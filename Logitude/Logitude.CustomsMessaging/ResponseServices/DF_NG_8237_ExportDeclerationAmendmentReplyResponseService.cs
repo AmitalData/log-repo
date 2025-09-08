@@ -909,7 +909,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
 
-                AutoFixDeclarationDiamondByErrors(customResponse, _MyDeclarationPM, context);
+                AutoFixDeclarationDiamondByErrors(customResponse, _MyDeclarationPM, context, requestParams.RequestVIA);
 
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
@@ -958,11 +958,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-        public void AutoFixDeclarationDiamondByErrors(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, DeclarationPM declaration, ICustomContext context)
+        public void AutoFixDeclarationDiamondByErrors(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, DeclarationPM declaration, ICustomContext context, SendRequestVIA requestVIA)
         {
             try
             {
-            if (declaration.Direction == "E" && declaration.AutoSending && declaration.IsDiamondDeclaration)
+            if (declaration.Direction == "E" && declaration.AutoSending && declaration.IsDiamondDeclaration && !requestVIA == SendRequestVIA.WebServiceInteractive)
             {
                 logger.Debug("Starting To Handle Customs Errors.");
                 if (customResponse?.Response?.Error == null) return;
