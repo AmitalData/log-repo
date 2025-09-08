@@ -2012,7 +2012,7 @@ namespace WebFreight.Web
                 }
 
 
-                string environment = IsLogBoxEnvironment() ? "Logbox" : LogitudeSettings.WorkEnvironment == "cloud" ? "Cloud" : "Logitude";
+                string environment = IsLogBoxEnvironment() ? "Logbox" : "AmitalCloud";
                 string body = "Please use the code " + device.AuthenticationCode + " to verify your " + environment + " Account";
                 byte[] bytearray = Encoding.ASCII.GetBytes(body);
 
