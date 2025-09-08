@@ -1035,7 +1035,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     // send auto close declaration:
                     logger.Debug("Before Send8235.");
                     ICustomsAutoDecClosing CustomsAutoDecClosing = Server.Tools.ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new Microsoft.Practices.Unity.ParameterOverride("", 1)) as ICustomsAutoDecClosing;
-                    CustomsAutoDecClosing.Send8235(_MyDeclarationPM);
+                    CustomsAutoDecClosing.Send8235(_MyDeclarationPM,"" , true);
                     logger.Debug("After Send8235.");
                 }
             }
@@ -1368,7 +1368,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
     public class CustomsAutoDecClosing : ICustomsAutoDecClosing
     {
 
-        public void Send8235(DeclarationPM decPm, string LoggingUserId = "")
+        public void Send8235(DeclarationPM decPm, string LoggingUserId = "", bool isAutoSendByErrorDiamondDec = false)
         {
             DateTime stopLogAt = DateTime.MinValue;
 
@@ -1420,11 +1420,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             try
             {
-                ExportDeclarationAmendmentResponseData responseData = requestParamsData.IsTransShipment ?
-                        new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
-                        new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
-                LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing AFTER SEND", false, "sendClosing", stopLogAt);
-
+                if (isAutoSendByErrorDiamondDec)
+                {
+                    requestParamsData.InterfaceTypeCode = requestParamsData.IsTransShipment ? "8235T" : "8235";
+                    requestParamsData.FutureSendDateTime = DateTime.Now.AddMinutes(1);
+                    SBQMessageService.CreateSheetSBQMessage<AmendmentRequestParams>(requestParamsData , false, requestParamsData.FutureSendDateTime );
+                }
+                else
+                {
+                    ExportDeclarationAmendmentResponseData responseData = requestParamsData.IsTransShipment ?
+                            new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
+                            new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
+                    LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing AFTER SEND", false, "sendClosing", stopLogAt);
+                }
+                
             }
             catch (System.Exception ex)
             {
