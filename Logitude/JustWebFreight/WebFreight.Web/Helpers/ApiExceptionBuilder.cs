@@ -1,8 +1,11 @@
 ﻿using Logitude.Server.Tools;
 using Marvin.JsonPatch.Exceptions;
 using Newtonsoft.Json;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace WebFreight.Web.Helpers
 {
@@ -49,7 +52,6 @@ namespace WebFreight.Web.Helpers
                 string shortErrorMessage = ex.Message + Environment.NewLine;
                 if (ex.InnerException != null)
                 {
-
                     errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
                     shortErrorMessage = shortErrorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
                 }
@@ -57,7 +59,7 @@ namespace WebFreight.Web.Helpers
                 apiException = new APIException()
                 {
                     ErrorType = ex.GetType().Name,
-                    ErrorMessage = errorMessage + " (" + ex.StackTrace + ")",
+                    ErrorMessage = GetErrorMessage(ex, errorMessage),
                     ShortErrorMessage = shortErrorMessage
                 };
             }
@@ -119,6 +121,35 @@ namespace WebFreight.Web.Helpers
                 return "Invalid update";
             }
         }
+
+        private static string GetErrorMessage(Exception ex, string errorMessage)
+        {
+            try
+            {
+                var token = HttpContext.Current?.Request?.Headers["Token"];
+                if (string.IsNullOrWhiteSpace(token))
+                    return errorMessage;
+
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                if (authToken == null)
+                    return errorMessage;
+
+                int tenant = authToken.Tenant;
+                
+                var userRepository = new UserRepository(tenant);
+                var user = userRepository.GetSingleUserByEmail(authToken.Email, 0, true);
+
+                if (user == null)
+                    return errorMessage;
+
+                return $"{errorMessage} ({ex?.StackTrace})";
+            }
+            catch
+            {
+                return errorMessage;
+            }
+        }
+
 
         private static string GetChildEntityName(JsonPatchException exception)
         {
