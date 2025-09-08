@@ -63,6 +63,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             CurrencyRateTracing.Trace(theEntityPm, Poco, isNewEntity);
             CurrencyRateMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
+            entityRepository.SubmitChanges();
+
         }
 
         public void Update(CurrencyRatePM theEntityPm)

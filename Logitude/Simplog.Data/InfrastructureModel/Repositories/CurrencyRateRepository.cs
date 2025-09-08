@@ -37,6 +37,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     where a.ExchangeRateId == exchangeRateId
                     select a).ToList();
         }
+        public List<CurrencyRate> GetSingleByExchangeRateIdAndAdditionalCurrencyRateId(string exchangeRateId,string additionalCurrencyRateId,int tenant)
+        {
+            return (from a in context.CurrencyRates
+                    where a.ExchangeRateId == exchangeRateId && a.AdditionalCurrencyRateId  == additionalCurrencyRateId && a.Tenant == tenant
+                    select a).ToList();
+        }
 
         public List<CurrencyRate> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
