@@ -76,7 +76,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 const string interfaceNameResponse = CustomsPartnerFtpDetails.InterfaceName_SIIProductFileCheck_Response;
                 const string partnerCode = CustomsPartnerFtpDetails.PartnerCode_SII;
 
-                var factory = new SIIRequestApiRequestFactory(auth.Tenant);
+                var factory = new SIIRequestApiRequestFactory(authToken.Tenant);
                 var credentials = factory.BuildCredentials(interfaceName, partnerCode);
 
                 var commRequest = factory.BuildCommunicationsDto(interfaceName, partnerCode, declarationId);
