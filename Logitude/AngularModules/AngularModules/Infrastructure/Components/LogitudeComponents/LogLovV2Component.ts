@@ -3488,6 +3488,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     //turn loading flag off
                     this.isLoading = false;
                 }
+                if (this.CD) this.CD.detectChanges();
             })
         });
     }
