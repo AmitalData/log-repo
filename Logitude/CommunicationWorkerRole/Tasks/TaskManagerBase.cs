@@ -30,7 +30,7 @@ namespace CommunicationWorkerRole.Tasks
         public string MessageId { get; set; }
         string TaskId;
         string TaskHistoryId;
-        int Tenant;
+        protected  int Tenant;
         public bool IsStartedFromUI = false;
 
         TaskSchedulerHistoryPM TaskSchedulerHistory;
