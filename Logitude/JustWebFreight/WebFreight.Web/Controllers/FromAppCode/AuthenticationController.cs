@@ -1728,7 +1728,7 @@ namespace WebFreight.Web
                     {
                         bool IsTwoFactorAuthenticationRequired = false;
 
-                        if (!parameters.IsAngularLogin && !parameters.IsMobileLogin && parameters.IsUser && !customerCare && !FromCTool)
+                        if ( !parameters.IsMobileLogin && parameters.IsUser && !customerCare && !FromCTool && !parameters.IgnoreMFA)
                         {
                             IsTwoFactorAuthenticationRequired = CheckLoginSecurityPolicy(tenant, user, logitudeUser, commonDataContext);
                         }
@@ -2012,7 +2012,7 @@ namespace WebFreight.Web
                 }
 
 
-                string environment = IsLogBoxEnvironment() ? "Logbox" : LogitudeSettings.WorkEnvironment == "cloud" ? "Cloud" : "Logitude";
+                string environment = IsLogBoxEnvironment() ? "Logbox" : "AmitalCloud";
                 string body = "Please use the code " + device.AuthenticationCode + " to verify your " + environment + " Account";
                 byte[] bytearray = Encoding.ASCII.GetBytes(body);
 
