@@ -678,7 +678,6 @@
     <Compile Include="RestRequestExecutor\CommunicationConstants.cs" />
     <Compile Include="RestRequestExecutor\RestRequestExecutor.cs" />
     <Compile Include="RestRequestExecutor\StatusTypeCommunication.cs" />
-    <Compile Include="InvoiceApiWorkerRole.cs" />
     <Compile Include="InvoiceApiWR.cs" />
     <Compile Include="Services\AutomationDocumentOutBuildService.cs" />
     <Compile Include="Services\ContainerTraking\ContainerTrackingWRService.cs" />
