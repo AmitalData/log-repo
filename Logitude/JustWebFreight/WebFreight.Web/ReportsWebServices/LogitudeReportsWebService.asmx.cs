@@ -1,10 +1,12 @@
 ﻿using LogicExtensions;
+using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.BusinessUnitFilters;
@@ -12040,26 +12042,27 @@ namespace WebFreight.Web.ReportsWebServices
 
             // Identify the parent Ids from the groupedList that no longer have any children in the list.
             var chartIdsToRemove = totalData.ResultList
-                .Where(res => res.Type == "ChartOfAccount" && res.ParentId != null).Select(res => res.Id)
+                .Where(res => res.Type == ChartOfAccount && res.ParentId != null).Select(res => res.Id)
                 .Where(chartId => !remainingParentIds.Contains(chartId))
                 .ToHashSet();
 
-            List<string> typeIdList = new List<string> { "1", "2", "3", "4", "5", "6", "7" };
+
 
             // Identify GrandParents of the removed charts to check if they have any children left after the removal of the charts.
             var grandParentIdsToCheck = totalData.ResultList
                 .Where(res => chartIdsToRemove.Contains(res.Id) && res.ParentId != null
-                            && !typeIdList.Contains(res.ParentId))
+                            && !ChartOfAccountsTypes.All.Contains(res.ParentId))
                 .Select(item => item.ParentId).ToHashSet();
 
             // Remove the parent items that have no children left.
             totalData.ResultList.RemoveAll(item => chartIdsToRemove.Contains(item.Id));
 
             // ** Stage 2: Check GrandParents of the removed Parents and remove them if they have no children left
+            const int maxIterations = 3; // Remaining levels to check
             if (grandParentIdsToCheck.Any())
             {
 
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < maxIterations; i++)
                 {
                     remainingParentIds = totalData.ResultList.Select(item => item.ParentId).ToHashSet();
                     var gpIdsToRemove = new HashSet<string>(
@@ -12073,7 +12076,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     grandParentIdsToCheck = totalData.ResultList
                         .Where(res => gpIdsToRemove.Contains(res.Id) && res.ParentId != null
-                            && !typeIdList.Contains(res.ParentId))
+                            && !ChartOfAccountsTypes.All.Contains(res.ParentId))
                         .Select(item => item.ParentId).ToHashSet();
 
 
@@ -12272,27 +12275,26 @@ namespace WebFreight.Web.ReportsWebServices
                     var error = ex.Message;
                 }
 
-                List<string> typeIdList = new List<string> { "1", "2", "3", "4", "5", "6", "7" };
 
                 if (totalData.ResultList.Any(res => res.ParentId != null && res.ParentId != "" && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) 
-                            && !typeIdList.Contains(res.ParentId)))
+                            && !ChartOfAccountsTypes.All.Contains(res.ParentId)))
                 {
                     try
                     {
-                        List<string> parentChartIds = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && typeIdList.Contains(res.ParentId)).Select(res => res.Id).ToList();
+                        List<string> parentChartIds = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && ChartOfAccountsTypes.All.Contains(res.ParentId)).Select(res => res.Id).ToList();
 
-                        var children = totalData.ResultList.Where(res => parentChartIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !typeIdList.Contains(res.ParentId));
+                        var children = totalData.ResultList.Where(res => parentChartIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !ChartOfAccountsTypes.All.Contains(res.ParentId));
                         List<string> childrenIds = children.Select(res => res.Id).ToList();
 
-                        if (childrenIds != null && childrenIds.Count > 0 && totalData.ResultList.Any(res => childrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !typeIdList.Contains(res.ParentId)))
+                        if (childrenIds != null && childrenIds.Count > 0 && totalData.ResultList.Any(res => childrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !ChartOfAccountsTypes.All.Contains(res.ParentId)))
                         {
-                            var grandChildren = totalData.ResultList.Where(res => childrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !typeIdList.Contains(res.ParentId));
+                            var grandChildren = totalData.ResultList.Where(res => childrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !ChartOfAccountsTypes.All.Contains(res.ParentId));
                             List<string> grandChildrenIds = grandChildren.Select(res => res.Id).ToList();
 
 
-                            if (grandChildrenIds != null && grandChildrenIds.Count > 0 && totalData.ResultList.Any(res => grandChildrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !typeIdList.Contains(res.ParentId)))
+                            if (grandChildrenIds != null && grandChildrenIds.Count > 0 && totalData.ResultList.Any(res => grandChildrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !ChartOfAccountsTypes.All.Contains(res.ParentId)))
                             {
-                                var grandGrandChildren = totalData.ResultList.Where(res => grandChildrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !typeIdList.Contains(res.ParentId));
+                                var grandGrandChildren = totalData.ResultList.Where(res => grandChildrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !ChartOfAccountsTypes.All.Contains(res.ParentId));
                                 List<string> grandGrandChildrenIds = grandGrandChildren.Select(res => res.Id).ToList();
 
                                 try
@@ -12342,7 +12344,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 try
                 {
-                    var allCharts = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && typeIdList.Contains(res.ParentId));
+                    var allCharts = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && ChartOfAccountsTypes.All.Contains(res.ParentId));
                     var groupedByParent_Parents =
                          allCharts.GroupBy(c => c.ParentId);
 
