@@ -233,6 +233,9 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 
         [Column("MarkDate")]
         public DateTime? MarkDate { get; set; }
+
+        [Column("ForeignCurrencyInterest")]
+        public bool ForeignCurrencyInterest { get; set; }
     }
 }
 	 

@@ -174,5 +174,6 @@ export class GLAccountList {
 	ContactEmail: string;
 	ContactPhone: string;
 	MarkDate: Date;
+	ForeignCurrencyInterest: boolean;
 
 }

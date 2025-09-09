@@ -1124,6 +1124,7 @@
     <Compile Include="Controllers\CustomsModel\WebServices\GatepassRequestController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ObjectTableExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\AdditionalCurrencyRateViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\InvoiceApiCommunicationLogController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ChequeCounterSerialViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\Aur_ItemController.Generated.cs" />
