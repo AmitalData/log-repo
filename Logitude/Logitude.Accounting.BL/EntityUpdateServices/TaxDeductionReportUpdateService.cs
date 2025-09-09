@@ -15,6 +15,7 @@ using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -70,16 +71,43 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
+                var notesBuilder = new StringBuilder();
+                if (entityPOCO.StatusTypeCode != entityPM.StatusTypeCode)
+                {
+                    TaxDeductionReportStatusQueryService taxDeductionReportStatusQueryService = new TaxDeductionReportStatusQueryService(entityPM.Tenant);
+                    string pmstatusname = taxDeductionReportStatusQueryService.GetSingleEnglishNameByCode(entityPM.StatusTypeCode);
+                    string oldStatusName = taxDeductionReportStatusQueryService.GetSingleEnglishNameByCode(entityPOCO.StatusTypeCode);
+                    
+                    notesBuilder.Append($"{TranslateTextsClass.Translate("TaxDeductionReport.F.StatusTypeCode", 0)} {TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0)} {oldStatusName}{Environment.NewLine}{TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0)} {pmstatusname}{Environment.NewLine}");
+                }
 
+                if (String.IsNullOrEmpty(entityPOCO.ReportSavedData) && !String.IsNullOrEmpty(entityPM.ReportSavedData))
+                {
+                    notesBuilder.Append($"{TranslateTextsClass.Translate("TaxDeductionReport.F.ReportSavedData", 0)} added {Environment.NewLine}");
+                }
+
+                if (String.IsNullOrEmpty(entityPOCO.ErrorMessage) && !String.IsNullOrEmpty(entityPM.ErrorMessage))
+                {
+                    notesBuilder.Append($"{TranslateTextsClass.Translate("TaxDeductionReport.F.ErrorMessage", 0)} added {Environment.NewLine}");
+                }
+                if (notesBuilder.Length == 0)
+                {
+                    PropertyInfo[] pmProperties = EntityPM.GetType().GetProperties();
+                    PropertyInfo[] pocoProperties = EntityPOCO.GetType().GetProperties();
+                    foreach (PropertyInfo property in pmProperties)
+                    {
+                        notesBuilder = GetTraceEventNotes(pmProperties, pocoProperties, property);
+                    }
+                }
                 EventTracerArgs eventTracerArgs = new EventTracerArgs()
                 {
                     EntityId = entityPM.Id,
                     Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
+                    UserId = entityPM.UpdatedByUserId,
                     ObjectTableName = "TaxDeductionReport",
                     IsAddedManually = false,
                     EventTypeCode = "UPEV",
-                    Notes = "",
+                    Notes = notesBuilder.ToString(),
                 };
                 EventTracer.CreateTraceEvent(eventTracerArgs);
 
@@ -87,6 +115,24 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             base.Trace(entityPM, entityPOCO, changesXml);
         }
+
+        public StringBuilder GetTraceEventNotes(PropertyInfo[] pmProperties, PropertyInfo[] pocoProperties, PropertyInfo property)
+        {
+            StringBuilder notes = new StringBuilder();
+            PropertyInfo pmProperty = pmProperties.Where(d => d.Name == property.Name).FirstOrDefault();
+            PropertyInfo pocoProperty = pocoProperties.Where(d => d.Name == property.Name).FirstOrDefault();
+            if (pmProperty != null && pocoProperty != null)
+            {
+                var pmPropertyValue = pmProperty.GetValue(EntityPM, null);
+                var pocoPropertyValue = pocoProperty.GetValue(EntityPOCO, null);
+                if (!pocoPropertyValue.Equals(pmPropertyValue))
+                {
+                    notes.Append($"{TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0)}  {pocoPropertyValue} {TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0)}  {pmPropertyValue}");
+                }
+            }
+            return notes;
+        }
+
 
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }

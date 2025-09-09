@@ -1,55 +1,37 @@
-﻿using Logitude.Accounting.BL.CloseTables;
-using Logitude.Accounting.BL.CoreBL;
+﻿using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.Utils;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Infrastructure.BL.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
-namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
+
+namespace WebFreight.Web.Controllers.AccountingModel
 {
-    public class TaxDeductionReportFileController: ApiController
+    public class TaxDeductionReportDataController : ApiController
     {
-
-
-        public HttpResponseMessage PostDownloadTaxDeduction856FileInBatch(TaxDeductionReportPM entityPM)
+        public TaxDeductionReportDataController()
         {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnEntityTenant("TaxDeductionReport", entityPM.Tenant, authToken.Tenant);
-                SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
-                int tenant = authToken.Tenant;
-
-                BatchTaskExecutionPM btePM = TaxDeductionReportService.Create856FileInBatch(entityPM.Id, tenant);
-
-
-                return Request.CreateResponse(HttpStatusCode.OK, btePM);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
 
         }
 
         [HttpGet]
-        [Route("TaxDeductionReportFile/GetTaxDeductionReportData")]
+        [Route("TaxDeductionReportData/GetTaxDeductionReportData")]
         public HttpResponseMessage GetTaxDeductionReportData(string reportId)
         {
             try
@@ -66,12 +48,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound, "Tax Deduction Report not found.");
                 }
-
-                if (taxDeductionReportPM.StatusTypeCode == TaxDeductionReportStatusValues.Completed && String.IsNullOrEmpty(taxDeductionReportPM.ReportSavedData))
-                {
-                    TaxDeductionReportService.CreateReportDataForOlderReports(ref taxDeductionReportPM, tenant);
-                }
-
                 TaxDeductionReportData taxDeductionReportData = string.IsNullOrEmpty(taxDeductionReportPM.ReportSavedData)
                                 ? new TaxDeductionReportData()
                                 : JsonSerializer.Deserialize<TaxDeductionReportData>(taxDeductionReportPM.ReportSavedData);
@@ -85,6 +61,5 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
             }
         }
-
     }
 }

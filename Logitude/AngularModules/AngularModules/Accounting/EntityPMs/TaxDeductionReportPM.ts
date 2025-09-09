@@ -117,6 +117,16 @@ export class TaxDeductionReportPM {
     public set Month(newValue: Date) { if (this.month != newValue) { this.month = newValue; this.MarkAsDirty("Month"); } }
        
 	 
+    private fromMonth: Date;
+    public get FromMonth() { return this.fromMonth; }
+    public set FromMonth(newValue: Date) { if (this.fromMonth != newValue) { this.fromMonth = newValue; this.MarkAsDirty("FromMonth"); } }
+       
+	 
+    private reportSavedData: string;
+    public get ReportSavedData() { return this.reportSavedData; }
+    public set ReportSavedData(newValue: string) { if (this.reportSavedData != newValue) { this.reportSavedData = newValue; this.MarkAsDirty("ReportSavedData"); } }
+       
+	 
 
     public OldEntityPM: TaxDeductionReportPM;
 		
