@@ -962,7 +962,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             try
             {
-            if (declaration.Direction == "E" && declaration.AutoSending && declaration.IsDiamondDeclaration && !requestVIA == SendRequestVIA.WebServiceInteractive)
+            if (declaration.Direction == "E" && declaration.AutoSending && declaration.IsDiamondDeclaration && requestVIA != SendRequestVIA.WebServiceInteractive)
             {
                 logger.Debug("Starting To Handle Customs Errors.");
                 if (customResponse?.Response?.Error == null) return;
