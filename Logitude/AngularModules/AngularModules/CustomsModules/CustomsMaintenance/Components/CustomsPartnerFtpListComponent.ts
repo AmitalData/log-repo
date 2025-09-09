@@ -115,7 +115,7 @@ export class CustomsPartnerFtpListComponent extends BaseComponent implements OnI
                 let _mappedListsArray: Array<CustomsPartnerFtpList> = myResult.Result;
                 _mappedListsArray.forEach(row => {
                     let detail = this._InterfaceDetailsItems.filter(r => r.Code == row.InterfaceName)[0];
-                    row.InterfaceCodeName = detail.Name;
+                    row.InterfaceCodeName = detail?.Name;
                 });
                 
                 this._FetchCustomsPartnerFtpResultList.InsertCollection(_mappedListsArray);
