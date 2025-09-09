@@ -21,12 +21,12 @@ namespace Logitude.Accounting.Data.Repositories
 			throw new NotImplementedException();
         }
 
-        public InvoiceApiCommunicationLog GetByCommunicationId(string communicationId, int tenant)
+        public InvoiceApiCommunicationLog GetByExternalID(string externalId, int tenant)
         {
-            return context.InvoiceApiCommunicationLogs
-                .FirstOrDefault(x => x.CommunicationId == communicationId && x.Tenant == tenant);
+            return (from a in context.InvoiceApiCommunicationLogs
+                    where a.ExternalID == externalId && a.Tenant == tenant
+                    select a).FirstOrDefault();
         }
-
     }
 
 }

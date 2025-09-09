@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Logitude.Accounting.BL.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Logitude_Accounting_BL_MagayaRef_CSSoapService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://38172.magayacloud.com/api/Invoke?Handler=CSSoapService</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -12,10 +12,16 @@ export class InvoiceApiCommunicationLogList {
 	Tenant: number;
 	CreateDate: Date;
 	SearchFields: string;
-	CommunicationId: string;
+	DocumentId: string;
 	Step: string;
 	StatusCode: string;
 	Exception: string;
+	StatusName: string;
+	StepName: string;
+	ExternalID: string;
+	ARInvoiceId: string;
+	InvoiceNumber: string;
+	ExternalInvoiceNumber: string;
 	
 }
  

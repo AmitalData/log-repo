@@ -199,6 +199,26 @@ namespace Logitude.BL.Helpers
 
         }
 
+        public DocumentOutPM PutCreateDocumentOut(CreateDocumentOutArgs createDocumentOutArgs ,string userId =null )
+        {
+            DocumentOutQuery documentOutQuery = new DocumentOutQuery(createDocumentOutArgs.Tenant);
+            DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.Tenant);
+            if (documentOutPM == null)
+            {
+               
+                documentOutPM = CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant, userId, createDocumentOutArgs.DocumentTypeTemplateId);
+                if (createDocumentOutArgs.SignHSM)
+                {
+                    IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+                    FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(createDocumentOutArgs.Tenant);
+                    if (accountingSettings.AccountingActivated && !string.IsNullOrEmpty(accountingSettings.HSM) && !string.IsNullOrEmpty(accountingSettings.HSMaddress) && !string.IsNullOrEmpty(accountingSettings.HSMtoken))
+                        Sign(documentOutPM.Id, createDocumentOutArgs.Tenant, accountingSettings);
+
+                }
+
+            }
+            return documentOutPM;
+        }
 
         private DocumentOut CreateDocumentOutInstance(string userId, string documentTemplateId, string emailTemplateId)
         {
@@ -293,7 +313,6 @@ namespace Logitude.BL.Helpers
             return context.Database.Connection.ConnectionString;
         }
 
-      
         
         
 
@@ -1029,7 +1048,18 @@ namespace Logitude.BL.Helpers
             }
         }
     }
-      
-   
+    public class CreateDocumentOutArgs
+    {
+        public string DocumentTypeId { get; set; }
+        public string EntityId { get; set; }
+        public string ChildEntityId { get; set; }
+        public string ChildReference { get; set; }
+        public string ObjectTableId { get; set; }
+        public int Tenant { get; set; }
+        public string DocumentTypeTemplateId { get; set; }
+
+        public bool SignHSM { get; set; }
+    }
+
 
 }

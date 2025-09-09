@@ -57,7 +57,7 @@ export class SchedulerExtendedPMService {
 
     insert(entityPM: TasksSchedulerPM) {
         var callTime = new Date();
-        var url = this.apiUrl;
+        var url = this.apiUrl + '/PostInsertScheduler';
         var validator: ClassLevelValidator;
         validator = new ClassLevelValidator();
         var errorsArray = validator.Validate("TasksScheduler", entityPM);
@@ -126,7 +126,22 @@ export class SchedulerExtendedPMService {
             return of(serviceResponse);
         }
     }
+    RunNowButtonClicked(taskSchedulerId: string, fromDate: Date, toDate: Date) {
+              
+            const body = {
+                TaskSchedulerId: taskSchedulerId,
+                FromDate: fromDate,
+                ToDate: toDate
+            };
+            var url = this.apiUrl + '/PostRunTaskNow';
 
+            return this.httpClient.post(url, body, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
+                if (response instanceof HttpResponse) {
+                    return response;
+                }
+            }), catchError(ServiceHelper.HandleServiceError));
+       
+    }
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TasksSchedulerPM = null) {
 
 

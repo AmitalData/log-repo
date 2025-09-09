@@ -46,9 +46,9 @@ export class InvoiceApiCommunicationLogPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private communicationId: string;
-    public get CommunicationId() { return this.communicationId; }
-    public set CommunicationId(newValue: string) { if (this.communicationId != newValue) { this.communicationId = newValue; this.MarkAsDirty("CommunicationId"); } }
+    private documentId: string;
+    public get DocumentId() { return this.documentId; }
+    public set DocumentId(newValue: string) { if (this.documentId != newValue) { this.documentId = newValue; this.MarkAsDirty("DocumentId"); } }
        
 	 
     private step: string;
@@ -64,6 +64,36 @@ export class InvoiceApiCommunicationLogPM {
     private exception: string;
     public get Exception() { return this.exception; }
     public set Exception(newValue: string) { if (this.exception != newValue) { this.exception = newValue; this.MarkAsDirty("Exception"); } }
+       
+	 
+    private statusName: string;
+    public get StatusName() { return this.statusName; }
+    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
+       
+	 
+    private stepName: string;
+    public get StepName() { return this.stepName; }
+    public set StepName(newValue: string) { if (this.stepName != newValue) { this.stepName = newValue; this.MarkAsDirty("StepName"); } }
+       
+	 
+    private externalID: string;
+    public get ExternalID() { return this.externalID; }
+    public set ExternalID(newValue: string) { if (this.externalID != newValue) { this.externalID = newValue; this.MarkAsDirty("ExternalID"); } }
+       
+	 
+    private aRInvoiceId: string;
+    public get ARInvoiceId() { return this.aRInvoiceId; }
+    public set ARInvoiceId(newValue: string) { if (this.aRInvoiceId != newValue) { this.aRInvoiceId = newValue; this.MarkAsDirty("ARInvoiceId"); } }
+       
+	 
+    private invoiceNumber: string;
+    public get InvoiceNumber() { return this.invoiceNumber; }
+    public set InvoiceNumber(newValue: string) { if (this.invoiceNumber != newValue) { this.invoiceNumber = newValue; this.MarkAsDirty("InvoiceNumber"); } }
+       
+	 
+    private externalInvoiceNumber: string;
+    public get ExternalInvoiceNumber() { return this.externalInvoiceNumber; }
+    public set ExternalInvoiceNumber(newValue: string) { if (this.externalInvoiceNumber != newValue) { this.externalInvoiceNumber = newValue; this.MarkAsDirty("ExternalInvoiceNumber"); } }
        
 	 
 

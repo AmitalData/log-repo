@@ -1,23 +1,23 @@
-﻿using System;
-using System.Web;
-using System.Linq;
-using System.Collections.Generic;
-using Simplog.Data.Helpers;
-using Logitude.Server.Tools.Helpers;
+﻿using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
-using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.BL.InfrastructureModel.Tools.Validating;
-using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
+using Logitude.BL.InfrastructureModel.Tools.Validating;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -197,7 +197,38 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.SubmitChanges();
         }
 
+        public void RunTaskNow(string taskSchedulerId, int tenant, DateTime FromDate, DateTime ToDate)
+        {
+            var poco = entityRepository.GetSingleTasksScheduler(taskSchedulerId, tenant);
+            if (FromDate != null && ToDate != null)
+            {
+                var details = new SchedulerDateRange { FromDate = FromDate, ToDate = ToDate };
+                poco.SchedulerDetailsXML = LogitudeXmlSerializer.SerializeObjectToElementString(details);
+                entityRepository.Update(poco);
+                entityRepository.SubmitChanges();
+            }
 
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("SchedularQueue", 0);
+            queueservice.Send(
+                new Dictionary<string, string> {
+                    { "TaskId", poco.Id },
+                    { "Tenant", poco.Tenant.ToString() },
+                    { "Version", poco.Version.ToString() },
+                    { "IsStartedFromUI", true.ToString() }
+                },
+                tenant, null, null, null,null
+            );
+        }
 
     }
+}
+[System.Runtime.Serialization.DataContract]
+public class SchedulerDateRange
+{
+    [System.Runtime.Serialization.DataMember]
+    public DateTime FromDate { get; set; }
+
+    [System.Runtime.Serialization.DataMember]
+    public DateTime ToDate { get; set; }
 }

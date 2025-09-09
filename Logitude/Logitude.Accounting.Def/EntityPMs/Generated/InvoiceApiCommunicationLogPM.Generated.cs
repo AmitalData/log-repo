@@ -119,25 +119,25 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string communicationId ;
+	  private string documentId ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string CommunicationId  
+       public string DocumentId  
 	   {
 	    
 	     get
 		{
-		   return communicationId;
+		   return documentId;
 		 }
 		 set
 		 {
-		   if(communicationId != value)
+		   if(documentId != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CommunicationId",OldValue=communicationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentId",OldValue=documentId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   communicationId=value;
+		   documentId=value;
 		   }
 			
 		 }
@@ -207,6 +207,144 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Exception",OldValue=exception,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   exception=value;
+		   }
+			
+		 }
+	   }
+	  private string statusName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StatusName  
+	   {
+	    
+	     get
+		{
+		   return statusName;
+		 }
+		 set
+		 {
+		   if(statusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=statusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   statusName=value;
+		   }
+			
+		 }
+	   }
+	  private string stepName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StepName  
+	   {
+	    
+	     get
+		{
+		   return stepName;
+		 }
+		 set
+		 {
+		   if(stepName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StepName",OldValue=stepName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   stepName=value;
+		   }
+			
+		 }
+	   }
+	  private string externalID ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExternalID  
+	   {
+	    
+	     get
+		{
+		   return externalID;
+		 }
+		 set
+		 {
+		   if(externalID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalID",OldValue=externalID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   externalID=value;
+		   }
+			
+		 }
+	   }
+	  private string aRInvoiceId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ARInvoiceId  
+	   {
+	    
+	     get
+		{
+		   return aRInvoiceId;
+		 }
+		 set
+		 {
+		   if(aRInvoiceId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ARInvoiceId",OldValue=aRInvoiceId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   aRInvoiceId=value;
+		   }
+			
+		 }
+	   }
+	  private string invoiceNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InvoiceNumber  
+	   {
+	    
+	     get
+		{
+		   return invoiceNumber;
+		 }
+		 set
+		 {
+		   if(invoiceNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceNumber",OldValue=invoiceNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   invoiceNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string externalInvoiceNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExternalInvoiceNumber  
+	   {
+	    
+	     get
+		{
+		   return externalInvoiceNumber;
+		 }
+		 set
+		 {
+		   if(externalInvoiceNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalInvoiceNumber",OldValue=externalInvoiceNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   externalInvoiceNumber=value;
 		   }
 			
 		 }

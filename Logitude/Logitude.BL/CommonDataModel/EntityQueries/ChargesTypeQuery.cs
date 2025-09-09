@@ -362,7 +362,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               IsActiveInDomestic = a.IsActiveInDomestic,
                           }).FirstOrDefault();
 
-
+                if (entity == null)
+                    return null;
                 ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
                 entity.ChargeTypeAccountings = chargeTypeAccountingQuery.GetChargeTypeAccountingsForChargeType(entity.Id, tenant).ToList();
                 new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "PM", Entities = new List<ChargesTypePM> { entity }.Cast<object>().ToList() }).Set();
