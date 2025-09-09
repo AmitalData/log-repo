@@ -1,5 +1,5 @@
 ﻿
-using HtmlAgilityPack;
+
 using Logitude.Accounting.BL.DataContract;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -13,12 +13,9 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json.Linq;
-using NPOI.OpenXmlFormats.Dml;
-using NPOI.SS.Formula.Functions;
-using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -34,16 +31,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Linq.Dynamic.Core;
 using System.Text;
-using System.Threading;
-using System.Web;
-using System.Xml;
+using System.Web.UI.WebControls;
 using System.Xml.Serialization;
-using WebFreight.Web.AccountingModel.Reports.BankDeposit;
 using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers.DataProviderHelpers;
@@ -61,8 +54,8 @@ using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
 using WebFreight.Web.ShipmentPackageModel;
 using WebFreight.Web.TaxesApprovalModel;
 using WebFreight.Web.WebServices;
-using System.Linq.Dynamic.Core;
-using System.Web.UI.WebControls;
+using System.Reflection;
+
 
 namespace WebFreight.Web.Helpers
 {
@@ -804,7 +797,7 @@ namespace WebFreight.Web.Helpers
 			}
 			return customerPotentialActualDataProvider;
 		}
-		public MemoryStream CreateExcelOfReport(ReportFliter reportFliter)
+		public void CreateExcelOfReport(ReportFliter reportFliter)
 		{
 			AdvancedDateResolver advancedDateResolver = new AdvancedDateResolver();
 			List<QueryFilterItem> reportFilterItems = advancedDateResolver.ResolveDateValues(reportFliter.QueryFilterItemLists);
@@ -822,6 +815,7 @@ namespace WebFreight.Web.Helpers
 					using (BufferedStream memorystream = new BufferedStream(new MemoryStream(reportDataProvider)))
 					{
 						reportStimulDataProviderDetails = GetReportStimulDataProviderDetails(memorystream, reportFliter);
+
 					}
 				}
 				else
@@ -838,9 +832,43 @@ namespace WebFreight.Web.Helpers
 			
 			MemoryStream memoryStream = new MemoryStream();
 			workbook.Write(memoryStream);
-			return memoryStream;
-		}
-		public string BuildStimulReport(ReportFliter reportFliter)
+            MemoryStream tempStream = new MemoryStream(memoryStream.ToArray());
+
+
+            string tempFilePath = Path.GetTempFileName() + ".xlsx";
+            using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write))
+            {
+                tempStream.Position = 0;
+                tempStream.CopyTo(fileStream);
+            }
+
+            ReadFileFromStreamFileAndSaveOnStorgeByChunks(tempFilePath, reportFliter, ".xlsx");
+
+
+        }
+
+        public MemoryStream GetExcel(string reportKey,string fileName,int tenant)
+        {
+            string extension = ".xlsx";
+             fileName = $"{reportKey}@{fileName}{extension}";
+
+            BlobFileInfo fileInfo = GetNewBlobFileInfo(fileName, extension, tenant);
+
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(
+                typeof(IBlobService),
+                "StorageService",
+                new ParameterOverride("", 1)
+            ) as IBlobService;
+
+            byte[] result = storageservice.Read(fileInfo); 
+
+            if (result == null || result.Length == 0)
+                return null;
+
+            return new MemoryStream(result);
+        }
+
+        public string BuildStimulReport(ReportFliter reportFliter)
 		{
 			AdvancedDateResolver advancedDateResolver = new AdvancedDateResolver();
 			List<QueryFilterItem> reportFilterItems = advancedDateResolver.ResolveDateValues(reportFliter.QueryFilterItemLists);
