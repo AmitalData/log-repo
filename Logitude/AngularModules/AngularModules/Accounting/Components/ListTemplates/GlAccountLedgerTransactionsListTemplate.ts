@@ -23,7 +23,7 @@ import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSec
 export class GlAccountLedgerTransactionsListTemplate {
     public rowData: any;
     public fieldName: any;
-    public AdditionalData: any;
+    public RowIndex: string;
     public Source: any;
     public IconCode: string;
     public ColorCode: string;
@@ -73,24 +73,24 @@ export class GlAccountLedgerTransactionsListTemplate {
 
     setVariables(rowData: any, fieldName: string, MyAdditionalData: any) {
         this.rowData = rowData;
-        if (this.rowData.IsChecked == true) {
-            console.log("Oh Yea True");
-        } else {
-            console.log("Else " + this.rowData.IsChecked);
-        }
         this.fieldName = fieldName;
-        this.AdditionalData = MyAdditionalData;
-        this.ChartOfAccountsTypeCode = MyAdditionalData;
-        //#region Set Icons
 
-        this.IconCode = AccountingEntityHelper.getEntityIcon(this.rowData.SourceTypeCode);
-        if (GLAccountSecurityLevelService.IsMultiWithReconcileMethodCodeEqualOneParameter && !GLAccountSecurityLevelService.IsCheckBoxEnabledParameter) {
-            this.IsCheckBoxEnabled = false;
+        if (fieldName == "Source") {
+            this.IconCode = AccountingEntityHelper.getEntityIcon(this.rowData.SourceTypeCode);
         }
-        //#endregion
+        else if (fieldName == "SelectCheckBox"){
 
-        var isDestroyed: boolean = this.CD["destroyed"];
-        if (!isDestroyed) { 
+            this.RowIndex = MyAdditionalData.rowIndex;
+
+            if (GLAccountSecurityLevelService.IsMultiWithReconcileMethodCodeEqualOneParameter && !GLAccountSecurityLevelService.IsCheckBoxEnabledParameter) {
+                this.IsCheckBoxEnabled = false;
+            }
+        }
+        else if (fieldName == "GLAccountIndicator") {
+            this.ChartOfAccountsTypeCode = MyAdditionalData;
+        }
+
+        if (!this.CD["destroyed"]) { 
             this.CD.detectChanges();
         }
     }
@@ -180,7 +180,6 @@ export class GlAccountLedgerTransactionsListTemplate {
             });
         }
     }
-
     CheckBoxClicked(checked: boolean) {
         //console.log("clicked: ", checked);
         //this.rowData['IsChecked'] = checked;
@@ -190,7 +189,7 @@ export class GlAccountLedgerTransactionsListTemplate {
             reconcileEventParams.Params={
                 line: this.rowData,
                 isChecked: checked,
-                RowIndex: this.AdditionalData.rowIndex
+                RowIndex: this.RowIndex
             };
             ReconcileEventManager.CheckBoxChecked.emit(reconcileEventParams);
         }
