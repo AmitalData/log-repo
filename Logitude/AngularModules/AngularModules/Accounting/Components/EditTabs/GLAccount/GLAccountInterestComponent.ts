@@ -17,7 +17,7 @@ import { GLAccountValidator } from '../../../Validators/GLAccountValidator';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { InterestBasesTypePM } from '../../../EntityPMs/InterestBasesTypePM';
 import { DateTimeToDatePipe } from '../../../../Controls/Pipes/DateTimeToDatePipe';
-import { DateTimeToShortDatePipe } from '../../../../Infrastructure/Pipes/DateTimeToShortDatePipe';
+import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     
@@ -60,14 +60,14 @@ export class GLAccountInterestComponent extends BaseComponent {
     public Disabled: boolean;
     SetUIProperties() {
 
-        if (!this.EntityPM.IsMultiCurrency && this.TenantPM.CurrencyId != this.EntityPM.CurrencyId && !this.EntityPM.IsSplitted) {
-            this.UIProperties.SetEnabled("ActiveForInterest", "GLAccount", false);
-            this.Disabled = true;
-        }
-        else {
+        // if (!this.EntityPM.IsMultiCurrency && this.TenantPM.CurrencyId != this.EntityPM.CurrencyId && !this.EntityPM.IsSplitted) {
+        //     this.UIProperties.SetEnabled("ActiveForInterest", "GLAccount", false);
+        //     this.Disabled = true;
+        // }
+       // else {
             this.UIProperties.SetEnabled("ActiveForInterest", "GLAccount", true);
             this.Disabled = false;
-        }
+       // }
         if (this.EntityPM.ActiveForInterest) {
             if (!this.EntityPM.IsSplitted) {
                 if (this.WasActiveActiveForInterest) {
@@ -246,6 +246,29 @@ export class GLAccountInterestComponent extends BaseComponent {
         this.EntityPM.ActiveForInterest = newValue;
         this.SetUIProperties();
     }
+
+    get ForeignCurrencyInterest() {
+        return this.EntityPM.ForeignCurrencyInterest;
+    }
+    showForeignCurrencyCheckbox = true;
+
+    set ForeignCurrencyInterest(newValue: boolean) {
+
+
+        if (newValue && this.EntityPM.IsMultiCurrency) {
+          const msg = new MessageWindow();
+          msg.RTL = true;
+          msg.Show(TextCodeTranslator.Translate('GLAccounts.O.ErrForeignInterestMultiCurrency'));
+            
+          this.showForeignCurrencyCheckbox = false;
+          setTimeout(() => {
+            this.showForeignCurrencyCheckbox = true;
+          }, 0);
+        } 
+        else {
+            this.EntityPM.ForeignCurrencyInterest = newValue;
+        }
+    }
     get ActiveForInterestCreditInvoice() {
         return this.EntityPM.ActiveForInterestCreditInvoice;
     }
@@ -301,6 +324,9 @@ export class GLAccountInterestComponent extends BaseComponent {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
+    
+
+
 }
 
 export class GLAccountInterestPeriodModel extends BaseComponent {

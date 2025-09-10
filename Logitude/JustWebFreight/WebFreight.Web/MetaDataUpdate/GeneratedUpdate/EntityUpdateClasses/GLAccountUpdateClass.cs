@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "058f088d6ee5f61aa92c1b85d6382ca1";
+		public const string HashString = "d275a83952d658c05c4a1a053a203be5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -12882,6 +12882,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ForeignCurrencyInterest",
 					  						ListPropertyPath =  "ForeignCurrencyInterest",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -12900,8 +12901,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForeignCurrencyInterest",
 					  						DefaultText =  "Foreign Currency Interest",
-					  						FullLocalDefaultTextBack_up =  "פעיל לריבית",
-					  						FullLocalDefaultText =  "BS64:Itek16LXmdecINec16jXmdeR15nXqiI=",
+					  						FullLocalDefaultTextBack_up =  "ריבית במטבע זר",
+					  						FullLocalDefaultText =  "BS64:Iteo15nXkdeZ16og15HXnteY15HXoiDXlteoIg==",
 					  						ListFieldLable =  "ForeignCurrencyInterestListLable",
 					  						ListLableDefaultText =  "Foreign Currency Interest",
 					  						ListLocalDefaultTextBack_up =  "ריבית במטבע זר",
@@ -15227,6 +15228,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountsRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountsRange", DefaultText = "GLAccount range by Display Number",LocalDefaultText = @"טווח כרטיסים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_AgingReportORunReportImmediately = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.RunReportImmediately", DefaultText = "Run Immediately",LocalDefaultText = @"BS64:IteU16jXpSDXnteZ15nXk9eZ16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOErrForeignInterestMultiCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ErrForeignInterestMultiCurrency", DefaultText = "Interest in foreign currency cannot be set for a multi-currency",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNeS15PXmdeoINeo15nXkdeZ16og15HXnteYIteWINec15vXqNeY15nXoSDXqNeRINee15jXkdei15ki", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOErrMultiCurrencyDueToInterest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ErrMultiCurrencyDueToInterest", DefaultText = "Cannot change the card to multi-currency – it is set with interest in foreign currency",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXqdeg15XXqiDXkNeqINeU15LXk9eo16og15TXm9eo15jXmdehINec16jXkS3XnteY15HXoteZIOKAkyDXlNeb16jXmNeZ16Eg157XldeS15PXqCDXnNeo15nXkdeZ16og15HXnteYIteWIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
 
    

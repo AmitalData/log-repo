@@ -47,6 +47,8 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
     private CurrentSession = SessionLocator.SelectedSession;
     private myCurrencyRatesService: CurrencyRatesService;
     private myCardListService: CardListService;
+    private gLAccountPMService: GLAccountPMService;
+
     private interestReportExtendedListService: InterestReportExtendedListService;
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -58,7 +60,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         this.myCurrencyRatesService = new CurrencyRatesService();
         this.myCardListService = new CardListService();
         this.interestReportExtendedListService = new InterestReportExtendedListService();
-
+        this.gLAccountPMService = new GLAccountPMService();    
      }
 
 
@@ -342,8 +344,8 @@ public GetARInvoicePMWithLine(): ARInvoicePM {
         _ARInvoiceLinePM.DateForInterest = _ARInvoicePM.InvoiceDate;
         _ARInvoiceLinePM.Tenant = this.TenantPM.Id;
         _ARInvoiceLinePM.InvoiceLocalCurrencyCode = this.TenantPM.CurrencyCode;
-        _ARInvoiceLinePM.ForiegnCurrencyCode = this.TenantPM.CurrencyCode;
-        _ARInvoiceLinePM.ForiegnCurrencyId = this.TenantPM.CurrencyId;
+         _ARInvoiceLinePM.ForiegnCurrencyCode =  this.glaccount?.ForeignCurrencyInterest ? this.glaccount?.CurrencyCode :  this.TenantPM.CurrencyCode;
+        _ARInvoiceLinePM.ForiegnCurrencyId = this.glaccount?.ForeignCurrencyInterest ? this.glaccount?.CurrencyId : this.TenantPM.CurrencyId;
         _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount;
         _ARInvoiceLinePM.Quantity = 1;
         _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount + CreditAllotmentCommission + CalculatedPostponedChequesCommision;
@@ -362,7 +364,7 @@ public GetARInvoicePMWithLine(): ARInvoicePM {
         _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList ? this.chargesTypeList.Id : null;
         _ARInvoiceLinePM.VatTypeId = this.chargesTypeList.VatTypeId;
         _ARInvoiceLinePM.GLAccountId = this.chargesTypeList.ReceivableCreditGLAccountId;
-        _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
+       // _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
         _ARInvoiceLinePM.VatPercentage = this.GetVatTypePercentage(_ARInvoiceLinePM.VatTypeId);
         _ARInvoiceLinePM.VatTypeName = this.VatTypeName;
         _ARInvoiceLinePM.LineActionCode = this.chargesTypeList.IsExpense ? '2' : '1';
@@ -398,7 +400,7 @@ public GetARInvoicePMWithLine(): ARInvoicePM {
     _ARInvoicePM.BillToPartnerTypeId = this.BillToPartnerTypeId;
     _ARInvoicePM.AmountInLocalCurrency = this.EntityPM.TotalAmount;
     _ARInvoicePM.LocalCurrencyId = this.TenantPM.CurrencyId;
-    _ARInvoicePM.InvoiceCurrencyId = this.TenantPM.CurrencyId;
+    _ARInvoicePM.InvoiceCurrencyId = this.glaccount?.ForeignCurrencyInterest ?  this.glaccount?.CurrencyId : this.TenantPM.CurrencyId;
     _ARInvoicePM.AmountInInvoiceCurrency = this.EntityPM.TotalAmount;
     _ARInvoicePM.AmountInProfitCurrency = this.EntityPM.TotalAmount;
     _ARInvoicePM.BranchId  = SessionLocator.LoggedUserPM.BranchId;;
@@ -420,8 +422,7 @@ public GetARInvoicePMWithLine(): ARInvoicePM {
     _ARInvoicePM.Description = myDescription;
     _ARInvoicePM.IsGeneralInvoice = true;
     _ARInvoicePM.IsFullAccounting = true;
-    _ARInvoicePM.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
-    _ARInvoicePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
+    //_ARInvoicePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
      InvoiceTool.ComputeARInvoiceDueDate(_ARInvoicePM);
     _ARInvoicePM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
     _ARInvoicePM.ProfitCurrencyCode = SessionLocator.TenantPM.ProfitCurrencyCode;
@@ -545,17 +546,20 @@ public VatTypeName:string;
                     this.chargesTypeList = myResponse.Result[0];
                     this.GetBillToCard( this.EntityPM.CustomerId).then(res => {
                         this.getVatTypePercentegeListByDates().then(res => {
-                            this.GetVatTypeName(this.chargesTypeList.VatTypeId).then(res => {
-                                this._ARInvoicePM = this.GetARInvoicePMWithLine();
-                                   this.LoadCurrencyRates().then(res => {
-                                    this.CurrentSession.StopBusyIndicator();
-                                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                                          .then(cmpRef => {
-                                              cmpRef.instance.ComponentRef = cmpRef;
-                                              cmpRef.instance.Run({ EntityPM: this._ARInvoicePM, ObjectTableName: 'ARInvoice' });
-                                              cmpRef.instance.BackCompleted.subscribe(($event: any) => this.CurrentSession.CurrentEditComponent.ReloadEntityPM());
-                                         });
-                                    });
+                             this.GetVatTypeName(this.chargesTypeList.VatTypeId).then(res => {
+                                this.GetGLAccount(this.EntityPM.GLAccountId).then(res =>{
+                                    this._ARInvoicePM = this.GetARInvoicePMWithLine();
+                                    this.LoadCurrencyRates().then(res => {
+                                     this.CurrentSession.StopBusyIndicator();
+                                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                                           .then(cmpRef => {
+                                               cmpRef.instance.ComponentRef = cmpRef;
+                                               cmpRef.instance.Run({ EntityPM: this._ARInvoicePM, ObjectTableName: 'ARInvoice' });
+                                               cmpRef.instance.BackCompleted.subscribe(($event: any) => this.CurrentSession.CurrentEditComponent.ReloadEntityPM());
+                                          });
+                                     });
+                                })
+                              
                         });
                       });
                     });
@@ -619,7 +623,25 @@ public VatTypeName:string;
             }
         });
     });
+    
    }
+
+   glaccount:GLAccountPM;
+   GetGLAccount(id:string) {
+    return new Promise(resolve => {
+    this.gLAccountPMService.get(id).subscribe((myResponse: ServiceResponse) => {
+        if (!myResponse.HasError) {
+            const glaccount: GLAccountPM = myResponse.Result;
+            this.glaccount = glaccount;
+            resolve(myResponse.Result);
+        }
+        else {
+            reject();
+        }
+    });
+});
+
+}
 
 
 
