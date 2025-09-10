@@ -516,5 +516,6 @@ __pycache__/
 /Logitude/Logitude.Update/Nlog.config
 /Logitude/RabbitMQSRV/Nlog.config
  /LogitudeTools/ShipmentsReport/ShipmentsReport/appsettings.json
+/Logitude/packages.zip
 
  
