@@ -258,11 +258,10 @@ namespace Logitude.Accounting.BL.InterestService
 
             if (myCard != null && !string.IsNullOrEmpty(myCard.EmailForSendingSingArinvoice))
             {
-                email = objectContext.Contacts.Where(contact => contact.Id == myCard.EmailForSendingSingArinvoice).FirstOrDefault().Email;
+                email = objectContext.Contacts.Where(contact => contact.Id == myCard.EmailForSendingSingArinvoice).FirstOrDefault()?.Email;
                 if (!string.IsNullOrEmpty(email))
                 {
-                    isInterestReport = myCard.SendingInterestReport ? true : false;
-                    return (email, isInterestReport);
+                    return (email, myCard.SendingInterestReport);
                 }
 
             }
@@ -285,7 +284,7 @@ namespace Logitude.Accounting.BL.InterestService
                     ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);
                     invoiceService.BuildDocumentsForNewInvoiceLite(aRInvoicePM, interestReport);
                     invoiceService.SignInvoice(aRInvoicePM, tenant);
-                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace("PrintInterestInvoice aRInvoicePM.Id=" + aRInvoicePM.Id);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"PrintInterestInvoice aRInvoicePM.Id={aRInvoicePM.Id}");
                     scope.Complete();
                 }
                 catch (Exception ex)
