@@ -396,8 +396,8 @@ namespace Logitude.Accounting.BL.InterestService
 
                 }
             }
-            args.SelectedIds = interestReportQueryService.GetInterestReprtsWithInvocies(tenant, args.SelectedIds);
-            return args.SelectedIds;  // Adjust according to the actual requirement
+            var ids = interestReportQueryService.GetInterestReprtsWithInvocies(tenant, args.SelectedIds);
+            return ids;  // Adjust according to the actual requirement
         }
         public PDFDocumentInvoices GetNumberOfDocumentNotPrinted(InterestReportArguments interestReportArgs, int tenant,string email)
         {
@@ -418,13 +418,13 @@ namespace Logitude.Accounting.BL.InterestService
 
             }
 
-            interestReportArgs.SelectedIds = interestReportQueryService.GetInterestReprtsWithInvocies(tenant, interestReportArgs.SelectedIds);
+            var ids = interestReportQueryService.GetInterestReprtsWithInvocies(tenant, interestReportArgs.SelectedIds);
             List<string> ARInvoiceIdsNotPrinted = new List<string>();
             List<string> InterestReportIdsNotPrinted = new List<string>();
 
-            for (int i = 0; i < interestReportArgs.SelectedIds.Count; i++)
+            for (int i = 0; i < ids.Count; i++)
             {
-                string[] EntitiesId = interestReportArgs.SelectedIds[i].Split(',');
+                string[] EntitiesId = ids[i].Split(',');
                 string InterestReportId = EntitiesId[0];
                 string ARInvoieId = EntitiesId[1];
                 bool IsPrintARInvoice = PrintInvoicesPDF(email, tenant, ARInvoieId, pdfDoc, "999G", true);
@@ -526,12 +526,11 @@ namespace Logitude.Accounting.BL.InterestService
                     if (aRInvoice != null)
                     {
                         string signStatus = aRInvoice.IsSigned;
-                        if (signStatus == "1" || signStatus == "3" || signStatus == "4")
-                        {
-                            notGetCopy = true;
-                        }
-                        if (signStatus == "2")
-                            return false;
+                        if (signStatus == ARInvoiceSignedStatusValues.SignedButNotYetSent
+                                || signStatus == ARInvoiceSignedStatusValues.SigningFailed
+                                || signStatus == ARInvoiceSignedStatusValues.SignedAndSentByEmail
+                                || signStatus == ARInvoiceSignedStatusValues.SignedButSendingByEmailFailed)
+                            notGetCopy = true; 
                     }
 
                     if (copy != null && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId) && ((DocumentCode != "999G" && doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited) || (DocumentCode == "999G" && !notGetCopy)))
