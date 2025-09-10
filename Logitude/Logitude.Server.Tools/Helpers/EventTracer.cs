@@ -35,8 +35,8 @@ namespace Logitude.Server.Tools.Helpers
                 else
                 {
                     ObjectTableRepository objectTabelRepository = new ObjectTableRepository(objectContext);
-                    ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(args.ObjectTableName, 0, true);
-                    ObjectTable childObjectTable = objectTabelRepository.GetObjectTableByName(args.ChildObjectTableName, 0, true);
+                    ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(args.ObjectTableName, tenant, true, tenant);
+                    ObjectTable childObjectTable = objectTabelRepository.GetObjectTableByName(args.ChildObjectTableName, tenant, true, tenant);
 
                     #region User
                     string myUserId = null;
