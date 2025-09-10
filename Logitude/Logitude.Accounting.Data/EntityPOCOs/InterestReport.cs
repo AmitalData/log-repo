@@ -88,6 +88,13 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public decimal? CalCreditAllotmentCommission { get; set; }
      
 	    public decimal? CalculatedPostponedChequesCommision { get; set; }
+        [Column("IsForeignCurrency")]
+	    public bool IsForeignCurrency { get; set; }
+        [ForeignKey("Currency")]
+        [Column("ReportCurrencyId")]
+	    public string ReportCurrencyId { get; set; }
+	      
+        public virtual Currency Currency { get; set; }
     }
 }
 	 

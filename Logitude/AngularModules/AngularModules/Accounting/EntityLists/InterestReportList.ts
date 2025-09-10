@@ -59,6 +59,9 @@ export class InterestReportList {
 	ChartOfAccountsId: string;
 	ChartOfAccountsName: string;
 	ChartOfAccountsCode: string;
+	IsForeignCurrency: boolean;
+	ReportCurrencyId: string;
+	ReportCurrencyCode: string;
 	
 }
  

@@ -305,7 +305,39 @@
                                     </td>
                                     <td>
                                         <table>
-                                            <tr class="FormFieldRow"></tr>
+                                           <!-- ForeignCurrencyInterest -->
+                                           <tr class="FormFieldRow">
+                                            <td style="width: 200px">
+                                                <table>
+                                                    <tr  style="height: 15px">
+                                                        <LogLabel
+                                                            [ObjectFieldName]="'ForeignCurrencyInterest'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                        ></LogLabel>
+                                                    </tr>
+                                                 
+                                                </table>
+                                            </td>
+                                            <td>
+                                                <table>
+                                                    <tr   style="height: 15px">
+                                                        <LogCheckBox
+                                                        *ngIf="showForeignCurrencyCheckbox"
+                                                        [ObjectFieldName]="'ForeignCurrencyInterest'"
+                                                        [HideColumns]="true"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [Value]="ForeignCurrencyInterest">
+                                                      </LogCheckBox>
+                                                      
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
                                             <tr class="FormFieldRow">
                                                 <td style="width: 200px;">
                                                     <table>

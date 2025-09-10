@@ -14947,6 +14947,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ForeignCurrencyInterest&quot;"
     ListPropertyPath="&quot;ForeignCurrencyInterest&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -14965,8 +14966,8 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ForeignCurrencyInterest&quot;"
     DefaultText="&quot;Foreign Currency Interest&quot;"
-    FullLocalDefaultTextBack_up="&quot;פעיל לריבית&quot;"
-    FullLocalDefaultText="&quot;BS64:Itek16LXmdecINec16jXmdeR15nXqiI=&quot;"
+    FullLocalDefaultTextBack_up="&quot;ריבית במטבע זר&quot;"
+    FullLocalDefaultText="&quot;BS64:Iteo15nXkdeZ16og15HXnteY15HXoiDXlteoIg==&quot;"
     ListFieldLable="&quot;ForeignCurrencyInterestListLable&quot;"
     ListLableDefaultText="&quot;Foreign Currency Interest&quot;"
     ListLocalDefaultTextBack_up="&quot;ריבית במטבע זר&quot;"
@@ -20490,6 +20491,20 @@
       DefaultText="&quot;Run Immediately&quot;"
       LocalDefaultTextBack_up="&quot;הרץ מיידית&quot;"
       LocalDefaultText="&quot;BS64:IteU16jXpSDXnteZ15nXk9eZ16oi&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.ErrForeignInterestMultiCurrency&quot;"
+      DefaultText="&quot;Interest in foreign currency cannot be set for a multi-currency&quot;"
+      LocalDefaultTextBack_up="&quot;לא ניתן להגדיר ריבית במט&quot;ז לכרטיס רב מטבעי&quot;"
+      LocalDefaultText="&quot;BS64:Itec15Ag16DXmdeq158g15zXlNeS15PXmdeoINeo15nXkdeZ16og15HXnteYIteWINec15vXqNeY15nXoSDXqNeRINee15jXkdei15ki&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.ErrMultiCurrencyDueToInterest&quot;"
+      DefaultText="&quot;Cannot change the card to multi-currency – it is set with interest in foreign currency&quot;"
+      LocalDefaultTextBack_up="&quot;לא ניתן לשנות את הגדרת הכרטיס לרב-מטבעי – הכרטיס מוגדר לריבית במט&quot;ז&quot;"
+      LocalDefaultText="&quot;BS64:Itec15Ag16DXmdeq158g15zXqdeg15XXqiDXkNeqINeU15LXk9eo16og15TXm9eo15jXmdehINec16jXkS3XnteY15HXoteZIOKAkyDXlNeb16jXmNeZ16Eg157XldeS15PXqCDXnNeo15nXkdeZ16og15HXnteYIteWIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
