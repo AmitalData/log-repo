@@ -147,9 +147,8 @@
         <td style="width:10px"></td>
         <td style="width: 35px;height:23px;">
             <div>
-                <CheckBox [IsChecked]="ShowPrintedInvoice" 
+                <CheckBox [IsChecked]="ShowPrintedInvoice" [IsEnabled]="IsShowPrintedInvoiceEnabled"
                 (Checked)="ShowPrintedInvoice = $event "></CheckBox>
-
             </div>
         </td>
         <td style="width: 250px;">
@@ -160,9 +159,8 @@
         <td style="width:10px"></td>
         <td style="width: 35px;height:23px;">
             <div>
-                <CheckBox [IsChecked]="ShowSignedInvoice" 
+                <CheckBox [IsChecked]="ShowSignedInvoice" [IsEnabled]="IsShowSignedInvoiceEnabled"
                 (Checked)="ShowSignedInvoice = $event "></CheckBox>
-
             </div>
         </td>
         <td style="width: 250px;">

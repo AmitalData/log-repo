@@ -1,28 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InvoiceModel.CustomFilters;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Enums;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Accounting.Data.Repositories;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.CommonDataModel;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts.Models;
-using Logitude.BL.InvoiceModel.CustomFilters;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -241,7 +244,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             IQueryable<ARPayment> payments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARPayment>(new QueryOperations(), repository.context.ARPayments.Where(t => t.Tenant == tenant), tenant);
 
             List<MoneyStatusClass> datalistInvoice = (from a in invoices
-                                                      where a.StatusCode != "DR" && a.StatusCode != "PR" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.InvoiceDate >= lastDate && a.Tenant == tenant //&& !a.IsAutoCredit && !a.IsClosed && !a.IsCancelled
+                                                      where a.StatusCode != "DR" && a.StatusCode != "PR" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.InvoiceDate >= lastDate && a.Tenant == tenant
                                                      && !a.IsConstituentInvoice
                                                       group a by new
                                                       {
@@ -261,7 +264,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                  ).ToList();
 
             List<MoneyStatusClass> datalistPayment = (from a in payments
-                                                      where a.RegisterDate >= lastDate && a.Tenant == tenant && a.StatusCode != "VD" && a.StatusCode != "DR"  && a.StatusCode != "PR"//&& !a.IsClosed
+                                                      where a.RegisterDate >= lastDate && a.Tenant == tenant && a.StatusCode != "VD" && a.StatusCode != "DR"  && a.StatusCode != "PR"
                                                       group a by new
                                                       {
                                                           a.RegisterDate.Value.Day,
@@ -362,34 +365,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                         #endregion
 
-                        #region by 6 months
-                        //datalist2 = (from a in datalist
-                        //             group a by new
-                        //             {
-
-                        //                 a.month,
-                        //                 a.year,
-                        //                 a.DataType,
-                        //             } into inv
-                        //             orderby inv.Key.year, inv.Key.month
-                        //             select new MoneyStatusClass()
-                        //             {
-                        //                 DateRange = inv.Key.month.ToString() + "/" + inv.Key.year.ToString(),
-
-                        //                 month = inv.Key.month,
-                        //                 year = inv.Key.year,
-                        //                 TotalAmount = inv.Sum(d => d.TotalAmount),
-                        //                 DataType = inv.Key.DataType,
-                        //             }).ToList();
-                        //if (datalist2.Count < 6)
-                        //{
-                        //    datalist2 = FillEmptyDates(datalist2, -5);
-                        //    datalist2 = (from a in datalist2
-                        //                 orderby a.year, a.month
-                        //                 select a).ToList();
-                        //}
-                        //break;
-                        #endregion
                     }
                 case 3:
                     {
@@ -503,7 +478,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             IQueryable<ARPayment> payments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARPayment>(new QueryOperations(), repository.context.ARPayments.Where(t => t.Tenant == tenant), tenant);
 
             List<MoneyStatusClass> datalistInvoice = (from a in invoices
-                                                      where a.StatusCode != "DR" && a.StatusCode != "PR" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.InvoiceDate >= FromDate && a.Tenant == tenant //&& !a.IsAutoCredit && !a.IsClosed && !a.IsCancelled
+                                                      where a.StatusCode != "DR" && a.StatusCode != "PR" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.InvoiceDate >= FromDate && a.Tenant == tenant
                                                       group a by new
                                                       {
                                                           a.InvoiceDate.Value.Day,
@@ -525,7 +500,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                  ).ToList();
 
             List<MoneyStatusClass> datalistPayment = (from a in payments
-                                                      where a.RegisterDate >= FromDate && a.Tenant == tenant && a.StatusCode != "VD" && a.StatusCode != "DR" && a.StatusCode != "PR" //&& !a.IsClosed
+                                                      where a.RegisterDate >= FromDate && a.Tenant == tenant && a.StatusCode != "VD" && a.StatusCode != "DR" && a.StatusCode != "PR"
                                                       group a by new
                                                       {
                                                           a.RegisterDate.Value.Day,
@@ -1039,34 +1014,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                         #endregion
 
-                        #region by 6 months
-                        //datalist2 = (from a in datalist
-                        //             group a by new
-                        //             {
-
-                        //                 a.month,
-                        //                 a.year,
-                        //                 a.DataType,
-                        //             } into inv
-                        //             orderby inv.Key.year, inv.Key.month
-                        //             select new MoneyStatusClass()
-                        //             {
-                        //                 DateRange = inv.Key.month.ToString() + "/" + inv.Key.year.ToString(),
-
-                        //                 month = inv.Key.month,
-                        //                 year = inv.Key.year,
-                        //                 TotalAmount = inv.Sum(d => d.TotalAmount),
-                        //                 DataType = inv.Key.DataType,
-                        //             }).ToList();
-                        //if (datalist2.Count < 6)
-                        //{
-                        //    datalist2 = FillEmptyDates(datalist2, -5);
-                        //    datalist2 = (from a in datalist2
-                        //                 orderby a.year, a.month
-                        //                 select a).ToList();
-                        //}
-                        //break;
-                        #endregion
                     }
                 case 3:
                     {
@@ -2417,6 +2364,19 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 invoice.InterestReportId = interestReport.Id;
             }
         }
+
+        public InterestReport GetInterestReport(ARInvoice invoice)
+        {
+            InterestReport interestReport = null;
+            if (invoice.ARInvoiceTypeCode == InterestReportInvoiceTypeCode && IsAccountingActivated(invoice.Tenant))
+            {
+                InterestReportRepository interestReportRepository = new InterestReportRepository(invoice.Tenant);
+                interestReport = interestReportRepository.GetSingleByARInvoiceId(invoice.Id, invoice.Tenant);
+            }
+            return interestReport;
+        }
+
+
         private bool IsAccountingActivated(int tenant)
         {
             TenantRepository tenantRepository = new TenantRepository(tenant);
@@ -2429,7 +2389,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             var result = (from a in repository.context.ARInvoices where a.Tenant == tenant && a.ARInvoiceTypeCode == "IT" && a.InvoiceDate >= fromDate && a.InvoiceDate <= toDate select a);
             if (!ShowPrintedInvoice)
             {
-                result = result.Where(s => s.IsPrinted == false);
+                result = result.Where(s => s.IsSigned != ARInvoiceSignedStatusValues.SignedAndSentByEmail);
             }
             return result;
         }
