@@ -34,7 +34,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     entityResourceService: EntityResourceService = new EntityResourceService();
     @ViewChild("comboBoxWithCheckBoxChartOfAccountsComboBoxValue") comboBoxWithCheckBox: ComboBoxWithInCheckBox;
 
-    private static readonly WITHOUT_OPTION = 'WITHOUT';
+    private static readonly ALL_OPTION     = 'ALL';
     private static readonly WITH_OPTION    = 'WITH';
 
     GLAccountHtmlinputId: string;
@@ -76,10 +76,9 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     public BalanceOptionsFilterList: CodeNameClass[];
     private BuildFilterList() {
         this.BalanceOptionsFilterList = [];
-        this.BalanceOptionsFilterList.push(new CodeNameClass(RevenueExpenseFilterComponent.WITHOUT_OPTION, "Without Transactions", "בלי תנועות"));
-        this.BalanceOptionsFilterList.push(new CodeNameClass(RevenueExpenseFilterComponent.WITH_OPTION, "With Transactions", "עם תנועות"));
-
-        this.SelectedBalanceOptionFilter = this.BalanceOptionsFilterList.filter(d => d.Code === RevenueExpenseFilterComponent.WITHOUT_OPTION)[0];
+        this.BalanceOptionsFilterList.push(new CodeNameClass(RevenueExpenseFilterComponent.ALL_OPTION, "All Accounts", "כל הכרטיסים"));
+        this.BalanceOptionsFilterList.push(new CodeNameClass(RevenueExpenseFilterComponent.WITH_OPTION, "Only accounts with transactions in the period", "רק כרטיסים עם תנועות בתקופה"));
+        this.SelectedBalanceOptionFilter = this.BalanceOptionsFilterList.filter(d => d.Code === RevenueExpenseFilterComponent.ALL_OPTION)[0];
     }
 
     private selectedBalanceOptionFilter: CodeNameClass;
@@ -404,7 +403,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
 
                  case "CardFilter":
                  {  this.BuildFilterList();
-                    this.SelectedBalanceOptionFilter = (queryFilterItem.FieldValue == "0" || queryFilterItem.FieldValue == "2")?this.BalanceOptionsFilterList.filter(d => d.Code == "WITHOUT")[0]:this.BalanceOptionsFilterList.filter(d => d.Code == "WITH")[0];
+                    this.SelectedBalanceOptionFilter = (queryFilterItem.FieldValue == "0" || queryFilterItem.FieldValue == "2")?this.BalanceOptionsFilterList.filter(d => d.Code == "ALL")[0]:this.BalanceOptionsFilterList.filter(d => d.Code == "WITH")[0];
                     this.UseBalanceFilter = queryFilterItem.FieldValue == "1" || queryFilterItem.FieldValue == "2";                            
                     break;
                  }
@@ -476,14 +475,17 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
         this.queryFilterItems.push(new QueryFilterItem("IncludeZeroBalance", this.UseBalanceFilter));
         this.queryFilterItems.push(new QueryFilterItem("SelectedBalance", this.SelectedBalanceOptionFilter.Code));
 
-        if (!this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code === RevenueExpenseFilterComponent.WITHOUT_OPTION) {
+        if (!this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code === RevenueExpenseFilterComponent.ALL_OPTION) {
             this.queryFilterItems.push(new QueryFilterItem("CardFilter", "0"));
         }
-        else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code === RevenueExpenseFilterComponent.WITHOUT_OPTION) {
+        else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code === RevenueExpenseFilterComponent.ALL_OPTION) {
             this.queryFilterItems.push(new QueryFilterItem("CardFilter", "2"));
         }
         else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code === RevenueExpenseFilterComponent.WITH_OPTION) {
             this.queryFilterItems.push(new QueryFilterItem("CardFilter", "1"));
+        }
+        else if (!this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code === RevenueExpenseFilterComponent.WITH_OPTION) {
+            this.queryFilterItems.push(new QueryFilterItem("CardFilter", "3"));
         }
 
 

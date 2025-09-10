@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "4c11a0b621658c2b02ebea8540e6d72a";
+		public const string HashString = "9e4b6d8f23c0a17db58ac4e279f6b031";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -2036,7 +2036,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOWithZeroBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.WithZeroBalance", DefaultText = "GLAccount with balance equal to zero",LocalDefaultText = @"BS64:Iteb15zXldecINeb16jXmNeZ16HXmdedINec15zXkCDXqteg15XXoteV16og16LXnSDXmdeq16jXlCAwIg==", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GeneralTextCode_AccountingGeneralORun = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Run", DefaultText = "Run",LocalDefaultText = @"BS64:IteU16jXpSI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+            TextCode GeneralTextCode_AccountingGeneralOAlsoWithZeroBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AlsoWithZeroBalance", DefaultText = "Also include accounts with 0 balance", LocalDefaultText = @"BS64:Iteb15zXldecINeS150g15vXqNeY15nXodeZ150g16LXnSDXmdeq16jXlCAwIg==", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode GeneralTextCode_AccountingGeneralORun = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Run", DefaultText = "Run",LocalDefaultText = @"BS64:IteU16jXpSI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GeneralTextCode_AccountingGeneralOFutureDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.FutureDate", DefaultText = "Future Date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og16LXqteZ15Mi", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 

@@ -378,54 +378,20 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                 )
                                ;
                             break;
+
                         case RevenueExpenseReportParam.CardFilterEnum.ShowCardsWithActivity_EvenBalanceItsZero:
-                            _QTrailReportFull =
-            ///join 
-            (from data in qAllMoneySideRevenueExpenseReportM
-             join chartf in QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy
-             on data.GLAccountId equals chartf.GLAccountId
-             select new RevenueExpenseReportM()
-             {
-                 ChartOfAcountType = chartf.ChartOfAccountTypeCode,
-                 ChartOfAcount1 = chartf.Level1Id,
-                 ChartOfAcount2 = chartf.Level2Id,
-                 ChartOfAcount3 = chartf.Level3Id,
-                 ChartOfAcount4 = chartf.Level4Id,
-                 ChartOfAcount5 = chartf.Level5Id,
-
-                 ChartOfAcountName1 = chartf.Level1Name,
-                 ChartOfAcountName2 = chartf.Level2Name,
-                 ChartOfAcountName3 = chartf.Level3Name,
-                 ChartOfAcountName4 = chartf.Level4Name,
-                 ChartOfAcountName5 = chartf.Level5Name,
-
-
-                 ChartOfAcountCode1 = chartf.Level1Code,
-                 ChartOfAcountCode2 = chartf.Level2Code,
-                 ChartOfAcountCode3 = chartf.Level3Code,
-                 ChartOfAcountCode4 = chartf.Level4Code,
-                 ChartOfAcountCode5 = chartf.Level5Code,
-
-                 GLAccountName = chartf.GLAccountName,
-                 GLAccountNumber = chartf.GLAccountNumber,
-                 GLAccountId = chartf.GLAccountId,
-                 GLAccountEnglish = chartf.GLAccountEnglish,
-
-                 ChartOfAccountId = chartf.ChartOfAccountId,
-
-
-				 ChartOfAcountName1English = chartf.Level1English,
-                 ChartOfAcountName2English = chartf.Level2English,
-                 ChartOfAcountName3English = chartf.Level3English,
-                 ChartOfAcountName4English = chartf.Level4English,
-                 ChartOfAcountName5English = chartf.Level5English,
-
-                 LocalCloseBalancePeriod1 = data.LocalCloseBalancePeriod1,
-                 LocalCloseBalancePeriod2 = data.LocalCloseBalancePeriod2,
-
-             });
+                            _QTrailReportFull = CreateFullTrailReportQuery(qAllMoneySideRevenueExpenseReportM, QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy);
                             break;
+
+
+                        case RevenueExpenseReportParam.CardFilterEnum.ShowCardsWithActivity_AndBalanceNotZero:
+                            _QTrailReportFull = CreateFullTrailReportQuery(qAllMoneySideRevenueExpenseReportM, QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy)
+                                    .Where(r => r.LocalCloseBalancePeriod1 != null)
+                                    .Where(r => r.LocalCloseBalancePeriod1 != 0m);
+
+                             break;
                         case RevenueExpenseReportParam.CardFilterEnum.ShowAllCard:
+
                         default:
                             //already Put all
                             break;
@@ -873,6 +839,52 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         }
 
 
+        private static IQueryable<RevenueExpenseReportM> CreateFullTrailReportQuery(IQueryable<RevenueExpenseReportM> qAllMoneySideRevenueExpenseReportM, IQueryable<ChartOfAccount5LevelM> QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy)
+        {
+            return (from data in qAllMoneySideRevenueExpenseReportM
+                    join chartf in QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy
+                    on data.GLAccountId equals chartf.GLAccountId
+                    select new RevenueExpenseReportM()
+                    {
+                        ChartOfAcountType = chartf.ChartOfAccountTypeCode,
+                        ChartOfAcount1 = chartf.Level1Id,
+                        ChartOfAcount2 = chartf.Level2Id,
+                        ChartOfAcount3 = chartf.Level3Id,
+                        ChartOfAcount4 = chartf.Level4Id,
+                        ChartOfAcount5 = chartf.Level5Id,
+
+                        ChartOfAcountName1 = chartf.Level1Name,
+                        ChartOfAcountName2 = chartf.Level2Name,
+                        ChartOfAcountName3 = chartf.Level3Name,
+                        ChartOfAcountName4 = chartf.Level4Name,
+                        ChartOfAcountName5 = chartf.Level5Name,
+
+
+                        ChartOfAcountCode1 = chartf.Level1Code,
+                        ChartOfAcountCode2 = chartf.Level2Code,
+                        ChartOfAcountCode3 = chartf.Level3Code,
+                        ChartOfAcountCode4 = chartf.Level4Code,
+                        ChartOfAcountCode5 = chartf.Level5Code,
+
+                        GLAccountName = chartf.GLAccountName,
+                        GLAccountNumber = chartf.GLAccountNumber,
+                        GLAccountId = chartf.GLAccountId,
+                        GLAccountEnglish = chartf.GLAccountEnglish,
+
+                        ChartOfAccountId = chartf.ChartOfAccountId,
+
+
+                        ChartOfAcountName1English = chartf.Level1English,
+                        ChartOfAcountName2English = chartf.Level2English,
+                        ChartOfAcountName3English = chartf.Level3English,
+                        ChartOfAcountName4English = chartf.Level4English,
+                        ChartOfAcountName5English = chartf.Level5English,
+
+                        LocalCloseBalancePeriod1 = data.LocalCloseBalancePeriod1,
+                        LocalCloseBalancePeriod2 = data.LocalCloseBalancePeriod2,
+                    });
+        }
+
 
 
 
@@ -989,7 +1001,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         {
             DoNotShowCardWithZeroBalance=0,//Default
             ShowCardsWithActivity_EvenBalanceItsZero=1,
-            ShowAllCard=2
+            ShowAllCard=2,
+            ShowCardsWithActivity_AndBalanceNotZero = 3
         }
     }
      
