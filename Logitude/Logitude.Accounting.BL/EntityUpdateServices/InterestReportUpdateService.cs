@@ -78,7 +78,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                             if (statusCode != HttpStatusCode.Accepted)
                             {
-                                //throw new ApplicationException($"GLAccount {gLAccountPM.InternalNumber} {responseText}");
+                                throw new ApplicationException($"GLAccount {gLAccountPM.InternalNumber} {responseText}");
                             }
 
                             entityPM.OpenBalance = gLAccountPM.InterestOpenBalance;
