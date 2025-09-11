@@ -82,6 +82,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             }
 
                             entityPM.OpenBalance = gLAccountPM.InterestOpenBalance;
+                            if (gLAccountPM.ActiveForInterest)
+                            {
+                                entityPM.IsForeignCurrency = true;
+                                entityPM.ReportCurrencyId = gLAccountPM.CurrencyId;
+                            }
                         }
                     }
                 }

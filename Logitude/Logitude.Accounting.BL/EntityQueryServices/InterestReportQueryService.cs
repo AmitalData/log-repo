@@ -26,10 +26,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return interestReportRepository.GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(tenant, glaccountId);
         }
 
-        public decimal? GetInterestReportOpenBalance(DateTime inputDate, int tenant, string glAccountId)
+        public decimal? GetInterestReportOpenBalance(DateTime inputDate, int tenant, string glAccountId,bool isForeignCurrency)
         {
             var interestReportRepository = new InterestReportRepository(tenant);
-            return interestReportRepository.GetInterestReportOpenBalance(inputDate, glAccountId, tenant);
+            return interestReportRepository.GetInterestReportOpenBalance(inputDate, glAccountId, tenant, isForeignCurrency);
         }
 
 
@@ -192,7 +192,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         InterestReportStatusLocalName = a.InterestReportStatuse == null ? null : a.InterestReportStatuse.LocalName,
                         GLAccountDisplayNumber = a.GLAccount == null ? null : a.GLAccount.DisplayNumber,
                         ARInvoiceNumber = a.ARInvoice == null ? null : a.ARInvoice.InvoiceNumber,
-                        GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName
+                        GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName,
+                        ReportCurrencyCode = a.Currency != null ? a.Currency.Code : null,
 
                     });
 
@@ -312,6 +313,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName,
 
                        GLAccountMinimumInterest = a.GLAccount.MinimumInterestInvoiceBilling,
+
+                        ReportCurrencyCode = a.Currency != null ? a.Currency.Code : null,
+
 
                     }).ToList();
         }
