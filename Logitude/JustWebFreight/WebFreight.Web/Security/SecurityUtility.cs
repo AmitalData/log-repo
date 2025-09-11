@@ -1342,10 +1342,10 @@ namespace WebFreight.Web.Security
             return false;
 
         }
-        public static bool isUserAdmin(string email, int tenant)
+        public static bool isUserAdmin(string email, int tenant, bool getFromCache = false)
         {
             UserRepository userRepository = new UserRepository(tenant);
-            User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, email, tenant, false);
+            User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, email, tenant, getFromCache);
             if (loggedUser != null && loggedUser.UserRoles != null)
             {
                 if (loggedUser.UserRoles.Contains("Administrator"))

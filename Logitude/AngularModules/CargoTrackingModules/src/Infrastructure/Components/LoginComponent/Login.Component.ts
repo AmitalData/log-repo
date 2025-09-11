@@ -209,8 +209,6 @@ export class LoginComponent implements OnInit {
 
             this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
                 this.ShowbusyIndicator = false;
-                sessionStorage.setItem("IsAdmin", userData.IsAdmin);
-                SessionInfo.IsAdmin=userData.IsAdmin;
                 if (userData) {
                     this.FillSessionInfoData(userData);
                     this.RouteToMainPage();

@@ -34,9 +34,8 @@ import { QueryColumnPM } from 'src/CargoTracking/Services/Others/QueryColumnPM';
 import { ApiQueryFilters } from 'src/CargoTracking/Services/Others/ApiQueryFilters';
 import { LogitudeGridExportToExcelService } from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
 import { TenantManagementService } from 'src/CargoTracking/Services/Others/TenantManagementService';
-import { TenantManagementPM } from 'src/CargoTracking/Services/Others/TenantManagementPM';
-import { DateTimeFormatPipe } from 'src/Infrastructure/Pipes/DateTimeFormatPipe';
-import { NgZone } from '@angular/core';
+import { UserExtendedService } from '../../../../Services/Others/UserExtendedService';
+
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -144,6 +143,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         public sharedService: SharedService,
         private logitudeGridExportToExcelService: LogitudeGridExportToExcelService,
         private tenantManagementService: TenantManagementService,
+        private userExtendedService : UserExtendedService,
+
     ) {
         
         this.InitComponent();
@@ -154,16 +155,24 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         });
     }
 
-    private GetCompanyLoginsFromCache() {
+private GetCompanyLoginsFromCache() {
 
-        SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
-        SessionInfo.IsAdmin = JSON.parse(sessionStorage.getItem("IsAdmin"));
+    SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
+    this.userExtendedService.IsUserAdmin().subscribe(
+        (res: any) => {
+            const isAdmin = res === true;
 
-        if (!SessionInfo.IsAdmin) {
-            this.GetInvitedCustomers();
+            if (!isAdmin) {
+                this.GetInvitedCustomers();
+            }
+
+        },
+        (err) => {
+            console.error("Failed to check admin status", err);
         }
-       
-    }
+    );
+}
+    
 
     GetInvitedCustomers() {
 
@@ -873,7 +882,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     private async InitiateShipmentDataSource() {
         let filter = await this.filterWithAllCustomersWhenCustomersNotSelected();
 
-        this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, filter, this);
+        this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, filter, this, this.userExtendedService);
         let s = SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0];
         if (SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0].IsUser === true) {
             this.ShipmentsDataSource.GetShipmentsCustomers(this.tenant);
