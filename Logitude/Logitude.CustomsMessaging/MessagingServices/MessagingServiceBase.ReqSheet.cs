@@ -924,7 +924,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 					var sFTPDeleteTempFilesService = new SFTPDeleteTempFilesService(tenant, ftpHost: $"{ftpHostIP}@{ftpUserName}:{ftpPort}/{ftpFolderName}");
 					SFTPService sftpService = new SFTPService(sFTPDeleteTempFilesService);
-					sftpService.LogonWithKey(ftpHostIP, ftpUserName, ftpPrivateKeyPath, ftpPort, ftpFolderName, out p_status, out p_message);
+					sftpService.LogonWithKey(ftpHostIP, ftpUserName, ftpPrivateKeyPath, ftpPort, ftpFolderName, out p_status, out p_message, ftpPassword);
 
 					if (p_status == "0")
 					{
