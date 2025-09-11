@@ -1349,13 +1349,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             //Writing RESHIMON DATE and there is no HATARA DATE  ==> INDICATORS="G"
-            
-            if (_DirtyDeclarationPM.PaymentDate.HasValue && !_DirtyDeclarationPM.HatraDate.HasValue && _DirtyDeclarationPM.IsAmendment == false)
+
+            if (_DirtyDeclarationPM.PaymentDate.HasValue && !_DirtyDeclarationPM.HatraDate.HasValue)
             {
                 DeclarationRepository dr = new DeclarationRepository(_DirtyDeclarationPM.Tenant);
                 var hasHatara = dr.HasHataraByCustomFile(_DirtyDeclarationPM.CustomFileNo, _DirtyDeclarationPM.Tenant);
-                if(!hasHatara)
+                if (!hasHatara)
+                {
                     _CCUFILEMPM.INDICATORS = "G";
+                }
+                else
+                {
+                    _CCUFILEMPM.INDICATORS = "";
+                }
             }
             //Deleting RESHIMON DATE ==> INDICATORS=""
             if (!_DirtyDeclarationPM.PaymentDate.HasValue && _CCUFILEMPM.RESHMDATE.HasValue)
