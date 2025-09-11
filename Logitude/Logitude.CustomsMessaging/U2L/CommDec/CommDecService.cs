@@ -2644,6 +2644,15 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 if (string.IsNullOrWhiteSpace(invoiceQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.QUANTITY_TYPE))
                 {
                     invoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.QUANTITY_TYPE);
+                    if (invoiceQuantityType != null &&
+                        invoiceQuantityType == "KGM" &&
+                        string.IsNullOrWhiteSpace(invoice.ITEM_WEIGHT))
+                    {
+                        if (decimal.TryParse(invoiceItem.QUANTITY_STS, out decimal decimalValue))
+                        {
+                            SupplierInvoiceItemPM.InvoiceQuantity = decimalValue;
+                        }
+                    }
                 }
                 if (!string.IsNullOrWhiteSpace(invoiceQuantityType))
                 {

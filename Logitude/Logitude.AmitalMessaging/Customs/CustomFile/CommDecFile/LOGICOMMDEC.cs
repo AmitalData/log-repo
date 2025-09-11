@@ -869,6 +869,8 @@
 
         private string tRADE_AGREEMENTField;
 
+        private string iTEM_WEIGHTField;
+
         /// <remarks/>
         public string INVOICELINENO
         {
@@ -1115,6 +1117,18 @@
             set
             {
                 this.tRADE_AGREEMENTField = value;
+            }
+        }
+
+        public string ITEM_WEIGHT
+        {
+            get
+            {
+                return this.iTEM_WEIGHTField;
+            }
+            set
+            {
+                this.iTEM_WEIGHTField = value;
             }
         }
     }
