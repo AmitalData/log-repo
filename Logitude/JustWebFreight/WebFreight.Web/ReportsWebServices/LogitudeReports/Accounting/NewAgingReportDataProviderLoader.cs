@@ -74,7 +74,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     var command = connection.CreateCommand();
                     command.CommandText = "usp_NewAgingReport";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
-                   
+                    command.CommandTimeout = 300;
 
 
                     command.Parameters.AddWithValue("@AccountID", GetFilterValue<string>( "CustomerId"));
