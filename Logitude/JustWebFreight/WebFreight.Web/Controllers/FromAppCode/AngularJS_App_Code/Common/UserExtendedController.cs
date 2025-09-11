@@ -873,7 +873,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                 int tenant = authToken.Tenant;
                 string email = authToken.Email;
 
-                bool isAdmin = SecurityUtility.isUserAdmin(email, tenant, true);
+                bool isAdmin = SecurityUtility.IsUserAdminOrCustomerCare(email, tenant, true);
               
                 return Request.CreateResponse(HttpStatusCode.OK, isAdmin);
             }
