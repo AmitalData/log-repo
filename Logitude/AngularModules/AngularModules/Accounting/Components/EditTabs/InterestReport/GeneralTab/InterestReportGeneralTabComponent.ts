@@ -93,6 +93,8 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
         this.UIProperties.SetEnabled("InterestCalculationDate", "InterestReport", false);
         this.UIProperties.SetEnabled("GLAccountInterestCreditLimit", "InterestReport", false);
         this.UIProperties.SetEnabled("CreditAllotmentPercentage", "InterestReport", false);
+        this.UIProperties.SetEnabled("ReportCurrencyCode", "InterestReport", false);
+
     }
      public DataSource = {
         pageSize: 50,
@@ -146,7 +148,20 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
             }
         })
     }
-
+    get IsForeignCurrency(){
+        if (this.EntityPM != null) {
+            return this.EntityPM.IsForeignCurrency;
+        }
+        else
+            return false;
+    }
+    get ReportCurrencyCode(){
+        if (this.EntityPM != null) {
+            return this.EntityPM.ReportCurrencyCode;
+        }
+        else
+            return null;
+    }
     get CustomerId() {
         if (this.EntityPM != null) {
             return this.EntityPM.CustomerId;

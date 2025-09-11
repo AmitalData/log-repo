@@ -425,7 +425,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         private decimal? GetInterestReportOpenBalance()
         {
             InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-            return interestReportQueryService.GetInterestReportOpenBalance(interestReportPM.InterestCalculationDate, tenant, interestReportPM.GLAccountId);
+            return interestReportQueryService.GetInterestReportOpenBalance(interestReportPM.InterestCalculationDate, tenant, interestReportPM.GLAccountId,interestReportPM.IsForeignCurrency);
 
         }
 
