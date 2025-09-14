@@ -2452,7 +2452,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MapUserToContact(user, newContact);
 
                 newContact.Email = newContact.Email.ToLower();
-                Contact adminContact = contactsRepository.GetSingleContactByEmail("admin@fnarsoft.com", 0);
+                Contact adminContact = contactsRepository.GetSingleContactByEmail("support@amital.co.il", 0);
                 if (adminContact != null)
                 {
                     newContact.Signature = adminContact.Signature;

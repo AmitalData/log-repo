@@ -270,7 +270,7 @@ return 0;
                 {
                     ObjectTableId = item.Id,
                     AlternativeUserTenant = 0,
-                    AlternativeUserId = "1-1" ///in oracle  //"admin@fnarsoft.com"=1-1
+                    AlternativeUserId = "1-1" ///in oracle  //"support@amital.co.il"=1-1
 
                 });
             }
