@@ -997,12 +997,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 			
 			return result;
 
-			}
-			else
-			{
-				throw new Exception("The file data was not found!");
-			}
-			return serverjobID;
+			
 
 		}
 
