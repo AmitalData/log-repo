@@ -4144,6 +4144,20 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;Accounting.General.O.AllAccountsOption&quot;"
+      DefaultText="&quot;All Accounts&quot;"
+      LocalDefaultTextBack_up="&quot;כל הכרטיסים&quot;"
+      LocalDefaultText="&quot;BS64:Iteb15wg15TXm9eo15jXmdeh15nXnSI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.WithTransactionsOption&quot;"
+      DefaultText="&quot;Only accounts with transactions in the period&quot;"
+      LocalDefaultTextBack_up="&quot;רק כרטיסים עם תנועות בתקופה&quot;"
+      LocalDefaultText="&quot;BS64:Iteo16cg15vXqNeY15nXodeZ150g16LXnSDXqteg15XXoteV16og15HXqten15XXpNeUIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;Accounting.General.O.Run&quot;"
       DefaultText="&quot;Run&quot;"
       LocalDefaultTextBack_up="&quot;הרץ&quot;"

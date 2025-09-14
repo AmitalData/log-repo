@@ -320,8 +320,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     case RevenueExpenseReportParam.CardFilterEnum.DoNotShowCardWithZeroBalance:
                         _QTrailReportFull =
                             _QTrailReportFull
-                            .Where(r => r.LocalCloseBalancePeriod1 != null)
-                            .Where(r => r.LocalCloseBalancePeriod1 != 0m);
+                            .Where(r => r.LocalCloseBalancePeriod1 != null && r.LocalCloseBalancePeriod1 != 0m);
                         break;
 
 
@@ -332,8 +331,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                     case RevenueExpenseReportParam.CardFilterEnum.ShowCardsWithActivity_AndBalanceNotZero:
                         _QTrailReportFull = CreateFullTrailReportQuery(qAllMoneySideRevenueExpenseReportM, QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy)
-                            .Where(r => r.LocalCloseBalancePeriod1 != null)
-                            .Where(r => r.LocalCloseBalancePeriod1 != 0m);
+                            .Where(r => r.LocalCloseBalancePeriod1 != null && r.LocalCloseBalancePeriod1 != 0m);
 
                         break;
 

@@ -3,6 +3,7 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -386,8 +387,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                         case RevenueExpenseReportParam.CardFilterEnum.ShowCardsWithActivity_AndBalanceNotZero:
                             _QTrailReportFull = CreateFullTrailReportQuery(qAllMoneySideRevenueExpenseReportM, QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy)
-                                    .Where(r => r.LocalCloseBalancePeriod1 != null)
-                                    .Where(r => r.LocalCloseBalancePeriod1 != 0m);
+                                    .Where(r => (r.LocalCloseBalancePeriod1 != null && r.LocalCloseBalancePeriod1 != 0m)
+                                                ||
+                                                (r.LocalCloseBalancePeriod2 != null && r.LocalCloseBalancePeriod2 != 0m));
 
                              break;
                         case RevenueExpenseReportParam.CardFilterEnum.ShowAllCard:

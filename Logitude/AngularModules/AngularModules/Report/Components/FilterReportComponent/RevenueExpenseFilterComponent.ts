@@ -81,8 +81,12 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     public BalanceOptionsFilterList: CodeNameClass[];
     private BuildFilterList() {
         this.BalanceOptionsFilterList = [];
-        this.BalanceOptionsFilterList.push(new CodeNameClass(RevenueExpenseFilterComponent.ALL_OPTION, "All Accounts", "כל הכרטיסים"));
-        this.BalanceOptionsFilterList.push(new CodeNameClass(RevenueExpenseFilterComponent.WITH_OPTION, "Only accounts with transactions in the period", "רק כרטיסים עם תנועות בתקופה"));
+        this.BalanceOptionsFilterList.push(new CodeNameClass(RevenueExpenseFilterComponent.ALL_OPTION,  
+            TextCodeTranslator.Translate("Accounting.General.O.AllAccountsOption")));
+
+        this.BalanceOptionsFilterList.push(new CodeNameClass(RevenueExpenseFilterComponent.WITH_OPTION,  
+            TextCodeTranslator.Translate("Accounting.General.O.WithTransactionsOption")
+));
         this.SelectedBalanceOptionFilter = this.BalanceOptionsFilterList.filter(d => d.Code === RevenueExpenseFilterComponent.ALL_OPTION)[0];
     }
 
