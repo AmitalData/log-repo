@@ -471,6 +471,8 @@ using WebFreight.Web.Helpers;
 
             InterestReportDP.ReportCurrencyCode = currencyPM?.Code;
             InterestReportDP.ReportCurrencyName = currencyPM?.EnglishName ;
+            InterestReportDP.ReportCurrencyLocalName = currencyPM?.LocalName;
+
         }
 
 

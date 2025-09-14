@@ -35,6 +35,8 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public List<InterestReportFlatLine> InterestReportFlatLineList { get; set; }
 
         public string ReportCurrencyName { get; set; }
+        public string ReportCurrencyLocalName { get; set; }
+
         public string ReportCurrencyCode { get; set; }
 
 
