@@ -186,6 +186,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 { CargoTrackingMilestoneValues.DeliveryOut, "DTC"},
                 { CargoTrackingMilestoneValues.Delivered, "POD"},
                 { CargoTrackingMilestoneValues.Invoiced, "INV"},
+                { CargoTrackingMilestoneValues.DeliveryArrived,"DTA" },
+
+
+
             };           
         }
 
