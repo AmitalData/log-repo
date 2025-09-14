@@ -20379,6 +20379,36 @@
       LocalDefaultText="&quot;BS64:IteU16jXpSDXnteZ15nXk9eZ16oi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLTransactionReport.O.GLAccountList&quot;"
+      DefaultText="&quot;GLAccount List&quot;"
+      LocalDefaultText="&quot;רשימת כרטיסים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLTransactionReport.O.RequiredFieldsForNew&quot;"
+      DefaultText="&quot;One of the following filters is required: GLAccount /GLAccounts range/Chartofaccount/ Chart Of Accounts Type / Category / Salesman&quot;"
+      LocalDefaultText="&quot;חובה לתחום אחת מהאפשרויות הבאות : כרטיס/טווח כרטיסים/קבוצת מאזן/סוג קבוצת מאזן / קטגוריה/איש מכירות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLTransactionReport.O.FromGLAccount&quot;"
+      DefaultText="&quot;From GLAccount&quot;"
+      LocalDefaultText="&quot;מכרטיס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLTransactionReport.O.ToGLAccount&quot;"
+      DefaultText="&quot;To GLAccount &quot;"
+      LocalDefaultText="&quot;עד כרטיס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLTransactionReport.O.GLAccountsRange&quot;"
+      DefaultText="&quot;GLAccount range by Display Number&quot;"
+      LocalDefaultText="&quot;טווח כרטיסים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

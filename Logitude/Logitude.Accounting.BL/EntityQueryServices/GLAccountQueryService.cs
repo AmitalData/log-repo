@@ -324,7 +324,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
         public IQueryable<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType, string chartOfAccountsId,
-    bool IncludeChildAccounts, string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, bool useSecurityLevel, string collectorId)
+    bool IncludeChildAccounts, string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, bool useSecurityLevel, string collectorId,List<string> listGLAccounts,string fromGLAccountDisplayNumber , string toGLAccountDisplayNumber)
         {
             int? securityLevel = GetSecurityLevel(useSecurityLevel, tenant);
             // List<String> allIdAccounts = new List<string>() { GLAccountId };
@@ -332,7 +332,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             if (!String.IsNullOrWhiteSpace(cat1) || !String.IsNullOrWhiteSpace(cat2) || !String.IsNullOrWhiteSpace(cat3) || !String.IsNullOrWhiteSpace(cat4)
                 || !String.IsNullOrWhiteSpace(cat5) || !String.IsNullOrWhiteSpace(gLAccountType) || !String.IsNullOrWhiteSpace(chartOfAccountsId)
                 || !String.IsNullOrWhiteSpace(ChartOfAccountsTypeCode)
-                || !String.IsNullOrWhiteSpace(salesmanId) || !String.IsNullOrWhiteSpace(collectorId)
+                || !String.IsNullOrWhiteSpace(salesmanId) || !String.IsNullOrWhiteSpace(collectorId) || (listGLAccounts != null && listGLAccounts.Count > 0 || (!String.IsNullOrWhiteSpace(fromGLAccountDisplayNumber)  && !String.IsNullOrWhiteSpace(toGLAccountDisplayNumber)))
                 )
             {
 
@@ -340,7 +340,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     IAccountingContext context = AccountingContext.GetContext(tenant);
                     GLAccountRepository repository = new GLAccountRepository(context);
                                       
-                   allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, collectorId, securityLevel);
+                   allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, collectorId, securityLevel, listGLAccounts, fromGLAccountDisplayNumber, toGLAccountDisplayNumber);
                     if (IncludeChildAccounts && allIdAccounts != null && allIdAccounts.ToList().Count > 0)
                     {
                         IQueryable<String> ChildAccounts = repository.GetChildAccountsQ(allIdAccounts, tenant, securityLevel)

@@ -42,12 +42,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     !(myLedgerTransactionBalanceFilter.IncludeChildAccounts || myLedgerTransactionBalanceFilter.IncludeRelatedCurrenciesAccount);
                 var myLedgerTransactionBalanceService = new LedgerTransactionBalanceService(_AccountingContext, myLedgerTransactionBalanceFilter, this._Param.IsReconciled);
                 myLedgerTransactionBalanceService.Run();
-                //if (this._Param.IsReconciled.HasValue /*&& _Param.IsReconciled==false*/)
-                //{
-                //    bool IsReconciled =this._Param.IsReconciled.GetValueOrDefault();
-                //    myLedgerTransactionBalanceService.Response.MyLedgerTransactionList = myLedgerTransactionBalanceService.Response.MyLedgerTransactionList
-                //        .Where(r => r.IsReconciled == IsReconciled).ToList();
-                //}
                 myLedgerTransactionBalanceService.Response.GLAccountId = currGLAccountId;
                 CardIndexs.Add(myLedgerTransactionBalanceService.Response);
 
@@ -60,18 +54,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             bool includeControlAccount = false;
 
             var myGLAccountQueryService = new GLAccountQueryService(_AccountingContext);
-            //                    var hashsetallIdAccounts = myGLAccountQueryService.GetAllIdAccountsCat(_Param.Tenant, _Param.GLAccountId, _Param.Category1Id, _Param.Category2Id,
-            //                        _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.IncludeChildAccounts);
            
-
-
-                var hashsetallIdAccounts = myGLAccountQueryService.GetAllIdAccountsTypeCat(_Param.Tenant, _Param.GLAccountId, _Param.Category1Id, _Param.Category2Id,
+            string input = _Param.ListGLAccounts;
+            List<string> listGLAccounts = input?.Split(',').Select(s => s.Trim()).ToList();
+            var hashsetallIdAccounts = myGLAccountQueryService.GetAllIdAccountsTypeCat(_Param.Tenant, _Param.GLAccountId, _Param.Category1Id, _Param.Category2Id,
                     _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.AccountTypeCode, _Param.ChartOfAccountsId, _Param.IncludeChildAccounts,
                     _Param.ChartOfAccountsTypeCode,
                     _Param.SalesmanId,
-                    includeControlAccount,_Param.UseSecurityLevel,_Param.CollectorId);
+                    includeControlAccount,_Param.UseSecurityLevel,_Param.CollectorId, listGLAccounts,_Param.FromGLAccountDisplayNumber,_Param.ToGLAccountDisplayNumber);
                 var hash = new HashSet<string>(hashsetallIdAccounts);
-                _allIdAccounts = new List<string>(hash);// hashsetallIdAccounts);
+                _allIdAccounts = new List<string>(hash);
            
             
             if (_Param.IncludeRelatedCurrenciesAccount)
@@ -93,7 +85,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         private void GLAccountFilterIsMust()
         {
-            if (string.IsNullOrWhiteSpace(this._Param.Category1Id + this._Param.Category2Id + this._Param.Category3Id + this._Param.Category4Id + this._Param.Category5Id + this._Param.ChartOfAccountsId + this._Param.AccountTypeCode + this._Param.GLAccountId + _Param.ChartOfAccountsTypeCode + _Param.SalesmanId))
+            if (string.IsNullOrWhiteSpace(this._Param.Category1Id + this._Param.Category2Id + this._Param.Category3Id + this._Param.Category4Id + this._Param.Category5Id + this._Param.ChartOfAccountsId + this._Param.AccountTypeCode + this._Param.GLAccountId + _Param.ChartOfAccountsTypeCode + _Param.SalesmanId + _Param.ListGLAccounts + _Param.FromGLAccountDisplayNumber +_Param.ToGLAccountDisplayNumber))
             {
 
                 throw new Exception("GLAccountFilterIsMust");
@@ -122,7 +114,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public string CollectorId { get; set; }
         public bool UseSecurityLevel { get; set; }
 
-        //public bool IncludeRelatedCurrenciesAccount { get; set; }
-
+        public string ListGLAccounts { get; set; }
+        public string ToGLAccountDisplayNumber { get; set; }
+        public string FromGLAccountDisplayNumber { get; set; }
     }
 }

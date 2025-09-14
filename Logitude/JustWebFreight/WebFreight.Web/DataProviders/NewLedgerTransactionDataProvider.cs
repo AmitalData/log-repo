@@ -5,41 +5,23 @@ using System.Web;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class LedgerTransactionsDataProvider : BaseDataProvider
+    public class NewLedgerTransactionDataProvider : BaseDataProvider
     {
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
-        public string AccountNumber { get; set; }
-        public string AccountEnglishName { get; set; }
-        public string AccountLocalName { get; set; }
-        public bool IsAccountMulticurrency { get; set; }
-        public string AccountCurrencySign { get; set; }
-        public string AccountCurrencyCode { get; set; }
-        public string AccountReconcileMethod { get; set; }
-
         public string PrintedByUser { get; set; }
         public string UserEnglishName { get; set; }
         public DateTime PrintDate { get; set; }
         public string TenantCurrencyCode { get; set; }
         public string TenantCurrencySign { get; set; }
 
-        public decimal LocalOpenBalance { get; set; }
-        public decimal LocalClosedBalance { get; set; }
-        public decimal ForeignOpenBalance { get; set; }
-        public decimal ForeignClosedBalance { get; set; }
-        public decimal LastCumulativeOpenAmount { get; set; }
-
-        public List<ReportLedgerTransaction> Transactions { get; set; }
-
+        public List<NewGLAccountList> NewGLAccountList { get; set; }
        
-        public List<GLAccountBalanceList> LocalOpenBalanceList { get; set; }
-        public List<GLAccountBalanceList> LocalClosedBalanceList { get; set; }
-        public decimal StartTotalOpenAmount { get; set; }
 
 
     }
 
-    public class ReportLedgerTransaction
+    public class NewReportLedgerTransaction
     {
         public string AccountEnglishName { get; set; }
         public string AccountLocalName { get; set; }
@@ -85,7 +67,6 @@ namespace WebFreight.Web.DataProviders
         public string OppositeAccountLocalName { get; set; }
         public string OppositeAccountEnglishName { get; set; }
 
-        // foreign fields
         public string GLAccountRecoMethodCode { get; set; }
         public string TenantCurrencySign { get; set; }
         public string Source { get; set; }
@@ -104,7 +85,6 @@ namespace WebFreight.Web.DataProviders
 
         public bool IsExternalEntity { get; set; }
 
-        // calculated fields
         public decimal OriginalAmount
         {
             get
@@ -113,7 +93,7 @@ namespace WebFreight.Web.DataProviders
                 if (!string.IsNullOrEmpty(GLAccountRecoMethodCode))
                 {
 
-                    if (GLAccountRecoMethodCode == "0")  // 0-local currency
+                    if (GLAccountRecoMethodCode == "0")  
                     {
 
                         if (LocalAmountCredit == 0)
@@ -126,7 +106,7 @@ namespace WebFreight.Web.DataProviders
                         }
 
                     }
-                    else if (GLAccountRecoMethodCode == "1") // 1-foreign currency
+                    else if (GLAccountRecoMethodCode == "1") 
                     {
 
                         if (ForeignAmountCredit == 0)
@@ -186,7 +166,7 @@ namespace WebFreight.Web.DataProviders
             }
         }
     }
-    public class GLAccountBalanceList
+    public class NewGLAccountBalanceList
     {
         public string CurrencyId { get; set; }
         public decimal? BalanceForeign { get; set; }
@@ -219,4 +199,32 @@ namespace WebFreight.Web.DataProviders
 
       
     }
+
+
+    public class NewGLAccountList
+    {
+        public string Id { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+        public string AccountNumber { get; set; }
+        public string AccountEnglishName { get; set; }
+        public string AccountLocalName { get; set; }
+        public bool IsAccountMulticurrency { get; set; }
+        public string AccountCurrencySign { get; set; }
+        public string AccountCurrencyCode { get; set; }
+        public string AccountReconcileMethod { get; set; }
+         public decimal LocalOpenBalance { get; set; }
+        public decimal LocalClosedBalance { get; set; }
+        public decimal ForeignOpenBalance { get; set; }
+        public decimal ForeignClosedBalance { get; set; }
+        public decimal LastCumulativeOpenAmount { get; set; }
+        public decimal StartTotalOpenAmount { get; set; }
+        public List<NewReportLedgerTransaction> Transactions { get; set; }
+
+        public List<NewGLAccountBalanceList> LocalOpenBalanceList { get; set; }
+        public List<NewGLAccountBalanceList> LocalClosedBalanceList { get; set; }
+
+    }
+
+
 }
