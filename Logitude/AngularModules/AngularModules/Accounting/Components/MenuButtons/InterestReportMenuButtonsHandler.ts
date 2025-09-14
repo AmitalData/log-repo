@@ -368,6 +368,7 @@ public GetARInvoicePMWithLine(): ARInvoicePM {
         _ARInvoiceLinePM.VatPercentage = this.GetVatTypePercentage(_ARInvoiceLinePM.VatTypeId);
         _ARInvoiceLinePM.VatTypeName = this.VatTypeName;
         _ARInvoiceLinePM.LineActionCode = this.chargesTypeList.IsExpense ? '2' : '1';
+        
         return _ARInvoiceLinePM;
     }
 
@@ -597,10 +598,16 @@ public VatTypeName:string;
             }
 
             else {
-                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == this._ARInvoicePM.InvoiceCurrencyId)[0];
+               
+                const lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == this._ARInvoicePM.InvoiceCurrencyId)[0];
                 if (lastRate != null) {
-                    myRate = lastRate.Rate;
-                    myRateDate = lastRate.ValueDate;
+                    const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId  : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === this._ARInvoicePM.InvoiceCurrencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
+                    const customRate = exchangeRateId 
+                    ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
+                    : null;
+
+                myRate = customRate ?? lastRate.Rate;
+                myRateDate = lastRate.ValueDate;
                 }
             }
         }
@@ -608,6 +615,9 @@ public VatTypeName:string;
         this._ARInvoicePM.InvoiceCurrencyExchangeRate = myRate;
         this._ARInvoicePM.ProfitCurrencyExchangeRate = myRate;
         this._ARInvoicePM.ExchangeRateDate = myRateDate;
+        this._ARInvoicePM.InvoiceLines[0].ForiegnExchangeRate = myRate;
+        this._ARInvoicePM.InvoiceLines[0].ExchangeRateDate = myRateDate;
+
     }
     public cardList: CardList;
     GetBillToCard(BillToId:string) {

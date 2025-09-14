@@ -34,7 +34,11 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public decimal? TotalAmountWithPostponedCheques { get; set; }
         public List<InterestReportFlatLine> InterestReportFlatLineList { get; set; }
 
-        public string ReportCurrency { get; set; }
+        public string ReportCurrencyName { get; set; }
+        public string ReportCurrencyLocalName { get; set; }
+
+        public string ReportCurrencyCode { get; set; }
+
 
     }
 

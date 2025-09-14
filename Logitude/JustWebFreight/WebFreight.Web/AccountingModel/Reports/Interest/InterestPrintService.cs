@@ -364,7 +364,7 @@ using WebFreight.Web.Helpers;
                 rv.Date = interestReportPM.InterestCalculationDate;
                 rv.Notes = TranslateTextsClass.Translate("Accounting.General.O.OpenAmount", interestReportPM.Tenant);
                 rv.LocalAmount = interestReportPM.OpenBalance ?? 0m;
-               
+                rv.AmountInCurrencyReport = interestReportPM.OpenBalance ?? 0m;
                 rv.TotalToDate = rv.LocalAmount;
                 rv.TotalLocalInPeriod = rv.LocalAmount;
 
@@ -461,7 +461,10 @@ using WebFreight.Web.Helpers;
             CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
             CurrencyPM currencyPM = currencyQuery.GetSinglePM(currencyId, tenant);
 
-            InterestReportDP.ReportCurrency = currencyPM?.Code +" "+ currencyPM?.LocalName ;
+            InterestReportDP.ReportCurrencyCode = currencyPM?.Code;
+            InterestReportDP.ReportCurrencyName = currencyPM?.EnglishName ;
+            InterestReportDP.ReportCurrencyLocalName = currencyPM?.LocalName;
+
         }
 
 
