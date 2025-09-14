@@ -47,9 +47,12 @@ using Logitude.Customs.Data.EntityMapping;
  
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 {
-
+    internal static class UnfMarkers
+    {
+        public const string NotFound = "UNF_NOT_FOUND";
+    }
     //Logitude.Customs.BL.Messaging.U2L.ImportDeclaration.DeclarationUpsertService 
-	public class DeclarationUpsertService : UnifreightGenericService
+    public class DeclarationUpsertService : UnifreightGenericService
 	{
 		private LOGICUSTFILE _LOGICUSTFILE;
 		public LogitudeCustomsFile _AmitalCustomsFile;
@@ -1044,8 +1047,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					myDeclarationUpdateService.LastMileServiceType = _AmitalCustomsFile.LastMileServiceType;
 					myDeclarationUpdateService.MAWB = _AmitalCustomsFile.MAWB;
 					myDeclarationUpdateService.Update(_MyDeclarationPM, true);
-				}
-				catch (DbEntityValidationException ex)
+
+                    var sharedLog = LogMessagingUtil.Instance.ToString();
+                    if (!string.IsNullOrEmpty(sharedLog) && sharedLog.Contains(UnfMarkers.NotFound))
+                    {
+                        MyGenericResponseObj.ExtStatus = UnfMarkers.NotFound;       
+                    }
+                }
+                catch (DbEntityValidationException ex)
 				{
 					var FormatedException = ExceptionFormatUtil.GetFormated(ex);
 					AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
