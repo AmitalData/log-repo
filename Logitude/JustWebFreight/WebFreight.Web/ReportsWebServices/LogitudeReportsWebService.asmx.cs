@@ -10549,6 +10549,11 @@ namespace WebFreight.Web.ReportsWebServices
                         revenueExpenseReportParam.MyCardFilter = CardFilterEnum.ShowAllCard;
                         break;
                     }
+                case "3":
+                    {
+                        revenueExpenseReportParam.MyCardFilter = CardFilterEnum.ShowCardsWithActivity_AndBalanceNotZero;
+                        break;
+                    }
 
             }
             totalData.ForDate = toDate;
