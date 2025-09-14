@@ -167,10 +167,10 @@ export class ARInvoiceMenuButtonsHandler {
                         }
 
                         case "AutoCredit": {
-                            if (this.EntityPM.ARInvoiceTypeCode == 'IT') {
+                            /*if (this.EntityPM.ARInvoiceTypeCode == 'IT') {
                                 myButtonIsDisabled = true;
                             }
-                            else {
+                            else {*/
                                 if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                                     myButtonIsDisabled = true;
                                 }
@@ -190,7 +190,7 @@ export class ARInvoiceMenuButtonsHandler {
                                         }
 
                                         else {
-                                            if (this.EntityPM.StatusCode == "PP" || this.EntityPM.StatusCode == "PD" || this.EntityPM.StatusCode == "AD") {
+                                            if (this.EntityPM.StatusCode == "PP" || this.EntityPM.StatusCode == "PD" || this.EntityPM.StatusCode == "AD" || this.EntityPM.StatusCode == "DR") {
                                                 isEnabled = true;
                                             }
                                         }
@@ -209,7 +209,7 @@ export class ARInvoiceMenuButtonsHandler {
                                         myButtonIsDisabled = true;
                                     }
                                 }
-                            }
+                            //}
                             // myButtonIsDisabled = false;  
                             break;
                         }
@@ -1306,7 +1306,10 @@ export class ARInvoiceMenuButtonsHandler {
     AutoCreditDate: Date = null;
     AutoCreditManualNumber: string = null;
     AutoCreditClicked() {
-
+        if (this.EntityPM.StatusCode == "DR"){
+            this.CancelDraftClicked();
+            return;
+        }
         if (this.EntityPM.InvoicePayments.length > 0) {
             var messageWindow = new MessageWindow();
             messageWindow.Show(TextCodeTranslator.Translate("ARInvoice.S.AutoCreditingMsg1"));
