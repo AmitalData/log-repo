@@ -2646,9 +2646,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     invoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.QUANTITY_TYPE);
                     if (invoiceQuantityType != null &&
                         invoiceQuantityType == "KGM" &&
-                        string.IsNullOrWhiteSpace(invoice.ITEM_WEIGHT))
+                        string.IsNullOrWhiteSpace(invoiceItem.ITEM_WEIGHT))
                     {
-                        if (decimal.TryParse(invoiceItem.QUANTITY_STS, out decimal decimalValue))
+                        if (decimal.TryParse(invoiceItem.ITEM_WEIGHT, out decimal decimalValue))
                         {
                             SupplierInvoiceItemPM.InvoiceQuantity = decimalValue;
                         }
