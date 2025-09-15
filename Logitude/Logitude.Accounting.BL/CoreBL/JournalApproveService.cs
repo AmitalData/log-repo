@@ -1,57 +1,49 @@
-﻿using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
+using Logitude.Accounting.BL.CoreBL.Reports.Aging;
+using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.Utils;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.CoreBL;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
+using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
+using Newtonsoft.Json;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Logitude.Server.Tools.QueueService;
-using Logitude.Accounting.BL.CloseTables;
-using static Simplog.Server.Infrastructure.DbContextBase;
 using System.Transactions;
-using Simplog.Data.Helpers;
-using System.Data;
-using System.Data.SqlClient;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
-using Simplog.Data.CommonDataModel.Repositories;
-using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
-using Logitude.Server.Tools;
 using System.Web;
-using Logitude.Accounting.BL.CoreBL.Reports.Aging;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.InvoiceModel.CoreBL;
-using Logitude.BL.InvoiceModel.Tools.EntityService;
-using Logitude.Accounting.BL.DataContract;
-using Logitude.Accounting.BL.Utils;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.CommonDataModel;
-using Newtonsoft.Json;
-using Microsoft.Practices.Unity;
-using System.Collections;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.CRM.Data.EntityPOCOs;
-using Logitude.Server.Tools.Utils;
-using CsvHelper.Configuration;
-using Logitude.BL.CommonDataModel.EntityQueries;
+using static Simplog.Server.Infrastructure.DbContextBase;
 
 
 namespace Logitude.Accounting.BL.CoreBL
@@ -1293,6 +1285,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             messageProperties.Add(QP_JournalTenant, entityPM.Tenant.ToString());
             messageProperties.Add(QP_JournalId, entityPM.Id);
+
             try
             {
                 queueService.Send(messageProperties, entityPM.Tenant);
@@ -1341,6 +1334,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     myDbQueueService.Complete();
                     isSubmitApprove = true;
+                    MatchPaymentCommandTransactions(qpJournalId,tenant);
                 }
                 else
                 {
@@ -1786,7 +1780,18 @@ namespace Logitude.Accounting.BL.CoreBL
             return tGLAccountAgingDataType;
         }
 
+        private static void MatchPaymentCommandTransactions(string journalId, int tenant)
+        {
 
+            try
+            {
+                         
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError(ex.Message + " ,"+journalId);
+            }
+        }
         public class JournalApproveWorker
         {
             private static DateTime _NextDueDoneAt = DateTime.MinValue;
