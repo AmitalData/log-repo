@@ -321,6 +321,11 @@ export class JournalPM {
     public set IsExternalEntity(newValue: boolean) { if (this.isExternalEntity != newValue) { this.isExternalEntity = newValue; this.MarkAsDirty("IsExternalEntity"); } }
        
 	 
+    private invoicesXml: string;
+    public get InvoicesXml() { return this.invoicesXml; }
+    public set InvoicesXml(newValue: string) { if (this.invoicesXml != newValue) { this.invoicesXml = newValue; this.MarkAsDirty("InvoicesXml"); } }
+       
+	 
 
     public OldEntityPM: JournalPM;
 		
