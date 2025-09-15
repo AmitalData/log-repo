@@ -627,7 +627,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
       
     }
 
-    RunButtonClicked() {
+    RunButtonClicked(isInteractive: boolean) {
         this.SetUIProperties();
 
 
@@ -640,6 +640,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
             myReportFliter.NumberOfPage = 1;
             myReportFliter.ProcessType = "GenerateReport";
             myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            myReportFliter.IsInteractive = isInteractive;
 
             this.RunReportEvent.emit(myReportFliter);
 
