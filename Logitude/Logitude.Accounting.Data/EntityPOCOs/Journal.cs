@@ -108,6 +108,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string CurrencyId { get; set; }
         [Column("SecurityLevel")]
 	    public int? SecurityLevel { get; set; }
+        [Column("InvoicesXml")]
+	    public string InvoicesXml { get; set; }
     }
 }
 	 

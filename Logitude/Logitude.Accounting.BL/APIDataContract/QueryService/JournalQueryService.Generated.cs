@@ -20,8 +20,9 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
+using System.Text.Json;
 
- namespace Logitude.Accounting.BL.APIDataContract.ApiV1
+namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 { 
    public partial class JournalQueryService
    {
@@ -209,9 +210,13 @@ using Logitude.Accounting.Data;
 						JournalLineQueryService JournalLineService4 = new JournalLineQueryService(Tenant);
 						temp.JournalLines = JournalLineService4.JournalLineCustomDataMappingAndValidatin(MyEntity,MyEntity.JournalLines,Tenant,ComputingPartnerName);
 					}
+                    if (MyEntity.invoices != null && MyEntity.invoices.Any())
+                    {
+                       temp.InvoicesXml = JsonSerializer.Serialize(MyEntity.invoices);
+                    }
 
-								 
-					temp.JournalNumber = MyEntity.JournalNumber;					   
+
+                temp.JournalNumber = MyEntity.JournalNumber;			
 					   return temp;
 		    }
             catch (Exception ex)
