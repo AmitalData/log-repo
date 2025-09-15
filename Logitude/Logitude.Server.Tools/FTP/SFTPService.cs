@@ -330,7 +330,41 @@ namespace Logitude.Server.Tools.FTP
                 }
             }
         }
+		public void IsFileExist(string p_filename, out string p_status, out string p_message)
+		{
+			p_status = "";
+			p_message = "";
 
+			try
+			{
+				sftp.ListDirectory();
+
+				DirEntryList _dirList = sftp.DirList;
+				foreach (DirEntry dirEntry in _dirList)
+				{
+					if (!string.IsNullOrEmpty(dirEntry.FileName))
+					{
+						if (string.Equals(dirEntry.FileName, p_filename, StringComparison.OrdinalIgnoreCase))
+						{
+							p_status = "IN_PROGRESS";
+							p_message = "File Exists";
+							break;
+						}
+					}
+				}
+                if (string.IsNullOrEmpty(p_status))
+                {
+                    p_status = "SENT";
+                    p_message = "File Not Exists";
+				}
+			}
+			catch (Exception ex)
+			{
+				p_status = "FAILD";
+				p_message = "IsFileExist Exeception" + ex.Message.ToString();
+			}
+
+		}
 
         private void CreateFoldersIfNotExist(nsoftware.IPWorksSSH.Sftp sftp)
         {

@@ -672,8 +672,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 //string MessageOut="";
                 if (dCAServerUploadStatusFromWebForm == null)
                 {
+                    int tenant = _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant;
+                    FeatureQuery featureQuery = new FeatureQuery(new FeatureRepository(CommonDataContext.GetContext(tenant)));
+                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
 
-
+                    bool isSendSFTPEnabled = features.Features.Any(x => string.Equals(x.Code, FeatureCode_IsSendSFTP, StringComparison.OrdinalIgnoreCase));
+                    if (isSendSFTPEnabled)
+                    {
+						UnifreightQueueOutStatus = UploadOrCheckSFTP(tenant, null, dCAServerUploadResponse.FileName, out MessageOut, false);
+					}
+                    else 
+                    {
                     var dcaManager = new DcaManager(this.CustomsSetting.DCAServiceAddress //  @"http://itzik7:5050/Unifreight/DCAService/basic"
                          , this.CustomsSetting.DCAPartnerVault  ///"IIG"
                         , _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant);
@@ -682,19 +691,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Id, dCAServerUploadResponse.FileName,
                         out UnifreightQueueOutStatus,
                         out MessageOut);
+					}
+
 
                     //                All UnifreightQueueOutStatusEnum are   NOT_FOUND,FAILD,IN_PROGRESS,SENT
                     //UnifreightQueueOutStatus  =SENT
 
                     LogMessagingUtil.Instance.AppendLine("UnifreightQueueOutStatus =" + UnifreightQueueOutStatus);
 
-					int tenant = _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant;
-					FeatureQuery featureQuery = new FeatureQuery(new FeatureRepository(CommonDataContext.GetContext(tenant)));
-					var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
 
-					bool isSendSFTPEnabled = features.Features.Any(x => string.Equals(x.Code, FeatureCode_IsSendSFTP, StringComparison.OrdinalIgnoreCase));
 
-					if (String.IsNullOrWhiteSpace(UnifreightQueueOutStatus)&& !isSendSFTPEnabled)
+					if (String.IsNullOrWhiteSpace(UnifreightQueueOutStatus))
                     {
                         LogMessagingUtil.Instance.AppendLine("UnifreightQueueOutStatus==null ; error " + MessageOut);
                         throw new Exception("UnifreightQueueOutStatus==null ; error  " + MessageOut);
@@ -843,7 +850,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 				if (isSendSFTPEnabled)
 				{
 					var bytsArry = Convert.FromBase64String(fileContentsBASE64);
-					serverJobID = SendFileToSFTP(tenant, bytsArry, dCAOutFileName, out MessageOut);
+					serverJobID = UploadOrCheckSFTP(tenant, bytsArry, dCAOutFileName, out MessageOut, true);
 				}
 				else
                 {
@@ -901,24 +908,23 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             }
         }
-		private string SendFileToSFTP(int tenant,byte[] filedata, string fileName, out string MessageOut)
+		private string UploadOrCheckSFTP(int tenant, byte[] filedata, string fileName, out string messageOut, bool isSend)
 		{			
 			var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
 			CustomsPartnerFtpPM pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, "Customs", "Customs", CustomsPartnerFtpDetails.TypeCode_Out);
 			
-            string serverjobID = string.Empty;
-			MessageOut = string.Empty;
-			if (filedata != null)
-			{
-				if (pmCustomsPartnerFtp.MyFtpDetail != null)
-				{
+            string result = string.Empty;
+			messageOut = string.Empty;
+			
+			if (pmCustomsPartnerFtp?.MyFtpDetail == null)
+				throw new FTPServiceException("No FTP details configured for tenant " + tenant);
 				
 					string ftpHostIP = pmCustomsPartnerFtp.MyFtpDetail.Host;
 					string ftpUserName = pmCustomsPartnerFtp.MyFtpDetail.UserName;
 					string ftpPassword = pmCustomsPartnerFtp.MyFtpDetail.Password;
 					string ftpPrivateKeyPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "PRK.PPK");
 					string ftpFolderName = pmCustomsPartnerFtp.MyFtpDetail.Folder;
-                    string ftpPort = string.IsNullOrWhiteSpace(ftpPassword)? "2023": "20022";
+			        string ftpPort = string.IsNullOrWhiteSpace(ftpPassword) ? "2023" : "20022";
 					string p_message = "";
 					string p_status = "";
 
@@ -926,16 +932,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
 					SFTPService sftpService = new SFTPService(sFTPDeleteTempFilesService);
 					sftpService.LogonWithKey(ftpHostIP, ftpUserName, ftpPrivateKeyPath, ftpPort, ftpFolderName, out p_status, out p_message, ftpPassword);
 
-					if (p_status == "0")
-					{
-						try
-						{
+			if (p_status != "0")
+				throw new FTPServiceException("SFTP Login failed: " + p_message);
+
+			if (isSend)
+						   {
+				if (filedata == null)
+					throw new ArgumentNullException(nameof(filedata), "The file data was not found!");
+
 
 							sftpService.Upload(fileName, filedata, false, false, out p_status, out p_message);
-							MessageOut = p_message; 
-						}
-						finally
-						{
+				messageOut = p_message;
 
 							try
 							{
@@ -947,13 +954,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 								}
 
 							}
-							catch //(Exception)
+				            catch
 							{
-
-								///throw;
 							}
 
-						}
 
 						if (p_status == "-1")
 						{
@@ -962,23 +966,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
 						}
 						else
 						{
-                            serverjobID = p_status;
+								result = p_status;
 							Debug.WriteLine("sftpService.Upload-success");
 						}
 					}
 					else
-						throw new FTPServiceException("SFTP Login failed: " + p_message);
-
-				}
-
-
-			}
-			else
-			{
-				throw new Exception("The file data was not found!");
-			}
-			return serverjobID;
-
+						   {
+							 sftpService.IsFileExist(fileName, out p_status, out p_message);
+							result = p_status;
+						}
+			return result;
 		}
 
 		private bool CustomsCommandAnalyzeResponseEndStep(TRequestParams requestParams, TResponseData responseData, CommStatusEnum stepStatusEnum)
