@@ -34,7 +34,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 		IInvoiceContext  context;
 		//ARInvoiceService service; 
 		
-		ARInvoiceQuery query; 
+		ARInvoiceQuery query;
 
         public ARInvoiceQueryService(int tenant)
         {
@@ -563,11 +563,11 @@ using Simplog.Data.CommonDataModel.Repositories;
 
 				                        }
 
-                    //if (!IsUpdate)
-                    //{
-                    //    temp.InternalNotes = MyEntity.InternalNotes;
+                    if (!IsUpdate && MyEntity.IsUNFGeneralInvoice == true) // Manages both the UNF General Invoice and the UNF General Credit Note
+                {
+                    temp.InternalNotes = MyEntity.InternalNotes;
 
-                    //                    }
+                                        }
 
                     if (!IsUpdate)
                     {
