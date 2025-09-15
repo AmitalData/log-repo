@@ -24,7 +24,6 @@ import { DocumentsFilingExtendedPMService } from '../../../Common/Services/Exten
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { ConsilidationInvoiceDomainService } from '../../Services/ConsilidationInvoiceDomainService';
 import { ShipmentDomainService } from '../../../Shipment/Services/ShipmentDomainService';
-import { escapeLeadingUnderscores } from 'typescript';
 import { interval, Subscription } from 'rxjs';
 import { switchMap, takeWhile } from 'rxjs/operators';
 import { TraceEventExtendedPMService } from 'Infrastructure/Services/ExtendedPMs/TraceEventExtendedPMService';
@@ -42,7 +41,6 @@ export class ARInvoiceMenuButtonsHandler {
     public myEntityPMService: ARInvoicePMService = new ARInvoicePMService()
     public statusCode: string;  
     public approvedDate: Date;  
-    //private RelativeRateDate: String; 
     
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -167,10 +165,6 @@ export class ARInvoiceMenuButtonsHandler {
                         }
 
                         case "AutoCredit": {
-                            /*if (this.EntityPM.ARInvoiceTypeCode == 'IT') {
-                                myButtonIsDisabled = true;
-                            }
-                            else {*/
                                 if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                                     myButtonIsDisabled = true;
                                 }
@@ -209,8 +203,6 @@ export class ARInvoiceMenuButtonsHandler {
                                         myButtonIsDisabled = true;
                                     }
                                 }
-                            //}
-                            // myButtonIsDisabled = false;  
                             break;
                         }
 
@@ -219,10 +211,6 @@ export class ARInvoiceMenuButtonsHandler {
 
                             if (this.EntityPM.Id != null) {
                                 myButtonIsDisabled = false;
-
-                                if (!this.EntityPM.IsConsolidationInvoice) {
-                                    //this.PrintInvoiceButtonLoaded();
-                                }
                             }
 
                             break;
@@ -496,7 +484,6 @@ export class ARInvoiceMenuButtonsHandler {
 
     SolvedManual() {
         this.EntityPM.SATTransferStatusCode = "SM";
-        //this.EntityPM.TransmissionError = ""; // or ng if
         this.entityArgs.EditComponent.SaveChanges("Solved Manual");
     }
 
@@ -561,13 +548,6 @@ export class ARInvoiceMenuButtonsHandler {
                     if (this.isRunningBatchTaskExecution) {
 
                         this.isRunningBatchTaskExecution = false;
-
-                        //if (this.EntityPM.BatchTaskExecutionId) {
-
-                        //    this.CurrentSession.StartBusyIndicator("Updating Shipments. It may take a few minutes...");
-
-                        //    this.CheckBatchTaskExecution(this.EntityPM.BatchTaskExecutionId);
-                        //}
                     }
                 }
 
@@ -668,13 +648,6 @@ export class ARInvoiceMenuButtonsHandler {
                 }
 
                 var helper = new CreditLimitHelper(this.EntityPM);
-
-                //var isCardBlockingNewInvoiceCreation: boolean = false;
-                //if (helper.HasCreditLimitFeature && helper.IsCreditLimitActivated) {
-                //    if (this.EntityPM.BillToIsCreditLimitEnabled && this.EntityPM.BillToBlockNewInvoiceCreation) {
-                //        isCardBlockingNewInvoiceCreation = true;
-                //    }
-                //}
 
                 if (this.EntityPM.BillToBlockNewInvoiceCreation) {
 
@@ -951,7 +924,6 @@ export class ARInvoiceMenuButtonsHandler {
 
         if (this.EntityPM.IsConsolidationInvoice) {
             this.SaveConsolidation(msg);
-            //this.isRunningBatchTaskExecution = true;
         }
 
         else
@@ -984,7 +956,6 @@ export class ARInvoiceMenuButtonsHandler {
            
            
         }
-        // this.InitializePrinting(false);
     }
     private subscription: Subscription | null = null;
 
@@ -1274,7 +1245,6 @@ export class ARInvoiceMenuButtonsHandler {
 
                 if (this.EntityPM.IsConsolidationInvoice) {
                     this.SaveConsolidation("Voiding...");
-                    //this.isRunningBatchTaskExecution = true;
                 }
 
                 else {
@@ -1422,11 +1392,11 @@ export class ARInvoiceMenuButtonsHandler {
         AutoCreditInvoice.BillToAddressId = this.EntityPM.BillToAddressId;
         AutoCreditInvoice.PartnerId = this.EntityPM.PartnerId;
         AutoCreditInvoice.BillToId = this.EntityPM.BillToId;
-        AutoCreditInvoice.InternalNotes = note.replace("%InvoiceNumber", this.EntityPM.InvoiceNumber);// this.EntityPM.InternalNotes;
+        AutoCreditInvoice.InternalNotes = note.replace("%InvoiceNumber", this.EntityPM.InvoiceNumber);
         AutoCreditInvoice.InvoiceCurrencyExchangeRate = this.EntityPM.InvoiceCurrencyExchangeRate;
         AutoCreditInvoice.InvoiceCurrencyId = this.EntityPM.InvoiceCurrencyId;
         AutoCreditInvoice.InvoiceCurrencyCode = this.EntityPM.InvoiceCurrencyCode;
-        AutoCreditInvoice.PrintNotes = note.replace("%InvoiceNumber", this.EntityPM.InvoiceNumber);// this.EntityPM.PrintNotes;
+        AutoCreditInvoice.PrintNotes = note.replace("%InvoiceNumber", this.EntityPM.InvoiceNumber);
         AutoCreditInvoice.PaymentTermId = this.EntityPM.PaymentTermId;
         AutoCreditInvoice.PrepaidCollectId = this.EntityPM.PrepaidCollectId;
         AutoCreditInvoice.LocalCurrencyId = this.EntityPM.LocalCurrencyId;
