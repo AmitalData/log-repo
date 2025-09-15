@@ -850,7 +850,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 				if (isSendSFTPEnabled)
 				{
 					var bytsArry = Convert.FromBase64String(fileContentsBASE64);
-					serverJobID = UploadOrCheckSFTP(tenant, bytsArry, dCAOutFileName, out MessageOut,true);
+					serverJobID = UploadOrCheckSFTP(tenant, bytsArry, dCAOutFileName, out MessageOut, true);
 				}
 				else
                 {
@@ -908,23 +908,23 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             }
         }
-		private string UploadOrCheckSFTP(int tenant,byte[] filedata, string fileName, out string MessageOut,bool IsSend)
+		private string UploadOrCheckSFTP(int tenant, byte[] filedata, string fileName, out string messageOut, bool isSend)
 		{			
 			var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
 			CustomsPartnerFtpPM pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, "Customs", "Customs", CustomsPartnerFtpDetails.TypeCode_Out);
 			
             string result = string.Empty;
-			MessageOut = string.Empty;
+			messageOut = string.Empty;
 			
-				if (pmCustomsPartnerFtp.MyFtpDetail != null)
-				{
+			if (pmCustomsPartnerFtp?.MyFtpDetail == null)
+				throw new FTPServiceException("No FTP details configured for tenant " + tenant);
 				
 					string ftpHostIP = pmCustomsPartnerFtp.MyFtpDetail.Host;
 					string ftpUserName = pmCustomsPartnerFtp.MyFtpDetail.UserName;
 					string ftpPassword = pmCustomsPartnerFtp.MyFtpDetail.Password;
 					string ftpPrivateKeyPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "PRK.PPK");
 					string ftpFolderName = pmCustomsPartnerFtp.MyFtpDetail.Folder;
-                    string ftpPort = string.IsNullOrWhiteSpace(ftpPassword)? "2023": "20022";
+			        string ftpPort = string.IsNullOrWhiteSpace(ftpPassword) ? "2023" : "20022";
 					string p_message = "";
 					string p_status = "";
 
@@ -932,21 +932,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
 					SFTPService sftpService = new SFTPService(sFTPDeleteTempFilesService);
 					sftpService.LogonWithKey(ftpHostIP, ftpUserName, ftpPrivateKeyPath, ftpPort, ftpFolderName, out p_status, out p_message, ftpPassword);
 
-					if (p_status == "0")
-					{
-                        if (IsSend)
-                        {
-						   if (filedata != null)
-						   {
+			if (p_status != "0")
+				throw new FTPServiceException("SFTP Login failed: " + p_message);
 
-						try
-						{
+			if (isSend)
+						   {
+				if (filedata == null)
+					throw new ArgumentNullException(nameof(filedata), "The file data was not found!");
+
 
 							sftpService.Upload(fileName, filedata, false, false, out p_status, out p_message);
-							MessageOut = p_message; 
-						}
-						finally
-						{
+				messageOut = p_message;
 
 							try
 							{
@@ -958,13 +954,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 								}
 
 							}
-							catch //(Exception)
+				            catch
 							{
-
-								///throw;
 							}
 
-						}
 
 						if (p_status == "-1")
 						{
@@ -979,26 +972,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 					}
 					else
 						   {
-						   	throw new Exception("The file data was not found!");
-						   }
-					    }
-                        else
-                        {
 							 sftpService.IsFileExist(fileName, out p_status, out p_message);
 							result = p_status;
 						}
-					}
-					else
-						throw new FTPServiceException("SFTP Login failed: " + p_message);
-
-				}
-
-
-			
 			return result;
-
-			
-
 		}
 
 		private bool CustomsCommandAnalyzeResponseEndStep(TRequestParams requestParams, TResponseData responseData, CommStatusEnum stepStatusEnum)
