@@ -581,7 +581,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public IQueryable<ARPaymentList> GetIQueryableEntityList(IQueryable<ARPayment> iQueryable)
         {
+            bool isEntityFramework = !(iQueryable.Provider is System.Linq.EnumerableQuery);
+
             IQueryable<ARPaymentList> query2 = from entity in iQueryable.Include("ARAccount").Include("AccountingPaymentMethod").Include("BillToCard").Include("CreatedByUser.Contact").Include("DebitAccount").Include("LocalCurrency").Include("PaymentCurrency").Include("Status").Include("TransferStatus").Include("SATTransferStatus").Include("Branch").Include("BankAccountLite")
+
+                                               let bankAccountView = isEntityFramework ? 
+                                               repository.context.BankAccountView.Where(b => b.BankAccountId == entity.BankAccountId).FirstOrDefault(): null
+
                                                select new ARPaymentList()
                                                {
                                                    ARAccountId = entity.ARAccountId,
@@ -629,7 +635,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    Account = entity.Account,
                                                    ValueDate = entity.ValueDate,
                                                    ChequeOrPaymentRef = entity.ChequeOrPaymentRef,
-                                                   Bank = entity.Bank,
+                                                   Bank = entity.AccountingPaymentMethod != null && entity.AccountingPaymentMethod.Code == "BT" && bankAccountView != null ? bankAccountView.LocalName : entity.Bank,
                                                    BankBranch = entity.BankBranch,
                                                    AmountInProfitCurrency = entity.AmountInProfitCurrency,
                                                    ProfitCurrencyExchangeRate = entity.ProfitCurrencyExchangeRate,
