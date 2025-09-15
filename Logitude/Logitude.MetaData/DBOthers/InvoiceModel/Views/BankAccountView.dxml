@@ -1,4 +1,4 @@
-<View DBType="Main" Name="ControlForInvoiceLinesDataView" Schema="dbo" Module="Invoice">
+<View DBType="Main" Name="BankAccountView" Schema="dbo" Module="Invoice">
   <SqlScript>
     <![CDATA[
 CREATE VIEW [dbo].[BankAccountView]
