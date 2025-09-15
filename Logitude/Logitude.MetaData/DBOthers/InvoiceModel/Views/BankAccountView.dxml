@@ -1,7 +1,7 @@
 <View DBType="Main" Name="BankAccountView" Schema="dbo" Module="Invoice">
   <SqlScript>
     <![CDATA[
-CREATE VIEW [dbo].[BankAccountView]
+CREATE VIEW [dbo].[BankAccountViews]
 AS
 
 SELECT id as BankAccountId, Tenant, LocalName
