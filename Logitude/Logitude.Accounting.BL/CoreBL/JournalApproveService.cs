@@ -1785,7 +1785,16 @@ namespace Logitude.Accounting.BL.CoreBL
 
             try
             {
-                         
+                var  accountingContext = AccountingContext.GetContext(tenant);
+                var journalQueryService = new JournalQueryService(accountingContext);
+                JournalPM journalPM = journalQueryService.GetSingle(journalId, true, false);
+                if(journalPM != null && journalPM.InvoicesXml !=null && journalPM.InvoicesXml.Any())
+                {
+                    List<APIDataContract.ApiV1.Invoice> invoices = JsonConvert.DeserializeObject<List <APIDataContract.ApiV1.Invoice>>(journalPM.InvoicesXml);
+                    
+                   
+                }
+
             }
             catch (Exception ex)
             {
