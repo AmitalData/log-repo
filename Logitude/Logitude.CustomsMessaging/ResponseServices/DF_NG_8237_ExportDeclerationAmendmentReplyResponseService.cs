@@ -1396,7 +1396,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             try
             {
                 if (isAutoSendByErrorDiamondDec)
-                {
+                {  requestParamsData.ignoreConcurrentKiller=true; 
                     requestParamsData.InterfaceTypeCode = requestParamsData.IsTransShipment ? "8235T" : "8235";
                     requestParamsData.FutureSendDateTime = DateTime.Now.AddMinutes(1);
                     SBQMessageService.CreateSheetSBQMessage<AmendmentRequestParams>(requestParamsData , false, requestParamsData.FutureSendDateTime );
