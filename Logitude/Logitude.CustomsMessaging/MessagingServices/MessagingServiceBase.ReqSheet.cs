@@ -991,54 +991,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
 		}
 
 
-	
-		public async Task<byte[]> EncryptPrivateKeyAsync(string privateKey)
-		{
-			var keyVaultUrl =ConfigurationManager.AppSettings["keyVaultUrl"];
-			var secretName =  ConfigurationManager.AppSettings["secretName"];
-			var clientId =  ConfigurationManager.AppSettings["clientIdVault"];
-			var tenantId =  ConfigurationManager.AppSettings["tenantIdVault"];
-			var clientSecret =  ConfigurationManager.AppSettings["clientSecretVault"];
-
-
-			var credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
-			var secretClient = new SecretClient(new Uri(keyVaultUrl), credential);
-
-			// שליפה של מפתח AES מ-Key Vault
-			KeyVaultSecret aesKeySecret = await secretClient.GetSecretAsync(secretName).ConfigureAwait(false);
-			byte[] aesKey = Convert.FromBase64String(aesKeySecret.Value);
-
-
-			byte[] encryptedBytes;
-			using (Aes aesAlg = Aes.Create())
-			{
-				aesAlg.Key = aesKey;
-				aesAlg.GenerateIV(); // יוצרת IV חדש לכל הצפנה
-
-				ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-
-				byte[] plainBytes = Encoding.UTF8.GetBytes(privateKey);
-				
-
-				using (var ms = new MemoryStream())
-				{
-					// שמירת ה-IV בהתחלה, כדי שנוכל לפענח בהמשך
-					ms.Write(aesAlg.IV, 0, aesAlg.IV.Length);
-
-					using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
-					{
-						cs.Write(plainBytes, 0, plainBytes.Length);
-						cs.FlushFinalBlock();
-					}
-
-					encryptedBytes = ms.ToArray();
-				}
-			}
-
-			return encryptedBytes;
-		}
-
-
 		public  async Task<string> DecryptFromKeyVaultAsync(byte[] encryptedBytes)
 		{
 			if (encryptedBytes == null || encryptedBytes.Length == 0)
