@@ -84,6 +84,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PrivateKey"
+    Type="varbinary"
+     Size="-1">
+  <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+  Name="Port"
+  Type="varchar"
+  Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

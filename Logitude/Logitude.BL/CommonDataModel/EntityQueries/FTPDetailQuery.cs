@@ -44,7 +44,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       UpdatedByUserId = d.UpdatedByUserId,
                                       InActive = d.InActive,
                                       UseSFTP = d.UseSFTP,
-                                  }).FirstOrDefault();
+                                      PrivateKey = d.PrivateKey,
+                                      Port = d.Port,
+								  }).FirstOrDefault();
             
             return detail;
         }
@@ -67,7 +69,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              UpdatedByUserId = d.UpdatedByUserId,
                                                              InActive = d.InActive,
                                                              UseSFTP = d.UseSFTP,
-                                                         });
+                                                             PrivateKey = d.PrivateKey,
+                                                             Port = d.Port,
+														 });
 
             return result;
         }
@@ -89,7 +93,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    UpdatedByUserId = d.UpdatedByUserId,
                                                    InActive = d.InActive,
                                                    UseSFTP = d.UseSFTP,
-                                               };
+                                                   PrivateKey = d.PrivateKey,
+                                                   Port = d.Port,
+											   };
             return result;
         }
     }

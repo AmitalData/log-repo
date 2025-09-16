@@ -363,10 +363,10 @@ namespace Logitude.Server.Tools.FTP
 				p_status = "FAILD";
 				p_message = "IsFileExist Exeception" + ex.Message.ToString();
 			}
-
+			
 		}
 
-        private void CreateFoldersIfNotExist(nsoftware.IPWorksSSH.Sftp sftp)
+		private void CreateFoldersIfNotExist(nsoftware.IPWorksSSH.Sftp sftp)
         {
             if (string.IsNullOrEmpty(sftp.RemotePath)) return;
             var folders = sftp.RemotePath.Split('/');
