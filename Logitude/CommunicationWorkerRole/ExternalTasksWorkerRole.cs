@@ -30,7 +30,7 @@ namespace CommunicationWorkerRole
         string Token = "";
         public override async void AsyncRun()
         {
-            Token = Login("admin@fnarsoft.com","1");
+            Token = Login("support@amital.co.il", "1");
             while (IsRunning)
             {
                 if (!General.IsUpdating())

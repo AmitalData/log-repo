@@ -2449,7 +2449,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MapUserToContact(user, newContact);
 
                 newContact.Email = newContact.Email.ToLower();
-                Contact adminContact = contactsRepository.GetSingleContactByEmailMultiDB("admin@fnarsoft.com", 0, contextTenant: tenant);
+                Contact adminContact = contactsRepository.GetSingleContactByEmail("support@amital.co.il", 0, contextTenant: tenant);
                 if (adminContact != null)
                 {
                     newContact.Signature = adminContact.Signature;
