@@ -1787,7 +1787,6 @@ namespace WebFreight.Web
                     }
 
                     user.HtmlVersion = GetHtmlVersion();
-                    user.IsAdmin = SecurityUtility.isUserAdmin(email, tenant) || customerCare;
                 }
 
                 int executionTime = (int)((DateTime.Now.Ticks - DateBeforePostLoginData.Ticks) / TimeSpan.TicksPerMillisecond);
@@ -3172,7 +3171,7 @@ namespace WebFreight.Web
             else HttpContext.Current.Response.Headers.Add("ServerTime", executionTime.ToString());
 
         }
-
+        
 
 
         //   [OperationContract]
