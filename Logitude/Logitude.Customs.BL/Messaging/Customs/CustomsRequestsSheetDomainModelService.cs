@@ -138,7 +138,8 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 SuppressSendIIGMessages(requestParams);
 
                 CheckMessageInContainer(requestParams.InterfaceTypeCode, requestParams.MainInterfaceCode);
-                ConcurrentKiller(requestParams, reqSheetDetails);//Leave the campground cleaner than the way you found it.” found it.
+                
+                if (!requestParams.ignoreConcurrentKiller) ConcurrentKiller(requestParams, reqSheetDetails);//Leave the campground cleaner than the way you found it.” found it.
 
                 this.RequestParams = requestParams;            
                 InitMessageDefinition();
