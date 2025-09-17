@@ -378,6 +378,14 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
             this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, isFieldRequired);
         }
+        if(this.VatNumber === SessionLocator.AccountingSettingPM.VatNumber  && InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM)){
+            this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
+
+        }
+        else{
+            this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, false);
+
+        }
     }
     SetUIProperties_ExchangeRate() {
         var isFieldtEnabled = false;
@@ -507,7 +515,14 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                                     }
                                 });
                             }
+                            if(this.VatNumber === SessionLocator.AccountingSettingPM.VatNumber  && InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM)){
+                                this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
 
+                            }
+                            if(this.VatNumber !== SessionLocator.AccountingSettingPM.VatNumber || !InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM)){
+                                this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, false);
+                                
+                            }
                             if (!AppTool.IsNullOrEmpty(this.cardList.InvoiceCurrencyId)) {
                                 this.InvoiceCurrencyId = this.cardList.InvoiceCurrencyId;
                             }

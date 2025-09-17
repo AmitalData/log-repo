@@ -641,7 +641,7 @@ export class ARInvoiceMenuButtonsHandler {
         if (!FeatureLocator.HasEntityPermessions("ARInvoice", "UPDT", true)) {
             this.StopFlags();
         }
-
+          
         else if(!AppTool.IsNullOrEmpty(this.EntityPM.Id)){
             this.CurrentSession.StartBusyIndicatorLoading();
             this.myEntityPMService.get(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
@@ -948,7 +948,14 @@ export class ARInvoiceMenuButtonsHandler {
         this.EntityPM.SetReTransfer = false;
         this.EntityPM.SetCancelDraft = false;
         this.EntityPM.SetReSendQBO = false;
-
+        if(!AppTool.IsNullOrEmpty(this.EntityPM.ConfirmationNumber) && AppTool.IsNullOrEmpty(this.EntityPM.ConfirmationNumberStatus) ){
+            this.EntityPM.ConfirmationNumberStatus="7";
+        }
+        else{
+            if(this.EntityPM.VatNumber === SessionLocator.AccountingSettingPM.VatNumber){
+                
+            }
+        }
         if (this.EntityPM.IsConsolidationInvoice) {
             this.SaveConsolidation(msg);
             //this.isRunningBatchTaskExecution = true;
