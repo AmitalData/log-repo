@@ -621,7 +621,10 @@ namespace WebFreight.Web
 
             HttpCookie cookie1 = new HttpCookie(FormsAuthentication.FormsCookieName, "");
             cookie1.Expires = DateTime.Now.AddYears(-1);
-            HttpContext.Current.Response.Cookies.Add(cookie1);
+			cookie1.HttpOnly = true;               
+			cookie1.Secure = true;                 
+			cookie1.SameSite = SameSiteMode.Lax; 
+			HttpContext.Current.Response.Cookies.Add(cookie1);
             HttpContext.Current.Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
             HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             HttpContext.Current.Response.Cache.SetNoStore();
@@ -1679,7 +1682,9 @@ namespace WebFreight.Web
 
                                 string encryptedTicket = FormsAuthentication.Encrypt(ticket);
                                 HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-                                authCookie.SameSite = SameSiteMode.None;
+								authCookie.HttpOnly = true;          
+								authCookie.Secure = true;								
+								authCookie.SameSite = SameSiteMode.None;
                                 HttpContext.Current.Response.Cookies.Add(authCookie);
 
                             }
