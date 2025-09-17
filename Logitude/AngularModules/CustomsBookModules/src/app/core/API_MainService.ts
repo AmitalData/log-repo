@@ -29,6 +29,11 @@ export class API_MainService extends BaseService {
 		// this.ApiURL = this.BaseURL + 'api/ShipmentDomain';
 	}
 
+	GetCustomsBookLastUpdateDateByTenant(tenant: number) {
+		const url = `${this._apiUrl}CustomsSettingExtended/GetCustomsBookLastUpdateDateByTenant?tenant=${tenant}`;
+		return this.Get(url);
+	}
+	
 	AddNEWRemarksClassification(data) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/AddNEWRemarksClassification`;
 		// const url = `${this._apiUrl}RemarksClassifications/Post`;

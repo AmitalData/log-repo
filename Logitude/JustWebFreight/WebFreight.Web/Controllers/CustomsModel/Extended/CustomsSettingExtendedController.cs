@@ -427,6 +427,31 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetCustomsBookLastUpdateDateByTenant()
+        {
+
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                 SecurityUtility.AuthenticationOnTenant(tenant);
+
+
+                ICustomContext MyContext = CustomContext.GetContext(0);
+
+                CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(MyContext);
+
+                DateTime? tenantMs = customsSettingQuery.GetCustomsBookLastUpdateDateByTenant(tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, tenantMs);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
          public HttpResponseMessage GetUpdateLastRunningDCA([FromUri]int tenant , int NumOfMessages)
         {

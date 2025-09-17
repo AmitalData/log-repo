@@ -7,6 +7,7 @@
 			<!-- logo: -->
 			<div class="headerLogo">
 				<a href=""><img class="logoImage" src="assets/images/amital.png" alt="UNIFREIGHT" /></a>
+				<span *ngIf="lastUpdateTaskScheduled" style="font-size: 12px;">תאריך עדכון אחרון: {{ lastUpdateTaskScheduled | date: 'dd/MM/yyyy' }}</span>
 			</div>
 		</div>
 		<!-- Search area -->
