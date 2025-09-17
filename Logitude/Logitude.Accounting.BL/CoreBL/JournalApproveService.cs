@@ -1334,7 +1334,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     myDbQueueService.Complete();
                     isSubmitApprove = true;
-                    MatchPaymentCommandTransactions(qpJournalId,tenant);
                 }
                 else
                 {
@@ -1780,27 +1779,6 @@ namespace Logitude.Accounting.BL.CoreBL
             return tGLAccountAgingDataType;
         }
 
-        private static void MatchPaymentCommandTransactions(string journalId, int tenant)
-        {
-
-            try
-            {
-                var  accountingContext = AccountingContext.GetContext(tenant);
-                var journalQueryService = new JournalQueryService(accountingContext);
-                JournalPM journalPM = journalQueryService.GetSingle(journalId, true, false);
-                if(journalPM != null && journalPM.InvoicesXml !=null && journalPM.InvoicesXml.Any())
-                {
-                    List<APIDataContract.ApiV1.Invoice> invoices = JsonConvert.DeserializeObject<List <APIDataContract.ApiV1.Invoice>>(journalPM.InvoicesXml);
-                    
-                   
-                }
-
-            }
-            catch (Exception ex)
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError(ex.Message + " ,"+journalId);
-            }
-        }
         public class JournalApproveWorker
         {
             private static DateTime _NextDueDoneAt = DateTime.MinValue;
