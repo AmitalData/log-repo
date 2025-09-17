@@ -1,31 +1,32 @@
 
+using Logitude.Accounting.Data.DataContract;
+using Logitude.Accounting.Data.EntityKeys;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Enums;
+using Logitude.Server.Tools;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.EntityKeys;
-using Simplog.Server.Infrastructure;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Threading;
 using System.Reflection.Emit;
-using Simplog.Server.Infrastructure.Helpers;
-
-using Logitude.Accounting.Data.DataContract;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Runtime.InteropServices;
-using Logitude.Server.Tools;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.Accounting.Data.Enums;
-using System.Data.Entity.Infrastructure;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -1346,6 +1347,41 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return mysumlist;
         }
 
+
+        public List<CurrencySum> GetLedgerTransactionTotalLocalAmountFromToV2(
+    IEnumerable<string> accountIds,
+    DateTime fromDate,
+    DateTime toDate,
+    int tenant)
+        {
+            var ids = (accountIds ?? Enumerable.Empty<string>())
+                      .Where(id => !string.IsNullOrEmpty(id))
+                      .Distinct()
+                      .ToList();
+
+            if (!ids.Any())
+                return new List<CurrencySum>();
+
+            var q = from r in context.LedgerTransactions.AsNoTracking()
+                    where ids.Contains(r.AccountId)
+                          && r.AccountingDate >= fromDate
+                          && r.AccountingDate <= toDate
+                          && r.Tenant == tenant
+                    group r by new { r.AccountId, r.CurrencyId } into g
+                    select new CurrencySum
+                    {
+                        AccountId = g.Key.AccountId,
+                        CurrencyId = g.Key.CurrencyId,
+                        LocalAmountCredit = g.Sum(x => x.LocalAmountCredit),
+                        LocalAmountDebit = g.Sum(x => x.LocalAmountDebit),
+                        ForeignAmountCredit = g.Sum(x => x.ForeignAmountCredit),
+                        ForeignAmountDebit = g.Sum(x => x.ForeignAmountDebit)
+                    };
+
+            return q.ToList();
+        }
+
+
         public IQueryable<CurrencySum> GetQLedgerTransactionGroupBETWEENinclusive(DateTime fromDate, DateTime toDate, int tenant)
         {
             return (from r in context.LedgerTransactions
@@ -1727,7 +1763,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         GetLedgerTransactionsByJournalIdsCombined(List<string> journalIds, int tenant)
         {
             // Single DB query (Include Account and JournalLine to capture all required data)
-            var query = context.LedgerTransactions
+            var query = ((DbQuery<LedgerTransaction>)context.LedgerTransactions)
                 .Include("JournalLine")
                 .Include("Account")
                 .Where(a => journalIds.Contains(a.JournalId) && a.Tenant == tenant)
@@ -1756,7 +1792,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         {
 
 
-            return (from a in context.LedgerTransactions.Include("Account")
+            return (from a in ((DbQuery<LedgerTransaction>)context.LedgerTransactions).Include("Account")
                     where journalIds.Contains(a.JournalId) && a.Tenant == tenant && a.AccountId == accountId
 
                     select a
