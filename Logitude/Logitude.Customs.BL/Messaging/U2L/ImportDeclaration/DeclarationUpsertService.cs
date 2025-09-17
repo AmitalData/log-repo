@@ -1134,9 +1134,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 		}		
 		private void SendClosing()
 		{
-			try { 
-
-			    if (FieldError.Length == 0)
+			try {
+                if (FieldError.Length == 0)
 			    {
 			    	AppendLogLine("FieldError.Length == 0");
 			    
@@ -1340,14 +1339,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
 		private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id,string FieldError)
 		{
-			//primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
-			string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
+            bool isExport = dirtyDeclarationPM.Direction == "E";
+            //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
+            string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
 			if (dirtyDeclarationPM.TransportModeId != "A")
 			{
 				primary_number = $"{dirtyDeclarationPM.CustomFileNo},MFIFILEM";
 			}
 
-			var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
 			{
 				Tenant = dirtyDeclarationPM.Tenant,
 				objectTableName = "Customs.Declaration",
@@ -1360,7 +1360,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				CommunicationSubject = "FU Status " + status_id + " from logitude",
 				MyFUStatus = new AmitalEventTracerModel.FUStatus()
 				{
-					entname = dirtyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM",
+					entname = isExport  ? "BFIFILE" : "CFIFILEM",
 					primary_number = primary_number,
 					status = "new",
 					xml_status = "new",
@@ -1370,7 +1370,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				}
 			};
 
-			AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
+			AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, isExport: isExport);
 
 
 		}
