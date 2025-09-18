@@ -13,7 +13,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
 using System.Reflection.Emit;
-using Simplog.Server.Infrastructure.Helpers;
+//using Simplog.Server.Infrastructure.Helpers;
 
 using Logitude.Accounting.Data.DataContract;
 using Logitude.Accounting.Data.EntityLists;
@@ -27,6 +27,7 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Accounting.Data.Enums;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity; 
+
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -43,7 +44,7 @@ namespace Logitude.Accounting.Data.Repositories
         }
         public void ResetDraftOpenReconciliation(string gLAccountId, int tenant)
         {
-            using (var scope = TransactionFactory.GetTransaction())
+            using (var scope = Simplog.Server.Infrastructure.Helpers.TransactionFactory.GetTransaction())
 
             //using (var context = new BloggingContext())
             {
