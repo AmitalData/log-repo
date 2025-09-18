@@ -697,6 +697,42 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
 
 
+
+        public Dictionary<string, List<GLAccountCurrencyBalance>> GetCurrencyBalancesByIdsV2(IEnumerable<string> gLAccountIds, DateTime revaluationDate, int tenant)
+        {
+            DateTime revDate = revaluationDate.Date;
+
+            var ids = gLAccountIds.Where(id => !string.IsNullOrEmpty(id)).Distinct().ToList();
+            if (!ids.Any()) return new Dictionary<string, List<GLAccountCurrencyBalance>>();
+
+            LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(context);
+            // single DB hit for all accounts (up to revDate)
+            var allSums = ledgerTransactionQueryService
+                .GetLedgerTransactionTotalLocalAmountFromToV2(ids, DateTime.MinValue, revDate, tenant);
+
+            var result = allSums
+                .GroupBy(s => s.AccountId)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.Select(item => new GLAccountCurrencyBalance
+                    {
+                        AccountId = item.AccountId,
+                        CurrencyId = item.CurrencyId,
+                        ForeignAmount = item.ForeignAmountDebit - item.ForeignAmountCredit,
+                        LocalAmount = item.LocalAmountDebit - item.LocalAmountCredit
+                    }).ToList()
+                );
+
+            // Ensure all requested IDs are in the result dictionary, even if they have no balances.
+            foreach (var accId in ids.Where(id => !result.ContainsKey(id)))
+            {
+                result[accId] = new List<GLAccountCurrencyBalance>();
+            }
+
+            return result;
+        }
+
+
         public List<GLAccountCurrencyBalance> GetCurrencyBalances(GLAccount gLAccountPM, DateTime revaluationDate, int tenant)
         {
             if (gLAccountPM == null)
