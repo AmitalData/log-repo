@@ -289,6 +289,7 @@ export class CustomerDebtNotificationComponent extends BaseComponent implements 
 
   set DebtLevelAmount(value: number) {
     if (this.Notification.DebtLevelAmount != value) {
+       value = value ?? 0;
       this.Notification.DebtLevelAmount = value;
       if (!this.IsFromMaintenance) {
         this.EntityPM.MarkAsDirty("CustomerDebtNotification");
