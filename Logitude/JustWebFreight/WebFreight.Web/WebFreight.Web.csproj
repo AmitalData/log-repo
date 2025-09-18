@@ -1148,6 +1148,7 @@
     <Compile Include="Controllers\CustomsModel\WebServices\DeclarationPaymentWebServiceController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\GeneralLockController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\GeneralLockViewsController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\ConfirmationNumberDefaultExtendedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentExtendedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\FreightForwarderReferenceViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ReferenceTypeViewsController.Generated.cs" />
