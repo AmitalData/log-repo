@@ -189,20 +189,18 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             try
             {
-
+                if (string.IsNullOrWhiteSpace(journalPM.InvoicesXml))
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"No InvoicesXml found for Journal {journalPM.Id}, tenant={tenant}");
+                    return;
+                }
                 var accountingContext = AccountingContext.GetContext(tenant);
                 JournalQueryService journalQueryService = new JournalQueryService(accountingContext);
                 JournalUpdateService journalUpdateService = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
                  LedgerTransactionQueryService ledgerTransactionQuery = new LedgerTransactionQueryService(accountingContext);
                 APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(tenant);
                 Tenant loggedTenant = TenantRepository.GetSingleTenant(tenant, true);
-                if (string.IsNullOrWhiteSpace(journalPM.InvoicesXml))
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"No InvoicesXml found for Journal {journalPM.Id}, tenant={tenant}");
-                    return;
-                }
-                if (journalPM != null && journalPM.InvoicesXml != null && journalPM.InvoicesXml.Any())
-                {
+              
                     List<APIDataContract.ApiV1.Invoice> invoices = null;
 
                     try
@@ -229,7 +227,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         APInvoicePM aPInvoicePM = aPInvoiceQuery.GetSingleInvoiceByExternlaEntityId(invoice.Key, tenant);
 
                         if (aPInvoicePM == null)
+                        {
+                            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"No aPInvoicePM found for Invoice {invoice.Key}, Journal {journalPM.Id}");
                             continue;
+                        }
                         List<LedgerTransactionPM> ledgerTransactions = ledgerTransactionQuery
                             .GetTransactionBySourceEntity(aPInvoicePM.Id, AccountingEntityValues.APInvoice, tenant)?
                             .Where(a =>
@@ -258,7 +259,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                     }
 
-                }
+                
 
 
             }
@@ -271,7 +272,16 @@ namespace Logitude.Accounting.BL.CoreBL
         private static void AddJournalReconciles(LedgerTransactionPM transaction, JournalLinePM journalLinePM, JournalPM journalPM, decimal reconciliationAmount, JournalPM baseJournal)
         {
             if (transaction == null || journalLinePM == null || journalPM == null)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteWarning(
+                           "AddJournalReconciles: One or more required parameters are null. " +
+                           $"transaction={(transaction == null ? "null" : "ok")}, " +
+                           $"journalLinePM={(journalLinePM == null ? "null" : "ok")}, " +
+                           $"journalPM={(journalPM == null ? "null" : "ok")}");
+
                 return;
+
+            }
 
             if (Math.Abs(reconciliationAmount) > Math.Abs(transaction.OpenAmount))
             {
