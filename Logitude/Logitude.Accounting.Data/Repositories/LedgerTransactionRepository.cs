@@ -1,32 +1,32 @@
-
-using Logitude.Accounting.Data.DataContract;
-using Logitude.Accounting.Data.EntityKeys;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Enums;
-using Logitude.Server.Tools;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+using System.Data.Entity.Core.Objects;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using System.Reflection.Emit;
+using Simplog.Server.Infrastructure.Helpers;
+
+using Logitude.Accounting.Data.DataContract;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using System.Runtime.InteropServices;
+using Logitude.Server.Tools;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Accounting.Data.Enums;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity; 
 
 namespace Logitude.Accounting.Data.Repositories
 {
