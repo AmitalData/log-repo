@@ -58,13 +58,13 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
         public string JournalNumber { get; set; }
 
-        public List<invoice> invoices { get; set; }
+        public List<Invoice> Invoices { get; set; }
     }
 
-    public class invoice
+    public class Invoice
     {
-        public string key { get; set; }
-        public string LocalAmount { get; set; }
-        public string ForeignAmount { get; set; }
+        public string Key { get; set; }
+        public decimal LocalAmount { get; set; }
+        public decimal ForeignAmount { get; set; }
     }
 }

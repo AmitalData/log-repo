@@ -210,9 +210,9 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 						JournalLineQueryService JournalLineService4 = new JournalLineQueryService(Tenant);
 						temp.JournalLines = JournalLineService4.JournalLineCustomDataMappingAndValidatin(MyEntity,MyEntity.JournalLines,Tenant,ComputingPartnerName);
 					}
-                    if (MyEntity.invoices != null && MyEntity.invoices.Any())
+                    if (MyEntity.Invoices != null && MyEntity.Invoices.Any())
                     {
-                       temp.InvoicesXml = JsonSerializer.Serialize(MyEntity.invoices);
+                       temp.InvoicesXml = JsonSerializer.Serialize(MyEntity.Invoices);
                     }
 
 
@@ -227,4 +227,4 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
         }
 		 
    }
-}
+}
