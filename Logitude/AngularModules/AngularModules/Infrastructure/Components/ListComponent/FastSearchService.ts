@@ -42,7 +42,7 @@ export class FastSearchService implements OnDestroy {
     }
 
     public async search(currentQueryFilters: ApiQueryFilters, searchText: string): Promise<FastSearchResult[]> {
-        if (searchText?.length > 0) {
+        if (searchText?.length >= this.Settings.minimumSearchQueryLength) {
             this.orginalCurrentAdditionalFilters = [...currentQueryFilters.AdditionalFilters];
             return await this.azureSearchWebService.fastSearch(currentQueryFilters, searchText, this.indexName)
 
