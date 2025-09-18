@@ -1048,11 +1048,16 @@
       SearchFields="&quot;STQ ,Add Task Scheduler To Queue&quot;"
       Description="&quot;הכנסה לתור של מתזמן לפי התאריך&quot;" />
      <Record
-      Name="&quot;Report Export To Exel&quot;"
+      Name="&quot;Report Export To Excel&quot;"
       Code="&quot;REE&quot;"
-      SearchFields="&quot;REE,Report Export To Exel&quot;"
-      Description="&quot;Report Export To Exel&quot;" />
-   </Records>
+      SearchFields="&quot;REE,Report Export To Excel&quot;"
+      Description="&quot;Report Export To Excel&quot;" />
+    <Record
+     Name="&quot;c&quot;"
+     Code="&quot;TRO&quot;"
+     SearchFields="&quot;TRO,Tax Report Journal Optimization&quot;"
+     Description="&quot;Tax Report Journal Optimization&quot;" />
+  </Records>
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
