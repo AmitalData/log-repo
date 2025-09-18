@@ -1533,10 +1533,14 @@
         }
 
         function setCookie(cname, cvalue, exdays) {
+                    const isSecure = (window.location.protocol === "https:");
+
             const d = new Date();
             d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
             let expires = "expires=" + d.toUTCString();
-            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/"+
+        (isSecure ? "; Secure" : "") +
+        "; SameSite=Lax";
         }
 
         function getCookie(cname) {
@@ -2191,7 +2195,7 @@
             ((expires == null) ? "" : "; expires=" + expires.toGMTString()) +
             ((path == null) ? "" : "; path=" + path) +
             ((domain == null) ? "" : "; domain=" + domain) +
-            ((secure == null) ? "" : "; secure");
+            ((secure == null) ? "" : "; secure") + ";SameSite=Strict";
     }
 
     function get_cookie(name) {
@@ -2262,7 +2266,7 @@
 
 
 
-</script> 
+    </script> 
         
     <script type="text/javascript">
         $(document).ready(function () {
