@@ -58,7 +58,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
             this.Property(t => t.InActive).HasColumnName("InActive");
+			this.Property(t => t.PrivateKey).HasColumnName("PrivateKey");
+			this.Property(t => t.Port).HasColumnName("Port");
 
-        }
-    }
+		}
+	}
 }

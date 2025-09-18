@@ -29,6 +29,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("UpdatedByUserId")]
         public virtual User UpdatedByUser { get; set; }
         public string UpdatedByUserId { get; set; }
- 
-    }
+        public byte[] PrivateKey { get; set; }
+		public string Port { get; set; }
+
+	}
 }

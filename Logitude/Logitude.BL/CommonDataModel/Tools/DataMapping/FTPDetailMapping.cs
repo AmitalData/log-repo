@@ -29,7 +29,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             itemPoco.Folder = itemPM.Folder;
             itemPoco.InActive = itemPM.InActive;
             itemPoco.UseSFTP = itemPM.UseSFTP;
+            itemPoco.PrivateKey = itemPM.PrivateKey;
+            itemPoco.Port = itemPM.Port;
 
-        }
-    }
+		}
+	}
 }
