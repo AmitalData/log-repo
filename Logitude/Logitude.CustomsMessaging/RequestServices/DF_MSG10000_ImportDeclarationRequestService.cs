@@ -1972,16 +1972,16 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             if (!String.IsNullOrWhiteSpace(supplierInvoiceItemPM.TaxExemptCode))
             {
-                if (supplierInvoiceItemPM.TaxExemptCode.Length == 12)
+                string taxExemptNormalized = supplierInvoiceItemPM.TaxExemptCode.Trim();
+                taxExemptNormalized = taxExemptNormalized.Replace("/", "");
+
+                if (taxExemptNormalized.Length >= 11)
                 {
-                    supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(11, "/");
+                    taxExemptNormalized = taxExemptNormalized.Insert(10, "/"); 
                 }
-                if (supplierInvoiceItemPM.TaxExemptCode.Length == 11)
-                {
-                    supplierInvoiceItemPM.TaxExemptCode = supplierInvoiceItemPM.TaxExemptCode.Insert(10, "/");
-                }
+                supplierInvoiceItemPM.TaxExemptCode = taxExemptNormalized;
+
                 DMExtensions.TaxExemptCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsTaxExemptCode() { Value = supplierInvoiceItemPM.TaxExemptCode };
-                //SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsTaxExemptCode>(String.IsNullOrWhiteSpace(supplierInvoiceItemPM.TaxExemptCode) ? "1" : supplierInvoiceItemPM.TaxExemptCode)
             }
             if (supplierInvoiceItemPM.OptionalTamaPercentage.HasValue)
             {
