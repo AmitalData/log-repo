@@ -14,5 +14,6 @@
         public string recentEditScreenParam { get; set; }
         public string addAsteriskToNumberSearch { get; set; }
         public string DDLWidth { get; set; }
+        public int? minimumSearchQueryLength { get; set; }
     }
 }
