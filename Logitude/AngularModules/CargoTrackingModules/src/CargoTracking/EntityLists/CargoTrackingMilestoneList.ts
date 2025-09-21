@@ -17,6 +17,7 @@ export class CargoTrackingMilestoneList {
 	ExportWeight: number;
 	Tenant: number;
 	EventTypeId: string;
+	Notes: string;
 	
 }
  

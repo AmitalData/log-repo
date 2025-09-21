@@ -71,6 +71,11 @@ export class CargoTrackingMilestonePM {
     public set EventTypeId(newValue: string) { if (this.eventTypeId != newValue) { this.eventTypeId = newValue; this.MarkAsDirty("EventTypeId"); } }
        
 	 
+    private notes: string;
+    public get Notes() { return this.notes; }
+    public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingMilestonePM;
 		

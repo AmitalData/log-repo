@@ -31,6 +31,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ExportWeight,
 	         Tenant, 
 	         EventTypeId,
+	         Notes,
 	      }
 
 
@@ -46,6 +47,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ExportWeight,
 	         Tenant, 
 	         EventTypeId,
+	         Notes,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -92,6 +94,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EventTypeId))
             {
 				entityPOCO.EventTypeId = entityPM.EventTypeId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
+            {
+				entityPOCO.Notes = entityPM.Notes;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -145,6 +152,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.EventTypeId = entityPOCO.EventTypeId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Notes))
+            {
+					entityPM.Notes = entityPOCO.Notes;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingMilestonePM entityPM, CargoTrackingMilestonePM oldEntityPM)
@@ -189,6 +201,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EventTypeId))
             {
                 oldEntityPM.EventTypeId = entityPM.EventTypeId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
+            {
+                oldEntityPM.Notes = entityPM.Notes;
             }
 			
 		}

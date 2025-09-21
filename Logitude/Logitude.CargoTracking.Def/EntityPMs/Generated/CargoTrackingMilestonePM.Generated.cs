@@ -227,6 +227,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string notes ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Notes  
+	   {
+	    
+	     get
+		{
+		   return notes;
+		 }
+		 set
+		 {
+		   if(notes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Notes",OldValue=notes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   notes=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

@@ -65,4 +65,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Notes"
+    Type="varchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>
