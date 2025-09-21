@@ -556,53 +556,48 @@
                                 <ul class="P-button-drop-menu" style="text-align:right; left:250px;">
                                     <li
                                         (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();ShowDeclaration($event);  ">
-                                        <span>כניסה להצהרה</span>
+                                        <span>{{'LBL_ENTRY_TO_DECLARATION' | TextCodeTranslationPipe}}</span>
                                     </li>
                                     <li
                                         (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();ShowAddOrEditExceptionReason();  ">
-                                        <span>הזנת חריג</span>
+                                        <span>{{'LBL_ENTER_EXCEPTION' | TextCodeTranslationPipe}}</span>
                                     </li>
                                     <li
                                         (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveToQueueScreen();">
-                                        <span>העברה לתור</span>
+                                        <span>{{'LBL_MOVE_TO_QUEUE' | TextCodeTranslationPipe}}</span>
                                     </li>
 
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();  ShowGFUUSTS();">
-                                        <span>מסך F/U</span>
+                                        <span>{{'LBL_FU_SCREEN' | TextCodeTranslationPipe}}</span>
                                     </li>
                                     <li
                                         (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveSIToOCRScreen();">
-                                        <span>העברת חשבונות ספק ל-OCR</span>
+                                        <span>{{'LBL_TRANSFER_SUPPLIER_INVOICES_TO_OCR' | TextCodeTranslationPipe}}</span>
                                     </li>
                                     <li>
                                         <span
                                             *ngIf="Entity['CollectionOfMoneyStatus']=='' || Entity['CollectionOfMoneyStatus']==null"
-                                            (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveToCollector();">העברה
-                                            לגובה</span>
-                                        <span *ngIf="Entity['CollectionOfMoneyStatus']=='P'" class="DimLI">העברה
-                                            לגובה</span>
+                                            (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveToCollector();">{{'LBL_TRANSFER_TO_COLLECTOR' | TextCodeTranslationPipe}}</span>
+                                        <span *ngIf="Entity['CollectionOfMoneyStatus']=='P'" class="DimLI">{{'LBL_TRANSFER_TO_COLLECTOR' | TextCodeTranslationPipe}}</span>
                                         <span *ngIf="Entity['CollectionOfMoneyStatus']=='V'"
-                                            (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveToCollector();">העברה
-                                            חוזרת לגובה</span>
+                                            (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveToCollector();">{{'LBL_RE_TRANSFER_TO_COLLECTOR' | TextCodeTranslationPipe}}</span>
                                     </li>
                                     <li
                                         (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMEnterRemarks();">
-                                        <span>הזנת הערות לתור</span>
+                                        <span>{{'LBL_ENTER_REMARKS_FOR_QUEUE' | TextCodeTranslationPipe}}</span>
                                     </li>
                                     <li>
                                         <span *ngIf="Entity['IsCustomerLogBoxActivated']== true"
-                                            (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowSharedDocuments();">שיתוף
-                                            מסמכים</span>
-                                        <span *ngIf="Entity['IsCustomerLogBoxActivated']== false" class="DimLI">שיתוף
-                                            מסמכים</span>
+                                            (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowSharedDocuments();">{{'LBL_SHARE_DOCUMENTS' | TextCodeTranslationPipe}}</span>
+                                        <span *ngIf="Entity['IsCustomerLogBoxActivated']== false" class="DimLI">{{'LBL_SHARE_DOCUMENTS' | TextCodeTranslationPipe}}</span>
 
                                     </li>
                                     <li
                                         (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowMoneyOrder();">
-                                        <span>הזמנת כסף</span>
+                                        <span>{{'LBL_MONEY_ORDER' | TextCodeTranslationPipe}}</span>
                                     </li>
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowDelivery();">
-                                        <span>הובלה יבשתית</span>
+                                        <span>{{'LBL_LAND_TRANSPORT' | TextCodeTranslationPipe}}</span>
                                     </li>
                                     <li *ngIf="closingOpening != null"
                                         (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ClosingOpeningFileNo()">
@@ -635,10 +630,10 @@
                 <div *ngIf="FieldName == 'IsClosed'" style="position:relative;width:100%; height: 100%;">
                     <div *ngIf="IsHeaderScreenTemplate">
                         <div *ngIf="Entity['IsClosed']">
-                            <span>{{'כן'}}</span>
+                            <span>{{'LBL_YES' | TextCodeTranslationPipe}}</span>
                         </div>
                         <div *ngIf="!Entity['IsClosed']">
-                            <span>{{'לא'}}</span>
+                            <span>{{'LBL_NO' | TextCodeTranslationPipe}}</span>
                         </div>
                     </div>
                     <div *ngIf="!IsHeaderScreenTemplate">
