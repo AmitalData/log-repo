@@ -1993,7 +1993,20 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             break;
                         }
+                        if(response.RetryNumber >  6)
+                       {
+                        OnException(
+                           queueservice,
+                           response,
+                           response.MessageValues.ContainsKey("JournalId") ? response.MessageValues["JournalId"] : null,
+                           response.Tenant,
+                           new Exception("Retry count exceeded: more than 6 attempts to process the journal. Marking as failed.")
+                        );
+                        break;
+                        }
+                        
 
+                    
                     NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 0, tenant {0}, selectedQueue {1}", response.Tenant, selectedQueue));
 
                         if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR
