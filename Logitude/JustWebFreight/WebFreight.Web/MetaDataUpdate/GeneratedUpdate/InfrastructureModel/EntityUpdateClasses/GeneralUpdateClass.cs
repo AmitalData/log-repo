@@ -23,8 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-
-		public const string HashString = "f3a7c28d9b0e6145de8c2f93a1b4760b";
+		public const string HashString = "5ca2c2e6d666dd96e9e1626e2e14e434";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -679,7 +678,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_FASTSEARCH = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FASTSEARCH", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.FASESEARCH", NameTextCodeDefaultText = @"Fast Search" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable,contextTenant);
 
-		   Feature GeneralFeature_General_Features_CustomerDebtNotification = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.CustomerDebtNotification", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Features.CustomerDebtNotification", NameTextCodeDefaultText = @"Customer Debt Notification" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+		   Feature GeneralFeature_General_Features_CustomerDebtNotification = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.CustomerDebtNotification", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Features.CustomerDebtNotification", NameTextCodeDefaultText = @"Customer Debt Notification" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable,contextTenant);
 
    
 	    
@@ -2039,13 +2038,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOWithZeroBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.WithZeroBalance", DefaultText = "GLAccount with balance equal to zero",LocalDefaultText = @"BS64:Iteb15zXldecINeb16jXmNeZ16HXmdedINec15zXkCDXqteg15XXoteV16og16LXnSDXmdeq16jXlCAwIg==", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-            TextCode GeneralTextCode_AccountingGeneralOAlsoWithZeroBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AlsoWithZeroBalance", DefaultText = "Also include accounts with 0 balance", LocalDefaultText = @"BS64:Iteb15zXldecINeS150g15vXqNeY15nXodeZ150g16LXnSDXmdeq16jXlCAwIg==", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+ 		   TextCode GeneralTextCode_AccountingGeneralOAlsoWithZeroBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AlsoWithZeroBalance", DefaultText = "Also include accounts with 0 balance",LocalDefaultText = @"BS64:Iteb15zXldecINeS150g15vXqNeY15nXodeZ150g16LXnSDXmdeq16jXlCAwIg==", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-            TextCode GeneralTextCode_AccountingGeneralOAllAccountsOption = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AllAccountsOption", DefaultText = "All Accounts", LocalDefaultText = @"BS64:Iteb15wg15TXm9eo15jXmdeh15nXnSI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+ 		   TextCode GeneralTextCode_AccountingGeneralOAllAccountsOption = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AllAccountsOption", DefaultText = "All Accounts",LocalDefaultText = @"BS64:Iteb15wg15TXm9eo15jXmdeh15nXnSI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-            TextCode GeneralTextCode_AccountingGeneralOWithTransactionsOption = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.WithTransactionsOption", DefaultText = "Only accounts with transactions in the period", LocalDefaultText = @"BS64:Iteo16cg15vXqNeY15nXodeZ150g16LXnSDXqteg15XXoteV16og15HXqten15XXpNeUIg==", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+ 		   TextCode GeneralTextCode_AccountingGeneralOWithTransactionsOption = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.WithTransactionsOption", DefaultText = "Only accounts with transactions in the period",LocalDefaultText = @"BS64:Iteo16cg15vXqNeY15nXodeZ150g16LXnSDXqteg15XXoteV16og15HXqten15XXpNeUIg==", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-            TextCode GeneralTextCode_AccountingGeneralORun = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Run", DefaultText = "Run",LocalDefaultText = @"BS64:IteU16jXpSI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GeneralTextCode_AccountingGeneralORun = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Run", DefaultText = "Run",LocalDefaultText = @"BS64:IteU16jXpSI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GeneralTextCode_AccountingGeneralOFutureDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.FutureDate", DefaultText = "Future Date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og16LXqteZ15Mi", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
@@ -2868,6 +2867,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralOGenerating = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Generating", DefaultText = "Generating...",LocalDefaultText = @"BS64:Itee15vXmdefINeT15XXlyI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GeneralTextCode_GeneralBSendToBackground = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.B.SendToBackground", DefaultText = "Send to Background",LocalDefaultText = @"BS64:Itep15zXlyDXnNeo16fXoiI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOCreateANewTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.CreateANewTaxReport", DefaultText = "Tax Report",LocalDefaultText = @"דוח מעמ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOCancelTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.CancelTaxReport", DefaultText = "Cancel Tax Report",LocalDefaultText = @"ביטול דוח מעמ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
