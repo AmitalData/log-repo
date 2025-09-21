@@ -189,7 +189,7 @@ export class HomeComponent implements OnDestroy{
     InitializeProcess(){
         this.processMenuService.LoadMenuItems();
         this.processMenuService.processCount$.subscribe(count => {
-            if (this.countCompletedProcesses != null && count > this.countCompletedProcesses) {
+            if (this.countCompletedProcesses != null && count > this.countCompletedProcesses ) {
                 this.setCountBlink = true;
             }
             this.countCompletedProcesses  = count;
@@ -843,7 +843,7 @@ export class HomeComponent implements OnDestroy{
     get IsProcessMenuVisible() { return this.isProcessMenuVisible; }
     set IsProcessMenuVisible(newValue: boolean) {
        
-       
+        this.setCountBlink = false;
         this.isProcessMenuVisible = newValue;
         
         if(!newValue){
