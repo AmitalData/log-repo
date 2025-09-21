@@ -876,7 +876,7 @@ ResetEditableField(field: EditableFieldPosition){
         if (this.StimulsoftArgData.ReportsPreviewComponent) {
             this.StimulsoftArgData.ReportFliter.ProcessType = processName;
             this.StimulsoftArgData.ReportFliter.NumberOfPage = this.StimulsoftArgData.NumberOfPage;
-            this.StimulsoftArgData.ReportsPreviewComponent.GenerateReport(this.StimulsoftArgData.ReportFliter, true);
+            this.StimulsoftArgData.ReportsPreviewComponent.GenerateReport(this.StimulsoftArgData.ReportFliter, true ,true);
         }
         else {
             if (this.StimulsoftArgData.EditDocumentComponent) {
