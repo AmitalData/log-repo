@@ -10,6 +10,8 @@ import { BatchTaskExecutionListService } from '../../../../Infrastructure/Servic
 import { TaxDeductionReportPMService } from '../../../Services/StandardPMs/TaxDeductionReportPMService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { TaxDeductionReportData  } from '../../../DataContracts/TaxDeductionReportData';
+import { interval, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -48,9 +50,11 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
         }
         this._TaxDeductionReportData = new TaxDeductionReportData();
         this.BuildTaxDeductionReportData();
-
+        this.startWatching();
     }
-
+    ngOnDestroy() {
+        this.watcher?.unsubscribe();
+    }
     Building: boolean= false;
     get IsAdditionalReportExist() { return this.entityPM.IsAdditionalReportExist; }
 
@@ -102,7 +106,7 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
             next: (response: ServiceResponse) => {
                 if (!response?.HasError) {
                     this._TaxDeductionReportData = response.Result;
-
+                    
 
                     this.firstTotalPayments = this._TaxDeductionReportData?.TotalForCompany &&
                         this._TaxDeductionReportData.TotalForCompany[0]
@@ -131,6 +135,8 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
             if (!response?.HasError) {
                 this.CurrentSession.StopBusyIndicator();
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                
+                this.startWatching();
                 this.download856File();
             } else {
                 this.CurrentSession.StopBusyIndicator();
@@ -156,6 +162,38 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
             }
         });
     }
+
+    private watcher?: Subscription;
+
+    startWatching() {
+        
+        if(this.entityPM.StatusTypeCode === TaxDeductionStatus.InProgress){
+            this.watcher = interval(1000) 
+          .pipe(
+            switchMap(() => this.taxDeductionReportPMService.get(this.entityPM.Id))
+          )
+          .subscribe({
+            next: res => {
+                if (!res?.HasError) {
+                    if (res.Result.StatusTypeCode !== TaxDeductionStatus.InProgress){
+                        this.watcher?.unsubscribe();
+                        this.entityPM = res.Result;
+                        this.BuildTaxDeductionReportData();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }                   
+                   
+                }                           
+               
+            },
+            error: err => {
+              console.error('Error checking report status', err);
+            }
+          });
+        }
+        
+      }
+    
+
 }
 
 export enum TaxDeductionStatus {
