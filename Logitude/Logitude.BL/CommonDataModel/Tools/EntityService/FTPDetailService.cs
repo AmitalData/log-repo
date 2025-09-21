@@ -58,13 +58,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm.Id = IdCounter.GetNumber("FTPDetail", tenant).ToString();
             this.Poco = new FTPDetail();
             this.Poco.Id = this.entityPm.Id;
-            
+
             FTPDetailMapping.MapEntity(entityPM, Poco, isNewEntity, loggedContact.Id);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
         }
 
-        public void Update(FTPDetailPM entityPM)
+        public async void Update(FTPDetailPM entityPM)
         {
             this.isNewEntity = false;
             this.entityPm = entityPM;
