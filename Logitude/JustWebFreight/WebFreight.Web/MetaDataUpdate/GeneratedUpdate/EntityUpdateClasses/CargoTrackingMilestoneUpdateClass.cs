@@ -710,7 +710,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Notes",
 					  						ObjectTableName =  "CargoTrackingMilestone",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  200,
 					  						IsRequired =  false,

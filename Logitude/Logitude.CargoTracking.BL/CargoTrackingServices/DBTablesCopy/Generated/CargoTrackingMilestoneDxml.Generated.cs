@@ -43,7 +43,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='EventTypeId' Type='varchar' Size='15'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='Notes' Type='varchar' Size='-1'>"+
+"  <Column Name='Notes' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "</Table>";

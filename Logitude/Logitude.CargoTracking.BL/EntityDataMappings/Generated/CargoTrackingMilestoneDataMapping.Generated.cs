@@ -225,6 +225,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
                 entityPM.LocalName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LocalName));
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.Notes)) //T4 find type == nText 
+            {
+                entityPM.Notes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Notes));
+            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 
