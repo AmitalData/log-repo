@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
-using Simplog.Data.InfrastructureModel.Repositories;
-
-using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -92,7 +91,15 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return result;
         }
 
+        public bool GetUniquePerPrefixByCounterName(string counterName, int tenant)
+        {
+            return (from counter in repository.context.Counters
+                    join counterDefinition in repository.context.CounterDefinitions on counter.Id equals counterDefinition.CounterId
+                    where counter.Name == counterName && counter.Tenant == tenant && !counterDefinition.InActive
 
+                    select counterDefinition.UniquePerPrefix).FirstOrDefault();
+
+        }
         public IQueryable<CounterDefinitionPM> GetCustomizedCounterDefinitionsByCounterId(string counterId, int tenant)
         {
             IQueryable<CounterDefinitionPM> result
