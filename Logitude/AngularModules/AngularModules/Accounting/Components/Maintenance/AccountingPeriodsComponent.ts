@@ -85,6 +85,7 @@ export class AccountingPeriodsComponent extends BaseComponent {
             var filters = new ApiQueryFilters();
             filters.GetAll = true;
             filters.addAdditionalFilter("Year", year, null, null, "Equal", false, false, false, "number");
+            //filters.addAdditionalFilter("PeriodTypeCode", "1,2", null, null, "InListExact",false , false, false, "string");
 
             this.accountingPeriodListService.getByFilters(filters).subscribe((myResult: any) => {
                 var result = myResult.Result;
@@ -121,7 +122,7 @@ export class AccountingPeriodsComponent extends BaseComponent {
     GetPeriodTypes() {
         var filters = new ApiQueryFilters();
         filters.GetAll = true;
-
+        
         this.periodTypeListService.getByFilters(filters).subscribe((myResult: any) => {
             var result = myResult.Result;
             if (!AppTool.IsNullOrEmpty(result) && result.length > 0) {
