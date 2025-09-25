@@ -7,11 +7,12 @@ import { SearchService } from '../page-top/service/top-page.service';
 import { NgIf } from '@angular/common';
 import { FilterPopupService } from '../filter-popup/service/filter-popup.service';
 import { PreferenceMenuComponent } from '../preference-menu/preference-menu';
+import { CommonModule } from '@angular/common';
 
 @Component({
 	selector: 'app-header',
 	standalone: true,
-	imports: [FontAwesomeModule, PageTopComponent, NgIf, PreferenceMenuComponent],
+	imports: [FontAwesomeModule, PageTopComponent, NgIf, PreferenceMenuComponent, CommonModule],
 	templateUrl: './app-header.component.html',
 	styleUrl: './app-header.component.css',
 })
@@ -21,12 +22,15 @@ export class AppHeaderComponent {
 	@Output() searchClick = new EventEmitter<string | number>();
 	discountCodes: string = 'קודי הנחה';
 	IsDiscountCodes: boolean = false;
+	lastUpdateTaskScheduled: Date;
 
 	constructor(private headerService: HeaderService, private searchService: SearchService, private filterPopupService: FilterPopupService) { }
 
 	ngOnInit(): void {
 		this.selected = this.headerService.getSearchState();
-		
+		this.headerService.lastUpdateTaskScheduled.subscribe((date: Date) => {
+			this.lastUpdateTaskScheduled = date;
+		});
 		this.headerService.IsDiscountCodes.subscribe((value) => {
 			this.IsDiscountCodes = value;
 		});
