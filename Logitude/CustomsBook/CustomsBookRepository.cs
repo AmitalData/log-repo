@@ -89,7 +89,17 @@ namespace CustomsBook
             return tenant;
         }
 
+        public static void UpdateCB_LastUpdateDateForAllCustomsSettings()
+        {
+            string query = @"UPDATE customs.CustomsSettings SET CB_LastUpdateDate = GETUTCDATE()";
 
+            using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
         public static void SwapTempToMainTable(string tempTableName)
         {
 
