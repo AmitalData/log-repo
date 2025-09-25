@@ -42,6 +42,7 @@
     <UseGlobalApplicationHostFile />
     <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
     <Use64BitIISExpress>false</Use64BitIISExpress>
+
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
