@@ -64,7 +64,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
         }
 
-        public async void Update(FTPDetailPM entityPM)
+        public void Update(FTPDetailPM entityPM)
         {
             this.isNewEntity = false;
             this.entityPm = entityPM;
