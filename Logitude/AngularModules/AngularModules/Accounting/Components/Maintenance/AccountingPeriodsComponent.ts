@@ -24,6 +24,9 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { PeriodTypeListService } from '../../Services/StandardLists/PeriodTypeListService';
 import { PeriodTypeList } from '../../EntityLists/PeriodTypeList';
+import { CounterDefinitionPMExtendedService } from 'Infrastructure/Services/ExtendedPMs/CounterDefinitionPMExtendedService';
+import { CounterDefinitionPM } from 'Infrastructure/EntityPMs/CounterDefinitionPM';
+import { switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -38,6 +41,7 @@ export class AccountingPeriodsComponent extends BaseComponent {
     public ObjectTableName: string = "AccountingPeriod";
     accountingPeriodListService: AccountingPeriodListService;
     periodTypeListService: PeriodTypeListService;
+    counterDefinitionPMExtendedService: CounterDefinitionPMExtendedService;
     accountingPeriodPMService: AccountingPeriodPMService;
     _AccountingPeriodExtendedListService: AccountingPeriodExtendedListService;
     _AccountingPeriodExtendedPMService: AccountingPeriodExtendedPMService;
@@ -45,9 +49,12 @@ export class AccountingPeriodsComponent extends BaseComponent {
     GotPeriodsList: AccountingPeriodList[];
     PeriodsList: AccountingPeriodList[];
     PeriodTypesList: PeriodTypeList[];
+    CounterDef: CounterDefinitionPM[];
+ 
     ShowPrompt: boolean = false;
     public isRTL: boolean = false;
     public hasReadPermision: boolean = false;
+    public uniquePeriodPrefix: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService, public entityArgs: EntityArgs) {
         super();
@@ -56,8 +63,7 @@ export class AccountingPeriodsComponent extends BaseComponent {
         this.accountingPeriodPMService = new AccountingPeriodPMService();
         this._AccountingPeriodExtendedListService = new AccountingPeriodExtendedListService();
         this._AccountingPeriodExtendedPMService = new AccountingPeriodExtendedPMService();
-        // this.UIProperties.SetEnabled("Year", this.ObjectTableName, true);
-
+        this.counterDefinitionPMExtendedService = new CounterDefinitionPMExtendedService();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.hasReadPermision = FeatureLocator.HasEntityPermessions(this.ObjectTableName, 'READ',false);
@@ -85,7 +91,6 @@ export class AccountingPeriodsComponent extends BaseComponent {
             var filters = new ApiQueryFilters();
             filters.GetAll = true;
             filters.addAdditionalFilter("Year", year, null, null, "Equal", false, false, false, "number");
-            //filters.addAdditionalFilter("PeriodTypeCode", "1,2", null, null, "InListExact",false , false, false, "string");
 
             this.accountingPeriodListService.getByFilters(filters).subscribe((myResult: any) => {
                 var result = myResult.Result;
@@ -106,7 +111,11 @@ export class AccountingPeriodsComponent extends BaseComponent {
 
                     } else {
                         this.PeriodsList = this.GotPeriodsList;
+                        
                     }
+                    if(!this.uniquePeriodPrefix)
+                        this.PeriodsList = this.PeriodsList.filter(a => a.PeriodTypeCode === "1" || a.PeriodTypeCode === "2"); 
+                    this.PeriodsList.sort((a, b) => (a.PeriodTypeCode > b.PeriodTypeCode) ? 1 : ((b.PeriodTypeCode > a.PeriodTypeCode) ? -1 : 0));
 
                 } else {
                     this.PeriodsList = [];
@@ -119,24 +128,66 @@ export class AccountingPeriodsComponent extends BaseComponent {
 
         }
     }
+
     GetPeriodTypes() {
-        var filters = new ApiQueryFilters();
+        this.CurrentSession.StartBusyIndicatorLoading();
+        const filters = new ApiQueryFilters();
         filters.GetAll = true;
-        
-        this.periodTypeListService.getByFilters(filters).subscribe((myResult: any) => {
-            var result = myResult.Result;
-            if (!AppTool.IsNullOrEmpty(result) && result.length > 0) {
-                this.ShowPrompt = false;
-                var periods = result;
-                this.PeriodTypesList = periods;
+    
+        this.counterDefinitionPMExtendedService
+        .GetCounterDefinitionsByCounterName("A/R Invoice")
+        .pipe(
+            switchMap((counterResult: any) => {
+            
+                              
+                this.CounterDef = !AppTool.IsNullOrEmpty(counterResult?.Result) ? counterResult.Result : [];
+                this.uniquePeriodPrefix = this.CounterDef ? this.CounterDef.filter(a => a.Parameter1 == "IN")[0]?.UniquePerPrefix : true;
+                return this.periodTypeListService.getByFilters(filters);
+            })
+        )
+        .subscribe(
+            (periodResult: any) => {
+                const result = periodResult?.Result || [];
 
-            } else {
+                if (result.length > 0) {
+                    this.ShowPrompt = false;
+
+                    this.PeriodTypesList = result.map((item: any) => {
+                        const code = this.mapPeriodTypToCode(item.Code);
+
+                        const counter = this.CounterDef.find(cd => cd.Parameter1 === code);
+
+                        const prefix = counter?.Prefix || '';
+
+                        return {
+                            ...item,
+                            LocalName: prefix ? `(${prefix}) ${item.LocalName || ''}`.trim() : item.LocalName
+                        };
+                    });
+                } else {
+                    this.PeriodTypesList = [];
+                }
+
+                this.CurrentSession.StopBusyIndicator();
+            },
+            (error) => {
+                console.error('Error loading PeriodTypes:', error);
                 this.PeriodTypesList = [];
+                this.CurrentSession.StopBusyIndicator();
             }
-        });
-
+        );
 
     }
+    mapPeriodTypToCode(periodTyp: string): string {
+        switch (periodTyp) {
+            case "1": return 'Accounting';
+            case "2": return 'IN';
+            case "3": return 'IT';
+            case "4": return 'CD';
+            default: return '';
+        }
+    }
+    
     BrowseButtonClicked() {
         if (AppTool.IsNullOrEmpty(this.year)) {
             this.Year = new Date().getFullYear();
@@ -168,13 +219,18 @@ export class AccountingPeriodsComponent extends BaseComponent {
                     windowArgs.AccountingRow = row; // attach accounting period to window to use it in logic
                 }
             }
-
+            if(!this.uniquePeriodPrefix){
+                windowArgs.AccountingRows = this.GotPeriodsList;
+             }
             var logWindow = new LogitudeWindow();
             logWindow.Width = 530;
             logWindow.Height = 400;
             logWindow.Title = TextCodeTranslator.Translate("Accounting.O.AccountingPeriods");
             logWindow.WindowArgs = windowArgs;
-            logWindow.WindowClosed.subscribe(($event: any) => this.GetPeriods(this.year));
+            logWindow.WindowClosed.subscribe(($event: any) => {
+
+                this.GetPeriods(this.year)
+            });
             logWindow.Show('./Accounting/Components/Maintenance/EditAccountingPeriodComponent');
         }
     }
@@ -227,4 +283,5 @@ export class AccountingPeriodsComponent extends BaseComponent {
 export class Args {
     EntityId: string;
     AccountingRow: AccountingPeriodList;
+    AccountingRows: AccountingPeriodList[];
 }
