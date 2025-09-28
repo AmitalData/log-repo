@@ -1279,6 +1279,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
                 AccountPeriodCode = "3";// 2- Interest Invoice
             }
+            if( Type == "CD")
+            {
+                AccountPeriodCode = "4";
+            }
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
             AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(accountingContext);
             AccountingPeriodList accountingPeriod = accountingPeriodQuery.GetByYear(year, AccountPeriodCode, tenant); 

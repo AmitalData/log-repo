@@ -98,8 +98,33 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     where counter.Name == counterName && counter.Tenant == tenant && !counterDefinition.InActive
 
                     select counterDefinition.UniquePerPrefix).FirstOrDefault();
-
+         
         }
+        public List<CounterDefinitionPM> GetCounterDefinitionsByCounterName(string counterName, int tenant)
+        {
+             IQueryable <CounterDefinitionPM > result = (from counter in repository.context.Counters
+                                                                 join counterDefinition in repository.context.CounterDefinitions on counter.Id equals counterDefinition.CounterId
+                                                                 where counter.Name == counterName && counter.Tenant == tenant && !counterDefinition.InActive
+                                                                 select new CounterDefinitionPM()
+                                                                 {
+                                                                     Id = counterDefinition.Id,
+                                                                     CounterId = counterDefinition.CounterId,
+                                                                     Parameter1 = counterDefinition.Parameter1,
+                                                                     Parameter2 = counterDefinition.Parameter2,
+                                                                     Prefix = counterDefinition.Prefix,
+                                                                     Tenant = counterDefinition.Tenant,
+                                                                     UniquePerPrefix = counterDefinition.UniquePerPrefix,
+                                                                     StartNumber = counterDefinition.StartNumber,
+                                                                     StartNumber_Old = counterDefinition.StartNumber,
+                                                                     CounterSize = counterDefinition.CounterSize,
+                                                                     Suffix = counterDefinition.Suffix,
+                                                                     InActive = counterDefinition.InActive,
+                                                                     UsePerBranch = counterDefinition.UsePerBranch,
+                                                                     IsCustomized = counterDefinition.IsCustomized,
+                                                                 }
+                                                            );
+                                             return result.ToList();
+         }
         public IQueryable<CounterDefinitionPM> GetCustomizedCounterDefinitionsByCounterId(string counterId, int tenant)
         {
             IQueryable<CounterDefinitionPM> result
