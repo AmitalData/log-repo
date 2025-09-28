@@ -114,7 +114,7 @@ export class AccountingPeriodsComponent extends BaseComponent {
                         
                     }
                     if(!this.uniquePeriodPrefix)
-                        this.PeriodsList = this.PeriodsList.filter(a => a.PeriodTypeCode === "1" || a.PeriodTypeCode === "2"); 
+                        this.PeriodsList = this.PeriodsList.filter(a => a.PeriodTypeCode === PeriodTypeCode.Accounting || a.PeriodTypeCode === PeriodTypeCode.Invoice); 
                     this.PeriodsList.sort((a, b) => (a.PeriodTypeCode > b.PeriodTypeCode) ? 1 : ((b.PeriodTypeCode > a.PeriodTypeCode) ? -1 : 0));
 
                 } else {
@@ -130,18 +130,20 @@ export class AccountingPeriodsComponent extends BaseComponent {
     }
 
     GetPeriodTypes() {
+        const COUNTER_NAME_AR_INVOICE = "A/R Invoice";
+
         this.CurrentSession.StartBusyIndicatorLoading();
         const filters = new ApiQueryFilters();
         filters.GetAll = true;
-    
+     
         this.counterDefinitionPMExtendedService
-        .GetCounterDefinitionsByCounterName("A/R Invoice")
+        .GetCounterDefinitionsByCounterName(COUNTER_NAME_AR_INVOICE)
         .pipe(
             switchMap((counterResult: any) => {
             
                               
                 this.CounterDef = !AppTool.IsNullOrEmpty(counterResult?.Result) ? counterResult.Result : [];
-                this.uniquePeriodPrefix = this.CounterDef ? this.CounterDef.filter(a => a.Parameter1 == "IN")[0]?.UniquePerPrefix : true;
+                this.uniquePeriodPrefix = this.CounterDef?.find(a => a.Parameter1 === "IN")?.UniquePerPrefix ?? true;
                 return this.periodTypeListService.getByFilters(filters);
             })
         )
@@ -180,10 +182,10 @@ export class AccountingPeriodsComponent extends BaseComponent {
     }
     mapPeriodTypToCode(periodTyp: string): string {
         switch (periodTyp) {
-            case "1": return 'Accounting';
-            case "2": return 'IN';
-            case "3": return 'IT';
-            case "4": return 'CD';
+            case PeriodTypeCode.Accounting: return 'Accounting';
+            case PeriodTypeCode.Invoice: return 'IN';
+            case PeriodTypeCode.InterestInvoice: return 'IT';
+            case PeriodTypeCode.CreditNote: return 'CD';
             default: return '';
         }
     }
@@ -285,3 +287,10 @@ export class Args {
     AccountingRow: AccountingPeriodList;
     AccountingRows: AccountingPeriodList[];
 }
+ export enum PeriodTypeCode {
+    Accounting = "1",
+    Invoice = "2",
+    InterestInvoice = "3",
+    CreditNote = "4"
+  }
+  

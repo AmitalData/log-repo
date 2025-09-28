@@ -10,7 +10,7 @@ import {AccountingPeriodPM} from '../../EntityPMs/AccountingPeriodPM';
 
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {Args} from '../Maintenance/AccountingPeriodsComponent';
+import {Args, PeriodTypeCode} from '../Maintenance/AccountingPeriodsComponent';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 
@@ -132,9 +132,9 @@ export class EditAccountingPeriodComponent extends BaseComponent {
         this.accountingPeriodPMService.update(this.EntityPM).subscribe((myResult:any) => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                if(this.accountingPeriodListPM && this.accountingPeriodListPM.length > 0 && this.EntityPM.PeriodTypeCode !== "1"){
+                if(this.accountingPeriodListPM && this.accountingPeriodListPM.length > 0 && this.EntityPM.PeriodTypeCode !== PeriodTypeCode.Accounting){
                     for(var i=0; i<this.accountingPeriodListPM.length; i++){
-                        if(this.accountingPeriodListPM[i].Id != this.EntityPM.Id && this.accountingPeriodListPM[i]?.PeriodTypeCode !== "1"){
+                        if(this.accountingPeriodListPM[i].Id != this.EntityPM.Id && this.accountingPeriodListPM[i]?.PeriodTypeCode !== PeriodTypeCode.Accounting){
                             this.accountingPeriodListPM[i].ClosedMonth = this.EntityPM.ClosedMonth;
                             this.accountingPeriodListPM[i].OpenMonth = this.EntityPM.OpenMonth;
                             this.accountingPeriodPMService.update(this.accountingPeriodListPM[i]).subscribe((myResult:any) => {
