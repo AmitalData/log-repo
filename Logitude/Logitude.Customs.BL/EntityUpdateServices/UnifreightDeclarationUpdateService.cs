@@ -174,10 +174,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
                 }
-                if(lCUSTOMFILENO < 1)
+                if(lCUSTOMFILENO < 1)   
                 {
                     if (!long.TryParse(_DirtyDeclarationPM.CustomFileNo, out lCUSTOMFILENO))
                     {
+                        if (!setting.IsConnectedToUniFreight && _DirtyDeclarationPM.IsCancelled == true && lCUSTOMFILENO == 0)
+                        {
+                            LogMessagingUtil.Instance.AppendLine($"{UnfMarkers.NotFound}: CUSTOMFILENO={lCUSTOMFILENO}; TENANT={_DirtyDeclarationPM.Tenant}; DECL_ID={_DirtyDeclarationPM.Id}");
+                            return;
+                        }
                         throw new BusinessErrorException("dirtyDeclarationPM.CustomFileNo could not convert to long ");
                     }
                 }
