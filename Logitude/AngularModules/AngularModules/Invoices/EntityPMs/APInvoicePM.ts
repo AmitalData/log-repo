@@ -823,6 +823,10 @@ export class APInvoicePM {
     private confirmationNumber: string;
     public get ConfirmationNumber() { return this.confirmationNumber; }
     public set ConfirmationNumber(newValue: string) { if (this.confirmationNumber != newValue) { this.confirmationNumber = newValue; this.MarkAsDirty("ConfirmationNumber"); } }
+
+    private isPrepaidExpenses: boolean;
+    public get IsPrepaidExpenses() { return this.isPrepaidExpenses; }
+    public set IsPrepaidExpenses(newValue: boolean) { if (this.isPrepaidExpenses != newValue) { this.isPrepaidExpenses = newValue; this.MarkAsDirty("IsPrepaidExpenses"); } }
        
 	 
 
@@ -854,4 +858,4 @@ export class APInvoicePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

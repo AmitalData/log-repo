@@ -1,20 +1,2 @@
 ﻿
-<div [hidden]="EntityPM.StatusCode == 'VD'" class="MediaFill">
-    <DocsOutControl [EntityPM]="EntityPM" [EntityId]="EntityId" [EntityReference]="EntityReference" [ObjectTableId]="EntityObjectTableId" [ChildEntityId]="ChildEntityId" [ChildEntityReference]="ChildEntityReference" [ChildObjectTableId]="ChildEntityObjectTableId" [IsCustomFilter]="true" [CustomFilterValue]="CustomFilterValue" [CustomFilterOperation]="CustomFilterOperation"></DocsOutControl>
-</div>
 
-<div [hidden]="EntityPM.StatusCode != 'VD'" class="TabHolder">
-    <table>
-        <tr class="TabTitleRow">
-            <td>
-                {{'APInvoice.TH.DocsOut' | TextCodeTranslationPipe}}
-            </td>
-        </tr>
-
-        <tr>
-            <td style="text-align: center; vertical-align: central; font-size: 54px; color: #6E7172;">
-                Void
-            </td>
-        </tr>
-    </table>
-</div>
