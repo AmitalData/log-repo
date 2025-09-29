@@ -251,9 +251,18 @@
 
                                     <td style="width: 375px;">
                                         <table>
-                                            <td>
-                                                <div></div>
-                                            </td>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 135px;">
+                                                    <LogLabel [ObjectFieldName]="'IsPrepaidExpenses'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                    </LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <CheckBox [IsChecked]="IsPrepaidExpenses"
+                                                        (Checked)="IsPrepaidExpenses = $event"></CheckBox>
+                                                </td>
+                                            </tr>
                                             <!-- ConfirmationNumber -->
                                             <tr class="FormFieldRow">
                                                 <td style="width: 135px;">

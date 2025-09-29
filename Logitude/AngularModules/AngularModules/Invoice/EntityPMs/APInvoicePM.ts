@@ -872,7 +872,12 @@ export class APInvoicePM {
     private confirmationNumberStatus: string;
     public get ConfirmationNumberStatus() { return this.confirmationNumberStatus; }
     public set ConfirmationNumberStatus(newValue: string) { if (this.confirmationNumberStatus != newValue) { this.confirmationNumberStatus = newValue; this.MarkAsDirty("ConfirmationNumberStatus"); } }
+
+    private isPrepaidExpenses: boolean;
+    public get IsPrepaidExpenses() { return this.isPrepaidExpenses; }
+    public set IsPrepaidExpenses(newValue: boolean) { if (this.isPrepaidExpenses != newValue) { this.isPrepaidExpenses = newValue; this.MarkAsDirty("IsPrepaidExpenses"); } }
        
+	 
 	 
 
     public OldEntityPM: APInvoicePM;
@@ -902,4 +907,4 @@ export class APInvoicePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -1093,7 +1093,12 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.EntityPM.IsEquipment = newValue;
         }
     }
-
+    get IsPrepaidExpenses() { return this.EntityPM.IsPrepaidExpenses; }
+    set IsPrepaidExpenses(newValue: boolean) {
+        if (this.EntityPM.IsPrepaidExpenses != newValue) {
+            this.EntityPM.IsPrepaidExpenses = newValue;            
+        }
+    }
     get DueDate() { return this.EntityPM.DueDate; }
     set DueDate(newValue: Date) {
         if (this.EntityPM.DueDate != newValue) {

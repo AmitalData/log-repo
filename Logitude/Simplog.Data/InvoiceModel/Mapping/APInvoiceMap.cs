@@ -148,7 +148,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ConnectedPaymentsNumbers).HasColumnName("ConnectedPaymentsNumbers");
             this.Property(t => t.TotalEquation).HasColumnName("TotalEquation");
             this.Property(t => t.ConfirmationNumber).HasColumnName("ConfirmationNumber");
-      
+            this.Property(t => t.IsPrepaidExpenses).HasColumnName("IsPrepaidExpenses");
+
 
 
             // Relationships

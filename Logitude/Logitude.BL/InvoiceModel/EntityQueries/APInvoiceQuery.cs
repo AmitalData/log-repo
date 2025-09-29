@@ -245,7 +245,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                              TotalEquation = a.TotalEquation,
                              ConfirmationNumber = a.ConfirmationNumber,
-                          
+                             IsPrepaidExpenses = a.IsPrepaidExpenses,
 
                          });          
 
@@ -657,6 +657,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         GlobalTaxCalculation = a.GlobalTaxCalculation,
                                         ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                                         TotalEquation = a.TotalEquation,
+                                        IsPrepaidExpenses = a.IsPrepaidExpenses,
                                     }).FirstOrDefault();
             return entityPM;
         }
@@ -751,6 +752,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         GlobalTaxCalculation = a.GlobalTaxCalculation,
                                         ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                                         TotalEquation = a.TotalEquation,
+                                        IsPrepaidExpenses = a.IsPrepaidExpenses,
                                     }).FirstOrDefault();
 
             if(entityPM != null)
@@ -1204,6 +1206,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              GlobalTaxCalculation = a.GlobalTaxCalculation,
                              IsEquipment = a.IsEquipment,
                              ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
+                             IsPrepaidExpenses = a.IsPrepaidExpenses,
                          };
 
             return result;
@@ -1282,6 +1285,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             TotalVATOnly = a.TotalVATOnly,
                             PaidDate = a.PaidDate,
                             ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
+                            IsPrepaidExpenses = a.IsPrepaidExpenses,
                         };
 
             return query;
@@ -1408,6 +1412,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              TotalVATOnly = a.TotalVATOnly,
                              PaidDate = a.PaidDate,
                              ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
+                             IsPrepaidExpenses = a.IsPrepaidExpenses,
                          };
 
             return result;
@@ -1525,6 +1530,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                 ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                                                 TotalEquation = a.TotalEquation,
                                                 ConfirmationNumber=a.ConfirmationNumber,
+                                                IsPrepaidExpenses = a.IsPrepaidExpenses,
                                             }).ToList();
             return invoicePMs;
         }

@@ -73,7 +73,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         OppositeAccountNumber, 
 	         TenantForConfirmationNumberApi, 
 	         InvoiceNotes, 
-	         InterestInvoiceNotes,
+	         InterestInvoiceNotes, 
+	         PrepaidExpensesGLAccountId,
 	      }
 
 
@@ -142,7 +143,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         OppositeAccountNumber, 
 	         TenantForConfirmationNumberApi, 
 	         InvoiceNotes, 
-	         InterestInvoiceNotes,
+	         InterestInvoiceNotes, 
+	         PrepaidExpensesGLAccountId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -374,6 +376,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestInvoiceNotes))
             {
 				entityPOCO.InterestInvoiceNotes = entityPM.InterestInvoiceNotes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrepaidExpensesGLAccountId))
+            {
+				entityPOCO.PrepaidExpensesGLAccountId = entityPM.PrepaidExpensesGLAccountId;
 			}
 			}
 
@@ -610,6 +617,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.InterestInvoiceNotes = entityPOCO.InterestInvoiceNotes;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PrepaidExpensesGLAccountId))
+            {
+					entityPM.PrepaidExpensesGLAccountId = entityPOCO.PrepaidExpensesGLAccountId;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -839,6 +851,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestInvoiceNotes))
             {
                 oldEntityPM.InterestInvoiceNotes = entityPM.InterestInvoiceNotes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrepaidExpensesGLAccountId))
+            {
+                oldEntityPM.PrepaidExpensesGLAccountId = entityPM.PrepaidExpensesGLAccountId;
             }
 			
 		}
