@@ -22,7 +22,7 @@ import { fieldsError } from 'InfrastructureModules/InfrastructureOthers/AmitalAP
     styles: [`
             LogTabs {
                 display: block; 
-                height: 300px;
+                height: 190px;
             }
         `],
 })
