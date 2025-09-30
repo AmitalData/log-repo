@@ -61,8 +61,9 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("CustomsHSMSignWR");
             _CBWorkerRole.Items.Add("ReportExecutionLogWR");
 			_CBWorkerRole.Items.Add("DocumentAzureQueueWR");
+			_CBWorkerRole.Items.Add("DocumentSFTPAnalyzeWR");
 
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Env:");
+			NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Env:");
            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(LogitudeSettings.LogitudeURL);
 
             var t = new Thread(GetENV);
@@ -293,6 +294,13 @@ namespace AmitalCustomsWindowsService.Tester
 				case "DocumentAzureQueueWR":
 					{
 						d = new AmitalCustomsWindowsService.BL.WorkerOnce<DocumentAzureQueueWR>(
+				10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+						{ ServiceStarted = true, };
+					}
+					break;
+				case "DocumentSFTPAnalyzeWR":
+					{
+						d = new AmitalCustomsWindowsService.BL.WorkerOnce<DocumentSFTPAnalyzeWR>(
 				10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
 						{ ServiceStarted = true, };
 					}
@@ -773,6 +781,13 @@ namespace AmitalCustomsWindowsService.Tester
 					{
 						var documentAzureQueueWR = new DocumentAzureQueueWR();
 						documentAzureQueueWR.DebugStep();
+
+					}
+					break;
+				case "DocumentSFTPAnalyzeWR":
+					{
+						var documentSFTPAnalyzeWR = new DocumentSFTPAnalyzeWR();
+						documentSFTPAnalyzeWR.DebugStep();
 
 					}
 					break;

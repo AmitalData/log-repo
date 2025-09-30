@@ -246,7 +246,8 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new CustomsHSMSignWR());
             listOfWorkerEntryPoint.Add(new ReportExecutionLogWR());
             listOfWorkerEntryPoint.Add(new SyncRecordsCCUTableWR());
-			listOfWorkerEntryPoint.Add(new DocumentAzureQueueWR());      
+			listOfWorkerEntryPoint.Add(new DocumentAzureQueueWR());
+			listOfWorkerEntryPoint.Add(new DocumentSFTPAnalyzeWR());
 
 			bool testCustomsSchedularWR = false;
             if (testCustomsSchedularWR)

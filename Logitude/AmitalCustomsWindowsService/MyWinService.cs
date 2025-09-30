@@ -155,6 +155,7 @@ namespace AmitalCustomsWindowsService
                 AddWorkerFromAppSetting<CustomsHSMSignWR>();
                 AddWorkerFromAppSetting<ReportExecutionLogWR>();
 				AddWorkerFromAppSetting<DocumentAzureQueueWR>();
+				AddWorkerFromAppSetting<DocumentSFTPAnalyzeWR>();
 
 				bool courierFeaturePackageExist = true;
                 if (courierFeaturePackageExist)
