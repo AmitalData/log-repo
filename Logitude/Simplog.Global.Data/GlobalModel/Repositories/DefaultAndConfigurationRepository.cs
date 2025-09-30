@@ -106,5 +106,8 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public IQueryable<DefaultAndConfiguration> GetDefaultAndConfigurations(int tenant) =>
             context.DefaultAndConfigurations.Where(x => x.Tenant == tenant && x.Is_Active == true);
+
+        public IQueryable<DefaultAndConfiguration> GetWithInheritance(int tenant) =>
+            context.DefaultAndConfigurations.Where(x => x.Is_Active == true && (x.Tenant == tenant || (x.Tenant == 0 && x.AllowInheritance == true)));
     }
 }
