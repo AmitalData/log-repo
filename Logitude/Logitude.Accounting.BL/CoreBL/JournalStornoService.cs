@@ -140,6 +140,10 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 Storno.AccountingDate = stornoOverrideM.AccountingDate.Value;
             }
+            if (stornoOverrideM.DocumentDate.HasValue)
+            {
+                Storno.DocumentDate = stornoOverrideM.DocumentDate.Value;
+            }
 
             Storno.AccountingEntityCode = _JournalPM.AccountingEntityCode;
             if (!String.IsNullOrWhiteSpace(stornoOverrideM.AccountingEntityCode) && Storno.AccountingEntityCode != AccountingEntityValues.Revaluation)
