@@ -94,6 +94,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 				   temp.InvoiceDate = MyEntityPM.InvoiceDate;
 				   temp.AccountingDate = MyEntityPM.AccountingDate; 
 				   temp.ConfirmationNumber = MyEntityPM.ConfirmationNumber;
+				   temp.OperationalDate = MyEntityPM.OperationalDate;
 			  
 				   if(MyEntityPM.PaymentTermId != null)
 				   {
@@ -333,7 +334,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
 
 						temp.AccountingDate = MyEntity.AccountingDate;
-
+						temp.OperationalDate = MyEntity.OperationalDate;
 					}  
 
 					
