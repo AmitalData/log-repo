@@ -102,11 +102,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
 
-			if (declarationPM.IsCourierDeclaration && declarationPM.ChangeSetOp == ChangeSetOperation.Update)
+			if (declarationPM.IsCourierDeclaration)
 			{
 				if (isUpdated)
 				{
 					declarationPM.ManifestCargoStatusCode = null;
+					declarationPM.IsChanged = true;
 					declarationPM.ChangeSetOp = ChangeSetOperation.Update;
 					DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
 					declarationUpdateService.Update(declarationPM, true);
