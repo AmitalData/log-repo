@@ -833,6 +833,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             string vatNumbers = string.Join(",", cardLists.Where(card => !string.IsNullOrEmpty(card?.VatNumber)).Select(card => card.VatNumber));
 
             entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName + "," + vatNumbers;
+            if (!string.IsNullOrEmpty(entityPM.SearchFields) && entityPM.SearchFields.Length > 845)
+            {
+                entityPM.SearchFields = entityPM.SearchFields.Substring(0, 845);
+            }
+
         }
 
         private void FillForeignFields(GLAccountPM entityPM)
