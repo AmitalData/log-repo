@@ -222,6 +222,10 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                         this.CancelContainerizationMethod();//SaveDeclarationMethod("DeclarationRestore");
                         break;
                     }
+                case "UpdateContainerization": {
+                    this.UpdateContainerizationMethod();
+                    break;
+                }
             }
         }
     }
@@ -245,7 +249,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
         currRequestParams.DeclarationList = this.EntityPM.ConnectedDeclarations;
         currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
         currRequestParams.Tenant = SessionLocator.Tenant;
-       currRequestParams.RequestOrigin = "DeclarationStatusRequestViewModel";
+        currRequestParams.RequestOrigin = "DeclarationStatusRequestViewModel";
         var _DeclarationMessagesService = new DeclarationMessagesService();
         this.CurrentSession.StartBusyIndicator("Sending...");
 
@@ -271,6 +275,25 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
             });
 
 
+    }
+    UpdateContainerizationMethod() {
+        this.CurrentSession.StartBusyIndicator("");
+        var params: GenericRequestParams = new GenericRequestParams();
+        params.Tenant = SessionLocator.Tenant;
+        var params: GenericRequestParams = new GenericRequestParams();
+        params.Tenant = SessionLocator.Tenant;
+        params.AppicationId = "12345";
+        params.RequestVIA = SendRequestVIA.WebServiceInteractive;
+        params.ForcePersonalSign = false;
+        params.LoggingEnabled = true;
+        params.LoggingEntityId = this.EntityPM.Id;
+        params.LoggingUserId = SessionLocator.LoggedUserId;
+        params.SendUpdateContainerization = true;
+        this.containerizationMessagesService.SendContainerization(params)
+            .subscribe((myServiceResponse: ServiceResponse) => {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.StopBusyIndicator();
+            });
     }
 
 
@@ -305,16 +328,14 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
     CancelContainerizationMethod() {
         if (AppTool.IsNullOrEmpty(this.EntityPM.ExistInCustoms)) {
 
-            if (AppTool.IsNullOrEmpty(this.EntityPM.ConnectedDeclarations))
-            {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.ConnectedDeclarations)) {
                 let messageWindow = new MessageWindow();
                 messageWindow.Width = 300;
                 messageWindow.Height = 180;
                 messageWindow.Title = "שליחת המכלה";
                 messageWindow.Show("המכלה לא קיימת במכס");
             }
-            else
-            {
+            else {
                 let messageWindow = new ConfirmWindow();
                 messageWindow.Width = 300;
                 messageWindow.Height = 180;
@@ -322,7 +343,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                 messageWindow.YesButtonText = "אישור";
                 messageWindow.ShowCancelButton = true;
                 messageWindow.ShowNoButton = false;
-            //messageWindow.RTL = true;
+                //messageWindow.RTL = true;
                 messageWindow.ShowErorImage = true;
                 messageWindow.Show("המכלה לא קיימת במכס, האם לשחרר תיקים?");
                 messageWindow.WindowClosed.subscribe((event: any) => {
@@ -337,55 +358,52 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                 });
             }
         }
-        else
-        {
-            if (AppTool.IsNullOrEmpty(this.EntityPM.ConnectedDeclarations))
-            {
+        else {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.ConnectedDeclarations)) {
                 let messageWindow = new MessageWindow();
                 messageWindow.Width = 300;
                 messageWindow.Height = 180;
                 messageWindow.Title = "שליחת המכלה";
                 messageWindow.Show("לא ניתן לשלוח מסר ביטול ללא הצהרות מקושרות");
             }
-            else 
-            {
-               var confirmWindow = new ConfirmWindow();
-               confirmWindow.Width = 300;
-               confirmWindow.Show("האם ברצונך לבטל את ההמכלה ?");
-               confirmWindow.WindowClosed.subscribe((event: any) => {
-                   if (confirmWindow.Yes) {
-                       this.EntityPM.OperationMode = "3";
-                       this.containerizationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
-                           if (!response.HasError) {
-                               this.CurrentSession.StartBusyIndicator("Sending...");
-                               this.containerizationMessagesService.SendContainerization(this.getParams(response, event)).subscribe((response: ServiceResponse) => {
-                                   console.log("[response] CancelContainerizationMethod: ", response);
-                                   this.CurrentSession.StopBusyIndicator();
-                                   if (!response.Result.HasException) {
-                                       this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                                       this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
-                                       let messageWindow = new MessageWindow();
-                                       messageWindow.Width = 300;
-                                       messageWindow.Height = 180;
-                                       messageWindow.Show("ההמכלה בוטלה בהצלחה");
-                                   }
-                                   else {
-                                       let messageWindow = new MessageWindow();
-                                       messageWindow.Width = 300;
-                                       messageWindow.Height = 180;
-                                       messageWindow.Title = "שליחה נכשלה";
-                                       messageWindow.RTL = true;
-                                       messageWindow.ShowErrorIcon = true;
-                                       messageWindow.Show(response.Result.UserMessage);
-                                   }
-                               });
-                           }
-                       });
-                   }
-               });
+            else {
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 300;
+                confirmWindow.Show("האם ברצונך לבטל את ההמכלה ?");
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        this.EntityPM.OperationMode = "3";
+                        this.containerizationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+                            if (!response.HasError) {
+                                this.CurrentSession.StartBusyIndicator("Sending...");
+                                this.containerizationMessagesService.SendContainerization(this.getParams(response, event)).subscribe((response: ServiceResponse) => {
+                                    console.log("[response] CancelContainerizationMethod: ", response);
+                                    this.CurrentSession.StopBusyIndicator();
+                                    if (!response.Result.HasException) {
+                                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                        this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
+                                        let messageWindow = new MessageWindow();
+                                        messageWindow.Width = 300;
+                                        messageWindow.Height = 180;
+                                        messageWindow.Show("ההמכלה בוטלה בהצלחה");
+                                    }
+                                    else {
+                                        let messageWindow = new MessageWindow();
+                                        messageWindow.Width = 300;
+                                        messageWindow.Height = 180;
+                                        messageWindow.Title = "שליחה נכשלה";
+                                        messageWindow.RTL = true;
+                                        messageWindow.ShowErrorIcon = true;
+                                        messageWindow.Show(response.Result.UserMessage);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
             }
         }
-    }    
+    }
 
     DisplayOnlyCheck() {
     }

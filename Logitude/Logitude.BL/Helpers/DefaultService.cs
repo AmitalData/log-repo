@@ -84,7 +84,7 @@ namespace Logitude.BL.Helpers
         {
             DefaultAndConfigurationRepository repository = new DefaultAndConfigurationRepository(GlobalContext.GetContext(tenant));
             List<DefaultAndConfiguration_Ext> result = repository
-                .GetDefaultAndConfigurations(tenant).ToList()
+                .GetWithInheritance(tenant).ToList()
                 .Select(a => new DefaultAndConfiguration_Ext(a)).ToList();
             return result;
         }

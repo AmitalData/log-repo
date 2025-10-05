@@ -49,6 +49,10 @@ namespace Logitude.CustomsMessaging.RequestServices
 		    {
                 req.ContainerizationDetails.operationCode = 3;
             }
+            if (requestParams.SendUpdateContainerization)
+            {
+                req.ContainerizationDetails.operationCode = 2;
+            }
             //req.ContainerizationDetails.operationCode = Convert.ToInt32(containerization.OperationMode);
             //if (containerization.ContainerizationStatus == "4")
             //{

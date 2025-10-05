@@ -53,6 +53,15 @@ namespace Logitude.Accounting.BL
                 Inactive = false, 
                 EnglishName = "Invoice", 
 			});
+			 
+            all.Add(new PeriodTypeDetails()
+            {    
+                Code = "4", 
+                EnglishName = "Credit Note", 
+                LocalName = "חשבונית זיכוי", 
+                SearchFields = "Credit Note , חשבונית זיכוי,4", 
+                Inactive = false, 
+			});
 			
             return all;
        }

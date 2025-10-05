@@ -66,6 +66,7 @@ export class FullAccountingSettingList {
 	TenantForConfirmationNumberApi: string;
 	InvoiceNotes: string;
 	InterestInvoiceNotes: string;
+	PrepaidExpensesGLAccountId: string;
 	
 }
  

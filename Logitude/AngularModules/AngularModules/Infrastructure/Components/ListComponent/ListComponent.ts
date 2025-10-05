@@ -2107,7 +2107,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                             }
 
                             case "DefaultAndConfiguration": {
-                                logWindow.Height = 400;
+                                logWindow.Height = 275;
+                                logWindow.Width = 870;
                                 break;
                             }
 
@@ -3604,8 +3605,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.Height = 200;
                         break;
                     }
-
-
+                case "DefaultAndConfiguration": 
+                    {
+                        logWindow.Height = 275;
+                        logWindow.Width = 870;
+                        break;
+                    }
             }
 
             var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;

@@ -134,6 +134,8 @@ namespace CustomsBook
                 {
                     Directory.GetFiles(folder).ToList().ForEach(File.Delete);
                 }
+
+                CustomsBookRepository.UpdateCB_LastUpdateDateForAllCustomsSettings();
             }
         }
         static List<string> FindFileNames()

@@ -1476,6 +1476,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string prepaidExpensesGLAccountId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PrepaidExpensesGLAccountId  
+	   {
+	    
+	     get
+		{
+		   return prepaidExpensesGLAccountId;
+		 }
+		 set
+		 {
+		   if(prepaidExpensesGLAccountId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrepaidExpensesGLAccountId",OldValue=prepaidExpensesGLAccountId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   prepaidExpensesGLAccountId=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

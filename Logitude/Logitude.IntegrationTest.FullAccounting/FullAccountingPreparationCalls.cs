@@ -22,6 +22,8 @@ namespace Logitude.IntegrationTest.FullAccounting
             await GetAccounntingPeriods("1");
             await GetAccounntingPeriods("2");
             await GetAccounntingPeriods("3");
+            await GetAccounntingPeriods("4");
+
             await OpenCurrentMonth();
             await GetAccountingCurriencyTenant();
             await GetCountryAX();

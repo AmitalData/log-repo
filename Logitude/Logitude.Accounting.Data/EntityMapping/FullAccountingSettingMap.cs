@@ -121,6 +121,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.InvoiceNotes).HasColumnName("InvoiceNotes").HasMaxLength(40).IsUnicode(true);
 
             this.Property(t => t.InterestInvoiceNotes).HasColumnName("InterestInvoiceNotes").HasMaxLength(40).IsUnicode(true);
+
+            this.Property(t => t.PrepaidExpensesGLAccountId).HasColumnName("PrepaidExpensesGLAccountId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

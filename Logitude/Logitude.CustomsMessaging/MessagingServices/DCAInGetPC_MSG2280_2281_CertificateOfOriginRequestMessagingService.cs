@@ -74,9 +74,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override CertificateOfOriginRequestRequestParams CreateDefaultRequestParamsFromCustomsResponse(PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback customsResponse)
         {
-			CertificateOfOriginPM entity = new CertificateOfOriginQueryService(CustomContext.GetContext(SettingUtil.GetCurrentTenant())).GetCertificateOfOriginByCounter(
-			   customsResponse.CertificateOfOriginRequestFeedback.internalApplication);
-			var myRequestParams = new CertificateOfOriginRequestRequestParams()
+            int tenant = SettingUtil.GetCurrentTenant();
+            CertificateOfOriginPM entity = new CertificateOfOriginQueryService(CustomContext.GetContext(tenant)).GetCertificateOfOriginByCounter(
+               customsResponse.CertificateOfOriginRequestFeedback.internalApplication, tenant);
+            var myRequestParams = new CertificateOfOriginRequestRequestParams()
             {
 				LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
 			    LoggingEntityId = entity.DeclarationId,
