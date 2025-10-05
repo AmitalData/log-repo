@@ -37,7 +37,6 @@ import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocat
 import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
 import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccountListService';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { isThisTypeNode } from 'typescript';
 declare var window: any;
 
 @Component({
@@ -218,6 +217,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("LocalDescription", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("IsPrepaidExpenses", this.ObjectTableName, false);
 
         }
 
@@ -1096,8 +1096,29 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     get IsPrepaidExpenses() { return this.EntityPM.IsPrepaidExpenses; }
     set IsPrepaidExpenses(newValue: boolean) {
         if (this.EntityPM.IsPrepaidExpenses != newValue) {
-            this.EntityPM.IsPrepaidExpenses = newValue;            
+            this.EntityPM.IsPrepaidExpenses = newValue;  
+            if (newValue) {
+                this.ShowRecurringScheduleSettings();
+            }          
         }
+    }
+    ShowRecurringScheduleSettings(){
+
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 350;
+        logWindow.Title = "Recurring Schedule Settings";
+        //logWindow.WindowArgs = { CurrencyId: this.ForiegnCurrencyId, CurrencyCode: this.ForiegnCurrencyCode, Rate: this.ForiegnExchangeRate, Date: loadingDate };
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    
+                }
+            });
+        });
+        logWindow.Show('./CommonModules/CommonOthers/Components/RecurringSchedule/RecurringScheduleComponent');
+      
     }
     get DueDate() { return this.EntityPM.DueDate; }
     set DueDate(newValue: Date) {
@@ -2205,5 +2226,8 @@ export class APInvoiceLineItem extends BaseComponent {
         }
     }
 
+
+  
+   
 }
 

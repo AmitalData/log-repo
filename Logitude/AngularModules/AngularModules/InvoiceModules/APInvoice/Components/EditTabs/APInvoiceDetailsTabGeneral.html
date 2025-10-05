@@ -260,9 +260,13 @@
 
                                                 <td>
                                                     <CheckBox [IsChecked]="IsPrepaidExpenses"
-                                                        (Checked)="IsPrepaidExpenses = $event"></CheckBox>
+                                                        (Checked)="IsPrepaidExpenses = $event"
+                                                        [IsEnabled]="IsScreenEnabled"></CheckBox>
                                                 </td>
                                             </tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
                                             <!-- ConfirmationNumber -->
                                             <tr class="FormFieldRow">
                                                 <td style="width: 135px;">
