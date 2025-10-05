@@ -93,7 +93,7 @@ namespace Logitude.CRM.Data.BusinessUnitFilters
         {
             List<RoleFeature> myFeatureRoles = new List<RoleFeature>();
 
-            if (loggedUserEmail != "admin@fnarsoft.com")
+            if (loggedUserEmail != "support@amital.co.il")
             {
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(myCurrentTenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Ticket", 0, true);

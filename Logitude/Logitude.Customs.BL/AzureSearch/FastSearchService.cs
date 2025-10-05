@@ -16,17 +16,26 @@ namespace Logitude.Customs.BL.AzureSearch
     {
         private const string AzureSearchAISetKey = "AzureSearchAI";
         private const string AzureSearchAISettingsSetKey = "AzureSearchAISettings";
-        private static DefaultAndConfiguration_Ext ConnectionDetails => DefaultService.Instance.Get(0, AzureSearchAISetKey, "Customs");
-        private static string serviceName => ConnectionDetails?.Value1;
-        private static string apiKey => ConnectionDetails?.Value2;
-        private static DefaultAndConfiguration_Ext settings => DefaultService.Instance.Get(0, AzureSearchAISettingsSetKey, "Customs");
-        private static bool perfixSearch => settings != null && (bool)settings.ObjVal1;
         private static readonly DevLog logger = DevLog.Instance;
 
         private static readonly Dictionary<string, Func<FastSearchService>> _indexRegistry = new Dictionary<string, Func<FastSearchService>>()
         {
             { "declarations", () => new DeclarationAzureSearchService() }
         };
+
+        public static DefaultAndConfiguration_Ext GetAzureSearchAISettings(int tenant) => DefaultService.Instance.Get(tenant, AzureSearchAISettingsSetKey, "Customs");
+
+
+        public static DefaultAndConfiguration_Ext GetConnectionDetails(int tenant)
+        {
+            DefaultAndConfiguration_Ext ConnectionDetails = DefaultService.Instance.Get(tenant, AzureSearchAISetKey, "Customs");
+            if (ConnectionDetails == null)
+                ConnectionDetails = DefaultService.Instance.Get(0, AzureSearchAISetKey, "Customs");
+            if (ConnectionDetails == null)
+                throw new Exception("connection detailes for search AI not found");
+
+            return ConnectionDetails;
+        }
 
         public static async Task<List<dynamic>> Search(ApiQueryFilters filters, string searchText, string index, int tenant)
         {
@@ -66,7 +75,9 @@ namespace Logitude.Customs.BL.AzureSearch
 
             filters = ManipulateFilters(additionalFilters, filters, tenant);
 
-            FastSearchAzureSearchRepo fastSearchAzureSearchRepo = new FastSearchAzureSearchRepo(serviceName, apiKey, tableName);
+            DefaultAndConfiguration_Ext connectionDetails = GetConnectionDetails(tenant);
+            FastSearchAzureSearchRepo fastSearchAzureSearchRepo = new FastSearchAzureSearchRepo(connectionDetails.Value1, connectionDetails.Value2, tableName);
+
             List<string> fieldsNotExistsInIndex = await FieldsNotExistsInIndex(filters, fastSearchAzureSearchRepo);
             if (fieldsNotExistsInIndex.Count > 0)
                 throw new FieldsNotExistsInIndexException(fieldsNotExistsInIndex);
@@ -75,7 +86,10 @@ namespace Logitude.Customs.BL.AzureSearch
             FastSearchSettings settings = await GetIndexSettingsAsync(tenant, indexSettingsName);
             List<string> selectedFields = GetSelectedFields(settings);
 
-            return await fastSearchAzureSearchRepo.SearchAsync(filters, searchText, settings.maxResults, selectedFields, perfixSearch);
+            DefaultAndConfiguration_Ext azureSearchAISettings = GetAzureSearchAISettings(tenant);
+            bool prefixSearch = azureSearchAISettings == null || (bool)azureSearchAISettings.ObjVal1;
+
+            return await fastSearchAzureSearchRepo.SearchAsync(filters, searchText, settings.maxResults, selectedFields, prefixSearch);
         }
 
         protected virtual void ManipulateAdditionalFilters(List<QueryFilterItem> additionalFilters, int tenant) { }
@@ -94,7 +108,10 @@ namespace Logitude.Customs.BL.AzureSearch
             if (string.IsNullOrEmpty(settings))
                 throw new ArgumentNullException(nameof(settings), "AzureSearch settings default not found");
 
-            return JsonConvert.DeserializeObject<FastSearchSettings>(settings);
+            FastSearchSettings fastSearchSettings = JsonConvert.DeserializeObject<FastSearchSettings>(settings);
+            fastSearchSettings.minimumSearchQueryLength = fastSearchSettings.minimumSearchQueryLength ?? 3;
+
+            return fastSearchSettings;
         }
 
         private static List<string> GetSelectedFields(FastSearchSettings settings) =>

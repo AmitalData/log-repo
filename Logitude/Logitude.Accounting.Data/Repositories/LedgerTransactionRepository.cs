@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,18 +13,21 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
 using System.Reflection.Emit;
-using Simplog.Server.Infrastructure.Helpers;
+//using Simplog.Server.Infrastructure.Helpers;
 
 using Logitude.Accounting.Data.DataContract;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Runtime.InteropServices;
 using Logitude.Server.Tools;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Accounting.Data.Enums;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity; 
+
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -42,7 +44,7 @@ namespace Logitude.Accounting.Data.Repositories
         }
         public void ResetDraftOpenReconciliation(string gLAccountId, int tenant)
         {
-            using (var scope = TransactionFactory.GetTransaction())
+            using (var scope = Simplog.Server.Infrastructure.Helpers.TransactionFactory.GetTransaction())
 
             //using (var context = new BloggingContext())
             {
@@ -1346,6 +1348,41 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return mysumlist;
         }
 
+
+        public List<CurrencySum> GetLedgerTransactionTotalLocalAmountFromToV2(
+    IEnumerable<string> accountIds,
+    DateTime fromDate,
+    DateTime toDate,
+    int tenant)
+        {
+            var ids = (accountIds ?? Enumerable.Empty<string>())
+                      .Where(id => !string.IsNullOrEmpty(id))
+                      .Distinct()
+                      .ToList();
+
+            if (!ids.Any())
+                return new List<CurrencySum>();
+
+            var q = from r in context.LedgerTransactions.AsNoTracking()
+                    where ids.Contains(r.AccountId)
+                          && r.AccountingDate >= fromDate
+                          && r.AccountingDate <= toDate
+                          && r.Tenant == tenant
+                    group r by new { r.AccountId, r.CurrencyId } into g
+                    select new CurrencySum
+                    {
+                        AccountId = g.Key.AccountId,
+                        CurrencyId = g.Key.CurrencyId,
+                        LocalAmountCredit = g.Sum(x => x.LocalAmountCredit),
+                        LocalAmountDebit = g.Sum(x => x.LocalAmountDebit),
+                        ForeignAmountCredit = g.Sum(x => x.ForeignAmountCredit),
+                        ForeignAmountDebit = g.Sum(x => x.ForeignAmountDebit)
+                    };
+
+            return q.ToList();
+        }
+
+
         public IQueryable<CurrencySum> GetQLedgerTransactionGroupBETWEENinclusive(DateTime fromDate, DateTime toDate, int tenant)
         {
             return (from r in context.LedgerTransactions
@@ -1727,7 +1764,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         GetLedgerTransactionsByJournalIdsCombined(List<string> journalIds, int tenant)
         {
             // Single DB query (Include Account and JournalLine to capture all required data)
-            var query = context.LedgerTransactions
+            var query = ((DbQuery<LedgerTransaction>)context.LedgerTransactions)
                 .Include("JournalLine")
                 .Include("Account")
                 .Where(a => journalIds.Contains(a.JournalId) && a.Tenant == tenant)
@@ -1756,7 +1793,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         {
 
 
-            return (from a in context.LedgerTransactions.Include("Account")
+            return (from a in ((DbQuery<LedgerTransaction>)context.LedgerTransactions).Include("Account")
                     where journalIds.Contains(a.JournalId) && a.Tenant == tenant && a.AccountId == accountId
 
                     select a

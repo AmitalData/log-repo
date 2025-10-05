@@ -508,8 +508,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 bool anyClosedSolved = pm.DeclarationPendings != null &&
                     closedNow.Count > 0 &&
                     pm.DeclarationPendings.Any(p =>
-                        p.ChangeSetOp != ChangeSetOperation.Delete &&
-                        p.Status == "S" &&
+                       (p.Status == "S" || p.ChangeSetOp == ChangeSetOperation.Delete) &&
                         closedNow.Contains(p.CourierPendingReasonCode));
 
                 if (anyClosedSolved)

@@ -10,7 +10,7 @@ import {AccountingPeriodPM} from '../../EntityPMs/AccountingPeriodPM';
 
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {Args} from '../Maintenance/AccountingPeriodsComponent';
+import {Args, PeriodTypeCode} from '../Maintenance/AccountingPeriodsComponent';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 
@@ -24,12 +24,14 @@ export class EditAccountingPeriodComponent extends BaseComponent {
     public DataContext: EditAccountingPeriodComponent = this;
     public EntityPM: AccountingPeriodPM;
     public EntityId: string;
+    accountingPeriodListPM: AccountingPeriodPM[];
 
     oldClosedMonth: number;
 
     public ObjectTableName: string = "AccountingPeriod";
     accountingPeriodPMService: AccountingPeriodPMService;
-    transactionsService: LedgerTransactionListService;s
+    transactionsService: LedgerTransactionListService;
+    accountingPeriodList: AccountingPeriodList[];
 
     accountingPeriod: AccountingPeriodList;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -48,8 +50,8 @@ export class EditAccountingPeriodComponent extends BaseComponent {
 
         this.EntityId = args.EntityId;
         this.accountingPeriod = args.AccountingRow;
-
-
+        this.accountingPeriodList = args.AccountingRows;
+       
         this.Run();
     }
 
@@ -59,7 +61,18 @@ export class EditAccountingPeriodComponent extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(result)) {
                 this.EntityPM = result;
                 this.oldClosedMonth = this.EntityPM.ClosedMonth;
-
+                if(this.accountingPeriodList && this.accountingPeriodList.length > 0){
+                    this.accountingPeriodListPM = [];
+                    for(var i=0; i<this.accountingPeriodList.length; i++){
+                        if(this.accountingPeriodList[i].Id !== this.EntityPM.Id ){
+                            this.accountingPeriodPMService.get(this.accountingPeriodList[i]?.Id).subscribe((myResult: any) => {
+                                if(myResult && myResult.Result){
+                                   this.accountingPeriodListPM.push(myResult.Result);
+                                }
+                            })
+                        }
+                    }
+                }
             } else {
                 console.log("cannot find the entity!!");
             }
@@ -115,10 +128,28 @@ export class EditAccountingPeriodComponent extends BaseComponent {
     }
 
     SubmitChanges() {
+       
         this.accountingPeriodPMService.update(this.EntityPM).subscribe((myResult:any) => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
+                if(this.accountingPeriodListPM && this.accountingPeriodListPM.length > 0 && this.EntityPM.PeriodTypeCode !== PeriodTypeCode.Accounting){
+                    for(var i=0; i<this.accountingPeriodListPM.length; i++){
+                        if(this.accountingPeriodListPM[i].Id != this.EntityPM.Id && this.accountingPeriodListPM[i]?.PeriodTypeCode !== PeriodTypeCode.Accounting){
+                            this.accountingPeriodListPM[i].ClosedMonth = this.EntityPM.ClosedMonth;
+                            this.accountingPeriodListPM[i].OpenMonth = this.EntityPM.OpenMonth;
+                            this.accountingPeriodPMService.update(this.accountingPeriodListPM[i]).subscribe((myResult:any) => {
+                                var mm: ServiceResponse = myResult;
+                                if (mm.HasError) {
+                                    this.ValidationErrorsList = mm.ErrorsArray;
+                                }
+                                
+                            });
+                        }
+                       
+                    }
+                }
                 this.CurrentSession.CloseCurrentWindowEmit("ok");
+
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;

@@ -621,7 +621,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 var batchTaskId = myBatchGLAccountInterestActivationBalanceTask.CreateQBatchTaskExecution<GLAccountInterestActivationBalanceArgs>(
                     args, args.Tenant, subj, false);
             }
-            if (!string.IsNullOrEmpty(entityPM.CustomerDebtNotification?.AccountId) && !string.IsNullOrEmpty(entityPM.CustomerDebtNotification?.TasksSchedulerId))
+            if (!string.IsNullOrEmpty(entityPM.CustomerDebtNotification?.AccountId))
             {
 				var accountingContext = AccountingContext.GetContext(tenant);
 				CustomerDebtNotificationUpdateService customerDebtNotificationUpdateService = new CustomerDebtNotificationUpdateService(accountingContext,new Dictionary<string, IContext>(), tenant);

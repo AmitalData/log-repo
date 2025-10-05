@@ -1,5 +1,6 @@
 using System.Data.Common;
 using System.Data.Entity;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mapping;
 using Simplog.Data.InfrastructureModel.Mapping;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -477,6 +478,7 @@ namespace Simplog.Data.InvoiceModel
         public IDbSet<APInvoiceAnalytic> APInvoiceAnalytics { get; set; }
         public IDbSet<DigitalInvoicesCounterDataView> DigitalInvoicesCounterDataView { get; set; }
         public IDbSet<ControlForInvoiceLinesDataView> ControlForInvoiceLinesDataView { get; set; }
+        public IDbSet<BankAccountView> BankAccountView { get; set; }
         public IDbSet<ConfirmationNumberStatus> ConfirmationNumberStatuses { get; set; }
         public IDbSet<ConfirmationNumberDefault> ConfirmationNumberDefaults { get; set; }
 

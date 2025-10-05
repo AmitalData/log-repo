@@ -93,4 +93,5 @@ export interface FastSearchResult {
     recentEditScreenParam: string;
     addAsteriskToNumberSearch: string;
     DDLWidth: string;
+    minimumSearchQueryLength: number;
 }

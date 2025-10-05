@@ -47,6 +47,7 @@ import { QBOGlobalTaxCalculationListService } from './Services/StandardLists/QBO
 import { ConfirmationNumberDefaultListService } from './Services/StandardLists/ConfirmationNumberDefaultListService';
 import { ConfirmationNumberDefaultPMService } from './Services/StandardPMs/ConfirmationNumberDefaultPMService';
 import { ConfirmationNumberStatusListService } from './Services/StandardLists/ConfirmationNumberStatusListService';
+import { ConfirmationNumberDefaultExtendedService } from './Services/ExtendedPMs/ConfirmationNumberDefaultExtendedService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -97,6 +98,7 @@ export class ModuleProviders {
             case "APPaymentTransferStatusListService": { myResult = new APPaymentTransferStatusListService(); break; }
             case "ARInvoiceStockPMService": { myResult = new ARInvoiceStockPMService(); break; }
             case "ARInvoiceExtendedService": { myResult = new ARInvoiceExtendedService(); break; }
+            case "ConfirmationNumberDefaultExtendedService": { myResult = new ConfirmationNumberDefaultExtendedService(); break; }
 
             case "APInvoiceMenuButtonsHandler": { myResult = new APInvoiceMenuButtonsHandler(); break; }
             case "APPaymentMenuButtonsHandler": { myResult = new APPaymentMenuButtonsHandler(); break; }

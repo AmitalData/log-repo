@@ -74,8 +74,6 @@ namespace WebFreight.Web.DataContracts
         public DateTime?  DigitalLastLoginDateTime { get; set; }
         public string InvalidDocumentToken { get; set; }
 
-        public bool IsAdmin { get; set; }
-
 
         //public string LoginPolicyCode { get; set; }
         //[Key]

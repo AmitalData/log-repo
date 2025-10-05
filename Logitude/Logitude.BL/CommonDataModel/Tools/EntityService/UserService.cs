@@ -514,7 +514,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
 			MapUserToContact(entityPM, newContact);
 
-            Contact adminContact = contactRepository.GetSingleContactByEmail("admin@fnarsoft.com", 0);
+            Contact adminContact = contactRepository.GetSingleContactByEmail("support@amital.co.il", 0);
             if (adminContact != null)
             {
                 newContact.Signature = adminContact.Signature;
@@ -618,7 +618,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             entityPM.Email = entityPM.Email.ToLower();
 
-            Contact adminContact = contactRepository.GetSingleContactByEmail("admin@fnarsoft.com", 0);
+            Contact adminContact = contactRepository.GetSingleContactByEmail("support@amital.co.il", 0);
             if (adminContact != null)
             {
                 contact.Signature = adminContact.Signature;

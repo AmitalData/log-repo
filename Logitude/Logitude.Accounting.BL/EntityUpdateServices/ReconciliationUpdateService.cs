@@ -613,8 +613,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ledgerTransactionUpdateService._CancelledAction = this._CancelledAction;
             ledgerTransactionUpdateService.UpdateMulti(LedgerTransactionPMsUpdated, new List<LedgerTransactionPM>(), entityPM, false);
 
-            bool getNewContextWhileStreamingLedger = true;
-            if (getNewContextWhileStreamingLedger && (this._CancelledAction || !updateGLAccountAgingDataUsingWR))
+            if (this._CancelledAction || !updateGLAccountAgingDataUsingWR)
             {
                 UpdateGLaccountAgingData(entityPM);
             }

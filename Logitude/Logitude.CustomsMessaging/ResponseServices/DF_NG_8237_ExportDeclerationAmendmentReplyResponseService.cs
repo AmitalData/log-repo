@@ -83,12 +83,37 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
                 {
+                    DeclarationPM declarationPM = null;
                     if (requestParams.IsFromAutoClosing)
                     {
-                        var declarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, false, false);
+                        declarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, true, false);
                         var comments = "";
                         customResponse.ResponseContentHeader.Exception.ForEach(x => comments += x.ExeptionDescription);
                         RaiseEvent(declarationPM, null, "CF2", comments);
+                    }
+                    if (requestParams.IsExportClose)
+                    {
+                        DeclarationError declarationError = new DeclarationError();
+                        declarationError.Entitites = new List<Entity>();
+                        foreach (var item in customResponse.ResponseContentHeader?.Exception)
+                        {
+                            Entity entity = new Entity();
+                            entity.FieldErrors = new List<field>();
+                            entity.FieldErrors.Add(new field()
+                            {
+                                MessageError = item.ExeptionDescription,
+                                Code = "Exception",
+                                ListVersionID = "1"
+
+                            });
+                            declarationError.Entitites.Add(entity);
+                        }
+                        var myDeclaretionErrorXml = XmlGenericUtil<DeclarationError>.SerializeObject(declarationError);
+                        if(declarationPM == null)
+                            declarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, true, false);
+                        declarationPM.ExportClosedErrorXML = myDeclaretionErrorXml;
+                        declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                        myDeclarationUpdateService.Update(declarationPM, true);
                     }
                     this.MyResponseData.ApplicationID = requestParams.AppicationId;
                     this.MyResponseData.Succeeded = true;
@@ -884,7 +909,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
 
-                AutoFixDeclarationDiamondByErrors(customResponse, _MyDeclarationPM, context);
+                AutoFixDeclarationDiamondByErrors(customResponse, _MyDeclarationPM, context, requestParams.RequestVIA);
 
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
@@ -933,11 +958,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-        public void AutoFixDeclarationDiamondByErrors(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, DeclarationPM declaration, ICustomContext context)
+        public void AutoFixDeclarationDiamondByErrors(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, DeclarationPM declaration, ICustomContext context, SendRequestVIA requestVIA)
         {
             try
             {
-            if (declaration.Direction == "E" && declaration.AutoSending && declaration.IsDiamondDeclaration)
+            if (declaration.Direction == "E" && declaration.AutoSending && declaration.IsDiamondDeclaration && requestVIA != SendRequestVIA.WebServiceInteractive)
             {
                 logger.Debug("Starting To Handle Customs Errors.");
                 if (customResponse?.Response?.Error == null) return;
@@ -1010,7 +1035,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     // send auto close declaration:
                     logger.Debug("Before Send8235.");
                     ICustomsAutoDecClosing CustomsAutoDecClosing = Server.Tools.ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new Microsoft.Practices.Unity.ParameterOverride("", 1)) as ICustomsAutoDecClosing;
-                    CustomsAutoDecClosing.Send8235(_MyDeclarationPM);
+                    CustomsAutoDecClosing.Send8235(_MyDeclarationPM,"" , true);
                     logger.Debug("After Send8235.");
                 }
             }
@@ -1343,7 +1368,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
     public class CustomsAutoDecClosing : ICustomsAutoDecClosing
     {
 
-        public void Send8235(DeclarationPM decPm, string LoggingUserId = "")
+        public void Send8235(DeclarationPM decPm, string LoggingUserId = "", bool isAutoSendByErrorDiamondDec = false)
         {
             DateTime stopLogAt = DateTime.MinValue;
 
@@ -1395,11 +1420,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             try
             {
-                ExportDeclarationAmendmentResponseData responseData = requestParamsData.IsTransShipment ?
-                        new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
-                        new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
-                LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing AFTER SEND", false, "sendClosing", stopLogAt);
-
+                if (isAutoSendByErrorDiamondDec)
+                {  requestParamsData.ignoreConcurrentKiller=true; 
+                    requestParamsData.InterfaceTypeCode = requestParamsData.IsTransShipment ? "8235T" : "8235";
+                    requestParamsData.FutureSendDateTime = DateTime.Now.AddMinutes(1);
+                    SBQMessageService.CreateSheetSBQMessage<AmendmentRequestParams>(requestParamsData , false, requestParamsData.FutureSendDateTime );
+                }
+                else
+                {
+                    ExportDeclarationAmendmentResponseData responseData = requestParamsData.IsTransShipment ?
+                            new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
+                            new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
+                    LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing AFTER SEND", false, "sendClosing", stopLogAt);
+                }
+                
             }
             catch (System.Exception ex)
             {

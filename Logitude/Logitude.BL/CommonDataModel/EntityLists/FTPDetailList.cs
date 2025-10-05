@@ -22,5 +22,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string CreatedByUserId { get; set; }
         public string UpdatedByUserId { get; set; }
         public bool UseSFTP { get; set; }
-    }
+		public byte[] PrivateKey { get; set; }
+		public string Port { get; set; }
+
+	}
 }

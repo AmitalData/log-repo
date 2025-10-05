@@ -179,6 +179,9 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.MarkDate).HasColumnName("MarkDate");
 
+            this.Property(t => t.ForeignCurrencyInterest).HasColumnName("ForeignCurrencyInterest");
+
+
         }
     }
 }

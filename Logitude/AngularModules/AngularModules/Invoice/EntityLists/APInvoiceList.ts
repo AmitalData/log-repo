@@ -103,5 +103,6 @@ export class APInvoiceList {
 		ConnectedPaymentsNumbers: string;
 		ConfirmationNumber: string;
 		ConfirmationNumberStatus: string;
+		IsPrepaidExpenses: boolean;
 	
-}
+}

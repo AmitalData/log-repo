@@ -378,6 +378,14 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
             this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, isFieldRequired);
         }
+        if(this.VatNumber === SessionLocator.AccountingSettingPM.VatNumber  && InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM)){
+            this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
+
+        }
+        else{
+            this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, false);
+
+        }
     }
     SetUIProperties_ExchangeRate() {
         var isFieldtEnabled = false;
@@ -507,7 +515,14 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                                     }
                                 });
                             }
+                            if(this.VatNumber === SessionLocator.AccountingSettingPM.VatNumber  && InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM)){
+                                this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
 
+                            }
+                            if(this.VatNumber !== SessionLocator.AccountingSettingPM.VatNumber || !InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM)){
+                                this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, false);
+                                
+                            }
                             if (!AppTool.IsNullOrEmpty(this.cardList.InvoiceCurrencyId)) {
                                 this.InvoiceCurrencyId = this.cardList.InvoiceCurrencyId;
                             }
@@ -1028,6 +1043,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     myResult = lastRate.ValueDate;
                 }
             }
+            
         }
 
         return myResult;
@@ -1666,9 +1682,14 @@ export class ARInvoiceLineItem extends BaseComponent {
             else {
                 var lastRate: LastRate = this.fatherComponent.LastRatesList.filter(d => d.ForeignCurrencyId == this.ForiegnCurrencyId)[0];
                 if (lastRate != null) {
-                    myRate = lastRate.Rate;
+                    const exchangeRateId = !this.fatherComponent.glaccount?.IsMultiCurrency ? this.fatherComponent.glaccount?.ExchangeRateId  : this.fatherComponent.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === this.ForiegnCurrencyId)?.ExchangeRateId ?? this.fatherComponent.glaccount?.ExchangeRateId;
+                    const customRate = exchangeRateId 
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
+                        : null;
+                    myRate = customRate ?? lastRate.Rate;
                     myRateDate = lastRate.ValueDate;
                 }
+               
             }
         }
 

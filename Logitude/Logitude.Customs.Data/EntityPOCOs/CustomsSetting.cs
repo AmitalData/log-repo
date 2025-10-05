@@ -100,10 +100,12 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int? MaxItemsSendInteractive { get; set; }
         [Column("MaxSISendInteractive")]
 	    public int? MaxSISendInteractive { get; set; }
-          [Column("ForbiddenSigns")]
-	    public string ForbiddenSigns { get; set; }
-         [Column("CourierDocToken")]
+        [Column("CourierDocToken")]
 	    public string CourierDocToken { get; set; }
-     }
+        [Column("ForbiddenSigns")]
+	    public string ForbiddenSigns { get; set; }
+        [Column("CB_LastUpdateDate")]
+	    public DateTime? CB_LastUpdateDate { get; set; }
+    }
 }
 	 

@@ -22,12 +22,15 @@ export class AppHeaderComponent {
 	@Output() searchClick = new EventEmitter<string | number>();
 	discountCodes: string = 'קודי הנחה';
 	IsDiscountCodes: boolean = false;
+	lastUpdateTaskScheduled: Date;
 
 	constructor(private headerService: HeaderService, private searchService: SearchService, private filterPopupService: FilterPopupService) { }
 
 	ngOnInit(): void {
 		this.selected = this.headerService.getSearchState();
-		
+		this.headerService.lastUpdateTaskScheduled.subscribe((date: Date) => {
+			this.lastUpdateTaskScheduled = date;
+		});
 		this.headerService.IsDiscountCodes.subscribe((value) => {
 			this.IsDiscountCodes = value;
 		});

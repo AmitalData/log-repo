@@ -2702,10 +2702,19 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 						ClasificationQtyTypes.Add(SupplierInvoiceItemPM.ClassificationCode, invoiceQuantityType);
 					}
 				}
-				if (string.IsNullOrWhiteSpace(invoiceQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.QUANTITY_TYPE))
-				{
-					invoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.QUANTITY_TYPE);
-				}
+				 if (string.IsNullOrWhiteSpace(invoiceQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.QUANTITY_TYPE))
+                {
+                    invoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.QUANTITY_TYPE);
+                    if (invoiceQuantityType != null &&
+                        invoiceQuantityType == "KGM" &&
+                        string.IsNullOrWhiteSpace(invoiceItem.ITEM_WEIGHT))
+                    {
+                        if (decimal.TryParse(invoiceItem.ITEM_WEIGHT, out decimal decimalValue))
+                        {
+                            SupplierInvoiceItemPM.InvoiceQuantity = decimalValue;
+                        }
+                    }
+                }
 				if (!string.IsNullOrWhiteSpace(invoiceQuantityType))
 				{
 					SupplierInvoiceItemPM.InvoiceQuantityType = invoiceQuantityType;

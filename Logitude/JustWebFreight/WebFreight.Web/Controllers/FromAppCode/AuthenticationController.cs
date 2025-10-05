@@ -617,7 +617,10 @@ namespace WebFreight.Web
 
             HttpCookie cookie1 = new HttpCookie(FormsAuthentication.FormsCookieName, "");
             cookie1.Expires = DateTime.Now.AddYears(-1);
-            HttpContext.Current.Response.Cookies.Add(cookie1);
+			cookie1.HttpOnly = true;               
+			cookie1.Secure = true;                 
+			cookie1.SameSite = SameSiteMode.Lax; 
+			HttpContext.Current.Response.Cookies.Add(cookie1);
             HttpContext.Current.Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
             HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             HttpContext.Current.Response.Cache.SetNoStore();
@@ -1675,7 +1678,9 @@ namespace WebFreight.Web
 
                                 string encryptedTicket = FormsAuthentication.Encrypt(ticket);
                                 HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-                                authCookie.SameSite = SameSiteMode.None;
+								authCookie.HttpOnly = true;          
+								authCookie.Secure = true;								
+								authCookie.SameSite = SameSiteMode.None;
                                 HttpContext.Current.Response.Cookies.Add(authCookie);
 
                             }
@@ -1787,7 +1792,6 @@ namespace WebFreight.Web
                     }
 
                     user.HtmlVersion = GetHtmlVersion();
-                    user.IsAdmin = SecurityUtility.isUserAdmin(email, tenant) || customerCare;
                 }
 
                 int executionTime = (int)((DateTime.Now.Ticks - DateBeforePostLoginData.Ticks) / TimeSpan.TicksPerMillisecond);
@@ -2008,7 +2012,7 @@ namespace WebFreight.Web
                 }
 
 
-                string environment = IsLogBoxEnvironment() ? "Logbox" : LogitudeSettings.WorkEnvironment == "cloud" ? "Cloud" : "Logitude";
+                string environment = IsLogBoxEnvironment() ? "Logbox" : "AmitalCloud";
                 string body = "Please use the code " + device.AuthenticationCode + " to verify your " + environment + " Account";
                 byte[] bytearray = Encoding.ASCII.GetBytes(body);
 
@@ -3172,7 +3176,7 @@ namespace WebFreight.Web
             else HttpContext.Current.Response.Headers.Add("ServerTime", executionTime.ToString());
 
         }
-
+        
 
 
         //   [OperationContract]

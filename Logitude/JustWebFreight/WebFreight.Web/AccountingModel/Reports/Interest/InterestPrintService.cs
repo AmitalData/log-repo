@@ -6,6 +6,8 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
@@ -158,6 +160,7 @@ using WebFreight.Web.Helpers;
                         line.Date = transactionDP.InterestValueDate.Value.Date;
                         totalLocalInPeriod += transactionDP.LocalAmount;
                         line.LocalAmount = transactionDP.LocalAmount;
+                        line.AmountInCurrencyReport = _InterestReportPM.IsForeignCurrency ? transactionDP.ForeignAmount : transactionDP.LocalAmount;
                         line.Reference1 = GetReference1(transactionDP);
                         line.Notes = GetNotes(transactionDP);
                         line.IsOpenBalanceLine = false;
@@ -215,7 +218,7 @@ using WebFreight.Web.Helpers;
             decimal? lastTotal, int tenant)
         {
             GetGLAccountDisplayNumber(tenant, interestReportDP, _InterestReportPM);
-
+            GetCurrency(tenant,_InterestReportPM.ReportCurrencyId  ,  interestReportDP);
 
             interestReportDP.CustomerName = _InterestReportPM.CustomerName;
             interestReportDP.InterestCalculationDate = _InterestReportPM.InterestCalculationDate;
@@ -230,7 +233,6 @@ using WebFreight.Web.Helpers;
             interestReportDP.PostponedChequesCommission = !string.IsNullOrEmpty(_InterestReportPM.GLAccountId) ? GetPostponedChequesCommission(_InterestReportPM.GLAccountId, _InterestReportPM.Tenant) : null;
             interestReportDP.CountPostponedCheques = CalcCountPostponedCheques(interestReportDP.CalculatedPostponedChequesCommision, interestReportDP.PostponedChequesCommission);
             interestReportDP.TotalAmountWithPostponedCheques = _InterestReportPM?.TotalAmount + _InterestReportPM?.CalculatedPostponedChequesCommision;
-
             interestReportDP.InterestReportFlatLineList.Add(EndFlatLine(_InterestReportPM, lastTotal));
 
             Reorder(interestReportDP);
@@ -340,6 +342,7 @@ using WebFreight.Web.Helpers;
                             SourceType = transactionList.SourceType,
                             SourceTypeCode = transactionList.SourceTypeCode,
                             Tenant = transactionList.Tenant,
+                            AmountInCurrencyReport = _InterestReportPM.IsForeignCurrency ? transactionList.ForeignAmount : transactionList.LocalAmount,
                             Reference1 = GetReference1FromITList(transactionList),
                         };
                         futureInterestTransactions.Add(futureInterestTransactionProvider);
@@ -361,6 +364,7 @@ using WebFreight.Web.Helpers;
                 rv.Date = interestReportPM.InterestCalculationDate;
                 rv.Notes = TranslateTextsClass.Translate("Accounting.General.O.OpenAmount", interestReportPM.Tenant);
                 rv.LocalAmount = interestReportPM.OpenBalance ?? 0m;
+                rv.AmountInCurrencyReport = interestReportPM.OpenBalance ?? 0m;
                 rv.TotalToDate = rv.LocalAmount;
                 rv.TotalLocalInPeriod = rv.LocalAmount;
 
@@ -451,7 +455,21 @@ using WebFreight.Web.Helpers;
             }
         }
 
-        private static string SetAllotmentCalculationEquation(InterestDataProvider interestReportDP, InterestReportPM InterestReportPM)
+
+        private static void GetCurrency(int tenant,string currencyId, InterestDataProvider InterestReportDP)
+        {
+            CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
+            CurrencyPM currencyPM = currencyQuery.GetSinglePM(currencyId, tenant);
+
+            InterestReportDP.ReportCurrencyCode = currencyPM?.Code;
+            InterestReportDP.ReportCurrencyName = currencyPM?.EnglishName ;
+            InterestReportDP.ReportCurrencyLocalName = currencyPM?.LocalName;
+
+        }
+
+
+
+        private static string SetAllotmentCalculationEquation(InterestDataProvider InterestReportDP, InterestReportPM InterestReportPM)
         {
             if (InterestReportPM.CreditAllotmentPercentage != null)
             {

@@ -322,6 +322,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PrepaidExpensesGLAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultVATTypeId"
     ReferencedTable="VatTypes"
@@ -414,6 +421,11 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="TaxInstitutionGLAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PrepaidExpensesGLAccountId"
     ReferencedTable="GLAccounts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />

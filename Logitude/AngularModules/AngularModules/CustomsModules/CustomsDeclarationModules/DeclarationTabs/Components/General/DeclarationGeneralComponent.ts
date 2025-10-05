@@ -1795,10 +1795,10 @@ export class DeclarationExportRecipientModel extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(item: DeclarationExportRecipientPM, parent: DeclarationGeneralComponent, public EntityResourceService: EntityResourceService) {
         super();
+        this.Parent = parent;
+        this.EntityPM = item;
+        
         this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationExportRecipient").subscribe((response: any) => {
-
-            this.EntityPM = item;
-            this.Parent = parent;
             this.UIProperties.SetEnabled("RecipientIssueCountryCode", this.ObjectTableName, !this.Parent.IsDisplayOnly);
             this.UIProperties.SetEnabled("RecipientAddress", this.ObjectTableName, !this.Parent.IsDisplayOnly);
             this.UIProperties.SetEnabled("RecipientName", this.ObjectTableName, !this.Parent.IsDisplayOnly);

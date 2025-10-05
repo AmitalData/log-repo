@@ -96,6 +96,9 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string ParentId { get; set; }
         public bool ForceCompanySign { get; set; }
         public string DeclarationDirection { get; set; } = null;
+        public bool ignoreConcurrentKiller { get; set; }
+
+        public bool SendUpdateContainerization { get; set; }
     }
 
     public class TestCase

@@ -1,11 +1,10 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { ChangeDetectorRef } from '@angular/core';
-import { Console } from 'console';
 import { BehaviorSubject, Observable, Subscription,Subject } from 'rxjs';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import { ShipmentsListComponent } from '../Components/UserDashboard/ShipmentsPage/ShipmentsList/ShipmentsListComponent';
 import { CargoTrackingShipmentSearchInput } from './CargoTrackingShipmentFilters';
-import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
+import { UserExtendedService } from '../Services/Others/UserExtendedService';
 
 export class ShipmentDataSource extends DataSource<any | undefined> {
     private pageSize = 50;
@@ -23,13 +22,14 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
         public ShipmentSearchService: CargoTrackingSearchService,
         public ShipmentsFilters: CargoTrackingShipmentSearchInput,
         private parent: ShipmentsListComponent,
+        private userExtendedService: UserExtendedService,
         public ShipmentsCount = 1
     ) {
         super();
         this.InitComponent();
 
     }
-
+ 
     private InitComponent() {
         this.parent.ShipmentsCount = 0;
         this.parent.noResult = false;
@@ -89,6 +89,7 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
              this.GetShipmentsPage(pageNumber);
         }
     }
+    
 
     GetShipmentsCustomers(tenant: number) {
 
@@ -109,11 +110,19 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
                 StartwithoutSpeicalCharCustomers = StartwithoutSpeicalCharCustomers.sort((a, b) => a["Name"].toUpperCase().replace(/ /g, "") > b["Name"].toUpperCase().replace(/ /g, "") ? 1 : a["Name"].toUpperCase().replace(/ /g, "") === b["Name"].toUpperCase().replace(/ /g, "") ? 0 : -1);
                 this.parent.InvitedCustomers = StartwithSpeicalCharCustomers.concat(StartwithoutSpeicalCharCustomers);
                 this.parent.FillInvitedCustomersDictionary(this.parent.InvitedCustomers);
-                if (!SessionInfo.IsAdmin) {
-
-                    this.parent.GetInvitedCustomers();
-                }
-                this.ChangeDetector.detectChanges();
+                this.userExtendedService.IsUserAdmin().subscribe(
+                    (res: any) => {
+                        const isAdmin = res === true;
+                        if (!isAdmin) {
+                            this.parent.GetInvitedCustomers();
+                        }
+                        this.ChangeDetector.detectChanges();
+                    },
+                    (err) => {
+                        console.error("Failed to check admin status", err);
+                        this.ChangeDetector.detectChanges();
+                    }
+                );
             }, error => {
                 this.parent.ShipmentsLoadingError = error.statusText;
                 console.error(error);

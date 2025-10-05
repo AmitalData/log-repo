@@ -76,7 +76,7 @@
             this.EmailTextBox.Name = "EmailTextBox";
             this.EmailTextBox.Size = new System.Drawing.Size(176, 22);
             this.EmailTextBox.TabIndex = 3;
-            this.EmailTextBox.Text = "admin@fnarsoft.com";
+            this.EmailTextBox.Text = "support@amital.co.il";
             // 
             // EmailLabel
             // 

@@ -162,11 +162,18 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
 			if (LogitudeSettings.IsCostomsDeploy)
 			{
 				ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
-                //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-                CustomsDocumentPM customsDoc = currentCustomsDoc ?? customsDocumentQueryService.GetSingle(documentsFilingPM.Id, false, false, documentsFilingPM.Tenant);
-                if (customsDoc == null)
+                CustomsDocumentPM customsDocument = customsDocumentQueryService.GetSingle(documentsFilingPM.Id, false, false, documentsFilingPM.Tenant);
+                CustomsDocumentPM customsDoc = currentCustomsDoc ?? customsDocument;
+			
+
+				if (customsDoc == null)
                     LogMessagingUtil.Instance.AppendLine("customsDoc is null inside MapEntityToHybrid.");
-                if (customsDoc != null &&
+
+				NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DocumentsFilingId: " + customsDoc?.DocumentsFilingId);
+				NetCommonHelper.Logger.DevLog.Instance.WriteDebug("currentCustomsDoc: " + currentCustomsDoc?.IsPartOfDeclaration + "customsDocument:" + customsDocument?.IsPartOfDeclaration);
+				NetCommonHelper.Logger.DevLog.Instance.WriteDebug("StackTrace" + Environment.StackTrace);
+
+				if (customsDoc != null &&
 					!String.IsNullOrEmpty(customsDoc.CustomsDocId))
 				{
 					documentsFilingPM.DocumentsFilingMetaDataValues.Add(new DocumentsFilingMetaDataValuePM()
@@ -186,7 +193,7 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
 						DocumentsMetaDataTypeId = "DREL",
 						Tenant = documentsFilingPM.Tenant,
 						DocumentsFilingId = documentsFilingPM.Id,
-						MetaDataValue = customsDoc.IsPartOfDeclaration.ToString(),
+						MetaDataValue = customsDoc.IsPartOfDeclaration == true || customsDocument.IsPartOfDeclaration ==  true ? "true": "false",
 					});
 				}
 			}

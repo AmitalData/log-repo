@@ -204,6 +204,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         
         if (this.fastSearchService.$fastSearchEnable.value) {
             try {
+                if (this.searchFields?.length < this.fastSearchService.Settings.minimumSearchQueryLength) return;
+
                 this.searchRun = true;
                 this.CD.detectChanges();
                 this.searchDropdownOptions = await this.fastSearchService.search(this.CurrentQueryFilters, this.searchFields)
@@ -249,7 +251,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     async showRecentSearches() {
-        if (!this.fastSearchService.$fastSearchEnable.value || this.searchFields?.length > 0) return;
+        if (!this.fastSearchService.$fastSearchEnable.value || this.searchFields?.length >= this.fastSearchService.Settings.minimumSearchQueryLength) return;
 
         this.searchDropdownOptions = await this.fastSearchService.getRecentSearches();
         this.CD.detectChanges();    
@@ -2105,7 +2107,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                             }
 
                             case "DefaultAndConfiguration": {
-                                logWindow.Height = 400;
+                                logWindow.Height = 275;
+                                logWindow.Width = 870;
                                 break;
                             }
 
@@ -3602,8 +3605,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.Height = 200;
                         break;
                     }
-
-
+                case "DefaultAndConfiguration": 
+                    {
+                        logWindow.Height = 275;
+                        logWindow.Width = 870;
+                        break;
+                    }
             }
 
             var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;

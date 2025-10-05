@@ -485,7 +485,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    NumberOfDigits="6"
+    NumberOfDigits="10"
     DigitsAfterPoint="3"
     InActive="false"
     DisplayLongName="false"

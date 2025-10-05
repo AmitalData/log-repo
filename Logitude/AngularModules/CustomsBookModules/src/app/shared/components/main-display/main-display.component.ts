@@ -94,6 +94,7 @@ export class MainDisplayComponent implements OnInit {
 		if (SessionInfo.LoggedUserTenant == 0) this.GetAllCustomsBookMainView();
 		else this.checkIsFeaturePermessionCustomsBook(() => this.GetAllCustomsBookMainView());
 
+		this.getCustomsBookLastUpdateDate();
 		// listen to loading mode changes:
 		this.isLoadingMode.subscribe((isLoading) => {
 			this.isLoading = isLoading;
@@ -101,6 +102,24 @@ export class MainDisplayComponent implements OnInit {
 		this.isFeaturePermessionCB.subscribe((isFeaturePermessionCB) => {
 			this.isFeaturePermessionCBMsg = isFeaturePermessionCB;
 		});
+	}
+
+	getCustomsBookLastUpdateDate() {
+		
+		this.API_MainService.GetCustomsBookLastUpdateDateByTenant(SessionInfo.LoggedUserTenant).subscribe(
+			(data: any) => {
+				
+				const result = data.body;
+				if (!result) return;
+				console.log(result);
+				this.headerService.setLastUpdateTaskScheduled(result);
+			},
+			(error) => {
+				this.isLoadingMode.next(false);
+				this.itemsData.next([]);
+				console.log(error.message);
+			}
+		);
 	}
 
 	checkDefaultCB_CollapseSearchHierarchy() {

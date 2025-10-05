@@ -536,6 +536,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             return this.repository.GetLedgerTransactionTotalLocalAmountFromTo(gLAccointId, fromDate, toDate, tenant);
         }
+
+
+        public List<CurrencySum> GetLedgerTransactionTotalLocalAmountFromToV2(IEnumerable<string> accountIds, DateTime fromDate, DateTime toDate, int tenant)
+        {
+            return this.repository.GetLedgerTransactionTotalLocalAmountFromToV2(accountIds, fromDate, toDate, tenant);
+        }
+
+
+
         public List<LedgerTransactionPM> GetByJournalId(string journalId, int tenant)
         {
             List<LedgerTransaction> ledgerTransactionPOCOs = null;

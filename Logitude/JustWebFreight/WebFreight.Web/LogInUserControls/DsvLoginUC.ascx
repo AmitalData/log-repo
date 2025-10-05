@@ -1207,13 +1207,15 @@
     // An adaptation of Dorcht's cookie functions 
 
     function set_cookie(name, value, expires, path, domain, secure) {
+       const isSecure = (window.location.protocol === "https:");
 
         if (!expires) { expires = new Date() }
         document.cookie = name + "=" + escape(value) +
         ((expires == null) ? "" : "; expires=" + expires.toGMTString()) +
         ((path == null) ? "" : "; path=" + path) +
         ((domain == null) ? "" : "; domain=" + domain) +
-        ((secure == null) ? "" : "; secure");
+        (isSecure ? "; Secure" : "") +
+        "; SameSite=Lax";
     }
 
     function get_cookie(name) {
@@ -1286,7 +1288,7 @@
 
 
 
-</script> 
+    </script> 
         
     <script type="text/javascript">
         $(document).ready(function () {

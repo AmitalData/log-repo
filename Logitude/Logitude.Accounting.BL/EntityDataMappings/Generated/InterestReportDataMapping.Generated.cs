@@ -49,7 +49,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InvoiceFailureReason, 
 	         CreditAllotmentPercentage, 
 	         CalCreditAllotmentCommission, 
-	         CalculatedPostponedChequesCommision,
+	         CalculatedPostponedChequesCommision, 
+	         IsForeignCurrency, 
+	         ReportCurrencyId,
 	      }
 
 
@@ -96,7 +98,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsNewReport, 
 	         CreditAllotmentPercentage, 
 	         CalCreditAllotmentCommission, 
-	         CalculatedPostponedChequesCommision,
+	         CalculatedPostponedChequesCommision, 
+	         IsForeignCurrency, 
+	         ReportCurrencyId, 
+	         ReportCurrencyCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -208,6 +213,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CalculatedPostponedChequesCommision))
             {
 				entityPOCO.CalculatedPostponedChequesCommision = entityPM.CalculatedPostponedChequesCommision;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsForeignCurrency))
+            {
+				entityPOCO.IsForeignCurrency = entityPM.IsForeignCurrency;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReportCurrencyId))
+            {
+				entityPOCO.ReportCurrencyId = entityPM.ReportCurrencyId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -326,6 +341,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.CalculatedPostponedChequesCommision = entityPOCO.CalculatedPostponedChequesCommision;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsForeignCurrency))
+            {
+					entityPM.IsForeignCurrency = entityPOCO.IsForeignCurrency;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReportCurrencyId))
+            {
+					entityPM.ReportCurrencyId = entityPOCO.ReportCurrencyId;
+            }
+
 		}
 
 		public void PMToOldPM(InterestReportPM entityPM, InterestReportPM oldEntityPM)
@@ -435,6 +460,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CalculatedPostponedChequesCommision))
             {
                 oldEntityPM.CalculatedPostponedChequesCommision = entityPM.CalculatedPostponedChequesCommision;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsForeignCurrency))
+            {
+                oldEntityPM.IsForeignCurrency = entityPM.IsForeignCurrency;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReportCurrencyId))
+            {
+                oldEntityPM.ReportCurrencyId = entityPM.ReportCurrencyId;
             }
 			
 		}

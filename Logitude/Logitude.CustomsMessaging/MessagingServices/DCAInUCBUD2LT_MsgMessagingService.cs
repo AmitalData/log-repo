@@ -61,8 +61,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCBUD2LTWithResponseContentHeader customsResponse)
         {
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-            var objectTableId2 = ObjectTableRepository.GetObjectTableByName("DocumentsFiling");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration", customsResponse.tenant);
+            var objectTableId2 = ObjectTableRepository.GetObjectTableByName("DocumentsFiling", customsResponse.tenant);
             var genericRequestParams = new GenericRequestParams()
             {
                 Tenant = customsResponse.tenant,
@@ -100,8 +100,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             DocumentsFilingPM documentsFilingPM/*, DeclarationPM declarationPM*/ ,string entityId)
         {
 
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-            var objectTableDocumentsFilingId = ObjectTableRepository.GetObjectTableByName("DocumentsFiling");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration", tenant);
+            var objectTableDocumentsFilingId = ObjectTableRepository.GetObjectTableByName("DocumentsFiling", tenant);
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
 
 
@@ -684,7 +684,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("IsConnected2Decalaration() id:{0}, EntityId:{1} ,ExternalEntityReference{2} ", _DocumentsFilingPM.Id, this._DocumentsFilingPM.EntityId, this._DocumentsFilingPM.ExternalEntityReference));
 
-            return (this._DocumentsFilingPM.ObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration") &&  ( !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.EntityId) || !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.ExternalEntityReference))) || this._DocumentsFilingPM.ExternalEntityName == "EFIFILEM";
+            return (this._DocumentsFilingPM.ObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration", this._DocumentsFilingPM.Tenant) &&  ( !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.EntityId) || !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.ExternalEntityReference))) || this._DocumentsFilingPM.ExternalEntityName == "EFIFILEM";
         }
 
 

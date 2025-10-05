@@ -577,7 +577,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
 
         var isValid: boolean = true;
         isValid = this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
-        if ( !this.ChartOfAccountId && this.selectedChartOfAccountsTypes?.length === 0 && !this.SelectedCategoryValue && !this.Salesman && this.ListGLAccounts.length < 1 && (!this.FromGLAccountId || !this.ToGLAccountId) && !this.GLAccountId) {
+        if (!this.IsDisableGlaccountId && !this.ChartOfAccountId && this.selectedChartOfAccountsTypes?.length === 0 && !this.SelectedCategoryValue && !this.Salesman && this.ListGLAccounts.length < 1 && (!this.FromGLAccountId || !this.ToGLAccountId) && !this.GLAccountId) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFieldsForNew"));
             isValid = false;
         }
@@ -627,7 +627,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
       
     }
 
-    RunButtonClicked() {
+    RunButtonClicked(isInteractive: boolean) {
         this.SetUIProperties();
 
 
@@ -640,6 +640,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
             myReportFliter.NumberOfPage = 1;
             myReportFliter.ProcessType = "GenerateReport";
             myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            myReportFliter.IsInteractive = isInteractive;
 
             this.RunReportEvent.emit(myReportFliter);
 

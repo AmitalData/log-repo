@@ -356,17 +356,17 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.8\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.8\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Resources, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\UnifreightIIGResources.1.0.6\lib\Net40\UnifreightIIG.Resources.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.8\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -406,10 +406,10 @@
     <Compile Include="BL\SIIRequest\SIIRequestValidator.cs" />
     <Compile Include="BL\SIIRequest\SIIRequestWebApiEndpointConfig.cs" />
     <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
-      <Compile Include="CloseTables\Codes\DeclarationDirection.cs" />
+    <Compile Include="CloseTables\Codes\DeclarationDirection.cs" />
      <Compile Include="CloseTables\Codes\EventStatuses.cs" />
     <Compile Include="CloseTables\Codes\UserCodes.cs" />
-     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
+    <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomRabbitMQQueue.cs" />
     <Compile Include="CloseTables\CustomsPartnerFtpDetails.cs" />
@@ -604,7 +604,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\TransactionNatureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DeclaraionDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransportMeansTypeDetails.Generated.cs" />
-      <Compile Include="CloseTables\DetailsClassesGenerated\UnloadingSiteTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\UnloadingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ValidCustomsItemDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\VehicleManufacturerDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\VehiclePoolTypeDetails.Generated.cs" />
@@ -677,7 +677,7 @@
     <Compile Include="CloseTables\EnumGenerated\CustomerTypeGeneralStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomMetaDataTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsAddressTypeStruct.Generated.cs" />
-     <Compile Include="CloseTables\EnumGenerated\CustomsBookTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsBookTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsBranchStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsDocumentStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsDocumentUploadStruct.Generated.cs" />

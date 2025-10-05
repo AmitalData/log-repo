@@ -43,6 +43,7 @@ using Logitude.Customs.Def.Messaging.Customs;
 using Simplog.Data.CommonDataModel;
 using System.Globalization;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
+using Logitude.Customs.BL.Messaging.U2L.ImportDeclaration;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -216,10 +217,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
 
                         int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
+                    bool isConnectedToUniFreight = setting?.IsConnectedToUniFreight == true;
+                    if (!isConnectedToUniFreight && _DirtyDeclarationPM.IsCancelled == true && !FILENO.HasValue)
+                    {
+                        LogMessagingUtil.Instance.AppendLine($"{UnfMarkers.NotFound}: CUSTOMFILENO={lCUSTOMFILENO}; TENANT={_DirtyDeclarationPM.Tenant}; DECL_ID={_DirtyDeclarationPM.Id}");
+                        return;
+                    }
+
+
                         if (FILENO.HasValue)
                         {
                             LogMessagingUtil.Instance.AppendLine("Update3: GetFILENOByCUSTOMFILENO, file: " + lCUSTOMFILENO);
-                        bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
                         if (isConnectedToUniFreight) {
                             int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO, _DirtyDeclarationPM.Tenant);
                         }
@@ -1341,13 +1349,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             //Writing RESHIMON DATE and there is no HATARA DATE  ==> INDICATORS="G"
-            
-            if (_DirtyDeclarationPM.PaymentDate.HasValue && !_DirtyDeclarationPM.HatraDate.HasValue && _DirtyDeclarationPM.IsAmendment == false)
+
+            if (_DirtyDeclarationPM.PaymentDate.HasValue && !_DirtyDeclarationPM.HatraDate.HasValue)
             {
                 DeclarationRepository dr = new DeclarationRepository(_DirtyDeclarationPM.Tenant);
                 var hasHatara = dr.HasHataraByCustomFile(_DirtyDeclarationPM.CustomFileNo, _DirtyDeclarationPM.Tenant);
-                if(!hasHatara)
+                if (!hasHatara)
+                {
                     _CCUFILEMPM.INDICATORS = "G";
+                }
+                else
+                {
+                    _CCUFILEMPM.INDICATORS = "";
+                }
             }
             //Deleting RESHIMON DATE ==> INDICATORS=""
             if (!_DirtyDeclarationPM.PaymentDate.HasValue && _CCUFILEMPM.RESHMDATE.HasValue)

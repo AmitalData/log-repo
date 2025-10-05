@@ -924,6 +924,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? cB_LastUpdateDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? CB_LastUpdateDate  
+	   {
+	    
+	     get
+		{
+		   return cB_LastUpdateDate;
+		 }
+		 set
+		 {
+		   if(cB_LastUpdateDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CB_LastUpdateDate",OldValue=cB_LastUpdateDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   cB_LastUpdateDate=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

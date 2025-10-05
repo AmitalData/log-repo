@@ -290,7 +290,7 @@
                     </td>
 
                     <!-- 2 -->
-                    <td style="width: 245px">
+                    <td style="width: 330px">
                         <LogLov
                             [ShowInActive]="true"
                             [ObjectFieldName]="'Collector'"
@@ -318,7 +318,7 @@
                     </td>
 
                     <!-- 4 -->
-                    <td style="width: 200px">
+                    <td style="width: 250px">
                         <div style="width: 150px;" *ngIf="chartOfAccountsTypes.length > 0">
 
                              <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150"  
@@ -525,9 +525,9 @@
                     </td>
 
                     <!-- 3 -->
-                    <td>
+                    <td style="padding-top: 4px; width: 160px;">
                         <AdvancedDatePicker
-                            style="display: block; width: 110px"
+                            style="display: block; width: 135px"
                             float-start
                             [ObjectFieldName]="'FromDate'"
                             [ObjectTableName]="ObjectTableName"
@@ -596,16 +596,12 @@
                     </td>
 
                     <!-- 7 -->
-                    <td>
-                        <div style="width: 100px" float-left>
-                            <button
-                                class="GreenButton"
-                                (click)="RunButtonClicked()"
-                            >
-                                {{RunReportTitle}}
-                            </button>
-                        </div>
-                    </td>
+                     <td [hidden]="IsSchedulerReport" style="float: right; margin-right: 100px;">
+                        <app-run-report-toggle [isRTL]="isRTL" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunButtonClicked($event)"></app-run-report-toggle>
+                    </td> 
+                   
+
+
                 </tr>
 
                 <!-- Row 5-->
@@ -623,98 +619,100 @@
                     </td>
 
                     <!-- 2 -->
-                    <td style="">
-                        <ComboBox
-                            style="display: inline-block; width: 100px"
-                            [ItemsSource]="CategoriesList"
-                            [SelectedItem]="SelectedCategory"
-                            (SelectedItemChanged)="SelectedItemChanged($event)"
-                            [IsDisabled]="IsCategoryDisabled"
-                        ></ComboBox>
+                    <td style="padding-top: 6px;">
+                        <tr>
+                            <ComboBox
+                                style="display: inline-block; width: 121px;"
+                                [ItemsSource]="CategoriesList"
+                                [SelectedItem]="SelectedCategory"
+                                (SelectedItemChanged)="SelectedItemChanged($event)"
+                                [IsDisabled]="IsCategoryDisabled"
+                            ></ComboBox>
 
-                        <div
-                            style="
-                                display: inline-block;
-                                width: 117px;
-                                padding: 0 5px;
-                            "
-                            [ngSwitch]="SelectedCategory"
-                            [class.disabled]="IsCategoryDisabled"
-                        >
-                            <!-- Category 1 -->
-                            <LogLov
-                                [ShowInActive]="true"
-                                *ngSwitchCase="'Category 1'"
-                                [ObjectFieldName]="'Category1'"
-                                [ObjectTableName]="'GLAccount'"
-                                [DataContext]="DataContext"
-                                [DisplayMemberPath]="'LocalName'"
-                                [LookUpTableName]="'Category1'"
-                                [HideColumns]="true"
+                            <div
+                                style="
+                                    display: inline-block;
+                                    width: 121px;
+                                    padding: 0 5px;
+                                "
+                                [ngSwitch]="SelectedCategory"
+                                [class.disabled]="IsCategoryDisabled"
                             >
-                            </LogLov>
+                                <!-- Category 1 -->
+                                <LogLov
+                                    [ShowInActive]="true"
+                                    *ngSwitchCase="'Category 1'"
+                                    [ObjectFieldName]="'Category1'"
+                                    [ObjectTableName]="'GLAccount'"
+                                    [DataContext]="DataContext"
+                                    [DisplayMemberPath]="'LocalName'"
+                                    [LookUpTableName]="'Category1'"
+                                    [HideColumns]="true"
+                                >
+                                </LogLov>
 
-                            <!-- Category 2 -->
-                            <LogLov
-                                [ShowInActive]="true"
-                                *ngSwitchCase="'Category 2'"
-                                [ObjectFieldName]="'Category2'"
-                                [ObjectTableName]="'GLAccount'"
-                                [DataContext]="DataContext"
-                                [DisplayMemberPath]="'LocalName'"
-                                [LookUpTableName]="'Category2'"
-                                [HideColumns]="true"
-                            >
-                            </LogLov>
+                                <!-- Category 2 -->
+                                <LogLov
+                                    [ShowInActive]="true"
+                                    *ngSwitchCase="'Category 2'"
+                                    [ObjectFieldName]="'Category2'"
+                                    [ObjectTableName]="'GLAccount'"
+                                    [DataContext]="DataContext"
+                                    [DisplayMemberPath]="'LocalName'"
+                                    [LookUpTableName]="'Category2'"
+                                    [HideColumns]="true"
+                                >
+                                </LogLov>
 
-                            <!-- Category 3 -->
-                            <LogLov
-                                [ShowInActive]="true"
-                                *ngSwitchCase="'Category 3'"
-                                [ObjectFieldName]="'Category3'"
-                                [ObjectTableName]="'GLAccount'"
-                                [DataContext]="DataContext"
-                                [DisplayMemberPath]="'LocalName'"
-                                [LookUpTableName]="'Category3'"
-                                [HideColumns]="true"
-                            >
-                            </LogLov>
+                                <!-- Category 3 -->
+                                <LogLov
+                                    [ShowInActive]="true"
+                                    *ngSwitchCase="'Category 3'"
+                                    [ObjectFieldName]="'Category3'"
+                                    [ObjectTableName]="'GLAccount'"
+                                    [DataContext]="DataContext"
+                                    [DisplayMemberPath]="'LocalName'"
+                                    [LookUpTableName]="'Category3'"
+                                    [HideColumns]="true"
+                                >
+                                </LogLov>
 
-                            <!-- Category 4 -->
-                            <LogLov
-                                [ShowInActive]="true"
-                                *ngSwitchCase="'Category 4'"
-                                [ObjectFieldName]="'Category4'"
-                                [ObjectTableName]="'GLAccount'"
-                                [DataContext]="DataContext"
-                                [DisplayMemberPath]="'LocalName'"
-                                [LookUpTableName]="'Category4'"
-                                [HideColumns]="true"
-                            >
-                            </LogLov>
+                                <!-- Category 4 -->
+                                <LogLov
+                                    [ShowInActive]="true"
+                                    *ngSwitchCase="'Category 4'"
+                                    [ObjectFieldName]="'Category4'"
+                                    [ObjectTableName]="'GLAccount'"
+                                    [DataContext]="DataContext"
+                                    [DisplayMemberPath]="'LocalName'"
+                                    [LookUpTableName]="'Category4'"
+                                    [HideColumns]="true"
+                                >
+                                </LogLov>
 
-                            <!-- Category 5 -->
-                            <LogLov
-                                [ShowInActive]="true"
-                                *ngSwitchCase="'Category 5'"
-                                [ObjectFieldName]="'Category5'"
-                                [ObjectTableName]="'GLAccount'"
-                                [DataContext]="DataContext"
-                                [DisplayMemberPath]="'LocalName'"
-                                [LookUpTableName]="'Category5'"
-                                [HideColumns]="true"
-                            >
-                            </LogLov>
+                                <!-- Category 5 -->
+                                <LogLov
+                                    [ShowInActive]="true"
+                                    *ngSwitchCase="'Category 5'"
+                                    [ObjectFieldName]="'Category5'"
+                                    [ObjectTableName]="'GLAccount'"
+                                    [DataContext]="DataContext"
+                                    [DisplayMemberPath]="'LocalName'"
+                                    [LookUpTableName]="'Category5'"
+                                    [HideColumns]="true"
+                                >
+                                </LogLov>
 
-                            <!-- Default -->
-                            <div *ngSwitchDefault>
-                                <!--<span style="font-style: italic; color: #d1d1d1;font-size: 10px;">Select category first...</span>-->
-                                <ComboBox
-                                    [ItemsSource]="[]"
-                                    [IsDisabled]="true"
-                                ></ComboBox>
+                                <!-- Default -->
+                                <div *ngSwitchDefault>
+                                    <!--<span style="font-style: italic; color: #d1d1d1;font-size: 10px;">Select category first...</span>-->
+                                    <ComboBox
+                                        [ItemsSource]="[]"
+                                        [IsDisabled]="true"
+                                    ></ComboBox>
+                                </div>
                             </div>
-                        </div>
+                        </tr>
                     </td>
 
                     <!-- 3 -->
@@ -745,7 +743,12 @@
                     </td>
                     <td></td>
                     <td></td>
-                    <td style="width: 200px"></td>
+                    <td [hidden]="IsSchedulerReport" style="width: 200px"> 
+
+                    </td> 
+                   <td [hidden]="!IsSchedulerReport" style="float: right; margin-right: 100px;">
+                        <app-run-report-toggle [isRTL]="isRTL" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunButtonClicked($event)"></app-run-report-toggle>
+                    </td> 
                 </tr>
 
                 <tr [hidden]="!IsSchedulerReport" class="FieldRow">

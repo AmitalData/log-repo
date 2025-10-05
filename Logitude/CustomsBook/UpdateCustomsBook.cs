@@ -42,7 +42,7 @@ namespace CustomsBook
         static string sqlConnectionString = ConfigurationManager.ConnectionStrings["LogitudeStr"].ConnectionString;
 
         public static async Task Run()
-        {            
+        {
             await DownloadFile();
         }
         static async Task DownloadFile()
@@ -134,6 +134,8 @@ namespace CustomsBook
                 {
                     Directory.GetFiles(folder).ToList().ForEach(File.Delete);
                 }
+
+                CustomsBookRepository.UpdateCB_LastUpdateDateForAllCustomsSettings();
             }
         }
         static List<string> FindFileNames()
@@ -516,7 +518,7 @@ namespace CustomsBook
                         }
 
                         message.Subject = subject;
-                        message.Body = $"An error occurred:\n\n{ex}";
+                        message.Body = $"ConnectionString: {sqlConnectionString}\n\n An error occurred:\n\n{ex}";
 
                         client.Send(message);
                     }
