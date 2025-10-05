@@ -112,7 +112,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                 FolderName = "Amital",
                 From = _From, //"Logitude",
                 InOut = "O",
-				AdditionalFields = uServerCommunicationServiceParam.reqParam
+				AdditionalFields = uServerCommunicationServiceParam.reqParam,
 				//XMLData=some xml data string 
 			};
             var myMainObject = "";
