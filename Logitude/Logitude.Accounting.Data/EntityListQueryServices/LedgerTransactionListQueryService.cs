@@ -129,6 +129,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                     .Skip(ledgerTransactionBalanceFilter.PageStartAtRecordIndex)
                     .Take(ledgerTransactionBalanceFilter.PageSize);
 
+                ledgerTransactionBalanceFilter.Paged = true;
                 transactions = inputTransactions;
             }
             else if (ledgerTransactionBalanceFilter.GLAccountId == accountingSettingList.VATOutputGLAccountId)
@@ -590,7 +591,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 ledgerTransactionListQuery = ledgerTransactionListQuery.Where(r => r.IsReconciled == _isReconciled);
             }
 
-            ledgerTransactionListQuery = IsFromExcelGenerator ? ledgerTransactionListQuery : ledgerTransactionListQuery.Skip(skip).Take(_Param.PageSize);
+            if (!_Param.Paged)
+            {
+                ledgerTransactionListQuery = IsFromExcelGenerator ? ledgerTransactionListQuery : ledgerTransactionListQuery
+                    .Skip(skip).Take(_Param.PageSize);
+
             switch (_Param.DateTypeCode)
             {
                 case "2":// GLAccountTotalDateTypeValues.DueDate:
@@ -610,6 +615,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         ledgerTransactionListQuery = ledgerTransactionListQuery.OrderBy(rec => rec.AccountingDate).ThenBy(rec => rec.Id);
                     }
                     break;
+            }
             }
 
 
@@ -1995,6 +2001,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public bool NotIncludedInAnyTaxReport { get; set; }
         public string TaxreportId { get; set; }
         public int PageSize { get; set; }
+        public bool GetCount { get; set; }
+        public bool Paged { get; set; }
         public int PageStartAtRecordIndex { get; set; }
         public bool UseTaxreportFilter { get; set; }
         public bool IncludeRelatedCurrenciesAccount { get; set; }
