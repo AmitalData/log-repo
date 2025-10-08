@@ -4,9 +4,7 @@ using Logitude.BL.Helpers;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.DataContracts.SIIRequest;
-using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityKeys.Extended;
-using Logitude.Customs.Data.EntityMapping;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
@@ -18,7 +16,6 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.IO;
 using System.Linq;
 using System.Web;
 
