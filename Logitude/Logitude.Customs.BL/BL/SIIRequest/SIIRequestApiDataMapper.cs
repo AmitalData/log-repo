@@ -6,6 +6,7 @@ using Logitude.Customs.Data;
 using Logitude.Customs.Data.DataContracts.SIIRequest;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityKeys.Extended;
+using Logitude.Customs.Data.EntityMapping;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
@@ -318,6 +319,10 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                     $"{lineLbl} {key.UiIndex} - {dataMsg}");
             }
 
+            if (item.ClassificationCode.Length == 11) 
+            {
+                item.ClassificationCode = item.ClassificationCode.Insert(10, "/");
+            }
             var line = new ReleaseRequestLineDto
             {
                 lineSerialNumber = ++_lineCounter,
