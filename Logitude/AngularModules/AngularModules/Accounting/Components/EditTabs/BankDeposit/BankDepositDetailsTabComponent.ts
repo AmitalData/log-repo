@@ -845,6 +845,9 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         }
 
         this.CalculateTotals();
+        this.CurrentSession.CurrentEditComponent.EditComponentArgument = this.CurrentSession.CurrentEditComponent.EditComponentArgument || {};
+        this.CurrentSession.CurrentEditComponent.EditComponentArgument.ChequePairsValid = this.CheckAllSelectedChequesHaveTheirPairs();
+
     }
     
     LineSelection(cashbookLine, event, validatePairs = true) {
