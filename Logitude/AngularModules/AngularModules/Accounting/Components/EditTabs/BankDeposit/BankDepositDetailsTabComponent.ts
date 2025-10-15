@@ -52,7 +52,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     public IsNewDepositMode: boolean = false;
     public EnableExportChequeDepositsToExcell: boolean = false;
     searchText: string = "";
-
+    private ChequePairValidationDays = 183;
+    private PeriodForChequePairValidation = this.ChequePairValidationDays * 24 * 60 * 60 * 1000;
 
     CashBookPM: CashBookPM;
     // BankDepositLines: BankDepositLinePM[];
@@ -186,17 +187,14 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             }
         });
     }
-    MarkRelatedCheques() {
-        const SIX_MONTHS_MS = 183 * 24 * 60 * 60 * 1000;
-        const depositDate = new Date(this.EntityPM.DepositDate).getTime();
-    
+    MarkRelatedCheques() {    
         const selectedLines = this.CashbookLines.Collection.filter(line => line.IsSelected);
     
         for (const selected of selectedLines) {
             const { Bank, Branch, AccountNumber, ChequeNumber } = selected;
             const selectedDueDate = new Date(selected.DueDate).getTime();
-            const startRange = selectedDueDate - SIX_MONTHS_MS;
-            const endRange = selectedDueDate + SIX_MONTHS_MS;
+            const startRange = selectedDueDate - this.PeriodForChequePairValidation;
+            const endRange = selectedDueDate + this.PeriodForChequePairValidation;
         
             const relatedLines = this.CashbookLines.Collection.filter(line =>
                 !line.IsSelected &&
@@ -871,17 +869,14 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         }
     }
     CheckAllSelectedChequesHaveTheirPairs() {
-        const SIX_MONTHS_MS = 183 * 24 * 60 * 60 * 1000;
-        const depositDate = new Date(this.EntityPM.DepositDate).getTime();
-
         const selectedLines = this.CashbookLines.Collection.filter(line => line.IsSelected);
     
         for (const selected of selectedLines) {
             const { BankNumber, BranchNumber, AccountNumber, ChequeNumber } = selected;
             const selectedDueDate = new Date(selected.DueDate).getTime();
 
-            const startRange = selectedDueDate - SIX_MONTHS_MS;
-            const endRange = selectedDueDate + SIX_MONTHS_MS;
+            const startRange = selectedDueDate - this.PeriodForChequePairValidation;
+            const endRange = selectedDueDate + this.PeriodForChequePairValidation;
         
             const matchingGroup = this.CashbookLines.Collection.filter(line => 
                 line.BankNumber === BankNumber &&
