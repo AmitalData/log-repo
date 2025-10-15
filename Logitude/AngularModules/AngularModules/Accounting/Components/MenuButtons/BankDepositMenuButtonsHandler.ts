@@ -192,7 +192,7 @@ export class BankDepositMenuButtonsHandler {
                         return; 
                     }
                 
-                    this.entityArgs.EditComponent.SaveChanges();
+                    //this.entityArgs.EditComponent.SaveChanges();
                     break;
                 }
                 
