@@ -1102,6 +1102,10 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                                 }
                         }
                     }
+                    if(this.ObjectTableName == "APInvoice" && tab.Code == "PREX"){
+                        if (this.EntityPM.IsPrepaidExpenses)
+                            myTabsSorted.push(tab);
+                    }
                     else
                         myTabsSorted.push(tab);
                 }

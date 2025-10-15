@@ -880,6 +880,7 @@
     <Compile Include="InvoiceModel\EntityPOCOs\BankAccountLite.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ControlForInvoiceLinesDataView.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\DigitalInvoicesCounterDataView.cs" />
+    <Compile Include="InvoiceModel\EntityPOCOs\ExpenseAllocationSetting.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATPaymentMethod.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATInvoiceStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\QBOGlobalTaxCalculation.cs" />
@@ -898,6 +899,7 @@
     <Compile Include="InvoiceModel\Mapping\BankAccountLiteMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ControlForInvoiceLinesDataViewMap.cs" />
     <Compile Include="InvoiceModel\Mapping\DigitalInvoicesCounterDataViewMap.cs" />
+    <Compile Include="InvoiceModel\Mapping\ExpenseAllocationSettingMap.cs" />
     <Compile Include="InvoiceModel\Mapping\SATPaymentMethodMap.cs" />
     <Compile Include="InvoiceModel\Mapping\SATInvoiceStatusMap.cs" />
     <Compile Include="InvoiceModel\Mapping\QBOGlobalTaxCalculationMap.cs" />
