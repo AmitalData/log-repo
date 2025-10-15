@@ -1109,6 +1109,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         logWindow.Width = 600;
         logWindow.Height = 350;
         logWindow.Title = "Recurring Schedule Settings";
+        logWindow.ShowCloseButton =  true;
         //logWindow.WindowArgs = { CurrencyId: this.ForiegnCurrencyId, CurrencyCode: this.ForiegnCurrencyCode, Rate: this.ForiegnExchangeRate, Date: loadingDate };
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
