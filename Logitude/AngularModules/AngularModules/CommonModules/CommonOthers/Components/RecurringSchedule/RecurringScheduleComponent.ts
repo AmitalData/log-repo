@@ -14,7 +14,7 @@ export class RecurringScheduleComponent extends BaseComponent {
     public allocationTypes = Object.values(AllocationDateType);
     public typeRadio: string = 'RecurrenceCount';
     private currentSession = SessionLocator.SelectedSession;
-
+    private minDate: Date;
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting)
@@ -28,6 +28,7 @@ export class RecurringScheduleComponent extends BaseComponent {
         this.TotalAmount = args?.['TotalAmount'] ?? 0;
         this.AllocationDateType =
             args?.['AllocationDateType'] ?? AllocationDateType.SpecificDate;
+        this.minDate = args?.['MinDate'] ?? null;
     }
     private isWeekly: boolean;
     get IsWeekly() {
@@ -54,8 +55,15 @@ export class RecurringScheduleComponent extends BaseComponent {
     }
     set StartDateTime(newValue: Date) {
         if (this.startDateTime != newValue) {
-            this.startDateTime = newValue;
-            this.recalculateAll();
+            if(this.minDate && newValue < this.minDate) {
+                this.startDateTime = newValue;
+                this.recalculateAll();
+                this.UIProperties.SetValidity("StartDateTime", null, true, "");
+   
+            }
+            else{
+                this.UIProperties.SetValidity("StartDateTime", null, false, "The start date must be greater than or equal to the invoice date.");
+            }
         }
     }
     private endDateTime: Date;

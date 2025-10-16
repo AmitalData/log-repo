@@ -1105,15 +1105,16 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
     expenseAllocationSettingPMService: ExpenseAllocationSettingPMService = new ExpenseAllocationSettingPMService();
     ShowRecurringScheduleSettings(){
-        
-        
+        const defaultEnd = new Date(this.expenseAllocationSetting?.StartDateTime || this.AccountingDate);
+        defaultEnd.setDate(defaultEnd.getDate() + 364);    
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { 
             StartDateTime: this.expenseAllocationSetting?.StartDateTime || this.AccountingDate,
-            EndDateTime: this.expenseAllocationSetting?.EndDateTime || null, 
+            EndDateTime: this.expenseAllocationSetting?.EndDateTime || defaultEnd, 
             RecurrenceCount: this.expenseAllocationSetting?.NumberOfPayments || null, 
             MonthInterval: this.expenseAllocationSetting?.MonthInterval || 1,
-            TotalAmount: this.AmountInInvoiceCurrency };
+            TotalAmount: this.AmountInInvoiceCurrency ,
+            MinDate: this.AccountingDate ,};
         logWindow.Width = 600;
         logWindow.Height = 350;
         logWindow.Title = "Recurring Schedule Settings";
@@ -1128,7 +1129,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         this.expenseAllocationSetting.Tenant = SessionLocator.Tenant;
                         this.expenseAllocationSetting.UpdateDate = DateTool.GetCurrentDateAsUtc();
                         this.expenseAllocationSettingPMService.update(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {
-                            
+                                 
                         })
                     }
                     
