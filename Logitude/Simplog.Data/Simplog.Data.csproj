@@ -927,6 +927,7 @@
     <Compile Include="InvoiceModel\Repositories\BankAccountLiteRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ConfirmationNumberDefaultRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ConfirmationNumberStatusRepository.cs" />
+    <Compile Include="InvoiceModel\Repositories\ExpenseAllocationSettingRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATPaymentMethodRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATInvoiceStatusRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\QBOGlobalTaxCalculationRepository.cs" />

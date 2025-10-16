@@ -1,10 +1,10 @@
-<tr style="height: 170px">
+<tr style="height: 70px">
     <td style="vertical-align: top">
         <table>
             <tr style="height: 10px"></tr>
             <tr>
                 <td>
-                    <div>
+                    <div [style.direction]="isRTL ? 'rtl' : 'ltr'">
                         <table>
                             <tr class="FormFieldRow">
                                 <td
@@ -19,7 +19,7 @@
                                 <div
                                     style="
                                         height: 22px;
-                                        width: 100px;
+                                        width: 95px;
                                         position: relative;
                                         top: 10px;
                                     "
@@ -59,7 +59,7 @@
                                     <div></div>
                                 </td>
                                 <td
-                                    style="width: 25px"
+                                    style="width: 10px"
                                     [style.text-align]="isRTL ? 'right' : 'left'"
                                 >
                                     כל:
@@ -67,7 +67,7 @@
                                 <td style="width: 10px">
                                     <div></div>
                                 </td>
-                                <td>
+                                <td style="width: 80px">
                                     <div
                                         style="
                                             width: 80px;
@@ -82,16 +82,13 @@
                                         ></NumberInput>
                                     </div>
                                 </td>
-                                <td style="width: 10px">
-                                    <div></div>
-                                </td>
+
                                 <td
-                                style="width: 25px"
-                                [style.text-align]="isRTL ? 'right' : 'left'"
-                            >
-                                חודש(ים)
-                            </td>
-                            
+                                    style="width: 25px"
+                                    [style.text-align]="isRTL ? 'right' : 'left'"
+                                >
+                                    חודש(ים)
+                                </td>
                             </tr>
                             <tr class="FormFieldRow">
                                 <td
@@ -104,39 +101,142 @@
                                     <div></div>
                                 </td>
                                 <td style="width: 100px">
-                                    <LogDatePicker
-                                        [DataContext]="dataContext"
-                                        [SelectedDateValue]="StartDateTime"
-                                        [HideColumns]="true"
-                                        [NoObjectField]="true"
-                                    ></LogDatePicker>
+                                    <div style="width: 95px">
+                                        <LogDatePicker
+                                            [ObjectFieldName]="'StartDateTime'"
+                                            [DataContext]="dataContext"
+                                            [SelectedDateValue]="StartDateTime"
+                                            [HideColumns]="true"
+                                            [NoObjectField]="true"
+                                        ></LogDatePicker>
+                                    </div>
                                 </td>
 
                                 <td>
                                     <div></div>
                                 </td>
                             </tr>
-
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr style="height: 70px">
+    <td style="vertical-align: top">
+        <table>
+            <tr style="height: 10px"></tr>
+            <tr>
+                <td>
+                    <div [style.direction]="isRTL ? 'rtl' : 'ltr'">
+                        <table>
                             <tr class="FormFieldRow">
-                                <td
-                                    style="width: 75px"
-                                    [style.text-align]="isRTL ? 'right' : 'left'"
-                                >
-                                    סיום עד תאריך:
+                                <td style="width: 400px">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 7px">
+                                                <div style="width: 7px"></div>
+                                            </td>
+
+                                            <td style="width: 100px">
+                                                <div
+                                                    class="RadioButton"
+                                                    style="width: 100px"
+                                                >
+                                                    <input
+                                                        type="radio"
+                                                        id="recurrenceCountRadio"
+                                                        name="paymentRadio"
+                                                        (click)="radioTypeChanged('RecurrenceCount')"
+                                                        [checked]="typeRadio == 'RecurrenceCount'"
+                                                        style="width: 15px"
+                                                    />
+                                                    <label
+                                                        for="recurrenceCountRadio"
+                                                        style="font-size: 12px"
+                                                    >
+                                                        מספר פריסות:
+                                                    </label>
+                                                </div>
+                                            </td>
+
+                                            <td style="width: 5px">
+                                                <div style="width: 5px"></div>
+                                            </td>
+
+                                            <td style="width: 100px">
+                                                <div
+                                                    class="RadioButton"
+                                                    style="width: 100px"
+                                                >
+                                                    <input
+                                                        type="radio"
+                                                        id="endDateRadio"
+                                                        name="paymentRadio"
+                                                        (click)="radioTypeChanged('EndDateTime') "
+                                                        [checked]="typeRadio == 'EndDateTime'"
+                                                        style="width: 15px"
+                                                    />
+                                                    <label
+                                                        for="endDateRadio"
+                                                        style="font-size: 12px"
+                                                    >
+                                                        סיום עד תאריך:
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="width: 100px"></td>
+                            </tr>
+
+                            <tr
+                                *ngIf="typeRadio == 'EndDateTime'"
+                                class="FormFieldRow"
+                            >
+                                <td style="width: 100px; height: 50px">
+                                    <div style="width: 100px">
+                                        <LogDatePicker
+                                            [ObjectFieldName]="'EndDateTime'"
+                                            [DataContext]="dataContext"
+                                            [SelectedDateValue]="EndDateTime"
+                                            [HideColumns]="true"
+                                            [NoObjectField]="true"
+                                        ></LogDatePicker>
+                                    </div>
                                 </td>
                                 <td style="width: 10px">
                                     <div></div>
                                 </td>
-                                <td style="width: 100px">
-                                    <LogDatePicker
-                                        [DataContext]="dataContext"
-                                        [SelectedDateValue]="EndDateTime"
-                                        [HideColumns]="true"
-                                        [NoObjectField]="true"
-                                    ></LogDatePicker>
-                                </td>
-
                                 <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr
+                                *ngIf="typeRadio == 'RecurrenceCount'"
+                                class="FormFieldRow"
+                            >
+                                <td>
+                                    <div
+                                        style="
+                                            width: 80px;
+                                            top: 10px;
+                                            position: relative;
+                                            height: 50px;
+                                        "
+                                    >
+                                        <NumberInput
+                                            [(ngModel)]="RecurrenceCount"
+                                            name="no"
+                                            [min]="1"
+                                        ></NumberInput>
+                                    </div>
+                                </td>
+                                <td style="width: 10px">
                                     <div></div>
                                 </td>
                             </tr>
@@ -148,6 +248,96 @@
                             </tr>
                         </table>
                     </div>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr style="height: 20px">
+    <td>
+        <div></div>
+    </td>
+</tr>
+<tr style="height: 60px">
+    <td>
+        <table>
+            <tr style="width: 100%">
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr style="height: 20px">
+                                        <td text-start class="BlueTitle">
+                                            <!-- {{'Accounting.O.ARP.PaymentAmount' |
+                                            TextCodeTranslationPipe}} -->
+                                            סכום חשבונית
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="vertical-align: middle"
+                                            class="arp-footer"
+                                        >
+                                            <div float-start class="amount-div">
+                                                <div class="amount">
+                                                    {{TotalAmount |
+                                                    NumbersPipe:'N2'}}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width: 20px"></td>
+                            <td>
+                                <table>
+                                    <tr style="height: 20px">
+                                        <td text-start class="BlueTitle">
+                                            <!-- {{'Accounting.O.ARP.PaymentAmount' | TextCodeTranslationPipe}} -->
+                                            מספר פריסות
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="vertical-align: middle"
+                                            class="arp-footer"
+                                        >
+                                            <div float-start class="amount-div">
+                                                <div class="amount">
+                                                    {{RecurrenceAmount |
+                                                    NumbersPipe:'N2'}}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr style="height: 32px;">
+    <td style="vertical-align: bottom">
+        <table style="height: 22px;">
+            <tr>
+                <td>
+                    <div></div>
+                </td>
+
+                <td style="width: 57px;">
+                    <button class="Button" (click)="cancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                </td>
+
+                <td style="width: 5px;" >
+                    <div></div>
+                </td>
+
+                <td style="width: 57px;" >
+                    <button class="RedButton" (click)="okButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                 </td>
             </tr>
         </table>
