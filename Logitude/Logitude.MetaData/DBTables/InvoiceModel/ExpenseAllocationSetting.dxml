@@ -80,8 +80,7 @@
   </Column>
   <Column
     Name="NumberOfPayments"
-    Type="decimal"
-    Scale="0">
+    Type="int">
     <Constraints
       Nullable="false" />
   </Column>
