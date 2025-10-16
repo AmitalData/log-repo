@@ -442,11 +442,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var sw = Stopwatch.StartNew();
             bool includeChildAccounts = false;
 
-            if (_Param.GetCount)
-            {
-                QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId.RemoveSkipTake();
-            }
-
             var qGperiod = (from r in QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId
                             group r by 1 into g
                             select new
@@ -831,27 +826,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public LedgerTransactionBalanceResponse Response { get; set; }
     }
 
-    public static class QueryableExtensions
-    {
-        class SkipTakeRemover : ExpressionVisitor
-        {
-            protected override Expression VisitMethodCall(MethodCallExpression node)
-            {
-                if (node.Method.DeclaringType == typeof(Queryable) && (node.Method.Name == nameof(Queryable.Skip) || node.Method.Name == nameof(Queryable.Take)))
-                {
-                    return Visit(node.Arguments[0]);
-                }
-                return base.VisitMethodCall(node);
-            }
-        }
-
-        public static IQueryable<T> RemoveSkipTake<T>(this IQueryable<T> query)
-        {
-            var newExpression = new SkipTakeRemover().Visit(query.Expression);
-            return query.Provider.CreateQuery<T>(newExpression);
-        }
-    }
-
+    
     class MyBlance
     {
         public decimal SumLocalAmount { get; internal set; }
