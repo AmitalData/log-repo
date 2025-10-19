@@ -2868,8 +2868,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralBSendToBackground = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.B.SendToBackground", DefaultText = "Send to Background",LocalDefaultText = @"BS64:Itep15zXlyDXnNeo16fXoiI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOCancelTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.CancelTaxReport", DefaultText = "Cancel Tax Report",LocalDefaultText = @"ביטול דוח מעמ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
    
 	    
 }
