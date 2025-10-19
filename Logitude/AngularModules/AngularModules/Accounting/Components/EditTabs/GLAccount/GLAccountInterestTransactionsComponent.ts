@@ -40,6 +40,7 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
     public isControlAccount: boolean = false;
     public isRTL: boolean = false;
     InterestReports: any[] = [];
+    public SelectedReport = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
 
@@ -122,7 +123,7 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             {
                 if (!myResponse.HasError) {
                     const result = myResponse.Result;
-                    this.InterestReports = [{ ReportNumber : 'None' }];
+                    this.InterestReports = [{ ReportNumber : '' }, { ReportNumber : 'None' }];
                     this.InterestReports = this.InterestReports.concat(result);
                 }
             });
@@ -212,6 +213,18 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             ServerSideSortable: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("InterestValueDate", 'DateTime', TextCodeTranslator.Translate("InterestTransaction.F.InterestValueDate")));
+
+        this.columns.push({
+            FieldName: 'AccountingDate',
+            DataTypeCode: 'DateTime',
+            Display: TextCodeTranslator.Translate("InterestTransaction.F.AccountingDate"),
+            Styles: { width: '100px' },
+            HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true
+        });
+        this.QueryColumns.push(this.excelService.GetQueryColumn("AccountingDate", 'DateTime', TextCodeTranslator.Translate("InterestTransaction.F.AccountingDate")));
 
         this.columns.push({
             FieldName: 'CreateDateTime',
@@ -349,7 +362,9 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
         this.filterAgrs = new ApiQueryFilters();
 
         if (this.dateFilter) {
-            this.filterAgrs.AdditionalFilters.push(this.dateFilter);
+            if (!this.SelectedReport) {
+                this.filterAgrs.AdditionalFilters.push(this.dateFilter);
+            }
         } else {
             return new Promise(() => { });
         }
@@ -379,7 +394,7 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
 
         if(this.SelectedInterestReport && this.SelectedInterestReport.ReportNumber == 'None')
             this.filterAgrs.addAdditionalFilter("InterestReportId", "Please Don't Erase Me", null, null, "IsNull", true, false, false, "string");
-        else if(this.SelectedInterestReport && this.SelectedInterestReport.ReportNumber != 'None')
+        else if(this.SelectedInterestReport && this.SelectedReport)
             this.filterAgrs.addAdditionalFilter("InterestReportId", this.SelectedInterestReport.Id, null, null, "Equals", false, false, false, "string");
 
         this.filterAgrs.addAdditionalFilter("GLAccountId", this.glaccountPM.Id, null, null, "Equals", false, false, false, "string");
@@ -491,6 +506,8 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
     }
     public set SelectedInterestReport(v : InterestReportList) {
         this._SelectedInterestReport = v;
+
+        this.SelectedReport = this._SelectedInterestReport.ReportNumber != 'None' && this._SelectedInterestReport.ReportNumber != '';
 
         this.LoadGridData();
     }
