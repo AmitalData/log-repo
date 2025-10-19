@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.IsHebrewAddress).HasColumnName("IsHebrewAddress").IsRequired();
 
-            this.Property(t => t.BranchName).HasColumnName("BranchName").HasMaxLength(35).IsUnicode(true);
+            this.Property(t => t.BranchName).HasColumnName("BranchName").HasMaxLength(255).IsUnicode(true);
 
             this.Property(t => t.ContactIdentifier).HasColumnName("ContactIdentifier").HasMaxLength(9).IsUnicode(false);
 
