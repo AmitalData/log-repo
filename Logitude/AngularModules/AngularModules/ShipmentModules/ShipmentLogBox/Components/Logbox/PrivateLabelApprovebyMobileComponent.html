@@ -519,7 +519,7 @@
                 <tr style="height:30px;border-bottom:1px solid #BCBEC0;width:100%;font-family:sans-serif;">
                     <td colspan="2">
                         <div style="padding-right: 4px;color:#1B90CB;text-align:center;font-weight:bold;height:16px; text-align:left;float:right;">
-                            <span style="">{{ 'Shipment.O.TotalAmountToPayInNIS' | TextCodeTranslationPipe }}</span>
+                            <span style="padding-left: 5px;">{{ 'Shipment.O.TotalAmountToPayInNIS' | TextCodeTranslationPipe }}</span>
                             <span style="font-weight:bold;margin-right: 20px;">{{TotalAmount | CustomNumbersPipe:0}}</span>
                         </div>
                     </td> 
@@ -555,7 +555,7 @@
     <tr>
         <td>
             <div class="MediaFill" style="height:120px;">
-                <LogTextBox [Placeholder]="'{{ 'Shipment.O.PleaseFillInTheExplanationForDenialOfTheDeclaration' | TextCodeTranslationPipe }}'" [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'DenyReason'" [IsMultiline]="true" [DataContext]="DataContext" [Text]="DenyReason"></LogTextBox>
+                <LogTextBox [Placeholder]="'Shipment.O.PleaseFillInTheExplanationForDenialOfTheDeclaration' | TextCodeTranslationPipe" [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'DenyReason'" [IsMultiline]="true" [DataContext]="DataContext" [Text]="DenyReason"></LogTextBox>
             </div>
         </td>
     </tr>
