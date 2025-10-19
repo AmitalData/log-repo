@@ -992,6 +992,9 @@
     <Compile Include="InfrastructureModel\EntityQueries\QueueMessageQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\QuoteChargesGroupQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ReferenceCustomObjectQuery.cs" />
+    <Compile Include="InvoiceModel\EntityLists\ExpenseAllocationSettingList.cs" />
+    <Compile Include="InvoiceModel\EntityPMs\ExpenseAllocationSettingPM.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\ExpenseAllocationSettingQuery.cs" />
     <Compile Include="Security\ContactInfo.cs" />
     <Compile Include="ShipmentsModel\EntityLists\FreightForwarderReferenceList.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\FreightForwarderReferencePM.cs" />

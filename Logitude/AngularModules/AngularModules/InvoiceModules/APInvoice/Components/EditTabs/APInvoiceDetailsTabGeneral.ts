@@ -37,7 +37,10 @@ import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocat
 import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
 import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccountListService';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { isThisTypeNode } from 'typescript';
+import { ExpenseAllocationSettingExtendedService } from 'Invoice/Services/ExtendedPMs/ExpenseAllocationSettingExtendedService';
+import { ExpenseAllocationSettingPM } from 'Invoice/EntityPMs/ExpenseAllocationSettingPM';
+import { ExpenseAllocationSettingList } from 'Invoice/EntityLists/ExpenseAllocationSettingList';
+import { ExpenseAllocationSettingPMService } from 'Invoice/Services/StandardPMs/ExpenseAllocationSettingPMService';
 declare var window: any;
 
 @Component({
@@ -187,6 +190,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public myVatTypeListService: VatTypeListService;
     private myChargesTypeListService: ChargesTypeListService;
     public myGLAccountPMService: GLAccountPMService;
+    public expenseAllocationSettingExtendedService: ExpenseAllocationSettingExtendedService ;
+
     InitializeServices() {
         this.myCardListService = new CardListService();
         this.myCommonDomainService = new CommonDomainService();
@@ -195,6 +200,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.myVatTypeListService = new VatTypeListService();
         this.myChargesTypeListService = new ChargesTypeListService();
         this.myGLAccountPMService = new GLAccountPMService();
+        this.expenseAllocationSettingExtendedService = new ExpenseAllocationSettingExtendedService();
         this.GetAllVatTypes();
     }
     GetAllVatTypes() {
@@ -223,6 +229,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("LocalDescription", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("IsPrepaidExpenses", this.ObjectTableName, false);
 
         }
 
@@ -335,6 +342,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     private LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
     private myCurrencyRatesService: CurrencyRatesService;
+    public ObjectTableId: string;
+    public expenseAllocationSetting: ExpenseAllocationSettingPM;
     LoadData() {
 
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -352,9 +361,22 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
             if (!myResponse.HasError) {
                 this.LastRatesList = myResponse.Result;
-
+                var table = window.ObjectTables.filter(d=> d.Name == "APInvoice")[0];
+                if (table) this.ObjectTableId = table.Id;
+    
                 this.myCommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse2: ServiceResponse) => {
+                    if(this.EntityPM?.Id){
+                        this.expenseAllocationSettingExtendedService.getExpenseAllocationSettingByEntityIdAndObjectTable(this.EntityPM?.Id,this.ObjectTableId).subscribe((res: ServiceResponse) => {
+                            if (!res.HasError && res.Result) 
+                                 this.expenseAllocationSetting = res.Result;
+                            else{
+                                this.expenseAllocationSetting = new ExpenseAllocationSettingPM();
+                                this.expenseAllocationSetting.CreateDate = DateTool.GetCurrentDateAsUtc();
 
+                            }
+                        })
+
+                    }
                     if (!myResponse2.HasError) {
                         this.VatTypePercentagesList = myResponse2.Result;
                     }
@@ -810,28 +832,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.EntityPM.AmountInInvoiceCurrency = setValue;
             this.EntityPM.InvoiceExpectedAmount = setValue;
 
-            //// Local
-            //if (SessionLocator.LocalCurrencyId == this.EntityPM.InvoiceCurrencyId) {
-            //    this.EntityPM.AmountInLocalCurrency = setValue;
-            //}
-            //else {
-            //    this.EntityPM.AmountInLocalCurrency = AppTool.Round(setValue * this.InvoiceCurrencyExchangeRate, 2);
-            //}
-
-            //// Profit
-            //if (this.EntityPM.ProfitCurrencyId == this.InvoiceCurrencyId) {
-            //    this.EntityPM.AmountInProfitCurrency = setValue;
-            //}
-            //else if (this.EntityPM.ProfitCurrencyId == SessionLocator.LocalCurrencyId) {
-            //    this.EntityPM.AmountInProfitCurrency = this.EntityPM.AmountInLocalCurrency;
-            //}
-            //else {
-            //    this.EntityPM.AmountInProfitCurrency = AppTool.Round(this.EntityPM.AmountInLocalCurrency / this.ProfitCurrencyExchangeRate, 2);
-            //}
-
-            //this.EntityPM.AmountDue = this.EntityPM.AmountInInvoiceCurrency == null ? 0 : this.EntityPM.AmountInInvoiceCurrency;
-            //this.EntityPM.AmountDueInLocalCurrency = this.EntityPM.AmountInLocalCurrency == null ? 0 : this.EntityPM.AmountInLocalCurrency;
-            //this.EntityPM.AmountDueInProfitCurrency = this.EntityPM.AmountInProfitCurrency == null ? 0 : this.EntityPM.AmountInProfitCurrency;
+           
         }
     }
 
@@ -1102,8 +1103,46 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     get IsPrepaidExpenses() { return this.EntityPM.IsPrepaidExpenses; }
     set IsPrepaidExpenses(newValue: boolean) {
         if (this.EntityPM.IsPrepaidExpenses != newValue) {
-            this.EntityPM.IsPrepaidExpenses = newValue;            
+            this.EntityPM.IsPrepaidExpenses = newValue;  
+            if (newValue) {
+                this.ShowRecurringScheduleSettings();
+            }          
         }
+    }
+    expenseAllocationSettingPMService: ExpenseAllocationSettingPMService = new ExpenseAllocationSettingPMService();
+    ShowRecurringScheduleSettings(){
+        
+        
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { 
+            StartDateTime: this.expenseAllocationSetting?.StartDateTime || this.AccountingDate,
+            EndDateTime: this.expenseAllocationSetting?.EndDateTime || null, 
+            RecurrenceCount: this.expenseAllocationSetting?.NumberOfPayments || null, 
+            MonthInterval: this.expenseAllocationSetting?.MonthInterval || 1,
+            TotalAmount: this.AmountInInvoiceCurrency };
+        logWindow.Width = 600;
+        logWindow.Height = 350;
+        logWindow.Title = "Recurring Schedule Settings";
+        logWindow.ShowCloseButton =  true;
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    if(comp){
+                        this.expenseAllocationSetting = comp.expenseAllocationSettingPM;
+                        this.expenseAllocationSetting.EntityId = this.EntityPM?.Id;
+                        this.expenseAllocationSetting.ObjectTableId = this.ObjectTableId;
+                        this.expenseAllocationSetting.Tenant = SessionLocator.Tenant;
+                        this.expenseAllocationSetting.UpdateDate = DateTool.GetCurrentDateAsUtc();
+                        this.expenseAllocationSettingPMService.update(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {
+                            
+                        })
+                    }
+                    
+                }
+            });
+        });
+        logWindow.Show('./CommonModules/CommonOthers/Components/RecurringSchedule/RecurringScheduleComponent');
+      
     }
     get DueDate() { return this.EntityPM.DueDate; }
     set DueDate(newValue: Date) {
@@ -2218,5 +2257,8 @@ export class APInvoiceLineItem extends BaseComponent {
         }
     }
 
+
+  
+   
 }
 

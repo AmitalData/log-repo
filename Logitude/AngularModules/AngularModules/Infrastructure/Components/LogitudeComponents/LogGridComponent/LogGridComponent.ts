@@ -1264,13 +1264,13 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     AllCheckedRecords: any[] = [];
 
     ngOnChanges(changes: { [propName: string]: SimpleChange }) {
-        if (changes['ReattachToDetection']) {
-            this.cd.reattach();
-            this.cd.detectChanges();
-        } else if(changes['columns'] && !changes['columns'].currentValue[0]?.Styles.right)
-                this.fixRightStyleInColumns();
-        else
-            console.log("in else");
+        // if (changes['ReattachToDetection']) {
+        //     this.cd.reattach();
+        //     this.cd.detectChanges();
+        // } else if(changes['columns'] && !changes['columns'].currentValue[0]?.Styles.right)
+        //         this.fixRightStyleInColumns();
+        // else
+        //     console.log("in else");
     }
 
     fixRightStyleInColumns() {
@@ -1301,7 +1301,6 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         //    }
         //}
 
-        var xx = this.Filters;
         var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridId);
         this.viewportSize = this.GetviewportSize(elem.clientHeight, this.rowHeight);
 
@@ -1326,11 +1325,8 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                 RowsDiv.classList.add("EditableGridBody");
             }
         }
-        var vscroll = elem.scrollTop;
-        var hscroll = elem.scrollLeft;
         this.controller.setDataSource(this.dataSource);
         if (this.autoLoad == true) {
-            //console.log("autoLoad");
             this.init();
         }
         this.AfterViewInitCompleted.emit("Complete");
@@ -2081,61 +2077,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     rowStyle: any = {};
     timer = null;
     scrollDirection: string = null;
-    //onScroll() {
-    //    var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
-    //    var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridId);
 
-    //    this.LogGridElement = elem;
-    //    if (elem) {
-    //        var scroll = elem.scrollTop;
-    //        if (scroll > this.scrollPosition) {
-    //            this.scrollDirection = "down";
-    //            ////console.log("scrollPosition", this.scrollPosition);
-    //            ////console.log("scrollDirection", this.scrollDirection)
-    //        }
-    //        else {
-    //            this.scrollDirection = "up";
-    //            ////console.log("scrollPosition", this.scrollPosition);
-    //            ////console.log("scrollDirection", this.scrollDirection)
-    //        }
-    //        this.scrollPosition = scroll;
-    //        var hscroll = elem.scrollLeft;
-    //        //console.log("horizontal scroll", hscroll);
-    //        //this.headerStyle = { left: -(hscroll) + 'px' };
-    //        //if (this.timer !== null) {
-    //        //    clearTimeout(this.timer);
-    //        //}
-    //        var vscroll = elem.scrollTop;
-    //        this.scrollTop = elem.scrollTop;
-    //        //console.log(this.scrollTop,"hola i'm the on scroll");
-
-    //        if (vscroll != this.oldScrollTop) {
-    //            //////console.log("vscroll entered");
-    //            if (columns) {
-    //                //var maxTop = columns.parentElement.scrollHeight - columns.offsetHeight;
-    //                columns.style.top = elem.scrollTop + "px";//Math.min(elem.scrollTop, maxTop) + "px";
-    //            }
-    //            this.oldScrollTop = vscroll;
-    //            this.updateDisplayList();
-    //        }
-    //        //this.timer = setTimeout(() => {
-    //        //    //////console.log("scrolling...");
-    //        //    var vscroll = elem.scrollTop;
-    //        //    this.scrollTop = elem.scrollTop;
-    //        //    //////console.log("v scroll...", vscroll, "h scroll...", hscroll);
-    //        //    //////console.log("scrollHeight...", elem.scrollHeight, "scrollWidth...", elem.scrollWidth);
-    //        //    //elem.scrollHeight = this.rowCount * this.rowHeight;
-    //        //    //////console.log(elem.scrollHeight);
-    //        //    if (vscroll != this.oldScrollTop) {
-    //        //        //////console.log("vscroll entered");
-    //        //        this.oldScrollTop = vscroll;
-    //        //        this.updateDisplayList();
-    //        //    }
-    //        //    //this.$apply();
-    //        //    //this._renderer.renderComponent(this);
-    //        //}, 0);
-    //    }
-    //};
     scrolltimer = null;
     onScroll() {
 
@@ -2165,7 +2107,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             if (this.timer) {
                 clearTimeout(this.timer);
             }
-            this.timer = setTimeout(() => this.DoScroll(), 200);
+            this.timer = setTimeout(() => this.DoScroll(), 2000);
         
     };
     HScrollPosition: number = -1;
@@ -2228,7 +2170,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             }
             if (this.AfterServerSort == true) {
 
-                this.timer = setTimeout(() => this.RedrowScrollBar(), 400);
+                this.timer = setTimeout(() => this.RedrowScrollBar(), 4000);
             }
 
             //this.timer = setTimeout(() => {

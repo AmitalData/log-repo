@@ -1,7 +1,4 @@
-﻿using Logitude.Server.Tools;
-using Logitude.Server.Tools.QueueService;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
+﻿using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +22,11 @@ using Logitude.BL.CommonDataModel.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.Server.Tools;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 {
@@ -156,7 +156,26 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 			string communicationLogId = Communications.AddCommunicationLog(logParams);
 			return communicationLogId;
 		}
-		public void UpdateCommunicationLog(string communicationLogId, int tenant, string logs,string entityId,string communicationStatusTypeCode)
+		public static string AddCommunicationLog(AnalyzeQueue analyzeQueue, int tenant)
+		{
+			CommunicationsParams logParams = new CommunicationsParams()
+			{
+				Tenant = tenant,
+				From = analyzeQueue.From,
+				To = "amital",
+				CommunicationLogTypeCode = "A",
+				InOut = "O",
+				Status = "P",
+				Subject = "Courier Document SFTP",
+				ByteData = analyzeQueue.MessageBody,
+				LoggingEntityReference = analyzeQueue.FileName,
+				Logs = "Filename: " + analyzeQueue.FileName,
+				FolderName = "CourierDocumentSFTP"
+			};
+			string communicationLogId = Communications.AddCommunicationLog(logParams);
+			return communicationLogId;
+		}
+		public static void UpdateCommunicationLog(string communicationLogId, int tenant, string logs,string entityId,string communicationStatusTypeCode)
 		{
 			ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
 			CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);

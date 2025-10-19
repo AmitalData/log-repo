@@ -607,7 +607,6 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug("RunOneTenantFast ReBuild ");
                 this.ReBuild(tenant, "", true);
-                  this.ReBuild(tenant, "", true);
             }
             catch (Exception e)
             {

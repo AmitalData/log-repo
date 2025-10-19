@@ -319,6 +319,7 @@
     <Compile Include="DCA\DCATester.cs" />
     <Compile Include="DCA\LastAccessFileInDCADirM.cs" />
     <Compile Include="DocumentAzureQueueWR.cs" />
+    <Compile Include="DocumentSFTPAnalyzeWR.cs" />
     <Compile Include="DownloadDcaMessageSheetWR.cs" />
     <Compile Include="RabbitMQConsumerService.cs" />
     <Compile Include="RabbitMQReceiveWR.cs" />

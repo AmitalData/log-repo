@@ -1,37 +1,49 @@
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
 import { SearchBy, SearchService } from './service/top-page.service';
 import { FormsModule, } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
 import { FilterPopupService } from '../filter-popup/service/filter-popup.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RomanToolService } from '../../services/roman-tool.service';
+<<<<<<< HEAD
 import { SearchCustomsItemAutocomplateComponent } from './search-customs-item-autocomplate/search-customs-item-autocomplate.component';
 import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
+=======
+import { Subject, takeUntil } from 'rxjs';
+>>>>>>> af553fde82c20f2ded5643c16411786026b75723
 
 
 @Component({
 	selector: 'app-page-top',
 	standalone: true,
+<<<<<<< HEAD
 	imports: [FormsModule, MatAutocompleteModule, SearchCustomsItemAutocomplateComponent, Pipes],
+=======
+	imports: [FormsModule, MatAutocompleteModule],
+>>>>>>> af553fde82c20f2ded5643c16411786026b75723
 	templateUrl: './page-top.component.html',
 	styleUrl: './page-top.component.css',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PageTopComponent implements AfterViewInit {
-	@ViewChild(SearchCustomsItemAutocomplateComponent) searchCustomsItemAutocomplateComponent: SearchCustomsItemAutocomplateComponent;
+export class PageTopComponent implements AfterViewInit, OnDestroy {
 	@Output() searchClick = new EventEmitter<string | number>();
 	textToSearch: string = '';
 	searchHeader: string = 'חיפוש פרט מכס/מילה/צירוף מילים';
+
+	private destroy$ = new Subject<void>();
 
 	constructor(
 		public searchService: SearchService,
 		private headerService: HeaderService,
 		private filterPopupService: FilterPopupService,
-		public romanTool: RomanToolService, private cdr: ChangeDetectorRef
+		public romanTool: RomanToolService, 
+		private cdr: ChangeDetectorRef
 	) { }
 
 	ngAfterViewInit() {
 		this.cdr.detectChanges();
 	}
+
 	public text: string = '';
 	public checked: string | number = '';
 	public searchBy = SearchByParam;
@@ -40,12 +52,20 @@ export class PageTopComponent implements AfterViewInit {
 	public SearchByValidation: SearchBy = SearchBy.searchBy_form01;
 
 	ngOnInit() {
-		// this.text = this.searchService.SearchBy('searchBy_form01'); // #112160 
 		this.text = this.searchHeader;
 		this.checked = this.searchService.GetDefaultValue();
-		this.headerService.searchState$.subscribe((searchText) => {
-			this.currentSearchState = searchText;
-		});
+		
+		this.headerService.searchState$
+			.pipe(takeUntil(this.destroy$))
+			.subscribe((searchText) => {
+				this.currentSearchState = searchText;
+				this.cdr.markForCheck();
+			});
+	}
+
+	ngOnDestroy() {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 
 	// #112160
@@ -73,7 +93,6 @@ export class PageTopComponent implements AfterViewInit {
 	}
 
 	clickSearch() {
-		this.searchCustomsItemAutocomplateComponent.clearAutocomplete();
 
 		if (this.textToSearch.trim() === "") {
 			this.textToSearch = "";
