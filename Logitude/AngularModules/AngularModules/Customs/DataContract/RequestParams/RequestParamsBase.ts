@@ -49,7 +49,9 @@ export class RequestParamsBase {
 
     public DeclarationDirection: string;
     public ForcePersonalSign: boolean;
-    public TestCase: TestCase
+    public TestCase: TestCase;
+
+    public SendUpdateContainerization:boolean;
 }
 export class TestCase {
     public Code: string;
