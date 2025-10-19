@@ -340,7 +340,6 @@
     <Compile Include="APIDataContract\QueryService\GLAccountTypeQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\JournalActionTypeQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\JournalLineQueryService.cs" />
-    <Compile Include="APIDataContract\QueryService\JournalLineQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\JournalQueryService.cs" />
     <Compile Include="APIDataContract\QueryService\JournalQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\JournalStatusTypeQueryService.cs" />
