@@ -52,7 +52,7 @@
         <tr class="FormFieldRow">
             <td class="tbl1Label">
                 <LogLabel [NoObjectField]="true" [ObjectFieldName]="'FromExport'" [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext" [Text]="'מתאריך'">
+                    [DataContext]="DataContext" [Text]="'Accounting.General.O.Datefrom' | TextCodeTranslationPipe">
                 </LogLabel>
             </td>
             <td class="tbl1Col0"></td>
@@ -69,7 +69,7 @@
             <td class="tbl1Label">
                 <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ToDateExport'"
                     [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                    [Text]="'עד תאריך'"></LogLabel>
+                    [Text]="'Customs.CustomsExchangeRate.F.DateTo' | TextCodeTranslationPipe"></LogLabel>
             </td>
             <td class="tbl1Col0"></td>
             <!--style="width: 180px; padding-right: 15px;"-->
@@ -101,7 +101,7 @@
                             <div></div>
                         </td>
                         <td width="57px">
-                            <button class="Button" (click)="CancelButtonClicked()">סגור</button>
+                            <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Close' | TextCodeTranslationPipe}}</button>
                         </td>
                     </tr>
                 </table>

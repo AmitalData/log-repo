@@ -90,7 +90,7 @@
         color: #4F4F4F;
     }
 </style>
-<div *ngIf="!IsCustomerCare">מסך ניהול חסום</div>
+<div *ngIf="!IsCustomerCare">{{'General.O.ManagmentScreenBlocked' | TextCodeTranslationPipe}}</div>
 
 
     <table  *ngIf="IsCustomerCare && Load">
@@ -101,7 +101,7 @@
                         <tr class="TabTitleRow">
                             <td>
                                 <div style="width: 60px; ">
-                                    מסך ניהול
+                                    {{'General.O.ManagmetScreen' | TextCodeTranslationPipe}}
                                 </div>
                             </td>
 
@@ -111,8 +111,8 @@
                             <td>
 
                                 <label> Journal More Data </label>
-                                <div style="width:250px"><button class="Button" (click)="ResetJournalClicked(false)">אפס פקודה </button> </div>
-                                <div style="width:250px"><button class="Button" (click)="ResetJournalClicked(true)">  אפס פקודה כולל מחיקה </button> </div>
+                                <div style="width:250px"><button class="Button" (click)="ResetJournalClicked(false)">{{'General.O.ResetCommand' | TextCodeTranslationPipe}} </button> </div>
+                                <div style="width:250px"><button class="Button" (click)="ResetJournalClicked(true)">  {{'General.O.ResetCommandAndDelete' | TextCodeTranslationPipe}} </button> </div>
 
                             </td>
                         </tr>
@@ -155,7 +155,7 @@
                         <tr class="SectionHeader" style="height:27px">
                             <td>
 
-                                <label>תנעות שנצרו</label>
+                                <label>{{'General.O.TransactionsCreated' | TextCodeTranslationPipe}}</label>
 
                             </td>
                         </tr>
