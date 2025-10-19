@@ -251,6 +251,19 @@
 
                                     <td style="width: 375px;">
                                         <table>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 135px;">
+                                                    <LogLabel [ObjectFieldName]="'IsPrepaidExpenses'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                    </LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <CheckBox [IsChecked]="IsPrepaidExpenses"
+                                                        (Checked)="IsPrepaidExpenses = $event"
+                                                        [IsEnabled]="IsScreenEnabled"></CheckBox>
+                                                </td>
+                                            </tr>
                                             <td>
                                                 <div></div>
                                             </td>
@@ -267,6 +280,16 @@
                                                         [InputType]="'text'" [Text]="ConfirmationNumber"
                                                         [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Operational date -->
+                                            <tr *ngIf="ShowOperationalDate" class="FormFieldRow">
+                                                <td style="width: 135px;">
+                                                    <LogLabel [ObjectFieldName]="'OperationalDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'OperationalDate'" [SelectedDateValue]="OperationalDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
                                             </tr>
 

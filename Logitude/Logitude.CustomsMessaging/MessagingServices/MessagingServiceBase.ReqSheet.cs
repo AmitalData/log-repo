@@ -940,7 +940,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 			SFTPService sftpService = new SFTPService(sFTPDeleteTempFilesService);
 			sftpService.LogonWithKey(ftpHostIP, ftpUserName, ftpPrivateKeyPath, ftpPort, ftpFolderName, out p_status, out p_message, ftpPassword);
 
-			if (!string.IsNullOrEmpty(ftpPrivateKeyPath) && File.Exists(ftpPrivateKeyPath))				
+			if (!string.IsNullOrEmpty(PrivateKeyTempPath) && !string.IsNullOrEmpty(ftpPrivateKeyPath) && File.Exists(ftpPrivateKeyPath))				
 			    File.Delete(ftpPrivateKeyPath);
 
 			if (p_status != "0")
@@ -952,7 +952,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 					throw new ArgumentNullException(nameof(filedata), "The file data was not found!");
 
 
-				sftpService.Upload(fileName, filedata, false, false, out p_status, out p_message);
+				sftpService.Upload(fileName, filedata, true, false, out p_status, out p_message);
 				messageOut = p_message;
 
 				try

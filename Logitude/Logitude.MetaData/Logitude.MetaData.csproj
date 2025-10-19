@@ -315,6 +315,7 @@
     <None Include="DBScripts\ShipmentModel\202304051240_MarkDuplicatedShipmentsAsCancelled - logbox.sxml" />
     <None Include="DBScripts\ShipmentModel\FillContainersDataFromPackages.sxml" />
     <None Include="DBTables\CommonDataModel\DigitalContactLastSetting.dxml" />
+    <None Include="DBTables\InvoiceModel\ExpenseAllocationSetting.dxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentTypeMetaData.lxml" />
     <None Include="DBTables\CommonDataModel\FreelancerGroupType.dxml" />
     <None Include="DBTables\CommonDataModel\ExternalLink.dxml" />
@@ -381,6 +382,7 @@
     <None Include="EntityFiles\InfrastructureModel\SearchIndex.lxml" />
     <None Include="EntityFiles\InfrastructureModel\SearchIndexTenantHistory.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TabModification.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ExpenseAllocationSetting.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARInvoicesSignedStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\ConfirmationNumberDefault.lxml" />
     <None Include="EntityFiles\InvoiceModel\ConfirmationNumberStatus.lxml" />

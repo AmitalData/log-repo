@@ -88,6 +88,9 @@
     <Reference Include="Azure.Identity, Version=1.11.3.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\packages\Azure.Identity.1.11.3\lib\netstandard2.0\Azure.Identity.dll</HintPath>
     </Reference>
+    <Reference Include="Azure.Security.KeyVault.Secrets, Version=4.2.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Security.KeyVault.Secrets.4.2.0\lib\netstandard2.0\Azure.Security.KeyVault.Secrets.dll</HintPath>
+    </Reference>
     <Reference Include="Confluent.Kafka, Version=2.4.0.0, Culture=neutral, PublicKeyToken=12c514ca49093d1e, processorArchitecture=MSIL">
       <HintPath>..\packages\Confluent.Kafka.2.4.0\lib\net462\Confluent.Kafka.dll</HintPath>
     </Reference>
@@ -989,6 +992,9 @@
     <Compile Include="InfrastructureModel\EntityQueries\QueueMessageQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\QuoteChargesGroupQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ReferenceCustomObjectQuery.cs" />
+    <Compile Include="InvoiceModel\EntityLists\ExpenseAllocationSettingList.cs" />
+    <Compile Include="InvoiceModel\EntityPMs\ExpenseAllocationSettingPM.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\ExpenseAllocationSettingQuery.cs" />
     <Compile Include="Security\ContactInfo.cs" />
     <Compile Include="ShipmentsModel\EntityLists\FreightForwarderReferenceList.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\FreightForwarderReferencePM.cs" />

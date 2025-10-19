@@ -130,7 +130,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string ConnectedPaymentsNumbers { get; set; }
         public string TotalEquation { get; set; }
         public string ConfirmationNumber { get; set; }
+        public bool IsPrepaidExpenses { get; set; }
 
-        
+
     }
 }

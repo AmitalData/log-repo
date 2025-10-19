@@ -112,9 +112,9 @@ namespace Logitude.Customs.BL.Messaging.Amital
                 FolderName = "Amital",
                 From = _From, //"Logitude",
                 InOut = "O",
-				AdditionalFields = uServerCommunicationServiceParam.reqParam
+				AdditionalFields = uServerCommunicationServiceParam.reqParam,
 				//XMLData=some xml data string 
-			};
+			};        
             var myMainObject = "";
             if (_CommunicationModel.UnifaceMethodType == Server.Tools.Models.AmitalStandardCommunicationModel.OperationMethod.AnalyzeStandard)
             {
@@ -165,6 +165,10 @@ namespace Logitude.Customs.BL.Messaging.Amital
                 myInfo.ImmediatelyResponse = response;
                 myInfo.ImmediatelyMessage = P_MESSAGE;
                 _CommunicationsParams.Logs = response;
+                if (_CommunicationsParams.Subject == "Logitude Declaration check File Credit" && _CommunicationsParams.AdditionalFields == null)
+                {
+                    _CommunicationsParams.Logs += new System.Diagnostics.StackTrace().ToString();
+                }
                 _CommunicationsParams.Status = "D";
                 if(!string.IsNullOrEmpty(myInfo.CommunicationLogId))
 				Communications.UpdateCommunicationLogStatus(myInfo.CommunicationLogId, GetTenant(), null, "D", response, null);

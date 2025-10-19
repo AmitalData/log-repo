@@ -61,8 +61,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCBUD2LTWithResponseContentHeader customsResponse)
         {
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-            var objectTableId2 = ObjectTableRepository.GetObjectTableByName("DocumentsFiling");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration", customsResponse.tenant);
+            var objectTableId2 = ObjectTableRepository.GetObjectTableByName("DocumentsFiling", customsResponse.tenant);
             var genericRequestParams = new GenericRequestParams()
             {
                 Tenant = customsResponse.tenant,
@@ -100,8 +100,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             DocumentsFilingPM documentsFilingPM/*, DeclarationPM declarationPM*/ ,string entityId)
         {
 
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-            var objectTableDocumentsFilingId = ObjectTableRepository.GetObjectTableByName("DocumentsFiling");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration", tenant);
+            var objectTableDocumentsFilingId = ObjectTableRepository.GetObjectTableByName("DocumentsFiling", tenant);
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
 
 

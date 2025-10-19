@@ -341,6 +341,11 @@ export class FullAccountingSettingPM {
     public set InterestInvoiceNotes(newValue: string) { if (this.interestInvoiceNotes != newValue) { this.interestInvoiceNotes = newValue; this.MarkAsDirty("InterestInvoiceNotes"); } }
        
 	 
+    private prepaidExpensesGLAccountId: string;
+    public get PrepaidExpensesGLAccountId() { return this.prepaidExpensesGLAccountId; }
+    public set PrepaidExpensesGLAccountId(newValue: string) { if (this.prepaidExpensesGLAccountId != newValue) { this.prepaidExpensesGLAccountId = newValue; this.MarkAsDirty("PrepaidExpensesGLAccountId"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

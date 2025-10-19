@@ -19,6 +19,7 @@ namespace Logitude.Accounting.BL.CloseTables
         public const string Accounting = "1";
         public const string InterestInvoice = "3";
         public const string Invoice = "2";
+        public const string CreditNote = "4";
     }
  }
  

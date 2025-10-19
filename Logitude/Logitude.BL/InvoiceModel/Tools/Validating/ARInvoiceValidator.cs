@@ -1,38 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.Helpers;
-using Simplog.Data.InvoiceModel.Repositories;
-using Logitude.BL.CommonDataModel;
-using Logitude.BL.Helpers;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Server.Infrastructure.Helpers;
-using System.Globalization;
-using System.Transactions;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Server.Tools;
-using Logitude.Accounting.Def.EntityQueryServicesExt;
-using Microsoft.Practices.Unity;
+﻿using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityLists;
-using Simplog.Data.InvoiceModel;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Server.Infrastructure;
-using Logitude.BL.DataContracts;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.BL.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using System.Data.Entity.Core;
+using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
+using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity.Core;
+using System.Globalization;
+using System.Linq;
+using System.Transactions;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -1133,6 +1134,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         if (!entityPM.IsExternalEntity)
                         {
+                          var  counterDefinitionQuery = new CounterDefinitionQuery(entityPM.Tenant);
+                            bool uniquePerPrefix = counterDefinitionQuery.GetUniquePerPrefixByCounterName("A/R Invoice", entityPM.Tenant);
                             bool HasInterestFeature = entityPM.HasInterestFeature;
 
                             ARInvoice lastApprovedInvoice = (from a in myContext.ARInvoices
@@ -1143,7 +1146,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                                              && a.StatusCode != "PR"
                                                              && a.StatusCode != "VD"
                                                              && a.InvoiceNumber != a.Id
-                                                             && ((HasInterestFeature || entityPM.ARInvoiceTypeCode  == "IT") ? a.ARInvoiceTypeCode == "IT": a.ARInvoiceTypeCode != "IT")
+                                                              && (uniquePerPrefix ? ((HasInterestFeature || entityPM.ARInvoiceTypeCode == "IT") ? a.ARInvoiceTypeCode == "IT" : a.ARInvoiceTypeCode == entityPM.ARInvoiceTypeCode) : true)
                                                              select a).OrderByDescending(d => d.ApprovedDate).FirstOrDefault();
 
                             if (lastApprovedInvoice != null)
@@ -1275,6 +1278,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             if (Type == "IT")
             {
                 AccountPeriodCode = "3";// 2- Interest Invoice
+            }
+            if( Type == "CD")
+            {
+                AccountPeriodCode = "4";
             }
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
             AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(accountingContext);
