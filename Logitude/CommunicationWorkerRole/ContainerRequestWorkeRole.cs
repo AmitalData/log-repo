@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace CommunicationWorkerRole
 {
@@ -52,7 +53,7 @@ namespace CommunicationWorkerRole
                                     try
                                     {
                                         ContainerRequestSender analyzer = new ContainerRequestSender(communicationLog, context, communicationLogRepository, tenant);
-                                        analyzer.Send();
+                                        ProcessContainerRequestAsync(analyzer).GetAwaiter().GetResult();
                                         queueservice.Complete();
                                         LogDoneItemInMemory();
                                     }
@@ -81,6 +82,11 @@ namespace CommunicationWorkerRole
                 }
             }
         }
+        private async Task ProcessContainerRequestAsync(ContainerRequestSender analyzer)
+        {
+            await analyzer.SendAsync();
+        }
+
         private void SetCommunicationLog()
         {
             context = CommonDataContext.GetContext(tenant);

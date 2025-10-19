@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools;
 using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.BL.EntityPMs;
+using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.BL.EntityDataMappings;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityKeys;
