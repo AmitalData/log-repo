@@ -848,10 +848,6 @@
     <Compile Include="EntityQueryServiceExt\GLAccountWithholdingTaxQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\JournalQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\PaymentChequeQueryServiceExt.cs" />
-    <Compile Include="EntityQueryServices\Generated\ARPChequeLineQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\BankChequeQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\DepositQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\ReconcileCurrencyTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\GLAccountRecocileDataQueryService.cs" />
     <Compile Include="EntityQueryServices\InvoiceApiCommunicationLogQueryService.cs" />
     <Compile Include="EntityQueryServices\AccountingIntegrityCheckQueryService.cs" />
