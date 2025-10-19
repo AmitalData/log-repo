@@ -12,7 +12,6 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
-using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
@@ -41,7 +40,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     
     public string BankAccount { get; set; }
     
-    public StatusCode StatusCode { get; set; }
+    public string StatusCode { get; set; }
     
     public string StatusName { get; set; }
     }
