@@ -27,9 +27,7 @@
 					<div class="pageSearch_formField shown" [id]="text">
 						<input type="text" (input)="onChange($event)" [(ngModel)]="textToSearch"
 							[maxlength]="isNumeric(textToSearch) ? 11 : 100" [placeholder]="text"
-							(keyup.enter)="clickSearch()" [matAutocomplete]="searchCustomsItemAutocomplateComponent?.auto" />
-						<app-search-customs-item-autocomplate
-							(optionSelected)="onCustomsItemSelected(textToSearch)"></app-search-customs-item-autocomplate>
+							(keyup.enter)="clickSearch()" />
 					</div>
 
 					<button (click)="clickSearch()">חיפוש</button>
