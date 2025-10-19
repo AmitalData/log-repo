@@ -351,7 +351,9 @@ export class AppTool {
 
 		return myResult;
 	}
-
+  	public static IsNullOrUndefined(myFieldValue: any) {
+        return myFieldValue == null || myFieldValue == undefined;
+    }
 	// Measurments
 	public static GetWeightFromWeight(fromWeightCode: string, toWeightCode: string, myWeight: number) {
 		var myResult: number = null;
@@ -3316,6 +3318,7 @@ class AmitalList<Item> extends Array<Item> {
 		return this.reduce((a: Item, b: Item): Item => (select(a) > select(b) ? a : b));
 	}
 }
+
 ////--- itzik : Why Array Tool ? - better extend !!!!
 
 export class Pattern {

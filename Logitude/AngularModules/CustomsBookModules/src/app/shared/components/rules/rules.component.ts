@@ -7,11 +7,12 @@ import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { SearchService } from '../page-top/service/top-page.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 
 @Component({
   selector: 'app-rules',
   standalone: true,
-  imports: [FontAwesomeModule, NgIf, NgFor, CommonModule],
+  imports: [FontAwesomeModule, NgIf, NgFor, CommonModule, Pipes],
   templateUrl: './rules.component.html',
   styleUrl: './rules.component.css'
 })

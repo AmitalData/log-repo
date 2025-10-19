@@ -21,10 +21,15 @@ import { RomanToolService } from '../../services/roman-tool.service';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { PreferenceMenuComponent } from '../preference-menu/preference-menu';
 import { PreferencesService } from '../preference-menu/PreferencesService';
+import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
+<<<<<<< HEAD
+	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, NgStyle, PreferenceMenuComponent, Pipes],
+=======
 	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, NgStyle],
+>>>>>>> af553fde82c20f2ded5643c16411786026b75723
 	templateUrl: './main-display.component.html',
 	styleUrl: './main-display.component.css',
 	changeDetection: ChangeDetectionStrategy.OnPush,

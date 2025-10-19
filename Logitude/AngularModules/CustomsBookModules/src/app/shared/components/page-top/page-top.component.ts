@@ -5,13 +5,22 @@ import { HeaderService, searchState } from '../app-header/service/header.service
 import { FilterPopupService } from '../filter-popup/service/filter-popup.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RomanToolService } from '../../services/roman-tool.service';
+<<<<<<< HEAD
+import { SearchCustomsItemAutocomplateComponent } from './search-customs-item-autocomplate/search-customs-item-autocomplate.component';
+import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
+=======
 import { Subject, takeUntil } from 'rxjs';
+>>>>>>> af553fde82c20f2ded5643c16411786026b75723
 
 
 @Component({
 	selector: 'app-page-top',
 	standalone: true,
+<<<<<<< HEAD
+	imports: [FormsModule, MatAutocompleteModule, SearchCustomsItemAutocomplateComponent, Pipes],
+=======
 	imports: [FormsModule, MatAutocompleteModule],
+>>>>>>> af553fde82c20f2ded5643c16411786026b75723
 	templateUrl: './page-top.component.html',
 	styleUrl: './page-top.component.css',
 	changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,4 +1,4 @@
- 
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,15 +16,15 @@ using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Accounting.BL.EntityQueryServices
-{ 
-   public partial class ReconcileCurrencyTypeQueryService: EntityQueryService<ReconcileCurrencyType,ReconcileCurrencyTypeKeys,ReconcileCurrencyTypePM,object,ReconcileCurrencyTypeKeys>
-   {
-   
+{
+    public partial class ReconcileCurrencyTypeQueryService : EntityQueryService<ReconcileCurrencyType, ReconcileCurrencyTypeKeys, ReconcileCurrencyTypePM, object, ReconcileCurrencyTypeKeys>
+    {
+
         ReconcileCurrencyTypeRepository repository;
-		IAccountingContext  context;
+        IAccountingContext context;
         public ReconcileCurrencyTypeQueryService(int tenant)
         {
-		    context = AccountingContext.GetContext(tenant);
+            context = AccountingContext.GetContext(tenant);
             MainContext = context;
             repository = new ReconcileCurrencyTypeRepository(context);
             Repository = repository;
@@ -47,23 +47,22 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             Repository = repository;
             mapping = new ReconcileCurrencyTypeDataMapping();
         }
-		 
-		public  ReconcileCurrencyTypePM GetSingle(string id,bool getComposition, bool getFromCache)
-        {
-             EntityKeys = new ReconcileCurrencyTypeKeys(){ Id = id };
 
-			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        public ReconcileCurrencyTypePM GetSingle(string id, bool getComposition, bool getFromCache)
+        {
+            EntityKeys = new ReconcileCurrencyTypeKeys() { Id = id };
+
+            return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
-       
-	    protected override EntityKeyFields GetKeys(ReconcileCurrencyType entityPOCO)
+
+        protected override EntityKeyFields GetKeys(ReconcileCurrencyType entityPOCO)
         {
-            ReconcileCurrencyTypeKeys entityKeys = new ReconcileCurrencyTypeKeys() { Id = entityPOCO.Id,  };
+            ReconcileCurrencyTypeKeys entityKeys = new ReconcileCurrencyTypeKeys() { Id = entityPOCO.Id, };
             return entityKeys;
         }
-     
-	 
-   }
-   
+
+
+    }
+
 }
-	 

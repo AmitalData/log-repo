@@ -2,17 +2,15 @@ import {ObjectsLocator} from './ObjectsLocator';
 import {SessionLocator} from '../Utilities/SessionLocator';
 
 import {AppTool, DateTool} from '../Tools';
-import {UserPM} from '../../Common/EntityPMs/UserPM';
-import {TenantPM} from '../../Common/EntityPMs/TenantPM';
+
 import { TenantManagementJS } from '../DataContracts/TenantManagementJS';
-import {AccountingSettingPM} from '../../Common/EntityPMs/AccountingSettingPM';
-import {CustomsInterfaceSettingPM} from '../../Common/EntityPMs/CustomsInterfaceSettingPM';
+
 import { SharedLogisticsSettingPM } from '../EntityPMs/SharedLogisticsSettingPM';
 
 export class ObjectsUpdater {
-    public static TenantPM: TenantPM;
+    public static TenantPM;
 
-    public static UpdateTenantPM(value: TenantPM) {
+    public static UpdateTenantPM(value) {
         this.TenantPM = value;
         AppTool.TenantPM = value;
         DateTool.TenantPM = value;
@@ -27,7 +25,7 @@ export class ObjectsUpdater {
         }
     }
 
-    public static UpdateLoggedUserPM(value: UserPM) {
+    public static UpdateLoggedUserPM(value) {
         ObjectsLocator.LoggedUserPM = value;
     }
 
@@ -36,25 +34,25 @@ export class ObjectsUpdater {
             value = new TenantManagementJS();
         }
 
-        ObjectsLocator.TenantManagementJS = value;
+
         SessionLocator.TenantManagementJS = value;
     }
 
-    public static UpdateAccountingSettingPM(value: AccountingSettingPM) {
+    public static UpdateAccountingSettingPM(value) {
         if (!value) {
-            value = new AccountingSettingPM();
+         
         }
 
-        ObjectsLocator.AccountingSettingPM = value;
+
         SessionLocator.AccountingSettingPM = value;
     }
    
-    public static UpdateCustomsInterfaceSettingPM(value: CustomsInterfaceSettingPM) {
+    public static UpdateCustomsInterfaceSettingPM(value) {
         if (!value) {
-            value = new CustomsInterfaceSettingPM();
+
         }
 
-        ObjectsLocator.CustomsInterfaceSettingPM = value;
+   
     }
 
     public static UpdateSharedLogisticsSettingPM(value: SharedLogisticsSettingPM) {

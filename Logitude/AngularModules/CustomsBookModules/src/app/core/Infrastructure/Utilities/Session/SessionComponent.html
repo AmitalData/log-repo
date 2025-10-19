@@ -1,0 +1,14 @@
+
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="MediaFillAbsolute">
+                    <div #SessionContainer class="LocationDirective" LocationDirective Code="SessionContainer"></div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<BusyIndicator [IdPrefix]="'SessionComponent'" [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" *ngIf="ShowBusyIndicator"></BusyIndicator>

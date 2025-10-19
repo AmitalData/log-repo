@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.Http.Description;
 using System.Xml.Linq;
 using Newtonsoft.Json;
@@ -87,7 +88,7 @@ namespace AmitalCloud.WEB.API.Areas.HelpPage
         /// <param name="api">The <see cref="ApiDescription"/>.</param>
         /// <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
         /// <returns>The samples keyed by media type.</returns>
-        public virtual IDictionary<MediaTypeHeaderValue, object> GetSample(ApiDescription api, SampleDirection sampleDirection)
+        public virtual async Task<IDictionary<MediaTypeHeaderValue, object>> GetSampleAsync(ApiDescription api, SampleDirection sampleDirection)
         {
             if (api == null)
             {
@@ -123,7 +124,7 @@ namespace AmitalCloud.WEB.API.Areas.HelpPage
                             // If no sample found, try generate sample using formatter and sample object
                             if (sample == null && sampleObject != null)
                             {
-                                sample = WriteSampleObjectUsingFormatter(formatter, sampleObject, type, mediaType);
+                                sample = await WriteSampleObjectUsingFormatterAsync(formatter, sampleObject, type, mediaType);
                             }
 
                             samples.Add(mediaType, WrapSampleIfString(sample));
@@ -285,7 +286,7 @@ namespace AmitalCloud.WEB.API.Areas.HelpPage
         /// <param name="mediaType">Type of the media.</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "The exception is recorded as InvalidSample.")]
-        public virtual object WriteSampleObjectUsingFormatter(MediaTypeFormatter formatter, object value, Type type, MediaTypeHeaderValue mediaType)
+        public virtual async Task<object> WriteSampleObjectUsingFormatterAsync(MediaTypeFormatter formatter, object value, Type type, MediaTypeHeaderValue mediaType)
         {
             if (formatter == null)
             {
@@ -305,7 +306,7 @@ namespace AmitalCloud.WEB.API.Areas.HelpPage
                 {
                     ms = new MemoryStream();
                     content = new ObjectContent(type, value, formatter, mediaType);
-                    formatter.WriteToStreamAsync(type, value, ms, content, null).Wait();
+                    await formatter.WriteToStreamAsync(type, value, ms, content, null);
                     ms.Position = 0;
                     StreamReader reader = new StreamReader(ms);
                     string serializedSampleString = reader.ReadToEnd();

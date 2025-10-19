@@ -2,7 +2,7 @@ import { MenuButtonGroupPM } from './MenuButtonGroupPM';
 
 export class MenuButtonPM {
 	constructor(entityParent: MenuButtonGroupPM) {
-		this.UIProperties = new UIProperties();
+		// this.UIProperties = new UIProperties();
 		this.IsDirty = false;
 	}
 

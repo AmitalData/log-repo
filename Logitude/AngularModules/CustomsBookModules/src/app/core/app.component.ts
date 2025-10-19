@@ -6,11 +6,14 @@ import { MainPageComponent } from '../features/main-page/main-page.component';
 import { NgFor, NgForOf } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { SessionInfo } from './Infrastructure/Utilities/SessionInfo';
+import {Pipes } from './Infrastructure/ModuleDeclarations';
 
 @Component({
 	selector: 'app-root',
 	standalone: true,
 	imports: [NgFor, NgForOf, RouterOutlet, AppHeaderComponent, AppFooterComponent, MainPageComponent, CommonModule],
+    providers: [Pipes],
+
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.css',
 })

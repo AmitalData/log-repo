@@ -1,4 +1,4 @@
- 
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,15 +16,15 @@ using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Accounting.BL.EntityQueryServices
-{ 
-   public partial class BankChequeQueryService: EntityQueryService<BankCheque,BankChequeKeys,BankChequePM,object,BankChequeKeys>
-   {
-   
+{
+    public partial class BankChequeQueryService : EntityQueryService<BankCheque, BankChequeKeys, BankChequePM, object, BankChequeKeys>
+    {
+
         BankChequeRepository repository;
-		IAccountingContext  context;
+        IAccountingContext context;
         public BankChequeQueryService(int tenant)
         {
-		    context = AccountingContext.GetContext(tenant);
+            context = AccountingContext.GetContext(tenant);
             MainContext = context;
             repository = new BankChequeRepository(context);
             Repository = repository;
@@ -47,23 +47,22 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             Repository = repository;
             mapping = new BankChequeDataMapping();
         }
-		 
-		public  BankChequePM GetSingle(string id,bool getComposition, bool getFromCache)
-        {
-             EntityKeys = new BankChequeKeys(){ Id = id };
 
-			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        public BankChequePM GetSingle(string id, bool getComposition, bool getFromCache)
+        {
+            EntityKeys = new BankChequeKeys() { Id = id };
+
+            return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
-       
-	    protected override EntityKeyFields GetKeys(BankCheque entityPOCO)
+
+        protected override EntityKeyFields GetKeys(BankCheque entityPOCO)
         {
-            BankChequeKeys entityKeys = new BankChequeKeys() { Id = entityPOCO.Id,  };
+            BankChequeKeys entityKeys = new BankChequeKeys() { Id = entityPOCO.Id, };
             return entityKeys;
         }
-     
-	 
-   }
-   
+
+
+    }
+
 }
-	 

@@ -6,11 +6,12 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CommonModule, DatePipe, NgIf } from '@angular/common';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { ClassifGuidanceDetailsResponseData } from '../main-display/main-display.component';
+import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 
 @Component({
   selector: 'app-clasisification-guidance',
   standalone: true,
-  imports: [GenericTableComponent, CommonModule, NgIf],
+  imports: [GenericTableComponent, CommonModule, NgIf, Pipes],
   templateUrl: './clasisification-guidance.component.html',
   styleUrl: './clasisification-guidance.component.css',
   providers: [DatePipe]
