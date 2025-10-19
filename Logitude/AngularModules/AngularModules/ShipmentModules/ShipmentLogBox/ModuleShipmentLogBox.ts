@@ -1,9 +1,10 @@
 ﻿import {NgModule} from '@angular/core';
 import {InfrastructureModule} from '../../Infrastructure/Module_INFR';
 import {Components, ModuleDeclarations} from './ModuleDeclarations';
+import {ControlsModule} from '../../Controls/Module_CTRL';
 
 @NgModule({
-    imports: [InfrastructureModule],
+    imports: [InfrastructureModule, ControlsModule],
     declarations: [...Components],
     entryComponents: [...Components],
 })

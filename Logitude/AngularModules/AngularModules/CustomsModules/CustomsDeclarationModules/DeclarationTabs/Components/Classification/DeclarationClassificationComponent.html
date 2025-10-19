@@ -50,7 +50,7 @@
                                 <div class="DisbleBox">
                                     {{DisplayOnlyMessage}}
                                     <span style="padding: 0px 16px;">-</span>
-                                    <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
+                                    <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">{{'רענן' | TextCodeTranslationPipe}}</span>
 
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                     <td style="width: 130px;">
                                         <LogLabel [ObjectFieldName]="'CasualSupplierName'"
                                                   [ObjectTableName]="ObjectTableName"
-                                                  [Text]="'ספק'"
+                                                  [Text]="'ספק' | TextCodeTranslationPipe"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td style="width: 105px;" tabindex="2">
@@ -177,7 +177,7 @@
                                         <LogLabel [ObjectFieldName]="'InvoiceAmount'"
                                                   [ObjectTableName]="'Customs.SupplierInvoice'"
                                                   [DataContext]="DataContext"
-                                                  [Text]="'ערך סחורה'"></LogLabel>
+                                                  [Text]="'ערך סחורה' | TextCodeTranslationPipe"></LogLabel>
                                     </td>
 
                                     <td style="width: 160px;">
@@ -194,7 +194,7 @@
                                     <td style="width: 150px;">
                                         <LogLabel [ObjectFieldName]="'TotalInvoiceAmountInUSD'"
                                                   [ObjectTableName]="'Customs.SupplierInvoice'"
-                                                  [Text]="'ערך סחורה ב USD'"
+                                                  [Text]="'ערך סחורה ב USD' | TextCodeTranslationPipe"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
 
@@ -217,7 +217,7 @@
                                     <td style="width: 150px;">
                                         <LogLabel [ObjectFieldName]="'FreightAmount'"
                                                   [ObjectTableName]="'Customs.SupplierInvoice'"
-                                                  [Text]="'הובלה'"
+                                                  [Text]="'הובלה' | TextCodeTranslationPipe"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
 
@@ -263,7 +263,7 @@
                                     <td style="width: 130px;">
                                         <LogLabel [ObjectFieldName]="'PackageQuantity'"
                                                   [ObjectTableName]="ObjectTableName"
-                                                  [Text]="'כמות'"
+                                                  [Text]="'כמות' | TextCodeTranslationPipe"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td style="width: 105px;" tabindex="2">

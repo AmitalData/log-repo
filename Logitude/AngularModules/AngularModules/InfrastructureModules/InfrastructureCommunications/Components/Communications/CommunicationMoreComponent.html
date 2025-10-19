@@ -1,5 +1,4 @@
-﻿
-<style>
+﻿<style>
     .CustomMultiLinesText {
         width: 800px;
         max-height: 700px;
@@ -39,7 +38,7 @@
                           [ObjectFieldName]="'CorrelationID'"
                           [ObjectTableName]="ObjectTableName"
                           [DataContext]="DataContext"
-                          [Text]="'מתאם - קורלציה'">
+                          [Text]="'CommunicationLog.O.CorrelationID' | TextCodeTranslationPipe">
 
                 </LogLabel>
 
@@ -60,7 +59,7 @@
                         <tr>
                             <td><div style="margin:10px;text-align:right;width:360px;height:27px" class="CustomMultiLinesText">{{CorrelationID}}</div></td>
                             <td></td>
-                            <td><button class="Button" title="Copy to clipboard" (click)="Copy2Clipboard('CorrelationID')" style="width:50px;float:left;margin-left:100px;">העתק</button></td>
+                            <td><button class="Button" title="Copy to clipboard" (click)="Copy2Clipboard('CorrelationID')" style="width:50px;float:left;margin-left:100px;">{{'General.Copy' | TextCodeTranslationPipe}}</button></td>
                             <td></td>
                         </tr>
                     </table>
@@ -84,7 +83,7 @@
                           [ObjectFieldName]="'CorrelationID'"
                           [ObjectTableName]="ObjectTableName"
                           [DataContext]="DataContext"
-                          [Text]="'מזהה חיצוני - External ID'">
+                          [Text]="'CommunicationLog.O.ExternalID' | TextCodeTranslationPipe">
 
                 </LogLabel>
 
@@ -98,7 +97,7 @@
                         <tr>
                             <td><div style="margin:10px;text-align:right;width:360px;height:27px" class="CustomMultiLinesText">{{ExternalID}}</div></td>
                             <td></td>
-                            <td><button class="Button" title="Copy to clipboard" (click)="Copy2Clipboard('ExternalID')" style="width:50px;float:left;margin-left:100px;">העתק</button></td>
+                            <td><button class="Button" title="Copy to clipboard" (click)="Copy2Clipboard('ExternalID')" style="width:50px;float:left;margin-left:100px;">{{'General.Copy' | TextCodeTranslationPipe}}</button></td>
                             <td></td>
                         </tr>
                     </table>
@@ -121,7 +120,7 @@
             <td style="margin-left:5px;" colspan="4">
 
                 <div>
-                    <button class="Button" title="Copy to clipboard" (click)="Copy2Clipboard('Logs')" style="width:50px;float:left;margin-left:90px;">העתק</button>
+                    <button class="Button" title="Copy to clipboard" (click)="Copy2Clipboard('Logs')" style="width:50px;float:left;margin-left:90px;">{{'General.Copy' | TextCodeTranslationPipe}}</button>
                     <div style="margin:10px;vertical-align:top;" class="CustomMultiLinesText">
 
 
@@ -143,7 +142,7 @@
         <tr style="vertical-align:top;">
             <td style="margin-left:5px;" colspan="4">
                 <div>
-                    <button class="Button" title="Copy to clipboard" (click)="Copy2Clipboard('ExceptionMessage')" style="width:50px;float:left;margin-left:90px;">העתק</button>
+                    <button class="Button" title="Copy to clipboard" (click)="Copy2Clipboard('ExceptionMessage')" style="width:50px;float:left;margin-left:90px;">{{'General.Copy' | TextCodeTranslationPipe}}</button>
                     <div style="margin:10px;vertical-align:top;" class="CustomMultiLinesText">
 
 

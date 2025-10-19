@@ -1,5 +1,4 @@
-﻿
-<style>
+﻿<style>
 
     :host ::ng-deep .isBold .Label {
         font-size: 12px;
@@ -30,7 +29,7 @@
                         <ul float-start class="FiltersMenu">
                             <li (click)="itemClicked('All')" (mouseover)="itemMouseOver('All')"
                                 [class.SelectedFilter]="SelectedTransportModeId === 'All'">
-                                הכל
+                                {{'General.All' | TextCodeTranslationPipe}}
                             </li>
                             <li (click)="itemClicked('A')" (mouseover)="itemMouseOver('A')" (mouseleave)="itemMouseLeave('A')"
                                 [class.SelectedFilter]="SelectedTransportModeId === 'A'" title="Air">
@@ -55,12 +54,11 @@
                         <LogLabel class="isBold" [ObjectTableName]="ObjectTableName" 
                         [ObjectFieldName]="'CreateDateTime'" [DataContext]="DataContext"></LogLabel>
                     </td>
-
                     <td style="width: 7px;" > 
                         <LogLabel  [ObjectTableName]="ObjectTableName" 
                         [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td style="width:60px;">מתאריך: </td>
+                    <td style="width:60px;">{{'Report.FromDate' | TextCodeTranslationPipe}} </td>
                     <td style="width: 110px;" >
                         <AdvancedDatePicker style="display: block;width: 110px;" float-start
                             [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
@@ -75,7 +73,7 @@
                         <LogLabel  [ObjectTableName]="ObjectTableName" 
                         [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td style="width:60px;">עד תאריך: </td>
+                    <td style="width:60px;">{{'Report.ToDate' | TextCodeTranslationPipe}} </td>
                     
                     <td style="width: 110px;" >
                         <AdvancedDatePicker style="display: block;width: 150px;" float-start
@@ -88,7 +86,7 @@
                     </td> 
 
                     <td style="width: 55px;">
-                        <LogLabel class="isBold" [Text]="'דייר'"
+                        <LogLabel class="isBold" [Text]="'General.Tenant' | TextCodeTranslationPipe"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width: 150px;">

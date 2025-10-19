@@ -27,7 +27,7 @@
             <!-- Request Fields -->
 
             <tr style="height:35px">
-                <td style="width:40px;text-align:right"><span style="font-size:11px;color:dimgray">קובץ:</span></td>
+                <td style="width:40px;text-align:right"><span style="font-size:11px;color:dimgray">{{'HelpResource.F.File' | TextCodeTranslationPipe}}:</span></td>
                 <td style="width:150px; ">
                     <LogTextBox [ObjectFieldName]="'FileName'" [Placeholder]="Placeholder" [ObjectTableName]="ObjectTableName"
                                 [HideColumns]="true" [Text]="FileName" [DataContext]="DataContext"></LogTextBox>
@@ -64,7 +64,7 @@
         <table>
             <tr class="MyTR">
                 <td>
-                    <span>נמצאו השגיאות הבאות</span>
+                    <span>{{'Customs.SupplierInvoiceItemsReqList.O.ErrorsFound' | TextCodeTranslationPipe}}</span>
                 </td>
             </tr>
             <tr style="height:100px">
@@ -89,7 +89,7 @@
         <table>
             <tr class="MyTR">
                 <td>
-                    <span>נוצרה פקודת יומן</span>
+                    <span>{{'LBL_JOURNAL_ENTRY_CREATED' | TextCodeTranslationPipe}}</span>
                 </td>
             </tr>
             <tr>
