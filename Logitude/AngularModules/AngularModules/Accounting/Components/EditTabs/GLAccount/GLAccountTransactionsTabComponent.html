@@ -396,7 +396,7 @@
                                                             </LogLabel>
                                                         </td>
 
-                                                        <td style="width:120px">
+                                                        <td style="width:110px">
                                                             <LogLov [ObjectFieldName]="'CurrencyId'"
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext"
@@ -654,7 +654,7 @@
                                                         <td style="width:15px;">
                                                             <div></div>
                                                         </td>
-                                                        <td style="width:250px">
+                                                        <td style="width:270px">
                                                             <div [style.float]="isRTL ? 'left' : 'right'"
                                                                 style="width: 190px;padding: 0 5px;">
                                                                 <SearchTextBox [ObjectTableName]="'LedgerTransaction'"
@@ -663,7 +663,7 @@
                                                                 </SearchTextBox>
                                                             </div>
 
-
+                                                            
                                                             <div [style.float]="isRTL ? 'left' : 'right'">
                                                                 <IconButton [Name]="'Refresh'"
                                                                     (click)="RefreshButtonClicked()"></IconButton>
@@ -677,6 +677,11 @@
                                                                     (click)="ExportToExcelClick()"></IconButton>
                                                             </div>
 
+                                                            <div [style.float]="isRTL ? 'left' : 'right'" style="width: 15px; vertical-align: middle; position:relative;padding: 12px;">
+                                                                <img src="./Images/Columns.png"  title="Add/Remove columns"
+                                                                 style="cursor: pointer;" class="CenterCenter"  (click)="onColumnsClick()"
+                                                                 />
+                                                            </div>
                                                         </td>
                                                     </table>
                                                 </td>
@@ -693,7 +698,7 @@
                                                 <td>
                                                     <table style="table-layout: fixed;">
                                                         <td style="width:10px"></td>
-                                                        <td style="width:275px;"
+                                                        <td style="width:265px;"
                                                             [style.text-align]="isRTL ? 'right' : 'left'">
 
                                                             <span float-start
@@ -884,7 +889,7 @@
                                                                     (click)="ResetAdditionalDateFilter()"></IconButton>
                                                             </div>
                                                         </td>
-                                                        <td style="width: 405px;">
+                                                        <td style="width: 425px;">
                                                             <div></div>
                                                         </td>
                                                       
@@ -900,49 +905,7 @@
                         </td>
                     </tr>
 
-                    <!-- Transactions ToolBar -->
-                    <tr *ngIf="0" style="height: 40px;">
-                        <td colspan="4" style="width: 620px; padding: 4px;">
-                            <div [style.float]="isRTL ? 'left' : 'right'" style="width: 220px;padding: 0 5px;">
-                                <SearchTextBox [ObjectTableName]="'LedgerTransaction'"
-                                    [PlaceHolder]="'Accounting.General.O.JournalNoRef' | TextCodeTranslationPipe"
-                                    (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
-                            </div>
-                            <div style="width: 30px;" [style.float]="isRTL ? 'left' : 'right'">
-                                <!--<IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()" [disabled]="true"></IconButton>-->
-                            </div>
-
-                            <div [style.float]="isRTL ? 'left' : 'right'">
-                                <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
-                            </div>
-
-                            <!-- With Splitted by currency checkbox -->
-                            <!--<div *ngIf="EntityPM.AccountTypeCode == '2' || EntityPM.AccountTypeCode == '3'" [style.float]="isRTL ? 'left' : 'right'">
-                                <div float-start style="width: 20px; padding-top: 2px;">
-                                    <CheckBox (Checked)="SplittedByCurrencyCheckBox = $event" [IsChecked]="SplittedByCurrencyCheckBox"></CheckBox>
-                                </div>
-                                <div [style.float]="isRTL ? 'left' : 'right'" [style.text-align]="isRTL ? 'right' : 'left'"
-                                     style="width: 260px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
-                                    {{'Accounting.General.O.WithSplittedbycurrency' | TextCodeTranslationPipe}}
-                                </div>
-                            </div>-->
-
-                            <!-- with children checkbox-->
-                            <!--<div [style.float]="isRTL ? 'left' : 'right'">
-                                <div float-start style="width: 20px; padding-top: 2px;">
-                                    <CheckBox (Check
-
-                                ed)="AttachedGLAccountCheckBox = $event" [IsChecked]="AttachedGLAccountCheckBox"></CheckBox>
-                                </div>
-                                <div [style.float]="isRTL ? 'left' : 'right'" [style.text-align]="isRTL ? 'right' : 'left'"
-                                     style="width: 200px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
-                                    {{'Accounting.General.O.WithAttachedAccounts' | TextCodeTranslationPipe}}
-                                </div>
-                            </div>-->
-
-
-                        </td>
-                    </tr>
+                  
 
 
 
@@ -963,12 +926,15 @@
             <logitude-grid *ngIf="!UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
                 [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns" 
                 [autoLoad]="true"    (DataLoaded)="OnDataLoaded($event)"
-                [IsCustomTemplate]="true"  >
+                [IsCustomTemplate]="true" 
+                
+                >
             </logitude-grid>
             <logitude-grid-v2 *ngIf="UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
                 [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
                 [autoLoad]="true"   (DataLoaded)="OnDataLoaded($event)"
-                [IsCustomTemplate]="true"  >
+                [IsCustomTemplate]="true" 
+                [ColumnsReady]="ColumnsReady" >
             </logitude-grid-v2>
 
         </div>
