@@ -45,7 +45,22 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return instance;
         }
+        public CurrencyRatePM GetSingleByExchangeRateIdAndAdditionalCurrencyRateId(string exchangeRateId,string additionalCurrencyRateId,int tenant)
+        {
+           CurrencyRatePM instances = (from a in repository.GetSingleByExchangeRateIdAndAdditionalCurrencyRateId(exchangeRateId, additionalCurrencyRateId, tenant)
+                                              select new CurrencyRatePM()
+                                              {
+                                                  Id = a.Id,
+                                                  ExchangeRateId = a.ExchangeRateId,
+                                                  Tenant = a.Tenant,
+                                                  AdditionalCurrencyRateId = a.AdditionalCurrencyRateId,
+                                                  Rate = a.Rate,
+                                              }).FirstOrDefault();
+            return instances;
+        }
     }
-   
-}
+
+    
+
+    }
 	 

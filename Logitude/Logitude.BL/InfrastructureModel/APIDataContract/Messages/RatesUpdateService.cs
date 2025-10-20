@@ -177,6 +177,8 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
             }
             
             ratesTableService.Create(entityPM);
+            UpdateAdditionalCurrencyRates(entityPM);
+
         }
         private void UpdateRate(RateUpdate item, string rateId)
         {
@@ -194,7 +196,50 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
             entityPM.ValueDate = item.RateDate;
             entityPM.LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             ratesTableService.Update(entityPM);
+            UpdateAdditionalCurrencyRates(entityPM);
+
         }
+        private void UpdateAdditionalCurrencyRates(RatesTablePM entityPM)
+        {
+            AdditionalCurrencyRateQuery additionalCurrencyRateQuery = new AdditionalCurrencyRateQuery(tenant);
+            CurrencyRateQuery currencyRateQuery = new CurrencyRateQuery(tenant);
+            CurrencyRateService currencyRateService = new CurrencyRateService(iWebFreightContext, tenant);
+
+            var additionalRates = additionalCurrencyRateQuery
+                .GetAllAdditionalCurrencyRates(tenant)
+                .ToList();
+
+            foreach (var additionalRate in additionalRates)
+            {
+                if (!entityPM.Rate.HasValue || !additionalRate.RateCoefficient.HasValue)
+                    continue;
+                double rate = entityPM.Rate.Value * additionalRate.RateCoefficient.Value;
+                double calculatedRate = Math.Round(rate, 5, MidpointRounding.AwayFromZero);
+
+                var existingCurrencyRate = currencyRateQuery
+                    .GetSingleByExchangeRateIdAndAdditionalCurrencyRateId(entityPM.Id, additionalRate.Id, tenant);
+
+                if (existingCurrencyRate != null)
+                {
+                    existingCurrencyRate.Rate = calculatedRate;
+
+                    currencyRateService.Update(existingCurrencyRate);
+                }
+                else
+                {
+                    var newCurrencyRate = new CurrencyRatePM()
+                    {
+                        ExchangeRateId = entityPM.Id,
+                        AdditionalCurrencyRateId = additionalRate.Id,
+                        Rate = calculatedRate,
+                        Tenant = tenant
+                    };
+
+                    currencyRateService.Create(newCurrencyRate);
+                }
+            }
+        }
+
 
         private double CalculateRateAccordingUnit(RateUpdate item)
         {
