@@ -1028,6 +1028,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     myResult = lastRate.ValueDate;
                 }
             }
+            
         }
 
         return myResult;
@@ -1666,9 +1667,14 @@ export class ARInvoiceLineItem extends BaseComponent {
             else {
                 var lastRate: LastRate = this.fatherComponent.LastRatesList.filter(d => d.ForeignCurrencyId == this.ForiegnCurrencyId)[0];
                 if (lastRate != null) {
-                    myRate = lastRate.Rate;
+                    const exchangeRateId = !this.fatherComponent.glaccount?.IsMultiCurrency ? this.fatherComponent.glaccount?.ExchangeRateId  : this.fatherComponent.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === this.ForiegnCurrencyId)?.ExchangeRateId ?? this.fatherComponent.glaccount?.ExchangeRateId;
+                    const customRate = exchangeRateId 
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
+                        : null;
+                    myRate = customRate ?? lastRate.Rate;
                     myRateDate = lastRate.ValueDate;
                 }
+               
             }
         }
 
