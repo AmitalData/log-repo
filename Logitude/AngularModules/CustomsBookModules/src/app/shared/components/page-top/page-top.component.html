@@ -26,13 +26,13 @@
 				<fieldset>
 					<div class="pageSearch_formField shown" [id]="text">
 						<input type="text" (input)="onChange($event)" [(ngModel)]="textToSearch"
-							[maxlength]="isNumeric(textToSearch) ? 11 : 100" [placeholder]="text"
-							(keyup.enter)="clickSearch()" />
+						[maxlength]="isNumeric(textToSearch) ? 11 : 100" [placeholder]="text"
+						(keyup.enter)="clickSearch()" />
 					</div>
-
 					<button (click)="clickSearch()">חיפוש</button>
 				</fieldset>
 			</div>
+			<app-filter-popup (filterClick)="filterClickEvent($event)"/>
 		</div>
 	</div>
 </div>
