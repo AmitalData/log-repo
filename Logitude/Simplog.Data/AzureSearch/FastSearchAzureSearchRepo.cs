@@ -24,7 +24,7 @@ namespace Simplog.Data.AzureSearch.Repo
         public async Task<List<dynamic>> SearchAsync(string filter, string searchText, int maxResult, List<string> selectedFields, bool perfixSearch)
         {
             if (perfixSearch)
-                searchText += "*";
+                searchText += "* " + searchText;
 
             SearchOptions searchOptions = new SearchOptions
             {
