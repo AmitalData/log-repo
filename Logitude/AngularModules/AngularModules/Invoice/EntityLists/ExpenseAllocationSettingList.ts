@@ -18,4 +18,6 @@ export class ExpenseAllocationSettingList {
 	 NumberOfPayments : number
 	 MonthInterval : number 
 	 PaymentDateType : string
+	 UpdatedByUserId : string
+	 CreatedByUserId : string
 }

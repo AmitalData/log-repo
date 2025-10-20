@@ -27,12 +27,14 @@ namespace Simplog.Data.InvoiceModel.Mapping
                 .IsUnicode(true);
             this.Property(t => t.EntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ObjectTableId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PaymentDateType).HasMaxLength(10).IsUnicode(false);
+            this.Property(t => t.PaymentDateType).HasMaxLength(50).IsUnicode(false);
 
             // Table & Column Mappings
-            this.ToTable("ExpenseAllocationSettingMaps");
+            this.ToTable("ExpenseAllocationSettings");
             this.Property(t => t.Id).HasColumnName("Id");
-            this.Property(t => t.Tenant).HasColumnName("CreateDate");
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");

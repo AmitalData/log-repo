@@ -362,6 +362,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string TotalEquation { get; set; }
         public bool IsPrepaidExpenses { get; set; }
 
-
-        }
+        public bool HasExpenseAllocationSetting { get; set; }   
+    }
 }

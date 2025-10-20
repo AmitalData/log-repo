@@ -157,8 +157,10 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (this.entityArgs.EditComponent != null) {
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                if (isSaveSuccess) {
+                if (isSaveSuccess) {                   
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    if(this.EntityPM.IsPrepaidExpenses)
+                        this.saveExpenseAllocationSetting();
                     this.SetUIProperties();
                     this.BuildInvoiceLines();
                 }
@@ -361,11 +363,20 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 this.myCommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse2: ServiceResponse) => {
                     if(this.EntityPM?.Id){
                         this.expenseAllocationSettingExtendedService.getExpenseAllocationSettingByEntityIdAndObjectTable(this.EntityPM?.Id,this.ObjectTableId).subscribe((res: ServiceResponse) => {
-                            if (!res.HasError && res.Result) 
-                                 this.expenseAllocationSetting = res.Result;
+                            if (!res.HasError) 
+                                 if(res.Result){
+                                    this.expenseAllocationSetting = res.Result;
+                                    this.EntityPM.HasExpenseAllocationSetting = true;
+                                 }
+                                    
+                                else{
+                                    
+                                    this.expenseAllocationSetting = new ExpenseAllocationSettingPM();
+                                    this.expenseAllocationSetting.CreateDate = DateTool.GetCurrentDateAsUtc();
+                                    this.expenseAllocationSetting.CreatedByUserId = SessionLocator.LoggedUserId;
+                                }
                             else{
                                 this.expenseAllocationSetting = new ExpenseAllocationSettingPM();
-                                this.expenseAllocationSetting.CreateDate = DateTool.GetCurrentDateAsUtc();
 
                             }
                         })
@@ -385,6 +396,20 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 this.CurrentSession.StopBusyIndicator();
             }
         });
+    }
+
+    saveExpenseAllocationSetting(){
+
+        if(this.EntityPM?.Id){
+            if(this.expenseAllocationSetting?.Id){
+                this.expenseAllocationSettingPMService.update(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {                  
+                })
+            }
+            else{
+                this.expenseAllocationSettingPMService.insert(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {                     
+                })
+            }
+        }
     }
     UpdateData() {
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -1107,6 +1132,23 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     ShowRecurringScheduleSettings(){
         const defaultEnd = new Date(this.expenseAllocationSetting?.StartDateTime || this.AccountingDate);
         defaultEnd.setDate(defaultEnd.getDate() + 364);    
+        const paymentType = this.expenseAllocationSetting.PaymentDateType;
+          
+          var IsMonthly = false;
+          var AllocationDateType = '';
+          var selectedDay = null;
+          var selectedDayByWeek = null;
+
+        if (paymentType.startsWith('Monthly_')) {
+            IsMonthly = true;
+            const parts = paymentType.split('_'); 
+            AllocationDateType = parts[1] || '';
+            selectedDay = parts[2] ? parseInt(parts[2], 10) : null;
+        } else if (paymentType.startsWith('Weekly_')) {
+            IsMonthly = false;
+            const parts = paymentType.split('_'); 
+            selectedDayByWeek = parts[1] || null;
+        }
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { 
             StartDateTime: this.expenseAllocationSetting?.StartDateTime || this.AccountingDate,
@@ -1114,23 +1156,37 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             RecurrenceCount: this.expenseAllocationSetting?.NumberOfPayments || null, 
             MonthInterval: this.expenseAllocationSetting?.MonthInterval || 1,
             TotalAmount: this.AmountInInvoiceCurrency ,
-            MinDate: this.AccountingDate ,};
+            MinDate: this.AccountingDate ,
+            AllocationDateType: AllocationDateType,
+            IsWeekly: !IsMonthly,
+            SelectedDay: selectedDay,
+            SelectedDayByWeek: selectedDayByWeek
+            }
+            ;
         logWindow.Width = 600;
-        logWindow.Height = 350;
+        logWindow.Height = 450;
         logWindow.Title = "Recurring Schedule Settings";
         logWindow.ShowCloseButton =  true;
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     if(comp){
+                        const createDate = this.expenseAllocationSetting?.CreateDate;
+                        const createdByUserId = this.expenseAllocationSetting?.CreatedByUserId;
+                        const id = this.expenseAllocationSetting?.Id;
                         this.expenseAllocationSetting = comp.expenseAllocationSettingPM;
+                        this.expenseAllocationSetting.CreateDate = createDate;
+                        this.expenseAllocationSetting.CreatedByUserId = createdByUserId;
+                        this.expenseAllocationSetting.Id = id;
                         this.expenseAllocationSetting.EntityId = this.EntityPM?.Id;
                         this.expenseAllocationSetting.ObjectTableId = this.ObjectTableId;
                         this.expenseAllocationSetting.Tenant = SessionLocator.Tenant;
                         this.expenseAllocationSetting.UpdateDate = DateTool.GetCurrentDateAsUtc();
-                        this.expenseAllocationSettingPMService.update(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {
-                                 
-                        })
+                        this.expenseAllocationSetting.UpdatedByUserId = SessionLocator.LoggedUserId;
+                        if(this.expenseAllocationSetting)
+                            this.EntityPM.HasExpenseAllocationSetting = true;
+                        this.saveExpenseAllocationSetting();
+                        
                     }
                     
                 }

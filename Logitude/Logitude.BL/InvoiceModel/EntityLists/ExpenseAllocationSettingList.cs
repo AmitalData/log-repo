@@ -17,9 +17,13 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string ObjectTableId { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
-        public decimal NumberOfPayments { get; set; }
+        public int NumberOfPayments { get; set; }
         public int MonthInterval { get; set; }
         public string PaymentDateType { get; set; }
+        public string CreatedByUserId { get; set; }
+
+        public string UpdatedByUserId { get; set; }
+
 
     }
 }

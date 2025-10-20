@@ -21,7 +21,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string ObjectTableId { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
-        public decimal NumberOfPayments { get; set; }
+        public int NumberOfPayments { get; set; }
         public int MonthInterval { get; set; }
         public string PaymentDateType { get; set; }
 

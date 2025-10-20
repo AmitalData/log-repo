@@ -878,7 +878,10 @@ export class APInvoicePM {
     public set IsPrepaidExpenses(newValue: boolean) { if (this.isPrepaidExpenses != newValue) { this.isPrepaidExpenses = newValue; this.MarkAsDirty("IsPrepaidExpenses"); } }
        
 	 
-	 
+    private hasExpenseAllocationSetting: boolean;
+    public get HasExpenseAllocationSetting() { return this.hasExpenseAllocationSetting; }
+    public set HasExpenseAllocationSetting(newValue: boolean) { if (this.hasExpenseAllocationSetting != newValue) { this.hasExpenseAllocationSetting = newValue; this.MarkAsDirty("HasExpenseAllocationSetting"); } }
+       
 
     public OldEntityPM: APInvoicePM;
 		
