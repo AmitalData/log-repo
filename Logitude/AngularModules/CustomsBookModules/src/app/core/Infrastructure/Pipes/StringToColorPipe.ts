@@ -89,12 +89,6 @@ export class StringToColorPipe {
                     color = "#27AAE1";
                     break;
                 }
-            case "Arrival_referant":
-
-                {
-                    color = "#27AAE1";
-                    break;
-                }
             case "Printed":
             case "Pick Up":
             case "On Hand":

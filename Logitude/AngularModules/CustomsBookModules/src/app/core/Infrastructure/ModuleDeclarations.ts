@@ -3,10 +3,6 @@ import { FocusMeDirective } from './Utilities/FocusMeDirective';
 import { LocationDirective } from './Utilities/LocationDirective';
 import { FixedPositionDirective } from './Utilities/FixedPositionDirective';
 import { ChildDirective } from './Directives/ChildDirective';
-import { FloatStartDirective } from './Utilities/RTLDirectives/FloatStartDirective';
-import { FloatEndDirective } from './Utilities/RTLDirectives/FloatEndDirective';
-import { TextAlignStart } from './Utilities/RTLDirectives/TextAlignStart';
-import { TextAlignEnd } from './Utilities/RTLDirectives/TextAlignEnd';
 
 // Pipes.
 import { NumbersPipe } from './Pipes/NumbersPipe';
@@ -41,10 +37,6 @@ export const Directives = [
     LocationDirective,
     FixedPositionDirective,
     ChildDirective,
-    FloatStartDirective,
-    FloatEndDirective,
-    TextAlignStart,
-    TextAlignEnd,
 ];
 
 export const Pipes = [

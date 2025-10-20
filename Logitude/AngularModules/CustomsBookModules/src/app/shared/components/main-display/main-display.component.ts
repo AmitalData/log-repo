@@ -25,11 +25,7 @@ import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
-<<<<<<< HEAD
-	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, NgStyle, PreferenceMenuComponent, Pipes],
-=======
-	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, NgStyle],
->>>>>>> af553fde82c20f2ded5643c16411786026b75723
+	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, NgStyle, Pipes],
 	templateUrl: './main-display.component.html',
 	styleUrl: './main-display.component.css',
 	changeDetection: ChangeDetectionStrategy.OnPush,
