@@ -33,6 +33,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         public ExpenseAllocationSettingPM GetSingleByEntityIdAndObjectTable(string entityId,string objectTableId, int tenant)
         {
            var  expenseAllocationSetting=  repository.GetSingleByEntityIdAndObjectTable(entityId, objectTableId, tenant);
+            if (expenseAllocationSetting == null)
+                return null;    
             return new ExpenseAllocationSettingPM()
             {
                 Id = expenseAllocationSetting.Id,
@@ -45,13 +47,37 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 EndDateTime = expenseAllocationSetting.EndDateTime,
                 NumberOfPayments = expenseAllocationSetting.NumberOfPayments,
                 MonthInterval = expenseAllocationSetting.MonthInterval,
-                PaymentDateType = expenseAllocationSetting.PaymentDateType
+                PaymentDateType = expenseAllocationSetting.PaymentDateType,
+                CreatedByUserId = expenseAllocationSetting.CreatedByUserId,
             };
            
         }
 
-       
 
-       
+        public ExpenseAllocationSettingPM GetSinglePM(string id, int tenant)
+        {
+            return (from a in repository.context.ExpenseAllocationSettings
+                    where a.Id == id && a.Tenant == tenant
+                    select new ExpenseAllocationSettingPM()
+                    {
+                           CreateDate = a.CreateDate,
+                            EndDateTime = a.EndDateTime,
+                            EntityId = a.EntityId,
+                            Id = a.Id,
+                            MonthInterval = a.MonthInterval,
+                            NumberOfPayments = a.NumberOfPayments,
+                            ObjectTableId = a.ObjectTableId,
+                            PaymentDateType = a.PaymentDateType,
+                            StartDateTime = a.StartDateTime,
+                            Tenant = a.Tenant,
+                            UpdateDate = a.UpdateDate,
+                            CreatedByUserId = a.CreatedByUserId,
+                            UpdatedByUserId =a.UpdatedByUserId
+
+
+                    }).FirstOrDefault();
+        }
+
+
     }
 }

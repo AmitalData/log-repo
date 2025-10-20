@@ -127,6 +127,7 @@ export class ExpenseAllocationSettingPM {
             this.MarkAsDirty('MonthInterval');
         }
     }
+
     private paymentDateType: string;
     public get PaymentDateType() {
         return this.paymentDateType;
@@ -135,6 +136,27 @@ export class ExpenseAllocationSettingPM {
         if (this.paymentDateType != newValue) {
             this.paymentDateType = newValue;
             this.MarkAsDirty('PaymentDateType');
+        }
+    }
+    private createdByUserId: string;
+    public get CreatedByUserId() {
+        return this.createdByUserId;
+    }
+    public set CreatedByUserId(newValue: string) {
+        if (this.createdByUserId != newValue) {
+            this.createdByUserId = newValue;
+            this.MarkAsDirty('CreatedByUserId');
+        }
+    }
+
+    private updatedByUserId: string;
+    public get UpdatedByUserId() {
+        return this.updatedByUserId;
+    }
+    public set UpdatedByUserId(newValue: string) {
+        if (this.updatedByUserId != newValue) {
+            this.updatedByUserId = newValue;
+            this.MarkAsDirty('UpdatedByUserId');
         }
     }
 

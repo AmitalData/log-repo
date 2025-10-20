@@ -259,9 +259,17 @@
                                                 </td>
 
                                                 <td>
-                                                    <CheckBox [IsChecked]="IsPrepaidExpenses"
-                                                        (Checked)="IsPrepaidExpenses = $event"
-                                                        [IsEnabled]="IsScreenEnabled"></CheckBox>
+                                                    <div style="display: flex; gap: 20px;">
+
+                                                       <CheckBox [IsChecked]="IsPrepaidExpenses"
+                                                           (Checked)="IsPrepaidExpenses = $event"
+                                                           [IsEnabled]="IsScreenEnabled"></CheckBox>
+                                                          
+                                                       <button  style="width:100px"  
+                                                          class="Button" 
+                                                         [disabled]="!IsScreenEnabled"
+                                                         (click)="ShowRecurringScheduleSettings()">{{'APInvoice.F.IsPrepaidExpenses' | TextCodeTranslationPipe}}</button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <td>

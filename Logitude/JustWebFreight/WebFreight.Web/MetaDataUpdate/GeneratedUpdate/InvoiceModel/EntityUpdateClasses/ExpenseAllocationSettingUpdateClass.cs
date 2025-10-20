@@ -25,7 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ExpenseAllocationSettingUpdateClass
    {  		
-		public const string HashString = "3e0f7b788dea9d495d040972f6d9bc83";
+		public const string HashString = "3380645c04929e6463bc50cf6ea0d9fe";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,7 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Expense Allocation Settings",
-			      				    Code =  "e510",
+			      				    Code =  "bdfe",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -951,7 +951,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ObjectTableName =  "ExpenseAllocationSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  50,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -959,7 +959,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  10,
+					  						SystemMaxLength =  50,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -1094,7 +1094,57 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext,int contextTenant)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ExpenseAllocationSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ExpenseAllocationSetting" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOStartOfMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.StartOfMonth", DefaultText = "Start Of Month",LocalDefaultText = @"BS64:Iteq15fXmdec16og15fXldeT16ki", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOEndOfMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.EndOfMonth", DefaultText = "End Of Month",LocalDefaultText = @"BS64:Iteh15XXoyDXl9eV15PXqSI=", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOSpecificDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.SpecificDate", DefaultText = "Specific Date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og16HXpNem15nXpNeZIg==", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOFirstWeek = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.FirstWeek", DefaultText = "First Week",LocalDefaultText = @"BS64:Itep15HXldeiINeo15DXqdeV158i", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOSecondWeek = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.SecondWeek", DefaultText = "Second Week",LocalDefaultText = @"BS64:Itep15HXldeiINep16DXmSI=", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOThirdWeek = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.ThirdWeek", DefaultText = "Third Week",LocalDefaultText = @"BS64:Itep15HXldeiINep15zXmdep15ki", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOFourthWeek = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.FourthWeek", DefaultText = "Fourth Week",LocalDefaultText = @"BS64:Itep15HXldeiINeo15HXmdei15ki", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOSunday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.Sunday", DefaultText = "Sunday",LocalDefaultText = @"BS64:IteZ15XXnSDXqNeQ16nXldefIg==", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOMonday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.Monday", DefaultText = "Monday",LocalDefaultText = @"BS64:IteZ15XXnSDXqdeg15ki", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOTuesday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.Tuesday", DefaultText = "Tuesday",LocalDefaultText = @"BS64:IteZ15XXnSDXqdec15nXqdeZIg==", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOWednesday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.Wednesday", DefaultText = "Wednesday",LocalDefaultText = @"BS64:IteZ15XXnSDXqNeR15nXoteZIg==", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOThursday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.Thursday", DefaultText = "Thursday",LocalDefaultText = @"BS64:IteZ15XXnSDXl9ee15nXqdeZIg==", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOFriday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.Friday", DefaultText = "Friday",LocalDefaultText = @"BS64:IteZ15XXnSDXqdeZ16nXmSI=", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOSaturday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.Saturday", DefaultText = "Saturday",LocalDefaultText = @"BS64:IteZ15XXnSDXqdeR16oi", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOStartDateError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.StartDateError", DefaultText = "The start date must be greater than or equal to the invoice date.",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15TXlNeq15fXnNeUINeX15nXmdeRINec15TXmdeV16og15LXk9eV15wg15DXlSDXqdeV15XXlCDXnNeq15DXqNeZ15og15fXqdeR15XXoNeQ15kuIg==", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOInEvery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.InEvery", DefaultText = "In every",LocalDefaultText = @"BS64:IteR15vXnCI=", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOEvery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.Every", DefaultText = "Every",LocalDefaultText = @"BS64:Iteb15wi", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOMonths = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.Months", DefaultText = "Month(s)",LocalDefaultText = @"BS64:IteX15XXk9epKdeZ150pIg==", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOStartDateTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.StartDateTime", DefaultText = "First payment date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og16rXqdec15XXnSDXqNeQ16nXldefIg==", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingORecurrenceCount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.RecurrenceCount", DefaultText = "Number of layouts",LocalDefaultText = @"BS64:Itee16HXpNeoINek16jXmdeh15XXqiI=", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingOInvoiceAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.InvoiceAmount", DefaultText = "Invoice Amount",LocalDefaultText = @"BS64:Iteh15vXldedINeX16nXkdeV16DXmdeqIg==", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationSettingTextCode_ExpenseAllocationSettingORecurrenceAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationSetting.O.RecurrenceAmount", DefaultText = "Amount per layout",LocalDefaultText = @"BS64:Iteh15vXldedINec15vXnCDXpNeo15nXodeUIg==", ObjectTableId = ExpenseAllocationSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+   
 	    
 }
 

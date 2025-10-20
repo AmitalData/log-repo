@@ -38,7 +38,9 @@ export class APInvoiceValidator {
                 this.Errors.push(this.message.replace("%FieldName", "Vat Number"));
             }
         }
-
+        if(this.EntityPM.IsPrepaidExpenses && !this.EntityPM.HasExpenseAllocationSetting ){
+            this.Errors.push(TextCodeTranslator.Translate("APInvoice.O.ExpenseAllocationSettingIsRequiredForPrepaidExpenses"));
+        }
         if (entityPM.IsMultipleEntities) {
 
         }
