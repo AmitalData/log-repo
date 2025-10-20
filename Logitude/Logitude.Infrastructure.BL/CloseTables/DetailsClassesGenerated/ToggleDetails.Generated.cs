@@ -1047,12 +1047,18 @@ namespace Logitude.Infrastructure.BL
  			all.Add(new ToggleDetails()
 			{
 				Code = "REE",
-				Name = "Report Export To Exel",
-				SearchFields = "REE,Report Export To Exel",
-				Description = "Report Export To Exel ",
+				Name = "Report Export To Excel",
+				SearchFields = "REE,Report Export To Excel",
+				Description = "Report Export To Excel ",
 			});
-
- 			return all;
+            all.Add(new ToggleDetails()
+            {
+                Code = "TRO",
+                Name = "Tax Report Journal Optimization",
+                SearchFields = "TRO,Tax Report Journal Optimization",
+                Description = "Tax Report Journal Optimization ",
+            });
+            return all;
        }
 
 	    public void MapPoco(Toggle newPoco)

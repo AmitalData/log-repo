@@ -18,7 +18,8 @@ using Logitude.Server.Tools.Utils;
 using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Accounting.Data.Enums;
 [assembly: InternalsVisibleTo("My1stUnitTestProject")]
 
 
@@ -859,6 +861,10 @@ namespace Logitude.Accounting.BL.Validators
         private void ValidateJournalReconciles(JournalPM myJournalPM, ValidationContext accountingValidationContextServiceProvider, List<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
 
         {
+            if (myJournalPM.AccountingEntityCode == AccountingEntityValues.TaxReport && FeatureToggleHelper.HasFeatureToggle("TRO", myJournalPM.Tenant))
+                return;
+
+
             if (myJournalPM.JournalReconciles
                 .Where(r => r.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
                 .Count() == 0)
