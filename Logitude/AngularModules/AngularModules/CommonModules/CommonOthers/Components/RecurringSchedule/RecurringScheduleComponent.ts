@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { ExpenseAllocationSettingPM } from 'Invoice/EntityPMs/ExpenseAllocationSettingPM';
@@ -14,6 +15,7 @@ export class RecurringScheduleComponent extends BaseComponent {
 
     public dataContext = this;
     public isRTL = false;
+    public isReady = false;
     public IsDayDisabled = false;
     public typeRadio: 'RecurrenceCount' | 'EndDateTime' = 'RecurrenceCount';
 
@@ -27,18 +29,53 @@ export class RecurringScheduleComponent extends BaseComponent {
     public IsMonthly = true;
 
     public StartDateTime: Date | null = null;
-    public EndDateTime: Date | null = null;
-    public IntervalCount = 1;
-    public RecurrenceCount = 0;
+    public endDateTime: Date | null = null;
+    get EndDateTime() { return this.endDateTime }
+    set EndDateTime(newValue: Date) {
+        if (this.endDateTime != newValue) {
+            this.endDateTime = newValue;
+            if (this.minDate && new Date(newValue) < new Date(this.minDate)) 
+            {
+                this.UIProperties.SetValidity(
+                    'EndDateTime',
+                    null,
+                    false,
+                    TextCodeTranslator.Translate('ExpenseAllocationSetting.O.EndDateError')
+                );
+            }
+            else{
+                this.UIProperties.SetValidity('EndDateTime', null, true, '');
+            }
+            this.recalculateAll();
+        }
+    }
+    public intervalCount = 1;
+    get IntervalCount() { return this.intervalCount }
+    set IntervalCount(newValue: number) {
+        if (this.intervalCount != newValue) {
+            this.intervalCount = newValue;
+            this.recalculateAll();
+        }
+    }
     public TotalAmount = 0;
-    public RecurrenceAmount = 0;
+    public RecurrenceAmount = 0;    
+
+    public recurrenceCount = 0;
+    get RecurrenceCount() { return this.recurrenceCount }
+    set RecurrenceCount(newValue: number) {
+        if (this.recurrenceCount != newValue) {
+            this.recurrenceCount = newValue;
+            this.recalculateAll();
+        }
+    }
 
     public AllocationDateType: AllocationDateType = AllocationDateType.SpecificDate;
     public selectedDay: string = 'Sunday';
     public selectedDayByWeek: string = '';
 
     private expenseAllocationSettingPM!: ExpenseAllocationSettingPM;
-
+    entityResourceService: EntityResourceService = new EntityResourceService();
+  
     private readonly dayMap: Record<string, number> = {
         Sunday: 0,
         Monday: 1,
@@ -53,8 +90,12 @@ export class RecurringScheduleComponent extends BaseComponent {
     constructor() {
         super();
         this.isRTL = ObjectsLocator.GlobalSetting?.LayoutDirection === 'rtl';
+        this.GetResources()
     }
-
+    private GetResources()
+    {
+        this.entityResourceService.getEntityResourceByTableName("ExpenseAllocationSetting").subscribe((response: any) => { this.isReady = true; });
+    }
 
     public SetWindowArgs(args: any): void {
         this.minDate = args?.['MinDate'] ?? null;
@@ -73,26 +114,9 @@ export class RecurringScheduleComponent extends BaseComponent {
     }
 
 
-    set StartDateTimeValue(newValue: Date) {
-        if (this.minDate && new Date(newValue) < new Date(this.minDate)) {
-            this.UIProperties.SetValidity(
-                'StartDateTime',
-                null,
-                false,
-                TextCodeTranslator.Translate('ExpenseAllocationSetting.O.StartDateError')
-            );
-            return;
-        }
+    
 
-        this.StartDateTime = newValue;
-        this.recalculateAll();
-        this.UIProperties.SetValidity('StartDateTime', null, true, '');
-    }
-
-    set EndDateTimeValue(newValue: Date) {
-        this.EndDateTime = newValue;
-        this.recalculateAll();
-    }
+   
 
 
     public setTrigger(triggerType: string): void {
@@ -169,7 +193,7 @@ export class RecurringScheduleComponent extends BaseComponent {
         if (!this.EndDateTime) {
             const defaultEnd = new Date(start);
             defaultEnd.setDate(defaultEnd.getDate() + 364);
-            this.EndDateTime = defaultEnd;
+            this.endDateTime = defaultEnd;
         }
 
         if (this.typeRadio === 'RecurrenceCount' && this.RecurrenceCount > 0) {
@@ -185,7 +209,7 @@ export class RecurringScheduleComponent extends BaseComponent {
                 );
             }
 
-            this.EndDateTime = newEnd;
+            this.endDateTime = newEnd;
         }
 
         if (
@@ -206,7 +230,7 @@ export class RecurringScheduleComponent extends BaseComponent {
                 tempDate.setDate(tempDate.getDate() + 1);
             }
 
-            this.RecurrenceCount = count;
+            this.recurrenceCount = count;
         }
 
         this.RecurrenceAmount =

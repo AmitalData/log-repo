@@ -5,20 +5,23 @@
 //     the code is regenerated.
 // </auto-generated> InvoiceClassesGenerator.tt
 //---
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
+using System.Transactions;
 using WebFreight.Web.MetaDataUpdate.AddClasses;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
-using Simplog.Data.CommonDataModel;
-using Logitude.Server.Tools.Helpers;
-using System.Transactions;
-using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
@@ -97,7 +100,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 		ConfirmationNumberStatusUpdateClass  ConfirmationNumberStatusUpdateClass = new ConfirmationNumberStatusUpdateClass();
 		CreditCardTypeUpdateClass  CreditCardTypeUpdateClass = new CreditCardTypeUpdateClass();
 		ExpenseAllocationSettingUpdateClass  ExpenseAllocationSettingUpdateClass = new ExpenseAllocationSettingUpdateClass();
-		ExternalSystemsTablesCodeUpdateClass  ExternalSystemsTablesCodeUpdateClass = new ExternalSystemsTablesCodeUpdateClass();
+        ExpenseAllocationFlowUpdateClass ExpenseAllocationFlowUpdateClass = new ExpenseAllocationFlowUpdateClass();
+
+        ExternalSystemsTablesCodeUpdateClass ExternalSystemsTablesCodeUpdateClass = new ExternalSystemsTablesCodeUpdateClass();
 		QBOGlobalTaxCalculationUpdateClass  QBOGlobalTaxCalculationUpdateClass = new QBOGlobalTaxCalculationUpdateClass();
 		SATInterfaceUpdateClass  SATInterfaceUpdateClass = new SATInterfaceUpdateClass();
 		SATInterfaceSettingUpdateClass  SATInterfaceSettingUpdateClass = new SATInterfaceSettingUpdateClass();

@@ -47,7 +47,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 { 
 
     
-    public partial class ExpenseAllocationSettingViewsController : ApiController
+    public partial class ExpenseAllocationFlowViewsController : ApiController
     {
 	  
        
@@ -61,17 +61,17 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				
 		    	IInvoiceContext MyContext = InvoiceContext.GetContext(authToken.Tenant);
-				ExpenseAllocationSettingRepository  expenseAllocationSettingRepository = new ExpenseAllocationSettingRepository(MyContext);
-				ExpenseAllocationSettingList entityList = null;
-				ExpenseAllocationSetting entityPoco = expenseAllocationSettingRepository.GetSingleById(id , authToken.Tenant);
+				ExpenseAllocationFlowRepository  expenseAllocationFlowRepository = new ExpenseAllocationFlowRepository(MyContext);
+				ExpenseAllocationFlowList entityList = null;
+				ExpenseAllocationFlow entityPoco = expenseAllocationFlowRepository.GetSingleExpenseAllocationFlow(id , authToken.Tenant);
                 if (entityPoco != null)
 				{
-									List<ExpenseAllocationSetting> singleEntityList = new List<ExpenseAllocationSetting>();
+									List<ExpenseAllocationFlow> singleEntityList = new List<ExpenseAllocationFlow>();
 					singleEntityList.Add(entityPoco);
 
-					ExpenseAllocationSettingQuery expenseAllocationSettingQuery = new ExpenseAllocationSettingQuery(expenseAllocationSettingRepository);
-					IQueryable<ExpenseAllocationSetting> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<ExpenseAllocationSettingList> iQueryableEntityList = expenseAllocationSettingQuery.GetIQueryableEntityList(iQueryable);
+					ExpenseAllocationFlowQuery expenseAllocationFlowQuery = new ExpenseAllocationFlowQuery(expenseAllocationFlowRepository);
+					IQueryable<ExpenseAllocationFlow> iQueryable = singleEntityList.AsQueryable();
+					IQueryable<ExpenseAllocationFlowList> iQueryableEntityList = expenseAllocationFlowQuery.GetIQueryableEntityList(iQueryable);
 				    entityList = iQueryableEntityList.FirstOrDefault();
 
 			    }
@@ -98,13 +98,13 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
 
 				IInvoiceContext MyContext = InvoiceContext.GetContext(authToken.Tenant);
-				ExpenseAllocationSettingRepository  expenseAllocationSettingRepository = new ExpenseAllocationSettingRepository(MyContext);
-				IQueryable<ExpenseAllocationSetting> entityPocos = expenseAllocationSettingRepository.GetExpenseAllocationSettings(authToken.Tenant);
+				ExpenseAllocationFlowRepository  expenseAllocationFlowRepository = new ExpenseAllocationFlowRepository(MyContext);
+				IQueryable<ExpenseAllocationFlow> entityPocos = expenseAllocationFlowRepository.GetExpenseAllocationFlows(authToken.Tenant);
 
-				ExpenseAllocationSettingQuery expenseAllocationSettingQuery = new ExpenseAllocationSettingQuery(expenseAllocationSettingRepository);
-			    IQueryable<ExpenseAllocationSettingList> entityLists = expenseAllocationSettingQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderByDescending(d => d.EntityId);
-				List<ExpenseAllocationSettingList> listResult = entityLists.ToList();
+				ExpenseAllocationFlowQuery expenseAllocationFlowQuery = new ExpenseAllocationFlowQuery(expenseAllocationFlowRepository);
+			    IQueryable<ExpenseAllocationFlowList> entityLists = expenseAllocationFlowQuery.GetIQueryableEntityList(entityPocos);
+				entityLists = entityLists.OrderByDescending(d => d.RunDate);
+				List<ExpenseAllocationFlowList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -128,16 +128,16 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 				
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "ExpenseAllocationSetting",
+                    ObjectTableName = "ExpenseAllocationFlow",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "ExpenseAllocationSettings",
+                    QuerySection = "ExpenseAllocationFlows",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
-				List<ObjectField> ExpenseAllocationSettingObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ExpenseAllocationSetting",tenant);
+				List<ObjectField> ExpenseAllocationFlowObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ExpenseAllocationFlow",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -160,7 +160,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                             //}
                         //}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = ExpenseAllocationSettingObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = ExpenseAllocationFlowObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                         if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -187,7 +187,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = ExpenseAllocationSettingObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = ExpenseAllocationFlowObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -215,7 +215,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                  { 
                      AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "ExpenseAllocationSetting",
+                     ObjectTableName = "ExpenseAllocationFlow",
                      ParentEntityId = filters.ParentEntityId,
                      ParentObjectTableName = filters.ParentObjectTableName, 
                      Tenant = tenant ,
@@ -224,31 +224,31 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
 								
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
-                ExpenseAllocationSettingRepository  expenseAllocationSettingRepository = new ExpenseAllocationSettingRepository(MyContext);
-                IQueryable<ExpenseAllocationSetting> entityPocos = expenseAllocationSettingRepository.GetExpenseAllocationSettings(tenant);
+                ExpenseAllocationFlowRepository  expenseAllocationFlowRepository = new ExpenseAllocationFlowRepository(MyContext);
+                IQueryable<ExpenseAllocationFlow> entityPocos = expenseAllocationFlowRepository.GetExpenseAllocationFlows(tenant);
 
-                ExpenseAllocationSettingQuery expenseAllocationSettingQuery = new ExpenseAllocationSettingQuery(expenseAllocationSettingRepository);
+                ExpenseAllocationFlowQuery expenseAllocationFlowQuery = new ExpenseAllocationFlowQuery(expenseAllocationFlowRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 				
-                entityPocos = genericFilter.GetFilteredQuery<ExpenseAllocationSetting>(nonListQueryOperation, entityPocos);
+                entityPocos = genericFilter.GetFilteredQuery<ExpenseAllocationFlow>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
-                IQueryable<ExpenseAllocationSettingList> entityLists = expenseAllocationSettingQuery.GetIQueryableEntityList(entityPocos);
+                IQueryable<ExpenseAllocationFlowList> entityLists = expenseAllocationFlowQuery.GetIQueryableEntityList(entityPocos);
 
-                entityLists = genericFilter.GetFilteredQuery<ExpenseAllocationSettingList>(listQueryOperation, entityLists);
-                entityLists = new TreeFilterQueryService().Apply<ExpenseAllocationSettingList>(entityLists , treeFilterQueryArgs);
+                entityLists = genericFilter.GetFilteredQuery<ExpenseAllocationFlowList>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<ExpenseAllocationFlowList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
-                   PropertyInfo propInfo = typeof(ExpenseAllocationSettingList).GetProperty(queryOperations.SortByColumnName);
+                   PropertyInfo propInfo = typeof(ExpenseAllocationFlowList).GetProperty(queryOperations.SortByColumnName);
                    
 
-                   ObjectField objectField = (from a in ExpenseAllocationSettingObjectFields
+                   ObjectField objectField = (from a in ExpenseAllocationFlowObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -256,7 +256,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                    {
                     if (objectField.IsCustom)
                     {
-                        entityLists = sortClass.GetSorterQuery<ExpenseAllocationSettingList, string>(queryOperations, entityLists);
+                        entityLists = sortClass.GetSorterQuery<ExpenseAllocationFlowList, string>(queryOperations, entityLists);
                     }
                     else
                     {
@@ -266,41 +266,41 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                         case "text":
 						case "lookup":
                             {
-                                entityLists = sortClass.GetSorterQuery<ExpenseAllocationSettingList, string>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ExpenseAllocationFlowList, string>(queryOperations, entityLists);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                entityLists = sortClass.GetSorterQuery<ExpenseAllocationSettingList, double>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ExpenseAllocationFlowList, double>(queryOperations, entityLists);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                entityLists = sortClass.GetSorterQuery<ExpenseAllocationSettingList, DateTime>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ExpenseAllocationFlowList, DateTime>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                entityLists = sortClass.GetSorterQuery<ExpenseAllocationSettingList, int>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ExpenseAllocationFlowList, int>(queryOperations, entityLists);
                                 break;
                             }
                         case "boolean":
                             {
-                                entityLists = sortClass.GetSorterQuery<ExpenseAllocationSettingList, bool>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ExpenseAllocationFlowList, bool>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                entityLists = sortClass.GetSorterQuery<ExpenseAllocationSettingList, decimal>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<ExpenseAllocationFlowList, decimal>(queryOperations, entityLists);
                                 break;
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderByDescending(d => d.EntityId);
+                                entityLists = entityLists.OrderByDescending(d => d.RunDate);
                                 break;
                             }
                     }
@@ -309,7 +309,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderByDescending(d => d.EntityId);
+                entityLists = entityLists.OrderByDescending(d => d.RunDate);
             } 
 
 			ServiceResponse response = new ServiceResponse();
@@ -325,7 +325,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 				  entityLists = entityLists.Take(queryOperations.PageSize);
 
 				}
-			   List<ExpenseAllocationSettingList> listResult = entityLists.ToList();
+			   List<ExpenseAllocationFlowList> listResult = entityLists.ToList();
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

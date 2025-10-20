@@ -1132,19 +1132,19 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     ShowRecurringScheduleSettings(){
         const defaultEnd = new Date(this.expenseAllocationSetting?.StartDateTime || this.AccountingDate);
         defaultEnd.setDate(defaultEnd.getDate() + 364);    
-        const paymentType = this.expenseAllocationSetting.PaymentDateType;
+        const paymentType = this.expenseAllocationSetting?.PaymentDateType;
           
           var IsMonthly = false;
           var AllocationDateType = '';
           var selectedDay = null;
           var selectedDayByWeek = null;
 
-        if (paymentType.startsWith('Monthly_')) {
+        if (paymentType?.startsWith('Monthly_')) {
             IsMonthly = true;
             const parts = paymentType.split('_'); 
             AllocationDateType = parts[1] || '';
-            selectedDay = parts[2] ? parseInt(parts[2], 10) : null;
-        } else if (paymentType.startsWith('Weekly_')) {
+            selectedDay = parts[2] ? parts[2] : null;
+        } else if (paymentType?.startsWith('Weekly_')) {
             IsMonthly = false;
             const parts = paymentType.split('_'); 
             selectedDayByWeek = parts[1] || null;

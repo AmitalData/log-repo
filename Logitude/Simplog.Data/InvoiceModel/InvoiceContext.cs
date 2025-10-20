@@ -326,6 +326,7 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new ConfirmationNumberStatusMap());
             modelBuilder.Configurations.Add(new ConfirmationNumberDefaultMap());
             modelBuilder.Configurations.Add(new ExpenseAllocationSettingMap());
+            modelBuilder.Configurations.Add(new ExpenseAllocationFlowMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -453,6 +454,7 @@ namespace Simplog.Data.InvoiceModel
         public IDbSet<ExternalSystemsMissingTranslation> ExternalSystemsMissingTranslations { get; set; }
         public IDbSet<ExternalSystemsSyncStatus> ExternalSystemsSyncStatuses { get; set; }
         public IDbSet<ExpenseAllocationSetting> ExpenseAllocationSettings { get; set; }
+        public IDbSet<ExpenseAllocationFlow> ExpenseAllocationFlows { get; set; }
 
         public IDbSet<AccountingSystemsSetting> AccountingSystemsSettings { get; set; }
         public IDbSet<AccountingSystemsSyncStatus> AccountingSystemsSyncStatuses { get; set; }

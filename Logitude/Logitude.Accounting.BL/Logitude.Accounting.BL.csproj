@@ -1118,6 +1118,7 @@
     <Compile Include="Utils\APInvoiceStatusUpdateBatch.cs" />
     <Compile Include="Utils\BanksCCExternalRecoBatch.cs" />
     <Compile Include="Utils\CardGLAccountConnectBatch.cs" />
+    <Compile Include="Utils\ExpenseAllocationBatch.cs" />
     <Compile Include="Utils\IntegrityCheckBatch.cs" />
     <Compile Include="Utils\InvoiceApiQueryBatch.cs" />
     <Compile Include="Utils\ReconcileInProgressCleanupBatch.cs" />

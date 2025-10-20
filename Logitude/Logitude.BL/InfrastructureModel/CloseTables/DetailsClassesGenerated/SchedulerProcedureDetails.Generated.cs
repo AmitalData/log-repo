@@ -310,6 +310,15 @@ namespace Logitude.BL.InfrastructureModel
                 Description = "IntegrityCheckTask", 
                 IsInternallyDefined = false, 
 			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "ExpenseAllocationTask", 
+                Name = "ExpenseAllocationTask", 
+                SearchFields = "ExpenseAllocationTask", 
+                Description = "ExpenseAllocationTask", 
+                IsInternallyDefined = false, 
+			});
 			
             return all;
        }

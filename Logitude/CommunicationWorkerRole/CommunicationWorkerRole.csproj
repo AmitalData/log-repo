@@ -712,6 +712,7 @@
     <Compile Include="Services\Logbox\LogboxExceptionHandler.cs" />
     <Compile Include="ShipmentDocsInUploaderWorkerRole.cs" />
     <Compile Include="Services\SAT\UpdateCanceledSATEntitiesStatusesService.cs" />
+    <Compile Include="Tasks\ExpenseAllocationTask.cs" />
     <Compile Include="Tasks\IntegrityCheckTask.cs" />
     <Compile Include="Tasks\InvoiceApiQueryTask.cs" />
     <Compile Include="Tasks\ReconcileInProgressCleanupTask.cs" />

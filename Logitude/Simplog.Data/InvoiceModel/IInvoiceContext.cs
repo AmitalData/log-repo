@@ -39,6 +39,7 @@ namespace Simplog.Data.InvoiceModel
         IDbSet<ExternalSystemsMissingTranslation> ExternalSystemsMissingTranslations { get; }
         IDbSet<ExternalSystemsSyncStatus> ExternalSystemsSyncStatuses { get; set; }
         IDbSet<ExpenseAllocationSetting> ExpenseAllocationSettings { get; set; }
+        IDbSet<ExpenseAllocationFlow> ExpenseAllocationFlows { get; set; }
 
         IDbSet<AccountingSystemsSetting> AccountingSystemsSettings { get; set; }
         IDbSet<AccountingSystemsSyncStatus> AccountingSystemsSyncStatuses { get; set; }
