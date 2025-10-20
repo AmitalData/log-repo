@@ -27,7 +27,10 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             return (from record in context.ExpenseAllocationSettings where record.EntityId == entityId && record.Tenant == tenant && record.ObjectTableId == objectTableId select record).FirstOrDefault();          
         }
-
+        public IQueryable<ExpenseAllocationSetting> GetExpenseAllocationSettings(int tenant)
+        {
+            return (from record in context.ExpenseAllocationSettings where record.Tenant == tenant select record);
+        }
         public ExpenseAllocationSetting GetSingleById(string id, int tenant)
         {
             return (from a in context.ExpenseAllocationSettings where a.Id == id && a.Tenant == tenant select a).FirstOrDefault();

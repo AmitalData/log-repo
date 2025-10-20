@@ -78,6 +78,18 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     }).FirstOrDefault();
         }
 
+        public IQueryable<ExpenseAllocationSettingList> GetIQueryableEntityList(IQueryable<ExpenseAllocationSetting> iQueryable)
+        {
+            IQueryable<ExpenseAllocationSettingList> result = from ExpenseAllocationFlow in iQueryable
+                                                           select new ExpenseAllocationSettingList()
+                                                           {
+                                                               Id = ExpenseAllocationFlow.Id,
+                                                               Tenant = ExpenseAllocationFlow.Tenant,
+                                                               EntityId = ExpenseAllocationFlow.EntityId,
+
+                                                           };
+            return result;
+        }
 
     }
 }

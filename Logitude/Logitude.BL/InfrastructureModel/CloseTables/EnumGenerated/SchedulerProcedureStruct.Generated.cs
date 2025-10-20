@@ -51,6 +51,7 @@ namespace Logitude.BL.InfrastructureModel.CloseTables
        public const string InvoiceApiQueryTask = "InvoiceApiQueryTask";  
        public const string ReconcileInProgressCleanupTask = "ReconcileInProgressCleanupTask";  
        public const string IntegrityCheckTask = "IntegrityCheckTask";  
+       public const string ExpenseAllocationTask = "ExpenseAllocationTask";  
     }
 }
 

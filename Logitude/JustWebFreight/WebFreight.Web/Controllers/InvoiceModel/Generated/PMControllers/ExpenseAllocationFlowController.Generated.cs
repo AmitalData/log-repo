@@ -45,7 +45,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
 { 
 
     
-    public partial class ExpenseAllocationSettingsController : ApiController
+    public partial class ExpenseAllocationFlowsController : ApiController
     {
 	  
        
@@ -57,12 +57,12 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ExpenseAllocationSettingQuery expenseAllocationSettingQuery = new ExpenseAllocationSettingQuery(authToken.Tenant);
-                ExpenseAllocationSettingPM expenseAllocationSettingPM = expenseAllocationSettingQuery.GetSinglePM(id, authToken.Tenant);
+                ExpenseAllocationFlowQuery expenseAllocationFlowQuery = new ExpenseAllocationFlowQuery(authToken.Tenant);
+                ExpenseAllocationFlowPM expenseAllocationFlowPM = expenseAllocationFlowQuery.GetSinglePM(id, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                return Request.CreateResponse(HttpStatusCode.OK, expenseAllocationSettingPM);
+                return Request.CreateResponse(HttpStatusCode.OK, expenseAllocationFlowPM);
 			 
 			}
             catch (Exception ex)
@@ -75,7 +75,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
          
 		
 
-        public HttpResponseMessage Post(ExpenseAllocationSettingPM entityPM)
+        public HttpResponseMessage Post(ExpenseAllocationFlowPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -89,11 +89,11 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
-                        ExpenseAllocationSettingService service = new ExpenseAllocationSettingService(MyContext, entityPM.Tenant);
+                        ExpenseAllocationFlowService service = new ExpenseAllocationFlowService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
 				
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ExpenseAllocationSetting", 0, true);
+                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ExpenseAllocationFlow", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         // ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
@@ -121,7 +121,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
         }
 
 
-        public HttpResponseMessage Put(ExpenseAllocationSettingPM entityPM)
+        public HttpResponseMessage Put(ExpenseAllocationFlowPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -134,18 +134,18 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                        string entityName = "ExpenseAllocationSetting" + entityPM.Id + entityPM.Tenant;
-                        string entityPmName = "ExpenseAllocationSettingPM" + entityPM.Id + entityPM.Tenant;
+                        string entityName = "ExpenseAllocationFlow" + entityPM.Id + entityPM.Tenant;
+                        string entityPmName = "ExpenseAllocationFlowPM" + entityPM.Id + entityPM.Tenant;
                         CacheManager.CacheWrapper.Invalidate(entityName);
                         CacheManager.CacheWrapper.Invalidate(entityPmName);
                 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
-                        ExpenseAllocationSettingService service = new ExpenseAllocationSettingService(MyContext, entityPM.Tenant);
+                        ExpenseAllocationFlowService service = new ExpenseAllocationFlowService(MyContext, entityPM.Tenant);
  
                         service.Update(entityPM);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ExpenseAllocationSetting", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ExpenseAllocationFlow", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
