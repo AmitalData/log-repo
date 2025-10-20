@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -847,6 +848,13 @@ namespace Simplog.Data.InvoiceModel.Mocks
             }
         }
         public IDbSet<ControlForInvoiceLinesDataView> ControlForInvoiceLinesDataView
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public IDbSet<BankAccountView> BankAccountView
         {
             get
             {

@@ -1,5 +1,6 @@
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
@@ -61,7 +62,7 @@ namespace Simplog.Data.InvoiceModel
         IDbSet<ARPaymentBankTranfer> ARPaymentBankTranfers { get; }
         IDbSet<DigitalInvoicesCounterDataView> DigitalInvoicesCounterDataView { get; }
         IDbSet<ControlForInvoiceLinesDataView> ControlForInvoiceLinesDataView { get; }
-
+        IDbSet<BankAccountView> BankAccountView { get; }
         IDbSet<ARInvoicesSignedStatus> ARInvoicesSignedStatuses { get; }
         IDbSet<ConfirmationNumberStatus> ConfirmationNumberStatuses { get; }
 

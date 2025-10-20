@@ -581,6 +581,17 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public IQueryable<ARPaymentList> GetIQueryableEntityList(IQueryable<ARPayment> iQueryable)
         {
+            bool isEntityFramework = !(iQueryable.Provider is System.Linq.EnumerableQuery);
+            string bankName = null;
+            if (!isEntityFramework && iQueryable.Count() == 1)
+            {
+                string bankAccountId = iQueryable.Select(a => a.BankAccountId).FirstOrDefault();
+                if (!string.IsNullOrEmpty(bankAccountId))
+                {
+                    bankName = repository.context.BankAccountView.Where(a => a.BankAccountId == bankAccountId).Select(a => a.LocalName).FirstOrDefault();
+                }
+            }
+
             IQueryable<ARPaymentList> query2 = from entity in iQueryable.Include("ARAccount").Include("AccountingPaymentMethod").Include("BillToCard").Include("CreatedByUser.Contact").Include("DebitAccount").Include("LocalCurrency").Include("PaymentCurrency").Include("Status").Include("TransferStatus").Include("SATTransferStatus").Include("Branch").Include("BankAccountLite")
                                                select new ARPaymentList()
                                                {
@@ -629,7 +640,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    Account = entity.Account,
                                                    ValueDate = entity.ValueDate,
                                                    ChequeOrPaymentRef = entity.ChequeOrPaymentRef,
-                                                   Bank = entity.Bank,
+                                                   Bank = entity.AccountingPaymentMethod != null && entity.AccountingPaymentMethod.Code == "BT" ? (isEntityFramework ? repository.context.BankAccountView.Where(b => b.BankAccountId == entity.BankAccountId).Select(b => b.LocalName).FirstOrDefault() : bankName) : entity.Bank,
                                                    BankBranch = entity.BankBranch,
                                                    AmountInProfitCurrency = entity.AmountInProfitCurrency,
                                                    ProfitCurrencyExchangeRate = entity.ProfitCurrencyExchangeRate,
