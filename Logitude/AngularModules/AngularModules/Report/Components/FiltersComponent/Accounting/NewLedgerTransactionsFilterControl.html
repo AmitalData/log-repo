@@ -596,16 +596,12 @@
                     </td>
 
                     <!-- 7 -->
-                    <td>
-                        <div style="width: 100px" float-left>
-                            <button
-                                class="GreenButton"
-                                (click)="RunButtonClicked()"
-                            >
-                                {{RunReportTitle}}
-                            </button>
-                        </div>
-                    </td>
+                     <td [hidden]="IsSchedulerReport" style="float: right; margin-right: 100px;">
+                        <app-run-report-toggle [isRTL]="isRTL" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunButtonClicked($event)"></app-run-report-toggle>
+                    </td> 
+                   
+
+
                 </tr>
 
                 <!-- Row 5-->
@@ -747,7 +743,12 @@
                     </td>
                     <td></td>
                     <td></td>
-                    <td style="width: 200px"></td>
+                    <td [hidden]="IsSchedulerReport" style="width: 200px"> 
+
+                    </td> 
+                   <td [hidden]="!IsSchedulerReport" style="float: right; margin-right: 100px;">
+                        <app-run-report-toggle [isRTL]="isRTL" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunButtonClicked($event)"></app-run-report-toggle>
+                    </td> 
                 </tr>
 
                 <tr [hidden]="!IsSchedulerReport" class="FieldRow">
