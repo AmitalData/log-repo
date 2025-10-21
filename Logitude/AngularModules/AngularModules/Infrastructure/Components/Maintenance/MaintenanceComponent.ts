@@ -1130,6 +1130,25 @@ export class MaintenanceComponent {
             )[0].Id;
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
+        if (SessionLocator.LoggedUserPM.IsCustomerCare &&
+            FeatureLocator.HasFeaturePermession(
+                'Customs.Declaration',
+                'ExportDeclarationsBatchActions')) {
+            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response: any) => {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = 'CSM';
+                item.Icon = 'Settings';
+                item.Code = 'EDBA';
+                item.ObjectTableName = 'Customs.Declaration';
+                item.ObjectTableId = window.ObjectTables.filter(
+                    (d) => d.Name == 'Customs.Declaration'
+                )[0].Id;
+                item.TranslatedName = TextCodeTranslator.Translate(
+                    'Customs.ExportDeclarations.BatchActions.T.Title'
+                );
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            });
+        }
 
         //let LoggedUserPMCode = SessionLocator.LoggedUserPM.Code || "";
         //LoggedUserPMCode = LoggedUserPMCode.toLowerCase();
@@ -1828,6 +1847,16 @@ export class MaintenanceComponent {
                     logWindow.Show(
                         './CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsSettingsComponent'
                     );
+                    break;
+                }
+                case 'EDBA': {
+                    const windowTitle = TextCodeTranslator.Translate('Customs.ExportDeclarations.BatchActions.T.Title');
+                    let logWindow = new LogitudeWindow();
+                    logWindow.Width = 750;
+                    logWindow.Height = 800;
+                    logWindow.Title = windowTitle;
+                    logWindow.IsShowCloseButton = true;
+                    logWindow.Show('./CustomsModules/CustomsMaintenance/Components/BatchActions/ExportDeclarationsBatchActionsComponent');
                     break;
                 }
                 case 'CSRA': {

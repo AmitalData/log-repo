@@ -30304,12 +30304,12 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Customs.ExportDeclarations.BatchActions.T.Title&quot;"
-      DefaultText="&quot;Export Declarations – Bulk Actions&quot;"
-      LocalDefaultTextBack_up="&quot;פעולות גורפות בהצהרות יצוא&quot;"
-      LocalDefaultText="&quot;BS64:Itek16LXldec15XXqiDXkteV16jXpNeV16og15HXlNem15TXqNeV16og15nXpteV15Ai&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
+	 Code="&quot;Customs.ExportDeclarations.BatchActions.T.Title&quot;"
+	 DefaultText="&quot;Export Declarations – Bulk Actions&quot;"
+	 LocalDefaultTextBack_up="&quot;פעולות גורפות למיישם בהצהרות יצוא&quot;"
+	 LocalDefaultText="&quot;BS64:16TXoteV15zXldeqINeS15XXqNek15XXqiDXnNee15nXmdep150g15HXlNem15TXqNeV16og15nXpteV15A=&quot;"
+	 TextCodeTypeCode="&quot;O&quot;"
+	 IsSpellChecked="false" />
     <TextCode
       Code="&quot;Customs.ExportDeclarations.BatchActions.O.ActionLabel&quot;"
       DefaultText="&quot;Choose Action&quot;"
