@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "ce2061b6b762f46642588f5178fde2e5";
+		public const string HashString = "3ef5e7c1fa03ab29b7ccfa6895e1b83d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -24202,7 +24202,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOScreenOnlyUNI = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ScreenOnlyUNI", DefaultText = "This screen in the cloud only works through Unifreight",LocalDefaultText = @"BS64:Itee16HXmiDXlteUINeR16LXoNefINei15XXkdeTINeo16cg15PXqNeaINeZ15XXoNeZ16TXqNeZ15nXmCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode DeclarationTextCode_CustomsExportDeclarationsBatchActionsTTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportDeclarations.BatchActions.T.Title", DefaultText = "Export Declarations – Bulk Actions",LocalDefaultText = @"BS64:Itek16LXldec15XXqiDXkteV16jXpNeV16og15HXlNem15TXqNeV16og15nXpteV15Ai", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode DeclarationTextCode_CustomsExportDeclarationsBatchActionsTTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportDeclarations.BatchActions.T.Title", DefaultText = "Export Declarations – Bulk Actions",LocalDefaultText = @"BS64:16TXoteV15zXldeqINeS15XXqNek15XXqiDXnNee15nXmdep150g15HXlNem15TXqNeV16og15nXpteV15A=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode DeclarationTextCode_CustomsExportDeclarationsBatchActionsOActionLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportDeclarations.BatchActions.O.ActionLabel", DefaultText = "Choose Action",LocalDefaultText = @"BS64:IteR15fXmdeo16og16TXoteV15zXlCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 

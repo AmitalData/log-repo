@@ -2740,6 +2740,57 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
             return queryOperations;
         }
+
+        [HttpPost]
+        public HttpResponseMessage PostExportDeclarationsBatchActions([FromBody] SendExportDeclarationsBatchRequestParams request, [FromUri] ApiQueryFilters filters)
+        {
+            try
+            {
+                var token = HttpContext.Current.Request.Headers["Token"];
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                var tenant = authToken.Tenant;
+                var email = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                var userRepository = new UserRepository(tenant);
+                var loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, email, tenant, true);
+
+                var customContext = CustomContext.GetContext(authToken.Tenant);
+                var bl = new ExportDeclarationsBatchActionsService(customContext);
+
+                if (request.IsAllSelected && filters != null)
+                {
+                    filters.GetAll = true;
+                    request.QueryOperations = PrepareFilters(tenant, filters);
+                }
+
+                var result = new DataResult();
+                string reqList;
+
+                switch ((request.Action ?? string.Empty).Trim())
+                {
+                    case "CheckStatus":
+                        result.Message = bl.RunCheckStatus(tenant, request.SelectedIds, out reqList);
+                        result.RequestInProgressList = reqList;
+                        break;
+
+                    case "OperationalClose":
+                        result.Message = bl.RunOperationalClose(tenant, request.SelectedIds, out reqList);
+                        result.RequestInProgressList = reqList;
+                        break;
+
+                    default:
+                        throw new Exception("Action not supported");
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 
     internal class CustomsPartnersItemCRList
@@ -2772,5 +2823,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     {
         public string RequestInProgressList { get; set; }
         public string Message { get; set; }
+    }
+
+    public class SendExportDeclarationsBatchRequestParams
+    {
+        public string Action { get; set; }
+        public IEnumerable<string> SelectedIds { get; set; }
+        public bool IsAllSelected { get; set; }
+        public object QueryOperations { get; set; }
     }
 }

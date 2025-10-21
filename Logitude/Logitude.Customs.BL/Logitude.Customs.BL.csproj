@@ -393,16 +393,17 @@
     <Compile Include="BL\CreateContainerization.cs" />
     <Compile Include="BL\CancelOldCommunicationLogs.cs" />
     <Compile Include="BL\EFIFILEMDataInExportDeclarationClosing.cs" />
+    <Compile Include="BL\ExportDeclarationsBatchActionsService.cs" />
     <Compile Include="BL\ExternalFieldMappingBL.cs" />
     <Compile Include="BL\PrivacyProtection.cs" />
     <Compile Include="BL\ReferantUnifreightStatuses.cs" />
     <Compile Include="BL\CourierSchedulerService.cs" />
     <Compile Include="BL\ServerNamesRestartServiceScriptService.cs" />
     <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
-     <Compile Include="CloseTables\Codes\DeclarationDirection.cs" />
+    <Compile Include="CloseTables\Codes\DeclarationDirection.cs" />
     <Compile Include="CloseTables\Codes\EventStatuses.cs" />
     <Compile Include="CloseTables\Codes\UserCodes.cs" />
-     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
+    <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomRabbitMQQueue.cs" />
     <Compile Include="CloseTables\CustomsPartnerFtpDetails.cs" />
@@ -596,7 +597,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\TransactionNatureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DeclaraionDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransportMeansTypeDetails.Generated.cs" />
-     <Compile Include="CloseTables\DetailsClassesGenerated\UnloadingSiteTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\UnloadingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ValidCustomsItemDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\VehicleManufacturerDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\VehiclePoolTypeDetails.Generated.cs" />
@@ -669,7 +670,7 @@
     <Compile Include="CloseTables\EnumGenerated\CustomerTypeGeneralStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomMetaDataTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsAddressTypeStruct.Generated.cs" />
-     <Compile Include="CloseTables\EnumGenerated\CustomsBookTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsBookTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsBranchStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsDocumentStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsDocumentUploadStruct.Generated.cs" />
