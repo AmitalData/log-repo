@@ -38,6 +38,20 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             return from a in context.ExpenseAllocationFlows where a.Tenant == tenant select a;
         }
+        public IQueryable<ExpenseAllocationFlow> GetListByEntityIAndObjectTable(int tenant,string objectTableId,string entityId)
+        {
+           return context.ExpenseAllocationFlows
+                                      .Join(
+                                          context.ExpenseAllocationSettings,
+                                          flow => flow.SettingId,        
+                                          setting => setting.Id,       
+                                          (flow, setting) => new { flow, setting } 
+                                      )
+                                      .Where(x => x.flow.Tenant == tenant
+                                               && x.setting.ObjectTableId == objectTableId
+                                               && x.setting.EntityId == entityId)
+                                      .Select(x => x.flow);
+        }
         public void Add(ExpenseAllocationFlow entity)
         {
             context.ExpenseAllocationFlows.Add(entity);

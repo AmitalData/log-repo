@@ -2132,6 +2132,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             throw new Exception("Please configure Prepaid Expenses GL Account in Full Accounting Settings before approving Prepaid Expenses Invoice.");
                         }
+                       
                      }
                     // Insert Journal 
                     JournalPM journal = new JournalPM();
@@ -2313,9 +2314,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalUpdateServiceExt;
                     AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.APInvoiceApprove);
                     journalUpdate.Update(journal);
+
+                  
                 }
             }
         }
+      
         private JournalLinePM CreateJournalLinePM(APInvoicePM theEntityPm, int lineNo, string journalId, string glAccountId, string prepaidExpensesGLAccountId = null)
         {
             JournalLinePM journalLine = new JournalLinePM();

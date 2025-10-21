@@ -41,6 +41,8 @@ import { ExpenseAllocationSettingExtendedService } from 'Invoice/Services/Extend
 import { ExpenseAllocationSettingPM } from 'Invoice/EntityPMs/ExpenseAllocationSettingPM';
 import { ExpenseAllocationSettingList } from 'Invoice/EntityLists/ExpenseAllocationSettingList';
 import { ExpenseAllocationSettingPMService } from 'Invoice/Services/StandardPMs/ExpenseAllocationSettingPMService';
+import { ExpenseAllocationFlowPM } from 'Invoice/EntityPMs/ExpenseAllocationFlowPM';
+import { ExpenseAllocationFlowPMService } from 'Invoice/Services/StandardPMs/expenseAllocationFlowPMService';
 declare var window: any;
 
 @Component({
@@ -382,6 +384,12 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         })
 
                     }
+                    else{
+                        this.expenseAllocationSetting = new ExpenseAllocationSettingPM();
+                        this.expenseAllocationSetting.CreateDate = DateTool.GetCurrentDateAsUtc();
+                        this.expenseAllocationSetting.CreatedByUserId = SessionLocator.LoggedUserId;
+                    }
+                    
                     if (!myResponse2.HasError) {
                         this.VatTypePercentagesList = myResponse2.Result;
                     }
@@ -402,14 +410,38 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
         if(this.EntityPM?.Id){
             if(this.expenseAllocationSetting?.Id){
-                this.expenseAllocationSettingPMService.update(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {                  
+                this.expenseAllocationSettingPMService.update(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {
+                    if (!res.HasError) {
+                        this.expenseAllocationSetting = res.Result;
+                        if(this.EntityPM.StatusCode === "AD")
+                            this.addExpenseAllocationFlow();
+
+                    }                  
                 })
             }
             else{
-                this.expenseAllocationSettingPMService.insert(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {                     
+                this.expenseAllocationSettingPMService.insert(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {   
+                    if (!res.HasError) {
+                        this.expenseAllocationSetting = res.Result;
+                        if(this.EntityPM.StatusCode === "AD"){
+                            this.addExpenseAllocationFlow();
+                        }
+                            
+                    }                   
                 })
             }
         }
+    }
+    expenseAllocationFlowPMService: ExpenseAllocationFlowPMService = new ExpenseAllocationFlowPMService();
+    addExpenseAllocationFlow(){
+        var expenseAllocationFlowPM : ExpenseAllocationFlowPM = new ExpenseAllocationFlowPM();
+        expenseAllocationFlowPM.Tenant = SessionLocator.Tenant;
+        expenseAllocationFlowPM.SettingId = this.expenseAllocationSetting?.Id;
+        expenseAllocationFlowPM.Status = "Created";
+        expenseAllocationFlowPM.RunDate = DateTool.GetCurrentDateAsUtc();
+        expenseAllocationFlowPM.JournalId = this.EntityPM?.JournalId;
+        this.expenseAllocationFlowPMService.insert(expenseAllocationFlowPM).subscribe((res: ServiceResponse) => {});
+
     }
     UpdateData() {
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -1155,7 +1187,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             EndDateTime: this.expenseAllocationSetting?.EndDateTime || defaultEnd, 
             RecurrenceCount: this.expenseAllocationSetting?.NumberOfPayments || null, 
             MonthInterval: this.expenseAllocationSetting?.MonthInterval || 1,
-            TotalAmount: this.AmountInInvoiceCurrency ,
+            TotalAmount: this.SubTotalInInvoiceCurrency,
             MinDate: this.AccountingDate ,
             AllocationDateType: AllocationDateType,
             IsWeekly: !IsMonthly,

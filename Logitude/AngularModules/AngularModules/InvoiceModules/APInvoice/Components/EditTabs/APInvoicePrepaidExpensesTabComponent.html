@@ -1,34 +1,52 @@
-﻿
-
-
-<div class="TabHolder">
-    <table *ngIf="IsVisible">
+﻿<div class="TabHolder">
+    <table>
         <tr class="TabTitleRow">
             <td>{{'Customer.TH.AWBStock' | TextCodeTranslationPipe}}</td>
         </tr>
 
-        <tr style="height: 1px;">
+        <tr style="height: 1px">
             <td>
                 <table>
                     <tr>
-                        <td>
-                            <span class="Label">{{'MAWBStack.O.AWBRemainingAmount' | TextCodeTranslationPipe}}:</span>
-                            <span class="Value" style="margin-left: 3px;">{{ItemsCount}}</span>
+                        <td class="HeaderScreenLable" style="width:40px;">
+                            סכום מקורי:
                         </td>
-
-                        <td style="width: 100px;">
-                            <button class="Button" (click)="AddStockClicked()">Setting</button>
+                        <td  style="color:#282E30;font-size:12px;width:100px;">
+                            {{this.EntityPM.SubTotalInInvoiceCurrency}}
                         </td>
-
-                        <td style="width: 5px;">
+                        <td class="HeaderScreenLable" style="width:40px;">
+                            שולם עד כה:
+                        </td>
+                        <td  style="color:#282E30;font-size:12px;width:100px;">
+                            {{amountPaid | NumbersPipe:'N2'}}         
+                        </td>
+                        <td  class="HeaderScreenLable" style="width:40px;">
+                            נשאר לשלם:
+                        </td>
+                        <td style="color:#282E30;font-size:12px;width:100px;">
+                            {{amountDue | NumbersPipe:'N2'}}
+                        </td>
+                        
+                        
+                        <td style="width: 700px">
                             <div></div>
-                        </td>                        
+                        </td>
+
+                        <td style="width: 100px">
+                            <button class="Button" (click)="settingsClicked()">
+                                הגדרות פריסה
+                            </button>
+                        </td>
+
+                        <td style="width: 5px">
+                            <div></div>
+                        </td>
                     </tr>
                 </table>
             </td>
         </tr>
 
-        <tr style="height: 5px;">
+        <tr style="height: 5px">
             <td>
                 <div></div>
             </td>
@@ -41,11 +59,43 @@
                         <div class="SimpleGridViewHeader">
                             <table>
                                 <tr>
-                                    <td style="width: 200px; min-width: 200px; max-width: 200px;">Airline</td>
-                                    <td style="width: 120px; min-width: 120px; max-width: 120px;">From</td>
-                                    <td style="width: 120px; min-width: 120px; max-width: 120px;">To</td>
-                                    <td style="width: 90px; min-width: 90px; max-width: 90px;">Total</td>
-                                    <td style="width: 80px; min-width: 80px; max-width: 80px; text-align: center;">Unassign</td>
+                                    <td
+                                        style="
+                                            width: 200px;
+                                            min-width: 200px;
+                                            max-width: 200px;
+                                        "
+                                    >
+                                        תאריך ריצה
+                                    </td>
+                                    <td
+                                        style="
+                                            width: 120px;
+                                            min-width: 120px;
+                                            max-width: 120px;
+                                        "
+                                    >
+                                        סכום
+                                    </td>
+                                    <td
+                                        style="
+                                            width: 120px;
+                                            min-width: 120px;
+                                            max-width: 120px;
+                                        "
+                                    >
+                                        פקודה
+                                    </td>
+                                    <td
+                                        style="
+                                            width: 90px;
+                                            min-width: 90px;
+                                            max-width: 90px;
+                                        "
+                                    >
+                                        סטטוס
+                                    </td>
+                                   
                                     <td class="LastChild">
                                         <div></div>
                                     </td>
@@ -55,26 +105,54 @@
 
                         <div class="SimpleGridViewBody">
                             <table>
-                                <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
-
-                                    <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
-                                        {{item.AirlineName}}
+                                <tr
+                                    class="SimpleGridViewRow"
+                                    *ngFor="let item of expenseAllocationFlowLists"
+                                >
+                                    <td
+                                        class="GridViewCell"
+                                        style="
+                                            width: 200px;
+                                            min-width: 200px;
+                                            max-width: 200px;
+                                            position: relative;
+                                        "
+                                    >
+                                        {{item.RunDate | DateTimePipe:'D'}}
                                     </td>
 
-                                    <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; position: relative;">
-                                        {{item.From}}
+                                    <td
+                                        class="GridViewCell"
+                                        style="
+                                            width: 120px;
+                                            min-width: 120px;
+                                            max-width: 120px;
+                                            position: relative;
+                                        "
+                                    >
+                                        {{periodAmount | NumbersPipe:'N2'}}
                                     </td>
 
-                                    <td class="GridViewCell" style="width: 120px; min-width: 120px;max-width: 120px; ">
-                                        {{item.To}}
-                                    </td>
+                                    <td
+                                        class="GridViewCell"
+                                        style="
+                                            width: 120px;
+                                            min-width: 120px;
+                                            max-width: 120px;
+                                        "
+                                    >
+                                        <span class="hyperlink"  (click)="OpenJournal(item.JournalId)">{{item.JournalNumber}}</span>
+                                    </td>                                 
 
-                                    <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
-                                        {{item.Total}}
-                                    </td>
-
-                                    <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
-                                        <button class="Button" (click)="UnassignClicked(item)">Unassign</button>
+                                    <td
+                                        class="GridViewCell"
+                                        style="
+                                            width: 80px;
+                                            min-width: 80px;
+                                            max-width: 80px;
+                                        "
+                                    >
+                                        {{item.Status}}
                                     </td>
 
                                     <td>
