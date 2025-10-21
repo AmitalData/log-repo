@@ -10,9 +10,8 @@ export class CompanyAddressSetting  {
   }
 }
 
-
-
-it('Srearch Company Address Setting ', () => {
+describe('CompanyAddressSetting Tests', () => {
+  it('Srearch Company Address Setting ', () => {
     //cy.wait(10000)
     cy.get("#GeneralMHMaintenance").click()
     cy.get('#null_Search').type('company address setting')
@@ -28,6 +27,7 @@ it('Edit Copmnay Address Setting', () => {
 
 
 
+})
 })
 
 

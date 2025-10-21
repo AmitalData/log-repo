@@ -16,9 +16,6 @@ context('Actions', () => {
 	  //cy.get('#Email').type('protractor@test.com') 
 	  //cy.get('#Password').type('!P123t456') 
       cy.get('#cmdLogin').click();
-      cy.server();
-      cy.route('/api/ObjectTableLastUpdate/GetLastTableUpdateDate/*').as('ChachedDataLoaded')
-      cy.wait('@ChachedDataLoaded') 
     })
 
     it('Moving to Shipment Succeeded', () => {

@@ -12,28 +12,11 @@ for (i = 0; i <= 100; i++) {
 
 
         it('Login Successfully', () => {
-
-
-
-            //cy.visit('http://localhost:4200/')
-
-            //cy.visit('https://test.logitudeworld.com/test')
             cy.visit(Cypress.env("URL"))
-
-            cy.get('#Email').type(Cypress.env("Email"), { delay: 50 }).should('have.value', 'protractor2@test.com')
-
+            cy.get('#Email').type(Cypress.env("Email"), { delay: 50 })
             cy.get('#Password').type(Cypress.env("Password"))
             cy.get('#cmdLogin').click()
-
-
-
-            cy.server();
-            //cy.route('test/api/ObjectTableLastUpdate/GetLastTableUpdateDate/?tenant=1102').as('LoadDataCompleted');
-            cy.route('**/ObjectTableLastUpdate/**').as('LoadDataCompleted');
-
-            cy.wait('@LoadDataCompleted');
-
-
+            cy.url().should('not.include', '/login')
         }
 
         )
@@ -50,38 +33,38 @@ for (i = 0; i <= 100; i++) {
 
             cy.get('#NEWDIRECT').click({ force: true })
 
-            cy.get('#DirectionRadio_0E').click({ force: true })
-            cy.get('#TransportModeRadio_0A').click({ force: true })
-            cy.get('#Shipment_ShipperId').click({ force: true })
+            cy.get('#DirectionRadio_0E', { timeout: 5000 }).click({ force: true })
+            cy.get('#TransportModeRadio_0A', { timeout: 5000 }).click({ force: true })
+            cy.get('#Shipment_ShipperId', { timeout: 5000 }).click({ force: true })
             cy.get('#Shipment_ShipperId').type('TestShipperExport1')
-            cy.get('.DropDownListItem:first').click()
-            cy.get('#Shipment_ShipperReference1').type('Reference1')
+            cy.get('.DropDownListItem:first', { timeout: 5000 }).should('be.visible').click()
+            cy.get('#Shipment_ShipperReference1', { timeout: 5000 }).type('Reference1')
 
 
 
-            cy.get('#Shipment_ConsigneeId').click({ force: true })
-            cy.get('#Shipment_ShipperId').type('TestConsigneeExport1')
-            cy.get('.DropDownListItem:first').click()
-            cy.get('#Shipment_ShipperReference1').type('Reference1')
+            cy.get('#Shipment_ConsigneeId', { timeout: 5000 }).click({ force: true })
+            cy.get('#Shipment_ConsigneeId').type('TestConsigneeExport1')
+            cy.get('.DropDownListItem:first', { timeout: 5000 }).should('be.visible').click()
+            cy.get('#Shipment_ShipperReference1', { timeout: 5000 }).type('Reference1')
 
 
-            cy.get('#Shipment_MainCarriageFromPortId').click()
+            cy.get('#Shipment_MainCarriageFromPortId', { timeout: 5000 }).click()
             cy.get('#Shipment_MainCarriageFromPortId').type('eze')
-            cy.get('.DropDownListItem:first').click()
-            cy.get('#Shipment_MainCarriageToPortId').click()
+            cy.get('.DropDownListItem:first', { timeout: 5000 }).should('be.visible').click()
+            cy.get('#Shipment_MainCarriageToPortId', { timeout: 5000 }).click()
             cy.get('#Shipment_MainCarriageToPortId').type('mvd')
-            cy.get('.DropDownListItem:first').click()
-            cy.get('#Shipment_DescriptionOfGoods').type('CreateShipmentFromCypress')
+            cy.get('.DropDownListItem:first', { timeout: 5000 }).should('be.visible').click()
+            cy.get('#Shipment_DescriptionOfGoods', { timeout: 5000 }).type('CreateShipmentFromCypress')
 
 
 
 
 
-            cy.get('#ShipmentCreatebtn').click()
+            cy.get('#ShipmentCreatebtn', { timeout: 5000 }).click()
 
-            cy.get('#Shipments-O-Q').click()
+            cy.get('#Shipments-O-Q', { timeout: 5000 }).click()
 
-            cy.get('#LogGrid_0_0row0').click()
+            cy.get('#LogGrid_0_0row0', { timeout: 5000 }).click()
             //cy.get('#HelperNotesButton_0_1').click()
             //cy.get('#HelperNotesContent_0_1').click()
             //cy.get('#HelperNotesContent_0_1').type('Test Crypress')

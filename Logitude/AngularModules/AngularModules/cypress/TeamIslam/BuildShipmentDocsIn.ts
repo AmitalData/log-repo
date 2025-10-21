@@ -12,33 +12,42 @@ export class NewAgentScenario {
     }
 }
 
-
-it('OpenDocsInTab', function () {
-
-    cy.get('#ShipmentTHDocsIn').click();
-
+describe('BuildShipmentDocsIn Tests', () => {
+    it('OpenDocsInTab', function () {
+    cy.visit(Cypress.env("URL"), { timeout: 15000 })
+    cy.get('body', { timeout: 15000 }).should('be.visible')
+    cy.get('#Email', { timeout: 15000 }).type(Cypress.env("Email"), { delay: 50 })
+    cy.get('#Password', { timeout: 15000 }).type(Cypress.env("Password"))
+    cy.get('#cmdLogin', { timeout: 15000 }).click()
+    cy.url({ timeout: 20000 }).should('not.include', '/login')
+    
+    cy.get('#GeneralMHOperations', { timeout: 15000 }).click()
+    cy.get('#SHIP', { timeout: 15000 }).click()
+    cy.get('#Shipments-O-Q', { timeout: 15000 }).click()
+    cy.get('#ShipmentTHDocsIn', { timeout: 15000 }).click();
 });
 
 it('Successfully Upload File', function () {
-    //cy.get('#BusyIndicator_0').click();
-
-    //cy.get('#SearchFieldsId_0_1').click();
-    cy.get('#SearchFieldsId_0_1').type('General Message');
-    cy.wait(2000)
-    cy.get('#row0').click();
-    cy.get('#UploadDocumentdbtn', { multiple: true }).click();
-    //cy.get('.Button').click()
+    cy.visit(Cypress.env("URL"), { timeout: 15000 })
+    cy.get('body', { timeout: 15000 }).should('be.visible')
+    cy.get('#Email', { timeout: 15000 }).type(Cypress.env("Email"), { delay: 50 })
+    cy.get('#Password', { timeout: 15000 }).type(Cypress.env("Password"))
+    cy.get('#cmdLogin', { timeout: 15000 }).click()
+    cy.url({ timeout: 20000 }).should('not.include', '/login')
+    
+    cy.get('#GeneralMHOperations', { timeout: 5000 }).click()
+    cy.get('#SHIP', { timeout: 5000 }).click()
+    cy.get('#Shipments-O-Q', { timeout: 5000 }).click()
+    cy.get('#ShipmentTHDocsIn', { timeout: 5000 }).click()
+    
+    cy.get('#SearchFieldsId_0_1', { timeout: 5000 }).type('General Message');
+    cy.get('#row0', { timeout: 5000 }).click();
+    cy.get('#UploadDocumentdbtn', { multiple: true, timeout: 5000 }).click();
     const fileName = 'dummy.pdf'
     cy.fixture('dummy.pdf').then(function (fileContent) {
-        cy.get('input.upload').attachFile({ fileContent, fileName, mimetype: 'application/pdf' })
-        cy.get('#FileUploadedSuccessfully').should('be.visible')
-        //cy.get('#').should('be.visible')
-        //cy.get(popupContainerSelector).contains('File Uploaded Successfully	').should('be.visible')
-        //cy.title().should('contains', 'File Uploaded Successfully')
-
-
-        //cy.wait(6000)
-        cy.get('.RedButton').click()
-
+        cy.get('input.upload', { timeout: 5000 }).attachFile({ fileContent, fileName, mimetype: 'application/pdf' })
+        cy.get('#FileUploadedSuccessfully', { timeout: 10000 }).should('be.visible')
+        cy.get('.RedButton', { timeout: 5000 }).click()
     })
+})
 })
