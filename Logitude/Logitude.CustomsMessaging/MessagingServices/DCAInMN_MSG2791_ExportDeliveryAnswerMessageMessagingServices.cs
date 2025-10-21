@@ -55,9 +55,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var myGenericRequestParams = new GenericRequestParams()
             {
                 LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
-                LoggingEntityId = entity.DeclarationId,
+                LoggingEntityId = entity?.DeclarationId,
                 LoggingObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.ExportStorage"),
-                LoggingEntityId2 = entity.Id,                
+                LoggingEntityId2 = entity?.Id,                
             };
             
             return myGenericRequestParams;
