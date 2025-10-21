@@ -1,2 +1,97 @@
 ﻿
 
+
+<div class="TabHolder">
+    <table *ngIf="IsVisible">
+        <tr class="TabTitleRow">
+            <td>{{'Customer.TH.AWBStock' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr style="height: 1px;">
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <span class="Label">{{'MAWBStack.O.AWBRemainingAmount' | TextCodeTranslationPipe}}:</span>
+                            <span class="Value" style="margin-left: 3px;">{{ItemsCount}}</span>
+                        </td>
+
+                        <td style="width: 100px;">
+                            <button class="Button" (click)="AddStockClicked()">Setting</button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>                        
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 5px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <div class="SimpleGridView">
+                        <div class="SimpleGridViewHeader">
+                            <table>
+                                <tr>
+                                    <td style="width: 200px; min-width: 200px; max-width: 200px;">Airline</td>
+                                    <td style="width: 120px; min-width: 120px; max-width: 120px;">From</td>
+                                    <td style="width: 120px; min-width: 120px; max-width: 120px;">To</td>
+                                    <td style="width: 90px; min-width: 90px; max-width: 90px;">Total</td>
+                                    <td style="width: 80px; min-width: 80px; max-width: 80px; text-align: center;">Unassign</td>
+                                    <td class="LastChild">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="SimpleGridViewBody">
+                            <table>
+                                <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+
+                                    <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
+                                        {{item.AirlineName}}
+                                    </td>
+
+                                    <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; position: relative;">
+                                        {{item.From}}
+                                    </td>
+
+                                    <td class="GridViewCell" style="width: 120px; min-width: 120px;max-width: 120px; ">
+                                        {{item.To}}
+                                    </td>
+
+                                    <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                        {{item.Total}}
+                                    </td>
+
+                                    <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                        <button class="Button" (click)="UnassignClicked(item)">Unassign</button>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="6">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
