@@ -11,9 +11,9 @@
 
     },
     "env": {
-        "URL": "https://test-customs.amital.co.il/",
-        "Email": "dror@amital.com",
-        "Password": "Japan@2025"
+        "URL": "https://test.logitudeworld.com/test",
+        "Email": "protractor2@test.com",
+        "Password": "!P123p456"
 
     },
 
