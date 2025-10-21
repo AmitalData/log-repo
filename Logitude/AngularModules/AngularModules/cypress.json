@@ -2,18 +2,18 @@
     "viewportWidth": 2000,
     "viewportHeight": 1000,
     "projectId": "b2kqc4",
-    "integrationFolder": "cypress/TeamIslam",
+    "integrationFolder": "cypress/TeamIslam/specs",
     "screenshotsFolder": "cypress/results/html/screenshots",
     "scripts": {
-        "cypressRun": "cypress run",
+        "cypressRun": "cypress run --browser edge",
         "runtests": "npm run cypressRun -- BuildShipmentDocsIn.ts",
         "cypressopen": "node_modules\\.bin\\cypress open"
 
     },
     "env": {
-        "URL": "https://test.logitudeworld.com/test",
-        "Email": "protractor2@test.com",
-        "Password": "!P123p456"
+        "URL": "https://test-customs.amital.co.il/",
+        "Email": "dror@amital.com",
+        "Password": "Japan@2025"
 
     },
 

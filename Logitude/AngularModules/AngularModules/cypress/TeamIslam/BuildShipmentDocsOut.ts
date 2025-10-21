@@ -11,8 +11,8 @@ export class NewAgentScenario {
     }
 }
 
-
-it('OpenDocOutTab', function () {
+describe('BuildShipmentDocsOut Tests', () => {
+  it('OpenDocOutTab', function () {
 
     cy.get('#ShipmentTHDocsOut').click();
 
@@ -48,4 +48,5 @@ it('Failing Printing Document', function () {
 
     cy.get('#MessageWindow_Ok_0').click()
 
+})
 })
