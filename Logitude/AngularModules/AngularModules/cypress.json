@@ -5,7 +5,7 @@
     "integrationFolder": "cypress/TeamIslam/specs",
     "screenshotsFolder": "cypress/results/html/screenshots",
     "scripts": {
-        "cypressRun": "cypress run --browser edge",
+        "cypressRun": "cypress run ",
         "runtests": "npm run cypressRun -- BuildShipmentDocsIn.ts",
         "cypressopen": "node_modules\\.bin\\cypress open"
 
