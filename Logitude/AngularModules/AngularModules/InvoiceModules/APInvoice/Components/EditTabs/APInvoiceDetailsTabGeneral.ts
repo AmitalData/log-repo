@@ -407,13 +407,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     saveExpenseAllocationSetting(){
-
+        var approved = this.EntityPM?.StatusCode === "AD";
         if(this.EntityPM?.Id){
             if(this.expenseAllocationSetting?.Id){
                 this.expenseAllocationSettingPMService.update(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {
                     if (!res.HasError) {
                         this.expenseAllocationSetting = res.Result;
-                        if(this.EntityPM.StatusCode === "AD")
+                        if(approved)
                             this.addExpenseAllocationFlow();
 
                     }                  
@@ -423,7 +423,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 this.expenseAllocationSettingPMService.insert(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {   
                     if (!res.HasError) {
                         this.expenseAllocationSetting = res.Result;
-                        if(this.EntityPM.StatusCode === "AD"){
+                        if(approved){
                             this.addExpenseAllocationFlow();
                         }
                             
