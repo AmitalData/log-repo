@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "4c11a0b621658c2b02ebea8540e6d72a";
+		public const string HashString = "c8f1a37db0259e4f6b3d90a2e17c5f48";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -1478,9 +1478,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOReconciliationAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ReconciliationAmount", DefaultText = "Reconciliation Amount",LocalDefaultText = @"BS64:Iteh15vXldedINeU16rXkNee15Qi", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOReconciliationNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ReconciliationNo", DefaultText = "Reconciliation No.",LocalDefaultText = @"BS64:IteU16rXkNee15Qg157XoSci", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+            TextCode GeneralTextCode_AccountingGeneralOReconciliationNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ReconciliationNo", DefaultText = "Reconciliation No.", LocalDefaultText = @"BS64:IteU16rXkNee15Qg157XoSci", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
 
- 		   TextCode GeneralTextCode_AccountingGeneralORef1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Ref1", DefaultText = "Ref. 1",LocalDefaultText = @"BS64:IteQ16HXnteb16rXkCAxIg==", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+            TextCode GeneralTextCode_AccountingGeneralORFRDiff1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.RFRDiff1", DefaultText = "There is a difference of: ", LocalDefaultText = @"BS64:IiA616fXmdeZ150g15TXpNeo16kg16nXnCAgIg==", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode GeneralTextCode_AccountingGeneralORFRDiff2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.RFRDiff2", DefaultText = "Create a revaluation journal?", LocalDefaultText = @"BS64:IteU15DXnSDXnNeR16bXoiDXpNen15XXk9eqINep15nXoteo15XXmj8i", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode GeneralTextCode_AccountingGeneralORef1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Ref1", DefaultText = "Ref. 1",LocalDefaultText = @"BS64:IteQ16HXnteb16rXkCAxIg==", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GeneralTextCode_AccountingGeneralORef2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Ref2", DefaultText = "Ref. 2",LocalDefaultText = @"BS64:IteQ16HXnteb16rXkCAyIg==", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 

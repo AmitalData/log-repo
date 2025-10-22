@@ -384,6 +384,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? revalOnForeignReco ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? RevalOnForeignReco  
+	   {
+	    
+	     get
+		{
+		   return revalOnForeignReco;
+		 }
+		 set
+		 {
+		   if(revalOnForeignReco != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RevalOnForeignReco",OldValue=revalOnForeignReco,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   revalOnForeignReco=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }
