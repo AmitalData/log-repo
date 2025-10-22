@@ -1248,7 +1248,8 @@ export class ARInvoiceMenuButtonsHandler {
     ShowSelfInvoiceConfirmationNumberDialog()  {
         this.confirmationNumberDefaultExtendedService.getAmountForConfirmationNumber(this.EntityPM.InvoiceDate).subscribe((myResponse: ServiceResponse) => {
             if(!myResponse.HasError && myResponse.Result) {
-              if(myResponse.Result <= this.EntityPM.AmountInLocalCurrency) {
+               
+              if(myResponse.Result <= (this.EntityPM.AmountInLocalCurrency - this.EntityPM.SubTotalInLocalCurrency)) {
                 const confirmWindow = new ConfirmWindow();
                 confirmWindow.Width = 400;
                 confirmWindow.ShowErorImage = true;
