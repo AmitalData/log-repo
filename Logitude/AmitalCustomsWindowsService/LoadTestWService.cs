@@ -52,12 +52,11 @@ namespace AmitalCustomsWindowsService
             _LoadTestWorkerService.StopThreads();
         }
 
-        public void StartMe()
+      async public void StartMe()
         {
             //throw new NotImplementedException();
-            
             Program.ThreadStartStaticIsMustB4UsingTheDB();
-            _LoadTestWorkerService.EnshureThreadWorking(true);
+            await  _LoadTestWorkerService.EnshureThreadWorkingAsync(true);
         }
     }
 }
