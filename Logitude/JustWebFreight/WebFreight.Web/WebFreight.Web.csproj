@@ -1151,6 +1151,7 @@
     <Compile Include="Controllers\InfrastructureModel\Extended\GeneralLockController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\GeneralLockViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\ConfirmationNumberDefaultExtendedController.cs" />
+    <Compile Include="Controllers\InvoiceModel\Extended\ExpenseAllocationFlowExtendedController.cs" />
     <Compile Include="Controllers\InvoiceModel\Extended\ExpenseAllocationSettingExtendedController.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ExpenseAllocationFlowViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ExpenseAllocationSettingViewsController.Generated.cs" />

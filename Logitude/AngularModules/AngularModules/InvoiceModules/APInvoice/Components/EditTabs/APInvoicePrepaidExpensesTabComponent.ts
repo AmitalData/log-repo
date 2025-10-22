@@ -1,23 +1,136 @@
 ﻿declare var window: any;
-import {Component, OnInit}  from '@angular/core';
-import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
+import { Component, OnInit } from '@angular/core';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { APInvoicePM } from '../../../../Invoice/EntityPMs/APInvoicePM';
+import { ExpenseAllocationSettingExtendedService } from 'Invoice/Services/ExtendedPMs/ExpenseAllocationSettingExtendedService';
+import { ExpenseAllocationSettingPM } from 'Invoice/EntityPMs/ExpenseAllocationSettingPM';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { ExpenseAllocationFlowList } from 'Invoice/EntityLists/ExpenseAllocationFlowList';
+import { ExpenseAllocationFlowExtendedService } from 'Invoice/Services/ExtendedPMs/ExpenseAllocationFlowExtendedService';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
+import { AppTool } from 'Infrastructure/Tools';
 
 @Component({
-    
     templateUrl: './APInvoicePrepaidExpensesTabComponent.html',
 })
-
 export class APInvoicePrepaidExpensesTabComponent implements OnInit {
     public EntityPM: APInvoicePM = null;
-    public ObjectTableName = "APInvoice";
+    public ObjectTableName = 'APInvoice';
     public DataContext = this;
-    
+    public objectTableId: string = '';
+    public amountPaid : number = 0;
+    public amountDue : number = 0;
+    public periodAmount
+    private currentSession = SessionLocator.SelectedSession;
+
+    public expenseAllocationSettingPM = new ExpenseAllocationSettingPM();
+    expenseAllocationSettingExtendedService =
+        new ExpenseAllocationSettingExtendedService();
+    expenseAllocationFlowExtendedService =
+        new ExpenseAllocationFlowExtendedService();
+    expenseAllocationFlowLists: ExpenseAllocationFlowList[] = [];
     constructor(private entityArgs: EntityArgs) {
-        this.EntityPM = entityArgs.EntityPM;     
+        this.EntityPM = entityArgs.EntityPM;
+        var table = window.ObjectTables.filter((d) => d.Name == 'APInvoice')[0];
+        if (table) this.objectTableId = table.Id;
     }
 
     ngOnInit() {
-       
+        this.loadDate();
+    }
+    settingsClicked() {
+        const defaultEnd = new Date(
+            this.expenseAllocationSettingPM?.StartDateTime ||
+                this.EntityPM.AccountingDate
+        );
+        defaultEnd.setDate(defaultEnd.getDate() + 364);
+        const paymentType = this.expenseAllocationSettingPM?.PaymentDateType;
+
+        var IsMonthly = false;
+        var AllocationDateType = '';
+        var selectedDay = null;
+        var selectedDayByWeek = null;
+
+        if (paymentType?.startsWith('Monthly_')) {
+            IsMonthly = true;
+            const parts = paymentType.split('_');
+            AllocationDateType = parts[1] || '';
+            selectedDay = parts[2] ? parts[2] : null;
+        } else if (paymentType?.startsWith('Weekly_')) {
+            IsMonthly = false;
+            const parts = paymentType.split('_');
+            selectedDayByWeek = parts[1] || null;
+        }
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = {
+            StartDateTime:
+                this.expenseAllocationSettingPM?.StartDateTime ||
+                this.EntityPM.AccountingDate,
+            EndDateTime:
+                this.expenseAllocationSettingPM?.EndDateTime || defaultEnd,
+            RecurrenceCount:
+                this.expenseAllocationSettingPM?.NumberOfPayments || null,
+            MonthInterval: this.expenseAllocationSettingPM?.MonthInterval || 1,
+            TotalAmount: this.EntityPM.SubTotalInInvoiceCurrency,
+            MinDate: this.EntityPM.AccountingDate,
+            AllocationDateType: AllocationDateType,
+            IsWeekly: !IsMonthly,
+            SelectedDay: selectedDay,
+            SelectedDayByWeek: selectedDayByWeek,
+        };
+        logWindow.Width = 600;
+        logWindow.Height = 450;
+        logWindow.Title = 'Recurring Schedule Settings';
+        logWindow.ShowCloseButton = true;
+        logWindow.ComponentLoaded.subscribe((comp) => {
+            logWindow.WindowClosed.subscribe((s) => {});
+        });
+        logWindow.Show(
+            './CommonModules/CommonOthers/Components/RecurringSchedule/RecurringScheduleComponent'
+        );
+    }
+    loadDate() {
+        this.expenseAllocationSettingExtendedService
+            .getExpenseAllocationSettingByEntityIdAndObjectTable(
+                this.EntityPM?.Id,
+                this.objectTableId
+            )
+            .subscribe((res: ServiceResponse) => {
+                if (res?.Result && !res.HasError) {
+                    this.expenseAllocationSettingPM = res.Result;
+                }
+                this.expenseAllocationFlowExtendedService
+                    .getExpenseAllocationFlowByEntityIdAndObjectTable(
+                        this.EntityPM?.Id,
+                        this.objectTableId
+                    )
+                    .subscribe((resFlow) => {
+                        if (resFlow !== null) {
+                            (resFlow as ExpenseAllocationFlowList[]).forEach((item: ExpenseAllocationFlowList) => {
+                                this.expenseAllocationFlowLists.push(item);
+                            });
+                            this.periodAmount =  this.EntityPM.SubTotalInInvoiceCurrency / this.expenseAllocationSettingPM.NumberOfPayments
+                            this.amountPaid = this.periodAmount * this.expenseAllocationFlowLists.length;
+                            this.amountDue = this.EntityPM.SubTotalInInvoiceCurrency - this.amountPaid;
+                        }
+                    });
+            });
+    }
+
+    OpenJournal(id) {
+        if (!AppTool.IsNullOrEmpty(id)) {
+            SessionLocator.DynamicLoader.Load(
+                "./Infrastructure/Components/EditComponent/EditComponent",
+                this.currentSession.SessionLocation.viewContainerRef
+            ).then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityId: id,
+                    ObjectTableName: "Journal"
+                });
+                cmpRef.instance.BackCompleted.subscribe(bk => { });
+            });
+        }
     }
 }
