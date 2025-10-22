@@ -703,6 +703,7 @@ foreach(XElement textCodeElement in AdditionalTextCodes.Elements("TextCode")){
 <#+
 private void WriteAddFieldMethod(XElement entity,XElement field)
 { 
+if (ShouldSkipField(field)) return;
 	bool isCustomField = false;
 	if(field.Attribute(XName.Get("IsCustom")) != null)
     {
@@ -2215,5 +2216,16 @@ public void GenerateAddFieldMethods(string sourceFilePath)
 }
  
 #>
-
+<#+
+// Returns true if <field ObjectFieldDBOnly="true">
+private bool ShouldSkipField(XElement field)
+{
+    try
+    {
+        var a = field.Attribute(XName.Get("ObjectFieldDBOnly"));
+        return a != null && a.Value.Trim('"').ToLower() == "true";
+    }
+    catch { return false; }
+}
+#>
 
