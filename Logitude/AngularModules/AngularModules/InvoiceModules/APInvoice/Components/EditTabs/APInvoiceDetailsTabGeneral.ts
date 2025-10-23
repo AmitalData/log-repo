@@ -409,6 +409,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     saveExpenseAllocationSetting(){
         var approved = this.EntityPM?.StatusCode === "AD";
         if(this.EntityPM?.Id){
+            this.expenseAllocationSetting.EntityId = this.EntityPM?.Id;
             if(this.expenseAllocationSetting?.Id){
                 this.expenseAllocationSettingPMService.update(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {
                     if (!res.HasError) {
@@ -438,7 +439,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         expenseAllocationFlowPM.Tenant = SessionLocator.Tenant;
         expenseAllocationFlowPM.SettingId = this.expenseAllocationSetting?.Id;
         expenseAllocationFlowPM.Status = "Created";
-        expenseAllocationFlowPM.RunDate = DateTool.GetCurrentDateAsUtc();
+        expenseAllocationFlowPM.RunDate = this.expenseAllocationSetting.StartDateTime;
         expenseAllocationFlowPM.JournalId = this.EntityPM?.JournalId;
         this.expenseAllocationFlowPMService.insert(expenseAllocationFlowPM).subscribe((res: ServiceResponse) => {});
 

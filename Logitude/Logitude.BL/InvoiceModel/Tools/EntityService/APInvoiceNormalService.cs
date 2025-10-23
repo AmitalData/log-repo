@@ -2349,7 +2349,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
 
-        private static GLAccountPM GetInvoiceGLAccount(APInvoicePM invoicePM)
+        public  GLAccountPM GetInvoiceGLAccount(APInvoicePM invoicePM)
         {
             GLAccountPM glAccount;
             if (invoicePM.VendorGLAccountId != null)
@@ -2385,7 +2385,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
             return accountingSettings;
         }
-        private string SetDebitAccountForSingleLineAPInvoice(APInvoicePM invoice)
+        public string SetDebitAccountForSingleLineAPInvoice(APInvoicePM invoice)
         {
             if (invoice.InvoiceLines.Count == 1)
             {
