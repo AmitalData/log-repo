@@ -37,10 +37,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='ExportWeight' Type='int'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='Tenant' Type='int'>"+
+"  <Column Name='EventTypeId' Type='varchar' Size='15'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='EventTypeId' Type='varchar' Size='15'>"+
+"  <Column Name='Notes' Type='nvarchar' Size='-1'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='TenantId' Type='int'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "</Table>";
