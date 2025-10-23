@@ -175,24 +175,48 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
 				GlobalDBRepository globaldbRep = new GlobalDBRepository();
 				List<GlobalDB> activeDbs = globaldbRep.GetGlobalDBsActive();
-                foreach (GlobalDB db in activeDbs)
-                {
-                   int tenant = Convert.ToInt32(db.Id);
-                    if (tenant == 0) continue;
 
-				   ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
-					departmentRepository = new DepartmentRepository(MyContext);
-					department = departmentRepository.GetDepartmentByName(UserTenant0?.Department?.EnglishName, tenant);
+
+		
+			    foreach (var db in activeDbs)
+                {
+						var targetTenant = Convert.ToInt32(db.Id);
+                    if (targetTenant == 0) continue;
+
+					ICommonDataContext ctx = CommonDataContext.GetContext(targetTenant);
+					departmentRepository = new DepartmentRepository(ctx);
+					branchRepository = new BranchRepository(ctx);
+					businessUnitRepository = new BusinessUnitRepository(ctx);
+					UserService service = new UserService(ctx, targetTenant);
+
+					var deptName = UserTenant0?.Department?.EnglishName;
+					department = departmentRepository.GetDepartmentByName(deptName, targetTenant);
 					entityPM.DepartmentId = department?.Id;
-					branchRepository = new BranchRepository(MyContext);
-					branch = branchRepository.GetBranchByName(UserTenant0?.Branch?.EnglishName, tenant);
+
+					var branchtName = UserTenant0?.Branch?.EnglishName;
+					branch = branchRepository.GetBranchByName(branchtName, targetTenant);
 					entityPM.BranchId = branch?.Id;
-					businessUnitRepository = new BusinessUnitRepository(MyContext);
-					businessUnit = businessUnitRepository.GetBusinessUnitByName(UserTenant0?.BusinessUnit?.Name, tenant);
+
+					var businessUnitName = UserTenant0?.Branch?.EnglishName;
+					businessUnit = businessUnitRepository.GetBusinessUnitByName(businessUnitName, targetTenant);
 					entityPM.BusinessUnitId = businessUnit?.Id;
-					UserService service = new UserService(MyContext, tenant);
-                    service.Id0 = entityPM.Id;
-					service.Create(entityPM);
+
+					using (var scope = new System.Transactions.TransactionScope())
+					{
+						try
+						{
+							service.Id0 = entityPM.Id;
+							service.Create(entityPM);
+							scope.Complete();
+
+						}
+						catch (Exception ex)
+						{
+							throw ex;
+						}
+					}
+
+					
 				} 		
 			}
 
