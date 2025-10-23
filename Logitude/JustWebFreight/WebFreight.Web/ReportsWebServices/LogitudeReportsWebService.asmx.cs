@@ -10871,6 +10871,10 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             totalData.TotalRevenueExpense = (totalRevenues == null ? 0 : totalRevenues) + (totalExpenses == null ? 0 : totalExpenses);
+            foreach (var res in totalData.ResultList.Where(r => r.Balance == null))
+            {
+                res.Balance = 0;
+            }
 
 
             #endregion
