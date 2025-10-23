@@ -9,7 +9,6 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.CargoTracking.BL.APIDataContract;
-using Logitude.CargoTracking.BL.CloseTables;
 using Logitude.CargoTracking.BL.EntityQueryServices;
 using Logitude.CargoTracking.BL.CoreBL;
 using Logitude.CargoTracking.Data;
@@ -26,6 +25,7 @@ using System.Security.Policy;
 using System.Windows.Forms;
 using Simplog.Server.Infrastructure;
 using NPOI.SS.Formula.Functions;
+using Logitude.CargoTracking.BL.Enums;
 
 
 namespace WebFreight.Web.Helpers.APIHelpers
@@ -165,14 +165,13 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private void BuildMileStoneCodesDictionary()
         {
             milestoneCodes = new Dictionary<string, string>(){
-                { CargoTrackingMilestoneValues.NoMilstone, "NOM"},
                 { CargoTrackingMilestoneValues.Created, "CRT"},
                 { CargoTrackingMilestoneValues.Booking, "BKN"},
                 { CargoTrackingMilestoneValues.Pickup, "PIC"},
-                { CargoTrackingMilestoneValues.FromWarehouse, "FWH"},
+                { CargoTrackingMilestoneValues.OriginWarehouse, "FWH"},
                 { CargoTrackingMilestoneValues.Departure, "DPT"},
                 { CargoTrackingMilestoneValues.Arrival, "ATA"},
-                { CargoTrackingMilestoneValues.ToWarehouse, "TWH"},
+                { CargoTrackingMilestoneValues.DestinationWarehouse, "TWH"},
                 { CargoTrackingMilestoneValues.AssignedToCustomsBroker, "ASG"},
                 { CargoTrackingMilestoneValues.CustomsProcess, "CSP"},
                 { CargoTrackingMilestoneValues.GoodsClassification, "GDC"},
@@ -183,10 +182,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 { CargoTrackingMilestoneValues.Clearance, "RSG"},
                 { CargoTrackingMilestoneValues.GatepassArrived, "GTA"},
                 { CargoTrackingMilestoneValues.AssignedToTrucker, "TRG"},
-                { CargoTrackingMilestoneValues.DeliveryOut, "DTC"},
+                { CargoTrackingMilestoneValues.DeliveryOnTheWay, "DTC"},
                 { CargoTrackingMilestoneValues.Delivered, "POD"},
-                { CargoTrackingMilestoneValues.Invoiced, "INV"},
-                { CargoTrackingMilestoneValues.DeliveryArrived,"DTA" },
+                { CargoTrackingMilestoneValues.InvoiceIssued, "INV"},
+                { CargoTrackingMilestoneValues.ArrivedAtDistributionPoint,"DTA" },
 
 
 

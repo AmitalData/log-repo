@@ -1184,7 +1184,7 @@ namespace WebFreight.Web.MetaDataUpdate
             try
             {
                 CargoTrackingUpdateClass modelUpdateClass = new CargoTrackingUpdateClass();
-                modelUpdateClass.CreateAllClosedTables();
+                modelUpdateClass.CreateAllClosedTables(0);
                 performanceTimerLogger.LogMessage("Generated" + ",CargoTrackingModelUpdateClass");
             }
             catch (Exception ex)
