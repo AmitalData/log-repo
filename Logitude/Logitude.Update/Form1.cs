@@ -6999,7 +6999,7 @@ User/Pass",
 
                 List<string> customsFiles = ReadColumnFromCsv(ofd.FileName, 0);
                 List<string> actions = null;
-                try { actions = ReadColumnFromCsv(ofd.FileName, 1); } catch {  }
+                try { actions = ReadColumnFromCsv(ofd.FileName, 1); } catch { }
 
 
                 var declarationQueryService = new DeclarationQueryService(1);
@@ -7064,7 +7064,7 @@ User/Pass",
 
                 }
 
-        }
+            }
             void SendDeclarationRestoreRequest(DeclarationPM myDeclarationPM)
             {
                 var restoreParams = new DeclarationRestoreRequestParams
@@ -7102,38 +7102,39 @@ User/Pass",
             }
 
             void SendDeclarationStatusRequest(DeclarationPM myDeclarationPM)
-        {
-
-
-            var newSearchDeclarationStatusRequestParams = new DeclarationStatusRequestParams()
             {
-                LoggingEnabled = true,
-                CustomFileNo = myDeclarationPM.CustomFileNo,
-                DeclarationNumber = myDeclarationPM.DeclarationNumber,
-                Tenant = myDeclarationPM.Tenant,
-                RequestName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
-                ResponseName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
-                RequestVIA = SendRequestVIA.WebServiceBatch,
-                InterfaceTypeCode = "8250",
-                LoggingEntityId = myDeclarationPM.Id,
-                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
-                LoggingUserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
-            };
 
 
-
-            try
-            {
-                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.DeclarationStatusRequestParams>(newSearchDeclarationStatusRequestParams
-                    , false
-                    );
-
-            }
-            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
-            {
-                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                var newSearchDeclarationStatusRequestParams = new DeclarationStatusRequestParams()
                 {
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8250 RequestInProgress stop create a new one !! ");
+                    LoggingEnabled = true,
+                    CustomFileNo = myDeclarationPM.CustomFileNo,
+                    DeclarationNumber = myDeclarationPM.DeclarationNumber,
+                    Tenant = myDeclarationPM.Tenant,
+                    RequestName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
+                    ResponseName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
+                    RequestVIA = SendRequestVIA.WebServiceBatch,
+                    InterfaceTypeCode = "8250",
+                    LoggingEntityId = myDeclarationPM.Id,
+                    LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                    LoggingUserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
+                };
+
+
+
+                try
+                {
+                    SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.DeclarationStatusRequestParams>(newSearchDeclarationStatusRequestParams
+                        , false
+                        );
+
+                }
+                catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+                {
+                    if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                    {
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8250 RequestInProgress stop create a new one !! ");
+                    }
                 }
             }
         }
