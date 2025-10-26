@@ -55,7 +55,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsCancelled, 
 	         CurrencyCode, 
 	         AccountReconcileMethodCode, 
-	         AccountCurrencyId,
+	         AccountCurrencyId, 
+	         RevalOnForeignReco,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -131,6 +131,11 @@ export class ReconciliationPM {
     public set AccountCurrencyId(newValue: string) { if (this.accountCurrencyId != newValue) { this.accountCurrencyId = newValue; this.MarkAsDirty("AccountCurrencyId"); } }
        
 	 
+    private revalOnForeignReco: boolean;
+    public get RevalOnForeignReco() { return this.revalOnForeignReco; }
+    public set RevalOnForeignReco(newValue: boolean) { if (this.revalOnForeignReco != newValue) { this.revalOnForeignReco = newValue; this.MarkAsDirty("RevalOnForeignReco"); } }
+       
+	 
 
     public OldEntityPM: ReconciliationPM;
 		
