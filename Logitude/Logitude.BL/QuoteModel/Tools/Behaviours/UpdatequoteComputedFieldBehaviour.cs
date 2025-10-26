@@ -1,12 +1,14 @@
 ﻿using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.Tools.Initializers;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.BL.QuoteModel.Tools.Behaviours
 {
@@ -43,7 +45,9 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
             MapEstimatedReceivablesInLocalCurrencyField();
             MapEstimatedReceivablesInSalesCurrencyField();
             MapMarkupAmountField();
-        }
+			MapCostChargeGroupValField();
+
+		}
 
         private void MapConnectedToShipmentField()
         {
@@ -245,5 +249,20 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
                 quoteComputedField.MarkupPercentage = summaryCostAmount == 0 ? summaryCostAmount : MethodHelper.Round((summarySaleAmount - summaryCostAmount) * 100 / summaryCostAmount, 2);
             }
         }
-    }
+		private void MapCostChargeGroupValField()
+		{
+			if (quoteEntityPM.QuoteCharges != null)
+			{
+                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(initializer.Tenant);
+				var chargesTypes  = chargesTypeRepository.GetChargesTypesOfVAL(initializer.Tenant).ToList();
+				var quoteChargesVal = quoteCharges.Where(d => chargesTypes.Contains(d.ChargesTypeId)).ToList();
+				var CostTotalAmount = quoteChargesVal.Sum(d => d.CostTotalAmount);
+				var CostCurrencyId = quoteChargesVal?.Any() == true &&
+							 quoteChargesVal.Select(d => d.CostCurrencyId).Distinct().Count() == 1
+			                 ? quoteChargesVal.First().CostCurrencyId
+			                 : quoteEntityPM.SaleCurrencyId;
+				quoteComputedField.CostChargeGroupVal = CostTotalAmount + " " + CostCurrencyId;
+			}
+		}
+	}
 }
