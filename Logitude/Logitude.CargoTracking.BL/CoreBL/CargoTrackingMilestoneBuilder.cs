@@ -64,7 +64,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                         Date = null,
                         EstimationDate = null,
                         Done = false,
-                        Notes = null,
+                        Notes = mile.Notes,
                         IsCurrent = false,
                         IsEstimation = false,
                         InActive = mile.Inactive,
@@ -75,7 +75,6 @@ namespace Logitude.CargoTracking.BL.CoreBL
                     if(eventMatch != null)
                     {
                         milestone.Date = eventMatch.EventDatetime;
-                        milestone.Notes = eventMatch.Notes;
                         milestone.Done = true;
                     }
 
