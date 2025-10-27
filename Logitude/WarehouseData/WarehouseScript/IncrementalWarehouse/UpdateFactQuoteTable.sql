@@ -187,7 +187,7 @@
 	    [Connected To Shipment], [Connected To Ticket],[To Location], [From Location],
 	   [Delivery To], [Pickup From], [Estimated Payables in Sales Currency], [Estimated Payables in Local Currency],
 	   [Estimated Receivables in Local Currency], [Estimated Receivables in Sales Currency], [Estimated Profit in Sales Currency], [Local Currency],[Spot Rates Markup] 
-	   ,[To Port Code], [To Port Name],[From Port Code],[From Port Name],[Shipment No])
+	   ,[To Port Code], [To Port Name],[From Port Code],[From Port Name],[Shipment No],[Cost Charge Group Val])
 	   
 	   values(@Id  , @SourceTenant, @ParentTenant ,@Direction , @TransportMode , @Type,@Department ,@Branch,@QuoteNumber
 	 ,@Shipper ,@Consignee, @Agent ,@Customer , @Incoterm ,@CreatedByUser ,dbo.GetDateFormateAsNumber(@OpenDate)    , dbo.GetDateFormateAsNumber(@SentDate)  , dbo.GetDateFormateAsNumber(@AcceptedDate)  ,dbo.GetDateFormateAsNumber(@DeclinedDate)    ,dbo.GetDateFormateAsNumber(@StartDate)   ,dbo.GetDateFormateAsNumber(@LastActivityDate) 
