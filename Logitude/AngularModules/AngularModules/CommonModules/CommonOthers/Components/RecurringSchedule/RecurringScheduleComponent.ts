@@ -27,7 +27,8 @@ export class RecurringScheduleComponent extends BaseComponent {
 
     public IsWeekly = false;
     public IsMonthly = true;
-
+    public IsSpecificDateEnabled = false;
+    public NumberOfDayInMonth = 1;
     public StartDateTime: Date | null = null;
     public endDateTime: Date | null = null;
     get EndDateTime() { return this.endDateTime }
@@ -110,6 +111,8 @@ export class RecurringScheduleComponent extends BaseComponent {
         this.selectedDayByWeek = args?.['SelectedDayByWeek'] ?? '';
         this.IsWeekly = args?.['IsWeekly'] ?? false;
         this.IsMonthly = !this.IsWeekly;
+        if(this.AllocationDateType === AllocationDateType.SpecificDate)
+            this.IsSpecificDateEnabled = true;
         this.recalculateAll();
     }
 
@@ -132,7 +135,11 @@ export class RecurringScheduleComponent extends BaseComponent {
             type === AllocationDateType.EndOfMonth ||
             type === AllocationDateType.SpecificDate;
 
-        this.selectedDay = this.IsDayDisabled ? '' : this.selectedDay || 'Sunday';
+        this.selectedDay = this.IsDayDisabled ? null : this.selectedDay || 'Sunday';
+        if(type === AllocationDateType.SpecificDate)
+            this.IsSpecificDateEnabled = true;
+        else
+            this.IsSpecificDateEnabled = false;
     }
 
     public onSelectDay(day: string): void {
@@ -256,8 +263,8 @@ export class RecurringScheduleComponent extends BaseComponent {
         this.expenseAllocationSettingPM.EndDateTime = this.EndDateTime!;
         this.expenseAllocationSettingPM.NumberOfPayments = this.RecurrenceCount;
         this.expenseAllocationSettingPM.MonthInterval = this.IntervalCount;
-        this.expenseAllocationSettingPM.PaymentDateType = this.IsMonthly
-            ? `Monthly_${this.AllocationDateType}_${this.selectedDay}`
+        this.expenseAllocationSettingPM.PaymentDateType = this.IsMonthly 
+            ? `Monthly_${this.AllocationDateType}_${this.selectedDay ?? this.NumberOfDayInMonth}`
             : `Weekly_${this.selectedDayByWeek}`;
 
         this.currentSession.CloseCurrentWindowEmit('ok');
@@ -268,7 +275,7 @@ export class RecurringScheduleComponent extends BaseComponent {
 export enum AllocationDateType {
     StartOfMonth = 'Start',
     EndOfMonth = 'End',
-    SpecificDate = 'Specific',
+    SpecificDate = 'SpecificDate',
     FirstWeek = 'FirstWeek',
     SecondWeek = 'SecondWeek',
     ThirdWeek = 'ThirdWeek',

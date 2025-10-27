@@ -49,7 +49,8 @@ namespace Simplog.Data.InvoiceModel.Repositories
                                       )
                                       .Where(x => x.flow.Tenant == tenant
                                                && x.setting.ObjectTableId == objectTableId
-                                               && x.setting.EntityId == entityId)
+                                               && x.setting.EntityId == entityId 
+                                               && x.flow.JournalId != null)
                                       .Select(x => x.flow);
         }
         public void Add(ExpenseAllocationFlow entity)

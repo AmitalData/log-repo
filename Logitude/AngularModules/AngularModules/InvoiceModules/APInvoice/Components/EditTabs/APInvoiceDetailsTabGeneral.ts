@@ -438,7 +438,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         var expenseAllocationFlowPM : ExpenseAllocationFlowPM = new ExpenseAllocationFlowPM();
         expenseAllocationFlowPM.Tenant = SessionLocator.Tenant;
         expenseAllocationFlowPM.SettingId = this.expenseAllocationSetting?.Id;
-        expenseAllocationFlowPM.Status = "Created";
+        expenseAllocationFlowPM.Status = "Done";
         expenseAllocationFlowPM.RunDate = this.expenseAllocationSetting.StartDateTime;
         expenseAllocationFlowPM.JournalId = this.EntityPM?.JournalId;
         this.expenseAllocationFlowPMService.insert(expenseAllocationFlowPM).subscribe((res: ServiceResponse) => {});

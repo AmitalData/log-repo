@@ -71,10 +71,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if(theEntityPm.RunDate != null && theEntityPm.RunDate.Date == DateTime.Today.Date)
             {
                 RunTaskNow();               
-            }
-            entityRepository.Update(Poco);
-            entityRepository.SubmitChanges();
-            
+            }           
+             entityRepository.Update(Poco);
+             entityRepository.SubmitChanges();
+           
+
         }
 
         public void RunTaskNow()
@@ -93,18 +94,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 throw new Exception("AP Invoice not found.");
             }
             Poco.JournalId = AddJournalAndJournalLines(apInvoice, settingPM);
+
             AddTask(settingPM);
         }
         public void AddTask(ExpenseAllocationSettingPM settingPM)
         {
-            ExpenseAllocationFlowPM expenseAllocationFlowPM = new ExpenseAllocationFlowPM();
-            expenseAllocationFlowPM.Tenant = this.entityPM.Tenant;
-            expenseAllocationFlowPM.SettingId = this.entityPM.SettingId;
-            expenseAllocationFlowPM.Status = "";
-            expenseAllocationFlowPM.RunDate = DateTime.Now;
-            expenseAllocationFlowPM.JournalId = "123";
-            
-            entityRepository.Update(Poco);
+            ExpenseAllocationFlow expenseAllocationFlow = new ExpenseAllocationFlow();
+            expenseAllocationFlow.Id = IdCounter.GetNumber("ExpenseAllocationFlow", tenant).ToString();
+            expenseAllocationFlow.Tenant = this.entityPM.Tenant;
+            expenseAllocationFlow.SettingId = this.entityPM.SettingId;
+            expenseAllocationFlow.Status = "";
+            expenseAllocationFlow.RunDate = DateTime.Now.AddDays(5);
+            expenseAllocationFlow.JournalId =null;
+
+            entityRepository.Add(expenseAllocationFlow);
+            entityRepository.SubmitChanges();
+
 
         }
 
@@ -178,10 +183,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine = new JournalLinePM();
 
                     List<JournalLinePM> journalDebitLines = new List<JournalLinePM>();
+                if (theEntityPm.InvoiceLines[0].VatRecognizedPercentage == 0 || theEntityPm.InvoiceLines[0].VatRecognizedPercentage == null)
+                {
+                    if (theEntityPm.InvoiceLines[0].VatPercentage == null || theEntityPm.InvoiceLines[0].VatRecognizedPercentage == null)
+                    {
+                        theEntityPm.InvoiceLines[0].LocalAmountWithVatRecognized = theEntityPm.InvoiceLines[0].LocalCurrencyAmount;
+                    }
+                    else
+                    {
+                        theEntityPm.InvoiceLines[0].LocalAmountWithVatRecognized = theEntityPm.InvoiceLines[0].LocalCurrencyAmount + ((theEntityPm.InvoiceLines[0].VatPercentage / 100) * theEntityPm.InvoiceLines[0].LocalCurrencyAmount);
+                    }
+
+                }
+                else
+                {
+                    theEntityPm.InvoiceLines[0].LocalAmountWithVatRecognized = (theEntityPm.InvoiceLines[0].LocalCurrencyAmount + ((theEntityPm.InvoiceLines[0].VatPercentage / 100) * ((1 - theEntityPm.InvoiceLines[0].VatRecognizedPercentage) * theEntityPm.InvoiceLines[0].LocalCurrencyAmount)));
+                }
+                theEntityPm.InvoiceLines[0].ForiegnAmountWithRecognizedVat = theEntityPm.InvoiceLines[0].LocalAmountWithVatRecognized != null ? theEntityPm.InvoiceLines[0].LocalAmountWithVatRecognized / theEntityPm.InvoiceLines[0].ForiegnExchangeRate : theEntityPm.InvoiceLines[0].LocalAmountWithVatRecognized;
 
 
 
-                    List<JournalLinePM> journalLines = (from d in theEntityPm.InvoiceLines?.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete)
+                List<JournalLinePM> journalLines = (from d in theEntityPm.InvoiceLines?.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete)
                                                         select new JournalLinePM()
                                                         {
                                                             Tenant = tenant,
@@ -220,7 +242,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalUpdateServiceExt;
-                    AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.APInvoiceApprove);
+                    AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.APInvoiceApprove,settingPM.Id);
                     journalUpdate.Update(journal);
                     return journal.Id;
 

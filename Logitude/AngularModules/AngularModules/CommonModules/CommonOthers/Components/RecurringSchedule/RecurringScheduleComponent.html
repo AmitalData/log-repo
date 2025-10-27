@@ -91,6 +91,7 @@
                                     </div>
                                     <div style="width: 5px"></div>
                                     <div
+                                        *ngIf="!IsSpecificDateEnabled"
                                         style="
                                             height: 22px;
                                             width: 95px;
@@ -132,6 +133,38 @@
                                                 </button>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div
+                                        *ngIf="IsSpecificDateEnabled"
+                                        style="
+                                            height: 22px;
+                                            width: 95px;
+                                            position: relative;                                            
+                                        "
+                                        [style.text-align]="isRTL ? 'right' : 'left'"
+                                    >
+                                        <tr>
+                                           
+                                            <td style="width: 5px">
+                                                <div></div>
+                                            </td>
+                                            <td style="width: 95px">
+                                                <div
+                                                    style="
+                                                        width: 95px;                                                        
+                                                        position: relative;
+                                                        top: 10px;
+                                                    "
+                                                >
+                                                    <NumberInput
+                                                        [(ngModel)]="NumberOfDayInMonth"
+                                                        name="no"
+                                                        [min]="1"
+                                                        [max]="31"
+                                                    ></NumberInput>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     </div>
                                 </div>
                                 <td style="width: 10px">
