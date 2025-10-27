@@ -16,10 +16,10 @@ namespace Logitude.CargoTracking.BL.CoreBL
         {
             return BuildShipmentMilstonesFromPM(shipment, milestonesDictionaryByCode);
         }
-        public List<Milestone> BuildShipmentMilstones(CargoTrackingShipmentList shipment, Dictionary<string, CargoTrackingMilestoneList> milestonesDictionaryByCode)
+        public List<Milestone> BuildShipmentMilstones(CargoTrackingShipmentList shipment, Dictionary<string, CargoTrackingMilestoneList> milestonesDictionaryByCode, bool ignoreCustomMilestones =false)
         {
             var shipmentPM = GetShipmentPM(shipment);
-            return BuildShipmentMilstonesFromPM(shipmentPM, milestonesDictionaryByCode);
+            return BuildShipmentMilstonesFromPM(shipmentPM, milestonesDictionaryByCode, ignoreCustomMilestones);
         }
 
         private CargoTrackingShipmentPM GetShipmentPM(CargoTrackingShipmentList shipment)
@@ -39,13 +39,13 @@ namespace Logitude.CargoTracking.BL.CoreBL
             return shipmentPM;
         }
 
-        private List<Milestone> BuildShipmentMilstonesFromPM(CargoTrackingShipmentPM shipment, Dictionary<string, CargoTrackingMilestoneList> milestonesDictionaryByCode)
+        private List<Milestone> BuildShipmentMilstonesFromPM(CargoTrackingShipmentPM shipment, Dictionary<string, CargoTrackingMilestoneList> milestonesDictionaryByCode, bool ignoreCustomMilestones= false)
         {
             List<Milestone> milestones = new List<Milestone>();
 
             var tenantMilestones = milestonesDictionaryByCode.Where(x => x.Value.Tenant == shipment.Tenant)
                                                              .ToDictionary(x=>x.Key, x=>x.Value);
-            if (tenantMilestones.Count > 0)
+            if (!ignoreCustomMilestones && tenantMilestones.Count > 0)
             {
                 var eventsBuilder = new CargoTrackingEventsBuilder();
                 var events = eventsBuilder.BuildShipmentEvents(shipment.EntityId, shipment.Tenant, shipment.ForwardingShipmentHeaderId);
