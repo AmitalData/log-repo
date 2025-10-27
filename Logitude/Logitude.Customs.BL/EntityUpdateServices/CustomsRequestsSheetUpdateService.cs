@@ -324,9 +324,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     throw new Exception("Unable to cancel request. Current customsDocumentPM==null ");
                 }
-                if (customsDocumentPM.DocumentStatusCode != "7")
+                if (customsDocumentPM.DocumentStatusCode != "7" && !string.IsNullOrEmpty(customsDocumentPM.DocumentStatusCode))
                 {
-                    throw new Exception("Unable to cancel request. Current customsDocumentPM.DocumentStatusCode!=7 ");
+                    throw new Exception("Unable to cancel request. Current customsDocumentPM.DocumentStatusCode!=7 && !=null");
                 }
                 var featureDocumentStatusCodeShouldNOTChange = ConfigurationManager.AppSettings["20180624.DocumentStatusCodeShouldNOTChange"] == "1";
 
