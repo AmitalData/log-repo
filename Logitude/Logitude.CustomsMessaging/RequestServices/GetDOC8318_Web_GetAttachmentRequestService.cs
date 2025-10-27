@@ -10,18 +10,10 @@ namespace Logitude.CustomsMessaging.RequestServices
         public override DOC_Web_GetAttachment_IN GetRequest(GetAttachmentRequestParams requestParams)
         {
             DOC_Web_GetAttachment_IN myMsg = new DOC_Web_GetAttachment_IN();
-            
-            // TODO: fix the params to send to the service:
 
-            //myMsg.CIMekachIn = new UnifreightIIG.Common.GetAttachmentServiceReference.CustomsBookItemHeaderIn()
-            //{
-            //    customsItemId = requestParams.customsItemId,
-            //    customsItemIdSpecified = true,
-            //    validToDate = requestParams.validToDate,
-            //    languageType = requestParams.languageType,
-            //};
-
-
+            myMsg.externalId = "";
+            myMsg.documentId = requestParams.documentId;
+            myMsg.documentIdSpecified = true;
 
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = "תדפיסי חקיקה- קובץ (מקח''ים) - ספר סיווג";
