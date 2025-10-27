@@ -269,7 +269,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 			var distinctCurrencies = quoteChargesVal.Select(d => d.CostCurrencyId).Distinct().ToList();
 			var costCurrencyId = distinctCurrencies.Count == 1	? distinctCurrencies[0]: quoteEntityPM.SaleCurrencyId;
 			
-			var costCurrencyName = currencyRepository.GetSingleCurrencyById(costCurrencyId, initializer.Tenant, true);
+			var costCurrencyName = currencyRepository.GetSingleCurrencyById(costCurrencyId, initializer.Tenant, true)?.Code;
 			quoteComputedField.CostChargeGroupVal = string.Format(CultureInfo.InvariantCulture, "{0:0.##} {1}", costTotalAmount, costCurrencyName);
 
 		}
