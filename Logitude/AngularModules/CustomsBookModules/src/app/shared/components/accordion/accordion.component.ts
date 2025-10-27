@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FileTypes, GenericTableComponent, TableData } from '../generic-table/generic-table.component';
-import { CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, CustomItemClassifGuidanceResult, MainEntity, Mekach } from '../main-display/main-display.component';
+import { AttachmentResponseData, CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, CustomItemClassifGuidanceResult, MainEntity, Mekach } from '../main-display/main-display.component';
 import { API_MainService } from '../../../core/API_MainService';
 import { CommonModule, NgStyle } from '@angular/common';
 import { NgFor, NgForOf } from '@angular/common';
@@ -170,6 +170,35 @@ export class AccordionComponent implements OnInit {
     else
       this.isShowTableClassificationGuidance = !this.isShowTableClassificationGuidance;
     this.ClassificationGuidanceId.next(row.classificationGuidanceNumber);
+  }
+
+  handleButtonPdfClick(data: { event: Event, row: any, key: string }): void {
+    const { event, row, key } = data;
+    this.API_MainService.GetMekachDocument(row?.attachedMekahFile, SessionInfo.LoggedUserTenant).subscribe(
+      (docData: any) => {
+        if (docData?.body) {
+          let data: AttachmentResponseData = docData?.body;
+          if (data?.AttachedMekahFileData) this.openBase64File(data?.AttachedMekahFileData?.content, FileTypes.pdf);
+        }
+      },
+      (error) => {
+        console.log(error.message);
+        this.isLoadingMekach = false;
+      }
+    );
+  }
+
+  openBase64File(base64String: string, fileType: string): void {
+    if (!base64String) return;
+    const byteCharacters = atob(base64String);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const fileBlob = new Blob([byteArray], { type: fileType });
+    const fileURL = URL.createObjectURL(fileBlob);
+    window.open(fileURL, '_blank');
   }
 
   // שיעורי מס

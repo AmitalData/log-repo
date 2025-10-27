@@ -32,11 +32,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 foreach (var item in customResponse.CIMekachOut)
                 {
                     this.MyResponseData.CustomItemMekachDataList.Add(new CustomItemMekachData
-                    {
-                        mekachNumber = item.mekachNumber,
-                        changeDescription = item.changeDescription,
-                        validityDate = item.validityDate,
-                        attachedMekahFile = item.attachedMekahFile?.content != null ? Convert.ToBase64String(item.attachedMekahFile?.content) : null
+                        {
+                            mekachNumber = item.mekachNumber,
+                            changeDescription = item.changeDescription,
+                            validityDate = item.validityDate,
+                            attachedMekahFile = item.attachedMekahFile?.attachmentID != null ? item.attachedMekahFile?.attachmentID : ""
                     });
                 }
             }
