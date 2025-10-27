@@ -78,7 +78,6 @@
    declare @EstimateProfit as float
    declare @LocalCurrency as int
   declare @MarkupPercentage as float
-    declare @CostChargeGroupVal as float
 
 
    declare @BusinessUnitId varchar(15)
