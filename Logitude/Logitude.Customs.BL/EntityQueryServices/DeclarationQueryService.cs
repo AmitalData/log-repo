@@ -1323,9 +1323,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(declarationId)) return "";
             return repository.GetCustomFileNoByDeclarationId(declarationId, tenant);
         }
-        public Declaration GetDeclarationByConsignment(string cargoTypeCode, string manifestNumber, string secondCargoID, string thirdCargoID)
+        public Declaration GetDeclarationByConsignment(int tenant, string cargoTypeCode, string manifestNumber, string secondCargoID, string thirdCargoID)
         {
-            return repository.GetDeclarationByConsignment(cargoTypeCode, manifestNumber, secondCargoID, thirdCargoID);
+            return repository.GetDeclarationByConsignment(tenant, cargoTypeCode, manifestNumber, secondCargoID, thirdCargoID);
         }
 
         public List<DeclarationPM> GetMultiByKeys(int tenant, List<string> keys)
