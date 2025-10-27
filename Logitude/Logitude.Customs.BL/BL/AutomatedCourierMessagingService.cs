@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.BL
         }
         public bool CheckAndSendMessageis(DeclarationCourierStatusPM declarationCourierStatusPM)
         {
-             sent = false;
+            sent = false;
 
             if (!_featureSendManifest && !_featureSendDeclaration && !_featureSendPayment && !_featureSendPaymentOn902Close)
             {
@@ -66,12 +66,12 @@ namespace Logitude.Customs.BL.BL
             Declaration declaration;
             using (var ctx = (CustomContext)CustomContext.GetContext(declarationCourierStatusPM.Tenant))
             {
-                declaration = ctx.Declarations      
+                declaration = ctx.Declarations
                                  .AsNoTracking()
                                  .FirstOrDefault(d => d.Id == declarationCourierStatusPM.DeclarationId && d.Tenant == declarationCourierStatusPM.Tenant);
             }
 
-            if(declaration == null || declaration.IsAmendment == true)
+            if (declaration == null || declaration.IsAmendment == true || declaration.HatraDate != null || declaration.PaymentDate != null)
             {
                 Log("DECL:N:D0");
                 return sent;

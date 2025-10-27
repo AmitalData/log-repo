@@ -320,7 +320,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.hasOcr = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
         if (this.allowExport) {
             this.TooltipCopy = "שכפל שורה";
-            this.TooltipCertificate = "םישורים"
+            this.TooltipCertificate = "אישורים"
             this.TooltipCar = "נתוני רכב";
             this.TooltipEdit = "עריכת פריט";
             this.setAdjustmentsWarning(this.IncotermCode)
@@ -474,7 +474,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         windowArgs.Parent = this;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-        var windowTitle = "נתונים נוספים ליצום - חטיבת חשבון יצוםן";
+        var windowTitle = "נתונים נוספים ליצוא - חטיבת חשבון יצואן";
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
@@ -541,7 +541,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.AccumulatedFilterSelectedValue = itemValue;
             if (this.AccumulatedFilterSelectedValue == 'Accumulated') {
                 this.AccumulatedFilter = "parent";
-                this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לם צבור";
+                this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לא צבור";
 
                 this.IsActionButtonsEnabled = false;
             }
@@ -655,7 +655,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
                     if (this.EntityPM.IsAccumalated) {
                         this.IsAccumulated = true;
-                        this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לם צבור";
+                        this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לא צבור";
                         if (this.AccumulatedFilterSelectedValue == 'Accumulated') {
                             this.IsActionButtonsEnabled = false;
 
@@ -843,9 +843,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         if (ExtraPayments160 == null) {
             paymentCounter += 1;
-            this.AddModification("160", paymentCounter, "הוצםות נוספות");
+            this.AddModification("160", paymentCounter, "הוצאות נוספות");
         } else {
-            ExtraPayments160.TypeName = "הוצםות נוספות"
+            ExtraPayments160.TypeName = "הוצאות נוספות"
             this.AdjustmentsList.Insert(new ModificationItemModel(ExtraPayments160, this, "160"));
         }
 
@@ -1099,7 +1099,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.vendor = myResponse.Result;
             if (this.vendor != null) {
                 this.EntityPM.IssueCountryCode = this.vendor.CountryCode;
-                this.EntityPM.IssueCountryName = "טםיווםן";
+                this.EntityPM.IssueCountryName = "טאיוואן";
                 this.vendorNumber = this.vendor.VendorNumber;
                 this.SetDepositionStatus();
             }
@@ -1580,37 +1580,6 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
 
         if (this.declarationPM != null && this.declarationPM.SupplierInvoices.length >= 0) {
             if (this.EntityPM.InvoiceNumber) {
-
-                //server method
-                //var supplierInvoiceService: SupplierInvoiceService = new SupplierInvoiceService();
-                //supplierInvoiceService.GetCheckIfInvoiceNumberExists(this.EntityPM.DeclarationId, this.EntityPM.InvoiceNumber, this.EntityPM.InvoiceCounterKey).subscribe((resp: ServiceResponse) => {
-                //    if (!resp.HasError) {
-                //        if (resp.Result) {
-                //            var newValue = this.InvoiceNumber;
-                //            var confirm = new ConfirmWindow();
-                //            confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
-                //            confirm.ShowNoButton = true;
-                //            confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + resp.Result.SequenceNumeric + "- הםם להמשיך ?");
-                //            confirm.WindowClosed.subscribe((event: any) => {
-                //                confirm.Close();
-                //                this.InvoiceNumber = newValue;
-                //                if (confirm.Yes) {
-                //                    SessionLocator.SustainFocusOnCell = false;
-                //                }
-                //                else {
-                //                    SessionLocator.SustainFocusOnCell = true;
-                //                    console.log(invoiceNumberTextBox.InputId);
-                //                    var element = document.getElementById(invoiceNumberTextBox.InputId);
-                //                    if (element) {
-                //                        element.focus();
-                //                    }
-                //                }
-                //            });
-                //        }
-                //    }
-                //});
-
-                //client method
                 var invoices: SupplierInvoicePM[] = [];
                 invoices = this.declarationPM.SupplierInvoices;
                 invoices = invoices.concat(this.Parent.NewInvoices);
@@ -1621,7 +1590,7 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
                     var confirm = new ConfirmWindow();
                     confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
                     confirm.ShowNoButton = true;
-                    confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + exist.SequenceNumeric + "- הםם להמשיך ?");
+                    confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + exist.SequenceNumeric + "- האם להמשיך ?");
                     confirm.WindowClosed.subscribe((event: any) => {
                         confirm.Close();
                         this.InvoiceNumber = newValue;
@@ -4382,10 +4351,10 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             logWindow.Width = 1000;
             logWindow.Height = 600;
             if (item.ClassificationCode != null) {
-                logWindow.Title = "םישורים לפרט מכס" + " " + item.ClassificationCode;
+                logWindow.Title = "אישורים לפרט מכס" + " " + item.ClassificationCode;
             }
             else {
-                logWindow.Title = "םישורים לפרט מכס";
+                logWindow.Title = "אישורים לפרט מכס";
             }
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
@@ -4817,11 +4786,8 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                             this.PartnerItemsSelectionCompleted(this.entityPM, res[0]);
                                             return;
                                         } else {
-                                            //Eitancommented 15 minutes ago
-                                            //@odelia devashi @itzik M סיכום:
-                                            //גם כםשר מזינים קודם פרט מכס וםח"כ קוד פריט (מקט), עדיין צריך ליצור TASK של לימוד עצמי + שימוש ב-CACHE ברמת SESSION
                                             if (!AppTool.IsNullOrEmpty(this.ClassificationCode)) {
-                                                this.AdditemCodeDetail();//Task 43218: שיפור במנגנון לימוד עצמי
+                                                this.AdditemCodeDetail();
                                             }
                                         }
 
@@ -4836,7 +4802,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
           if(this.Parent.declarationPM.Direction!='E'){
             this.GetGITITEMPartnersItemListFromUnifreight(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, 'ALL',false)
             .then(async (res) => {
-                // כאן אתה יכול להמשיך עם הקוד שלך אחרי שהפונקציה החזירה תשובה
              
                 if (!AppTool.IsNullOrEmpty(res) && res.size() == 1) {                      
                     this.PartnerItemsSelectionCompleted(this.entityPM, res.get(0));
@@ -4855,11 +4820,8 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                             this.PartnerItemsSelectionCompleted(this.entityPM, res.get(0));
                                             return;
                                         } else {
-                                            //Eitancommented 15 minutes ago
-                                            //@odelia devashi @itzik M סיכום:
-                                            //גם כםשר מזינים קודם פרט מכס וםח"כ קוד פריט (מקט), עדיין צריך ליצור TASK של לימוד עצמי + שימוש ב-CACHE ברמת SESSION
-                                            if (!AppTool.IsNullOrEmpty(this.ClassificationCode)) {
-                                                this.AdditemCodeDetail();//Task 43218: שיפור במנגנון לימוד עצמי
+                                           if (!AppTool.IsNullOrEmpty(this.ClassificationCode)) {
+                                                this.AdditemCodeDetail();
                                             }
                                         }
                                     })
@@ -4894,7 +4856,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                         const xmlData = (xml: string) => xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
                         const result = this.parseXml(xmlData(XMLResponse));
                         SessionLocator.SelectedSession.StopBusyIndicator();
-                        resolve(result); // מחזירים את התוצאה עם resolve
+                        resolve(result); 
                        
                     }
                 }
