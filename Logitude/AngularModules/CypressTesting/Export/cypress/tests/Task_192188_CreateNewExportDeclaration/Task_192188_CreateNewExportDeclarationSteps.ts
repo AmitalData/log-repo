@@ -7,7 +7,7 @@ import { CreateNewExportDeclarationSelectors } from '../../selectors/CreateNewEx
 
 var createNewExportDeclarationDetails
 
-//#region Create new Declaration
+//#region Create new Import Declaration
 Given("the user logged in and navigates to Export workspace", () => {
     cy.Login();
     Actions.NavigatesExportsWizerd()
