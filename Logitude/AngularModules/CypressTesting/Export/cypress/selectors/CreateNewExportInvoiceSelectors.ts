@@ -1,8 +1,8 @@
 export class CreateNewExportInvoiceSelectors {
    
     public static readonly SearchField = "searchtextbox input[id*=SearchFieldsId]";
-    public static readonly FirstDeclaration ="#LogGrid_0_0row0";
-    public static readonly AddButtonInvoice = "declarationsupplierinvoicetabcomponent img[src='./Images/Buttons/Add.png']";
+    public static readonly FirstDeclaration = "[id*='LogGrid'][id*='row0']:first";
+    public static readonly AddButtonInvoice = "declarationsupplierinvoicetabcomponent img[src*='Add.png'], declarationsupplierinvoicetabcomponent button[title*='Add'], declarationsupplierinvoicetabcomponent .add-button";
     
 
     public static readonly AccountTypeCode = '#Customs\\.SupplierInvoice_AccountTypeCode';
@@ -31,9 +31,9 @@ export class CreateNewExportInvoiceSelectors {
     public static readonly ExpenseAmount = '#NewARPayment';
 
     public static readonly ButtonSaveSupplierInvoice = '#SaveSupplierInvoice'
-    public static readonly ButtonDeleteSupplierInvoice = '#Delete.LogitudeIconButton'
-    public static readonly Yes = '.RedButton'
-    public static readonly SupplierInvoiceFirstRow ="#row0";
+    public static readonly ButtonDeleteSupplierInvoice = '[id*="Delete"][class*="LogitudeIconButton"], button[title*="Delete"], .delete-button'
+    public static readonly Yes = '.RedButton, button[title*="Yes"], .confirm-button'
+    public static readonly SupplierInvoiceFirstRow = ".grid-row:first, [class*='ag-row']:first";
 
 
 

@@ -15,7 +15,7 @@ export function NavigatesExportWizerd() {
 export function FillSearchField(addItemDetails: AddItemDetails) {
     cy.FillLogTextBox(AddItemSelectors.SearchField, addItemDetails.File, true);
     cy.get(AddItemSelectors.SearchField).focus();
-    cy.wait(5000);
+    cy.wait(2000);
     cy.get(AddItemSelectors.FirstDeclaration).click();
     cy.get(BaseExportSelectors.ExporterInvoices).click();
  
@@ -23,7 +23,7 @@ export function FillSearchField(addItemDetails: AddItemDetails) {
 
 export function CreateNewItem(addItemDetails: AddItemDetails) {
    cy.get(AddItemSelectors.EditButtonInvoice).click();
-   cy.wait(10000);
+   cy.wait(3000);
    cy.get(AddItemSelectors.AddItemButton).click();
    
  }
@@ -41,7 +41,7 @@ export function CreateNewItem(addItemDetails: AddItemDetails) {
    // FillMatchingDDL(AddItemSelectors.OriginCountry, addItemDetails.OriginCountry); 
     cy.get('img.FlipImgHoriz:eq(42)').click();
     cy.get('#Add_6').click();
-    cy.wait(5000);
+    cy.wait(2000);
 
  }
 
@@ -51,9 +51,9 @@ export function CreateNewItem(addItemDetails: AddItemDetails) {
         FillMatchingDDL('.LogCellTemplate:eq(45)', addItemDetails.ProcessTypeCode);
         cy.get('button.RedButton:eq(1)').focus();
         cy.contains('.RedButton', 'אישור').click();
-        cy.wait(5000);
+        cy.wait(2000);
         cy.Click('#SaveSupplierInvoice.RedButton', null)
-        cy.wait(5000);
+        cy.wait(2000);
         cy.get(AddItemSelectors.EditButtonInvoice).click();
         cy.get(AddItemSelectors.DeleteButton).click();
 
@@ -63,7 +63,7 @@ export function CreateNewItem(addItemDetails: AddItemDetails) {
 
     
     cy.get(AddItemSelectors.EditButtonInvoice).click();
-    cy.wait(5000);
+    cy.wait(2000);
     cy.get(AddItemSelectors.DeleteButton).click();
     
   }

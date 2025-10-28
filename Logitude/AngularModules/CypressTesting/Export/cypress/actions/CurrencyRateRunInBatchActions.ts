@@ -24,14 +24,17 @@ export function FillCurrencyRatesDetails(CurrencyRateRunInBatchDetails: Currency
     cy.Click(CurrencyRateRunInBatchSelectors.RunInBatch, null);
     cy.Click(CurrencyRateRunInBatchSelectors.Approve, null);
     cy.Click(CurrencyRateRunInBatchSelectors.Cancel, null);
-    cy.wait(10000);
+    
+    // Wait for processing to complete with shorter timeout
+    cy.wait(3000);
     cy.Click(CurrencyRateRunInBatchSelectors.RequestsSheets, null);
     cy.Click(CurrencyRateRunInBatchSelectors.Search, null);
 
 }
 
 export function FillRequestSheets(currencyRateRunInBatchDetails: CurrencyRateRunInBatchDetails) {
-    cy.wait(60000);
+    // Wait for data to load with shorter timeout
+    cy.wait(10000);
     cy.FillLogLov(CurrencyRateRunInBatchSelectors.ManageCustomsRequests, currencyRateRunInBatchDetails.ManageCustomsRequests, true);
     cy.get(CurrencyRateRunInBatchSelectors.RequestStatus).then($status => {
         if ($status.length) {
@@ -40,7 +43,12 @@ export function FillRequestSheets(currencyRateRunInBatchDetails: CurrencyRateRun
             cy.get(CurrencyRateRunInBatchSelectors.RequestStatus1).click({ force: true });
         }
     });
-    cy.get(CurrencyRateRunInBatchSelectors.CheckAll).click({ force: true });
+    
+    // Wait for CheckAll checkbox to be visible and clickable with shorter timeout
+    cy.get(CurrencyRateRunInBatchSelectors.CheckAll, { timeout: 10000 })
+        .should('be.visible')
+        .click({ force: true });
+    
     cy.get(CurrencyRateRunInBatchSelectors.Reference).click();
 
 }
@@ -48,7 +56,8 @@ export function FillRequestSheets(currencyRateRunInBatchDetails: CurrencyRateRun
 
 export function CheckStatusRequest() {
 
-    cy.get('#LogGrid_0_12rowtemplate0').then(($elements) => {
+    // Use more robust selector for grid rows with shorter timeout
+    cy.get('[id*="LogGrid"][id*="rowtemplate"]:first', { timeout: 10000 }).then(($elements) => {
         // בדיקת מספר האלמנטים
         expect($elements.length).to.be.greaterThan(0);
 

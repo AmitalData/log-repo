@@ -16,16 +16,16 @@ export function NavigatesExportWizerd() {
 export function SearchFields(cargoSerialDatasDetails: CargoSerialDataDetails) 
 {
    cy.FillLogTextBox(CargoSerialDataSelectors.SearchField, cargoSerialDatasDetails.SearchField, true);
-   cy.wait(10000);
+   cy.wait(3000);
    cy.Click(CargoSerialDataSelectors.FirestDeclaration, null);
-   cy.wait(10000);
+   cy.wait(3000);
    cy.Click(CargoSerialDataSelectors.AddButton, null);
   
 }
 
 export function FillCargoSerialData(cargoSerialDataDetails: CargoSerialDataDetails) {
     debugger
-    cy.wait(10000);
+    cy.wait(3000);
 
     FillDropdownInRowTable('סוג כמות', cargoSerialDataDetails.TypeOfQuantity);
      FillDropdownInRowTable('סוג אריזה', cargoSerialDataDetails.PackagingType);
@@ -88,7 +88,7 @@ export function AssertSaveCargoSerialData() {
 
 
 export function DeleteRow(){
-    cy.wait(10000);
+    cy.wait(3000);
 
      cy.get('.EditableGridBody').click();
      cy.Click(CargoSerialDataSelectors.CargoSerialDataDeletRow,null);
