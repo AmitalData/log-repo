@@ -80,6 +80,11 @@ export class API_MainService extends BaseService {
 		return this.Get(url);
 	}
 
+	GetMekachDocument(documentId: number, tenant: number) {
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetMekachDocument?documentId=${documentId}&tenant=${tenant}`;
+		return this.Get(url);
+	}
+
 	GetCustomsBookAgreementLevelData(customsItemId: number, measurementUnitMalamId: number) {
 		const url = `${this._apiUrl}CB_TariffExtended/GetCustomsBookAgreementLevelData?customsItemId=${customsItemId}&measurementUnitMalamId=${measurementUnitMalamId}`;
 		return this.Get(url);
