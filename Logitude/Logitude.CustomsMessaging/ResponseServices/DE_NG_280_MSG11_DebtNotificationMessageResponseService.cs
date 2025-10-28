@@ -1,12 +1,15 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.Customs.Def.EntityPMs;
+using Logitude.BL.Security;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Models;
 using Logitude.Customs.Data;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.Dca;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -22,9 +25,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using UnifreightIIG.Common.MessageLib.DeclarationDeal;
 using UnifreightIIG.Common.MessageLib.Deficit;
-using Logitude.Customs.BL.Models;
 using Attachment = UnifreightIIG.Common.MessageLib.Deficit.Attachment;
-using Logitude.BL.Security;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -64,8 +65,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(DE_NG_280_MSG11_DebtNotificationMessage customResponse, GenericRequestParams requestParams)
         {
             var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
+            bool hasImportAndExport = SecurityUtility.CheckFeature("Customs.Declaration", "IIGEXPORTIMPORTDECLARATION", requestParams.Tenant);
+            bool hasExportOnly = SecurityUtility.CheckFeature("Customs.Declaration", "EXPORTDECLARATIONPSCREEN", requestParams.Tenant);
 
-            if (SecurityUtility.CheckFeature("Customs.Declaration", "CUSTOMSDECLARATION", requestParams.Tenant) != true)
+            if (!hasImportAndExport && hasExportOnly)
             {
                 this.MyResponseData = new INF_MSG_GenericResponseData();
                 this.MyResponseData.Succeeded = true;

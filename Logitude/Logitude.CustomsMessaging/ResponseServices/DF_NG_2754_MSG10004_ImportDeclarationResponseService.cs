@@ -130,6 +130,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             bool isCollectActive = false;
             CourierMasterPM courierMaster = null;
             this.MyResponseData = new INF_MSG_GenericResponseData();
+            var T900 = new Action<string>(m => LogMessagingUtil.Instance.AppendLine("[900] " + m));
 
             if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
             {
@@ -186,7 +187,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }          
                 CourierMasterQueryService courierMasterService = new CourierMasterQueryService(requestParams.Tenant);
                   courierMaster = courierMasterService.GetSingle(_MyDeclarationPM.CourierMasterId, false, false);
-
+                T900("g0 courierMaster=" + (courierMaster != null));
 
                 if (courierMaster != null)
                 {
@@ -196,6 +197,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     var setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
                         isCollectActive = defIsCollectActive == "Y";
+                    T900("g1 collectActive=" + isCollectActive + " (def=" + defIsCollectActive + ", UF=" + (setting?.IsConnectedToUniFreight ?? false) + ")");
+
                     if (isCollectActive)
                     {
                         if (setting.IsConnectedToUniFreight)
@@ -203,8 +206,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             try
                            {
                                isStatusVPA = myDeclarationUpdateService.CheckFileStatus(_MyDeclarationPM, requestParams.LoggingUserId, "VPA");
-                           }
-                           catch (Exception e)
+                                T900("g2 VPA=" + isStatusVPA + " (via URouter)");
+
+                            }
+                            catch (Exception e)
                            {
                                this.MyResponseData.ApplicationID = requestParams.AppicationId;
                                this.MyResponseData.Succeeded = false;
@@ -221,9 +226,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 							if (dcapm != null)
 							{
 								isStatusVPA = dcapm.IsNotSendVPE;
-							}
+                                T900("g2 VPA=" + isStatusVPA + " (via dcapm)");
+                            }
 
-						}
+                        }
 					}                                
                 }
               
@@ -1011,10 +1017,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
                             CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode("900", _MyDeclarationPM.Tenant);
- 
+                            T900("g3 reason900 exists=" + (courierPendingReasonPM != null) + ", active=" + (courierPendingReasonPM?.Inactive == true ? "false" : "true"));
+
                             if (courierPendingReasonPM == null || courierPendingReasonPM.Inactive==true)
                             {
- 
                                 LogMessagingUtil.Instance.AppendLine("לא קיים קוד תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900 בטבלת סיבות Pending");
                                 isCollectActive = false;
                             }
@@ -1030,20 +1036,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                             }
                         }
-                        //if (declarationPendingPM_900 != null && declarationPendingPM_900.Status == "S")
-                        //{
-                        //    isCollectActive = false;
-                        //} 
 
                         
                         if (isCollectActive)
                         {
-                          
-                            if (isStatusVPA) isCollectActive = false;
+
+                            if (isStatusVPA) {
+                                T900("g2b VPA disables collect (isStatusVPA=true)");
+                                isCollectActive = false; 
+                            }
                         }
 
                         if (isCollectActive)
                         {
+                            T900("g1b collectActive=TRUE (enter 900 flow)");
+
 
                             LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
 
@@ -1056,14 +1063,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 foreach (var item in _MyDeclarationCourierStatusPM.DeclarationPendings)
                                 {
                                    
-                                        CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(_MyDeclarationPM.Tenant);
-                                        CourierPendingReason PendingReason = courierPendingReasonRepository.GetByCode(item.CourierPendingReasonCode, _MyDeclarationPM.Tenant);
-
-                                        if (PendingReason != null && PendingReason.RequiresPayment == true && !PendingReason.Inactive)
-                                        {
-                                            pendingRequiresPayment = true;
-                                                break;
-                                        }
+                                    CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(_MyDeclarationPM.Tenant);
+                                    CourierPendingReason PendingReason = courierPendingReasonRepository.GetByCode(item.CourierPendingReasonCode, _MyDeclarationPM.Tenant);
+                                    
+                                    if (PendingReason != null && PendingReason.RequiresPayment == true && !PendingReason.Inactive)
+                                    {
+                                        T900("g5 pendingRequiresPayment=TRUE by code=" + item.CourierPendingReasonCode);
+                                        pendingRequiresPayment = true;
+                                        break;
+                                    }
                                             
                                     
                                     
@@ -1072,14 +1080,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             }
 
- 
 
 
+                            var incoterm = _MyDeclarationPM?.SupplierInvoices?.FirstOrDefault()?.IncotermCode ?? "?";
+                            T900("g4 incoterm=" + incoterm + " (ok=" + (incoterm != "DDP") + ")");
+                            T900("g5 taxOrPay=" + (_MyDeclarationPM.TotalTax > 0 || pendingRequiresPayment) + " (tax=" + _MyDeclarationPM.TotalTax + ", pay=" + pendingRequiresPayment + ")");
+                            T900("g6 status13=" + (_MyDeclarationPM.DeclarationStatusTypeCode == "13"));
+                            var defMatch = (!string.IsNullOrEmpty(defValue) && _MyDeclarationPM.CustomerCode == defValue);
+                            T900("g7 defMatch=" + defMatch + " (cust=" + _MyDeclarationPM.CustomerCode + ", def=" + defValue + ")");
                             if ((_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && (_MyDeclarationPM.TotalTax > 0 || pendingRequiresPayment))
                                 && _MyDeclarationPM.DeclarationStatusTypeCode == "13" && (!string.IsNullOrEmpty(defValue) && _MyDeclarationPM.CustomerCode == defValue))
                              {
                                 if (declarationPendingPM_900 == null)
                                 {
+                                    T900("ADD 900");
                                     declarationPendingPM_900 = new DeclarationPendingPM();
                                     declarationPendingPM_900.CourierPendingReasonCode = "900";
                                     declarationPendingPM_900.Status = "A";
@@ -1088,6 +1102,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                                 else if (declarationPendingPM_900.Status != "A")
                                 {
+                                    T900("SET 900 ACTIVE (update)");
                                     declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Update;
                                     declarationPendingPM_900.Status = "A";
                                 }
@@ -1099,6 +1114,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                             else if (declarationPendingPM_900 != null)
                             {
+                                T900("SET 900 SOLVED");
                                 declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Update;
                                 declarationPendingPM_900.Status = "S";
                                 if (_MyDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -1106,10 +1122,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             }
                         }
- 
- 
-                  
- 
+                        else
+                        {
+                            T900("SKIP 900: collectActive=FALSE");
+                        }
+
+
+
                     }
 
                 }
