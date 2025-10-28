@@ -102,8 +102,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                AccountDisplayNumber = a.Account != null ? a.Account.DisplayNumber : null,
                                                                AccountLocalName = a.Account != null ? a.Account.LocalName : null,
                                                                JournalCreatedByUser = j.CreatedByUser.Contact.DontShowLocalLabels ? j.CreatedByUser.Contact.EnglishName : j.CreatedByUser.Contact.LocalName,
-                                                           SecurityLevelFiltering = 1,
-                                                           TaxReportId = jad != null ? jad.TaxReportId : "",
+                                                               SecurityLevelFiltering = 1,
+                                                               TaxReportId = jad != null ? jad.TaxReportId : "",
                                                                TaxReportNumber = jad != null && jad.TaxReport != null ? jad.TaxReport.TaxReportNumber : "",
                                                                IsExternalEntity = j.ExternalSystem != null ? true : false,
                                                            });
@@ -188,9 +188,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransactionList> outputTransactions;
             if (taxReport != null)
             {
-
-                List<string> outputTaxReportsJournalsIds = GetTaxReportLinesJournalIds(taxReport, InputOutput.Output);
-                outputTransactions = GetTaxReportsLedgerTransactionsByJournalIds(outputTaxReportsJournalsIds, taxReport, accountingSettingList.VATOutputGLAccountId, query);
+                query = GetTaxReportLines(taxReport, InputOutput.Output, query);
+                outputTransactions = GetTaxReportsLedgerTransactionsByJournalIds(taxReport, accountingSettingList.VATOutputGLAccountId, query);
             }
             else
             {
@@ -200,17 +199,24 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return outputTransactions;
         }
 
-        public IQueryable<LedgerTransactionList> GetTaxReportsLedgerTransactionsByJournalIds(List<string> journalIds, TaxReportList taxReport, string accountId, IQueryable<LedgerTransactionList> query)
+        public IQueryable<LedgerTransactionList> GetTaxReportsLedgerTransactionsByJournalIds(TaxReportList taxReport, string accountId, IQueryable<LedgerTransactionList> query)
         {
             int days = DateTime.DaysInMonth(taxReport.TaxReportMonth.Year, taxReport.TaxReportMonth.Month);
             DateTime reportDate = new DateTime(taxReport.TaxReportMonth.Year, taxReport.TaxReportMonth.Month, days);
-            IQueryable<LedgerTransactionList> journalsTransactions = (from ledger in query
-                                                                      join j in context.Journals on ledger.JournalId equals j.Id
-                                                                      join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
-                                                                      where j.AccountingEntityCode == AccountingEntities.ARInvoice && (m.TaxReportId != null) && ledger.Tenant == taxReport.Tenant
-                                                                      && ledger.DocumentDate <= reportDate
-                                                                      where journalIds.Contains(ledger.JournalId) && ledger.Tenant == taxReport.Tenant && ledger.AccountId == accountId
-                                                                      select ledger).Distinct();
+
+            var query1 = from lt in query
+                         join ltvat in context.LedgerTransactions on lt.JournalId equals ltvat.JournalId
+                         where ltvat.AccountId == accountId && lt.AccountId != ltvat.AccountId
+                         && lt.DocumentDate <= reportDate
+                         && lt.Tenant == taxReport.Tenant
+                         select lt;
+
+            var query2 = from ltvat in query
+                         where ltvat.AccountId == accountId && ltvat.Tenant == taxReport.Tenant && ltvat.DocumentDate <= reportDate
+                         select ltvat;
+
+            IQueryable<LedgerTransactionList> journalsTransactions = query1.Union(query2);
+
             if (transactionBalanceFilter.GetCount)
             {
                 transactionBalanceFilter.TaxReportTotalCount = journalsTransactions.Count();
@@ -260,7 +266,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransactionList> outputLines = journalOutputLines.OrderByDescending(d => d.AccountingDate).Skip(transactionBalanceFilter.PageStartAtRecordIndex).Take(transactionBalanceFilter.PageSize);
             IQueryable<LedgerTransactionList> creditLines = GetTaxJournalLines(outputLines, transactionBalanceFilter.Tenant);
             outputLines = ExcludeDuplicatedLinesForTheSameJournal(creditLines, outputLines);
-            
+
             if (outputLines.Any() && creditLines.Any())
             {
                 var newoutputLines = outputLines.ToList();
@@ -380,8 +386,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(context);
             if (taxReport != null)
             {
-                List<string> inputTaxReportsJournalsIds = GetTaxReportLinesJournalIds(taxReport, InputOutput.Input);
-                inputTransactions = ledgerTransactionRepository.GetLedgerTransactionsByTaxReportJournalIds(taxReport.TaxReportMonth, transactionBalanceFilter, inputTaxReportsJournalsIds, query);
+                query = GetTaxReportLines(taxReport, InputOutput.Input, query);
+                inputTransactions = ledgerTransactionRepository.GetLedgerTransactionsByTaxReportJournalIds(taxReport.TaxReportMonth, transactionBalanceFilter, query);
             }
             else
             {
@@ -393,12 +399,17 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             }
             return inputTransactions;
         }
-        private List<string> GetTaxReportLinesJournalIds(TaxReportList taxReport, string inputOrOutput)
+
+        private IQueryable<LedgerTransactionList> GetTaxReportLines(TaxReportList taxReport, string inputOrOutput, IQueryable<LedgerTransactionList> query)
         {
-            return (from a in context.TaxReportLines
-                    where a.TaxReportId == taxReport.Id && a.Tenant == taxReport.Tenant && a.OutputOrInput == inputOrOutput && (a.TransmitStatusCode != TansmitStatuses.NotForTransmitAtAll && a.TransmitStatusCode != TansmitStatuses.NotForTransmitInThisReport)
-                    select a.JournalId).ToList();
+            var data = from q in query
+                   join a in context.TaxReportLines on q.Id equals a.LedgerTransactionId
+                   where a.TaxReportId == taxReport.Id && a.Tenant == taxReport.Tenant && a.OutputOrInput == inputOrOutput && (a.TransmitStatusCode != TansmitStatuses.NotForTransmitAtAll && a.TransmitStatusCode != TansmitStatuses.NotForTransmitInThisReport)
+                   && (inputOrOutput != InputOutput.Output || a.VatAmount != 0)
+                   select q;
+            return data;
         }
+
         private TaxReportList GetTaxReport(string Id, int tenant)
         {
             IAccountingContext context = AccountingContext.GetContext(tenant);
