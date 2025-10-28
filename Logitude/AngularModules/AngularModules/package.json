@@ -30,9 +30,6 @@
         "report:copyScreenshots": "cp -r cypress/screenshots cypress/results/html/screenshots"
     },
     "private": true,
-    "resolutions": {
-        "typescript": "3.8.3"
-    },
     "dependencies": {
         "@angular/animations": "^9.1.13",
         "@angular/cdk": "^9.2.4",
@@ -53,14 +50,15 @@
         "ag-grid-enterprise": "^20.0.0",
         "angular-fusioncharts": "3.0.4",
         "angular-mentions": "^1.4.0",
+        "collaboration-tool-components": "^1.4.37",
         "collaboration-tool-core": "^11.4.40",
-        "collaboration-tool-tasks-list": "^11.2.19",
+        "collaboration-tool-tasks-list": "^11.2.26",
         "console": "^0.7.2",
         "fast-json-patch": "^3.1.1",
         "file-saver": "^2.0.5",
         "fusioncharts": "^3.19.0",
         "lodash.clonedeep": "^4.5.0",
-        "logitude-dashboard-library": "3.1.75",
+        "logitude-dashboard-library": "^3.1.121",
         "logitude-workflow": "^3.1.70",
         "mochawesome-report-generator": "^5.1.0",
         "ng-zorro-antd": "^9.3.0",
@@ -75,6 +73,7 @@
         "quill": "^1.3.7",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
+        "react-draggable": "^4.4.5",
         "rxjs": "~6.5.4",
         "safe-clone-deep": "^1.1.5",
         "selenium-webdriver": "^4.0.0-alpha.5",
@@ -119,6 +118,6 @@
         "protractor-beautiful-reporter": "^1.3.6",
         "ts-node": "~8.3.0",
         "tslint": "~6.1.0",
-        "typescript": "3.8.3"
+        "typescript": "^3.8.3"
     }
 }
