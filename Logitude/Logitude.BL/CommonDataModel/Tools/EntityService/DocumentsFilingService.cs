@@ -1641,10 +1641,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                             //54378
                             //string UseSend2UServer =ConfigurationManager.AppSettings["20190909.UseSend2UServer8302"]??"";
-                            
+
                             string SuppressUseSend2UServer8302 = ConfigurationManager.AppSettings["20200123.SuppressUseSend2UServer8302"] ?? "";
                             if (string.IsNullOrWhiteSpace(SuppressUseSend2UServer8302)//!string.IsNullOrWhiteSpace(UseSend2UServer) 
-                                && !string.IsNullOrWhiteSpace(this.MetaDataVersionValue)//DeclarationPrint
+                                && !string.IsNullOrWhiteSpace(this.MetaDataVersionValue) //DeclarationPrint
                                 && CustomsSettingQueryService.GetLogitudeCustomsSettingsM(tenant).IsConnectedToUniFreight
                                 )
                             {
@@ -1652,6 +1652,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             }
                             else
                             {
+                                ObjectTable docChildTable = ObjectTableRepository.GetObjectTableById(extDocPM.ChildObjectTableId, extDocPM.Tenant);
+
 
                                 //INSERT INTO "TOGGLES" (CODE, NAME, SEARCHFIELDS) VALUES ('HCD', 'Hybrid Courier document-Prevent feedback', 'Hybrid document-Prevent feedback')
                                 //INSERT INTO "FEATURETOGGLES"(ID, TENANT, CREATEDATE, CREATEDBYUSERID, UPDATEDATE, UPDATEDBYUSERID, SEARCHFIELDS, TENANTNUMBER, INACTIVE, TOGGLECODE) VALUES('HCD', '1', TO_TIMESTAMP('2022-03-06 14:19:28.729000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', TO_TIMESTAMP('2022-03-06 14:19:46.456000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', 'HCD', '1', '0', 'HCD')
@@ -1668,13 +1670,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                 }
                                 bool sendHybridM = true;
 
-                                 if (extDocPM.ExternalEntityName == "CFIFILEM" && !extDocPM.IsFromCloud && isConnectedToUniFreight)
+                                 if (!(docChildTable.Name == "Customs.PaymentOrder") && extDocPM.ExternalEntityName == "CFIFILEM" && !extDocPM.IsFromCloud && isConnectedToUniFreight)
                                 {
                                     sendHybridM = false;
                                     SendCustomsReferenceByTask(tenant, extDocPM.ExternalEntityReference, extDocPM.CustomReference, xmlstring, loggedUserId);
                                 }
 
-                                if (sendHybridM && !extDocPM.IsFromCloud)
+                                if (docChildTable.Name == "Customs.PaymentOrder" ||( sendHybridM && !extDocPM.IsFromCloud))
                                 {
                                     List<QueueTask> queue1Tasks = new List<QueueTask>();
 
