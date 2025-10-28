@@ -2,7 +2,7 @@
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -114,13 +114,16 @@ namespace WebFreight.Web
             }
             if (tenantManagementPM != null)
             {
+                
                 this.Tenant = tenantManagementPM.Id;
                 this.MainColor = tenantManagementPM.MainColor == null ? this.MainColor : tenantManagementPM.MainColor;// ConvertHexaToRGBA(tenantManagementPM.MainColor);
                 this.SecondaryColor = tenantManagementPM.SecondaryColor == null ? this.SecondaryColor : tenantManagementPM.SecondaryColor;// ConvertHexaToRGBA(tenantManagementPM.SecondaryColor);
             }
             else
             {
-                ShipmentQuery shipmentQuery = new ShipmentQuery((int)this.Tenant);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SetCargoTrackingBrandingData: No TenantManagementPM found for domain '{this.Domain}'");
+
+                ShipmentQuery shipmentQuery = new ShipmentQuery(0);
                 this.Tenant = shipmentQuery.GetTenantBySecurityKey(linkParameters[0]);
             }
         }

@@ -197,7 +197,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             CargoTrackingShipmentQueryService cargoTrackingShipmentQueryService = new CargoTrackingShipmentQueryService(MyContext);
             var milestone = cargoTrackingShipmentQueryService.GetMilestonesDictionaryByCode();
             var cargoTrackingMilestoneBuilder = new CargoTrackingMilestoneBuilder();
-            return cargoTrackingMilestoneBuilder.BuildShipmentMilstones(cargoTrackingShipment, milestone);
+            return cargoTrackingMilestoneBuilder.BuildShipmentMilstones(cargoTrackingShipment, milestone, true);
         }
 
         private List<TraceEventPM> GetAllShipmentEvents(ShipmentPM shipment)

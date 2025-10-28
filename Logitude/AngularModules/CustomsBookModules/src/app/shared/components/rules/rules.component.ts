@@ -110,7 +110,7 @@ export class RulesComponent implements OnInit, OnChanges {
     // Find root rules
     const rootRules = rulesList?.filter(rule => rule.ParentID == 0 || rule.ParentID == null || rule.Index == "-");
     // Build the hierarchy for root rules
-    const rulesListData = rootRules.map(rootRule => {
+    const rulesListData = rootRules?.map(rootRule => {
       const children = getChildren(rootRule);
       return {
         ...rootRule,
@@ -119,7 +119,7 @@ export class RulesComponent implements OnInit, OnChanges {
     });
 
     // Group rules by title
-    const grouped: GroupedRules[] = rulesListData.reduce((acc: GroupedRules[], rule) => {
+    const grouped: GroupedRules[] = rulesListData?.reduce((acc: GroupedRules[], rule) => {
       const key = rule.CB_ID;
       let group = acc.find(g => g.id === key);
 

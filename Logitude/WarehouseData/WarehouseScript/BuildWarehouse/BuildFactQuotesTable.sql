@@ -91,6 +91,7 @@
    declare @FromPortCode as varchar(3)
    declare @FromPortName as varchar(40)
    declare @ShipmentNumber as varchar(20)
+   declare @CostChargeGroupVal as varchar(30)
 
 	DECLARE QuotesCursor CURSOR READ_ONLY
 	FOR
@@ -106,7 +107,7 @@
 	dw_QuoteComputedFields.ConnectedToShipment, dw_QuoteComputedFields.ConnectedToTicket, dw_QuoteComputedFields.ToLocation, dw_QuoteComputedFields.FromLocation, 
 	dw_QuoteComputedFields.DeliveryTo, dw_QuoteComputedFields.PickupFrom, dw_QuoteComputedFields.EstimatedPayablesInSales, dw_QuoteComputedFields.EstimatedPayablesInLocal, 
 	dw_QuoteComputedFields.EstimatedReceivablesInLocal, dw_QuoteComputedFields.EstimatedReceivablesInSales, dw_Quotes.EstimateProfit, LocalCurrency.Id_Number, dw_QuoteComputedFields.MarkupPercentage
-	,toPort.Code, toPort.EnglishName,fromPort.Code,fromPort.EnglishName,dw_Quotes.ShipmentNumber
+	,toPort.Code, toPort.EnglishName,fromPort.Code,fromPort.EnglishName,dw_Quotes.ShipmentNumber, dw_QuoteComputedFields.CostChargeGroupVal
 
 
 
@@ -155,7 +156,7 @@
 	, @SaleCurrency ,@Subject , @GrossWeightInKG ,@ChargeableWeightInKG ,@VolumeInCBM ,@NumberOfPackages ,@NumberOfContainers
 	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@AutomaticallyCloseDate , @FromCountry, @ToCountry  , @ShipperPartnerType ,@ConsigneePartnerType  ,  @CustomerPartnerType
 	 , @ConnectedToShipment, @ConnectedToTicket, @ToLocation, @FromLocation,@DeliveryTo, @PickupFrom, @EstimatedPayablesInSales
-	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit,  @LocalCurrency,  @MarkupPercentage,@ToPortCode, @ToPortName,@FromPortCode,@FromPortName,@ShipmentNumber
+	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit,  @LocalCurrency,  @MarkupPercentage,@ToPortCode, @ToPortName,@FromPortCode,@FromPortName,@ShipmentNumber,@CostChargeGroupVal
 
 
 	WHILE @@FETCH_STATUS = 0
@@ -184,7 +185,7 @@
 
 	    [Connected To Shipment], [Connected To Ticket],[To Location], [From Location],
 	   [Delivery To], [Pickup From], [Estimated Payables in Sales Currency], [Estimated Payables in Local Currency],
-	   [Estimated Receivables in Local Currency], [Estimated Receivables in Sales Currency], [Estimated Profit in Sales Currency], [Local Currency],[Spot Rates Markup] ,[To Port Code], [To Port Name],[From Port Code],[From Port Name],[Shipment No])
+	   [Estimated Receivables in Local Currency], [Estimated Receivables in Sales Currency], [Estimated Profit in Sales Currency], [Local Currency],[Spot Rates Markup] ,[To Port Code], [To Port Name],[From Port Code],[From Port Name],[Shipment No],[Cost Charge Group Val])
 	   
 	   
       values(@Id  , @SourceTenant, @ParentTenant ,@Direction , @TransportMode , @Type,@Department ,@Branch,@QuoteNumber
@@ -195,7 +196,7 @@
 	 @IsQuoteDataExternal ,@IsQuoteDocumentExternal,dbo.GetDateFormateAsNumber(@AutomaticallyCloseDate) 
 	  , @FromCountry , @ToCountry ,@IsPotentialShipper ,  @IsPotentialConsignee , @IsPotentialCustomer,
 	   @ConnectedToShipment, @ConnectedToTicket, @ToLocation, @FromLocation,@DeliveryTo, @PickupFrom, @EstimatedPayablesInSales
-	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit,  @LocalCurrency, @MarkupPercentage ,@ToPortCode, @ToPortName,@FromPortCode,@FromPortName,@ShipmentNumber
+	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit,  @LocalCurrency, @MarkupPercentage ,@ToPortCode, @ToPortName,@FromPortCode,@FromPortName,@ShipmentNumber,@CostChargeGroupVal
 	 )
 
 
@@ -224,7 +225,7 @@ END CATCH
 	, @SaleCurrency ,@Subject , @GrossWeightInKG ,@ChargeableWeightInKG ,@VolumeInCBM ,@NumberOfPackages ,@NumberOfContainers
 	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@AutomaticallyCloseDate,@FromCountry , @ToCountry  , @ShipperPartnerType,@ConsigneePartnerType  , @CustomerPartnerType
 	 ,@ConnectedToShipment, @ConnectedToTicket, @ToLocation, @FromLocation,@DeliveryTo, @PickupFrom, @EstimatedPayablesInSales
-	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit, @LocalCurrency , @MarkupPercentage,@ToPortCode, @ToPortName,@FromPortCode,@FromPortName,@ShipmentNumber
+	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit, @LocalCurrency , @MarkupPercentage,@ToPortCode, @ToPortName,@FromPortCode,@FromPortName,@ShipmentNumber,@CostChargeGroupVal
 		End
 	CLOSE QuotesCursor
 	DEALLOCATE QuotesCursor

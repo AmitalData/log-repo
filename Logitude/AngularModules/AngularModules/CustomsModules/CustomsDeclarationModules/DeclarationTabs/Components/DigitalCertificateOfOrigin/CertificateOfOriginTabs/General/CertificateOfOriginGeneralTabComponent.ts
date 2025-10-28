@@ -107,6 +107,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.CertificateOriginItemItems = new ObservableCollection([]);
         this.currentDeclaration = currentDeclaration;
         this.cargoDescription = this.currentDeclaration.Consignments[0]?.CargoDescription;
+        this.updatePortOfShipment();
 
         if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
 
@@ -159,6 +160,14 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     }
 
+
+    updatePortOfShipment(): void {
+        this.entityPM.PortOfShipment = this.currentDeclaration.Consignments[0]?.ExportLoadingPortCode;
+        if (this.entityPM?.PortOfShipment === "ILAST")
+            this.entityPM.PortOfShipment = "ILASH";
+        else if (this.entityPM?.PortOfShipment === "ILHBT")
+            this.entityPM.PortOfShipment = "ILHFA";
+    }
 
     setDisplayMessage() {
         if (this.entityPM.UpdateDeclaration == "A") {
@@ -306,8 +315,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             mappedConsignments.Weight = unifreightItem.weight || '';
             mappedConsignments.ContainerIsoCode = unifreightItem.isoContainerType || '';
 
-            if(AppTool.IsNullOrEmpty(mappedConsignments.MarksAndNumbers)) mappedConsignments.MarksAndNumbers = mappedConsignments.ItemDescription;
-            
+            if (AppTool.IsNullOrEmpty(mappedConsignments.MarksAndNumbers)) mappedConsignments.MarksAndNumbers = mappedConsignments.ItemDescription;
+
             const TransportModeOcean = 'O';
             // Find corresponding consignment item by serial or other identifier
             let consignment = this.currentDeclaration.Consignments.filter(c => c.SequenceNumeric == unifreightItem.itemSerial)[0];
@@ -317,7 +326,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             if (consignment) {
                 const consignmentPackage = consignment.ConsignmentPackages[0];
                 // Update fields if not set by Unifreight data:
-                if(this.currentDeclaration.TransportModeId !== TransportModeOcean){
+                if (this.currentDeclaration.TransportModeId !== TransportModeOcean) {
                     mappedConsignments.MarksAndNumbers = mappedConsignments.MarksAndNumbers || consignmentPackage?.MarksNumbers || '';
                     mappedConsignments.ItemDescription = mappedConsignments.ItemDescription || consignment.CargoDescription || '';
                     mappedConsignments.PackageQuantity = mappedConsignments.PackageQuantity || consignmentPackage?.PackageQuantity || 0;
@@ -536,11 +545,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         if (this.currentDeclaration.TransportModeId !== TransportModeOcean && AppTool.IsNullOrEmpty(ManifestNumberFromUnifreight)) {
             consignment.ManifestNumber = consignment.ManifestNumber ? consignment.ManifestNumber : '';
         }
-        else if(AppTool.IsNullOrEmpty(ManifestNumberFromUnifreight)){
+        else if (AppTool.IsNullOrEmpty(ManifestNumberFromUnifreight)) {
             mappedConsignments.ContainerIsoCode = "";
             return;
         }
-        else    
+        else
             consignment.ManifestNumber = ManifestNumberFromUnifreight;
 
         consignment.SecondCargoID = consignment.SecondCargoID ? consignment.SecondCargoID : '';

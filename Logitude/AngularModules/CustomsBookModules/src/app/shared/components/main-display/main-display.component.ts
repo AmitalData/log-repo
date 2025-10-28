@@ -839,9 +839,18 @@ export class ClassifGuidanceAttached {
 
 export class Mekach {
 	mekachNumber: number; // מס מק"ת/מק"ח
-	attachedMekahFile: string; // קובץ מצורף (נתיב לקובץ)
+	attachedMekahFile: string; // מזהה קובץ מצורף
 	validityDate: Date; // בתוקף מיום
 	changeDescription: string; // דברי הסבר
 	customsItemId?: number;
 	tenant?: number;
+}
+export class AttachedMekahFileData {
+	attachmentID: string;
+	fileName: string;
+	content: string;
+}
+
+export class AttachmentResponseData {
+	AttachedMekahFileData: AttachedMekahFileData;
 }

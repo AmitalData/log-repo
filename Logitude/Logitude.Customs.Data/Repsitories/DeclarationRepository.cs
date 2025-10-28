@@ -51,14 +51,14 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).FirstOrDefault();
         }
 
-        public Declaration GetDeclarationByConsignment(string cargoTypeCode, string manifestNumber, string secondCargoID, string thirdCargoID)
+        public Declaration GetDeclarationByConsignment(int tenant, string cargoTypeCode, string manifestNumber, string secondCargoID, string thirdCargoID)
         {
             var query = (
                    from d in context.Declarations
                    join a in context.Consignments
                     on d.Id equals a.DeclarationId
-                   where a.CargoTypeCode.ToLower() == cargoTypeCode.ToLower() & a.ManifestNumber.ToLower() == manifestNumber.ToLower()
-                & a.SecondCargoID.ToLower() == secondCargoID.ToLower() & a.ThirdCargoID.ToLower() == thirdCargoID.ToLower()
+                   where a.Tenant == tenant && a.CargoTypeCode.ToLower() == cargoTypeCode.ToLower() && a.ManifestNumber.ToLower() == manifestNumber.ToLower()
+                && a.SecondCargoID.ToLower() == secondCargoID.ToLower() && a.ThirdCargoID.ToLower() == thirdCargoID.ToLower()
                    select d
                        ).ToList().FirstOrDefault();
             return query;

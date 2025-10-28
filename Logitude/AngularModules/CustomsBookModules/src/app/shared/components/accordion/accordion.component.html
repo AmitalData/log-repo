@@ -83,7 +83,7 @@
 		</section>
 	</div>
 </div>
-<!-- <div class="detailsSlide_box">
+<div class="detailsSlide_box">
 	<div class="detailsSlide_toggle" (click)="expandedArea5 = !expandedArea5">
 		<div>
 			<h3 class="main_title">{{mekachHeader}}</h3>
@@ -96,7 +96,8 @@
 		<section class="title">
 			<div class="tableContainer" [ngStyle]="expandedArea5 ? {'display': 'none'} : {}"
 				*ngIf="!isLoadingMekach && tableData5?.data?.length > 0">
-				<app-generic-table *ngIf="!expandedArea5" [tableData]="tableData5"></app-generic-table>
+				<app-generic-table *ngIf="!expandedArea5" [tableData]="tableData5"
+				(buttonClicked)="handleButtonPdfClick($event)"></app-generic-table>
 			</div>
 			<div class="dataLoadingBox" *ngIf="!expandedArea5 && tableData5?.data?.length == 0">
 				<span *ngIf="isLoadingMekach; else noData">{{ reloadMsg }}</span>
@@ -106,4 +107,4 @@
 			</div>
 		</section>
 	</div>
-</div> -->
+</div>

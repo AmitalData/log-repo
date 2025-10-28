@@ -1,6 +1,4 @@
-﻿using LogicExtensions;
-using Logitude.Accounting.BL.CloseTables;
-using Logitude.Accounting.BL.CoreBL.Reports;
+﻿using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
@@ -43,7 +41,6 @@ using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.WarehouseLib.BL.DataContracts;
 using Logitude.WarehouseLib.BL.EntityQueryServices;
-using MathNet.Numerics.IntegralTransforms;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Practices.ObjectBuilder2;
 using Newtonsoft.Json;
@@ -96,9 +93,7 @@ using WebFreight.Web.Security;
 using WebFreight.Web.Services;
 using WebFreight.Web.WebServices;
 using static Logitude.Accounting.BL.CoreBL.Reports.RevenueExpenseReportParam;
-using static Stimulsoft.Report.Func;
-using Convert = System.Convert;
-
+//using NPOI.SS.Formula.Functions;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -10874,6 +10869,10 @@ namespace WebFreight.Web.ReportsWebServices
 
             }
 
+            if (level == GLAccount)
+            {
+                RemoveRevExpZeroBalanceCards(totalData);
+            }
             RecalculateParentTotals(totalData);
 
             totalData.ResultList.OrderBy(d => d.Name);
@@ -10904,6 +10903,64 @@ namespace WebFreight.Web.ReportsWebServices
             return totalData;
         }
 
+
+        private void RemoveRevExpZeroBalanceCards(RevenueExpenseDataProvider totalData)
+        {
+            // ** Stage 1: Removal of Parents of the removed GLAccounts that have no children left
+            // Get the set of all remaining ParentIds in the list - these are parents that still have children after the GLAccount removal.
+            var remainingParentIds = totalData.ResultList.Select(item => item.ParentId).ToHashSet();
+
+            // Identify the parent Ids from the groupedList that no longer have any children in the list.
+            var chartIdsToRemove = totalData.ResultList
+                .Where(res => res.Type == ChartOfAccount && res.ParentId != null).Select(res => res.Id)
+                .Where(chartId => !remainingParentIds.Contains(chartId))
+                .ToHashSet();
+
+            List<string> typeIdList = ChartOfAccountsTypes.All.ToList();
+            if (!typeIdList.Any())
+            {
+                typeIdList = new List<string>() { "1", "2", "3", "4", "5", "6", "7" };
+            }
+
+
+            // Identify GrandParents of the removed charts to check if they have any children left after the removal of the charts.
+            var grandParentIdsToCheck = totalData.ResultList
+            .Where(res => chartIdsToRemove.Contains(res.Id) && res.ParentId != null
+                        && !typeIdList.Contains(res.ParentId))
+            .Select(item => item.ParentId).ToHashSet();
+
+            // Remove the parent items that have no children left.
+            totalData.ResultList.RemoveAll(item => chartIdsToRemove.Contains(item.Id));
+
+            // ** Stage 2: Check GrandParents of the removed Parents and remove them if they have no children left
+            const int maxIterations = 3; // Remaining levels to check
+            if (grandParentIdsToCheck.Any())
+            {
+
+                for (int i = 0; i < maxIterations; i++)
+                {
+                    remainingParentIds = totalData.ResultList.Select(item => item.ParentId).ToHashSet();
+                    var gpIdsToRemove = new HashSet<string>(
+                        grandParentIdsToCheck.Where(grandParentId =>
+                                        !remainingParentIds.Contains(grandParentId)));
+
+                    if (!gpIdsToRemove.Any())
+                    {
+                        break; // Exit loop if no items to remove
+                    }
+
+                    grandParentIdsToCheck = totalData.ResultList
+                        .Where(res => gpIdsToRemove.Contains(res.Id) && res.ParentId != null
+                            && !typeIdList.Contains(res.ParentId))
+                        .Select(item => item.ParentId).ToHashSet();
+
+
+                    totalData.ResultList.RemoveAll(item => gpIdsToRemove.Contains(item.Id));
+
+                }
+
+            }
+        }
 
         #endregion
 
@@ -11150,7 +11207,9 @@ namespace WebFreight.Web.ReportsWebServices
                 Category5 = category5,
                 DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance,
                 IsRevenueExpenseReport = false,
-                Suppress_DoNotShowCardWithoutActivity = true,
+                //Suppress_ControlAccount = true,
+                //  Skip = true
+                Suppress_DoNotShowCardWithoutActivity = false,
                 IsTrialBalanceReport = true,
 
             };
@@ -11194,7 +11253,7 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.DetailedControlFile = true;
                 trailReportParam.CurrenciesDetailed = false;
                 trailReportParam.Suppress_ControlAccount = true;
-                trailReportParam.Suppress_DoNotShowCardWithoutActivity = true;
+                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
                 trailReportParam.Category1 = category1;
                 trailReportParam.Category2 = category2;
@@ -11290,7 +11349,8 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.DetailedControlJob = true;
                 trailReportParam.DetailedControlFile = true;
                 trailReportParam.CurrenciesDetailed = false;
-                trailReportParam.Suppress_DoNotShowCardWithoutActivity = true;
+               // trailReportParam.Suppress_ControlAccount = true;
+                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
                  trailReportParam.Category1 = category1;
                 trailReportParam.Category2 = category2;
@@ -11832,7 +11892,8 @@ namespace WebFreight.Web.ReportsWebServices
                 if (chartOfAccountsTypeCodeList != null && chartOfAccountsTypeCodeList.Count > 0) trailReportParam.ChartOfAccountsTypeCodeList = chartOfAccountsTypeCodeList;
                 if (chartOfAccountsIdList != null && chartOfAccountsIdList.Count > 0) trailReportParam.ChartOfAccountsIdList = chartOfAccountsIdList;
                 trailReportParam.MyTrailReportLevel = ReportLevel.GLAccount;
-                trailReportParam.Suppress_DoNotShowCardWithoutActivity = true;
+                //trailReportParam.Suppress_ControlAccount = true;
+                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false; // may it be 'true' sometimes? 
 
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance;
 
@@ -12003,15 +12064,7 @@ namespace WebFreight.Web.ReportsWebServices
                 string logtext6 = "LogitudeReportsWebService.GetTrailBalanceDataProvider(), Point 6, Count=" + totalData.ResultList.Count.ToString() + ", T=" + tenant.ToString();
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext6);
 
-
-                if (totalData.DontShowCardsWith0Balance && level == GLAccount)
-                {
-                    RemoveZeroClosingBalanceCards(totalData);
-                }
                 RecalculateParentTotals(totalData);
-
-
-
                 totalData.ResultList.Where(res => res.Type == FictiveGLAccount).ToList().ForEach(fict =>
                 {
                     var parent = totalData.ResultList.Where(rec => rec.Id == fict.ParentId).SingleOrDefault();
@@ -12057,58 +12110,7 @@ namespace WebFreight.Web.ReportsWebServices
             return totalData;
         }
 
-        private void RemoveZeroClosingBalanceCards(RevenueExpenseDataProvider totalData)
-        {
-            // ** Stage 1: Removal of Parents of the removed GLAccounts that have no children left
-            // Get the set of all remaining ParentIds in the list - these are parents that still have children after the GLAccount removal.
-            var remainingParentIds = totalData.ResultList.Select(item => item.ParentId).ToHashSet();
 
-            // Identify the parent Ids from the groupedList that no longer have any children in the list.
-            var chartIdsToRemove = totalData.ResultList
-                .Where(res => res.Type == ChartOfAccount && res.ParentId != null).Select(res => res.Id)
-                .Where(chartId => !remainingParentIds.Contains(chartId))
-                .ToHashSet();
-
-
-
-            // Identify GrandParents of the removed charts to check if they have any children left after the removal of the charts.
-            var grandParentIdsToCheck = totalData.ResultList
-                .Where(res => chartIdsToRemove.Contains(res.Id) && res.ParentId != null
-                            && !ChartOfAccountsTypes.All.Contains(res.ParentId))
-                .Select(item => item.ParentId).ToHashSet();
-
-            // Remove the parent items that have no children left.
-            totalData.ResultList.RemoveAll(item => chartIdsToRemove.Contains(item.Id));
-
-            // ** Stage 2: Check GrandParents of the removed Parents and remove them if they have no children left
-            const int maxIterations = 3; // Remaining levels to check
-            if (grandParentIdsToCheck.Any())
-            {
-
-                for (int i = 0; i < maxIterations; i++)
-                {
-                    remainingParentIds = totalData.ResultList.Select(item => item.ParentId).ToHashSet();
-                    var gpIdsToRemove = new HashSet<string>(
-                        grandParentIdsToCheck.Where(grandParentId =>
-                                        !remainingParentIds.Contains(grandParentId)));
-
-                    if (!gpIdsToRemove.Any())
-                    {
-                        break; // Exit loop if no items to remove
-                    }
-
-                    grandParentIdsToCheck = totalData.ResultList
-                        .Where(res => gpIdsToRemove.Contains(res.Id) && res.ParentId != null
-                            && !ChartOfAccountsTypes.All.Contains(res.ParentId))
-                        .Select(item => item.ParentId).ToHashSet();
-
-
-                    totalData.ResultList.RemoveAll(item => gpIdsToRemove.Contains(item.Id));
-
-                }
-
-            }
-        }
 
         private void UpdateBalances(ResultList duplicated, ResultList record)
         {
@@ -12298,26 +12300,27 @@ namespace WebFreight.Web.ReportsWebServices
                     var error = ex.Message;
                 }
 
+                List<string> typeIdList = new List<string> { "1", "2", "3", "4", "5", "6", "7" };
 
                 if (totalData.ResultList.Any(res => res.ParentId != null && res.ParentId != "" && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) 
-                            && !ChartOfAccountsTypes.All.Contains(res.ParentId)))
+                            && !typeIdList.Contains(res.ParentId)))
                 {
                     try
                     {
-                        List<string> parentChartIds = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && ChartOfAccountsTypes.All.Contains(res.ParentId)).Select(res => res.Id).ToList();
+                        List<string> parentChartIds = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && typeIdList.Contains(res.ParentId)).Select(res => res.Id).ToList();
 
-                        var children = totalData.ResultList.Where(res => parentChartIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !ChartOfAccountsTypes.All.Contains(res.ParentId));
+                        var children = totalData.ResultList.Where(res => parentChartIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !typeIdList.Contains(res.ParentId));
                         List<string> childrenIds = children.Select(res => res.Id).ToList();
 
-                        if (childrenIds != null && childrenIds.Count > 0 && totalData.ResultList.Any(res => childrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !ChartOfAccountsTypes.All.Contains(res.ParentId)))
+                        if (childrenIds != null && childrenIds.Count > 0 && totalData.ResultList.Any(res => childrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !typeIdList.Contains(res.ParentId)))
                         {
-                            var grandChildren = totalData.ResultList.Where(res => childrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !ChartOfAccountsTypes.All.Contains(res.ParentId));
+                            var grandChildren = totalData.ResultList.Where(res => childrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !typeIdList.Contains(res.ParentId));
                             List<string> grandChildrenIds = grandChildren.Select(res => res.Id).ToList();
 
 
-                            if (grandChildrenIds != null && grandChildrenIds.Count > 0 && totalData.ResultList.Any(res => grandChildrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !ChartOfAccountsTypes.All.Contains(res.ParentId)))
+                            if (grandChildrenIds != null && grandChildrenIds.Count > 0 && totalData.ResultList.Any(res => grandChildrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !typeIdList.Contains(res.ParentId)))
                             {
-                                var grandGrandChildren = totalData.ResultList.Where(res => grandChildrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !ChartOfAccountsTypes.All.Contains(res.ParentId));
+                                var grandGrandChildren = totalData.ResultList.Where(res => grandChildrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !typeIdList.Contains(res.ParentId));
                                 List<string> grandGrandChildrenIds = grandGrandChildren.Select(res => res.Id).ToList();
 
                                 try
@@ -12367,7 +12370,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 try
                 {
-                    var allCharts = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && ChartOfAccountsTypes.All.Contains(res.ParentId));
+                    var allCharts = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && typeIdList.Contains(res.ParentId));
                     var groupedByParent_Parents =
                          allCharts.GroupBy(c => c.ParentId);
 
