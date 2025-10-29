@@ -117,6 +117,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 }
             }
+            if (entityPM?.CustomsDocumentPointers.Count > 1
+                && entityPM.RequestedCustomsDocId != null
+                && entityPM.CustomsDocumentPointers.Any(x => x.ChangeSetOp == ChangeSetOperation.Delete))
+            {
+                var survivor = entityPM.CustomsDocumentPointers
+                       .FirstOrDefault(x => x.ChangeSetOp == ChangeSetOperation.None);
+                if (survivor != null)
+                {
+                    survivor.ChangeSetOp = ChangeSetOperation.Insert;
+                }
+            }
             UpdateNotification(entityPM);
             SetDeclarationAsChanged(entityPM);
 
