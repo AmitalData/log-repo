@@ -51,7 +51,7 @@ export class WizardAddressCompnent extends BaseComponent {
         if (AppTool.IsNullOrEmpty(addressPM.Description)) {
             this.EntityPM.Description = addressPM.Description = "Main Address";
         }
-        if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "test2" || ObjectsLocator.GlobalSetting.DeploymentStage == "amitalstorage") {
+        if (ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting?.DeploymentStage == "test2" || ObjectsLocator.GlobalSetting?.DeploymentStage == "amitalstorage") {
             this.ShowDayLightSettings = true;
         }
         else if (tenantPM.DayLightOffset != 0) {

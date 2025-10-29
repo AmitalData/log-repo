@@ -273,9 +273,9 @@ export class UserRolesTabComponent extends BaseComponent implements OnDestroy {
             case "BILL":
                 {
                     if (ObjectsLocator.GlobalSetting &&
-                        (  ObjectsLocator.GlobalSetting.DeploymentStage == "Dev"
-                        || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2"
-                        || ObjectsLocator.GlobalSetting.DeploymentStage == "Simplog")) {
+                        (  ObjectsLocator.GlobalSetting?.DeploymentStage == "Dev"
+                        || ObjectsLocator.GlobalSetting?.DeploymentStage == "Test2"
+                        || ObjectsLocator.GlobalSetting?.DeploymentStage == "Simplog")) {
                         this.ObsList.push(new UserRolesItemClass(item, this.EntityPM, this));
                     }
 

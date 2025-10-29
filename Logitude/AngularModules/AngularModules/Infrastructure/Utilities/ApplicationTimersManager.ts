@@ -60,7 +60,7 @@ export class ApplicationTimersManager {
                 //console.log('The response is received.');
             })
         );
-        if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
+        if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
             console.log("WorkEnvironment is customs! Suppress this.AddPeformanceLogs();");
         } else {
             SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe((res:any) => {

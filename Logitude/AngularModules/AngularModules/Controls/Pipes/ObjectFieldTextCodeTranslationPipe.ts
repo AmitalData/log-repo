@@ -32,7 +32,7 @@ export class ObjectFieldTextCodeTranslationPipe {
 
         let productionStages: Array<string> = ["simplog", "logboxwe1", "amitalstorage"];
 
-        if (productionStages.find(stage => stage == ObjectsLocator.GlobalSetting.DeploymentStage.toLowerCase())) return false;
+        if (productionStages.find(stage => stage == ObjectsLocator.GlobalSetting?.DeploymentStage?.toLowerCase())) return false;
         if (!SessionLocator.ProtractorEmails.find(userEmail => userEmail == SessionLocator.LoggedUserPM.Email.toLowerCase())) return true;
         
         return false;
