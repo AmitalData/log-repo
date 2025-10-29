@@ -76,6 +76,11 @@ export class CargoTrackingMilestonePM {
     public set TenantId(newValue: number) { if (this.tenantId != newValue) { this.tenantId = newValue; this.MarkAsDirty("TenantId"); } }
        
 	 
+    private externalCode: string;
+    public get ExternalCode() { return this.externalCode; }
+    public set ExternalCode(newValue: string) { if (this.externalCode != newValue) { this.externalCode = newValue; this.MarkAsDirty("ExternalCode"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingMilestonePM;
 		

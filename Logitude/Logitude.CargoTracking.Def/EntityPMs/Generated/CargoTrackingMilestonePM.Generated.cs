@@ -257,6 +257,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string externalCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExternalCode  
+	   {
+	    
+	     get
+		{
+		   return externalCode;
+		 }
+		 set
+		 {
+		   if(externalCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalCode",OldValue=externalCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   externalCode=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }
