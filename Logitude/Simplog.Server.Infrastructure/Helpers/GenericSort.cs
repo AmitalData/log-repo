@@ -82,15 +82,62 @@ namespace Simplog.Server.Infrastructure.Helpers
             }
         }
 
-        private Expression<Func<T,N>> GetSortExpression<T,N>(string sortByFieldName)
-        {
-            var param = Expression.Parameter(typeof(T), "item");
-            var sortExpression = Expression.Lambda<Func<T, N>>
-               (Expression.Convert(Expression.Property(param, sortByFieldName), typeof(N)), param);
-            return sortExpression;
-        }
+		private Expression<Func<T, N>> GetSortExpression<T, N>(string sortByFieldName)
+		{
+			if (string.IsNullOrEmpty(sortByFieldName))
+				return null;
 
-        private string GetObjectTableKeyName(QueryOperations queryOperations , int tenant = -100)
+			var param = Expression.Parameter(typeof(T), "item");
+			var propertyExpr = Expression.PropertyOrField(param, sortByFieldName);
+
+			Expression body = BuildSafeExpression<N>(propertyExpr);
+
+			return Expression.Lambda<Func<T, N>>(body, param);
+		}
+
+		private Expression BuildSafeExpression<N>(Expression propertyExpr)
+		{
+			var targetType = typeof(N);
+
+			if (IsNullable(propertyExpr.Type))
+				return BuildNullableExpression<N>(propertyExpr);
+
+			if (!propertyExpr.Type.IsValueType)
+				return BuildReferenceTypeExpression<N>(propertyExpr);
+
+			return propertyExpr.Type != targetType
+				? Expression.Convert(propertyExpr, targetType)
+				: propertyExpr;
+		}
+
+		private bool IsNullable(Type type)
+		{
+			return type.IsValueType && Nullable.GetUnderlyingType(type) != null;
+		}
+
+		private Expression BuildNullableExpression<N>(Expression propertyExpr)
+		{
+			var targetType = typeof(N);
+			var hasValue = Expression.Property(propertyExpr, "HasValue");
+			var value = Expression.Property(propertyExpr, "Value");
+			var defaultValue = Expression.Default(targetType);
+
+			return Expression.Condition(
+				hasValue,
+				Expression.Convert(value, targetType),
+				defaultValue
+			);
+		}
+
+		private Expression BuildReferenceTypeExpression<N>(Expression propertyExpr)
+		{
+			var targetType = typeof(N);
+			var isNull = Expression.Equal(propertyExpr, Expression.Constant(null, propertyExpr.Type));
+			var defaultValue = Expression.Default(targetType);
+			return Expression.Condition(isNull, defaultValue, propertyExpr);
+		}
+
+		private string GetObjectTableKeyName(QueryOperations queryOperations , int tenant = -100)
         {
 
             if (tenant == -100)
