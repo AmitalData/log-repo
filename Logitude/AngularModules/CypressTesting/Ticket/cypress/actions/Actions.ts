@@ -56,23 +56,23 @@ export function AddInternalNoteTicket() {
 
 export function CancelTicket() {
     cy.DefineRequestWait(RestAPI.PUT,URLs.Tickets,RequestAliases.PutTicket)
-    cy.Click(TicketSelectors.MenuButtons, null);
-    cy.Click(TicketSelectors.TicketCancel, null);
-    cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsYes);
+    cy.Click(TicketSelectors.MenuButtons, null, true);
+    cy.Click(TicketSelectors.TicketCancel, null, true);
+    cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsYes, true);
 }
 
 export function ReactivateTicket() {
     cy.DefineRequestWait(RestAPI.PUT,URLs.Tickets,RequestAliases.PutTicket)
-    cy.Click(TicketSelectors.MenuButtons, null);
-    cy.Click(TicketSelectors.TicektReactivate, null);
-    cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsYes);
+    cy.Click(TicketSelectors.MenuButtons, null, true);
+    cy.Click(TicketSelectors.TicektReactivate, null, true);
+    cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsYes, true);
 }
 
 export function CloseTicket() {
     cy.DefineRequestWait(RestAPI.PUT,URLs.Tickets,RequestAliases.PutTicket)
-    cy.Click(TicketSelectors.MenuButtons, null);
-    cy.Click(TicketSelectors.TicektClosewithoutNotifying, null);
-    cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsOk);
+    cy.Click(TicketSelectors.MenuButtons, null, true);
+    cy.Click(TicketSelectors.TicektClosewithoutNotifying, null, true);
+    cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsOk, true);
 }
 
 export function CreateActivity(ActivityTypeButton: string ,ticketActivitySubject:string) {
