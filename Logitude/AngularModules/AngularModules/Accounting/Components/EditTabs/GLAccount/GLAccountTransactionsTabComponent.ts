@@ -1446,9 +1446,11 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     
                     this.columns.push(column);
     
-                    this.QueryColumns.push(
-                        this.LogitudeGridExportToExcelComponent.GetQueryColumn(field.FieldName, field.DataTypeCode, displayName)
-                    );
+                    if (this.QueryColumns.length === 0) {
+                        this.QueryColumns.push(
+                            this.LogitudeGridExportToExcelComponent.GetQueryColumn(field.FieldName, field.DataTypeCode, displayName)
+                        );
+                    }
                 });
                 this.columnsReady = true;
                 this.CD.detectChanges();
