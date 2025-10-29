@@ -156,7 +156,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			
 			};
 
-            if (certificateOfOrigin.OriginCountry == "IL" && (certificateOfOrigin.CooTypeCode == "1" || certificateOfOrigin.CooTypeCode == "2" || certificateOfOrigin.CooTypeCode == "7"))
+            if (certificateOfOrigin.OriginCountry == "IL" && (certificateOfOrigin.CooTypeCode == "1" || certificateOfOrigin.CooTypeCode == "2" || certificateOfOrigin.CooTypeCode == "7" || certificateOfOrigin.CooTypeCode == "9"))
 			{
 				PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin.PlaceOfManufacture = string.IsNullOrEmpty(certificateOfOrigin.PlaceOfManufacture) ? null : (int?)Convert.ToInt32(certificateOfOrigin.PlaceOfManufacture);
 				PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin.PlaceOfManufactureSpecified = true;
