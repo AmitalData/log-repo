@@ -152,7 +152,7 @@ export class EntityResourceService {
 
     catch (error) {
       this.HandleError(error, objectTableName);
-      if (ObjectsLocator.GlobalSetting && (ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2")) {
+      if (ObjectsLocator.GlobalSetting && (ObjectsLocator.GlobalSetting?.DeploymentStage == "Dev" || ObjectsLocator.GlobalSetting?.DeploymentStage == "Test2")) {
         alert(error);
       }
 

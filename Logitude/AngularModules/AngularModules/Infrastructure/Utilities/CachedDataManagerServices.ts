@@ -285,7 +285,7 @@ export class CachedDataManagerServices {
 
              default: {
 
-                if (ObjectsLocator.GlobalSetting && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
+                if (ObjectsLocator.GlobalSetting && ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
                     console.error(name + " is not declared in CachedDataManagerServices")
                 } else {
                     alert(name + " is not declared in CachedDataManagerServices");

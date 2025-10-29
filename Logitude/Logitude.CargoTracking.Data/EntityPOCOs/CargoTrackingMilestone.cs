@@ -46,6 +46,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string Notes { get; set; }
         [Column("TenantId")]
 	    public int? TenantId { get; set; }
+        [Column("ExternalCode")]
+	    public string ExternalCode { get; set; }
     }
 }
 	 

@@ -72,4 +72,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ExternalCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

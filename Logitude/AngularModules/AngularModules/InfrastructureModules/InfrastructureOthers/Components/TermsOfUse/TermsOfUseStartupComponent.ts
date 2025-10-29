@@ -39,7 +39,7 @@ export class TermsOfUseStartupComponent implements OnInit {
     public ErrorMessage = "";
     public LogoURL: string = "./Images/LoginScreen/header.jpg";
     public Name: string = "Logitude";
-    //public isLogbox = ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1"
+    //public isLogbox = ObjectsLocator.GlobalSetting?.DeploymentStage == "logboxwe1"
     constructor() {
         if (this.termsofUseSignaturePMService == null) {
             this.termsofUseSignaturePMService = new TermsofUseSignaturePMService();
