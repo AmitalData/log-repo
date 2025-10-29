@@ -193,7 +193,7 @@ export class QueryColumnsEditComponent {
 
                 this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
 
-                if (this.QueryCode === 'ARInvoice.All Invoices' && ObjectsLocator.GlobalSetting.WorkEnvironment !== 'cloud') {
+                if (this.QueryCode === 'ARInvoice.All Invoices' && ObjectsLocator.GlobalSetting?.WorkEnvironment !== 'cloud') {
                     this.unSelectedList = this.unSelectedList.filter(a =>
                         a.FieldName !== 'TotalVAT' &&
                         a.FieldName !== 'TotalExamptFortaxReport' &&

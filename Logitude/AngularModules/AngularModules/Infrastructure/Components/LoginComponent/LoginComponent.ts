@@ -878,7 +878,7 @@ export class LoginComponent implements OnInit ,AfterViewInit {
                                     'READ'
                                 ) &&
                                 ObjectsLocator.GlobalSetting &&
-                                ObjectsLocator.GlobalSetting.WorkEnvironment !=
+                                ObjectsLocator.GlobalSetting?.WorkEnvironment !=
                                     'customs'
                             ) {
                                 var myCreditLimitSettingPMService =

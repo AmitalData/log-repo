@@ -30,8 +30,8 @@ export class PerformanceLogger {
     public static InsertPerformanceLog(callTime: Date, completionTime: Date, serverTime: number, modelName: string, methodName: string, methodParams: string): void {
         try {
             if (ObjectsLocator.GlobalSetting) {
-                //if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
-                if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
+                //if (ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
+                if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
                     return;
                 }
             }

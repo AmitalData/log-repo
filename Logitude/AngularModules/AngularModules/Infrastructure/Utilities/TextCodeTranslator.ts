@@ -149,7 +149,7 @@ export class TextCodeTranslator {
         if (value == "AccountingPartner.F.SearchFields")
             return false;
         var productionStages: Array<string> = ["simplog", "logboxwe1", "amitalstorage"];
-        if (!productionStages.find(stage => stage == ObjectsLocator.GlobalSetting.DeploymentStage.toLowerCase())) {
+        if (!productionStages.find(stage => stage == ObjectsLocator.GlobalSetting?.DeploymentStage.toLowerCase())) {
             if (!SessionLocator.ProtractorEmails.find(userEmail => userEmail == SessionLocator.LoggedUserPM.Email.toLowerCase()))
                 return true;
         }

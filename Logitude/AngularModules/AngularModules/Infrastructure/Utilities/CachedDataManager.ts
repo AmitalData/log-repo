@@ -163,7 +163,7 @@ export class CachedDataManager {
             }
         }
         //if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
-        if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
+        if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
             CachedDataManager.AllCachedTables = window.ObjectTables.filter(d => d.CacheOnClient === true && d.ClientModuleName && d.IsClosed == false && d.Name.startsWith("Customs."));
 
         }
