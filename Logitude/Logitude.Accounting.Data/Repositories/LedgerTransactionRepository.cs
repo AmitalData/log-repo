@@ -182,7 +182,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
         public IQueryable<LedgerTransactionList> GetFilteredTransactions(IQueryable<string> accountsIds, LedgerTransactionBalanceFilter filters, DateTime? maxCreateDate)
         {
-            IQueryable<LedgerTransactionList> transactionsQuery = GetTenantTransactionsFilteredByAccountsIds(accountsIds, filters);
+            IQueryable<LedgerTransactionList> transactionsQuery = GetTenantTransactionsFilteredByAccountsIds(!filters.UseTaxreportFilter? accountsIds: null, filters);
 
             transactionsQuery = FilterByCurrency(filters, transactionsQuery);
             transactionsQuery = FilterBySearchFields(filters, transactionsQuery);
@@ -212,8 +212,13 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
 
             var query = (from transaction in context.LedgerTransactions
-                         where transaction.Tenant == filters.Tenant && accountsIds.Contains(transaction.AccountId)
+                         where transaction.Tenant == filters.Tenant
                          select transaction);
+
+            if (accountsIds != null)
+            {
+                query = query.Where(transaction => accountsIds.Contains(transaction.AccountId));
+            }
 
             return ledgerTransactionListQueryService.GetIqueryableList(query);
         }
@@ -1725,28 +1730,17 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
 
         }
-        public IQueryable<LedgerTransactionList> GetLedgerTransactionsByTaxReportJournalIds(DateTime? taxReportMonth, LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter, List<string> journalIds, IQueryable<LedgerTransactionList> query)
+        public IQueryable<LedgerTransactionList> GetLedgerTransactionsByTaxReportJournalIds(DateTime? taxReportMonth, LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter, IQueryable<LedgerTransactionList> query)
         {
 
             int days = DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
             DateTime endOfTaxReportDate = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days, 23, 59, 59);
 
-            FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(ledgerTransactionBalanceFilter.Tenant);
-            FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(ledgerTransactionBalanceFilter.Tenant);
-
-            var ledgerTransactionsListQuery = (from a in query
-                                               join j in context.Journals on a.JournalId equals j.Id
-                                               join m in context.JournalAdditionalDatas on a.JournalId equals m.JournalId
-
-                                               where (m.TaxReportId != null)
-                                                       && a.DocumentDate <= endOfTaxReportDate
-
-                                                       && a.Tenant == ledgerTransactionBalanceFilter.Tenant
-                                                       && a.LocalAmountDebit != 0
-                                                      && a.AccountId == ledgerTransactionBalanceFilter.GLAccountId
-                                                       && journalIds.Contains(a.JournalId)
-
-                                               select a).Distinct();
+            var ledgerTransactionsListQuery = from lt in query
+                         where lt.DocumentDate <= endOfTaxReportDate 
+                            && lt.Tenant == ledgerTransactionBalanceFilter.Tenant
+                            && lt.AccountId == ledgerTransactionBalanceFilter.GLAccountId
+                         select lt;
 
             if (!string.IsNullOrWhiteSpace(ledgerTransactionBalanceFilter.SearchFields))
             {
