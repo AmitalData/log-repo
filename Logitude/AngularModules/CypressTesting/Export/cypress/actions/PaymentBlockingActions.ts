@@ -3,9 +3,47 @@ import { PaymentBlockingDetails } from '../models/PaymentBlockingDetails';
 import { BaseExportSelectors } from '../selectors/BaseExportSelectors';
 
 export function NavigateToImportDeclarations() {
-    cy.get(BaseExportSelectors.ExportDeclaration, { timeout: 15000 })
+    // Navigate to declarations workspace
+    cy.log('=== Navigating to Import Declarations ===');
+    cy.get(BaseExportSelectors.ImportDeclaration, { timeout: 15000 })
         .should('be.visible')
-        .click();
+        .click({ force: true });
+    
+    cy.wait(2000);
+    
+    // Look for the sidebar menu and click on "הצהרות יבוא" (Import Declarations)
+    cy.get('body').then(($body) => {
+        cy.log('Looking for Import Declarations filter in sidebar menu...');
+        
+        // The menu might be in a sidebar/popup - try multiple approaches
+        const importMenuSelectors = [
+            'li#GeneralMHDeclarations\\.DefaultMenuItem:contains("הצהרות יבוא")',
+            '[id*="GeneralMHDeclarations"] li:contains("הצהרות יבוא")',
+            'li._ngcontent-erm-c8:contains("הצהרות יבוא")',
+            'li[class*="DefaultMenuItem"]:contains("הצהרות יבוא")',
+            'a:contains("הצהרות יבוא")',
+            'li:contains("הצהרות יבוא")'
+        ];
+        
+        let found = false;
+        for (const selector of importMenuSelectors) {
+            if ($body.find(selector).length > 0) {
+                cy.log(`✓ Found Import Declarations with selector: ${selector}`);
+                cy.get(selector).first().click({ force: true });
+                found = true;
+                break;
+            }
+        }
+        
+        if (!found) {
+            cy.log('⚠️ Import Declarations filter not found - may already be showing all or import declarations');
+            // If we can't find the filter, we might already be on the correct view
+            // The file search should work regardless
+        }
+    });
+    
+    cy.wait(1500);
+    cy.log('✓ Navigation to Import Declarations completed');
 }
 
 export function FilterByDeclarationStatus(status: string) {
@@ -37,17 +75,78 @@ export function SelectFirstResult() {
 }
 
 export function SearchByFileNumber(fileNumber: string) {
-    // Ensure field is interactable even if covered; then type with force
-    cy.get(PaymentBlockingSelectors.FileNumberSearch, { timeout: 15000 })
-        .scrollIntoView()
-        .click({ force: true })
-        .clear({ force: true })
-        .type(fileNumber, { force: true });
-    cy.wait(1000);
-    // Open first result
+    cy.log(`=== Searching for file number: ${fileNumber} ===`);
+    
+    // Wait for the declarations grid/workspace to be ready
+    cy.wait(2000);
+    
+    // Type in the search field (the text input at the top)
+    cy.get('body').then(($body) => {
+        // Try multiple selectors for the search input field
+        const searchSelectors = [
+            PaymentBlockingSelectors.FileNumberSearch,
+            'input[type="text"]:visible',
+            'input[type="search"]',
+            '#search',
+            '.search-input'
+        ];
+        
+        let found = false;
+        for (const selector of searchSelectors) {
+            if ($body.find(selector).length > 0) {
+                cy.log(`Found search field with selector: ${selector}`);
+                cy.get(selector).first()
+                    .scrollIntoView()
+                    .click({ force: true })
+                    .clear({ force: true })
+                    .type(fileNumber, { force: true });
+                found = true;
+                break;
+            }
+        }
+        
+        if (!found) {
+            cy.log('⚠️ Search field not found with standard selectors');
+        }
+    });
+    
+    // Press Enter to trigger search or wait for auto-search
+    cy.get(PaymentBlockingSelectors.FileNumberSearch)
+        .type('{enter}', { force: true });
+    
+    // Wait for search results to load
+    cy.wait(3000);
+    
+    // Check if any results were found
+    cy.get('body').then(($body) => {
+        const gridRowSelector = "[id*='LogGrid'][id*='row']";
+        const rowCount = $body.find(gridRowSelector).length;
+        
+        if (rowCount === 0) {
+            cy.log(`❌ No search results found for file number: ${fileNumber}`);
+            cy.log('Possible causes:');
+            cy.log('1. File does not exist in the system');
+            cy.log('2. User does not have access to this file');
+            cy.log('3. Wrong declaration type selected (Import vs Export)');
+            cy.log('4. Search field did not trigger properly');
+            
+            // Take a screenshot for debugging
+            cy.screenshot('no-search-results-found');
+            
+            throw new Error(`File "${fileNumber}" not found in system. Please verify the file exists and user has access.`);
+        } else {
+            cy.log(`✓ Found ${rowCount} search result(s) for file: ${fileNumber}`);
+        }
+    });
+    
+    // Click on the first result to open it
     cy.get("[id*='LogGrid'][id*='row0']:first", { timeout: 20000 })
+        .should('exist')
         .should('be.visible')
+        .scrollIntoView()
         .click({ force: true });
+    
+    cy.log('✓ Clicked on first search result');
 }
 
 export function EnterFile() {
