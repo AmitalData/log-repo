@@ -7,6 +7,7 @@ import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 import { URLs } from '../constants/URLs';
 import { Constants } from '../constants/Constants';
+import * as PaymentBlockingActions from './PaymentBlockingActions';
 
 export function NavigatesCustomsRequestsWizerd() {
 
