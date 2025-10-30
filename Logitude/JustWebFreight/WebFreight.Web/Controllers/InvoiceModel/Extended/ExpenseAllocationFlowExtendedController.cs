@@ -41,7 +41,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Extended
 
                 IInvoiceContext MyContext = InvoiceContext.GetContext(authToken.Tenant);
                 ExpenseAllocationFlowRepository expenseAllocationFlowRepository = new ExpenseAllocationFlowRepository(MyContext);
-                IQueryable<ExpenseAllocationFlow> entityPocos = expenseAllocationFlowRepository.GetListByEntityIAndObjectTable(authToken.Tenant,objectTableId,entityId);
+                IQueryable<ExpenseAllocationFlow> entityPocos = expenseAllocationFlowRepository.GetListByEntityIAndObjectTable(authToken.Tenant, objectTableId, entityId);
 
                 ExpenseAllocationFlowQuery expenseAllocationFlowQuery = new ExpenseAllocationFlowQuery(expenseAllocationFlowRepository);
                 List<ExpenseAllocationFlowList> entityLists = expenseAllocationFlowQuery.GetList(entityPocos);

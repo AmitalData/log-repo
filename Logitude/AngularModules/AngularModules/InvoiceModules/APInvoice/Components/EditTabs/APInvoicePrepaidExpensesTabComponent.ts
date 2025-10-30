@@ -10,6 +10,7 @@ import { ExpenseAllocationFlowList } from 'Invoice/EntityLists/ExpenseAllocation
 import { ExpenseAllocationFlowExtendedService } from 'Invoice/Services/ExtendedPMs/ExpenseAllocationFlowExtendedService';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { AppTool } from 'Infrastructure/Tools';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
     templateUrl: './APInvoicePrepaidExpensesTabComponent.html',
@@ -22,18 +23,30 @@ export class APInvoicePrepaidExpensesTabComponent implements OnInit {
     public amountPaid : number = 0;
     public amountDue : number = 0;
     public periodAmount
+    public isReady: boolean = false;
     private currentSession = SessionLocator.SelectedSession;
-
+    public isVoided: boolean = false;
     public expenseAllocationSettingPM = new ExpenseAllocationSettingPM();
     expenseAllocationSettingExtendedService =
         new ExpenseAllocationSettingExtendedService();
     expenseAllocationFlowExtendedService =
         new ExpenseAllocationFlowExtendedService();
     expenseAllocationFlowLists: ExpenseAllocationFlowList[] = [];
+    entityResourceService: EntityResourceService = new EntityResourceService();
+
     constructor(private entityArgs: EntityArgs) {
+        this.GetResources();
         this.EntityPM = entityArgs.EntityPM;
+        this.isVoided = this.EntityPM.StatusCode === "VD";
         var table = window.ObjectTables.filter((d) => d.Name == 'APInvoice')[0];
         if (table) this.objectTableId = table.Id;
+    }
+    private GetResources() {
+        this.entityResourceService
+            .getEntityResourceByTableName('ExpenseAllocationFlow')
+            .subscribe((response: any) => {
+                this.isReady = true;
+            });
     }
 
     ngOnInit() {
@@ -55,7 +68,7 @@ export class APInvoicePrepaidExpensesTabComponent implements OnInit {
         if (paymentType?.startsWith('Monthly_')) {
             IsMonthly = true;
             const parts = paymentType.split('_');
-            AllocationDateType = parts[1] || '';
+            AllocationDateType = parts[1] || '';          
             selectedDay = parts[2] ? parts[2] : null;
         } else if (paymentType?.startsWith('Weekly_')) {
             IsMonthly = false;
@@ -73,11 +86,14 @@ export class APInvoicePrepaidExpensesTabComponent implements OnInit {
                 this.expenseAllocationSettingPM?.NumberOfPayments || null,
             MonthInterval: this.expenseAllocationSettingPM?.MonthInterval || 1,
             TotalAmount: this.EntityPM.SubTotalInInvoiceCurrency,
+            TotalLocalAmount: this.EntityPM.SubTotalInLocalCurrency,
+            CurrencyCode: this.EntityPM.InvoiceCurrencyCode,
             MinDate: this.EntityPM.AccountingDate,
             AllocationDateType: AllocationDateType,
             IsWeekly: !IsMonthly,
             SelectedDay: selectedDay,
             SelectedDayByWeek: selectedDayByWeek,
+            Disabled : true
         };
         logWindow.Width = 600;
         logWindow.Height = 450;
@@ -91,6 +107,7 @@ export class APInvoicePrepaidExpensesTabComponent implements OnInit {
         );
     }
     loadDate() {
+        this.currentSession.StartBusyIndicatorLoading()
         this.expenseAllocationSettingExtendedService
             .getExpenseAllocationSettingByEntityIdAndObjectTable(
                 this.EntityPM?.Id,
@@ -108,12 +125,14 @@ export class APInvoicePrepaidExpensesTabComponent implements OnInit {
                     .subscribe((resFlow) => {
                         if (resFlow !== null) {
                             (resFlow as ExpenseAllocationFlowList[]).forEach((item: ExpenseAllocationFlowList) => {
-                                this.expenseAllocationFlowLists.push(item);
+                                if(!AppTool.IsNullOrEmpty(item.JournalId) || item.Status === "failed")
+                                   this.expenseAllocationFlowLists.push(item);
                             });
                             this.periodAmount =  this.EntityPM.SubTotalInInvoiceCurrency / this.expenseAllocationSettingPM.NumberOfPayments
-                            this.amountPaid = this.periodAmount * this.expenseAllocationFlowLists.length;
+                            this.amountPaid = this.periodAmount * this.expenseAllocationFlowLists?.filter(item => !AppTool.IsNullOrEmpty(item.JournalId))?.length;
                             this.amountDue = this.EntityPM.SubTotalInInvoiceCurrency - this.amountPaid;
                         }
+                        this.currentSession.StopBusyIndicator()
                     });
             });
     }

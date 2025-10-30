@@ -42,8 +42,8 @@ namespace CommunicationWorkerRole.Tasks
                     {
                         var expenseAllocationBatch = new ExpenseAllocationBatch();
                         int tenant = this.Task != null ? this.Task.Tenant : 0;
-
-                        string responseText = expenseAllocationBatch.ResponseText();
+                        expenseAllocationBatch.Execute(tenant);
+                         string responseText = expenseAllocationBatch.ResponseText();
                         _SB.Append(DateTime.Now.ToString()).Append("responseText:").Append(responseText).AppendLine();
                     }
                     catch (Exception ex)

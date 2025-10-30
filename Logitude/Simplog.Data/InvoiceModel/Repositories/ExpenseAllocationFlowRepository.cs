@@ -1,8 +1,10 @@
 ﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace Simplog.Data.InvoiceModel.Repositories
 {
@@ -49,8 +51,27 @@ namespace Simplog.Data.InvoiceModel.Repositories
                                       )
                                       .Where(x => x.flow.Tenant == tenant
                                                && x.setting.ObjectTableId == objectTableId
-                                               && x.setting.EntityId == entityId)
+                                               && x.setting.EntityId == entityId )
                                       .Select(x => x.flow);
+        }
+
+        public IQueryable<ExpenseAllocationFlow> GetListBySettingId(int tenant, string settingId)
+        {
+            return context.ExpenseAllocationFlows                                      
+                                       .Where(x => x.Tenant == tenant
+                                                && x.SettingId == settingId                                             
+                                                && x.JournalId != null)
+                                       .Select(x => x);
+        }
+
+        public IQueryable<ExpenseAllocationFlow> GetListByDate(int tenant, DateTime runDate)
+        {
+            var nextDay = runDate.AddDays(1);
+            return context.ExpenseAllocationFlows                                      
+                                       .Where(x => x.Tenant == tenant
+                                                && x.RunDate < nextDay
+                                                && x.JournalId == null)
+                                       .Select(x => x);
         }
         public void Add(ExpenseAllocationFlow entity)
         {

@@ -165,7 +165,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {                   
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    if(this.EntityPM.IsPrepaidExpenses)
+                    if(this.EntityPM.IsPrepaidExpenses && this.EntityPM.HasExpenseAllocationSetting)
                         this.saveExpenseAllocationSetting();
                     this.SetUIProperties();
                     this.BuildInvoiceLines();
@@ -375,6 +375,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                                  if(res.Result){
                                     this.expenseAllocationSetting = res.Result;
                                     this.EntityPM.HasExpenseAllocationSetting = true;
+                                    this.EntityPM.ExpenseAllocationStartDate = this.expenseAllocationSetting.StartDateTime;
                                  }
                                     
                                 else{
@@ -413,27 +414,42 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     saveExpenseAllocationSetting(){
+       
         var approved = this.EntityPM?.StatusCode === "AD";
         if(this.EntityPM?.Id){
+            this.expenseAllocationSetting.EntityId = this.EntityPM?.Id;
             if(this.expenseAllocationSetting?.Id){
+                this.CurrentSession.StartBusyIndicatorSaving();
                 this.expenseAllocationSettingPMService.update(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {
                     if (!res.HasError) {
                         this.expenseAllocationSetting = res.Result;
                         if(approved)
                             this.addExpenseAllocationFlow();
-
-                    }                  
+                        else{
+                            this.CurrentSession.StopBusyIndicator();
+                        }
+                    }  
+                    else{
+                        this.CurrentSession.StopBusyIndicator();
+                    }                
                 })
             }
             else{
+                this.CurrentSession.StartBusyIndicatorSaving();
                 this.expenseAllocationSettingPMService.insert(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {   
                     if (!res.HasError) {
                         this.expenseAllocationSetting = res.Result;
                         if(approved){
                             this.addExpenseAllocationFlow();
                         }
+                        else{
+                            this.CurrentSession.StopBusyIndicator();
+                        }
                             
-                    }                   
+                    }     
+                    else{
+                        this.CurrentSession.StopBusyIndicator();
+                    }                 
                 })
             }
         }
@@ -443,10 +459,14 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         var expenseAllocationFlowPM : ExpenseAllocationFlowPM = new ExpenseAllocationFlowPM();
         expenseAllocationFlowPM.Tenant = SessionLocator.Tenant;
         expenseAllocationFlowPM.SettingId = this.expenseAllocationSetting?.Id;
-        expenseAllocationFlowPM.Status = "Created";
-        expenseAllocationFlowPM.RunDate = DateTool.GetCurrentDateAsUtc();
-        expenseAllocationFlowPM.JournalId = this.EntityPM?.JournalId;
-        this.expenseAllocationFlowPMService.insert(expenseAllocationFlowPM).subscribe((res: ServiceResponse) => {});
+        expenseAllocationFlowPM.Status = "Done";
+        expenseAllocationFlowPM.RunDate = this.expenseAllocationSetting.StartDateTime;
+        expenseAllocationFlowPM.JournalId = null;
+        this.expenseAllocationFlowPMService.insert(expenseAllocationFlowPM).subscribe((res: ServiceResponse) => {
+           
+                this.CurrentSession.StopBusyIndicator();
+            
+        });
 
     }
     UpdateData() {
@@ -1168,12 +1188,10 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
     expenseAllocationSettingPMService: ExpenseAllocationSettingPMService = new ExpenseAllocationSettingPMService();
     ShowRecurringScheduleSettings(){
-        const defaultEnd = new Date(this.expenseAllocationSetting?.StartDateTime || this.AccountingDate);
-        defaultEnd.setDate(defaultEnd.getDate() + 364);    
         const paymentType = this.expenseAllocationSetting?.PaymentDateType;
           
-          var IsMonthly = false;
-          var AllocationDateType = '';
+          var IsMonthly = true;
+          var AllocationDateType = null;
           var selectedDay = null;
           var selectedDayByWeek = null;
 
@@ -1190,10 +1208,12 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { 
             StartDateTime: this.expenseAllocationSetting?.StartDateTime || this.AccountingDate,
-            EndDateTime: this.expenseAllocationSetting?.EndDateTime || defaultEnd, 
+            EndDateTime: this.expenseAllocationSetting?.EndDateTime || this.AccountingDate, 
             RecurrenceCount: this.expenseAllocationSetting?.NumberOfPayments || null, 
             MonthInterval: this.expenseAllocationSetting?.MonthInterval || 1,
             TotalAmount: this.SubTotalInInvoiceCurrency,
+            TotalLocalAmount: this.SubTotalInLocalCurrency,
+            CurrencyCode: this.InvoiceCurrencyCode,
             MinDate: this.AccountingDate ,
             AllocationDateType: AllocationDateType,
             IsWeekly: !IsMonthly,
@@ -1221,6 +1241,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         this.expenseAllocationSetting.Tenant = SessionLocator.Tenant;
                         this.expenseAllocationSetting.UpdateDate = DateTool.GetCurrentDateAsUtc();
                         this.expenseAllocationSetting.UpdatedByUserId = SessionLocator.LoggedUserId;
+                        this.EntityPM.ExpenseAllocationStartDate = this.expenseAllocationSetting.StartDateTime;
                         if(this.expenseAllocationSetting)
                             this.EntityPM.HasExpenseAllocationSetting = true;
                         this.saveExpenseAllocationSetting();
@@ -1278,7 +1299,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             }
             else {
                 this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, false);
-            }
+            }           
         }
     }
 
