@@ -41,7 +41,7 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
     DocumentTypeTemplates: DocumentTypeTemplatePM[];
     private CurrentSession = SessionLocator.SelectedSession;
     public documentTypePMService: DocumentTypePMService;
-    @Output() LoadTemplate: EventEmitter<any> = new EventEmitter<any>();
+    @Output() ReloadTemplates: EventEmitter<any> = new EventEmitter();
 
     constructor() {
         super();
@@ -87,6 +87,13 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
         
 
     
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['DocumentTypeTemplates']) {
+            this.DocumentTypeTemplates = changes['DocumentTypeTemplates'].currentValue;
+            this.FillDocumentTypeTemplate();
+        }
     }
 
     CheckManageDocumentFeature() {
@@ -152,9 +159,12 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
        
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/NewReportTemplateComponent');
-
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event) {
+                this.ReloadTemplates.emit("reload");
+            }
+        });
     }
-
 
     DeleteTemplateButtonClicked() {
 
@@ -231,7 +241,7 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
             logWindow.WindowArgs = windowArgs;
             logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/HtmlDocumentPreviewComponent");
             logWindow.WindowClosed.subscribe((res: any) => {
-                this.LoadTemplate.emit();
+                this.ReloadTemplates.emit("reload");
             })  
         }
 
@@ -271,19 +281,14 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
                 }, 200);
 
                 logWindow.WindowClosed.subscribe((res: any) => {
-                this.LoadTemplate.emit();
+                this.ReloadTemplates.emit("reload");
                 })   
            
         }
 
 
     }
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes['DocumentTypeTemplates']) {
-            this.DocumentTypeTemplates = changes['DocumentTypeTemplates'].currentValue;
-            this.FillDocumentTypeTemplate();
-        }
-    }
+
     RunStimulsoftDesigner(templateId: string) {
         var URI = AppTool.GetLogitudeURL() + "/Stimulsoft/Designer.aspx?token=" + SessionInfo.Token + "&tenant=" + SessionInfo.LoggedUserTenant + "&templateId=" + templateId;
 

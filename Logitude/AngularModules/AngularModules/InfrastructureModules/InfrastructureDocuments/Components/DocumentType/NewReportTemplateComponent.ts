@@ -20,6 +20,7 @@ import {DocumentTypeTemplateViewModel} from '../DocumentComponent/DocsOut/ViewMo
 import {DocumentTypeTemplateComponent} from  './DocumentTypeTemplateComponent';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import { CopyFromTenant0ExtendedListService } from 'Accounting/Services/ExtendedLists/CopyFromTenant0ExtendedListService';
 declare var querySelection, StringToBase64, resultToUnitArray: any;
 
 @Component({
@@ -57,6 +58,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
     RadioButtonChoice2Id: string = Guid.newGuid();
     RadioButtonChoice3Id: string = Guid.newGuid();
     RadioButtonChoice4Id: string = Guid.newGuid();
+    RadioButtonChoice5Id: string = Guid.newGuid();
 
     RadioEditorChoice1Id: string = Guid.newGuid();
     RadioEditorChoice2Id: string = Guid.newGuid();
@@ -64,6 +66,10 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
     NameRadioButtonChoice: string = Guid.NewRandomString();
     NameRadioEditorChoice: string = Guid.NewRandomString();
     private CurrentSession = SessionLocator.SelectedSession;
+    public _copyFromTenant0ExtendedListService: CopyFromTenant0ExtendedListService;
+    public FromTenantZero = "FromTenantZero";
+    private ReportTableName = "DocumentTypesandTemplates";
+
     constructor(public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService) {
         super();
 
@@ -71,15 +77,11 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
             this.documentTypeTemplatePMService = new DocumentTypeTemplatePMService();
 
         }
-
-    }
-    ngOnInit(
-
-
-    ) {
-
+        this._copyFromTenant0ExtendedListService = new CopyFromTenant0ExtendedListService();
     }
 
+    ngOnInit() {
+    }
 
     RequestAreaName: string;
     ObjectTableId: string;
@@ -314,10 +316,10 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
         this.DocumentsGridVisibility = false;
 
         switch (choose) {
+            case this.FromTenantZero:
+            case "FromFile":
             case "Blank":
                 {
-
-
                     this.ShowSaveButton = true;
                     this.CloseButtonLable = "Cancel";
                     break;
@@ -345,18 +347,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
 
                     break;
                 }
-
-            case "FromFile":
-                {
-                    this.ShowSaveButton = true;
-                    this.CloseButtonLable = "Cancel";
-                    break;
-                }
-
-
-
         }
-
     }
 
     CloseButtonClicked() {
@@ -364,7 +355,6 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
         this.CurrentSession.CloseCurrentWindow();
 
     }
-
 
     EditorRadioButtonChoice(choose: string) {
         this.ValueEditorRadio = choose;
@@ -376,12 +366,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
             var editorTool = this.ValueEditorRadio == "StimulSoft" ? "S" : "R";
             this.DocumentTypeTemplateLists = this.FullDocumentTypeTemplateLists.filter(d=> d.InActive == false && d.EditorTool == editorTool);
         }
-
-
-
     }
-
-
 
     SaveButtonClicked() {
 
@@ -390,7 +375,16 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
         if ((this.ValueRadioChoice == "FromLibrary" || this.ValueRadioChoice == "Duplicate") && !this.DocumentTypeTemplateViewModelSelected) {
             this.ValidationErrorsList.push("Please select at least template");
         }
-
+        else if (this.ValueRadioChoice == this.FromTenantZero) {
+            this.CurrentSession.StartBusyIndicatorSaving();
+            this._copyFromTenant0ExtendedListService.copyTableFromTenant0(this.ReportTableName, this.DocumentType.Code).subscribe((res: any) => {
+                var result: ServiceResponse = res;
+                if (!result.HasError) {
+                    this.CurrentSession.CloseCurrentWindowEmit("changed");
+                }
+                this.CurrentSession.StopBusyIndicator();
+            });
+        }
         else {
             const regex = new RegExp('^[^<+>#%&\\/\'"*?!:@=|]+$');
             var valid: boolean = regex.test(this.Description);

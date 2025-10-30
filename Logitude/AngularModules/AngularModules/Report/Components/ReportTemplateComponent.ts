@@ -381,8 +381,6 @@ export class ReportTemplateComponent implements OnInit {
 
 
     AddReportTemplateButtonClicked(type: string) {
-
-
         var windowArgs: any = {};
         windowArgs.DataViewModel = this;
         windowArgs.TemplateType = type;
@@ -391,13 +389,13 @@ export class ReportTemplateComponent implements OnInit {
         logWindow.Height = 500;
         logWindow.Title = type == "R" ? "New Report Template" : type == "M" ? "New Message Template" : "New Excel Report Template";
         logWindow.WindowArgs = windowArgs;
-
         logWindow.Show("./Report/Components/NewReportsTemplateComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
+                this.IsChange = true;
+                this.Refresh();
             }
         });
-
     }
 
 
