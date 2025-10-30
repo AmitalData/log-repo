@@ -10,9 +10,9 @@ namespace WebFreight.Web.Helpers.ExcelReport
 {
     public class ExcelDataProviderFieldsBuilder
     {
-        public List<DataProviderField> Build(string reportCode)
+        public List<DataProviderField> Build(string reportCode , int maxSubLevels)
         {
-            return BuildDataProviderFields(GetDataProviderType(reportCode).GetProperties(), GetDataProviderType(reportCode).Name, 1);
+            return BuildDataProviderFields(GetDataProviderType(reportCode).GetProperties(), GetDataProviderType(reportCode).Name, maxSubLevels);
         }
 
 

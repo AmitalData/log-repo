@@ -20,6 +20,7 @@
                         <div style="height:5px"></div>
                     </td>
                 </tr>
+                
                 <tr style="height:30px">
 
                     <td>
@@ -32,7 +33,7 @@
 
                        </td>
                     
-                       <td style="width:120px">
+                       <td style="width:120px" *ngIf="UseStimul">
                            <RadioButton [Name]="NewReportTypeRadio" [IsChecked]="NewReportTypeRadioChoice == 'FromFile'"  (Checked)="NewReportTypeRadioChange('FromFile')" [Text]="'From File'"></RadioButton>
 
                        </td>
@@ -58,7 +59,7 @@
                 </tr>
 
 
-                <tr *ngIf="NewReportTypeRadioChoice == 'FromFile'" style="vertical-align:top;margin-top:5px;height:25px">
+                <tr *ngIf="NewReportTypeRadioChoice == 'FromFile' && UseStimul" style="vertical-align:top;margin-top:5px;height:25px">
                     <td>
                         <table>
                             <tr>

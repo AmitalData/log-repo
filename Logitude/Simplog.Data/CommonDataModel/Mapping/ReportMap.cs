@@ -27,6 +27,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.FilterHtmlComponentUrl).HasMaxLength(256).IsUnicode(false);
             this.Property(t => t.DefaultTemplateId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DefaultMessageTemplateId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.DefaultExcelNoStimId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DefaultExcelTemplateId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FeatureUniqeCode).HasMaxLength(120).IsUnicode(false);
 
@@ -46,7 +47,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.InActive).HasColumnName("InActive");
             this.Property(t => t.FilterHtmlComponentUrl).HasColumnName("FilterHtmlComponentUrl");
             this.Property(t => t.DefaultMessageTemplateId).HasColumnName("DefaultMessageTemplateId");
-            this.Property(t => t.DefaultExcelTemplateId).HasColumnName("DefaultExcelTemplateId");
+            this.Property(t => t.DefaultMessageTemplateId).HasColumnName("DefaultMessageTemplateId");
+            this.Property(t => t.DefaultExcelNoStimId).HasColumnName("DefaultExcelNoStimId");
             this.Property(t => t.DefaultTemplateId).HasColumnName("DefaultTemplateId");
             this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode");
             this.Property(t => t.AvailableForScheduling).HasColumnName("AvailableForScheduling");
@@ -59,6 +61,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             //this.HasOptional(t => t.Feature).WithMany().HasForeignKey(d => d.FeatureId);
             this.HasOptional(t => t.ReportsTemplate).WithMany().HasForeignKey(d => d.DefaultTemplateId);
             this.HasOptional(t => t.ReportsTemplateDefaultMessage).WithMany().HasForeignKey(d => d.DefaultMessageTemplateId);
+            this.HasOptional(t => t.TemplateDefExcelNoStim).WithMany().HasForeignKey(d => d.DefaultExcelNoStimId);
             this.HasOptional(t => t.ReportsTemplateDefaultExcel).WithMany().HasForeignKey(d => d.DefaultExcelTemplateId);
 
         }

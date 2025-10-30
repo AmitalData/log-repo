@@ -281,7 +281,7 @@ export class ProcessMenuComponent implements OnDestroy {
             false
         );
 
-        this.PageChild_PRREP.SetReportTemplate(relatedRep.TemplateId);
+        this.PageChild_PRREP.SetReportTemplate(relatedRep.TemplateId, true);
         this.PageChild_PRREP.ReportsPreview(null, report, this.ReportTemplates);
         this.PageChild_PRREP.GenerateReportViewWorkerRole(reportFilterItems);
     }
