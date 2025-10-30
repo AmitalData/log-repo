@@ -2570,7 +2570,7 @@ namespace WebFreight.Web.Helpers
 
 		#region UpdateReport
 
-        public void CopyFromTenant0(int tenant, int tenantToCopy)
+        public void CopyFromTenant0(int tenant, int tenantToCopy, string reportCode = null)
         {
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenantToCopy);
             reportsTemplateRepository = new ReportsTemplateRepository(commonDataContext);
@@ -2592,6 +2592,11 @@ namespace WebFreight.Web.Helpers
             myTenantReportsTemplatesVersion = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(myTenantReportsTemplate.Select(d => d.Id).ToList(), tenantToCopy);
             ReportRepository reportRepository = new ReportRepository(commonDataContext);
             List<Report> myReports = reportRepository.GetReports(tenantToCopy).ToList();
+
+			if (!string.IsNullOrEmpty(reportCode))
+			{
+				tenantZeroReports = tenantZeroReports.Where(a => a.Code == reportCode).ToList();
+            }
 
             tenantZeroReports.ForEach(report => CreateReportTemplates(report, tenantToCopy, userId, myReports));
 

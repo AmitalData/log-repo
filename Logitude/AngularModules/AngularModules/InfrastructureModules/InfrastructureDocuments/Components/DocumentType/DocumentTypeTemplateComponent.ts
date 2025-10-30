@@ -2,7 +2,7 @@ declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {Component, OnInit}  from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, SimpleChanges}  from '@angular/core';
 import {DocumentTypePM} from '../../../../Common/EntityPMs/DocumentTypePM';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -41,7 +41,9 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
     DocumentTypeTemplates: DocumentTypeTemplatePM[];
     private CurrentSession = SessionLocator.SelectedSession;
     public documentTypePMService: DocumentTypePMService;
-    constructor() {
+    @Output() ReloadTemplates: EventEmitter<any> = new EventEmitter();
+
+constructor() {
         super();
          
         this.documentTypePMService = new DocumentTypePMService();;
@@ -85,6 +87,13 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
         
 
     
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['DocumentTypeTemplates']) {
+            this.DocumentTypeTemplates = changes['DocumentTypeTemplates'].currentValue;
+            this.FillDocumentTypeTemplate();
+        }
     }
 
     CheckManageDocumentFeature() {
@@ -150,9 +159,12 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
        
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/NewReportTemplateComponent');
-
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event) {
+                this.ReloadTemplates.emit("reload");
+            }
+        });
     }
-
 
     DeleteTemplateButtonClicked() {
 

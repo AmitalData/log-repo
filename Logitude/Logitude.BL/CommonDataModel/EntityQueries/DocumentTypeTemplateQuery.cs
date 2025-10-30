@@ -1110,7 +1110,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return DocumentsIds;
         }
 
-        public void CopyFromTenant0(int tenant, int tenatToCopy)
+        public void CopyFromTenant0(int tenant, int tenatToCopy, string documentTypeCode = null)
         {
 
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
@@ -1132,6 +1132,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             List<DocumentTypeCustomField> tenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
 
             IQueryable<DocumentTypeTemplatePM> tenantZeroDocumentTypeTemplates = this.GetDocumentTypeTemplatePMsByTenant(0).Where(d => !d.InActive && d.IsCopiedAtSignup && d.IsEnabledForCustomers);
+
+            if (!string.IsNullOrEmpty(documentTypeCode))
+            {
+                tenantZeroDocumentTypes = tenantZeroDocumentTypes.Where(d => d.Code == documentTypeCode).ToList();
+            }
 
             foreach (DocumentTypePM docType in tenantZeroDocumentTypes) {
 

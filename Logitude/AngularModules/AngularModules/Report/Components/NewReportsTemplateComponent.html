@@ -29,12 +29,12 @@
                        <td style="width:5px;"><div></div></td>
                        <td style="width:70px">
                            <RadioButton [Name]="NewReportTypeRadio" [IsChecked]="NewReportTypeRadioChoice == 'Blank'"  (Checked)="NewReportTypeRadioChange('Blank')" [Text]="'Blank'"></RadioButton>
-
                        </td>
-                    
-                       <td style="width:120px">
+                       <td style="width: 90px">
                            <RadioButton [Name]="NewReportTypeRadio" [IsChecked]="NewReportTypeRadioChoice == 'FromFile'"  (Checked)="NewReportTypeRadioChange('FromFile')" [Text]="'From File'"></RadioButton>
-
+                       </td>
+                       <td style="width: 90px">
+                           <RadioButton [Name]="NewReportTypeRadio" [IsChecked]="NewReportTypeRadioChoice == FromTenantZero"  (Checked)="NewReportTypeRadioChange(FromTenantZero)" [Text]="'From Tenant 0'"></RadioButton>
                        </td>
                        <td></td>
                    </tr>
@@ -43,7 +43,7 @@
 
                 </tr>
 
-                <tr style="vertical-align:top;height:25px">
+                <tr *ngIf="NewReportTypeRadioChoice != FromTenantZero" style="vertical-align:top;height:25px">
                     <td>
                         <table>
                             <tr>
