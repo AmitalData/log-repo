@@ -90,7 +90,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 Status = flow.Status,
                 JournalId = flow.JournalId,
                 SettingId = flow.SettingId,
-                JournalNumber = journalDict.TryGetValue(flow.JournalId, out var number) ? number : null
+                JournalNumber =flow.JournalId != null ? (journalDict.TryGetValue(flow.JournalId, out var number) ? number : null ):null
             }).ToList();
 
             return result;

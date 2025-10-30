@@ -1,62 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
+﻿using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.BL.AnalyticTableServices;
+using Logitude.BL.CommonDataModel.APIDataContract;
+using Logitude.BL.CommonDataModel.APIDataContract;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
+using Logitude.BL.ExternalService;
+using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityLists;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityOtherServices;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.Enums;
+using Logitude.BL.InvoiceModel.Tools.Behaviours;
+using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
+using Logitude.BL.InvoiceModel.Tools.DataMapping;
+using Logitude.BL.InvoiceModel.Tools.Initializers;
+using Logitude.BL.InvoiceModel.Tools.TraceEvents;
+using Logitude.BL.InvoiceModel.Tools.Validating;
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Utils;
+using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Mocks;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Mocks;
 using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Mocks;
 using Simplog.Data.ShipmentsModel.Repositories;
-using Logitude.BL.DataContracts;
-using Logitude.BL.Helpers;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.InvoiceModel.Tools.DataMapping;
-using Logitude.BL.InvoiceModel.Tools.TraceEvents;
-using Logitude.BL.InvoiceModel.Tools.Validating;
-using Logitude.Server.Tools.Counters;
-using Simplog.Server.Infrastructure;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.Def.EntityUpdateServicesExt;
-using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
-using Logitude.Accounting.Def.EntityQueryServicesExt;
-using Logitude.BL.InvoiceModel.EntityOtherServices;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.Accounting.Data.Repositories;
-using Simplog.Data.ShipmentsModel;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InfrastructureModel.EntityLists;
-using Simplog.Data.InfrastructureModel;
-using Logitude.BL.InvoiceModel.Tools.Initializers;
-using Logitude.BL.ExternalService;
-using Logitude.BL.InvoiceModel.Tools.Behaviours;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
-using Logitude.BL.Resolvers;
-using Logitude.BL.AnalyticTableServices;
-using Simplog.Server.Infrastructure.Helpers;
-using System.Data.SqlClient;
-using System.Data;
-using System.Transactions;
-using System.Data.Common;
-using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.Server.Tools.Utils;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.BL.CommonDataModel.APIDataContract;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.IdentityModel.Metadata;
+using System.Linq;
+using System.Transactions;
 using GLAccountPM = Logitude.Accounting.Def.EntityPMs.GLAccountPM;
-using Logitude.BL.InvoiceModel.Enums;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.BL.CommonDataModel.APIDataContract;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -393,12 +396,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalQueryServiceExt;
                 JournalPM journalPM = journalQuery.GetJournalByAccountingEntityIdAndCode(entityPM.Id, "4", entityPM.Tenant);
+                var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalVoidUpdateServiceExt;
 
                 if (journalPM != null)
                 {
                     CheckJournalInactiveAccounts(entityPM, journalPM);
-
-                    var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalVoidUpdateServiceExt;
                     AddAccountingEntitieJournal(journalPM, AccountingEntityJournalActions.APInvoiceVoid, journalPM.Id);
                     journalUpdate.Update(journalPM, new StornoOverrideM()
                     {
@@ -406,6 +408,42 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         AccountingEntityId = entityPM.Id,
                         AccountingEntityReference = entityPM.InvoiceNumber
                     });
+                }
+                if(entityPM.IsPrepaidExpenses){
+
+                    ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+                    var objectTable = objectTableRepository.GetObjectTableByName("APInvoice", tenant, true);
+                    IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
+                    ExpenseAllocationFlowRepository expenseAllocationFlowRepository = new ExpenseAllocationFlowRepository(MyContext);
+                    List<ExpenseAllocationFlow> entityPocos = expenseAllocationFlowRepository.GetListByEntityIAndObjectTable(tenant, objectTable?.Id, entityPM.Id).ToList();
+                    if (entityPocos != null)
+                    {
+                       foreach (var expenseAllocationFlow in entityPocos)
+                        {
+                            if (expenseAllocationFlow.JournalId == null) {
+                                expenseAllocationFlowRepository.Remove(expenseAllocationFlow);
+                                expenseAllocationFlowRepository.SubmitChanges();
+                                continue;
+                            }
+                            JournalPM journal = journalQuery.GetJournalById(expenseAllocationFlow.JournalId,entityPM.Tenant);
+                            if(journal == null)
+                            {
+                                continue;
+                            }
+                            AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.APInvoiceVoid, expenseAllocationFlow.Id);
+                            journalUpdate.Update(journal, new StornoOverrideM()
+                            {
+                                AccountingEntityCode = "4",
+                                AccountingEntityId = entityPM.Id,
+                                AccountingEntityReference = entityPM.InvoiceNumber
+                            });
+                             journal = journalQuery.GetJournalById(expenseAllocationFlow.JournalId, entityPM.Tenant);
+                            expenseAllocationFlow.JournalId = journal?.VoidedByJournalId;
+                            expenseAllocationFlowRepository.Update(expenseAllocationFlow);
+                            expenseAllocationFlowRepository.SubmitChanges();
+                        }
+                    }
+
                 }
             }
         }

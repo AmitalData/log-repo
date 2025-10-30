@@ -37,7 +37,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private ExpenseAllocationFlowPM entityPM;
         private IInvoiceContext objectContext;
         private ExpenseAllocationFlowRepository entityRepository;
-        private APInvoiceNormalService aPInvoiceNormalService;
         public ExpenseAllocationFlowService(IInvoiceContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -52,13 +51,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.entityPM.Id = IdCounter.GetNumber("ExpenseAllocationFlow", tenant).ToString();
             this.Poco = new ExpenseAllocationFlow();
             this.Poco.Id = this.entityPM.Id;
-            ExpenseAllocationFlowMapping.MapEntity(entityPM, Poco, isNewEntity);
-            if (theEntityPm.RunDate != null && theEntityPm.RunDate.Date == DateTime.Today.Date)
-            {
-                RunTaskNow();
-            }
+            ExpenseAllocationFlowMapping.MapEntity(entityPM, Poco, isNewEntity);            
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
+            if (theEntityPm.RunDate != null && theEntityPm.RunDate.Date == DateTime.Today.Date)
+            {
+                RunTaskNow(Poco);
+            }
 
         }
 
@@ -68,20 +67,24 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.entityPM = theEntityPm;
             this.Poco = entityRepository.GetSingleById(theEntityPm.Id, entityPM.Tenant);
             ExpenseAllocationFlowMapping.MapEntity(entityPM, Poco, isNewEntity);
-            if(theEntityPm.RunDate != null && theEntityPm.RunDate.Date == DateTime.Today.Date)
-            {
-                RunTaskNow();               
-            }           
+                    
              entityRepository.Update(Poco);
              entityRepository.SubmitChanges();
-           
+            if (theEntityPm.RunDate != null && theEntityPm.RunDate.Date == DateTime.Today.Date)
+            {
+                RunTaskNow(Poco);
+            }
 
         }
+        public bool ShouldCreateAnotherTask(string settingId,int numberOfPayments)
+        {                                 
+            return entityRepository.GetListBySettingId(tenant,settingId).Count() < numberOfPayments;
+         }
 
-        public void RunTaskNow()
+        public void RunTaskNow(ExpenseAllocationFlow theEntity)
         {
-            ExpenseAllocationSettingQuery query = new ExpenseAllocationSettingQuery();
-            ExpenseAllocationSettingPM settingPM = query.GetSinglePM(entityPM.SettingId,entityPM.Tenant);
+            ExpenseAllocationSettingQuery query = new ExpenseAllocationSettingQuery(tenant);
+            ExpenseAllocationSettingPM settingPM = query.GetSinglePM(theEntity.SettingId, tenant);
             if(settingPM == null)
             {
                 throw new Exception("Expense Allocation Setting not found.");
@@ -93,18 +96,34 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 throw new Exception("AP Invoice not found.");
             }
-            Poco.JournalId = AddJournalAndJournalLines(apInvoice, settingPM);
-
-            AddTask(settingPM);
+            try
+            {
+                theEntity.JournalId = AddJournalAndJournalLines(apInvoice, settingPM, theEntity.Id);
+                entityRepository.Update(theEntity);
+                entityRepository.SubmitChanges();
+            }
+            catch (Exception)
+            {
+                 theEntity.Status = "failed";
+                entityRepository.Update(theEntity);
+                entityRepository.SubmitChanges();
+                throw;
+            }
+            
+            if (ShouldCreateAnotherTask(settingPM.Id,settingPM.NumberOfPayments))
+                    AddTask(settingPM);
         }
+
+
+        
         public void AddTask(ExpenseAllocationSettingPM settingPM)
         {
             ExpenseAllocationFlow expenseAllocationFlow = new ExpenseAllocationFlow();
             expenseAllocationFlow.Id = IdCounter.GetNumber("ExpenseAllocationFlow", tenant).ToString();
-            expenseAllocationFlow.Tenant = this.entityPM.Tenant;
-            expenseAllocationFlow.SettingId = this.entityPM.SettingId;
-            expenseAllocationFlow.Status = "";
-            expenseAllocationFlow.RunDate = DateTime.Now.AddDays(5);
+            expenseAllocationFlow.Tenant =tenant;
+            expenseAllocationFlow.SettingId = settingPM.Id;
+            expenseAllocationFlow.Status = "Done";
+            expenseAllocationFlow.RunDate = GetNextRunDate(settingPM.PaymentDateType,settingPM.MonthInterval,DateTime.Now);
             expenseAllocationFlow.JournalId =null;
 
             entityRepository.Add(expenseAllocationFlow);
@@ -114,10 +133,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
 
 
-        private string AddJournalAndJournalLines(APInvoicePM theEntityPm, ExpenseAllocationSettingPM settingPM)
+        private string AddJournalAndJournalLines(APInvoicePM theEntityPm, ExpenseAllocationSettingPM settingPM,string expenseAllocationFlowId )
         {
             int tenant = theEntityPm.Tenant;
-            aPInvoiceNormalService = new APInvoiceNormalService(this.ObjectContext, theEntityPm);
           
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
@@ -128,7 +146,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journal.Tenant = tenant;
                     journal.JournalNumber = "1";
                     journal.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    journal.AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
+                    journal.AccountingDate =  TenantServerConfigration.GetCurrentDateTime(tenant);
+                    journal.DueDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                     journal.TypeCode = "0";
                     journal.StatusCode = "6";
                     journal.CreatedByUserId = theEntityPm.CreatedByUserId;
@@ -152,15 +171,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         }
                     }
                     int counter = 0;
-                    Accounting.Def.EntityPMs.GLAccountPM glAccount = aPInvoiceNormalService.GetInvoiceGLAccount(theEntityPm);
+                    Accounting.Def.EntityPMs.GLAccountPM glAccount = GetInvoiceGLAccount(theEntityPm);
                     JournalLinePM journalLine = new JournalLinePM();
                     if (!differentCurrencies)
                     {
                         journalLine = CreateJournalLinePM(theEntityPm, ++counter, journal.Id, glAccount.Id, theEntityPm.IsPrepaidExpenses ? accountingSettings?.PrepaidExpensesGLAccountId : null);
 
-                        journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency / settingPM.NumberOfPayments;
+                        journalLine.LocalAmount = (decimal)theEntityPm.SubTotalInLocalCurrency / settingPM.NumberOfPayments;
                         journalLine.CurrencyId = theEntityPm.InvoiceCurrencyId;
-                        journalLine.ForeignAmount = (decimal)theEntityPm.AmountInInvoiceCurrency / settingPM.NumberOfPayments;
+                        journalLine.ForeignAmount = (decimal)theEntityPm.SubTotalInInvoiceCurrency / settingPM.NumberOfPayments;
                         journalLine.ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate;
 
                         journal.JournalLines.Add(journalLine);
@@ -183,23 +202,28 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine = new JournalLinePM();
 
                     List<JournalLinePM> journalDebitLines = new List<JournalLinePM>();
-                if (theEntityPm.InvoiceLines[0].VatRecognizedPercentage == 0 || theEntityPm.InvoiceLines[0].VatRecognizedPercentage == null)
+
+                foreach (var item in theEntityPm.InvoiceLines)
                 {
-                    if (theEntityPm.InvoiceLines[0].VatPercentage == null || theEntityPm.InvoiceLines[0].VatRecognizedPercentage == null)
+                    if (item.VatRecognizedPercentage == 0 || item.VatRecognizedPercentage == null)
                     {
-                        theEntityPm.InvoiceLines[0].LocalAmountWithVatRecognized = theEntityPm.InvoiceLines[0].LocalCurrencyAmount;
+                        if (item.VatPercentage == null || item.VatRecognizedPercentage == null)
+                        {
+                            item.LocalAmountWithVatRecognized = item.LocalCurrencyAmount;
+                        }
+                        else
+                        {
+                            item.LocalAmountWithVatRecognized = item.LocalCurrencyAmount + ((item.VatPercentage / 100) * item.LocalCurrencyAmount);
+                        }
+
                     }
                     else
                     {
-                        theEntityPm.InvoiceLines[0].LocalAmountWithVatRecognized = theEntityPm.InvoiceLines[0].LocalCurrencyAmount + ((theEntityPm.InvoiceLines[0].VatPercentage / 100) * theEntityPm.InvoiceLines[0].LocalCurrencyAmount);
+                        item.LocalAmountWithVatRecognized = (item.LocalCurrencyAmount + ((item.VatPercentage / 100) * ((1 - item.VatRecognizedPercentage) * item.LocalCurrencyAmount)));
                     }
+                    item.ForiegnAmountWithRecognizedVat = item.LocalAmountWithVatRecognized != null ? item.LocalAmountWithVatRecognized / item.ForiegnExchangeRate : item.LocalAmountWithVatRecognized;
 
                 }
-                else
-                {
-                    theEntityPm.InvoiceLines[0].LocalAmountWithVatRecognized = (theEntityPm.InvoiceLines[0].LocalCurrencyAmount + ((theEntityPm.InvoiceLines[0].VatPercentage / 100) * ((1 - theEntityPm.InvoiceLines[0].VatRecognizedPercentage) * theEntityPm.InvoiceLines[0].LocalCurrencyAmount)));
-                }
-                theEntityPm.InvoiceLines[0].ForiegnAmountWithRecognizedVat = theEntityPm.InvoiceLines[0].LocalAmountWithVatRecognized != null ? theEntityPm.InvoiceLines[0].LocalAmountWithVatRecognized / theEntityPm.InvoiceLines[0].ForiegnExchangeRate : theEntityPm.InvoiceLines[0].LocalAmountWithVatRecognized;
 
 
 
@@ -211,7 +235,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                                                             JournalId = journal.Id,
                                                             DebitAccountId =  d.ChargeTypeGLAccountId,
-                                                            CreditAccountId = theEntityPm.VendorGLAccountId,
+                                                            CreditAccountId = accountingSettings?.PrepaidExpensesGLAccountId,
                                                             Line = ++counter,
                                                             DocumentDate = theEntityPm.InvoiceDate.Value,
                                                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
@@ -242,7 +266,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalUpdateServiceExt;
-                    AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.APInvoiceApprove,settingPM.Id);
+                    AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.APInvoiceApprove, expenseAllocationFlowId);
                     journalUpdate.Update(journal);
                     return journal.Id;
 
@@ -254,7 +278,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private JournalLinePM CreateJournalLinePM(APInvoicePM theEntityPm, int lineNo, string journalId, string glAccountId, string prepaidExpensesGLAccountId = null)
         {
-            APInvoiceNormalService aPInvoiceNormalService = new APInvoiceNormalService(this.ObjectContext, theEntityPm);
              int tenant = theEntityPm.Tenant;
             JournalLinePM journalLine = new JournalLinePM();
             journalLine.Tenant = tenant;
@@ -270,13 +293,23 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalLine.Reference2 = theEntityPm.MainEntityReference;
             journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
             journalLine.Notes = theEntityPm.InternalNotes;
-            journalLine.CreditAccountId = glAccountId;
+            journalLine.CreditAccountId = prepaidExpensesGLAccountId;
 
-            journalLine.DebitAccountId =  aPInvoiceNormalService.SetDebitAccountForSingleLineAPInvoice(theEntityPm);
+            journalLine.DebitAccountId =  SetDebitAccountForSingleLineAPInvoice(theEntityPm);
             journalLine.ChangeSetOp = ChangeSetOperation.Insert;
             return journalLine;
         }
+        public string SetDebitAccountForSingleLineAPInvoice(APInvoicePM invoice)
+        {
+            if (invoice.InvoiceLines.Count == 1)
+            {
+                APInvoiceLinePM invoiceLine = invoice.InvoiceLines?.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete)?.First();
+                return invoiceLine.ChargeTypeGLAccountId;
 
+            }
+
+            else return null;
+        }
         private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
         {
             IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride(string.Empty, 1)) as IAccountingEntityJournalUpdateServiceExt;
@@ -290,5 +323,149 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
             return accountingSettings;
         }
+        public GLAccountPM GetInvoiceGLAccount(APInvoicePM invoicePM)
+        {
+            GLAccountPM glAccount;
+            if (invoicePM.VendorGLAccountId != null)
+                glAccount = GetGLAccountById(invoicePM.VendorGLAccountId, invoicePM.Tenant);
+            else
+                glAccount = GetGLAccountByCardId(invoicePM.VendorId, invoicePM.Tenant);
+            return glAccount;
+        }
+        private static GLAccountPM GetGLAccountById(string glaccountId, int tenant)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IGLAccountQueryServiceExt;
+            GLAccountPM glaAccount = glAccountQuery.GetSingleGLAccountPM(glaccountId, tenant);
+            return glaAccount;
+        }
+        private static GLAccountPM GetGLAccountByCardId(string cardId, int tenant)
+        {
+            GLAccountPM glaAccount = null;
+            CardRepository cardRep = new CardRepository(tenant);
+            Card card = cardRep.GetSingleCard(cardId, tenant);
+            if (card != null)
+            {
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IGLAccountQueryServiceExt;
+                glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
+            }
+
+            return glaAccount;
+        }
+        public static DateTime GetNextRunDate(
+     string frequencyPattern,
+     int interval,
+     DateTime lastRunDate){
+
+
+            var parts = frequencyPattern.Split('_');
+            if (parts.Length == 0)
+                throw new ArgumentException("Invalid frequency pattern");
+
+            string type = parts[0]; 
+            string option = parts.Length > 1 ? parts[1] : null;
+            string value = parts.Length > 2 ? parts[2] : null;
+
+            DateTime nextDate = lastRunDate;
+
+            if (type == "Weekly")
+            {  
+                DayOfWeek targetDay = ParseDayOfWeek(option);
+                nextDate = GetNextWeeklyDate(lastRunDate, targetDay, interval);
+            }
+            else if (type == "Monthly")
+            {
+                nextDate = GetNextMonthlyDate(option, value, interval, lastRunDate);
+            }
+            else
+            {
+                throw new InvalidOperationException("Unknown frequency type: " + type);
+            }
+
+            return nextDate;
+
+            
+        }
+
+        private static DateTime GetNextMonthlyDate(string option, string value, int interval, DateTime lastRunDate)
+        {
+            DateTime targetMonth = lastRunDate.AddMonths(interval);
+
+            switch (option)
+            {
+                case "Start":
+                    return new DateTime(targetMonth.Year, targetMonth.Month, 1);
+
+                case "End":
+                    int daysInMonth = DateTime.DaysInMonth(targetMonth.Year, targetMonth.Month);
+                    return new DateTime(targetMonth.Year, targetMonth.Month, daysInMonth);
+
+                case "SpecificDate":
+                    int day = int.Parse(value);
+                    int maxDays = DateTime.DaysInMonth(targetMonth.Year, targetMonth.Month);
+                    if (day > maxDays) day = maxDays;
+                    return new DateTime(targetMonth.Year, targetMonth.Month, day);
+
+                case "FirstWeek":
+                case "SecondWeek":
+                case "ThirdWeek":
+                case "FourthWeek":
+                    int weekNum = GetWeekNumber(option);
+                    DayOfWeek dayOfWeekEnum = ParseDayOfWeek(value);
+                    return GetMonthlyWeekday(targetMonth, weekNum, dayOfWeekEnum);
+
+                default:
+                    throw new InvalidOperationException("Unknown monthly option: " + option);
+            }
+        }
+
+        private static int GetWeekNumber(string option)
+        {
+            if (option == "FirstWeek") return 1;
+            if (option == "SecondWeek") return 2;
+            if (option == "ThirdWeek") return 3;
+            if (option == "FourthWeek") return 4;
+            throw new ArgumentException("Invalid week option: " + option);
+        }
+
+        private static DateTime GetMonthlyWeekday(DateTime month, int weekNum, DayOfWeek targetDay)
+        {
+            DateTime firstDay = new DateTime(month.Year, month.Month, 1);
+            int offset = ((int)targetDay - (int)firstDay.DayOfWeek + 7) % 7;
+            return firstDay.AddDays(offset + (weekNum - 1) * 7);
+
+        }
+
+        private static DayOfWeek ParseDayOfWeek(string day)
+        {
+            if (string.IsNullOrEmpty(day))
+                throw new ArgumentException("Invalid day of week");
+
+            switch (day.ToLower())
+            {
+                case "sunday": return DayOfWeek.Sunday;
+                case "monday": return DayOfWeek.Monday;
+                case "tuesday": return DayOfWeek.Tuesday;
+                case "wednesday": return DayOfWeek.Wednesday;
+                case "thursday": return DayOfWeek.Thursday;
+                case "friday": return DayOfWeek.Friday;
+                case "saturday": return DayOfWeek.Saturday;
+                default:
+                    throw new ArgumentException("Invalid day of week: " + day);
+            }
+        }
+
+        private static DateTime GetNextWeeklyDate(DateTime fromDate, DayOfWeek targetDay, int interval)
+        {
+            DateTime next = fromDate.AddDays(1);
+            while (next.DayOfWeek != targetDay)
+                next = next.AddDays(1);
+
+            return next.AddDays((interval - 1) * 7);
+        }
+
+
+
+
+
     }
 }

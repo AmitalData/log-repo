@@ -25,7 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ExpenseAllocationFlowUpdateClass
    {  		
-		public const string HashString = "286f9812d514e1cc904819bdc0ec1126";
+		public const string HashString = "dbc0c2be90634e968922dc71b048faa5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,7 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Expense Allocation Flows",
-			      				    Code =  "f315",
+			      				    Code =  "5bb8",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -635,7 +635,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext,int contextTenant)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ExpenseAllocationFlowObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ExpenseAllocationFlow" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ExpenseAllocationFlowTextCode_ExpenseAllocationFlowOExpenseAllocationSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationFlow.O.ExpenseAllocationSetting", DefaultText = "Expense Allocation Setting",LocalDefaultText = @"BS64:IteU15LXk9eo15XXqiDXpNeo15nXodeUIg==", ObjectTableId = ExpenseAllocationFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationFlowTextCode_ExpenseAllocationFlowOAmountDue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationFlow.O.AmountDue", DefaultText = "Amount Due:",LocalDefaultText = @"BS64:Iteg16nXkNeoINec16nXnNedOiI=", ObjectTableId = ExpenseAllocationFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationFlowTextCode_ExpenseAllocationFlowOAmountPaid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationFlow.O.AmountPaid", DefaultText = "amount Paid ",LocalDefaultText = @"BS64:Itep15XXnNedINei15Mg15vXlDoi", ObjectTableId = ExpenseAllocationFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationFlowTextCode_ExpenseAllocationFlowOInvoiceVoided = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationFlow.O.InvoiceVoided", DefaultText = "Invoice Voided",LocalDefaultText = @"BS64:IteX16nXkdeV16DXmdeqINeR15XXmNec15Qi", ObjectTableId = ExpenseAllocationFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+   
 	    
 }
 

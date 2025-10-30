@@ -1,4 +1,4 @@
-﻿<div class="TabHolder">
+﻿<div *ngIf="isReady"  class="TabHolder">
     <table>
         <tr class="TabTitleRow">
             <td>{{'Customer.TH.AWBStock' | TextCodeTranslationPipe}}</td>
@@ -8,33 +8,51 @@
             <td>
                 <table>
                     <tr>
-                        <td class="HeaderScreenLable" style="width:40px;">
-                            סכום מקורי:
+                        <td class="HeaderScreenLable" style="width: 40px">
+                            {{'Accounting.General.O.OriginalAmount' | TextCodeTranslationPipe}}
                         </td>
-                        <td  style="color:#282E30;font-size:12px;width:100px;">
-                            {{this.EntityPM.SubTotalInInvoiceCurrency}}
+                        <td
+                            style="
+                                color: #282e30;
+                                font-size: 12px;
+                                width: 100px;
+                            "
+                        >
+                            {{EntityPM.SubTotalInInvoiceCurrency |
+                            NumbersPipe:'N2'}}
                         </td>
-                        <td class="HeaderScreenLable" style="width:40px;">
-                            שולם עד כה:
+                        <td class="HeaderScreenLable" style="width: 40px">
+                            {{'ExpenseAllocationFlow.O.AmountPaid' | TextCodeTranslationPipe}}
                         </td>
-                        <td  style="color:#282E30;font-size:12px;width:100px;">
-                            {{amountPaid | NumbersPipe:'N2'}}         
+                        <td
+                            style="
+                                color: #282e30;
+                                font-size: 12px;
+                                width: 100px;
+                            "
+                        >
+                            {{isVoided ? 0 : (amountPaid | NumbersPipe:'N2')}}
                         </td>
-                        <td  class="HeaderScreenLable" style="width:40px;">
-                            נשאר לשלם:
+                        <td class="HeaderScreenLable" style="width: 40px">
+                            {{'ExpenseAllocationFlow.O.AmountDue' | TextCodeTranslationPipe}}
                         </td>
-                        <td style="color:#282E30;font-size:12px;width:100px;">
-                            {{amountDue | NumbersPipe:'N2'}}
+                        <td
+                            style="
+                                color: #282e30;
+                                font-size: 12px;
+                                width: 100px;
+                            "
+                        >
+                            {{isVoided ? ('ExpenseAllocationFlow.O.InvoiceVoided' | TextCodeTranslationPipe) : (amountDue | NumbersPipe:'N2')}}
                         </td>
-                        
-                        
+
                         <td style="width: 700px">
                             <div></div>
                         </td>
 
                         <td style="width: 100px">
                             <button class="Button" (click)="settingsClicked()">
-                                הגדרות פריסה
+                                {{'ExpenseAllocationFlow.O.ExpenseAllocationSetting' | TextCodeTranslationPipe}}
                             </button>
                         </td>
 
@@ -66,7 +84,17 @@
                                             max-width: 200px;
                                         "
                                     >
-                                        תאריך ריצה
+                                    {{'ExpenseAllocationFlow.F.RunDate' | TextCodeTranslationPipe}}
+                                </td>
+                                    <td
+                                        style="
+                                            width: 120px;
+                                            min-width: 120px;
+                                            max-width: 120px;
+                                        "
+                                    >
+                                    {{'Accounting.General.O.Amount' | TextCodeTranslationPipe}}
+
                                     </td>
                                     <td
                                         style="
@@ -75,16 +103,7 @@
                                             max-width: 120px;
                                         "
                                     >
-                                        סכום
-                                    </td>
-                                    <td
-                                        style="
-                                            width: 120px;
-                                            min-width: 120px;
-                                            max-width: 120px;
-                                        "
-                                    >
-                                        פקודה
+                                        {{'ExpenseAllocationFlow.F.JournalNumber' | TextCodeTranslationPipe}}
                                     </td>
                                     <td
                                         style="
@@ -93,9 +112,10 @@
                                             max-width: 90px;
                                         "
                                     >
-                                        סטטוס
+                                    {{'ExpenseAllocationFlow.F.Status' | TextCodeTranslationPipe}}
+   
                                     </td>
-                                   
+
                                     <td class="LastChild">
                                         <div></div>
                                     </td>
@@ -104,7 +124,9 @@
                         </div>
 
                         <div class="SimpleGridViewBody">
-                            <table>
+                            <table
+                                *ngIf="expenseAllocationFlowLists?.length > 0"
+                            >
                                 <tr
                                     class="SimpleGridViewRow"
                                     *ngFor="let item of expenseAllocationFlowLists"
@@ -141,8 +163,12 @@
                                             max-width: 120px;
                                         "
                                     >
-                                        <span class="hyperlink"  (click)="OpenJournal(item.JournalId)">{{item.JournalNumber}}</span>
-                                    </td>                                 
+                                        <span
+                                            class="hyperlink"
+                                            (click)="OpenJournal(item.JournalId)"
+                                            >{{item.JournalNumber}}</span
+                                        >
+                                    </td>
 
                                     <td
                                         class="GridViewCell"
@@ -166,6 +192,20 @@
                                     </td>
                                 </tr>
                             </table>
+                            <div
+                                *ngIf="expenseAllocationFlowLists?.length === 0"
+                            >
+                                <div
+                                    style="
+                                        text-align: center;
+                                        font-size: 18px !important ;
+                                        color: gray;
+                                    "
+                                >
+                                    {{ 'General.O.NoDataFound' |
+                                    TextCodeTranslationPipe }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

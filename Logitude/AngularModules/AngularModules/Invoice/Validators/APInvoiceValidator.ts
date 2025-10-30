@@ -38,8 +38,11 @@ export class APInvoiceValidator {
                 this.Errors.push(this.message.replace("%FieldName", "Vat Number"));
             }
         }
-        if(this.EntityPM.IsPrepaidExpenses && !this.EntityPM.HasExpenseAllocationSetting ){
+        if(this.EntityPM.IsPrepaidExpenses && !this.EntityPM.HasExpenseAllocationSetting && this.EntityPM.SetApproved){
             this.Errors.push(TextCodeTranslator.Translate("APInvoice.O.ExpenseAllocationSettingIsRequiredForPrepaidExpenses"));
+        }
+        if(this.EntityPM.ExpenseAllocationStartDate != null && this.EntityPM.ExpenseAllocationStartDate < this.EntityPM.AccountingDate && this.EntityPM.IsPrepaidExpenses  && this.EntityPM.SetApproved){
+            this.Errors.push(TextCodeTranslator.Translate("APInvoice.O.ExpenseAllocationSettingStartDateError"));
         }
         if (entityPM.IsMultipleEntities) {
 
