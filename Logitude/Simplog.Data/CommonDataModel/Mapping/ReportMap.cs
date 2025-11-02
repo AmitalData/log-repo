@@ -47,7 +47,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.InActive).HasColumnName("InActive");
             this.Property(t => t.FilterHtmlComponentUrl).HasColumnName("FilterHtmlComponentUrl");
             this.Property(t => t.DefaultMessageTemplateId).HasColumnName("DefaultMessageTemplateId");
-            this.Property(t => t.DefaultMessageTemplateId).HasColumnName("DefaultMessageTemplateId");
             this.Property(t => t.DefaultExcelNoStimId).HasColumnName("DefaultExcelNoStimId");
             this.Property(t => t.DefaultTemplateId).HasColumnName("DefaultTemplateId");
             this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode");
