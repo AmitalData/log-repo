@@ -758,7 +758,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("TradeAgreementCountry1", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("TradeAgreementCountry2", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("TradeAgreementGroupOfCountries", this.ObjectTableName, enabled);
-        if(this.entityPM.CooTypeCode != "9" && this.entityPM.CooTypeCode != "1" && this.entityPM.CooTypeCode != "2"){
+        if(this.entityPM.CooTypeCode != "7" && this.entityPM.CooTypeCode != "9" && this.entityPM.CooTypeCode != "1" && this.entityPM.CooTypeCode != "2"){
             this.UIProperties.SetEnabled("PlaceOfManufacture", this.ObjectTableName, enabled);
             this.UIProperties.SetEnabled("ZipCodeOfManufacture", this.ObjectTableName, enabled);
         }
