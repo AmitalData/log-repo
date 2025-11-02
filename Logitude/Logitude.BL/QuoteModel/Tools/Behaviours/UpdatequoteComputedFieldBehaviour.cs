@@ -278,13 +278,11 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 			var costCurrencyId = distinctCurrencies.Count == 1 ? distinctCurrencies[0] : quoteEntityPM.SaleCurrencyId;
 
 
-			
 			var costTotalAmount = quoteChargesVal.Sum(d =>
 			{
-				if (d.CostCurrencyId == costCurrencyId)
-					return d.CostTotalAmount;
-				else
-					return ConvertCurrency(d.CostTotalAmount, d.CostCurrencyId, costCurrencyId, accountingCurrencyId);
+				return d.CostCurrencyId == costCurrencyId
+			          ? d.CostTotalAmount
+			          : ConvertCurrency(d.CostTotalAmount, d.CostCurrencyId, costCurrencyId, accountingCurrencyId);
 			});
 
 
@@ -302,8 +300,8 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 			var ratesTableQuery = new RatesTableQuery(ratesTablesRepository);
 	
 
-			RatesTablePM rateFrom = ratesTableQuery.GetLastRateByValueDate(initializer.Tenant, fromCurrencyId, accountingCurrencyId, DateTime.Now);
-			RatesTablePM rateTo = ratesTableQuery.GetLastRateByValueDate(initializer.Tenant, toCurrencyId, accountingCurrencyId, DateTime.Now);
+			RatesTablePM rateFrom = ratesTableQuery.GetLastRateByValueDate(initializer.Tenant, fromCurrencyId, accountingCurrencyId, quoteEntityPM.OpenDate);
+			RatesTablePM rateTo = ratesTableQuery.GetLastRateByValueDate(initializer.Tenant, toCurrencyId, accountingCurrencyId, quoteEntityPM.OpenDate);
 
 			double fromRate = rateFrom?.Rate ?? 1.0;
 			double toRate = rateTo?.Rate ?? 1.0;
