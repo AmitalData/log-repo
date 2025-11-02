@@ -1176,12 +1176,18 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (this.EntityPM.IsPrepaidExpenses != newValue) {
             this.EntityPM.IsPrepaidExpenses = newValue;  
             if (newValue) {
-                this.ShowRecurringScheduleSettings();
+                this.setPrepaidExpensesForLines(true);
+                this.showRecurringScheduleSettings();
             }          
         }
     }
+    setPrepaidExpensesForLines(isPrepaid: boolean){
+        this.ItemsSource.Collection.forEach(item => {
+            item.IsPrepaidExpenses = isPrepaid;
+        });
+    }
     expenseAllocationSettingPMService: ExpenseAllocationSettingPMService = new ExpenseAllocationSettingPMService();
-    ShowRecurringScheduleSettings(){
+    showRecurringScheduleSettings(){
         const paymentType = this.expenseAllocationSetting?.PaymentDateType;
           
           var IsMonthly = true;
@@ -1428,7 +1434,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         line.ForiegnCurrencyId = this.InvoiceCurrencyId;
         line.ForiegnCurrencyCode = this.InvoiceCurrencyCode;
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
-
+        line.IsPrepaidExpenses = this.IsPrepaidExpenses;
         var myService: CardListService = new CardListService();
         myService.getSingle(this.VendorId).subscribe((myResult: any) => {
             var myResponse: ServiceResponse = myResult;
@@ -1443,6 +1449,14 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 logWindow.DataContext = addEditViewModel;
                 var title = TextCodeTranslator.Translate("APInvoiceLine.O.AddInvoiceLine");
                 logWindow.Title = title;
+                logWindow.ComponentLoaded.subscribe(comp => {
+                    logWindow.WindowClosed.subscribe(s => {
+                        if (s) {
+                          
+                               this.markSameChargeTypeLinesAsPrepaid(line.ChargesTypeId ,line.IsPrepaidExpenses);
+                        }
+                    });
+                });
                 logWindow.Show('./InvoiceModules/APInvoice/Components/EditTabs/AddEditAPGeneralInvoiceLineComponent');
             }
         });
@@ -1452,8 +1466,25 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             var logWindow = new LogitudeWindow();
             logWindow.Title = TextCodeTranslator.Translate("APInvoiceLine.O.EditInvoiceLine");
             logWindow.DataContext = item;
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(s => {
+                    if (s) {
+                        if(item.IsPrepaidExpenses)
+                           this.markSameChargeTypeLinesAsPrepaid(item.ChargesTypeId,item.IsPrepaidExpenses);
+                    }
+                });
+            });
             logWindow.Show('./InvoiceModules/APInvoice/Components/EditTabs/AddEditAPGeneralInvoiceLineComponent');
         }
+    }
+    markSameChargeTypeLinesAsPrepaid(chargesTypeId: string, isPrepaid: boolean){
+       
+            this.ItemsSource.Collection.forEach(item => {
+                if(item.chargesTypeId == chargesTypeId){
+                    item.IsPrepaidExpenses = isPrepaid;
+                }
+            });
+        
     }
 }
 export class APInvoiceLineItem extends BaseComponent {
@@ -1508,7 +1539,7 @@ export class APInvoiceLineItem extends BaseComponent {
     get InvoiceCurrencyId() {
         return this.invoicePM.InvoiceCurrencyId;
     }
-
+     
     get ForiegnCurrencyId() { return this.invoiceLinePM.ForiegnCurrencyId; }
     set ForiegnCurrencyId(value: string) {
         if (this.invoiceLinePM.ForiegnCurrencyId != value) {
@@ -1549,7 +1580,17 @@ export class APInvoiceLineItem extends BaseComponent {
     get ForiegnCurrencyCode() {
         return this.invoiceLinePM.ForiegnCurrencyCode;
     }
-
+    get IsPrepaidExpenses() {
+        return this.invoicePM.IsPrepaidExpenses;
+    }
+    set IsPrepaidExpenses(value: boolean) {
+        if (this.invoiceLinePM != null) {
+            if (this.invoiceLinePM.IsPrepaidExpenses != value) {
+                this.invoiceLinePM.IsPrepaidExpenses = value;
+                
+            }
+        }
+    }
     UpdateCurrencyRateClicked() {
 
         var loadingDate = this.fatherComponent.InvoiceDate;

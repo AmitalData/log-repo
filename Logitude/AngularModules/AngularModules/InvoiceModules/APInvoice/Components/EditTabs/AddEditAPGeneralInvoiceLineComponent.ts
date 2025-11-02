@@ -157,7 +157,7 @@ export class AddEditAPGeneralInvoiceLineComponent {
         this.myCloner.AddField('InvoiceCurrencyAmount');
         this.myCloner.AddField('OpenAmount');
         this.myCloner.AddField('PayableDebitGLAcountId');
-
+        this.myCloner.AddField('IsPrepaidExpenses');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.fatherComponent.EntityPM);
     }
