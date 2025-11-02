@@ -276,6 +276,10 @@ export class APInvoiceLinePM {
     private payableDebitGLAcountId: string;
     public get PayableDebitGLAcountId() { return this.payableDebitGLAcountId; }
     public set PayableDebitGLAcountId(newValue: string) { if (this.payableDebitGLAcountId != newValue) { this.payableDebitGLAcountId = newValue; this.MarkAsDirty("PayableDebitGLAcountId"); } }
+        
+    private isPrepaidExpenses: boolean;
+    public get IsPrepaidExpenses() { return this.isPrepaidExpenses; }
+    public set IsPrepaidExpenses(newValue: boolean) { if (this.isPrepaidExpenses != newValue) { this.isPrepaidExpenses = newValue; this.MarkAsDirty("IsPrepaidExpenses"); } }
        
 	 
 
@@ -313,4 +317,4 @@ export class APInvoiceLinePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

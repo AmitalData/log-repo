@@ -249,6 +249,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
                                                             Notes = !string.IsNullOrEmpty(d.Notes) && !string.IsNullOrWhiteSpace(d.Notes) ? d.Notes : theEntityPm.InternalNotes,
                                                             ExcludeFromTaxReport = d.ExcludeFromTaxReport,
+                                                          
+
                                                         }).ToList();
 
                     journalDebitLines.AddRange(journalLines);

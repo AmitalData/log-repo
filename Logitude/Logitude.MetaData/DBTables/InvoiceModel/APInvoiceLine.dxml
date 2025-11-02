@@ -176,6 +176,12 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ExcludeFromTaxReport"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="PayableDebitGLAcountId"
     Type="varchar"
     Size="15">
@@ -183,7 +189,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ExcludeFromTaxReport"
+    Name="IsPrepaidExpenses"
     Type="bit">
     <Constraints
       Nullable="true" />
