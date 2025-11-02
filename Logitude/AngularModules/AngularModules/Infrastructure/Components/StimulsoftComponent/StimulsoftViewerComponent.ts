@@ -690,8 +690,10 @@ export class StimulsoftViewerComponent implements OnInit {
                     this.RunReport();
                 }
             } else {
-                this.StimulsoftArgData.DefaultTemplateId = "";
-                this.StimulsoftArgData.DefaultExcelTemplateId = "";
+                if (this.TemplateType === "E")
+                    this.StimulsoftArgData.DefaultExcelTemplateId = "";
+                else
+                    this.StimulsoftArgData.DefaultTemplateId = "";
             }
         }
     }
