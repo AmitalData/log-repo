@@ -1,7 +1,8 @@
 ﻿using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,8 @@ namespace Logitude.Server.Tools.Utils
                 ProcessLockReleaseToken processLockToken = null;
             var repo = new GeneralLockRepository(tenant);
             LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: trylock<<<" + key2Upsert.ToString());
-            var lockPoco = repo.GetSingleGeneralLockNOWAIT(key2Upsert, tenant);
+			NetCommonHelper.Logger.DevLog.Instance.WriteError("MultiProcessLockTableUtil: trylock<<<" + key2Upsert.ToString());
+			var lockPoco = repo.GetSingleGeneralLockNOWAIT(key2Upsert, tenant);
             if (lockPoco == null)
             {
                 using (var scope = TransactionFactory.GetNewTransaction())
@@ -37,18 +39,22 @@ namespace Logitude.Server.Tools.Utils
                         GeneralKey = key2Upsert,
                         CreatedAt = TenantServerConfigration.GetCurrentDateTime(tenant)
                     });
-                    LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: LockItAndGetReleaseToken:ADD<<<" + key2Upsert.ToString());
+					NetCommonHelper.Logger.DevLog.Instance.WriteError("MultiProcessLockTableUtil: LockItAndGetReleaseToken:ADD<<<" + key2Upsert.ToString());
+					LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: LockItAndGetReleaseToken:ADD<<<" + key2Upsert.ToString());
                     repo.SubmitChanges();
                     scope.Complete();
                 }
-                LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: trylock<<<" + key2Upsert.ToString());
+				NetCommonHelper.Logger.DevLog.Instance.WriteError("MultiProcessLockTableUtil: trylock<<<" + key2Upsert.ToString());
+				LogMessagingUtil.Instance.AppendLine("MultiProcessLockTableUtil: trylock<<<" + key2Upsert.ToString());
                 lockPoco = repo.GetSingleGeneralLockNOWAIT(key2Upsert, tenant);
 
             }
 
             if (lockPoco == null)
             {
-                throw new Exception("MultiProcessLockTableUtil:lockPoco ==null");
+				NetCommonHelper.Logger.DevLog.Instance.WriteError("Exception MultiProcessLockTableUtil:lockPoco ==null" + key2Upsert.ToString());
+
+				throw new Exception("MultiProcessLockTableUtil:lockPoco ==null");
             }
 
 

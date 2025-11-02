@@ -145,9 +145,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
             }
 
-          
 
-            LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBUD2LT  !!!");
+			NetCommonHelper.Logger.DevLog.Instance.WriteError("Build !!!Requestsheet  with Interface Type  = UCBUD2LT  !!! " + documentsFilingPM.Id);
+
+			LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBUD2LT  !!!");
 
             string uniComm = null;
             string fileName = null;
@@ -352,7 +353,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
  
             DeclarationPM declarationPM;
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreateUD2LTService");
+            NetCommonHelper.Logger.DevLog.Instance.WriteError("CreateUD2LTService");
           
             try
             {
@@ -361,7 +362,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 if (_DocumentsFilingPM == null)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("_DocumentsFilingPM == null");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError("_DocumentsFilingPM == null");
                     return;
                 }
                
@@ -373,7 +374,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 if (String.IsNullOrWhiteSpace(_DocumentsFilingPM.DocumentTypeCode))
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("CreateUD2LTService.DOC_ID== null id:{0}", _DocumentsFilingPM.Id));
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("CreateUD2LTService.DOC_ID== null id:{0}", _DocumentsFilingPM.Id));
                     return;
                 }
 
@@ -381,7 +382,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 if (!IsConnected2Declaration())
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("!IsConnected2Decalaration() id:{0}", _DocumentsFilingPM.Id));
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("!IsConnected2Decalaration() id:{0}", _DocumentsFilingPM.Id));
                      return;
                 }
 
@@ -400,33 +401,33 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 if (declarationPM == null)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("declarationPM == null id:{0}", _DocumentsFilingPM.Id));
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("declarationPM == null id:{0}", _DocumentsFilingPM.Id));
                    
                      return;
                 }
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"declarationPM.id={declarationPM.Id},CustomFileNo={declarationPM.CustomFileNo}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"declarationPM.id={declarationPM.Id},CustomFileNo={declarationPM.CustomFileNo}");
 
                  if (declarationPM.PaymentDate.HasValue || declarationPM.IsSubmitDeclaration == true)
                 {
                     shouldCreateDCAComm = false;
-                     NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Declaration has already been payed id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
+                     NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("Declaration has already been payed id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
                     return;
                 }
 
                 if ( declarationPM.IsCourierDeclaration || declarationPM.UNFCourier)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("if ( declarationPM.IsCourierDeclaration || declarationPM.UNFCourier) id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("if ( declarationPM.IsCourierDeclaration || declarationPM.UNFCourier) id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
 
 
                     shouldCreateDCAComm = true;
                 }
                 else
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("if !( declarationPM.IsCourierDeclaration || declarationPM.UNFCourier) id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("if !( declarationPM.IsCourierDeclaration || declarationPM.UNFCourier) id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
 
                     if (declarationPM.IsDiamondDeclaration && declarationPM.Direction!="E")
                     {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("if (declarationPM.IsDiamondDeclaration && declarationPM.Direction!=\"E\") id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("if (declarationPM.IsDiamondDeclaration && declarationPM.Direction!=\"E\") id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
 
                          var amitalContext = AmitalContext.GetContext(tenant);
                         var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
@@ -439,31 +440,31 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                             if (!String.IsNullOrWhiteSpace(declarationPM.CustomerCode) && def.Contains(declarationPM.CustomerCode)) 
                             {
-                               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("def.DEFDATA.Contains(declarationPM.CustomerId)");
+                               NetCommonHelper.Logger.DevLog.Instance.WriteError("def.DEFDATA.Contains(declarationPM.CustomerId)");
                                 shouldCreateDCAComm = true;
                             }
                             else
                             {
-                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("default CGG_DEC_DOC_CLT does not contains declarationPM.CustomerId  id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
+                                NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("default CGG_DEC_DOC_CLT does not contains declarationPM.CustomerId  id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
 
                              }
                         }
                         else
                         {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("default CGG_DEC_DOC_CLT is empty  id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
+                            NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("default CGG_DEC_DOC_CLT is empty  id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
 
                          }
                     }
                     else
                     {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("default CGG_DEC_DOC_CLT is empty  id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("default CGG_DEC_DOC_CLT is empty  id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
 
-                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Not Diamond Declaration   id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("Not Diamond Declaration   id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
 
  
                         if (CheckIsSendByDocType(declarationPM))
                         {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("\"if (CheckIsSendByDocType())  id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
+                            NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("\"if (CheckIsSendByDocType())  id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
 
                              shouldCreateDCAComm = true;
                         }
@@ -471,7 +472,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                        
                         else
                         {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Not Connect To Ticket   id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
+                            NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("Not Connect To Ticket   id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
 
                          }
                     }
@@ -480,14 +481,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 if (!shouldCreateDCAComm)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("!shouldCreateDCAComm  id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("!shouldCreateDCAComm  id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
 
                      return;
                 }
 
                 if (TicketalreadyExistforthisDocument(declarationPM))
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("TicketalreadyExistforthisDocument() id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("TicketalreadyExistforthisDocument() id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
                      return;
 
                 }
@@ -496,23 +497,25 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
                 string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
-                using (var disposableToken =
+				NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("TICKET key {2} id:{0} dec {1}", _DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant, key));
+
+				using (var disposableToken =
                      ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key, "UCBUD2LT.CRS", true)
                     )
                 {
 					Stopwatch _Stopwatch;
 					_Stopwatch = Stopwatch.StartNew();
-
+					NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("TICKET CreateCRS tenant: {0} id: {1} decId: {2}", tenant, _DocumentsFilingPM.Id, declarationPM.Id));
 					var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCBUD2LT_MsgMessagingService();
                     string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId, _DocumentsFilingPM, declarationPM.Id);
-                     NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("crs {2} id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo, crs));
+                     NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("TICKET crs {2} id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo, crs));
 
                 }
 
             }
             catch (Exception E)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Exception  id:{0} ex: {1}", _DocumentsFilingPM?.Id, E.ToString() + E.StackTrace));
+                NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("TICKET Exception  id:{0} ex: {1}", _DocumentsFilingPM?.Id, E.ToString() + E.StackTrace));
                 throw;
             }
             finally
@@ -528,11 +531,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
     
         private bool CheckIsSendByDocType(DeclarationPM declartionPM)
         {
-             NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("CheckIsSendByDocType"));
+             NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("CheckIsSendByDocType"));
 
             if (_DocumentsFilingPM != null)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("_DocumentsFilingPM != null id:{0}  ", _DocumentsFilingPM.Id ));
+                NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("_DocumentsFilingPM != null id:{0}  ", _DocumentsFilingPM.Id ));
             }
  
 
@@ -572,13 +575,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }
                     else
                     {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("empty documentTypeCustomsDataPM.CustomsDoucumentTypeCode"));
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("empty documentTypeCustomsDataPM.CustomsDoucumentTypeCode"));
 
                      }
                 }
                 else
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("empty documentTypePM.Code"));
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("empty documentTypePM.Code"));
 
                  }
 
@@ -593,16 +596,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
             catch (Exception ee)
             {
 
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format($"CheckIsSendByDocType:error:{ee.Message}"));
+                NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format($"CheckIsSendByDocType:error:{ee.Message}"));
 
                
             }
             finally
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format($"CheckIsSendByDocType:CustomsDocumentUpload:{CustomsDocumentUpload}"));
+                NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format($"CheckIsSendByDocType:CustomsDocumentUpload:{CustomsDocumentUpload}"));
 
             }
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("AutoSending"));
+            NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("AutoSending"));
 
    
             return AutoSending;
@@ -682,7 +685,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         private bool IsConnected2Declaration()
         {
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("IsConnected2Decalaration() id:{0}, EntityId:{1} ,ExternalEntityReference{2} ", _DocumentsFilingPM.Id, this._DocumentsFilingPM.EntityId, this._DocumentsFilingPM.ExternalEntityReference));
+            NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("IsConnected2Decalaration() id:{0}, EntityId:{1} ,ExternalEntityReference{2} ,Tenant{3}", _DocumentsFilingPM.Id, this._DocumentsFilingPM.EntityId, this._DocumentsFilingPM.ExternalEntityReference, this._DocumentsFilingPM.Tenant));
 
             return (this._DocumentsFilingPM.ObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration", this._DocumentsFilingPM.Tenant) &&  ( !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.EntityId) || !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.ExternalEntityReference))) || this._DocumentsFilingPM.ExternalEntityName == "EFIFILEM";
         }
