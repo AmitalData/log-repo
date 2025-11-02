@@ -1,0 +1,85 @@
+<div
+    style="position:absolute; top:0; bottom:0; left:0; right:0; margin:auto; padding:10px; background:white; border-radius:0 5px 5px 0;">
+    <table *ngIf="Ready" class="noselect">
+        <tr *ngIf="ValidationErrorsList && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="3">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <table style="width:420px;">
+
+                    <!-- Action selector -->
+                    <tr class="FormFieldRow">
+                        <td class="tbl1Label" style="width:140px;">
+                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'BatchAction'"
+                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                [Text]="'Customs.ExportDeclarations.BatchActions.O.ActionLabel' | TextCodeTranslationPipe">
+                            </LogLabel>
+                        </td>
+                        <td class="tbl1Col0"></td>
+                        <td class="tbl1Col1">
+                            <ComboBox [ItemsSource]="Actions" [Binding]="'Name'" [SelectedItem]="SelectedAction"
+                                (SelectedItemChanged)="SelectedAction = $event">
+                            </ComboBox>
+                        </td>
+                        <td class="tbl1LastCol">
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- IDs textarea -->
+                    <tr class="FormFieldRow" style="vertical-align:top;">
+                        <td class="tbl1Label" style="width:200px;">
+                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'DeclarationIds'"
+                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                [Text]="'Customs.ExportDeclarations.BatchActions.O.IdsLabel' | TextCodeTranslationPipe">
+                            </LogLabel>
+                        </td>
+                        <td class="tbl1Col0"></td>
+                        <td class="tbl1Col1">
+                            <LogTextBox [ObjectFieldName]="'DeclarationIds'" [InputType]="'text'"
+                                [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                [IsMultiline]="true" [Text]="DeclarationIds" (TextChanged)="DeclarationIds = $event">
+                            </LogTextBox>
+
+                            <div class="FieldHint" style="margin-top:4px;">
+                                {{ 'Customs.ExportDeclarations.BatchActions.O.IdsExample' | TextCodeTranslationPipe }}
+                            </div>
+                        </td>
+                        <td class="tbl1LastCol">
+                            <div></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+
+        <!-- Footer buttons -->
+        <tr class="FormFieldRow">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">
+                                {{ 'Customs.General.B.Cancel' | TextCodeTranslationPipe }}
+                            </button>
+                        </td>
+                        <td style="width:5px;">
+                            <div></div>
+                        </td>
+                        <td style="width:57px;">
+                            <button class="RedButton" [disabled]="!IsContinueEnabled || IsBusy"
+                                (click)="ContinueButtonClicked()">
+                                {{ 'Customs.ExportDeclarations.BatchActions.B.Continue' | TextCodeTranslationPipe }}
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

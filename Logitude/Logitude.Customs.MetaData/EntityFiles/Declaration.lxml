@@ -30296,6 +30296,118 @@
       LocalDefaultText="&quot;BS64:Itee16HXmiDXlteUINeR16LXoNefINei15XXkdeTINeo16cg15PXqNeaINeZ15XXoNeZ16TXqNeZ15nXmCI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+	  <TextCode
+	 Code="&quot;Customs.ExportDeclarations.BatchActions.T.Title&quot;"
+	 DefaultText="&quot;Export Declarations – Bulk Actions&quot;"
+	 LocalDefaultTextBack_up="&quot;פעולות גורפות למיישם בהצהרות יצוא&quot;"
+	 LocalDefaultText="&quot;BS64:16TXoteV15zXldeqINeS15XXqNek15XXqiDXnNee15nXmdep150g15HXlNem15TXqNeV16og15nXpteV15A=&quot;"
+	 TextCodeTypeCode="&quot;O&quot;"
+	 IsSpellChecked="false" />
+	  <TextCode
+      Code="&quot;Customs.ExportDeclarations.BatchActions.O.ActionLabel&quot;"
+      DefaultText="&quot;Choose Action&quot;"
+      LocalDefaultTextBack_up="&quot;בחירת פעולה&quot;"
+      LocalDefaultText="&quot;BS64:IteR15fXmdeo16og16TXoteV15zXlCI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportDeclarations.BatchActions.O.IdsLabel&quot;"
+      DefaultText="&quot;List of IDs (comma-separated)&quot;"
+      LocalDefaultTextBack_up="&quot;רשימת מזהים (מופרדים בפסיק)&quot;"
+      LocalDefaultText="&quot;BS64:Iteo16nXmdee16og157XlteU15nXnSAo157Xldek16jXk9eZ150g15HXpNeh15nXpyki&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportDeclarations.BatchActions.O.IdsExample&quot;"
+      DefaultText="&quot;Example: 162-12345, 162-67890, 162-77777&quot;"
+      LocalDefaultTextBack_up="&quot;דוגמה: 1-12345, 1-67890, 1-77777&quot;"
+      LocalDefaultText="&quot;BS64:IteT15XXktee15Q6IDEtMTIzNDUsIDEtNjc4OTAsIDEtNzc3Nzci&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportDeclarations.BatchActions.O.CheckStatus&quot;"
+      DefaultText="&quot;Check Declaration Status&quot;"
+      LocalDefaultTextBack_up="&quot;בדיקת סטטוס הצהרה&quot;"
+      LocalDefaultText="&quot;BS64:IteR15PXmden16og16HXmNeY15XXoSDXlNem15TXqNeUIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportDeclarations.BatchActions.O.CloseOperational&quot;"
+      DefaultText="&quot;Operational Close&quot;"
+      LocalDefaultTextBack_up="&quot;סגירה תפעולית&quot;"
+      LocalDefaultText="&quot;BS64:Iteh15LXmdeo15Qg16rXpNei15XXnNeZ16oi&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportDeclarations.BatchActions.B.Continue&quot;"
+      DefaultText="&quot;Continue&quot;"
+      LocalDefaultTextBack_up="&quot;המשך&quot;"
+      LocalDefaultText="&quot;BS64:IteU157XqdeaIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportDeclarations.BatchActions.M.ConfirmTitle&quot;"
+      DefaultText="&quot;Confirm Bulk Action&quot;"
+      LocalDefaultTextBack_up="&quot;אישור פעולה גורפת&quot;"
+      LocalDefaultText="&quot;BS64:IteQ15nXqdeV16gg16TXoteV15zXlCDXkteV16jXpNeqIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportDeclarations.BatchActions.M.ConfirmBody&quot;"
+      DefaultText="&quot;{0} declarations selected. Approve to perform '{1}' for all?&quot;"
+      LocalDefaultTextBack_up="&quot;נבחרו {0} הצהרות. האם לאשר לבצע '{1}' על כולן?&quot;"
+      LocalDefaultText="&quot;BS64:Iteg15HXl9eo15UgezB9INeU16bXlNeo15XXqi4g15TXkNedINec15DXqdeoINec15HXpteiICd7MX0nINei15wg15vXldec158/Ig==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportDeclarations.BatchActions.M.BatchSent&quot;"
+      DefaultText="&quot;Batch sent in background. Succeeded: {0}, Failed: {1}.&quot;"
+      LocalDefaultTextBack_up="&quot;הפעולה נשלחה ברקע. הצליחו: {0}, נכשלו: {1}.&quot;"
+      LocalDefaultText="&quot;BS64:IteU16TXoteV15zXlCDXoNep15zXl9eUINeR16jXp9eiLiDXlNem15zXmdeX15U6IHswfSwg16DXm9ep15zXlTogezF9LiI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportDeclarations.BatchActions.M.ForbiddenAccess&quot;"
+      DefaultText="&quot;This screen is restricted to Implementers only.&quot;"
+      LocalDefaultTextBack_up="&quot;גישה למסך זה מותרת למיישם בלבד.&quot;"
+      LocalDefaultText="&quot;BS64:IteS15nXqdeUINec157XodeaINeW15Qg157Xldeq16jXqiDXnNee15nXmdep150g15HXnNeR15MuIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportDeclarations.BatchActions.E.SelectAction&quot;"
+      DefaultText="&quot;Please choose an action.&quot;"
+      LocalDefaultTextBack_up="&quot;יש לבחור פעולה.&quot;"
+      LocalDefaultText="&quot;BS64:IteZ16kg15zXkdeX15XXqCDXpNei15XXnNeULiI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportDeclarations.BatchActions.E.EnterIds&quot;"
+      DefaultText="&quot;Please enter IDs (comma-separated).&quot;"
+      LocalDefaultTextBack_up="&quot;יש להזין מזהים (מופרדים בפסיקים).&quot;"
+      LocalDefaultText="&quot;BS64:IteZ16kg15zXlNeW15nXnyDXnteW15TXmdedICjXnteV16TXqNeT15nXnSDXkdek16HXmden15nXnSkuIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportDeclarations.BatchActions.E.InvalidIds&quot;"
+      DefaultText="&quot;Some IDs are invalid: {0}&quot;"
+      LocalDefaultTextBack_up="&quot;חלק מהמזהים אינם בפורמט תקין: {0}&quot;"
+      LocalDefaultText="&quot;BS64:IteX15zXpyDXnteU157XlteU15nXnSDXkNeZ16DXnSDXkdek15XXqNee15gg16rXp9eZ1586IHswfSI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportDeclarations.BatchActions.E.Unexpected&quot;"
+      DefaultText="&quot;Unexpected error occurred.&quot;"
+      LocalDefaultTextBack_up="&quot;ארעה שגיאה לא צפויה.&quot;"
+      LocalDefaultText="&quot;BS64:IteQ16jXoteUINep15LXmdeQ15Qg15zXkCDXptek15XXmdeULiI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportDeclarations.BatchActions.E.SendFailed&quot;"
+      DefaultText="&quot;Failed to send request to server.&quot;"
+      LocalDefaultTextBack_up="&quot;שגיאה בשליחת הבקשה לשרת.&quot;"
+      LocalDefaultText="&quot;BS64:Itep15LXmdeQ15Qg15HXqdec15nXl9eqINeU15HXp9ep15Qg15zXqdeo16ouIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -30745,6 +30857,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.DownloadDcaSftp&quot;"
       FeatureDefaultText="&quot;Download Dca Sftp&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ExportDeclarationsBatchActions&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.ExportDeclarations.BatchActions.O.FeatureName&quot;"
+      FeatureDefaultText="&quot;Export Declarations – Bulk Actions&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

@@ -393,6 +393,7 @@
     <Compile Include="BL\CreateContainerization.cs" />
     <Compile Include="BL\CancelOldCommunicationLogs.cs" />
     <Compile Include="BL\EFIFILEMDataInExportDeclarationClosing.cs" />
+    <Compile Include="BL\ExportDeclarationsBatchActionsService.cs" />
     <Compile Include="BL\ExternalFieldMappingBL.cs" />
     <Compile Include="BL\PrivacyProtection.cs" />
     <Compile Include="BL\ReferantUnifreightStatuses.cs" />
