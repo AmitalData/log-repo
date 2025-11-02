@@ -139,7 +139,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              RevaluationEnabled = a.RevaluationEnabled,
                              ParentAccountId = a.ParentAccountId,
                              IsVATExempt = a.IsVATExempt,
-                             NextDueDate = MoreDatas.NextDueDate,
+                             NextDueDate = (a.AccountTypeCode == "2" || a.AccountTypeCode == "3") ? MoreDatas.NextDueDate : null,
                              DeductionFileNumber = a.DeductionFileNumber,
 
                              Category1Name = a.Category1.EnglishName,
