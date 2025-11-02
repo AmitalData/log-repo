@@ -2647,6 +2647,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                             if (string.IsNullOrEmpty(consignmentPM.FinalDestinationPortCode))
                                 consignmentPM.FinalDestinationPortCode = Consignment.FinalDestinationPortCode;
+                            if (string.IsNullOrEmpty(consignmentPM.DeliverySiteCode))
+                               consignmentPM.DeliverySiteCode = Consignment.DeliverySiteCode;
+                            if (string.IsNullOrEmpty(consignmentPM.StorageSiteCode))
+                                consignmentPM.StorageSiteCode = Consignment.StorageSiteCode;
 
                             consignmentPM.IsDangerousGoods = Consignment.IsDangerousGoods;
 
