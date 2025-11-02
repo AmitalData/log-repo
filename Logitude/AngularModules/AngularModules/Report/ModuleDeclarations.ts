@@ -98,6 +98,7 @@ import { VDKFilterComponent } from './Components/FilterReportComponent/VDKFilter
 import { UserDefinedReportFilterControl } from './Components/FilterReportComponent/UserDefinedReportFilterControl';
 import { LogitudeCRMReportFilterComponent } from './Components/FiltersComponent/CRM/LogitudeCRMReportFilterComponent';
 import { ExcelReportTemplateComponent } from './Components/ExcelReportTemplateComponent';
+import { NoStimulReportTemplateComponent } from './Components/NoStimulReportTemplateComponent';
 import { SpotRateQuoteReportFilterComponent } from './Components/FiltersComponent/Quote/SpotRate/SpotRateQuoteReportFilterComponent';
 import { ReportVariablesComponent } from './Components/ReportVariablesComponent';
 
@@ -191,6 +192,7 @@ export const Components =
         UserDefinedReportFilterControl,
          LogitudeCRMReportFilterComponent,
         ExcelReportTemplateComponent,
+        NoStimulReportTemplateComponent,
         PerVendorReportFilterComponent,
         ARinvoiceSequencesReportFilterComponent,
         SpotRateQuoteReportFilterComponent,
@@ -289,6 +291,7 @@ export class ModuleDeclarations {
             case "UserDefinedReportFilterControl": { myResult = UserDefinedReportFilterControl; break; }
             case "LogitudeCRMReportFilterComponent": { myResult = LogitudeCRMReportFilterComponent; break; }
             case "ExcelReportTemplateComponent": { myResult = ExcelReportTemplateComponent; break; }
+            case "NoStimulReportTemplateComponent": { myResult = NoStimulReportTemplateComponent; break; }
             case "PerVendorReportFilterComponent": { myResult = PerVendorReportFilterComponent; break; }
             case "ARinvoiceSequencesReportFilterComponent": { myResult = ARinvoiceSequencesReportFilterComponent; break; }
             case "SpotRateQuoteReportFilterComponent": { myResult = SpotRateQuoteReportFilterComponent; break; }

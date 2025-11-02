@@ -9,4 +9,6 @@ export class DataProviderField {
     public FieldsOpened: boolean;
     public Fields: DataProviderField[];
     public DivSelectBackgroud: string;
+    public Translation: string;
+
 }

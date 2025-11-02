@@ -19,16 +19,28 @@ export class ExcelReportService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExcelReport';
     }
 
-    getDataProviderFields(reportId: string, reportsTemplateId: string) {
+    getDataProviderFields(reportId: string, reportsTemplateId: string, maxSubLevels?: number) {
         var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + "/getDataProviderFields" + '?reportId=' + reportId + "&reportsTemplateId=" + reportsTemplateId , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
-            return pmresponse;
-        }), catchError(ServiceHelper.HandleServiceError));
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+    
+        let url = this._apiUrl + "/getDataProviderFields" + 
+                  '?reportId=' + reportId + 
+                  "&reportsTemplateId=" + reportsTemplateId;
+    
+        if (maxSubLevels !== undefined) {
+            url += "&maxSubLevels=" + maxSubLevels;
+        }
+    
+        return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var pmresponse: ServiceResponse = new ServiceResponse();
+                pmresponse.Result = response;
+                return pmresponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError)
+        );
     }
+    
 
     postDataProviderProperties(excelReportArguments: ExcelReportArguments) {
         var authHeader = new Headers();

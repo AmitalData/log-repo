@@ -40,6 +40,7 @@ export class NewReportsTemplateComponent implements OnInit {
     validator: ClassLevelValidator;
     Area: string;
     IsFromScheduler: boolean = false;
+    UseStimul: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public _copyFromTenant0ExtendedListService: CopyFromTenant0ExtendedListService;
     public FromTenantZero = "FromTenantZero";
@@ -69,6 +70,7 @@ export class NewReportsTemplateComponent implements OnInit {
         this.IsFromScheduler = args.IsFromScheduler ? true : false;
         this.ReportEntityId = args.ReportEntityId;
         this.ObjectTableId = args.ObjectTableId;
+        this.UseStimul = args.UseStimul ?? true;
     }
 
     NewReportTypeRadioChange(type: string) {
@@ -110,10 +112,7 @@ export class NewReportsTemplateComponent implements OnInit {
 
 
 
-
-
-
-
+    
     ArrayBufferToBase64(file: any, viewmodel: any) {
 
         var reader: FileReader = new FileReader();
@@ -141,7 +140,7 @@ export class NewReportsTemplateComponent implements OnInit {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    SaveButtonClicked() {
+    SaveButtonClicked() { 
 
         if (this.NewReportTypeRadioChoice == this.FromTenantZero) {
             this.CurrentSession.StartBusyIndicatorSaving();
@@ -179,6 +178,7 @@ export class NewReportsTemplateComponent implements OnInit {
             this.ReportsTemplatePM.UpdatedByUserId = SessionLocator.LoggedUserId;
 
             this.ReportsTemplatePM.TemplateType = this.TemplateType;
+            this.ReportsTemplatePM.UseStimul = this.UseStimul;
             this.ReportsTemplatePM.ReportId = this.DataViewModel.EntityPM.Id;
             if (this.IsFromScheduler) {
                 this.ReportsTemplatePM.EntityId = this.ReportEntityId;
@@ -238,7 +238,7 @@ export class NewReportsTemplateComponent implements OnInit {
                         }
 
                         if (this.TemplateType == "E") {
-                            this.DataViewModel.AddTemplateToExcelList(this.ReportsTemplatePM);
+                            this.ReportsTemplatePM.UseStimul ? this.DataViewModel.AddTemplateToExcelList(this.ReportsTemplatePM) : this.DataViewModel.AddTemplateToNoStimExcelList(this.ReportsTemplatePM);
                             this.DataViewModel.EditExcelReportsTemplate(this.ReportsTemplatePM);
                             this.CloseButtonClicked();
                             return;
