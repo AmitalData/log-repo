@@ -536,6 +536,16 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
 
     public ExportToExcelClick() {
+
+        this.QueryColumns.forEach(col => {
+            if (col.ObjectFieldName === "LocalAmountCredit") {
+                col.ObjectFieldName = "CalculatedLocalAmount";
+            }
+            else if (col.ObjectFieldName === "ForeignAmountCredit") {
+                col.ObjectFieldName = "CalculatedForeignAmount";
+            }
+        });
+
         this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("GLAccountLedgerTransaction", this.filterAgrs, this.QueryColumns, "SaveToMicrosoftExcel2007", true);
         
     }
