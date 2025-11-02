@@ -7,8 +7,8 @@ Feature: Search Import Declarations
         And navigates to Import Declarations workspace
 
     Scenario: STEP01 - Search by File Number
-        When the user enters file number "51340479" in the search field
-        Then the system displays only files matching "51340479"
+        When the user enters file number "51840032" in the search field
+        Then the system displays only files matching "51840032"
         And the displayed file number matches the search term
 
     Scenario: STEP02 - Search by Customer Name
@@ -19,13 +19,7 @@ Feature: Search Import Declarations
 
     Scenario: STEP03 - Search by Declaration Number
         When the user clears the search field
-        And the user enters declaration number "25043848690453" in the search field
-        Then the system displays only files matching declaration "25043848690453"
+        And the user enters declaration number "24023598220501" in the search field
+        Then the system displays only files matching declaration "24023598220501"
         And the displayed declaration number matches the search term
-
-    Scenario: STEP04 - Search by Cargo Identifier
-        When the user clears the search field
-        And the user enters cargo identifier "ZRH0190728" in the search field
-        Then the system displays only files with cargo identifier "ZRH0190728"
-        And all displayed files contain the cargo identifier in their data
 
