@@ -244,6 +244,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("LocalDescription", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("IsPrepaidExpenses", this.ObjectTableName, true);
+
 
             if (this.EntityPM.InvoicePayments.length > 0) {
                 this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
@@ -1175,10 +1177,10 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     set IsPrepaidExpenses(newValue: boolean) {
         if (this.EntityPM.IsPrepaidExpenses != newValue) {
             this.EntityPM.IsPrepaidExpenses = newValue;  
-            if (newValue) {
-                this.setPrepaidExpensesForLines(true);
+            this.setPrepaidExpensesForLines(newValue);
+             if(newValue)
                 this.showRecurringScheduleSettings();
-            }          
+                     
         }
     }
     setPrepaidExpensesForLines(isPrepaid: boolean){
@@ -1451,10 +1453,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 logWindow.Title = title;
                 logWindow.ComponentLoaded.subscribe(comp => {
                     logWindow.WindowClosed.subscribe(s => {
-                        if (s) {
-                          
-                               this.markSameChargeTypeLinesAsPrepaid(line.ChargesTypeId ,line.IsPrepaidExpenses);
-                        }
+                                                
+                         this.markSameChargeTypeLinesAsPrepaid(line.ChargesTypeId ,line.IsPrepaidExpenses);
+                       
                     });
                 });
                 logWindow.Show('./InvoiceModules/APInvoice/Components/EditTabs/AddEditAPGeneralInvoiceLineComponent');
@@ -1467,11 +1468,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             logWindow.Title = TextCodeTranslator.Translate("APInvoiceLine.O.EditInvoiceLine");
             logWindow.DataContext = item;
             logWindow.ComponentLoaded.subscribe(comp => {
-                logWindow.WindowClosed.subscribe(s => {
-                    if (s) {
-                        if(item.IsPrepaidExpenses)
-                           this.markSameChargeTypeLinesAsPrepaid(item.ChargesTypeId,item.IsPrepaidExpenses);
-                    }
+                logWindow.WindowClosed.subscribe(s => {                  
+                        this.markSameChargeTypeLinesAsPrepaid(item.ChargesTypeId,item.IsPrepaidExpenses);
+                   
                 });
             });
             logWindow.Show('./InvoiceModules/APInvoice/Components/EditTabs/AddEditAPGeneralInvoiceLineComponent');
@@ -1480,7 +1479,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     markSameChargeTypeLinesAsPrepaid(chargesTypeId: string, isPrepaid: boolean){
        
             this.ItemsSource.Collection.forEach(item => {
-                if(item.chargesTypeId == chargesTypeId){
+                if(item.ChargesTypeId == chargesTypeId){
                     item.IsPrepaidExpenses = isPrepaid;
                 }
             });
@@ -1581,12 +1580,13 @@ export class APInvoiceLineItem extends BaseComponent {
         return this.invoiceLinePM.ForiegnCurrencyCode;
     }
     get IsPrepaidExpenses() {
-        return this.invoicePM.IsPrepaidExpenses;
+        return this.invoiceLinePM.IsPrepaidExpenses;
     }
     set IsPrepaidExpenses(value: boolean) {
         if (this.invoiceLinePM != null) {
             if (this.invoiceLinePM.IsPrepaidExpenses != value) {
                 this.invoiceLinePM.IsPrepaidExpenses = value;
+                this.fatherComponent.markSameChargeTypeLinesAsPrepaid(this.ChargesTypeId, value);
                 
             }
         }
@@ -1725,7 +1725,8 @@ export class APInvoiceLineItem extends BaseComponent {
     SetUIProperties_PayableDebitGLAcountId() {
        this.UIProperties.SetRequired("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PayableDebitGLAcountId));
        this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.chargesTypeList?.PayableDebitGLAcountId));
-       
+       this.UIProperties.SetEnabled("IsPrepaidExpenses", this.ObjectTableName, false);
+
     }
     // Line Properties
     public RefreshLine() {

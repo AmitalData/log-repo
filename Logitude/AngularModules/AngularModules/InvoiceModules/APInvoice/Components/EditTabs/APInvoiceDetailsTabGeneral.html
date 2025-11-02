@@ -769,14 +769,13 @@
                                        </log-cell-template>
                                    </ng-template>
                                   </log-column>
-                                  <log-column [width]="'25'" [header]="'APInvoiceLine.F.IsPrepaidExpenses' | TextCodeTranslationPipe" 
+                                  <log-column [width]="'100'" [header]="'APInvoiceLine.F.IsPrepaidExpenses' | TextCodeTranslationPipe" 
                                   [Alignment]="'center'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [TabIndex]="-1">
                                             <div class="MediaFill"
                                                 style="padding:0 !important; text-indent: 0 !important;">
-                                                <div style="width: 16px; height: 16px;" class="CenterCenter"
-                                                    *ngIf="item.CheckBoxVisibility">
+                                                <div style="width: 16px; height: 16px;" class="CenterCenter">
                                                     <CheckBox [IsChecked]="item.IsPrepaidExpenses"
                                                         (Checked)="item.IsPrepaidExpenses = $event"
                                                         [IsEnabled]="item.IsScreenEnabled || !IsPrepaidExpenses"></CheckBox>
