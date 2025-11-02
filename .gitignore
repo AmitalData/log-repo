@@ -469,6 +469,25 @@ __pycache__/
 /Logitude/packages.rar
 
 /.nuget/NuGet.Config
+
+# Cypress Testing - Test Artifacts and Reports
+**/CypressTesting/**/cypress/Reports/
+**/CypressTesting/**/cypress/downloads/
+**/CypressTesting/**/mochawesome-report/
+**/CypressTesting/**/node_modules/
+**/CypressTesting/**/*.png
+**/CypressTesting/**/*.jpg
+**/CypressTesting/**/*.jpeg
+**/CypressTesting/**/*.mp4
+**/CypressTesting/**/*.webm
+**/CypressTesting/**/screenshots/
+**/CypressTesting/**/videos/
+
+# Cypress Testing - Documentation (Allow these)
+!**/CypressTesting/TESTING_ARCHITECTURE_SUMMARY.md
+!**/CypressTesting/ARCHITECTURE_DIAGRAM.md
+!**/CypressTesting/CLEANUP_SUMMARY.md
+!**/CypressTesting/README.md
  /Logitude/Logitude.Accounting.MetaData/EntityFiles/InterestTransactionNote.lxml
 /Logitude/Logitude.Accounting.MetaData/DBTables/InterestTransactionNote.dxml
 /Logitude/Logitude.Accounting.Def/EntityPMs/Generated/InterestTransactionNotePM.Generated.cs
