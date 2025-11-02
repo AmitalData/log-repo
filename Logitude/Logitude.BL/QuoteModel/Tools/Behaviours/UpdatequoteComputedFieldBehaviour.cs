@@ -1,12 +1,18 @@
-﻿using Logitude.BL.QuoteModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.Tools.Initializers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -257,6 +263,9 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 
 			ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(initializer.Tenant);
 			CurrencyRepository currencyRepository = new CurrencyRepository(initializer.Tenant);
+			TenantQuery tenantQuery = new TenantQuery(initializer.Tenant);
+			TenantPM tPM = tenantQuery.GetSinglePM(initializer.Tenant);
+			string accountingCurrencyId = tPM.CurrencyId;
 
 			var chargesTypes = chargesTypeRepository.GetChargesTypesOfVAL(initializer.Tenant).ToHashSet();
 			var quoteChargesVal = quoteCharges
@@ -264,14 +273,44 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 
 			if (!quoteChargesVal.Any())
 				return;
-            var costTotalAmount = quoteChargesVal.Sum(d => d.CostTotalAmount);
 
 			var distinctCurrencies = quoteChargesVal.Select(d => d.CostCurrencyId).Distinct().ToList();
-			var costCurrencyId = distinctCurrencies.Count == 1	? distinctCurrencies[0]: quoteEntityPM.SaleCurrencyId;
-			
+			var costCurrencyId = distinctCurrencies.Count == 1 ? distinctCurrencies[0] : quoteEntityPM.SaleCurrencyId;
+
+
+			var costTotalAmount = quoteChargesVal.Sum(d =>
+			{
+				return d.CostCurrencyId == costCurrencyId
+			          ? d.CostTotalAmount
+			          : ConvertCurrency(d.CostTotalAmount, d.CostCurrencyId, costCurrencyId, accountingCurrencyId);
+			});
+
+
 			var costCurrencyName = currencyRepository.GetSingleCurrencyById(costCurrencyId, initializer.Tenant, true)?.Code;
 			quoteComputedField.CostChargeGroupVal = string.Format(CultureInfo.InvariantCulture, "{0} {1:0.##}", costCurrencyName, costTotalAmount);
 
+		}
+
+		private double? ConvertCurrency(double? amount, string fromCurrencyId, string toCurrencyId,string accountingCurrencyId)
+		{
+			if (amount == null)
+				return 0;
+
+			var ratesTablesRepository = new RatesTableRepository(initializer.Tenant);
+			var ratesTableQuery = new RatesTableQuery(ratesTablesRepository);
+	
+
+			RatesTablePM rateFrom = ratesTableQuery.GetLastRateByValueDate(initializer.Tenant, fromCurrencyId, accountingCurrencyId, quoteEntityPM.OpenDate);
+			RatesTablePM rateTo = ratesTableQuery.GetLastRateByValueDate(initializer.Tenant, toCurrencyId, accountingCurrencyId, quoteEntityPM.OpenDate);
+
+			double fromRate = rateFrom?.Rate ?? 1.0;
+			double toRate = rateTo?.Rate ?? 1.0;
+
+
+			if (toRate == 0)
+				throw new InvalidOperationException($"Invalid currency rate for {toCurrencyId}: rate cannot be zero.");
+
+			return (amount.Value * fromRate) / toRate;
 		}
 	}
 }
