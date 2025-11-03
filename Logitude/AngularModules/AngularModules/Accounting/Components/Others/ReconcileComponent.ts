@@ -1144,7 +1144,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                     this.CurrentSession.entityResourceService.getEntityResourceByTableName("JournalLine").subscribe(response => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 500;
-                        logitudeWindow.Height = 450;
+                        logitudeWindow.Height = 500;
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.B.Adjust");
                         logitudeWindow.WindowArgs = {
                             "SelectedLines": this.SelectedLines,
