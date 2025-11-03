@@ -28,7 +28,7 @@ export function AssertAccountingPeriodsScreenDisplayed() {
 }
 
 export function EnterYear(accountingPeriodDetails: AccountingPeriodDetails) {
-    cy.get(AccountingPeriodSelectors.YearInput).should('be.visible').clear().type(accountingPeriodDetails.Year);
+    cy.get(AccountingPeriodSelectors.YearInput).should('be.visible').clear({ force: true }).type(accountingPeriodDetails.Year, { force: true });
     // Click the אישור (Approve) button after entering the year
     cy.contains('button', 'אישור').should('be.visible').click({ force: true });
     // Wait for the table to appear (much faster than waiting for API)
