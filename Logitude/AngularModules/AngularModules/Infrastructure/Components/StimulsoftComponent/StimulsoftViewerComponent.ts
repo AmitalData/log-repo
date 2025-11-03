@@ -704,7 +704,7 @@ export class StimulsoftViewerComponent implements OnInit {
         this.SelectedExcelReportsTemplateList = item ?? null;
     
         if (this.StimulsoftArgData) {
-            this.StimulsoftArgData.DefaultExcelTemplateId = item ? item.Id : null;
+            this.StimulsoftArgData.DefaultExcelNoStimId = item ? item.Id : null;
         }
     }
 
