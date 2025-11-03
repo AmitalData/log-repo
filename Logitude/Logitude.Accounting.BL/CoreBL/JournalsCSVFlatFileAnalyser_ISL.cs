@@ -402,8 +402,12 @@ namespace Logitude.Accounting.BL.CoreBL
             if(totalDebit != totalCredit) 
             {
 				text = TranslateTextsClassTranslate("JournalsCSV.O.TotalCreditDebitNotEqual", 0, useLocal);
-				if (String.IsNullOrEmpty(text)) text = "Total debit lines (after rounding) is different from total credit lines (after rounding). Please make sure that the rounded amounts are correct in the file and try again.";
-				this.AddErrorRow(text);
+				if (String.IsNullOrEmpty(text)) text = $"Total debit lines: {totalDebit} is different from total credit lines: {totalCredit}. Please make sure that the rounded amounts are correct in the file and try again.";
+                this.AddErrorRow(text);
+                if (this.MyCSVFlatFileLoadResult.ValidateAccountLineList.Count > 0)
+                {
+                    this.AddErrorRow(string.Join(Environment.NewLine, this.MyCSVFlatFileLoadResult.ValidateAccountLineList));
+                }
 			}
 
 		}
@@ -413,7 +417,7 @@ namespace Logitude.Accounting.BL.CoreBL
             LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(accountingContext);
             if (ledgerTransactionQueryService.ExistsLedgerTransactionByReferenceGLAccountId(reference1,gLAccountId, tenant))
             {
-                string text = "Reference " + reference1 + " exists already in G.L.Account " + account;
+                string text = $"The reference: {reference1} already exists in the account: {account}.";
                 this.AddAccountLineRow(text);
                 this.DuplicatesSkippedCount += 1;
                 return true;
