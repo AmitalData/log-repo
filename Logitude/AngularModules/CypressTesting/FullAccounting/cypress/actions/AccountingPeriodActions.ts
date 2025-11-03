@@ -34,7 +34,9 @@ export function AssertAccountingPeriodsScreenDisplayed() {
 export function EnterYear(accountingPeriodDetails: AccountingPeriodDetails) {
     cy.DefineRequestWait(RestAPI.GET, URLs.EntityResourceAccountingPeriod, RequestAliases.EntityResourceAccountingPeriod);
     cy.get(AccountingPeriodSelectors.YearInput).clear().type(accountingPeriodDetails.Year);
-    cy.Click(AccountingPeriodSelectors.ApproveYearButton, null);
+    // Click the אישור (Approve) button after entering the year
+    cy.contains('button', 'אישור').click({ force: true });
+    cy.wait(1000); // Wait for the table to load
 }
 
 export function AssertYearSetSuccessfully() {
