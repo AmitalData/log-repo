@@ -1,6 +1,6 @@
 export class AccountingPeriodSelectors {
     public static readonly MiscellaneousMenu = "#GeneralMHOthers";
-    public static readonly DefineAccountingPeriod = "הגדרת תקופה חשבונאית";
+    public static readonly DefineAccountingPeriod = "הגדרת תקופות";
     public static readonly AccountingPeriods = "תקופות חשבונאיות";
     public static readonly YearInput = "#AccountingPeriod_Year";
     public static readonly ApproveYearButton = ".RedButton:contains('אישור')";
