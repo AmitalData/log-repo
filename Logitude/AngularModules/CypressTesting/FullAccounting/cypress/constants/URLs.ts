@@ -20,6 +20,8 @@ export class URLs {
     public static readonly InterestBases = "**/interestbasestypes";
     public static readonly BankDeposits = "**/bankdeposits";
     public static readonly CashbookViewGetSingle = "**/cashbookviews/getsingle/?**";
+    public static readonly EntityResourceAccountingPeriod = "**/EntityResource?objectTableName=AccountingPeriod&**";
+    public static readonly AccountingPeriods = "**/accountingperiods";
 
 
     public static GetFilterSearch(filterBy: string) {

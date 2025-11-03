@@ -56,21 +56,29 @@ export function AddInternalNoteTicket() {
 
 export function CancelTicket() {
     cy.DefineRequestWait(RestAPI.PUT,URLs.Tickets,RequestAliases.PutTicket)
-    cy.Click(TicketSelectors.MenuButtons, null, true);
+    // Wait for MenuButtons to exist and use force click since it may be covered
+    cy.get(TicketSelectors.MenuButtons, { timeout: 5000 }).should('exist').click({ force: true });
+    cy.wait(500); // Small wait for menu to appear
     cy.Click(TicketSelectors.TicketCancel, null, true);
-    cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsYes, true);
+    // Wait for confirmation dialog to appear, then click the 'כן' button
+    cy.get(BaseSelectors.ConfirmWindow, { timeout: 5000 }).should('be.visible');
+    cy.get(BaseSelectors.RedButton).contains(TicketSelectors.ContainsYes, { timeout: 5000 }).should('be.visible').click({ force: true });
 }
 
 export function ReactivateTicket() {
     cy.DefineRequestWait(RestAPI.PUT,URLs.Tickets,RequestAliases.PutTicket)
-    cy.Click(TicketSelectors.MenuButtons, null, true);
+    // Wait for MenuButtons to exist and use force click since it may be covered
+    cy.get(TicketSelectors.MenuButtons, { timeout: 5000 }).should('exist').click({ force: true });
+    cy.wait(500); // Small wait for menu to appear
     cy.Click(TicketSelectors.TicektReactivate, null, true);
     cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsYes, true);
 }
 
 export function CloseTicket() {
     cy.DefineRequestWait(RestAPI.PUT,URLs.Tickets,RequestAliases.PutTicket)
-    cy.Click(TicketSelectors.MenuButtons, null, true);
+    // Wait for MenuButtons to exist and use force click since it may be covered
+    cy.get(TicketSelectors.MenuButtons, { timeout: 5000 }).should('exist').click({ force: true });
+    cy.wait(500); // Small wait for menu to appear
     cy.Click(TicketSelectors.TicektClosewithoutNotifying, null, true);
     cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsOk, true);
 }

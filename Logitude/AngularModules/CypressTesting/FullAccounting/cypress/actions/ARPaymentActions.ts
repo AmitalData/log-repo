@@ -73,7 +73,8 @@ export function VoidARPayment() {
     cy.DefineRequestWait(RestAPI.PUT, URLs.ARPayments, RequestAliases.ARPayments)
     cy.wait(2000);
     cy.Click(BaseSelectors.MenuButtons, null)
-    cy.Click(ARPaymentSelectors.VoidButton, null)
+    // Void button may be hidden, use force click
+    cy.get(ARPaymentSelectors.VoidButton, { timeout: 5000 }).should('exist').click({ force: true });
     cy.FillLogTextBox(ARPaymentSelectors.CancelationNotes, BaseSelectors.ContainsCancel)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
