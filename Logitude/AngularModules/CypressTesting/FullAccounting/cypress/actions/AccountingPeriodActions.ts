@@ -45,14 +45,16 @@ export function AssertYearSetSuccessfully() {
 }
 
 export function OpenClosedMonth(accountingPeriodDetails: AccountingPeriodDetails) {
-    // Find the row with the specified period type within the table and click the Edit button
+    // Find the row with the specified period type within the table and click Edit button
     cy.get(AccountingPeriodSelectors.AccountingPeriodsTable).should('be.visible');
+    
+    // Find the row containing the period type, then find the Edit button (img) within that row
     cy.get(AccountingPeriodSelectors.AccountingPeriodsTable)
         .find('.SimpleGridViewRow')
         .contains(accountingPeriodDetails.PeriodType || 'חודש חשבונאי')
         .parents('.SimpleGridViewRow')
         .first()
-        .find(AccountingPeriodSelectors.EditButton)
+        .find('img[src*="Edit.png"], img[src*="edit.png"], img[src*="Edit"], img[src*="edit"]')
         .first()
         .should('be.visible')
         .click({ force: true });
