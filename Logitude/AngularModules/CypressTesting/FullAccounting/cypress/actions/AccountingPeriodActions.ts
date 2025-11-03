@@ -7,13 +7,23 @@ import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 import { URLs } from '../constants/URLs';
 
 export function NavigateToAccountingPeriods() {
-    // Navigate directly to תקופות חשבונאיות from the right sidebar menu
-    // The menu item appears under הנהלת חשבונות section
-    cy.wait(3000);
-    // Wait for the QueryLink with the text to be visible, then click it
-    cy.get(BaseSelectors.QueryLink).contains(AccountingPeriodSelectors.AccountingPeriods, { timeout: 30000 })
+    // Navigate: שונות > הגדרת תקופה חשבונאית > תקופות חשבונאיות
+    // Step 1: Click שונות (Miscellaneous) tab in the top navigation
+    cy.wait(2000);
+    cy.contains('שונות').click({ force: true });
+    cy.wait(2000);
+    
+    // Step 2: Wait for הגדרת תקופה חשבונאית (Define Accounting Period) to appear and click it
+    cy.contains(AccountingPeriodSelectors.DefineAccountingPeriod, { timeout: 10000 })
         .should('be.visible')
         .click({ force: true });
+    cy.wait(1000);
+    
+    // Step 3: Click תקופות חשבונאיות (Accounting Periods)
+    cy.contains(AccountingPeriodSelectors.AccountingPeriods, { timeout: 10000 })
+        .should('be.visible')
+        .click({ force: true });
+    cy.wait(2000); // Wait for the Accounting Periods screen to load
 }
 
 export function AssertAccountingPeriodsScreenDisplayed() {
