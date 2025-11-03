@@ -3434,7 +3434,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     myLineNumber += 1;
                 }
             }
+           else  if (this.isApprovingInvoice || this.entityPM.SetApprovedAutoCredit)
+            {
+                foreach (ARInvoiceLinePM item in entityPM.InvoiceLines)
+                {
+                    this.UpdateInvoiceLine(item);
+                    this.UpdateReceivable(item);
+                    isUpdateTotalVats = true;                    
 
+                }
+            }
             else
             {
                 int myLineNumber = invoiceLineRepository.GetBiggestLineNumber(entityPM.Id, tenant);
