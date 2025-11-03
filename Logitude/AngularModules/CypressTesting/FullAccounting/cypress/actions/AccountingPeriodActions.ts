@@ -36,21 +36,21 @@ export function EnterYear(accountingPeriodDetails: AccountingPeriodDetails) {
 }
 
 export function AssertYearSetSuccessfully() {
-    // Verify the table is loaded instead of waiting for API
+    // Pass as soon as we see the table data (period type text appears in the table)
     cy.get(AccountingPeriodSelectors.AccountingPeriodsTable).should('be.visible');
-    cy.get(BaseSelectors.RowClass).should('have.length.at.least', 1);
+    // Check for the period type text in the table - if we see it, table is populated
+    cy.get(AccountingPeriodSelectors.AccountingPeriodsTable)
+        .contains('חודש חשבונאי')
+        .should('be.visible');
 }
 
 export function OpenClosedMonth(accountingPeriodDetails: AccountingPeriodDetails) {
-    // Wait for the table to load after year was entered and approved
+    // Find the row with the specified period type within the table and click the Edit button
     cy.get(AccountingPeriodSelectors.AccountingPeriodsTable).should('be.visible');
-    // Wait for at least one row to appear in the table
-    cy.get(BaseSelectors.RowClass).should('have.length.at.least', 1);
-    
-    // Find the row with the specified period type and click the Edit button
-    cy.get(BaseSelectors.RowClass)
+    cy.get(AccountingPeriodSelectors.AccountingPeriodsTable)
+        .find('.SimpleGridViewRow')
         .contains(accountingPeriodDetails.PeriodType || 'חודש חשבונאי')
-        .parents(BaseSelectors.RowClass)
+        .parents('.SimpleGridViewRow')
         .first()
         .find(AccountingPeriodSelectors.EditButton)
         .first()
