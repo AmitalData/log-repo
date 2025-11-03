@@ -46,17 +46,14 @@ export function OpenClosedMonth(accountingPeriodDetails: AccountingPeriodDetails
     cy.get(AccountingPeriodSelectors.AccountingPeriodsTable).should('be.visible');
     cy.wait(2000); // Wait for table data to load
     
-    // Find the row with the specified period type that has a closed month (חודש סגור not empty)
-    // First, find all rows with the period type, then check which one has a closed month
-    cy.get(BaseSelectors.RowClass).within(() => {
-        cy.contains(accountingPeriodDetails.PeriodType || 'חודש חשבונאי')
-            .parents(BaseSelectors.RowClass)
-            .first()
-            .within(() => {
-                // Find and click the Edit button in this row
-                cy.get(AccountingPeriodSelectors.EditButton).first().click({ force: true });
-            });
-    });
+    // Find the row with the specified period type and click the Edit button
+    cy.get(BaseSelectors.RowClass)
+        .contains(accountingPeriodDetails.PeriodType || 'חודש חשבונאי')
+        .parents(BaseSelectors.RowClass)
+        .first()
+        .find(AccountingPeriodSelectors.EditButton)
+        .first()
+        .click({ force: true });
     
     // Wait for dialog/window to appear, then click open month
     cy.get(AccountingPeriodSelectors.OpenMonthDialog, { timeout: 10000 }).should('be.visible');
