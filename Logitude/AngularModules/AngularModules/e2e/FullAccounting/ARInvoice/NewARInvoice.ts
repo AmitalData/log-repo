@@ -58,6 +58,15 @@ export class NewARInvoice {
         this.WaitBusyIndicatorToShowandHide();
         this.Helper.WaitByIdAndClick('ARInvoice.B.Approve');
         this.Helper.WaitBusyIndicator();
+        
+        // Wait 2 minutes for status to update
+        browser.sleep(120000);
+        
+        // Verify status is "Unpaid"
+        var EC = protractor.ExpectedConditions;
+        this.Helper.ItemsPresent('ARInvoiceHeaderStatusName');
+        this.Helper.ItemsVisibility('ARInvoiceHeaderStatusName');
+        browser.wait(EC.textToBePresentInElement(element(by.id('ARInvoiceHeaderStatusName')), 'Unpaid'), 60000);
        
 
 
