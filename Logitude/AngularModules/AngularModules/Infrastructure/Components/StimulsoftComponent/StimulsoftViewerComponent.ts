@@ -704,7 +704,7 @@ export class StimulsoftViewerComponent implements OnInit {
         this.SelectedExcelReportsTemplateList = item ?? null;
     
         if (this.StimulsoftArgData) {
-            this.StimulsoftArgData.DefaultExcelTemplateId = item ? item.Id : null;
+            this.StimulsoftArgData.DefaultExcelNoStimId = item ? item.Id : null;
         }
     }
 
@@ -1046,7 +1046,7 @@ ResetEditableField(field: EditableFieldPosition){
                         this.LoadReportTemplate(defaultTemplateId, runReport, defaultExcelTemplateId, isRefreshDefaultTemplate, defaultExcelNoStimId);
                     };
         
-                    instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => isSaveSuccess ?? loadTemplates(false, true));
+                    instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => { if(isSaveSuccess) loadTemplates(false, true)});
                     instance.SaveCompleted.subscribe(() => loadTemplates(false, true));
                     instance.BackCompleted.subscribe(() => loadTemplates(false, false));
                    
