@@ -2614,8 +2614,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             catch (Exception e)
             {
-                ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "BrandingController : GetTenantLogoUri Method", null);
-                return null;
+                ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "CommonDomainController : GetTenantLogoUri Method", null);
+                
+                // Return proper HTTP error response instead of null
+                HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
+                string errorMessage = "Failed to retrieve tenant logo";
+                
+                // Check if it's an authentication exception
+                if (e is AutenticationException)
+                {
+                    statusCode = HttpStatusCode.Unauthorized;
+                    errorMessage = e.Message;
+                }
+                
+                return Request.CreateResponse(statusCode, new { 
+                    error = errorMessage,
+                    tenant = tenant
+                });
             }
 
 
@@ -2654,8 +2669,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             catch (Exception e)
             {
-                ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "BrandingController : GetTenantLogoUri Method", null);
-                return null;
+                ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "CommonDomainController : GetTenantLogoUriByShipmentSecurityKey Method", null);
+                
+                // Return proper HTTP error response instead of null
+                HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
+                string errorMessage = "Failed to retrieve tenant logo";
+                
+                // Check if it's an authentication exception
+                if (e is AutenticationException)
+                {
+                    statusCode = HttpStatusCode.Unauthorized;
+                    errorMessage = e.Message;
+                }
+                
+                return Request.CreateResponse(statusCode, new { 
+                    error = errorMessage,
+                    tenant = tenant
+                });
             }
 
 
