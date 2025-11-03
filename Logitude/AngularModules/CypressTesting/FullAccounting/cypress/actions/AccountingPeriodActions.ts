@@ -7,11 +7,10 @@ import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 import { URLs } from '../constants/URLs';
 
 export function NavigateToAccountingPeriods() {
-    // Navigate: שונות > הגדרת תקופה חשבונאית > תקופות חשבונאיות
+    // Navigate: Click שונות (Miscellaneous) tab, then click תקופות חשבונאיות from right sidebar
     cy.Click(AccountingPeriodSelectors.MiscellaneousMenu, null, true);
-    cy.Click(BaseSelectors.QueryLink, AccountingPeriodSelectors.DefineAccountingPeriod);
-    // Wait for menu to load and click on תקופות חשבונאיות
     cy.wait(1000);
+    // Click on תקופות חשבונאיות (Accounting Periods) from the right sidebar menu
     cy.Click(BaseSelectors.QueryLink, AccountingPeriodSelectors.AccountingPeriods);
 }
 
