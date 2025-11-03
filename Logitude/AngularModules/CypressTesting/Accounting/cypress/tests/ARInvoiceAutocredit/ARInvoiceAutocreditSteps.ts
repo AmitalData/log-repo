@@ -87,6 +87,8 @@ Then("the invoice should approve successfully", () => {
         invoiceNumber = interception.response.body.InvoiceNumber;
         invoiceAmount = interception.response.body.AmountInInvoiceCurrency;
     });
+    // Wait 2 minutes for status to update
+    cy.wait(120000);
 });
 
 Then("the auto credit invoice should approve successfully", () => {
