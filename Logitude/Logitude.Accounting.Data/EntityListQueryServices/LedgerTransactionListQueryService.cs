@@ -8,17 +8,18 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.Repositories;
 using System.Reflection;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
 using Simplog.Data.Helpers;
 using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Data.Enums;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+using System.Linq.Expressions;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -124,8 +125,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             if (ledgerTransactionBalanceFilter.GLAccountId == accountingSettingList.VATInputsGLAccountId)
             {
-                inputTransactions = GetInputTransactions(taxReport, transactionBalanceFilter, accountingSettingList, query)
-                    .OrderByDescending(d => d.AccountingDate)
+                inputTransactions = GetInputTransactions(taxReport, transactionBalanceFilter, accountingSettingList, query);
+
+                inputTransactions = SetOrderBy(inputTransactions, ledgerTransactionBalanceFilter)
                     .Skip(ledgerTransactionBalanceFilter.PageStartAtRecordIndex)
                     .Take(ledgerTransactionBalanceFilter.PageSize);
 
@@ -134,8 +136,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             }
             else if (ledgerTransactionBalanceFilter.GLAccountId == accountingSettingList.VATOutputGLAccountId)
             {
-                outputTransactions = GetOutputTransactions(taxReport, accountingSettingList, query)
-                    .OrderByDescending(d => d.AccountingDate)
+                outputTransactions = GetOutputTransactions(taxReport, accountingSettingList, query);
+
+                outputTransactions = SetOrderBy(outputTransactions, ledgerTransactionBalanceFilter)
                     .Take(ledgerTransactionBalanceFilter.PageSize);
 
                 ledgerTransactionBalanceFilter.Paged = true;
@@ -176,6 +179,38 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 transactions = transactions.Where(d => d.SearchFields.Contains(ledgerTransactionBalanceFilter.SearchFields));
             }
             return transactions;
+        }
+
+        private IQueryable<LedgerTransactionList> SetOrderBy(IQueryable<LedgerTransactionList> transactions, LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter)
+        {
+            if (!string.IsNullOrEmpty(ledgerTransactionBalanceFilter.SortBy))
+            {
+                transactions = OrderByProperty(transactions, ledgerTransactionBalanceFilter.SortBy, ledgerTransactionBalanceFilter.SortDirection == "Ascending");
+            }
+            else
+            {
+                transactions = transactions.OrderByDescending(d => d.AccountingDate);
+            }
+            return transactions;
+        }
+
+        private IQueryable<LedgerTransactionList> OrderByProperty(IQueryable<LedgerTransactionList> source, string propertyName, bool ascending = true)
+        {
+            var parameter = Expression.Parameter(typeof(LedgerTransactionList), "x");
+            var property = Expression.PropertyOrField(parameter, propertyName);
+            var lambda = Expression.Lambda(property, parameter);
+
+            string methodName = ascending ? "OrderBy" : "OrderByDescending";
+
+            var result = Expression.Call(
+                typeof(Queryable),
+                methodName,
+                new Type[] { typeof(LedgerTransactionList), property.Type },
+                source.Expression,
+                Expression.Quote(lambda)
+            );
+
+            return source.Provider.CreateQuery<LedgerTransactionList>(result);
         }
 
         private FullAccountingSettingList GetFullAccountingSetting(int tenant)
@@ -221,7 +256,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             {
                 transactionBalanceFilter.TaxReportTotalCount = journalsTransactions.Count();
             }
-            IQueryable<LedgerTransactionList> transactions = journalsTransactions.OrderByDescending(d => d.AccountingDate).Skip(transactionBalanceFilter.PageStartAtRecordIndex).Take(transactionBalanceFilter.PageSize);
+            IQueryable<LedgerTransactionList> transactions = SetOrderBy(journalsTransactions, transactionBalanceFilter).Skip(transactionBalanceFilter.PageStartAtRecordIndex).Take(transactionBalanceFilter.PageSize);
             IQueryable<LedgerTransactionList> creditLines = GetTaxJournalLines(transactions, taxReport.Tenant);
             transactions = ExcludeDuplicatedLinesForTheSameJournal(creditLines, transactions);
             if (creditLines.Any())
@@ -263,7 +298,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             {
                 transactionBalanceFilter.TaxReportTotalCount = journalOutputLines.Count();
             }
-            IQueryable<LedgerTransactionList> outputLines = journalOutputLines.OrderByDescending(d => d.AccountingDate).Skip(transactionBalanceFilter.PageStartAtRecordIndex).Take(transactionBalanceFilter.PageSize);
+            IQueryable<LedgerTransactionList> outputLines = SetOrderBy(journalOutputLines, transactionBalanceFilter).Skip(transactionBalanceFilter.PageStartAtRecordIndex).Take(transactionBalanceFilter.PageSize);
             IQueryable<LedgerTransactionList> creditLines = GetTaxJournalLines(outputLines, transactionBalanceFilter.Tenant);
             outputLines = ExcludeDuplicatedLinesForTheSameJournal(creditLines, outputLines);
 
@@ -591,32 +626,51 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             if (!_Param.Paged)
             {
+                switch (_Param.DateTypeCode)
+                {
+                    case "2":// GLAccountTotalDateTypeValues.DueDate:
+                        {
+                            ledgerTransactionListQuery = ledgerTransactionListQuery.OrderBy(rec => rec.DueDate).ThenBy(rec => rec.Id);
+                        }
+                        break;
+                    case "3":// GLAccountTotalDateTypeValues.DocumentDate: 
+                        {
+                            ledgerTransactionListQuery = ledgerTransactionListQuery.OrderBy(rec => rec.DocumentDate).ThenBy(rec => rec.Id);
+                        }
+                        break;
+                    case "4":// GLAccountTotalDateTypeValues.Accountingdate:
+                    case "1":// GLAccountTotalDateTypeValues.Accountingdate:
+                    default:
+                        {
+                            ledgerTransactionListQuery = ledgerTransactionListQuery.OrderBy(rec => rec.AccountingDate).ThenBy(rec => rec.Id);
+                        }
+                        break;
+                }
                 ledgerTransactionListQuery = IsFromExcelGenerator ? ledgerTransactionListQuery : ledgerTransactionListQuery
                     .Skip(skip).Take(_Param.PageSize);
+            }
 
-            switch (_Param.DateTypeCode)
+            return ledgerTransactionListQuery.ToList();
+        }
+
+        public List<LedgerTransactionList> GetLedgerTransactionList(IQueryable<LedgerTransactionList> LedgerTransactionQuery, LedgerTransactionBalanceFilter _Param, bool IsFromExcelGenerator = false, bool? isReconciled = null)
+        {
+            IQueryable<LedgerTransactionList> ledgerTransactionListQuery = LedgerTransactionQuery;
+            var skip = _Param.PageStartAtRecordIndex;
+
+            if (isReconciled.HasValue)
             {
-                case "2":// GLAccountTotalDateTypeValues.DueDate:
-                    {
-                        ledgerTransactionListQuery = ledgerTransactionListQuery.OrderBy(rec => rec.DueDate).ThenBy(rec => rec.Id);
-                    }
-                    break;
-                case "3":// GLAccountTotalDateTypeValues.DocumentDate: 
-                    {
-                        ledgerTransactionListQuery = ledgerTransactionListQuery.OrderBy(rec => rec.DocumentDate).ThenBy(rec => rec.Id);
-                    }
-                    break;
-                case "4":// GLAccountTotalDateTypeValues.Accountingdate:
-                case "1":// GLAccountTotalDateTypeValues.Accountingdate:
-                default:
-                    {
-                        ledgerTransactionListQuery = ledgerTransactionListQuery.OrderBy(rec => rec.AccountingDate).ThenBy(rec => rec.Id);
-                    }
-                    break;
-            }
+                bool _isReconciled = isReconciled.GetValueOrDefault();
+                ledgerTransactionListQuery = ledgerTransactionListQuery.Where(r => r.IsReconciled == _isReconciled);
             }
 
+            if (!_Param.Paged)
+            {
+                ledgerTransactionListQuery = SetOrderBy(ledgerTransactionListQuery, _Param);
 
+                ledgerTransactionListQuery = IsFromExcelGenerator ? ledgerTransactionListQuery : ledgerTransactionListQuery
+                    .Skip(skip).Take(_Param.PageSize);
+            }
 
             return ledgerTransactionListQuery.ToList();
         }
@@ -2000,6 +2054,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public string TaxreportId { get; set; }
         public int PageSize { get; set; }
         public bool GetCount { get; set; }
+        public string SortBy { get; set; }
+        public string SortDirection { get; set; }
         public bool Paged { get; set; }
         public int PageStartAtRecordIndex { get; set; }
         public bool UseTaxreportFilter { get; set; }

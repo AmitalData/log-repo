@@ -57,16 +57,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 {
                     response.Count = LTBFilter.TaxReportTotalCount ?? ledgerTransactionBalanceService.Response.TotalRowCount.Value;
                 }
-                if (!string.IsNullOrEmpty(filters.SortBy)) { 
-                    if (filters.SortDirection == "Ascending")
-                    {
-                        ledgerTransactionBalanceService.Response.MyLedgerTransactionList = ledgerTransactionBalanceService.Response.MyLedgerTransactionList.OrderBy(d => d.GetType().GetProperty(filters.SortBy).GetValue(d, null)).ToList();
-                    }
-                    else
-                    {
-                        ledgerTransactionBalanceService.Response.MyLedgerTransactionList = ledgerTransactionBalanceService.Response.MyLedgerTransactionList.OrderByDescending(d => d.GetType().GetProperty(filters.SortBy).GetValue(d, null)).ToList();
-                    }
-                }
+
                 response.Result = ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
                 response.TookMS = ledgerTransactionBalanceService.Response.TookMS;
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);

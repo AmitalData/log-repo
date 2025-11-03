@@ -192,10 +192,10 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
             if (!filters.UseTaxreportFilter)
             {
-                transactionsQuery = FilterByFromAndToDate(filters.DateTypeCode, filters.From, filters.To, transactionsQuery);
+                transactionsQuery = FilterByFromAndToDate(filters.DateTypeCode, filters.From, filters.To, transactionsQuery, false);
             }
             if (filters.Date2TypeCode != null && filters.FromDate2 != null && filters.ToDate2 != null)
-                transactionsQuery = FilterByFromAndToDate(filters.Date2TypeCode, filters.FromDate2.Value, filters.ToDate2.Value, transactionsQuery);
+                transactionsQuery = FilterByFromAndToDate(filters.Date2TypeCode, filters.FromDate2.Value, filters.ToDate2.Value, transactionsQuery, false);
             transactionsQuery = FilterByTax(filters, transactionsQuery);
             return transactionsQuery;
         }
@@ -256,9 +256,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             }
             return query;
         }
-        private IQueryable<LedgerTransactionList> FilterByFromAndToDate(
-        string DateTypeCode, DateTime from, DateTime to, IQueryable<LedgerTransactionList> q
-        )
+        private IQueryable<LedgerTransactionList> FilterByFromAndToDate(string DateTypeCode, DateTime from, DateTime to, IQueryable<LedgerTransactionList> q, bool order = true)
         {
             if (context.ToString().StartsWith("Fake"))
             {
@@ -312,50 +310,49 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             }
             else
             {
-
                 switch (DateTypeCode)
                 {
-                    case "2"://GLAccountTotalDateTypeValues.DueDate:
+                    case "2":
                         {
                             q = (from rec in q
                                  where EntityFunctions.TruncateTime(rec.DueDate) >= @from
                                  where EntityFunctions.TruncateTime(rec.DueDate) <= to
                                  select rec);
-                            q = (from rec in q
-                                 orderby rec.DueDate, rec.Id
-                                 select rec);
+                            if (order)
+                                q = (from rec in q
+                                     orderby rec.DueDate, rec.Id
+                                     select rec);
                         }
                         break;
-                    case "3":// GLAccountTotalDateTypeValues.DocumentDate:
+
+                    case "3":
                         {
-                            //return null;
                             q = (from rec in q
                                  where EntityFunctions.TruncateTime(rec.DocumentDate) >= @from
                                  where EntityFunctions.TruncateTime(rec.DocumentDate) <= to
-                                 select rec
-                     );
-                            q = (from rec in q
-                                 orderby rec.DocumentDate, rec.Id
                                  select rec);
+                            if (order)
+                                q = (from rec in q
+                                     orderby rec.DocumentDate, rec.Id
+                                     select rec);
                         }
                         break;
-                    case "1": //Accountingdate = "1"
+
+                    case "1":
                     default:
                         {
                             q = (from rec in q
                                  where EntityFunctions.TruncateTime(rec.AccountingDate) >= @from
                                  where EntityFunctions.TruncateTime(rec.AccountingDate) <= to
-                                 select rec
-                     );
-                            q = (from rec in q
-                                 orderby rec.AccountingDate, rec.Id
                                  select rec);
+                            if (order)
+                                q = (from rec in q
+                                     orderby rec.AccountingDate, rec.Id
+                                     select rec);
                         }
                         break;
                 }
-
             }
-
             return q;
         }
 
