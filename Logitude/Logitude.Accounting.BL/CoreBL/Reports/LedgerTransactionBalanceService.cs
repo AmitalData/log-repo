@@ -674,9 +674,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public virtual List<LedgerTransactionList> Translate2ListMode(IQueryable<LedgerTransactionList> qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, bool isFromExcelGenerater)
         {
             var ledgerTransactionListQueryService = new LedgerTransactionListQueryService(_AccountingContext);
-            var list = ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByDateTypeCodeAndId(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
-                _Param, isFromExcelGenerater, IsReconciled);
-            return list;
+
+            if (!string.IsNullOrEmpty(_Param.SortBy))
+            {
+                return ledgerTransactionListQueryService.GetLedgerTransactionList(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, _Param, isFromExcelGenerater, IsReconciled);
+            }
+            else
+            {
+                return ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByDateTypeCodeAndId(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
+                    _Param, isFromExcelGenerater, IsReconciled);
+            }
         }
 
 
