@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankDepositUpdateClass
    {  		
-		public const string HashString = "569a8037e0ed39fce18c14614b8c5edb";
+		public const string HashString = "4bffbe6c2a8da8bc534590751b5be114";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -44,6 +44,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  true,
+			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -72,7 +73,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "NewBankDepositComponent",
-			      				    LocalDefaultText =  "הפקדה",
+			      				    LocalDefaultTextBack_up =  "הפקדה",
+			      				    LocalDefaultText =  "BS64:IteU16TXp9eT15Qi",
 			      				    DefaultText =  "Bank Deposit",
 			      				    Code =  "BNKD",
 			      				    Name =  "BankDeposit Query Group",
@@ -82,6 +84,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
+			      				    ShowFastSearch =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -264,10 +267,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תאריך יצירה",
+					  						FullLocalDefaultTextBack_up =  "תאריך יצירה",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תאריך יצירה",
+					  						ListLocalDefaultTextBack_up =  "תאריך יצירה",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -330,10 +335,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
 					  						DefaultText =  "Created By",
-					  						FullLocalDefaultText =  "יוצר",
+					  						FullLocalDefaultTextBack_up =  "יוצר",
+					  						FullLocalDefaultText =  "BS64:IteZ15XXpteoIg==",
 					  						ListFieldLable =  "CreatedByUserIdListLable",
 					  						ListLableDefaultText =  "Created By",
-					  						ListLocalDefaultText =  "יוצר ההפקדה",
+					  						ListLocalDefaultTextBack_up =  "יוצר ההפקדה",
+					  						ListLocalDefaultText =  "BS64:IteZ15XXpteoINeU15TXpNen15PXlCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "CreatedByUser",
@@ -397,10 +404,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
 					  						DefaultText =  "Update Date",
-					  						FullLocalDefaultText =  "תאריך עדכון",
+					  						FullLocalDefaultTextBack_up =  "תאריך עדכון",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyI=",
 					  						ListFieldLable =  "UpdateDateListLable",
 					  						ListLableDefaultText =  "Update Date",
-					  						ListLocalDefaultText =  "תאריך עדכון",
+					  						ListLocalDefaultTextBack_up =  "תאריך עדכון",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -462,10 +471,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
 					  						DefaultText =  "Updated By",
-					  						FullLocalDefaultText =  "עודכן ע''י משתמש",
+					  						FullLocalDefaultTextBack_up =  "עודכן ע''י משתמש",
+					  						FullLocalDefaultText =  "BS64:Itei15XXk9eb158g16InJ9eZINee16nXqtee16ki",
 					  						ListFieldLable =  "UpdatedByUserIdListLable",
 					  						ListLableDefaultText =  "Updated By",
-					  						ListLocalDefaultText =  "עודכן ע''י משתמש",
+					  						ListLocalDefaultTextBack_up =  "עודכן ע''י משתמש",
+					  						ListLocalDefaultText =  "BS64:Itei15XXk9eb158g16InJ9eZINee16nXqtee16ki",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "UpdatedByUser",
@@ -529,10 +540,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Deposit No. / Cheque No.",
-					  						FullLocalDefaultText =  "מספר הפקדה / המחאה",
+					  						FullLocalDefaultTextBack_up =  "מספר הפקדה / המחאה",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeU16TXp9eT15QgLyDXlNee15fXkNeUIg==",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Deposit No. / Cheque No.",
-					  						ListLocalDefaultText =  "מספר הפקדה / המחאה",
+					  						ListLocalDefaultTextBack_up =  "מספר הפקדה / המחאה",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeU16TXp9eT15QgLyDXlNee15fXkNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -595,10 +608,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DepositNumber",
 					  						DefaultText =  "Deposit No.",
-					  						FullLocalDefaultText =  "מספר הפקדה",
+					  						FullLocalDefaultTextBack_up =  "מספר הפקדה",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeU16TXp9eT15Qi",
 					  						ListFieldLable =  "DepositNumberListLable",
 					  						ListLableDefaultText =  "Deposit No.",
-					  						ListLocalDefaultText =  "מספר הפקדה",
+					  						ListLocalDefaultTextBack_up =  "מספר הפקדה",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeU16TXp9eT15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -661,10 +676,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DepositDate",
 					  						DefaultText =  "Deposit Date",
-					  						FullLocalDefaultText =  "תאריך חשבונאי",
+					  						FullLocalDefaultTextBack_up =  "תאריך חשבונאי",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXqdeR15XXoNeQ15ki",
 					  						ListFieldLable =  "DepositDateListLable",
 					  						ListLableDefaultText =  "Deposit Date",
-					  						ListLocalDefaultText =  "תאריך חשבונאי",
+					  						ListLocalDefaultTextBack_up =  "תאריך חשבונאי",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXqdeR15XXoNeQ15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -728,10 +745,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DepositCurrencyId",
 					  						DefaultText =  "Deposit Currency",
-					  						FullLocalDefaultText =  "מטבע הפקדה",
+					  						FullLocalDefaultTextBack_up =  "מטבע הפקדה",
+					  						FullLocalDefaultText =  "BS64:Itee15jXkdeiINeU16TXp9eT15Qi",
 					  						ListFieldLable =  "DepositCurrencyIdListLable",
 					  						ListLableDefaultText =  "Deposit Currency",
-					  						ListLocalDefaultText =  "מטבע הפקדה",
+					  						ListLocalDefaultTextBack_up =  "מטבע הפקדה",
+					  						ListLocalDefaultText =  "BS64:Itee15jXkdeiINeU16TXp9eT15Qi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Currency",
 					  						NavigationPropertyName =  "Currency",
@@ -798,10 +817,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalDepositAmount",
 					  						DefaultText =  "Local  Amount",
-					  						FullLocalDefaultText =  "סכום הפקדה במטבע מקומי",
+					  						FullLocalDefaultTextBack_up =  "סכום הפקדה במטבע מקומי",
+					  						FullLocalDefaultText =  "BS64:Iteh15vXldedINeU16TXp9eT15Qg15HXnteY15HXoiDXnten15XXnteZIg==",
 					  						ListFieldLable =  "LocalDepositAmountListLable",
 					  						ListLableDefaultText =  "Local  Amount",
-					  						ListLocalDefaultText =  "סכום הפקדה במטבע מקומי",
+					  						ListLocalDefaultTextBack_up =  "סכום הפקדה במטבע מקומי",
+					  						ListLocalDefaultText =  "BS64:Iteh15vXldedINeU16TXp9eT15Qg15HXnteY15HXoiDXnten15XXnteZIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -866,10 +887,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForeignAmount",
 					  						DefaultText =  "Foreign Amount",
-					  						FullLocalDefaultText =  "סכום הפקדה במטבע זר",
+					  						FullLocalDefaultTextBack_up =  "סכום הפקדה במטבע זר",
+					  						FullLocalDefaultText =  "BS64:Iteh15vXldedINeU16TXp9eT15Qg15HXnteY15HXoiDXlteoIg==",
 					  						ListFieldLable =  "ForeignAmountListLable",
 					  						ListLableDefaultText =  "Foreign Amount",
-					  						ListLocalDefaultText =  "סכום הפקדה במטבע זר",
+					  						ListLocalDefaultTextBack_up =  "סכום הפקדה במטבע זר",
+					  						ListLocalDefaultText =  "BS64:Iteh15vXldedINeU16TXp9eT15Qg15HXnteY15HXoiDXlteoIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -933,10 +956,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DepositBankAccountId",
 					  						DefaultText =  "Bank Account",
-					  						FullLocalDefaultText =  "בנק להפקדה",
+					  						FullLocalDefaultTextBack_up =  "בנק להפקדה",
+					  						FullLocalDefaultText =  "BS64:IteR16DXpyDXnNeU16TXp9eT15Qi",
 					  						ListFieldLable =  "DepositBankAccountIdListLable",
 					  						ListLableDefaultText =  "Bank Account",
-					  						ListLocalDefaultText =  "בנק להפקדה",
+					  						ListLocalDefaultTextBack_up =  "בנק להפקדה",
+					  						ListLocalDefaultText =  "BS64:IteR16DXpyDXnNeU16TXp9eT15Qi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "BankAccount",
 					  						NavigationPropertyName =  "BankAccount",
@@ -1002,10 +1027,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CashBookId",
 					  						DefaultText =  "Cash Book",
-					  						FullLocalDefaultText =  "קופה",
+					  						FullLocalDefaultTextBack_up =  "קופה",
+					  						FullLocalDefaultText =  "BS64:Iten15XXpNeUIg==",
 					  						ListFieldLable =  "CashBookIdListLable",
 					  						ListLableDefaultText =  "Cash Book",
-					  						ListLocalDefaultText =  "קופה",
+					  						ListLocalDefaultTextBack_up =  "קופה",
+					  						ListLocalDefaultText =  "BS64:Iten15XXpNeUIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CashBook",
 					  						NavigationPropertyName =  "CashBook",
@@ -1070,10 +1097,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingDate",
 					  						DefaultText =  "Accounting Date",
-					  						FullLocalDefaultText =  "תאריך חשבונאי",
+					  						FullLocalDefaultTextBack_up =  "תאריך חשבונאי",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXqdeR15XXoNeQ15ki",
 					  						ListFieldLable =  "AccountingDateListLable",
 					  						ListLableDefaultText =  "Accounting Date",
-					  						ListLocalDefaultText =  "תאריך חשבונאי",
+					  						ListLocalDefaultTextBack_up =  "תאריך חשבונאי",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXqdeR15XXoNeQ15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1198,10 +1227,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CashBookGLAccountId",
 					  						DefaultText =  "Cash Book GL Account",
-					  						FullLocalDefaultText =  "כרטיס קופה",
+					  						FullLocalDefaultTextBack_up =  "כרטיס קופה",
+					  						FullLocalDefaultText =  "BS64:Iteb16jXmNeZ16Eg16fXldek15Qi",
 					  						ListFieldLable =  "CashBookGLAccountIdListLable",
 					  						ListLableDefaultText =  "Cash Book GL Account ",
-					  						ListLocalDefaultText =  "כרטיס קופה",
+					  						ListLocalDefaultTextBack_up =  "כרטיס קופה",
+					  						ListLocalDefaultText =  "BS64:Iteb16jXmNeZ16Eg16fXldek15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1263,10 +1294,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCashDeposit",
 					  						DefaultText =  "CashDeposit",
-					  						FullLocalDefaultText =  " הפקדת מזומן",
+					  						FullLocalDefaultTextBack_up =  " הפקדת מזומן",
+					  						FullLocalDefaultText =  "BS64:IiDXlNek16fXk9eqINee15bXldee158i",
 					  						ListFieldLable =  "IsCashDepositListLable",
 					  						ListLableDefaultText =  "CashDeposit",
-					  						ListLocalDefaultText =  " הפקדת מזומן",
+					  						ListLocalDefaultTextBack_up =  " הפקדת מזומן",
+					  						ListLocalDefaultText =  "BS64:IiDXlNek16fXk9eqINee15bXldee158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1454,10 +1487,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCanceled",
 					  						DefaultText =  "Canceled",
-					  						FullLocalDefaultText =  "מבוטלת",
+					  						FullLocalDefaultTextBack_up =  "מבוטלת",
+					  						FullLocalDefaultText =  "BS64:Itee15HXldeY15zXqiI=",
 					  						ListFieldLable =  "IsCanceledListLable",
 					  						ListLableDefaultText =  "Canceled",
-					  						ListLocalDefaultText =  "מבוטלת",
+					  						ListLocalDefaultTextBack_up =  "מבוטלת",
+					  						ListLocalDefaultText =  "BS64:Itee15HXldeY15zXqiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1519,10 +1554,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DepositCurrencyCode",
 					  						DefaultText =  "Currency",
-					  						FullLocalDefaultText =  "מטבע",
+					  						FullLocalDefaultTextBack_up =  "מטבע",
+					  						FullLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
 					  						ListFieldLable =  "DepositCurrencyCodeListLable",
 					  						ListLableDefaultText =  "Currency",
-					  						ListLocalDefaultText =  "מטבע",
+					  						ListLocalDefaultTextBack_up =  "מטבע",
+					  						ListLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1584,10 +1621,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "JournalNumber",
 					  						DefaultText =  "Journal No.",
-					  						FullLocalDefaultText =  "מספר פקודת יומן",
+					  						FullLocalDefaultTextBack_up =  "מספר פקודת יומן",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINek16fXldeT16og15nXldee158i",
 					  						ListFieldLable =  "JournalNumberListLable",
 					  						ListLableDefaultText =  "Journal No.",
-					  						ListLocalDefaultText =  "מספר פקודת יומן",
+					  						ListLocalDefaultTextBack_up =  "מספר פקודת יומן",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINek16fXldeT16og15nXldee158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1648,10 +1687,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "JournalId",
 					  						DefaultText =  "Journal ",
-					  						FullLocalDefaultText =  "פקודת יומן",
+					  						FullLocalDefaultTextBack_up =  "פקודת יומן",
+					  						FullLocalDefaultText =  "BS64:Itek16fXldeT16og15nXldee158i",
 					  						ListFieldLable =  "JournalIdListLable",
 					  						ListLableDefaultText =  "Journal ",
-					  						ListLocalDefaultText =  "פקודת יומן",
+					  						ListLocalDefaultTextBack_up =  "פקודת יומן",
+					  						ListLocalDefaultText =  "BS64:Itek16fXldeT16og15nXldee158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1713,10 +1754,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CashBookName",
 					  						DefaultText =  "Cashbook",
-					  						FullLocalDefaultText =  "קופה",
+					  						FullLocalDefaultTextBack_up =  "קופה",
+					  						FullLocalDefaultText =  "BS64:Iten15XXpNeUIg==",
 					  						ListFieldLable =  "CashBookNameListLable",
 					  						ListLableDefaultText =  "Cashbook",
-					  						ListLocalDefaultText =  "קופה",
+					  						ListLocalDefaultTextBack_up =  "קופה",
+					  						ListLocalDefaultText =  "BS64:Iten15XXpNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1778,10 +1821,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivityDate",
 					  						DefaultText =  "Last Date",
-					  						FullLocalDefaultText =  "תאריך אחרון",
+					  						FullLocalDefaultTextBack_up =  "תאריך אחרון",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15DXl9eo15XXnyI=",
 					  						ListFieldLable =  "LastActivityDateListLable",
 					  						ListLableDefaultText =  "Last Date",
-					  						ListLocalDefaultText =  "תאריך אחרון",
+					  						ListLocalDefaultTextBack_up =  "תאריך אחרון",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15DXl9eo15XXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1843,10 +1888,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivityTypeName",
 					  						DefaultText =  "Last Activity Type Name",
-					  						FullLocalDefaultText =  "סוג ישות",
+					  						FullLocalDefaultTextBack_up =  "סוג ישות",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXmdep15XXqiI=",
 					  						ListFieldLable =  "LastActivityTypeNameListLable",
 					  						ListLableDefaultText =  "Last Activity Type Name",
-					  						ListLocalDefaultText =  "סוג ישות",
+					  						ListLocalDefaultTextBack_up =  "סוג ישות",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXmdep15XXqiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1908,10 +1955,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivityByUserName",
 					  						DefaultText =  "LastActivityByUserName",
-					  						FullLocalDefaultText =  "מעדכן אחרון",
+					  						FullLocalDefaultTextBack_up =  "מעדכן אחרון",
+					  						FullLocalDefaultText =  "BS64:Itee16LXk9eb158g15DXl9eo15XXnyI=",
 					  						ListFieldLable =  "LastActivityByUserNameListLable",
 					  						ListLableDefaultText =  "LastActivityByUserName",
-					  						ListLocalDefaultText =  "מעדכן אחרון",
+					  						ListLocalDefaultTextBack_up =  "מעדכן אחרון",
+					  						ListLocalDefaultText =  "BS64:Itee16LXk9eb158g15DXl9eo15XXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1973,10 +2022,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserName",
 					  						DefaultText =  "Created By",
-					  						FullLocalDefaultText =  "יוצר",
+					  						FullLocalDefaultTextBack_up =  "יוצר",
+					  						FullLocalDefaultText =  "BS64:IteZ15XXpteoIg==",
 					  						ListFieldLable =  "CreatedByUserNameListLable",
 					  						ListLableDefaultText =  "Created By",
-					  						ListLocalDefaultText =  "יוצר",
+					  						ListLocalDefaultTextBack_up =  "יוצר",
+					  						ListLocalDefaultText =  "BS64:IteZ15XXpteoIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2039,10 +2090,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BankAccountNumber",
 					  						DefaultText =  "Bank Account",
-					  						FullLocalDefaultText =  "מספר חשבון בנק",
+					  						FullLocalDefaultTextBack_up =  "מספר חשבון בנק",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158g15HXoNenIg==",
 					  						ListFieldLable =  "BankAccountNumberListLable",
 					  						ListLableDefaultText =  "Bank Account",
-					  						ListLocalDefaultText =  "מספר חשבון בנק",
+					  						ListLocalDefaultTextBack_up =  "מספר חשבון בנק",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158g15HXoNenIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2145,19 +2198,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode BankDepositTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.AllBankDeposits", DefaultText = @"All Bank Deposits",LocalDefaultText = "כל פיקדונות הבנק", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode BankDepositTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.AllBankDeposits", DefaultText = @"All Bank Deposits",LocalDefaultText = "BS64:Iteb15wg16TXmden15PXldeg15XXqiDXlNeR16DXpyI=", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature BankDepositFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankDeposit.Q.AllBankDeposits", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.AllBankDeposits", NameTextCodeDefaultText = "AllBankDeposits", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,BankDepositObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode BankDepositTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.Today", DefaultText = @"Today Deposits",LocalDefaultText = "הפקדות מהיום", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode BankDepositTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.Today", DefaultText = @"Today Deposits",LocalDefaultText = "BS64:IteU16TXp9eT15XXqiDXnteU15nXldedIg==", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature BankDepositFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TodayBankDeposit", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.todaydepo", NameTextCodeDefaultText = "Today Deposit", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,BankDepositObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode BankDepositTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.cash", DefaultText = @"Cash Deposit",LocalDefaultText = "הפקדות מזומן", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode BankDepositTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.cash", DefaultText = @"Cash Deposit",LocalDefaultText = "BS64:IteU16TXp9eT15XXqiDXnteW15XXntefIg==", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature BankDepositFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBankDeposit", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.cashdepo", NameTextCodeDefaultText = "Cash Deposit", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,BankDepositObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode BankDepositTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.chequeDeposit", DefaultText = @"Cheque Deposit",LocalDefaultText = "הפקדות המחאות", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode BankDepositTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.chequeDeposit", DefaultText = @"Cheque Deposit",LocalDefaultText = "BS64:IteU16TXp9eT15XXqiDXlNee15fXkNeV16oi", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature BankDepositFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ChequeBankDeposit", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.chequedepo", NameTextCodeDefaultText = "Cheque Deposit", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,BankDepositObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -2300,11 +2353,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable BankDepositObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankDeposit" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode BankDepositDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode BankDepositDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.TH.Details", DefaultText = "Details",LocalDefaultText = "BS64:Itek16jXmNeZ150i", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature BankDepositDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankDeposit.Tab.Details", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.Details", NameTextCodeDefaultText = "Details Tab", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankDepositObjectTable,contextTenant);
  
                  
-			   TextCode BankDepositEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode BankDepositEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.TH.Events", DefaultText = "Events",LocalDefaultText = "BS64:IteQ15nXqNeV16LXmdedIg==", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature BankDepositEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankDeposit.Tab.Events", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDepositFeatures.DPEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankDepositObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
@@ -2457,7 +2510,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "button",
 						FeatureId = BankDepositFeature_MB0.Id,
 						Style = "ApproveButtonStyle",
-						LocalDefaultText = "אישור",
+						LocalDefaultText = "BS64:IteQ15nXqdeV16gi",
 						FeatureUniqeCode = BankDepositFeature_MB0.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -2477,7 +2530,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = BankDepositFeature_MB1.Id,
 						Style = null,
-						LocalDefaultText = "נוספים",
+						LocalDefaultText = "BS64:Iteg15XXodek15nXnSI=",
 						FeatureUniqeCode = BankDepositFeature_MB1.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -2497,7 +2550,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  BankDepositFeature_MB10.Id,
 						Style = "Ordinary",
-						LocalDefaultText = "הדפס",
+						LocalDefaultText = "BS64:IteU15PXpNehIg==",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  BankDepositFeature_MB10.FeatureUniqeCode,
@@ -2517,7 +2570,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  BankDepositFeature_MB11.Id,
 						Style = null,
-						LocalDefaultText = "ביטול הפקדה",
+						LocalDefaultText = "BS64:IteR15nXmNeV15wg15TXpNen15PXlCI=",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  BankDepositFeature_MB11.FeatureUniqeCode,
@@ -2532,13 +2585,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable BankDepositObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankDeposit" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode BankDepositTextCode_GeneralMCACCBankDeposits = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.BankDeposits", DefaultText = "Bank Deposits",LocalDefaultText = @"הפקדות", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode BankDepositTextCode_GeneralMCACCBankDeposits = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.BankDeposits", DefaultText = "Bank Deposits",LocalDefaultText = @"BS64:IteU16TXp9eT15XXqiI=", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode BankDepositTextCode_DepositDetailsODetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = " Deposit.Details.O.Details", DefaultText = "Details",LocalDefaultText = @"פרטי הפקדה", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode BankDepositTextCode_DepositDetailsODetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = " Deposit.Details.O.Details", DefaultText = "Details",LocalDefaultText = @"BS64:Itek16jXmNeZINeU16TXp9eT15Qi", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode BankDepositTextCode_DepositGeneralODetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = " Deposit.General.O.Details", DefaultText = "General",LocalDefaultText = @"הגדרות הפקדה", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode BankDepositTextCode_DepositGeneralODetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = " Deposit.General.O.Details", DefaultText = "General",LocalDefaultText = @"BS64:IteU15LXk9eo15XXqiDXlNek16fXk9eUIg==", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode BankDepositTextCode_DepositDetailsBCancelDeposit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Deposit.Details.B.CancelDeposit", DefaultText = "Cancel Deposit",LocalDefaultText = @"ביטול הפקדה", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode BankDepositTextCode_DepositDetailsBCancelDeposit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Deposit.Details.B.CancelDeposit", DefaultText = "Cancel Deposit",LocalDefaultText = @"BS64:IteR15nXmNeV15wg15TXpNen15PXlCI=", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode BankDepositTextCode_BankDepositCHLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.Line", DefaultText = "Line",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
@@ -2570,17 +2623,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode BankDepositTextCode_BankDepositCHARPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.ARPayment", DefaultText = "ARPayment",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode BankDepositTextCode_BankDepositODepositAmountmustbelessthanCashbook = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.DepositAmountmustbelessthanCashbook", DefaultText = "Deposit amount should be less than or equal cashbook total",LocalDefaultText = @"סכום ההפקדה צריך להיות קטן או שווה לסכום בקופה", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode BankDepositTextCode_BankDepositODepositAmountmustbelessthanCashbook = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.DepositAmountmustbelessthanCashbook", DefaultText = "Deposit amount should be less than or equal cashbook total",LocalDefaultText = @"BS64:Iteh15vXldedINeU15TXpNen15PXlCDXpteo15nXmiDXnNeU15nXldeqINen15jXnyDXkNeVINep15XXldeUINec16HXm9eV150g15HXp9eV16TXlCI=", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode BankDepositTextCode_BankDepositOCashDeposit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.CashDeposit", DefaultText = "Cash Deposit",LocalDefaultText = @"הפקדת מזומן", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode BankDepositTextCode_BankDepositOCashDeposit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.CashDeposit", DefaultText = "Cash Deposit",LocalDefaultText = @"BS64:IteU16TXp9eT16og157XlteV157XnyI=", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode BankDepositTextCode_BankDepositOChequeDeposit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.ChequeDeposit", DefaultText = "Cheque Deposit",LocalDefaultText = @"הפקדת המחאות", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode BankDepositTextCode_BankDepositOChequeDeposit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.ChequeDeposit", DefaultText = "Cheque Deposit",LocalDefaultText = @"BS64:IteU16TXp9eT16og15TXnteX15DXldeqIg==", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode BankDepositTextCode_BankDepositODepositCancelChequeMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.DepositCancelChequeMSG", DefaultText = "The deposit can’t be cancelled, at least one one cheques have been redeemed, you should cancel the external reconciliation in order to return the cheque to the cashbook",LocalDefaultText = @"לא ניתן לבטל את ההפקדה, משום שהיא מכילה לפחות המחאה אחת שנפרעה, יש לבטל את ההתאמה החיצונית ע”מ להחזיר את ההמחאה לקופה", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode BankDepositTextCode_BankDepositODepositCancelChequeMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.DepositCancelChequeMSG", DefaultText = "The deposit can’t be cancelled, at least one one cheques have been redeemed, you should cancel the external reconciliation in order to return the cheque to the cashbook",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXkdeY15wg15DXqiDXlNeU16TXp9eT15QsINee16nXldedINep15TXmdeQINee15vXmdec15Qg15zXpNeX15XXqiDXlNee15fXkNeUINeQ15fXqiDXqdeg16TXqNei15QsINeZ16kg15zXkdeY15wg15DXqiDXlNeU16rXkNee15Qg15TXl9eZ16bXldeg15nXqiDXouKAndeeINec15TXl9eW15nXqCDXkNeqINeU15TXnteX15DXlCDXnNen15XXpNeUIg==", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode BankDepositTextCode_BankDepositOAlreadyDeposited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.AlreadyDeposited", DefaultText = "There is a cheques was already deposited, please reload the screen",LocalDefaultText = @"קיים בהפקדה שיק שכבר הופקד. ( יש לרענן את המסך)", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode BankDepositTextCode_BankDepositOAlreadyDeposited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.AlreadyDeposited", DefaultText = "There is a cheques was already deposited, please reload the screen",LocalDefaultText = @"BS64:Iten15nXmdedINeR15TXpNen15PXlCDXqdeZ16cg16nXm9eR16gg15TXldek16fXky4gKCDXmdepINec16jXoteg158g15DXqiDXlNee16HXmiki", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode BankDepositTextCode_BankDepositOCancelOrderInCashbookStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.CancelOrderInCashbookStatus", DefaultText = "A deposit cannot be canceled when one or more of the bags are not in the bank",LocalDefaultText = @"לא ניתן לבטל הפקדה כאשר אחד או יותר מהשקים אינם בבנק", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode BankDepositTextCode_BankDepositOCancelOrderInCashbookStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.CancelOrderInCashbookStatus", DefaultText = "A deposit cannot be canceled when one or more of the bags are not in the bank",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXkdeY15wg15TXpNen15PXlCDXm9eQ16nXqCDXkNeX15Mg15DXlSDXmdeV16rXqCDXnteU16nXp9eZ150g15DXmdeg150g15HXkdeg16ci", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode BankDepositTextCode_BankDepositOSelectAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.SelectAll", DefaultText = "Select All",LocalDefaultText = @"BS64:IteR15fXqCDXlNeb15wi", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode BankDepositTextCode_BankDepositOAllChequePairsSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.AllChequePairsSelected", DefaultText = "There are checks that appear several times, all of them must be deposited.",LocalDefaultText = @"BS64:IteZ16nXoNefINeU157Xl9eQ15XXqiDXlNee15XXpNeZ16LXldeqINeb157XlCDXpNei157XmdedLCDXmdepINec15TXpNen15nXkyDXkNeqINeb15XXnNedIg==", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
