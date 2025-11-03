@@ -7,11 +7,13 @@ import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 import { URLs } from '../constants/URLs';
 
 export function NavigateToAccountingPeriods() {
-    // Navigate: Click שונות (Miscellaneous) tab, then click תקופות חשבונאיות from right sidebar
-    cy.Click(AccountingPeriodSelectors.MiscellaneousMenu, null, true);
-    cy.wait(1000);
-    // Click on תקופות חשבונאיות (Accounting Periods) from the right sidebar menu
-    cy.Click(BaseSelectors.QueryLink, AccountingPeriodSelectors.AccountingPeriods);
+    // Navigate directly to תקופות חשבונאיות from the right sidebar menu
+    // The menu item appears under הנהלת חשבונות section
+    cy.wait(3000);
+    // Wait for the QueryLink with the text to be visible, then click it
+    cy.get(BaseSelectors.QueryLink).contains(AccountingPeriodSelectors.AccountingPeriods, { timeout: 30000 })
+        .should('be.visible')
+        .click({ force: true });
 }
 
 export function AssertAccountingPeriodsScreenDisplayed() {
