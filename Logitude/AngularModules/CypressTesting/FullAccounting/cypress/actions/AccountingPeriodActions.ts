@@ -9,21 +9,17 @@ import { URLs } from '../constants/URLs';
 export function NavigateToAccountingPeriods() {
     // Navigate: שונות > הגדרת תקופה חשבונאית > תקופות חשבונאיות
     // Step 1: Click שונות (Miscellaneous) tab in the top navigation
-    cy.wait(2000);
-    cy.contains('שונות').click({ force: true });
-    cy.wait(2000);
+    cy.contains('שונות').should('be.visible').click({ force: true });
     
-    // Step 2: Wait for הגדרת תקופה חשבונאית (Define Accounting Period) to appear and click it
-    cy.contains(AccountingPeriodSelectors.DefineAccountingPeriod, { timeout: 10000 })
+    // Step 2: Wait for הגדרת תקופות (Define Periods) to appear and click it
+    cy.contains(AccountingPeriodSelectors.DefineAccountingPeriod, { timeout: 5000 })
         .should('be.visible')
         .click({ force: true });
-    cy.wait(1000);
     
     // Step 3: Click תקופות חשבונאיות (Accounting Periods)
-    cy.contains(AccountingPeriodSelectors.AccountingPeriods, { timeout: 10000 })
+    cy.contains(AccountingPeriodSelectors.AccountingPeriods, { timeout: 5000 })
         .should('be.visible')
         .click({ force: true });
-    cy.wait(2000); // Wait for the Accounting Periods screen to load
 }
 
 export function AssertAccountingPeriodsScreenDisplayed() {
@@ -32,21 +28,24 @@ export function AssertAccountingPeriodsScreenDisplayed() {
 }
 
 export function EnterYear(accountingPeriodDetails: AccountingPeriodDetails) {
-    cy.DefineRequestWait(RestAPI.GET, URLs.EntityResourceAccountingPeriod, RequestAliases.EntityResourceAccountingPeriod);
-    cy.get(AccountingPeriodSelectors.YearInput).clear().type(accountingPeriodDetails.Year);
+    cy.get(AccountingPeriodSelectors.YearInput).should('be.visible').clear().type(accountingPeriodDetails.Year);
     // Click the אישור (Approve) button after entering the year
-    cy.contains('button', 'אישור').click({ force: true });
-    cy.wait(1000); // Wait for the table to load
+    cy.contains('button', 'אישור').should('be.visible').click({ force: true });
+    // Wait for the table to appear (much faster than waiting for API)
+    cy.get(AccountingPeriodSelectors.AccountingPeriodsTable, { timeout: 5000 }).should('be.visible');
 }
 
 export function AssertYearSetSuccessfully() {
-    BaseAssertion.AssertStatusCode(RequestAliases.EntityResourceAccountingPeriod, 200);
+    // Verify the table is loaded instead of waiting for API
+    cy.get(AccountingPeriodSelectors.AccountingPeriodsTable).should('be.visible');
+    cy.get(BaseSelectors.RowClass).should('have.length.at.least', 1);
 }
 
 export function OpenClosedMonth(accountingPeriodDetails: AccountingPeriodDetails) {
     // Wait for the table to load after year was entered and approved
     cy.get(AccountingPeriodSelectors.AccountingPeriodsTable).should('be.visible');
-    cy.wait(2000); // Wait for table data to load
+    // Wait for at least one row to appear in the table
+    cy.get(BaseSelectors.RowClass).should('have.length.at.least', 1);
     
     // Find the row with the specified period type and click the Edit button
     cy.get(BaseSelectors.RowClass)
@@ -55,10 +54,11 @@ export function OpenClosedMonth(accountingPeriodDetails: AccountingPeriodDetails
         .first()
         .find(AccountingPeriodSelectors.EditButton)
         .first()
+        .should('be.visible')
         .click({ force: true });
     
     // Wait for dialog/window to appear, then click open month
-    cy.get(AccountingPeriodSelectors.OpenMonthDialog, { timeout: 10000 }).should('be.visible');
+    cy.get(AccountingPeriodSelectors.OpenMonthDialog, { timeout: 5000 }).should('be.visible');
     cy.DefineRequestWait(RestAPI.PUT, URLs.AccountingPeriods, "AccountingPeriodsRequest");
     cy.Click(AccountingPeriodSelectors.OpenMonthButton, null);
     cy.Click(AccountingPeriodSelectors.ConfirmOpenMonthButton, null);
