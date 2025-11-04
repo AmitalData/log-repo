@@ -269,7 +269,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 
 			var chargesTypes = chargesTypeRepository.GetChargesTypesOfVAL(initializer.Tenant).ToHashSet();
 			var quoteChargesVal = quoteCharges
-				.Where(d => d != null && chargesTypes.Contains(d.ChargesTypeId)).ToList();
+				.Where(d => d != null && chargesTypes.Contains(d.ChargesTypeId) && d.CostTotalAmount.HasValue).ToList();
 
 			if (!quoteChargesVal.Any())
 				return;
