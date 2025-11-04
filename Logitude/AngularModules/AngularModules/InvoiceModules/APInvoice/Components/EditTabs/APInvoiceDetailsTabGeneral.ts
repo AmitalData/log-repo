@@ -410,7 +410,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     saveExpenseAllocationSetting(){
-       
+        var allIsPrepaidExpenses = this.EntityPM.InvoiceLines.every(line => line.IsPrepaidExpenses === true);
         var approved = this.EntityPM?.StatusCode === "AD";
         if(this.EntityPM?.Id){
             this.expenseAllocationSetting.EntityId = this.EntityPM?.Id;
@@ -419,8 +419,14 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 this.expenseAllocationSettingPMService.update(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {
                     if (!res.HasError) {
                         this.expenseAllocationSetting = res.Result;
-                        if(approved)
+                        if(approved){
+                            if(!allIsPrepaidExpenses){
+                                this.addExpenseAllocationFlow(this.EntityPM?.JournalId);
+                            }
                             this.addExpenseAllocationFlow();
+
+                        }
+                            
                         else{
                             this.CurrentSession.StopBusyIndicator();
                         }
@@ -436,6 +442,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     if (!res.HasError) {
                         this.expenseAllocationSetting = res.Result;
                         if(approved){
+                            if(!allIsPrepaidExpenses){
+                                this.addExpenseAllocationFlow(this.EntityPM?.JournalId);
+                            }
                             this.addExpenseAllocationFlow();
                         }
                         else{
@@ -451,13 +460,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
     expenseAllocationFlowPMService: ExpenseAllocationFlowPMService = new ExpenseAllocationFlowPMService();
-    addExpenseAllocationFlow(){
+    addExpenseAllocationFlow(jounalId: string = null){
         var expenseAllocationFlowPM : ExpenseAllocationFlowPM = new ExpenseAllocationFlowPM();
         expenseAllocationFlowPM.Tenant = SessionLocator.Tenant;
         expenseAllocationFlowPM.SettingId = this.expenseAllocationSetting?.Id;
         expenseAllocationFlowPM.Status = "Done";
         expenseAllocationFlowPM.RunDate = this.expenseAllocationSetting.StartDateTime;
-        expenseAllocationFlowPM.JournalId = null;
+        expenseAllocationFlowPM.JournalId = jounalId;
         this.expenseAllocationFlowPMService.insert(expenseAllocationFlowPM).subscribe((res: ServiceResponse) => {
            
                 this.CurrentSession.StopBusyIndicator();

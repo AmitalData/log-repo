@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { validate } from 'fast-json-patch';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { DateTool } from 'Infrastructure/Tools';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { ExpenseAllocationSettingPM } from 'Invoice/EntityPMs/ExpenseAllocationSettingPM';
@@ -35,18 +37,7 @@ export class RecurringScheduleComponent extends BaseComponent {
     set StartDateTime(newValue: Date) {
         if (this.startDateTime != newValue) {
             this.startDateTime = newValue;
-            if (this.minDate && new Date(newValue) < new Date(this.minDate)) {
-                this.UIProperties.SetValidity(
-                    'StartDateTime',
-                    null,
-                    false,
-                    TextCodeTranslator.Translate(
-                        'ExpenseAllocationSetting.O.EndDateError'
-                    )
-                );
-            } else {
-                this.UIProperties.SetValidity('StartDateTime', null, true, '');
-            }
+            this.validateDate();
             this.recalculateAll();
         }
     }
@@ -420,21 +411,9 @@ export class RecurringScheduleComponent extends BaseComponent {
     }
 
     public okButtonClicked(): void {
-        if (
-            this.minDate &&
-            new Date(this.StartDateTime!) < new Date(this.minDate)
-        ) {
-            this.UIProperties.SetValidity(
-                'StartDateTime',
-                null,
-                false,
-                TextCodeTranslator.Translate(
-                    'ExpenseAllocationSetting.O.StartDateError'
-                )
-            );
+         if(!this.validateDate())
             return;
-        }
-
+       
         this.expenseAllocationSettingPM = new ExpenseAllocationSettingPM();
         this.expenseAllocationSettingPM.StartDateTime = this.StartDateTime!;
         this.expenseAllocationSettingPM.EndDateTime = this.EndDateTime!;
@@ -452,6 +431,45 @@ export class RecurringScheduleComponent extends BaseComponent {
             : `Weekly_${this.selectedDayByWeek}`;
 
         this.currentSession.CloseCurrentWindowEmit('ok');
+    }
+    validateDate(): boolean {
+        if (this.minDate && new Date(this.startDateTime) < new Date(this.minDate)) {
+            this.UIProperties.SetValidity(
+                'StartDateTime',
+                null,
+                false,
+                TextCodeTranslator.Translate(
+                    'ExpenseAllocationSetting.O.EndDateError'
+                )
+            );
+            return false;
+        } 
+        else if( this.EndDateTime && new Date(this.startDateTime) > new Date(this.EndDateTime)) {
+            this.UIProperties.SetValidity(
+                'StartDateTime',
+                null,
+                false,
+                TextCodeTranslator.Translate(
+                    'ExpenseAllocationSetting.O.StartDateAfterEndDateError'
+                )
+            );
+            return false;
+        }
+        else if(this.startDateTime < DateTool.GetCurrentDateAsUtc()) {
+            this.UIProperties.SetValidity(
+                'StartDateTime',
+                null,
+                false,
+                TextCodeTranslator.Translate(
+                    'ExpenseAllocationSetting.O.PastDateError'
+                )
+            );
+            return false;
+        }
+        else {
+            this.UIProperties.SetValidity('StartDateTime', null, true, '');
+            return true;
+        }
     }
 }
 

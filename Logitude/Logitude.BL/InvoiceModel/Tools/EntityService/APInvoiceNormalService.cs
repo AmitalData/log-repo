@@ -2208,7 +2208,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     JournalLinePM journalLine = new JournalLinePM();
                     if (!differentCurrencies)
                     {
-                        journalLine = CreateJournalLinePM(theEntityPm, ++counter, journal.Id, glAccount.Id, theEntityPm.IsPrepaidExpenses ? accountingSettings?.PrepaidExpensesGLAccountId : null);
+                        journalLine = CreateJournalLinePM(theEntityPm, ++counter, journal.Id, glAccount.Id);
 
                         journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency;
                         journalLine.CurrencyId = theEntityPm.InvoiceCurrencyId;
@@ -2221,7 +2221,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         foreach (var curr in currencies)
                         {
-                            journalLine = CreateJournalLinePM(theEntityPm, ++counter, journal.Id, glAccount.Id, theEntityPm.IsPrepaidExpenses ? accountingSettings?.PrepaidExpensesGLAccountId : null);
+                            journalLine = CreateJournalLinePM(theEntityPm, ++counter, journal.Id, glAccount.Id);
 
                             journalLine.LocalAmount = (decimal)theEntityPm.InvoiceLines.Where(ln => ln.ForiegnCurrencyId == curr).Sum(ln => ln.LocalCurrencyAmount); 
                             journalLine.CurrencyId = curr;
@@ -2245,7 +2245,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             ActionCode = AccountingActionCodes.Debit,
                                                             ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                                                             JournalId = journal.Id,
-                                                            DebitAccountId = theEntityPm.IsPrepaidExpenses ? accountingSettings?.PrepaidExpensesGLAccountId :  d.ChargeTypeGLAccountId,
+                                                            DebitAccountId = d.IsPrepaidExpenses == true ? accountingSettings?.PrepaidExpensesGLAccountId :  d.ChargeTypeGLAccountId,
                                                             CreditAccountId = theEntityPm.VendorGLAccountId,
                                                             Line = ++counter,
                                                             DocumentDate = theEntityPm.InvoiceDate.Value,
@@ -2353,12 +2353,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.APInvoiceApprove);
                     journalUpdate.Update(journal);
 
-                  
+                   
                 }
             }
         }
       
-        private JournalLinePM CreateJournalLinePM(APInvoicePM theEntityPm, int lineNo, string journalId, string glAccountId, string prepaidExpensesGLAccountId = null)
+        private JournalLinePM CreateJournalLinePM(APInvoicePM theEntityPm, int lineNo, string journalId, string glAccountId)
         {
             JournalLinePM journalLine = new JournalLinePM();
             journalLine.Tenant = tenant;
@@ -2376,7 +2376,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalLine.Notes = theEntityPm.InternalNotes;
             journalLine.CreditAccountId = glAccountId;
             
-            journalLine.DebitAccountId = prepaidExpensesGLAccountId ?? SetDebitAccountForSingleLineAPInvoice(theEntityPm);
+            journalLine.DebitAccountId =   SetDebitAccountForSingleLineAPInvoice(theEntityPm);
             journalLine.ChangeSetOp = ChangeSetOperation.Insert;
             return journalLine;
         }

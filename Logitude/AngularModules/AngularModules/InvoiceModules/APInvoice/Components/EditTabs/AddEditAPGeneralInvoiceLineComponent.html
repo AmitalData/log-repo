@@ -262,7 +262,7 @@
                                 <td>
                                     <CheckBox [IsChecked]="DataContext.IsPrepaidExpenses" 
                                       (Checked)="DataContext.IsPrepaidExpenses = $event"  
-                                      [IsEnabled]="DataContext.IsRateEnabled"></CheckBox>
+                                      [IsEnabled]="DataContext.invoicePM?.IsPrepaidExpenses"></CheckBox>
                                 </td>
                                 <td>
                                     <div></div>

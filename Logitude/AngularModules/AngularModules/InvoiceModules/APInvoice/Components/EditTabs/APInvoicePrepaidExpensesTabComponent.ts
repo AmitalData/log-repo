@@ -11,17 +11,23 @@ import { ExpenseAllocationFlowExtendedService } from 'Invoice/Services/ExtendedP
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { AppTool } from 'Infrastructure/Tools';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { JournalPMService } from 'Accounting/Services/StandardPMs/JournalPMService';
+import { JournalPM } from 'Accounting/EntityPMs/JournalPM';
+import { FullAccountingSettingPMService } from 'Accounting/Services/StandardPMs/FullAccountingSettingPMService';
+import { FullAccountingSettingPM } from 'Accounting/EntityPMs/FullAccountingSettingPM';
 
 @Component({
     templateUrl: './APInvoicePrepaidExpensesTabComponent.html',
 })
 export class APInvoicePrepaidExpensesTabComponent implements OnInit {
     public EntityPM: APInvoicePM = null;
+    public journalPM: JournalPM = null;
     public ObjectTableName = 'APInvoice';
     public DataContext = this;
     public objectTableId: string = '';
     public amountPaid : number = 0;
     public amountDue : number = 0;
+    public originalAmount : number = 0;
     public periodAmount
     public isReady: boolean = false;
     private currentSession = SessionLocator.SelectedSession;
@@ -31,8 +37,12 @@ export class APInvoicePrepaidExpensesTabComponent implements OnInit {
         new ExpenseAllocationSettingExtendedService();
     expenseAllocationFlowExtendedService =
         new ExpenseAllocationFlowExtendedService();
+    journalPMService =
+        new JournalPMService();
+
     expenseAllocationFlowLists: ExpenseAllocationFlowList[] = [];
     entityResourceService: EntityResourceService = new EntityResourceService();
+    fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
 
     constructor(private entityArgs: EntityArgs) {
         this.GetResources();
@@ -106,35 +116,60 @@ export class APInvoicePrepaidExpensesTabComponent implements OnInit {
             './CommonModules/CommonOthers/Components/RecurringSchedule/RecurringScheduleComponent'
         );
     }
+    nonPrepaidPaidAmount: number = 0;
     loadDate() {
+        var fullAccountingSettingPM = new FullAccountingSettingPM();
         this.currentSession.StartBusyIndicatorLoading()
-        this.expenseAllocationSettingExtendedService
-            .getExpenseAllocationSettingByEntityIdAndObjectTable(
-                this.EntityPM?.Id,
-                this.objectTableId
-            )
-            .subscribe((res: ServiceResponse) => {
-                if (res?.Result && !res.HasError) {
-                    this.expenseAllocationSettingPM = res.Result;
+        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe((myResult:any) =>{
+            if(myResult?.Result && !myResult.HasError){
+                 fullAccountingSettingPM = myResult.Result;
+                
+            }
+            this.journalPMService.get(this.EntityPM.JournalId).subscribe(res=>{
+                if(res?.Result && !res.HasError){
+                    this.journalPM = res.Result;
+                    this.originalAmount = this.journalPM?.JournalLines
+                    ?.filter(line => line.ActionCode === "2")
+                    ?.reduce((sum, line) => sum + (line.LocalAmount || 0), 0);
+                    console.log("originalAmount", this.originalAmount);
                 }
-                this.expenseAllocationFlowExtendedService
-                    .getExpenseAllocationFlowByEntityIdAndObjectTable(
-                        this.EntityPM?.Id,
-                        this.objectTableId
-                    )
-                    .subscribe((resFlow) => {
-                        if (resFlow !== null) {
-                            (resFlow as ExpenseAllocationFlowList[]).forEach((item: ExpenseAllocationFlowList) => {
-                                if(!AppTool.IsNullOrEmpty(item.JournalId) || item.Status === "failed")
-                                   this.expenseAllocationFlowLists.push(item);
-                            });
-                            this.periodAmount =  this.EntityPM.SubTotalInInvoiceCurrency / this.expenseAllocationSettingPM.NumberOfPayments
-                            this.amountPaid = this.periodAmount * this.expenseAllocationFlowLists?.filter(item => !AppTool.IsNullOrEmpty(item.JournalId))?.length;
-                            this.amountDue = this.EntityPM.SubTotalInInvoiceCurrency - this.amountPaid;
-                        }
-                        this.currentSession.StopBusyIndicator()
-                    });
+               
+                this.expenseAllocationSettingExtendedService
+                .getExpenseAllocationSettingByEntityIdAndObjectTable(
+                    this.EntityPM?.Id,
+                    this.objectTableId
+                )
+                .subscribe((res: ServiceResponse) => {
+                    if (res?.Result && !res.HasError) {
+                        this.expenseAllocationSettingPM = res.Result;
+                    }
+                    this.expenseAllocationFlowExtendedService
+                        .getExpenseAllocationFlowByEntityIdAndObjectTable(
+                            this.EntityPM?.Id,
+                            this.objectTableId
+                        )
+                        .subscribe((resFlow) => {
+                            if (resFlow !== null) {
+                                (resFlow as ExpenseAllocationFlowList[]).forEach((item: ExpenseAllocationFlowList) => {
+                                    if(!AppTool.IsNullOrEmpty(item.JournalId) || item.Status === "failed")
+                                       this.expenseAllocationFlowLists.push(item);
+                                
+                                });
+                                this.expenseAllocationFlowLists = this.expenseAllocationFlowLists.sort((a, b) => (a.JournalId === this.EntityPM.JournalId ? -1 : b.JournalId === "1" ? 1 : 0))
+                                this.nonPrepaidPaidAmount = this.journalPM?.JournalLines
+                                ?.filter(line => line.ActionCode === "2" && line.DebitAccountId !== fullAccountingSettingPM?.PrepaidExpensesGLAccountId)    
+                                ?.reduce((sum, line) => sum + (line.LocalAmount || 0), 0) 
+                                this.periodAmount =  (this.originalAmount -  this.nonPrepaidPaidAmount)/ this.expenseAllocationSettingPM.NumberOfPayments
+                                this.amountPaid = this.periodAmount * this.expenseAllocationFlowLists?.filter(item => !AppTool.IsNullOrEmpty(item.JournalId))?.length + this.nonPrepaidPaidAmount;
+                                this.amountDue = this.originalAmount - this.amountPaid;
+                            }
+                            this.currentSession.StopBusyIndicator()
+                        });
+                });
             });
+        })
+       
+       
     }
 
     OpenJournal(id) {
