@@ -267,8 +267,8 @@
                                                           
                                                        <button  style="width:100px"  
                                                           class="Button" 
-                                                         [disabled]="!IsScreenEnabled"
-                                                         (click)="ShowRecurringScheduleSettings()">{{'APInvoice.F.IsPrepaidExpenses' | TextCodeTranslationPipe}}</button>
+                                                         [disabled]="!IsScreenEnabled || !IsPrepaidExpenses"
+                                                         (click)="showRecurringScheduleSettings()">{{'APInvoice.F.IsPrepaidExpenses' | TextCodeTranslationPipe}}</button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -779,6 +779,21 @@
                                        </log-cell-template>
                                    </ng-template>
                                   </log-column>
+                                  <log-column [width]="'100'" [header]="'APInvoiceLine.F.IsPrepaidExpenses' | TextCodeTranslationPipe" 
+                                  [Alignment]="'center'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                            <div class="MediaFill"
+                                                style="padding:0 !important; text-indent: 0 !important;">
+                                                <div style="width: 16px; height: 16px;" class="CenterCenter">
+                                                    <CheckBox [IsChecked]="item.IsPrepaidExpenses"
+                                                        (Checked)="item.IsPrepaidExpenses = $event"
+                                                        [IsEnabled]="item.IsScreenEnabled && IsPrepaidExpenses"></CheckBox>
+                                                </div>                                                
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
                                     <!-- Tool -->
                                     <log-column [width]="'55'">
                                         <ng-template let-item>

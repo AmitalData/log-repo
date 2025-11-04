@@ -250,6 +250,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("LocalDescription", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("IsPrepaidExpenses", this.ObjectTableName, true);
+
 
             if (this.EntityPM.InvoicePayments.length > 0) {
                 this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
@@ -414,7 +416,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     saveExpenseAllocationSetting(){
-       
+        var allIsPrepaidExpenses = this.EntityPM.InvoiceLines.every(line => line.IsPrepaidExpenses === true);
         var approved = this.EntityPM?.StatusCode === "AD";
         if(this.EntityPM?.Id){
             this.expenseAllocationSetting.EntityId = this.EntityPM?.Id;
@@ -423,8 +425,14 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 this.expenseAllocationSettingPMService.update(this.expenseAllocationSetting).subscribe((res: ServiceResponse) => {
                     if (!res.HasError) {
                         this.expenseAllocationSetting = res.Result;
-                        if(approved)
+                        if(approved){
+                            if(!allIsPrepaidExpenses){
+                                this.addExpenseAllocationFlow(this.EntityPM?.JournalId);
+                            }
                             this.addExpenseAllocationFlow();
+
+                        }
+                            
                         else{
                             this.CurrentSession.StopBusyIndicator();
                         }
@@ -440,6 +448,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     if (!res.HasError) {
                         this.expenseAllocationSetting = res.Result;
                         if(approved){
+                            if(!allIsPrepaidExpenses){
+                                this.addExpenseAllocationFlow(this.EntityPM?.JournalId);
+                            }
                             this.addExpenseAllocationFlow();
                         }
                         else{
@@ -455,13 +466,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
     expenseAllocationFlowPMService: ExpenseAllocationFlowPMService = new ExpenseAllocationFlowPMService();
-    addExpenseAllocationFlow(){
+    addExpenseAllocationFlow(jounalId: string = null){
         var expenseAllocationFlowPM : ExpenseAllocationFlowPM = new ExpenseAllocationFlowPM();
         expenseAllocationFlowPM.Tenant = SessionLocator.Tenant;
         expenseAllocationFlowPM.SettingId = this.expenseAllocationSetting?.Id;
         expenseAllocationFlowPM.Status = "Done";
         expenseAllocationFlowPM.RunDate = this.expenseAllocationSetting.StartDateTime;
-        expenseAllocationFlowPM.JournalId = null;
+        expenseAllocationFlowPM.JournalId = jounalId;
         this.expenseAllocationFlowPMService.insert(expenseAllocationFlowPM).subscribe((res: ServiceResponse) => {
            
                 this.CurrentSession.StopBusyIndicator();
@@ -1181,13 +1192,19 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     set IsPrepaidExpenses(newValue: boolean) {
         if (this.EntityPM.IsPrepaidExpenses != newValue) {
             this.EntityPM.IsPrepaidExpenses = newValue;  
-            if (newValue) {
-                this.ShowRecurringScheduleSettings();
-            }          
+            this.setPrepaidExpensesForLines(newValue);
+             if(newValue)
+                this.showRecurringScheduleSettings();
+                     
         }
     }
+    setPrepaidExpensesForLines(isPrepaid: boolean){
+        this.ItemsSource.Collection.forEach(item => {
+            item.IsPrepaidExpenses = isPrepaid;
+        });
+    }
     expenseAllocationSettingPMService: ExpenseAllocationSettingPMService = new ExpenseAllocationSettingPMService();
-    ShowRecurringScheduleSettings(){
+    showRecurringScheduleSettings(){
         const paymentType = this.expenseAllocationSetting?.PaymentDateType;
           
           var IsMonthly = true;
@@ -1441,7 +1458,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         line.ForiegnCurrencyId = this.InvoiceCurrencyId;
         line.ForiegnCurrencyCode = this.InvoiceCurrencyCode;
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
-
+        line.IsPrepaidExpenses = this.IsPrepaidExpenses;
         var myService: CardListService = new CardListService();
         myService.getSingle(this.VendorId).subscribe((myResult: any) => {
             var myResponse: ServiceResponse = myResult;
@@ -1456,6 +1473,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 logWindow.DataContext = addEditViewModel;
                 var title = TextCodeTranslator.Translate("APInvoiceLine.O.AddInvoiceLine");
                 logWindow.Title = title;
+                logWindow.ComponentLoaded.subscribe(comp => {
+                    logWindow.WindowClosed.subscribe(s => {
+                                                
+                         this.markSameChargeTypeLinesAsPrepaid(line.ChargesTypeId ,line.IsPrepaidExpenses);
+                       
+                    });
+                });
                 logWindow.Show('./InvoiceModules/APInvoice/Components/EditTabs/AddEditAPGeneralInvoiceLineComponent');
             }
         });
@@ -1465,8 +1489,23 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             var logWindow = new LogitudeWindow();
             logWindow.Title = TextCodeTranslator.Translate("APInvoiceLine.O.EditInvoiceLine");
             logWindow.DataContext = item;
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(s => {                  
+                        this.markSameChargeTypeLinesAsPrepaid(item.ChargesTypeId,item.IsPrepaidExpenses);
+                   
+                });
+            });
             logWindow.Show('./InvoiceModules/APInvoice/Components/EditTabs/AddEditAPGeneralInvoiceLineComponent');
         }
+    }
+    markSameChargeTypeLinesAsPrepaid(chargesTypeId: string, isPrepaid: boolean){
+       
+            this.ItemsSource.Collection.forEach(item => {
+                if(item.ChargesTypeId == chargesTypeId){
+                    item.IsPrepaidExpenses = isPrepaid;
+                }
+            });
+        
     }
 }
 export class APInvoiceLineItem extends BaseComponent {
@@ -1521,7 +1560,7 @@ export class APInvoiceLineItem extends BaseComponent {
     get InvoiceCurrencyId() {
         return this.invoicePM.InvoiceCurrencyId;
     }
-
+     
     get ForiegnCurrencyId() { return this.invoiceLinePM.ForiegnCurrencyId; }
     set ForiegnCurrencyId(value: string) {
         if (this.invoiceLinePM.ForiegnCurrencyId != value) {
@@ -1562,7 +1601,18 @@ export class APInvoiceLineItem extends BaseComponent {
     get ForiegnCurrencyCode() {
         return this.invoiceLinePM.ForiegnCurrencyCode;
     }
-
+    get IsPrepaidExpenses() {
+        return this.invoiceLinePM.IsPrepaidExpenses;
+    }
+    set IsPrepaidExpenses(value: boolean) {
+        if (this.invoiceLinePM != null) {
+            if (this.invoiceLinePM.IsPrepaidExpenses != value) {
+                this.invoiceLinePM.IsPrepaidExpenses = value;
+                this.fatherComponent.markSameChargeTypeLinesAsPrepaid(this.ChargesTypeId, value);
+                
+            }
+        }
+    }
     UpdateCurrencyRateClicked() {
 
         var loadingDate = this.fatherComponent.InvoiceDate;
@@ -1697,7 +1747,8 @@ export class APInvoiceLineItem extends BaseComponent {
     SetUIProperties_PayableDebitGLAcountId() {
        this.UIProperties.SetRequired("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PayableDebitGLAcountId));
        this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.chargesTypeList?.PayableDebitGLAcountId));
-       
+       this.UIProperties.SetEnabled("IsPrepaidExpenses", this.ObjectTableName, false);
+
     }
     // Line Properties
     public RefreshLine() {

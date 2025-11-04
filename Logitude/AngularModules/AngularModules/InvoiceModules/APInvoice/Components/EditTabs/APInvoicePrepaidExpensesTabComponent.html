@@ -18,7 +18,7 @@
                                 width: 100px;
                             "
                         >
-                            {{EntityPM.SubTotalInInvoiceCurrency |
+                            {{originalAmount |
                             NumbersPipe:'N2'}}
                         </td>
                         <td class="HeaderScreenLable" style="width: 40px">
@@ -152,7 +152,7 @@
                                             position: relative;
                                         "
                                     >
-                                        {{periodAmount | NumbersPipe:'N2'}}
+                                        {{item.JournalId === EntityPM.JournalId  ? (nonPrepaidPaidAmount | NumbersPipe:'N2') : (periodAmount | NumbersPipe:'N2')}}
                                     </td>
 
                                     <td

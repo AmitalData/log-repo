@@ -252,12 +252,27 @@
                                     <div></div>
                                 </td>
                             </tr>
+                           
+                              <!-- InvoiceCurrencyAmount -->
+                              <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'IsPrepaidExpenses'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <CheckBox [IsChecked]="DataContext.IsPrepaidExpenses" 
+                                      (Checked)="DataContext.IsPrepaidExpenses = $event"  
+                                      [IsEnabled]="DataContext.invoicePM?.IsPrepaidExpenses"></CheckBox>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
                             <tr>
                                 <td colspan="3">
                                     <div></div>
                                 </td>
                             </tr>
-
                         </table>
                     </td>
 
