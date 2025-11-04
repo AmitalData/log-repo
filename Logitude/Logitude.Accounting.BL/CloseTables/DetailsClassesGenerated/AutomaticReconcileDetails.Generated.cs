@@ -104,7 +104,7 @@ namespace Logitude.Accounting.BL
                 Code = "9", 
                 LocalName = "FIFO תאריך גביה", 
                 SearchFields = "FIFO תאריך גביה, 9, Due Date", 
-                EnglishName = "FIFO Due Date, 
+                EnglishName = "FIFO Due Date", 
                 Inactive = false, 
 			});
 			
