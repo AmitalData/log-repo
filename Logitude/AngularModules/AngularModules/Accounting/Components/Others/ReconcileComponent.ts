@@ -1183,7 +1183,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                             TotalDifference: this.TotalDifference,
                             TotalCredit: this.TotalCredit,
                             TotalDebit: this.TotalDebit,
-                            IsMultiWithReconcileMethodCodeEqualOne : this.IsMultiWithReconcileMethodCodeEqualOne
+                            IsMultiWithReconcileMethodCodeEqualOne : this.IsMultiWithReconcileMethodCodeEqualOne,
+                            ReconcileCurrencyId: this.GLAccountPM.IsMultiCurrency && this.GLAccountPM.ReconcileMethodCode === "1"? this.CurrencyId :null
                         };
                         logitudeWindow.Show('./Accounting/Components/Others/JournalReconcileComponent');
                         logitudeWindow.WindowClosed.subscribe(($event: any) => {
