@@ -543,6 +543,11 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                     break;
                 case "GLAccountId":
                     this.GLAccountId = queryFilterItem.FieldValue;
+                    if (!AppTool.IsNullOrEmpty(this.GLAccountId)) {
+                         this.filterGlAccountSelectedValue = 'filter_glaccount';
+                         this.IsListGLAccounts = false;
+                         this.IsRangGLAccounts = false;
+                    }
                     break;
                 case "IsDisableGlaccountId":
                     this.IsDisableGlaccountId = queryFilterItem.FieldValue;
