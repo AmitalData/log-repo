@@ -108,14 +108,14 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Extended
                 dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("ARInvoice.F.SequenceStatus", tenant, true), ColumnName = "SequenceStatus", DataType = "".GetType() });
 
 
-                InvoiceSequence.ForEach(r =>
-                {
-                    var newrow = dt.NewRow();
-                    newrow[0] = r.InvoiceSeries;
-                    newrow[1] = r.InvoiceNumberPart;
-                    newrow[2] = r.InvoiceDate;
-                    newrow[3] = r.InvoiceNumber;
-                    newrow[4] = r.SequenceStatus;
+            InvoiceSequence.ForEach(r =>
+            {
+                var newrow = dt.NewRow();
+                newrow[0] = r.InvoiceSeries ?? "";
+                newrow[1] = r.InvoiceNumberPart ?? "";
+                newrow[2] = r.InvoiceDate == null ? DBNull.Value : (object)r.InvoiceDate;
+                newrow[3] = r.InvoiceNumber ?? "";
+                newrow[4] = r.SequenceStatus ?? "";
 
                     dt.Rows.Add(newrow);
                 });
