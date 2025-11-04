@@ -282,7 +282,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
                                 var myResponse: ServiceResponse = myResult;
                                 this.MaintenanceSchedulerDetails = myResponse?.Result?.ReportDetails;
                                 queryFilterItems = this.MaintenanceSchedulerDetails.ReportFilterItems;
-                                resolve(); // נמשיך רק אחרי שהתשובה הגיעה
+                                resolve(); 
                             },
                             error: (err) => reject(err)
                         });
