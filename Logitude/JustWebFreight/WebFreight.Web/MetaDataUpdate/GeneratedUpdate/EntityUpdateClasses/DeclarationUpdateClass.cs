@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "082512b182069b5908b2f7e72e05411d";
+		public const string HashString = "1840d856bb2ab89c32c2fadf67c2ca08";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -843,8 +843,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "BS64:IteR15nXqiDXnteb16Ei",
 					  						ListFieldLable =  "DeclarationOfficeCodeListLable",
 					  						ListLableDefaultText =  "Declaration Office",
-					  						ListLocalDefaultTextBack_up =  "בית מכס",
-					  						ListLocalDefaultText =  "BS64:IteR15nXqiDXnteb16Ei",
+					  						ListLocalDefaultTextBack_up =  "קוד בית מכס",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXkdeZ16og157Xm9ehIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomsHouseType",
 					  						NavigationPropertyName =  "DeclarationOffice",
@@ -4659,8 +4659,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158g15bXm9eQ15ki",
 					  						ListFieldLable =  "EntitleImporterCodeListLable",
 					  						ListLableDefaultText =  "Entitle Importer",
-					  						ListLocalDefaultTextBack_up =  "מספר יבואן זכאי",
-					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeZ15HXldeQ158g15bXm9eQ15ki",
+					  						ListLocalDefaultTextBack_up =  "קוד מספר יבואן זכאי",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXnteh16TXqCDXmdeR15XXkNefINeW15vXkNeZIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5099,8 +5099,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefIg==",
 					  						ListFieldLable =  "ImporterTypeCodeListLable",
 					  						ListLableDefaultText =  "Importer Type Code",
-					  						ListLocalDefaultTextBack_up =  "סוג יבואן",
-					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefIg==",
+					  						ListLocalDefaultTextBack_up =  "קוד סוג יבואן",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeV15Ig15nXkdeV15DXnyI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomerIdentifyType",
 					  						NavigationPropertyName =  "ImporterType",
@@ -5170,8 +5170,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefINee16LXkdeZ16gi",
 					  						ListFieldLable =  "TransferImporterTypeCodeListLable",
 					  						ListLableDefaultText =  "Transfer Importer Type Code",
-					  						ListLocalDefaultTextBack_up =  "סוג יבואן מעביר",
-					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefINee16LXkdeZ16gi",
+					  						ListLocalDefaultTextBack_up =  "קוד סוג יבואן מעביר",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeV15Ig15nXkdeV15DXnyDXntei15HXmdeoIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomerIdentifyType",
 					  						NavigationPropertyName =  "TransferImporterType",
@@ -5241,8 +5241,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefINeW15vXkNeZIg==",
 					  						ListFieldLable =  "EntitleImporterTypeCodeListLable",
 					  						ListLableDefaultText =  "Entitle Importer Type Code",
-					  						ListLocalDefaultTextBack_up =  "סוג יבואן זכאי",
-					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXmdeR15XXkNefINeW15vXkNeZIg==",
+					  						ListLocalDefaultTextBack_up =  "קוד סוג יבואן זכאי",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeV15Ig15nXkdeV15DXnyDXlteb15DXmSI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomerIdentifyType",
 					  						NavigationPropertyName =  "EntitleImporterType",
@@ -9814,8 +9814,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15bXnteZ16DXldeqIg==",
 					  						ListFieldLable =  "AcceptanceStatusCodeListLable",
 					  						ListLableDefaultText =  "Acceptance Status",
-					  						ListLocalDefaultTextBack_up =  "סטטוס זמינות",
-					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg15bXnteZ16DXldeqIg==",
+					  						ListLocalDefaultTextBack_up =  "קוד סטטוס זמינות",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeY15jXldehINeW157Xmdeg15XXqiI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "AcceptanceStatus",
 					  						NavigationPropertyName =  "AcceptanceStatus",
@@ -10964,8 +10964,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "BS64:Itee15TXmdeoL9ek16jXmNeg15ki",
 					  						ListFieldLable =  "FastIndividualProcessCodeListLable",
 					  						ListLableDefaultText =  "Fast Individual Process",
-					  						ListLocalDefaultTextBack_up =  "מהיר/פרטני",
-					  						ListLocalDefaultText =  "BS64:Itee15TXmdeoL9ek16jXmNeg15ki",
+					  						ListLocalDefaultTextBack_up =  "קוד מהיר/פרטני",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXnteU15nXqC/XpNeo15jXoNeZIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -14057,8 +14057,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "BS64:IteQ16jXpSDXmdei15Mi",
 					  						ListFieldLable =  "DestinationCountryCodeListLable",
 					  						ListLableDefaultText =  "Destination Country",
-					  						ListLocalDefaultTextBack_up =  "ארץ יעד",
-					  						ListLocalDefaultText =  "BS64:IteQ16jXpSDXmdei15Mi",
+					  						ListLocalDefaultTextBack_up =  "קוד ארץ יעד",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXkNeo16Ug15nXoteTIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomsCountry",
 					  						NavigationPropertyName =  "CustomsCountry",
@@ -14412,8 +14412,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "BS64:Itee16EnINeR16fXqdeUIg==",
 					  						ListFieldLable =  "CancelRequestNumberListLable",
 					  						ListLableDefaultText =  "Cancel Request Number",
-					  						ListLocalDefaultTextBack_up =  "מס' בקשה",
-					  						ListLocalDefaultText =  "BS64:Itee16EnINeR16fXqdeUIg==",
+					  						ListLocalDefaultTextBack_up =  " (ביטול) מס' בקשה",
+					  						ListLocalDefaultText =  "BS64:IiAo15HXmdeY15XXnCkg157XoScg15HXp9ep15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -15764,8 +15764,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "BS64:IteR15PXmden15Qg16TXmdeW15nXqiI=",
 					  						ListFieldLable =  "PhysicalCheckListLable",
 					  						ListLableDefaultText =  "Physical Check",
-					  						ListLocalDefaultTextBack_up =  "בדיקה פיזית",
-					  						ListLocalDefaultText =  "BS64:IteR15PXmden15Qg16TXmdeW15nXqiI=",
+					  						ListLocalDefaultTextBack_up =  "קוד בדיקה פיזית",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXkdeT15nXp9eUINek15nXlteZ16oi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PhysicalCheckCode",
 					  						NavigationPropertyName =  "PhysicalCheckCode",
@@ -19757,8 +19757,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-
  
 	    }
 
