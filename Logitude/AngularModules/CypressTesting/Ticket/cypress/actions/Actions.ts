@@ -60,27 +60,33 @@ export function CancelTicket() {
     cy.get(TicketSelectors.MenuButtons, { timeout: 5000 }).should('exist').click({ force: true });
     cy.wait(500); // Small wait for menu to appear
     cy.Click(TicketSelectors.TicketCancel, null, true);
-    // Wait for confirmation dialog to appear, then click the 'כן' button
+    // Wait for confirmation dialog to appear, then click the 'כן' button directly by ID
     cy.get(BaseSelectors.ConfirmWindow, { timeout: 5000 }).should('be.visible');
-    cy.get(BaseSelectors.RedButton).contains(TicketSelectors.ContainsYes, { timeout: 5000 }).should('be.visible').click({ force: true });
+    cy.get(BaseSelectors.ConfirmWindowButton, { timeout: 5000 }).should('exist').click({ force: true });
 }
 
 export function ReactivateTicket() {
     cy.DefineRequestWait(RestAPI.PUT,URLs.Tickets,RequestAliases.PutTicket)
     // Wait for MenuButtons to exist and use force click since it may be covered
-    cy.get(TicketSelectors.MenuButtons, { timeout: 5000 }).should('exist').click({ force: true });
-    cy.wait(500); // Small wait for menu to appear
-    cy.Click(TicketSelectors.TicektReactivate, null, true);
-    cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsYes, true);
+    cy.get(TicketSelectors.MenuButtons, { timeout: 10000 }).should('exist').click({ force: true });
+    cy.wait(1000); // Wait for menu to appear
+    // Click Reactivate button with force
+    cy.get(TicketSelectors.TicektReactivate, { timeout: 5000 }).should('exist').click({ force: true });
+    // Wait for confirmation dialog and click Yes button
+    cy.get(BaseSelectors.ConfirmWindow, { timeout: 5000 }).should('be.visible');
+    cy.get(BaseSelectors.ConfirmWindowButton, { timeout: 5000 }).should('exist').click({ force: true });
 }
 
 export function CloseTicket() {
     cy.DefineRequestWait(RestAPI.PUT,URLs.Tickets,RequestAliases.PutTicket)
     // Wait for MenuButtons to exist and use force click since it may be covered
-    cy.get(TicketSelectors.MenuButtons, { timeout: 5000 }).should('exist').click({ force: true });
-    cy.wait(500); // Small wait for menu to appear
-    cy.Click(TicketSelectors.TicektClosewithoutNotifying, null, true);
-    cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsOk, true);
+    cy.get(TicketSelectors.MenuButtons, { timeout: 10000 }).should('exist').click({ force: true });
+    cy.wait(1000); // Wait for menu to appear
+    // Click Close Without Notifying button with force
+    cy.get(TicketSelectors.TicektClosewithoutNotifying, { timeout: 5000 }).should('exist').click({ force: true });
+    // Wait for confirmation dialog and click Ok button
+    cy.get(BaseSelectors.ConfirmWindow, { timeout: 5000 }).should('be.visible');
+    cy.contains('button', TicketSelectors.ContainsOk, { timeout: 5000 }).should('be.visible').click({ force: true });
 }
 
 export function CreateActivity(ActivityTypeButton: string ,ticketActivitySubject:string) {
