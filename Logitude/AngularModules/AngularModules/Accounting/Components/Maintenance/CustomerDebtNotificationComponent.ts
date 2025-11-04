@@ -128,6 +128,10 @@ export class CustomerDebtNotificationComponent extends BaseComponent implements 
                     if (this.CustomerDebtNotificationMaintenance) {
                         this.InActive = isMaintenanceNoActive || this.CustomerDebtNotificationMaintenance.InActive == IsActiveEnum.ActiveSelectedCustomers? IsActiveEnum.NotActive : IsActiveEnum.ActiveAllCustomers;
                         this.IsActive = !(isMaintenanceNoActive || this.CustomerDebtNotificationMaintenance.InActive == IsActiveEnum.ActiveSelectedCustomers);
+                        this.DebtLevelAmount = this.CustomerDebtNotificationMaintenance.DebtLevelAmount
+                        this.DebtLevel = this.CustomerDebtNotificationMaintenance.DebtLevel
+                        this.TypesDebts = this.CustomerDebtNotificationMaintenance.TypesDebts
+                        this.PaymentNotes = this.CustomerDebtNotificationMaintenance.PaymentNotes
                     } else {
                         this.InActive = IsActiveEnum.NotActive;
                         this.IsActive = false;
@@ -185,6 +189,7 @@ export class CustomerDebtNotificationComponent extends BaseComponent implements 
             windowArgs.IsCustomerDebNotification = true;
             windowArgs.TaskSchedulerId = this.TasksSchedulerId;
             windowArgs.GLAccountId = this.GLAccountId;
+            windowArgs.TaskSchedulerIdMaintenance = this.CustomerDebtNotificationMaintenance?.TasksSchedulerId;
             var logWindow = new LogitudeWindow();
             logWindow.Width = 1200;
             logWindow.Height = 1000;
