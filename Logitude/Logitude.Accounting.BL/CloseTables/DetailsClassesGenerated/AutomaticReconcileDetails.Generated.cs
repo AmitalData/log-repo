@@ -89,6 +89,24 @@ namespace Logitude.Accounting.BL
                 Inactive = false, 
                 EnglishName = "Reference Date", 
 			});
+			 
+            all.Add(new AutomaticReconcileDetails()
+            {    
+                Code = "8", 
+                LocalName = "FIFO תאריך חשבונאי", 
+                SearchFields = "FIFO תאריך חשבונאי,8,Accounting Date", 
+                EnglishName = "FIFO Accounting Date", 
+                Inactive = false, 
+			});
+			 
+            all.Add(new AutomaticReconcileDetails()
+            {    
+                Code = "9", 
+                LocalName = "FIFO תאריך גביה", 
+                SearchFields = "FIFO תאריך גביה, 9, Due Date", 
+                EnglishName = "FIFO Due Date", 
+                Inactive = false, 
+			});
 			
             return all;
        }
