@@ -32,7 +32,7 @@ export class TaskReportSchedulerComponent implements OnInit {
     public IsCustomerDebNotification: any;
     public GLAccountId: string;
     public TaskSchedulerId: string;
-   
+    public TaskSchedulerIdMaintenance: string
     filterAgrs: ApiQueryFilters;
     SchedulerType: string = "Report";
     IsEditReportSchedulerEventAlreadyExist: boolean = false;
@@ -72,7 +72,8 @@ export class TaskReportSchedulerComponent implements OnInit {
         this.IsCustomerDebNotification = windowArgs.IsCustomerDebNotification;
         this.GLAccountId = windowArgs.GLAccountId;
         this.TaskSchedulerId = !AppTool.IsNullOrEmpty(windowArgs.TaskSchedulerId) ? windowArgs.TaskSchedulerId : "empty";
-  
+        this.TaskSchedulerIdMaintenance = windowArgs.TaskSchedulerIdMaintenance;
+
         if (this.BIReportEntity) {
             this.IsBIReport = true;
         }
@@ -121,6 +122,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         windowArgs.IsQueryReport = this.IsQueryReport;
         windowArgs.IsCustomerDebNotification = this.IsCustomerDebNotification;
         windowArgs.GLAccountId = this.GLAccountId;
+        windowArgs.TaskSchedulerIdMaintenance = this.TaskSchedulerIdMaintenance;
 
         var logWindow = new LogitudeWindow();
         logWindow.Height = 820;

@@ -38,6 +38,8 @@ export class AddEditReportSchedulerComponent implements OnInit {
     public GLAccountId: string;
     public IsNew: boolean = true;
     public TasksSchedulerId: string;
+    public TaskSchedulerIdMaintenance: string;
+    public MaintenanceSchedulerDetails;
     public OldReportSchedulerDetails;
     private CurrentSession = SessionLocator.SelectedSession;
     schedulerExtendedPMService: SchedulerExtendedPMService;
@@ -84,6 +86,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         this.IsQueryReport = windowArgs.IsQueryReport;
         this.IsCustomerDebNotification = windowArgs.IsCustomerDebNotification;
         this.GLAccountId = windowArgs.GLAccountId;
+        this.TaskSchedulerIdMaintenance = windowArgs.TaskSchedulerIdMaintenance;
 
         if (!windowArgs.TasksSchedulerId) {
             this.BIReportEntity = windowArgs.BIReportEntity;
@@ -257,7 +260,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             });
     }
 
-    SetReportDetails() {
+    async SetReportDetails() {
         let reportTemplateId = this.PageChild_RETASK.GetReportTemplateId();
         let reportFilterItems = this.PageChild_RETASK.GetReportFilterItems();
         let messageTemplateId = this.PageChild_RETASK.GetMessageTemplateId();
@@ -266,8 +269,25 @@ export class AddEditReportSchedulerComponent implements OnInit {
            var queryFilterItems = new Array<QueryFilterItem>();
             var queryFilterItem = new QueryFilterItem();
 
-            if(!AppTool.IsNullOrEmpty(this.GLAccountId))
+            if (!AppTool.IsNullOrEmpty(this.GLAccountId))
             {
+
+                 if (AppTool.IsNullOrEmpty(this.TasksSchedulerId) && !AppTool.IsNullOrEmpty(this.TaskSchedulerIdMaintenance))
+               {
+                       await new Promise<void>((resolve, reject) => {
+                    this.schedulerExtendedPMService
+                        .GetSchedulerDetailsById(this.TaskSchedulerIdMaintenance)
+                        .subscribe({
+                            next: (myResult: ServiceResponse) => {
+                                var myResponse: ServiceResponse = myResult;
+                                this.MaintenanceSchedulerDetails = myResponse?.Result?.ReportDetails;
+                                queryFilterItems = this.MaintenanceSchedulerDetails.ReportFilterItems;
+                                resolve(); // נמשיך רק אחרי שהתשובה הגיעה
+                            },
+                            error: (err) => reject(err)
+                        });
+                });           
+              }
                queryFilterItem.FieldName = "GLAccountId";
                queryFilterItem.FieldValue = this.GLAccountId;
                queryFilterItem.Operator = "Equals";
