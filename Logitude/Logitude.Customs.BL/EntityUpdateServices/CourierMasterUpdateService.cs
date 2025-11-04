@@ -292,10 +292,47 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
+            if (entityPOCO != null)
+            {
+                var oldLanding = entityPOCO.LandingDate;
+                var newLanding = entityPM.LandingDate;
+
+                bool landingChanged =
+                    (oldLanding.HasValue != newLanding.HasValue) ||
+                    (oldLanding.HasValue && newLanding.HasValue && oldLanding.Value != newLanding.Value);
+
+                if (landingChanged && !string.IsNullOrWhiteSpace(entityPM.UnifreightLeadingFile))
+                {
+                    string remarks = $"LandingDate changed {oldLanding?.ToString("dd-MM-yyyy HH:mm") ?? "empty"} → {newLanding?.ToString("dd-MM-yyyy HH:mm") ?? "empty"}; CM={entityPM.Id}";
+                    SendRTA(entityPM.Tenant, remarks, entityPM.UnifreightLeadingFile);
+                }
+            }
             base.OnUpdating(entityPM, entityPOCO);
         }
 
+        public void SendRTA(int tenant, string remarks, string unifreightLeadingFile)
+        {
+            string loggedContactId = null;
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(tenant), tenant);
+            if (loggedContact != null)
+                loggedContactId = loggedContact.Id;
 
+            var param = new UnifreightEventParam
+            {
+                Code = "RTA",
+                Mode = UnifreightEventMode.@new,
+                EventDateTime = DateTime.Now,
+                Entname = "CFIFILEM",
+                PrimaryNum = unifreightLeadingFile,
+                EventRemarks = remarks
+            };
+
+            LogMessagingUtil.Instance.AppendLine("RTA UnifreightEventParam = " + (param?.ToString() ?? "NULL"));
+
+            var svc = new UnifreightEventTaskService();
+            svc.UpsertEventLE2U(tenant, loggedContactId, param);
+        }
         private static void Send2MasofDueMasterChanged(CourierDeclarationPM courierDeclaration, CourierMasterPM courierMasterPM)
         {
             var send2MasofIfNeededService = new Send2MasofIfNeededService();
