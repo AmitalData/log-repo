@@ -1,5 +1,5 @@
 export class AccountingPeriodSelectors {
-    public static readonly MiscellaneousMenu = "#GeneralMHOthers";
+    public static readonly MiscellaneousMenu = "#FAMISC";
     public static readonly DefineAccountingPeriod = "הגדרת תקופות";
     public static readonly AccountingPeriods = "תקופות חשבונאיות";
     public static readonly YearInput = "#AccountingPeriod_Year";
