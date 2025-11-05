@@ -1346,7 +1346,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                         HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
                         HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                         IsCustomTemplate: true,
-                       
+                        PreventSort: true,                       
                     },
                     ForeignAmountCredit: {
                         HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
@@ -1428,7 +1428,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                     if (fieldName === 'OppositeAccountLocalName') {
                         fieldName = this.CheckOppositeAccountIsActive();
                     }
-    
+
                     const displayName = TextCodeTranslator.Translate(field.ListTextCodeCode || field.FieldName);
                     const settings = customFieldSettings[field.FieldName];
     
@@ -1437,7 +1437,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                         DataTypeCode: field.DataTypeCode,
                         Display: displayName,
                         Styles: { width: ((settings?.Width || queryCol.ColumnWidth || 100) + 'px') },
-                        ServerSideSortable: true,
+                        ServerSideSortable: settings?.PreventSort? false: true,
                         ColumnHeaderTemplateName: field.ColumnHeaderTemplateName,
                         ObjectField: field,
                         QueryCode: queryCode
