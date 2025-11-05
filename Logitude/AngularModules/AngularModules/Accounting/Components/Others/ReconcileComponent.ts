@@ -1144,7 +1144,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                     this.CurrentSession.entityResourceService.getEntityResourceByTableName("JournalLine").subscribe(response => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 500;
-                        logitudeWindow.Height = 450;
+                        logitudeWindow.Height = 500;
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.B.Adjust");
                         logitudeWindow.WindowArgs = {
                             "SelectedLines": this.SelectedLines,
@@ -1152,7 +1152,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                             TotalDifference: this.TotalDifference,
                             TotalCredit: this.TotalCredit,
                             TotalDebit: this.TotalDebit,
-                            IsMultiWithReconcileMethodCodeEqualOne : this.IsMultiWithReconcileMethodCodeEqualOne
+                            IsMultiWithReconcileMethodCodeEqualOne : this.IsMultiWithReconcileMethodCodeEqualOne,
+                            ReconcileCurrencyId: this.GLAccountPM.IsMultiCurrency && this.GLAccountPM.ReconcileMethodCode === "1"? this.CurrencyId :null
                         };
                         logitudeWindow.Show('./Accounting/Components/Others/JournalReconcileComponent');
                         logitudeWindow.WindowClosed.subscribe(($event: any) => {

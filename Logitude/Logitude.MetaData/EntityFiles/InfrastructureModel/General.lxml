@@ -40,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;04ec&quot;"
+  Code="&quot;9b85&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -57,6 +57,7 @@
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
   TenantZeroData="false"
+  ShowFastSearch="false"
   Code1="&quot;6f7b&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -4840,9 +4841,9 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.O.PaymentBankAccountCurrencyDifferent&quot;"
-      DefaultText="&quot;Payment currency is different from bank account currency&quot;"
-      LocalDefaultTextBack_up="&quot;מטבע התשלום שונה ממטבע חשבון הבנק הנבחר&quot;"
-      LocalDefaultText="&quot;BS64:Itee15jXkdeiINeU16rXqdec15XXnSDXqdeV16DXlCDXntee15jXkdeiINeX16nXkdeV158g15TXkdeg16cg15TXoNeR15fXqCI=&quot;"
+      DefaultText="&quot;Payment currency is different from glaccount currency&quot;"
+      LocalDefaultTextBack_up="&quot;מטבע התשלום שונה ממטבע הכרטיס הנבחר&quot;"
+      LocalDefaultText="&quot;BS64:Itee15jXkdeiINeU16rXqdec15XXnSDXqdeV16DXlCDXntee15jXkdeiINeU15vXqNeY15nXoSDXlNeg15HXl9eoIg==&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -6705,8 +6706,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.O.NewReport&quot;"
-      DefaultTextBack_up="&quot;דוח חדש&quot;"
-      DefaultText="&quot;BS64:IteT15XXlyDXl9eT16ki&quot;"
+      DefaultText="&quot;New Report&quot;"
       LocalDefaultTextBack_up="&quot;דוח חדש&quot;"
       LocalDefaultText="&quot;BS64:IteT15XXlyDXl9eT16ki&quot;"
       TextCodeTypeCode="&quot;O&quot;"
