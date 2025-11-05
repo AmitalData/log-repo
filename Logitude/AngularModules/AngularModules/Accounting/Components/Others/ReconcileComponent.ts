@@ -944,35 +944,35 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
                     if (this.SelectedLines.Length > 0 && this.TotalLocalDifference != 0) {
                         let isRFRToggleOnForeignReco: boolean = false;
-                        if (this.GLAccountPM.ReconcileMethodCode == "1"){
-                            isRFRToggleOnForeignReco = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RFR")[0] ? true : false;
+                        if (this.GLAccountPM.ReconcileMethodCode === "1"){
+                            isRFRToggleOnForeignReco = SessionLocator.FeatureToggles.filter(d => d.ToggleCode === "RFR")[0] ? true : false;
                         }
                         if (isRFRToggleOnForeignReco) {
                             var rfrConfirm = new ConfirmWindow();
                             rfrConfirm.Width = 390;
-                            rfrConfirm.Show(TextCodeTranslator.Translate("Some.Preliminary.Question"));
+                            
+                            let textMessage = `${TextCodeTranslator.Translate("Accounting.O.RFRDiff1")} ${this.TotalLocalDifference} ${SessionLocator.TenantPM.CurrencySign}.\
+ ${TextCodeTranslator.Translate("Accounting.O.RFRDiff2")}`;
+
+                            rfrConfirm.Show(textMessage);
 
                             rfrConfirm.WindowClosed.subscribe((event: any) => {
                                 if (rfrConfirm.Yes) {
                                     this.revalOnForeignReco = true;
                                 }
-
+                                this.CurrentSession.StartBusyIndicatorSaving();
+                                var entity = this.CreateReconciliation();
+                                this.SubmitChanges(entity);
                             });
                         }
                     }
-
-                    this.CurrentSession.StartBusyIndicatorSaving();
-                    var entity = this.CreateReconciliation();
-                    this.SubmitChanges(entity);
-        
+                    else {
+                        this.CurrentSession.StartBusyIndicatorSaving();
+                        var entity = this.CreateReconciliation();
+                        this.SubmitChanges(entity);
+                    }
                 }
         
-           
-           
-        
-
-
-
     }
 
     private ShowAdjustmentConfirm(): void {
