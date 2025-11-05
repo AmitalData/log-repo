@@ -164,9 +164,14 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             //expresion tree
             var fieldList = fields.ToArray();
-            if (fields.FirstOrDefault() == "FIFOAccountingDate" || fields.FirstOrDefault() == "FIFODueDate")
+             string fifoAccountingDate = "FIFOAccountingDate";
+             string fifoDueDate = "FIFODueDate";
+             string accountingDate = "AccountingDate";
+             string dueDate = "DueDate";
+
+            if (fields.FirstOrDefault() == fifoAccountingDate || fields.FirstOrDefault() == fifoDueDate)
             {
-                string propertyName = fields[0] == "FIFOAccountingDate" ? "AccountingDate" : "DueDate";
+                string propertyName = fields[0] == fifoAccountingDate ? accountingDate : dueDate;
                 var fifoResult = DoFifoReconcile(qNotReconciledGroupByHaveValuesMapDTO, propertyName);
 
                 AllLedgerTransactionList = listService.GetDtoAsList(fifoResult);
