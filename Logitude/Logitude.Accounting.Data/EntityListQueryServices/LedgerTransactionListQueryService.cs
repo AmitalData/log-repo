@@ -781,6 +781,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
              .ToList()
              .ForEach(j =>
              {
+                 j.a.AmountToReconcile = j.dto.AmountToReconcile  ?? j.a.AmountToReconcile;
                  j.a.GroupHash = j.dto.GroupHash;
                  withGroup.Add(j.a);
              });
@@ -1983,6 +1984,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
         public int GroupHash { get; set; }
+        public decimal? AmountToReconcile { get; set; }
     }
 
     public class LedgerTransactionBalanceFilter
