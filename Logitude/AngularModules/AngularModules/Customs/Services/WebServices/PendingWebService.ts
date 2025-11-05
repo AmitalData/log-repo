@@ -104,7 +104,7 @@ export class PendingWebService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + "/PostSendMultiUpdate?" + '', // this.logtuideTableDataService.apiQueryFilterToQueryString(customFilter),
+                this._apiUrl + "/PostSendMultiUpdate?" +  this.logtuideTableDataService.apiQueryFilterToQueryString(customFilter),
                 JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
                     var res:any=response;
                     var serviceResponse: DataResult=new DataResult();
