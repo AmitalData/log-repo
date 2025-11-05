@@ -2583,7 +2583,7 @@ namespace WebFreight.Web.Helpers
             ReportGroupQuery reportGroupQuery = new ReportGroupQuery(tenantToCopy);
             string accountingReportGroupId = reportGroupQuery.GetReportGroupPMsByTenant(0).Where(a => a.Code == "RACC").Select(a => a.Id).FirstOrDefault();
             tenantZeroReportsTemplate = reportsTemplateRepository.GetReportsTemplates(0)
-                .Where(d => d.IsCopiedAtSignup && d.Report.ReportGroupId == accountingReportGroupId).ToList();
+                .Where(d => d.IsCopiedAtSignup && d.Report.ReportGroupId == accountingReportGroupId && !d.InActive).ToList();
             tenantZeroReportsTemplatesVersionLists = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(tenantZeroReportsTemplate.Select(d => d.Id).ToList(), 0);
             documentLists = documentRepository.GetDocumentsByIds(tenantZeroReportsTemplatesVersionLists.Select(d => d.ReportDocumentId).ToList());
             List<Report> tenantZeroReports = tenantZeroReportsTemplate.Select(a => a.Report).Distinct().ToList();
