@@ -950,9 +950,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                         if (isRFRToggleOnForeignReco) {
                             var rfrConfirm = new ConfirmWindow();
                             rfrConfirm.Width = 390;
+                            rfrConfirm.ShowCancelButton = true;
                             
-                            let textMessage = `${TextCodeTranslator.Translate("Accounting.O.RFRDiff1")} ${this.TotalLocalDifference} ${SessionLocator.TenantPM.CurrencySign}.\
- ${TextCodeTranslator.Translate("Accounting.O.RFRDiff2")}`;
+                            let textMessage = `${TextCodeTranslator.Translate("Accounting.O.General.RFRDiff1")} ${this.TotalLocalDifference} ${SessionLocator.TenantPM.CurrencySign}.\
+ ${TextCodeTranslator.Translate("Accounting.O.General.RFRDiff2")}`;
 
                             rfrConfirm.Show(textMessage);
 
@@ -960,9 +961,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                                 if (rfrConfirm.Yes) {
                                     this.revalOnForeignReco = true;
                                 }
-                                this.CurrentSession.StartBusyIndicatorSaving();
-                                var entity = this.CreateReconciliation();
-                                this.SubmitChanges(entity);
+                                if (rfrConfirm.No || rfrConfirm.Yes) {
+                                    this.CurrentSession.StartBusyIndicatorSaving();
+                                    var entity = this.CreateReconciliation();
+                                    this.SubmitChanges(entity);
+                                }
                             });
                         }
                     }
