@@ -36,7 +36,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             itemPoco.Folder = itemPM.Folder;
             itemPoco.InActive = itemPM.InActive;
             itemPoco.UseSFTP = itemPM.UseSFTP;
-            itemPoco.PrivateKey = EncryptPrivateKeyAsync(itemPM.PrivateKey).GetAwaiter().GetResult();
+            itemPoco.PrivateKey = !String.IsNullOrEmpty(itemPM.PrivateKey) ? EncryptPrivateKeyAsync(itemPM.PrivateKey).GetAwaiter().GetResult() : null;
             itemPoco.Port = itemPM.Port;
 
 		}
