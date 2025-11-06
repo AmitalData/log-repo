@@ -39,6 +39,11 @@ namespace Logitude.Accounting.BL.CoreBL
     ///PILOT 
     ///http://stackoverflow.com/questions/23280535/maybe-a-really-simple-dynamic-linq-to-entities-select-statement
     {
+        public static string fifoAccountingDate = "FIFOAccountingDate";
+         public static string fifoDueDate = "FIFODueDate";
+         public static string accountingDate = "AccountingDate";
+        public static string dueDate = "DueDate";
+
         public void AutomaticReconcile(string gLAccountId, int tenant, FilteredReconciliation myFilteredReconciliation)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
@@ -164,11 +169,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             //expresion tree
             var fieldList = fields.ToArray();
-             string fifoAccountingDate = "FIFOAccountingDate";
-             string fifoDueDate = "FIFODueDate";
-             string accountingDate = "AccountingDate";
-             string dueDate = "DueDate";
-
+            
             if (fields.FirstOrDefault() == fifoAccountingDate || fields.FirstOrDefault() == fifoDueDate)
             {
                 string propertyName = fields[0] == fifoAccountingDate ? accountingDate : dueDate;
@@ -257,10 +258,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     fields.Add("Reference3");
                     break;
                 case AutomaticReconcilePM.AutomaticReconcileEnum.FIFOAccountingDate:
-                    fields.Add("FIFOAccountingDate");
+                    fields.Add(fifoAccountingDate);
                     break;
                 case AutomaticReconcilePM.AutomaticReconcileEnum.FIFODueDate:
-                    fields.Add("FIFODueDate");
+                    fields.Add(fifoDueDate);
                     break;
                 default:
                     break;
