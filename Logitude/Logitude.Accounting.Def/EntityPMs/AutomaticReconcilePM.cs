@@ -31,7 +31,9 @@ C:\Source\Accounting\JustWebFreight\WebFreight.Web\MetaDataUpdate\UpdateClasses\
             Reference1=5,
             Reference2 = 6,
             Reference3 = 7,
+            FIFOAccountingDate = 8,
+            FIFODueDate = 9
 
-        }
+    }
     }
 }
