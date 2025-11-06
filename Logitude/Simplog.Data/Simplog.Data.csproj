@@ -298,6 +298,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CarrierServiceLine.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\BankAccountView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomsBookMainView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Responsibility.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TruckerSetting.cs" />

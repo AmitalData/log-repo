@@ -65,38 +65,32 @@ using Simplog.Server.Infrastructure;
             return myOut;
         }
     }
-    public static List<T> GetListNOWAITWhere<T>(this System.Data.Entity.Core.Objects.ObjectContext db, Expression<Func<T, bool>> filter) where T : class
-    {
+	public static List<T> GetListNOWAITWhere<T>(this System.Data.Entity.Core.Objects.ObjectContext db, Expression<Func<T, bool>> filter) where T : class
+	{
+		var query = db.CreateObjectSet<T>().Where(filter) as ObjectQuery<T>;
+		var parameters = query.Parameters.Select(p => GetDbParameter(p.Name, p.Value)).ToArray();
 
+		var recordExists = query.FirstOrDefault();
+		if (recordExists == null)
+		{
+            return null;
+		}
 
-        var newselectSql = "";
-        //var query = db.Set<T>().Where(filter);
-        var query = db.CreateObjectSet<T>().Where(filter) as ObjectQuery;
+		string selectSql = query.ToTraceString();
+		string newselectSql;
 
-        string selectSql = query.ToTraceString();
+		if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+		{
+			newselectSql = selectSql + " FOR UPDATE NOWAIT";
+		}
+		else
+		{
+			int indexOfWhere = selectSql.LastIndexOf("WHERE ");
+			newselectSql = selectSql.Insert(indexOfWhere, " WITH(UPDLOCK, NOWAIT)");
+		}
 
-
-        //newselectSql = "SELECT 1 MyCount  " + selectSql.Substring(indexOffROM) + " FOR UPDATE NOWAIT ";
-
-        if (LogitudeSettings.DatabaseManagementSystem == "oracle")
-        {
-            newselectSql = selectSql + " FOR UPDATE NOWAIT ";
-            //newselectSql = selectSql + " FOR UPDATE WAIT 1 ";
-        }
-        else
-        {
-            var indexOfWhere = selectSql.LastIndexOf("WHERE ");
-            var sqlServer = " WITH(NOWAIT) ";
-            sqlServer = " WITH(UPDLOCK, NOWAIT) ";
-
-            newselectSql = selectSql.Insert(indexOfWhere, sqlServer);
-        }
-        var parameters = query.Parameters.Select(p => GetDbParameter(p.Name, p.Value)).ToArray();
-
-        //db.Database.ExecuteSqlCommand(deleteSql, parameters);
-        return db.ExecuteStoreQuery<T>(newselectSql, parameters).ToList();
-
-    }
+		return db.ExecuteStoreQuery<T>(newselectSql, parameters).ToList();
+	}
 	public static List<T> GetListWhere<T>(this System.Data.Entity.DbContext dbContext, Expression<Func<T, bool>> filter) where T : class
 	{
 		using (var myIDbContextLogger = (dbContext as DbContextBase).CreateLogger())

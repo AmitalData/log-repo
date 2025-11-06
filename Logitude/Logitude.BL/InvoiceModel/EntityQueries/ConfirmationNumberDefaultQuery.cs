@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
+﻿using Logitude.BL.InvoiceModel.EntityLists;
+using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
-
-using Logitude.BL.InvoiceModel.EntityLists;
-using Logitude.BL.InvoiceModel.EntityPMs;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
+using System.Linq;
+using System.Web;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -70,6 +69,25 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                                };
             return result;
         }
+
+        public decimal GetAmountForConfirmationNumber(DateTime invoiceDate , int tenant)
+        {
+            var confirmationNumberDefault = (from a in repository.context.ConfirmationNumberDefaults
+                                             where a.Tenant == tenant && a.FromDate <= invoiceDate && a.InActive == false
+                                             orderby a.FromDate descending
+                                             select a
+                                           ).FirstOrDefault();
+            if(confirmationNumberDefault != null)
+            {
+                return confirmationNumberDefault.AmountForConfirmationNumber;
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
+
 
 
     }

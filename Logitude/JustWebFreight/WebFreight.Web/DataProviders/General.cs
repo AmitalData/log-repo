@@ -300,12 +300,6 @@ namespace WebFreight.Web.DataProviders
             }
         }
 
-        public static string GetCompanyName(int tenant)
-        {
-            TenantQuery tenantQuery = new TenantQuery(tenant);
-            return tenantQuery.GetCompanyNameById(tenant);
-        }
-
         private static string tenantManagementCustomerURL;
         private static bool hideSharedlogistics;
         private static bool isBrandingEnabled;

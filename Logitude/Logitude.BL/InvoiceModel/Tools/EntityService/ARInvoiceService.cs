@@ -74,6 +74,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private const string WorksChartOfAccountTypeCode = "6";
         const string CustomerChartOfAccountsTypeCode = "3";
         const string CustomerGLAccountType = "2";
+        private const string UNFGeneralInvoiceType = "G";
         private int tenant;
         private bool isNewEntity;
         private bool isUpdateTotalVats;
@@ -3433,7 +3434,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     myLineNumber += 1;
                 }
             }
+           else  if (this.isApprovingInvoice || this.entityPM.SetApprovedAutoCredit)
+            {
+                foreach (ARInvoiceLinePM item in entityPM.InvoiceLines)
+                {
+                    this.UpdateInvoiceLine(item);
+                    this.UpdateReceivable(item);
+                    isUpdateTotalVats = true;                    
 
+                }
+            }
             else
             {
                 int myLineNumber = invoiceLineRepository.GetBiggestLineNumber(entityPM.Id, tenant);
@@ -4236,7 +4246,9 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                         journalLine.Reference1 = theEntityPm.CustomerRef != null ? theEntityPm.CustomerRef : theEntityPm.InvoiceNumber;
                         journalLine.Reference2 = theEntityPm.MainEntityReference;
                         journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.MasterNumber) ? theEntityPm.MasterNumber : (!string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber);
-                        journalLine.Notes = theEntityPm.PrintNotes;
+                        journalLine.Notes = theEntityPm.IsExternalEntity && theEntityPm.InvoiceNumber.StartsWith(UNFGeneralInvoiceType) && !String.IsNullOrWhiteSpace(theEntityPm.InternalNotes)
+                            ? theEntityPm.InternalNotes
+                            :theEntityPm.PrintNotes;
                         journalLine.DebitAccountId = glAccount == null ? "" : glAccount.Id;
                         journalLine.DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId;
                         journalLine.ChangeSetOp = ChangeSetOperation.Insert;
@@ -4265,7 +4277,13 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                                                             Reference1 = theEntityPm.CustomerRef != null ? theEntityPm.CustomerRef : theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
                                                             Reference3 = !string.IsNullOrEmpty(theEntityPm.MasterNumber) ? theEntityPm.MasterNumber : (!string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber),
-                                                            Notes = !string.IsNullOrWhiteSpace(d.Notes) ? d.Notes : (!string.IsNullOrWhiteSpace(theEntityPm.PrintNotes) ? theEntityPm.PrintNotes : theEntityPm.InternalNotes),
+                                                            Notes = theEntityPm.IsExternalEntity && theEntityPm.InvoiceNumber.StartsWith(UNFGeneralInvoiceType)
+                                                            ? (   !string.IsNullOrWhiteSpace(d.Notes)?d.Notes
+                                                                : !string.IsNullOrWhiteSpace(d.LocalDescription) ? d.LocalDescription
+                                                                : !string.IsNullOrWhiteSpace(d.Description) ? d.Description
+                                                                : !string.IsNullOrWhiteSpace(theEntityPm.InternalNotes) ? theEntityPm.InternalNotes : theEntityPm.PrintNotes
+                                                                )
+                                                            :!string.IsNullOrWhiteSpace(d.Notes) ? d.Notes : (!string.IsNullOrWhiteSpace(theEntityPm.PrintNotes) ? theEntityPm.PrintNotes : theEntityPm.InternalNotes),
                                                         }).ToList();
 
                     UpdateJournalLinesDebitAccounts(journalLines);
@@ -4766,7 +4784,7 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
             {
                 this.UpdatePaymentsNumbers();
                 this.OnApprovingInvoice();
-                this.OnVoidingInvoise();
+                this.OnVoidingInvoice();
                 this.OnResendToSAT();
             }
 
@@ -4857,7 +4875,7 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                 }
             }
         }
-        private void OnVoidingInvoise()
+        private void OnVoidingInvoice()
         {
             if (this.isVoidingInvoice)
             {

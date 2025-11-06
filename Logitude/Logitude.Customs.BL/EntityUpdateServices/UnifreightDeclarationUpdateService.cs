@@ -174,10 +174,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
                 }
-                if(lCUSTOMFILENO < 1)
+                if(lCUSTOMFILENO < 1)   
                 {
                     if (!long.TryParse(_DirtyDeclarationPM.CustomFileNo, out lCUSTOMFILENO))
                     {
+                        if (!setting.IsConnectedToUniFreight && _DirtyDeclarationPM.IsCancelled == true && lCUSTOMFILENO == 0)
+                        {
+                            LogMessagingUtil.Instance.AppendLine($"{UnfMarkers.NotFound}: CUSTOMFILENO={lCUSTOMFILENO}; TENANT={_DirtyDeclarationPM.Tenant}; DECL_ID={_DirtyDeclarationPM.Id}");
+                            return;
+                        }
                         throw new BusinessErrorException("dirtyDeclarationPM.CustomFileNo could not convert to long ");
                     }
                 }
@@ -1349,13 +1354,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             //Writing RESHIMON DATE and there is no HATARA DATE  ==> INDICATORS="G"
-            
-            if (_DirtyDeclarationPM.PaymentDate.HasValue && !_DirtyDeclarationPM.HatraDate.HasValue && _DirtyDeclarationPM.IsAmendment == false)
+
+            if (_DirtyDeclarationPM.PaymentDate.HasValue && !_DirtyDeclarationPM.HatraDate.HasValue)
             {
                 DeclarationRepository dr = new DeclarationRepository(_DirtyDeclarationPM.Tenant);
                 var hasHatara = dr.HasHataraByCustomFile(_DirtyDeclarationPM.CustomFileNo, _DirtyDeclarationPM.Tenant);
-                if(!hasHatara)
+                if (!hasHatara)
+                {
                     _CCUFILEMPM.INDICATORS = "G";
+                }
+                else
+                {
+                    _CCUFILEMPM.INDICATORS = "";
+                }
             }
             //Deleting RESHIMON DATE ==> INDICATORS=""
             if (!_DirtyDeclarationPM.PaymentDate.HasValue && _CCUFILEMPM.RESHMDATE.HasValue)

@@ -80,47 +80,54 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Extended
         public byte[] ExportInvoiceSequenceStatusReport(string fromDate, string toDate, int tenant)
         {
 
+            try
+            {
+                var fromDate1 = Convert.ToDateTime(fromDate);
+                var toDate1 = Convert.ToDateTime(toDate);
 
-            var fromDate1 = Convert.ToDateTime(fromDate);
-            var toDate1 = Convert.ToDateTime(toDate);
+                ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(tenant);
+                List<ARInvoiceList> InvoiceSequence = invoiceQuery.GetInvoiceSequenceStatus(tenant, fromDate1, toDate1);
 
-            ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(tenant);
-            List<ARInvoiceList> InvoiceSequence = invoiceQuery.GetInvoiceSequenceStatus(tenant, fromDate1, toDate1);
+                DataTable dt = null;
+                var settingCol = new BITabularViewSettings() { Columns = new List<Column>() };
+                dt = new DataTable("Invoice Sequence");
 
-            DataTable dt = null;
-            var settingCol = new BITabularViewSettings() { Columns = new List<Column>() };
-            dt = new DataTable("Invoice Sequence");
+                settingCol.Columns.Add(new Column() { Index = 1, Code = "InvoiceSeries", Name = "InvoiceSeries", DataTypeCode = "String", Width = 100, });
+                dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("ARInvoice.F.InvoiceSeries", tenant, true), ColumnName = "InvoiceSeries", DataType = System.Type.GetType("System.String") });
 
-            settingCol.Columns.Add(new Column() { Index = 1, Code = "InvoiceSeries", Name = "InvoiceSeries", DataTypeCode = "String", Width = 100, });
-            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("ARInvoice.F.InvoiceSeries", tenant, true), ColumnName = "InvoiceSeries", DataType = System.Type.GetType("System.String") });
+                settingCol.Columns.Add(new Column() { Index = 2, Code = "InvoiceNumberPart", Name = "InvoiceNumberPart", DataTypeCode = "String", Width = 200, });
+                dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("ARInvoice.F.InvoiceNumberPart", tenant, true), ColumnName = "InvoiceNumberPart", DataType = "".GetType() });
 
-            settingCol.Columns.Add(new Column() { Index = 2, Code = "InvoiceNumberPart", Name = "InvoiceNumberPart", DataTypeCode = "String", Width = 200, });
-            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("ARInvoice.F.InvoiceNumberPart", tenant, true), ColumnName = "InvoiceNumberPart", DataType = "".GetType() });
+                settingCol.Columns.Add(new Column() { Index = 3, Code = "InvoiceDate", Name = "InvoiceDate", DataTypeCode = "DateTime", Width = 90, });
+                dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("ARInvoice.F.InvoiceDate", tenant, true), ColumnName = "InvoiceDate", DataType = DateTime.Now.GetType() });
 
-            settingCol.Columns.Add(new Column() { Index = 3, Code = "InvoiceDate", Name = "InvoiceDate", DataTypeCode = "DateTime", Width = 90, });
-            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("ARInvoice.F.InvoiceDate", tenant, true), ColumnName = "InvoiceDate", DataType = DateTime.Now.GetType() });
+                settingCol.Columns.Add(new Column() { Index = 4, Code = "InvoiceNumber", Name = "InvoiceNumber", DataTypeCode = "String", Width = 150, });
+                dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("ARInvoice.O.OriginalInvoiceNumber", tenant, true), ColumnName = "InvoiceNumber", DataType = "".GetType() });
 
-            settingCol.Columns.Add(new Column() { Index = 4, Code = "InvoiceNumber", Name = "InvoiceNumber", DataTypeCode = "String", Width = 150, });
-            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("ARInvoice.O.OriginalInvoiceNumber", tenant, true), ColumnName = "InvoiceNumber", DataType = "".GetType() });
-
-            settingCol.Columns.Add(new Column() { Index = 5, Code = "SequenceStatus", Name = "SequenceStatus", DataTypeCode = "String", Width = 90, });
-            dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("ARInvoice.F.SequenceStatus", tenant, true), ColumnName = "SequenceStatus", DataType = "".GetType() });
+                settingCol.Columns.Add(new Column() { Index = 5, Code = "SequenceStatus", Name = "SequenceStatus", DataTypeCode = "String", Width = 90, });
+                dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("ARInvoice.F.SequenceStatus", tenant, true), ColumnName = "SequenceStatus", DataType = "".GetType() });
 
 
             InvoiceSequence.ForEach(r =>
             {
                 var newrow = dt.NewRow();
-                newrow[0] = r.InvoiceSeries;
-                newrow[1] = r.InvoiceNumberPart;
-                newrow[2] = r.InvoiceDate;
-                newrow[3] = r.InvoiceNumber;
-                newrow[4] = r.SequenceStatus;
+                newrow[0] = r.InvoiceSeries ?? "";
+                newrow[1] = r.InvoiceNumberPart ?? "";
+                newrow[2] = r.InvoiceDate == null ? DBNull.Value : (object)r.InvoiceDate;
+                newrow[3] = r.InvoiceNumber ?? "";
+                newrow[4] = r.SequenceStatus ?? "";
 
-                dt.Rows.Add(newrow);
-            });
-            var xls = new ExportToExcelHelper();
-            var res = xls.ExportDataTableToExcel(dt, tenant, settingCol);
-            return res;
+                    dt.Rows.Add(newrow);
+                });
+                var xls = new ExportToExcelHelper();
+                var res = xls.ExportDataTableToExcel(dt, tenant, settingCol);
+                return res;
+            }
+            catch(Exception e)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,  $"ExportInvoiceSequenceStatusReport failed. StackTrace: {e.StackTrace}" );
+                throw;
+            }
         }
         [HttpPut]
         public HttpResponseMessage UpdateIsApproveDoneInARInvocie(string invoiceId, bool approvalInProgress)

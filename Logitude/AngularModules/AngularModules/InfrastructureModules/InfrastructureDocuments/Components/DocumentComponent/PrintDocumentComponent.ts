@@ -96,7 +96,10 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     private documentsExecutionLogListExtendedService: DocumentsExecutionLogListExtendedService;
     IsTemplateDisabled: boolean = false;
+    public IsDialogDisabled = false;
+    public DisabledDialogMessage = "This button is disabled for this document type";
     public EntityPM: any = null;
+
     constructor(public _documentTypeCustomFieldService: DocumentTypeCustomFieldService, public _documentOutPMService: DocumentOutPMService, public _documentTypePMService: DocumentTypePMExtendedService, public _exportDocumentService: ExportDocumentService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService) {
         super();
 
@@ -119,6 +122,8 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         if (ObjectsLocator.GlobalSetting.WorkEnvironment === 'cloud' && IsFromInterestBatchInvoice == false && SessionLocator.TenantPM.AccountingActivated && this.DataContext.invoiceType != "IT") {
             this.UpdateDocumentsAutomatically();
         }
+
+        this.IsDialogDisabled = !this.CheckDocumentTemplate() && this.CurrentDocumentOut.DocumentTemplateEditorTool == "S";
     }
 
     UpdateDocumentsAutomatically() {
@@ -391,17 +396,11 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             return;
         }
 
-        if (!this.CheckDocumentTemplate() && this.CurrentDocumentOut.DocumentTemplateEditorTool == "S") {
+        if (this.IsDialogDisabled) {
             return;
         }
-
 
         ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.DocumentTypeload.Name + " Building");
-
-        if (!this.CheckDocumentTemplate() && this.CurrentDocumentOut.DocumentTemplateEditorTool == "S") {
-            return;
-        }
-
 
         var windowArgs: any = {};
         var logWindow = new LogitudeWindow();

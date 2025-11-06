@@ -176,9 +176,24 @@ export class EditTaxReportLineComponent extends BaseComponent {
         this.UIProperties.SetRequired("TransmitStatusCode", this.ObjectTableName, !this.TransmitStatusCode);
         this.UIProperties.SetRequired("ConfirmationNumber", this.ObjectTableName, !this.TransmitStatusCode);
 
-        if (this.LineTypeCode == "I" || this.LineTypeCode == "S") {
+        if (this.LineTypeCode == "I" || this.LineTypeCode == "S" || this.LineTypeCode == "M" || this.LineTypeCode == "T" || this.LineTypeCode == "C") {
             this.UIProperties.SetEnabled("LineTypeCode", this.ObjectTableName, true);
             if (this.LineTypeCode != "I") { this.Reference = this.TaxReportLinePM.OriginalReference; }
+            if( this.LineTypeCode == "M" || this.LineTypeCode == "S" ){   
+                this.TypeFilterItems = new ApiQueryFilters();    
+                this.TypeFilterItems.addAdditionalFilter("Code", "M,S", null, null, "InListExact", false, false, false, "string", false, true);
+
+            }
+            else if( this.LineTypeCode == "C" || this.LineTypeCode == "T" ) {      
+                    this.TypeFilterItems = new ApiQueryFilters();            
+                    this.TypeFilterItems.addAdditionalFilter("Code", "T,C", null, null, "InListExact", false, false, false, "string", false, true);
+
+            }
+            else{
+                this.TypeFilterItems = new ApiQueryFilters();  
+                this.TypeFilterItems.addAdditionalFilter("Code", "I,S", null, null, "InListExact", false, false, false, "string", false, true);
+
+            }
         }
         if(this.TaxReportLinePM.IsExternalLine){
 

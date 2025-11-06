@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
+using System.Linq.Expressions;
 
 namespace Logitude.Accounting.BL.CoreBL.Reports
 {
@@ -441,10 +442,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var sw = Stopwatch.StartNew();
             bool includeChildAccounts = false;
 
-            //var BeginOfYearLocalAmountBalance = GetBeginOfYearLocalAmountBalance(_AccountingContext,_Param.From);
-
-
-
             var qGperiod = (from r in QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId
                             group r by 1 into g
                             select new
@@ -677,9 +674,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public virtual List<LedgerTransactionList> Translate2ListMode(IQueryable<LedgerTransactionList> qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, bool isFromExcelGenerater)
         {
             var ledgerTransactionListQueryService = new LedgerTransactionListQueryService(_AccountingContext);
-            var list = ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByDateTypeCodeAndId(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
-                _Param, isFromExcelGenerater, IsReconciled);
-            return list;
+
+            if (!string.IsNullOrEmpty(_Param.SortBy))
+            {
+                return ledgerTransactionListQueryService.GetLedgerTransactionList(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, _Param, isFromExcelGenerater, IsReconciled);
+            }
+            else
+            {
+                return ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByDateTypeCodeAndId(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
+                    _Param, isFromExcelGenerater, IsReconciled);
+            }
         }
 
 
@@ -829,6 +833,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public LedgerTransactionBalanceResponse Response { get; set; }
     }
 
+    
     class MyBlance
     {
         public decimal SumLocalAmount { get; internal set; }

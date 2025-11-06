@@ -1,4 +1,5 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -38,7 +39,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                              //join declarationStatus in context.DeclarationStatuses
                                                              //on a.DeclarationIdToDisplay equals declarationStatus.DeclarationId into qjoinDeclarationStatuses
-                                                             
+
 
                                                              select new DeclarationReferantDataList()
                                                              {
@@ -74,7 +75,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                                  CustomerName = (d.CustomerCard.LocalName != null ? d.CustomerCard.LocalName : d.CustomerCard.EnglishName),
 
-                                                                 VesselName = a.VesselCode != null ? (a.VesselCode.LocalName != null? a.VesselCode.LocalName : a.VesselCode.EnglishName): null,
+                                                                 VesselName = a.VesselCode != null ? (a.VesselCode.LocalName != null ? a.VesselCode.LocalName : a.VesselCode.EnglishName) : null,
 
                                                                  TransportModeId = d.TransportModeId,
 
@@ -144,19 +145,19 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  Actions = "",
                                                                  CancelRequestStatusCode = d.CancelRequestStatusCode,
                                                                  IsExceptionReasonsListNull = string.IsNullOrEmpty(a.ExceptionReasonsList),
-                                                                  IsManualPayment = a.IsManualPayment,
-                                                                 Commodity=a.Commodity,
-                                                                 ReferantUserName="",
-                                                                 DepartmentName="",                                                                
+                                                                 IsManualPayment = a.IsManualPayment,
+                                                                 Commodity = a.Commodity,
+                                                                 ReferantUserName = "",
+                                                                 DepartmentName = "",
 
                                                                  PackageTypeCode = a.PackageType.LocalName,
                                                                  LastStatusRemarks = a.LastStatusRemarks,
                                                                  RemoveInclusiveVisibility = "",
                                                                  Hawb = a.Hawb,
-                                                                 Mawb=a.Mawb,
-                                                                 ImporterApproval  = a.ImporterApproval,
-                                                                 CustomerId=d.CustomerId,
-                                                                 VendorId=a.VendorId,
+                                                                 Mawb = a.Mawb,
+                                                                 ImporterApproval = a.ImporterApproval,
+                                                                 CustomerId = d.CustomerId,
+                                                                 VendorId = a.VendorId,
                                                                  //OccuredStatuses = qjoinDeclarationStatuses.DefaultIfEmpty().Select(r=>r.StatusCode.Status_Code),
                                                              });
             return query;

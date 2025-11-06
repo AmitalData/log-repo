@@ -129,8 +129,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				DestinationGroupOfCountries = string.IsNullOrEmpty(certificateOfOrigin.DestinationGroupOfCountries) ? null : (int?)Convert.ToInt32(certificateOfOrigin.DestinationGroupOfCountries),
 				DestinationGroupOfCountriesSpecified = true,
 				Transport = certificateOfOrigin.Transport,
-                PortOfShipment = certificateOfOrigin.PortOfShipment,
-				IsCumulation = certificateOfOrigin.IsCumulation,
+                PortOfShipment = certificateOfOrigin.CooTypeCode == "3" && declarationPM.TransportModeId == "O" ? certificateOfOrigin.PortOfShipment : null,
+                IsCumulation = certificateOfOrigin.IsCumulation,
 				IsCumulationSpecified = true,
 				CumulationCountry = certificateOfOrigin.CumulationCountry,
 				CumulationGroupOfCountries = string.IsNullOrEmpty(certificateOfOrigin.CumulationGroupOfCountries) ? null : (int?)Convert.ToInt32(certificateOfOrigin.CumulationGroupOfCountries),
@@ -156,7 +156,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			
 			};
 
-			if (certificateOfOrigin.OriginCountry == "IL" && (certificateOfOrigin.CooTypeCode == "1" || certificateOfOrigin.CooTypeCode == "2" || certificateOfOrigin.CooTypeCode == "7"))
+            if (certificateOfOrigin.OriginCountry == "IL" && (certificateOfOrigin.CooTypeCode == "1" || certificateOfOrigin.CooTypeCode == "2" || certificateOfOrigin.CooTypeCode == "7" || certificateOfOrigin.CooTypeCode == "9"))
 			{
 				PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin.PlaceOfManufacture = string.IsNullOrEmpty(certificateOfOrigin.PlaceOfManufacture) ? null : (int?)Convert.ToInt32(certificateOfOrigin.PlaceOfManufacture);
 				PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin.PlaceOfManufactureSpecified = true;

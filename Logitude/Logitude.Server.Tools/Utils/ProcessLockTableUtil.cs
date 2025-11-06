@@ -131,7 +131,9 @@ namespace Logitude.Server.Tools.Utils
             {
                 if (multiProcess)
                 {
-                    var multiProcessLockTableUtil = new MultiProcessLockTableUtil();
+					NetCommonHelper.Logger.DevLog.Instance.WriteError("multiProcess lockit" + key.ToString());
+
+					var multiProcessLockTableUtil = new MultiProcessLockTableUtil();
                     return multiProcessLockTableUtil.LockItAndGetReleaseToken(tenant, key, requestLog);
                 }
                 return ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, requestLog);

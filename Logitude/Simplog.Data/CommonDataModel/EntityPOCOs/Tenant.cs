@@ -207,6 +207,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ShipmentATADateIndicator { get; set; }
         public bool ApproveUploadedDocuments { get; set; }
         public bool JouranlApprovalIsIdle { get; set; }
-        
+        public string InvoicePrintNotes { get; set; }
+        public string InvoicePrintNotesLocal { get; set; }
+
     }
 }

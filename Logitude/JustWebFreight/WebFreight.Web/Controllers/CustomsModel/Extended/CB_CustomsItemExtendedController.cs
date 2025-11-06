@@ -81,7 +81,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
+        
         [HttpPost]
         public HttpResponseMessage GetCustomsBookMainViewSearchByClassification([FromBody] Filters filters)
         {
@@ -293,6 +293,27 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
         }
+        public HttpResponseMessage GetCustomsBookLastUpdateDateByTenant(int tenant)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                ICustomContext MyContext = CustomContext.GetContext(tenant);
+                CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(MyContext);
+                DateTime? customsBookLastUpdateDate = customsSettingQuery.GetCustomsBookLastUpdateDateByTenant(tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, customsBookLastUpdateDate);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
 
         public HttpResponseMessage GetCustomItemClassifGuidance(int customsItemId, int tenant)
         {
@@ -320,7 +341,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
         }
-
+      
         public HttpResponseMessage GetClassifGuidanceDetails(string classificationGuidanceNumber, int tenant)
         {
             try
@@ -364,6 +385,32 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 };
                 DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService messagingService = new DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService();
                 CustomItemMekachResponseData responseData = messagingService.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+       
+        public HttpResponseMessage GetMekachDocument(int documentId, int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
+                GetAttachmentRequestParams requestParamsData = new GetAttachmentRequestParams()
+                {
+                    documentId = documentId,
+                    Tenant = tenant
+                };
+                GetDOC8318_Web_GetAttachmentMessagingService messagingService = new GetDOC8318_Web_GetAttachmentMessagingService();
+                AttachmentResponseData responseData = messagingService.Send(requestParamsData);
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);
 
             }

@@ -23,7 +23,10 @@ public class LedgerTransactionBalanceFilterCreateLTBFilter
         LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
 
         List<ObjectField> LedgerTransactionObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("LedgerTransaction", tenant);
-        LTBFilter.PageSize = filters!=null? filters.PageSize: queryOperations.PageSize;
+        LTBFilter.PageSize = filters != null ? filters.PageSize : queryOperations.PageSize;
+        LTBFilter.GetCount = filters?.GetCount ?? false;
+        LTBFilter.SortBy = filters?.SortBy;
+        LTBFilter.SortDirection = filters?.SortDirection;
         LTBFilter.PageStartAtRecordIndex = filters != null ? filters.PageIndex: queryOperations.PageIndex;
         LTBFilter.Tenant = tenant;
 

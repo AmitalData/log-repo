@@ -366,12 +366,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     myLedgerTransactionsWithCounters = _JournalApproveParser.LedgerTransactions
                         .OrderBy(rec => rec.JournalId).ThenBy(rec => rec.JournalLineNumber)
                         .ToList();
-                    if (this._SelectedQueue == JournalApproveService.K_AccountingJournalApproveWR)
-                    {
-                        var ledgerTransactionsAgingBuilderService = new LedgerTransactionsAgingBuilderService(_AccountingContext);
-                        gLAccountAgingDataPMs = ledgerTransactionsAgingBuilderService.GetAgingPMs(myLedgerTransactionsWithCounters);
+                    
+                    var ledgerTransactionsAgingBuilderService = new LedgerTransactionsAgingBuilderService(_AccountingContext);
+                    gLAccountAgingDataPMs = ledgerTransactionsAgingBuilderService.GetAgingPMs(myLedgerTransactionsWithCounters);
 
-                    }
 
 
                     //if (!_ExecAsSP)

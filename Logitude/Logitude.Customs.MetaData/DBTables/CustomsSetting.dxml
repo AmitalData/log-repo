@@ -230,28 +230,25 @@
       Nullable="true" />
   </Column>
   <Column
-     Name="CourierDocToken"
-    Type="varchar"
-    Size="1024">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-     Name="ForbiddenSigns"
-    Type="nvarchar"
-    Size="128">
-    <Constraints
-      Nullable="true" />
-  </Column>
-	
-   <Column
     Name="CourierDocToken"
     Type="varchar"
     Size="1024">
     <Constraints
       Nullable="true" />
   </Column>
- 	
+  <Column
+    Name="ForbiddenSigns"
+    Type="nvarchar"
+    Size="128">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CB_LastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultNotificationAssignee"
     ReferencedTable="Users"

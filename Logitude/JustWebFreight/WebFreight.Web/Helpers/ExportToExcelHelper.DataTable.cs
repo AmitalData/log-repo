@@ -63,15 +63,30 @@ namespace WebFreight.Web.Helpers
             TenantRepository tenantRepoitory = new TenantRepository(tenant);
             var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
             var rows = dataTable.Rows.Count;
-            if (rows > 0)
+            if (rows > 0 && sheet != null && dataTable != null && bITabularViewSettings?.Columns != null)
             {
-                
                 for (int j = 1; j <= dataTable.Columns.Count; j++)
                 {
                     var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[j - 1].ColumnName).FirstOrDefault();
                     if (agColumn != null)
                     {
-                        var writeRange = sheet.Range[2, j, rows+1, j];
+                        IRange writeRange = null;
+                        try
+                        {
+                            writeRange = sheet.Range[2, j, rows+1, j];
+                        }
+                        catch (Exception ex)
+                        {
+                            NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to access range: {ex.Message} for column: {j}");
+                            continue;
+                        }
+
+                        if (writeRange == null)
+                        {
+                            NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"Accessed range is null");
+                            continue;
+                        }
+
                         switch (agColumn.DataTypeCode)
                         {
                             case "Constant":

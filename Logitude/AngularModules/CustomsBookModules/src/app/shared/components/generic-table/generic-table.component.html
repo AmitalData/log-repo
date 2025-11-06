@@ -12,7 +12,7 @@
                 </td>
                 <ng-template #notImgCell>
                     <td *ngIf="col.visible && col.dataType == fileTypes.pdf; else notFileCell">
-                        <a *ngIf="row[col.key]; else notBase64" (click)="openBase64File(row[col.key], fileTypes.pdf)" style="cursor: pointer;">
+                        <a *ngIf="row[col.key]; else notBase64" (click)="onButtonClick($event, row, col.key)" style="cursor: pointer;">
                             <i class="fas fa-file-pdf" style="font-size: 18px; color: black;"></i>
                         </a>
                         <ng-template #notBase64>-</ng-template>

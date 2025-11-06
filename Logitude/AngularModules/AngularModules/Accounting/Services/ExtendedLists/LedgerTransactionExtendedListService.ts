@@ -83,6 +83,13 @@ export class LedgerTransactionExtendedListService {
 
     getByFilters(filters: ApiQueryFilters) {
 
+        if (filters.SortBy === "LocalAmountCredit") {
+            filters.SortBy = "CalculatedLocalAmount";
+        }
+        else if (filters.SortBy === "ForeignAmountCredit") {
+            filters.SortBy = "CalculatedForeignAmount";
+        }
+
         var urlparameters = '/GetLedgerTransactionsByFilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;

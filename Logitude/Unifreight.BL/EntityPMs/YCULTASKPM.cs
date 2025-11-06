@@ -20,6 +20,8 @@ namespace Unifreight.BL.EntityPMs
                 case "LP2U":
                 case "LP2UB":
                     return 3;
+                case "L2UCREF":
+                    return 4;
                 default:
                     return 0;
             }

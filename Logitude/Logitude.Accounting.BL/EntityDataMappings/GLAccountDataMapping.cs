@@ -436,7 +436,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 var poco = myGLAccountMoreDataRepository.GetSingle(entityPOCO.Id, entityPOCO.Tenant);
                 if (poco != null)
                 {
-                    entityPM.NextDueDate = poco.NextDueDate;
+                    entityPM.NextDueDate = (entityPOCO.AccountTypeCode == "2" || entityPOCO.AccountTypeCode == "3") ? poco.NextDueDate : null ;
                     entityPM.LocalBalanceInDue = poco.LocalBalanceInDue;
                     entityPM.BalanceInLocalCurrency = poco.BalanceInLocalCurrency;
                     entityPM.BalanceInForeignCurrency = poco.BalanceInForeignCurrency;
