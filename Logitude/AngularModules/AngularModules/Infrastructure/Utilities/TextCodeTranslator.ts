@@ -122,12 +122,14 @@ export class TextCodeTranslator {
                 window.TextCodesCache.push(translationObject);
             }
             else {
-                if (this.ShowAlertMessage(value)) {
-                    if (SessionLocator.LoggedUserPM.Email.includes("logitudeworld.com")) 
-                    {
-                        alert("This Code '" + value + "' Not Found!");
-                    } 
-                }
+              console.log("TextCodeTranslator - TranslateCached - Not Found Translation for Code: " + value); ;
+
+                // if (this.ShowAlertMessage(value)) {
+                //     if (SessionLocator.LoggedUserPM.Email?.includes("logitudeworld.com")) 
+                //     {
+                //         alert("This Code '" + value + "' Not Found!");
+                //     } 
+                // }
             }
         }
 
