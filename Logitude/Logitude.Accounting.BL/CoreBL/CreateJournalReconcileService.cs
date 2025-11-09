@@ -356,7 +356,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     var myAccountingEntityDetails = new AccountingEntityDetails();
                     var adjustmentAccountingEntityDetails = myAccountingEntityDetails.GetAll().FirstOrDefault(r => r.EnglishName == AdjustmentAccountingEntityName);
 
-                    string theJournalLineCurrencyId = !String.IsNullOrWhiteSpace(glAccountPM.CurrencyId) ? glAccountPM.CurrencyId : accountingCurrencyId;
+                    string theJournalLineCurrencyId = !String.IsNullOrWhiteSpace(glAccountPM.CurrencyId) ? glAccountPM.CurrencyId : (glAccountPM.IsMultiCurrency == true && glAccountPM.ReconcileMethodCode ==  "1") ? theCurrencyId :accountingCurrencyId;
                     theCurrencyId = theJournalLineCurrencyId;
                     RatesTablePM rate = null;
                     rate = ratesTableQuery.GetLastRateByValueDate(tenant, theCurrencyId, accountingCurrencyId,AccountDate);
