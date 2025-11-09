@@ -1,16 +1,21 @@
-﻿using Logitude.Customs.Def.EntityPMs;
+﻿using Logitude.BL.Resolvers;
+using Logitude.Customs.BL.CLoseTable;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Simplog.Server.Infrastructure;
 using System.Xml;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.BL.Resolvers;
-using Logitude.Customs.Data.EntityPOCOs;
 using static Logitude.Customs.BL.Messaging.FtpOutParams;
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -23,6 +28,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
         protected override void OnUpdating(CustomsSettingPM entityPM)
         {
+            if(entityPM.CompanyType == "B")
+            {  
+			     CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(entityPM.Tenant);
+			     this.AddCourierPendingReason(new CourierPendingReason() { Code = "900",Tenant = entityPM.Tenant, EnglishName = "Collection", LocalName = "גביה", Inactive = false, ErrorPlace = "2", UnifreightStatusCode = "VPE", RequiresApproval = false, RequiresPayment = false }, courierPendingReasonRepository);
+			     this.AddCourierPendingReason(new CourierPendingReason() { Code = "901",Tenant = entityPM.Tenant, EnglishName = "Autonomy", LocalName = "אוטונומיה", Inactive = false, ErrorPlace = "1" }, courierPendingReasonRepository);
+			     this.AddCourierPendingReason(new CourierPendingReason() { Code = "902",Tenant = entityPM.Tenant, EnglishName = "Missing ID", LocalName = "חסר ת.ז.", Inactive = false, ErrorPlace = "1", RequiresApproval = false, RequiresPayment = false }, courierPendingReasonRepository);
+			     this.AddCourierPendingReason(new CourierPendingReason() { Code = "903",Tenant = entityPM.Tenant, EnglishName = "Invalid phone number", LocalName = "מספר טלפון לא תקין", Inactive = false, ErrorPlace = "1" }, courierPendingReasonRepository);
+			     this.AddCourierPendingReason(new CourierPendingReason() { Code = "904",Tenant = entityPM.Tenant, EnglishName = "Weight", LocalName = "משקל", Inactive = false, RequiresApproval = true, RequiresPayment = false }, courierPendingReasonRepository);
+			     this.AddCourierPendingReason(new CourierPendingReason() { Code = "905",Tenant = entityPM.Tenant, EnglishName = "Shipping not to Israel", LocalName = "משלוח לא לישראל", Inactive = false }, courierPendingReasonRepository);
+			     this.AddCourierPendingReason(new CourierPendingReason() { Code = "906",Tenant = entityPM.Tenant, EnglishName = "Commercial Customer", LocalName = "לקוח מסחרי", Inactive = false }, courierPendingReasonRepository);
+			     this.AddCourierPendingReason(new CourierPendingReason() { Code = "907",Tenant = entityPM.Tenant, EnglishName = "Quantity Of Goods", LocalName = "כמות סחורה", Inactive = false }, courierPendingReasonRepository);
+			     this.AddCourierPendingReason(new CourierPendingReason() { Code = "908",Tenant = entityPM.Tenant, EnglishName = "required power of attorney", LocalName = "נדרש יפוי כח", Inactive = false }, courierPendingReasonRepository);
+                    
+			     courierPendingReasonRepository.SubmitChanges();				
+			}
+
+
             bool isChanged = false;
             List<string> changesText = new List<string>();
             bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
@@ -78,5 +100,26 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
         }
-    }
+		public void AddCourierPendingReason(CourierPendingReason courierPendingReason, CourierPendingReasonRepository courierPendingReasonRepository)
+        {
+            var existing = courierPendingReasonRepository.GetSingle(courierPendingReason.Code, courierPendingReason.Tenant);
+            if (existing == null)
+            {
+				CourierPendingReason newCourierPendingReason = new CourierPendingReason()
+				{
+					Id = courierPendingReason.Code,
+					Code = courierPendingReason.Code,
+					Tenant = courierPendingReason.Tenant,
+					Inactive = courierPendingReason.Inactive,
+					ErrorPlace = courierPendingReason.ErrorPlace,
+					RequiresApproval = courierPendingReason.RequiresApproval,
+					RequiresPayment = courierPendingReason.RequiresPayment,
+					LocalName = courierPendingReason.LocalName,
+					EnglishName = courierPendingReason.EnglishName,
+					SearchFields = (courierPendingReason.Code + "," + courierPendingReason.LocalName + "," + courierPendingReason.EnglishName).ToLower()
+				};
+				courierPendingReasonRepository.Add(courierPendingReason);
+            }
+		}
+	}
 }
