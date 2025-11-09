@@ -27,7 +27,8 @@
         "report": "run-s report:*",
         "report:merge": "mochawesome-merge --reportDir cypress/results/json > cypress/results/mochawesome-bundle.json",
         "report:generate": "marge cypress/results/mochawesome-bundle.json -o cypress/reports/html",
-        "report:copyScreenshots": "cp -r cypress/screenshots cypress/results/html/screenshots"
+        "report:copyScreenshots": "cp -r cypress/screenshots cypress/results/html/screenshots",
+        "test:jest": "jest --runInBand"
     },
     "private": true,
     "dependencies": {
@@ -102,6 +103,10 @@
         "cypress-localstorage-commands": "^1.2.1",
         "cypress-mochawesome-reporter": "^1.0.1",
         "cypress-multi-reporters": "^1.4.0",
+        "@types/jest": "^27.5.2",
+        "jest": "^27.5.1",
+        "jest-preset-angular": "^11.1.2",
+        "ts-jest": "^27.1.5",
         "jasmine-core": "~3.5.0",
         "jasmine-reporters": "^2.0.0",
         "jasmine-spec-reporter": "~4.2.1",
