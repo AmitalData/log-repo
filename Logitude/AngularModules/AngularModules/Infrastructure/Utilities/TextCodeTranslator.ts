@@ -122,7 +122,7 @@ export class TextCodeTranslator {
                 window.TextCodesCache.push(translationObject);
             }
             else {
-                if (isNullOrUndefined(translationObject) || translation == "") { console.log("TextCodeTranslator - TranslateCached - Not Found Translation for Code: " + value); };
+              console.log("TextCodeTranslator - TranslateCached - Not Found Translation for Code: " + value); ;
 
                 // if (this.ShowAlertMessage(value)) {
                 //     if (SessionLocator.LoggedUserPM.Email?.includes("logitudeworld.com")) 
