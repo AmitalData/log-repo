@@ -1358,7 +1358,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                         HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
                         HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                         IsCustomTemplate: true,
-                      
+                        PreventSort: true,                       
                     },
                     Reference1: {
                         IsCustomTemplate: true,
