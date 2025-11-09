@@ -3,7 +3,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Customs.BL.ClosedTable;
-using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.Data;
@@ -11,34 +11,35 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.ClosedTable;
 using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Infrastructure.BL;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Transactions;
 using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.MetaDataUpdate.AddClasses;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.BL;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using System.Configuration;
 
 namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 {
@@ -17073,11 +17074,22 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
         public void FillCourierPendingReasonTable(int tenant)
         {
-            //CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(tenant);
-            //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "900", EnglishName = "Payment", LocalName = "תשלום" }, courierPendingReasonRepository);
-            //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "901", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
-            //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "902", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
-            //courierPendingReasonRepository.SubmitChanges();
+			var customsSettingQueryService = new CustomsSettingQueryService(tenant);
+            if (customsSettingQueryService.IsCourierTenant(tenant))
+            {
+                CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(tenant);
+                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "900", EnglishName = "Collection", LocalName = "גביה", Inactive = false, ErrorPlace = "2",UnifreightStatusCode = "VPE", RequiresApproval = false, RequiresPayment = false }, courierPendingReasonRepository, tenant);
+                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "901", EnglishName = "Autonomy", LocalName = "אוטונומיה", Inactive = false, ErrorPlace = "1" }, courierPendingReasonRepository, tenant);
+                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "902", EnglishName = "Missing ID", LocalName = "חסר ת.ז.", Inactive = false, ErrorPlace = "1", RequiresApproval = false, RequiresPayment = false }, courierPendingReasonRepository, tenant);
+                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "903", EnglishName = "Invalid phone number", LocalName = "מספר טלפון לא תקין", Inactive = false, ErrorPlace = "1" }, courierPendingReasonRepository, tenant);
+                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "904", EnglishName = "Weight", LocalName = "משקל" ,Inactive = false,RequiresApproval = true, RequiresPayment = false }, courierPendingReasonRepository, tenant);
+                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "905", EnglishName = "Shipping not to Israel", LocalName = "משלוח לא לישראל" ,Inactive = false }, courierPendingReasonRepository, tenant);
+                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "906", EnglishName = "Commercial Customer", LocalName = "לקוח מסחרי" ,Inactive = false }, courierPendingReasonRepository, tenant);
+                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "907", EnglishName = "Quantity Of Goods", LocalName = "כמות סחורה", Inactive = false }, courierPendingReasonRepository, tenant);
+                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "908", EnglishName = "required power of attorney", LocalName = "נדרש יפוי כח" , Inactive = false }, courierPendingReasonRepository, tenant);
+
+                courierPendingReasonRepository.SubmitChanges();
+            }
         }
         public void FillContainerizationStatusCodeTable(int tenant)
         {

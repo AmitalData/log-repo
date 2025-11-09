@@ -3225,29 +3225,35 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
-        public static void AddCourierPendingReason(CourierPendingReason courierPendingReasonDetails, CourierPendingReasonRepository courierPendingReasonRepository)
+        public static void AddCourierPendingReason(CourierPendingReason courierPendingReasonDetails, CourierPendingReasonRepository courierPendingReasonRepository,int tenant)
         {
-            //Dictionary<string, CourierPendingReason> tenantCourierPendingReason = courierPendingReasonRepository.GetAll().ToDictionary(d => d.Code, a => a);
+            Dictionary<string, CourierPendingReason> tenantCourierPendingReason = courierPendingReasonRepository.GetAll(tenant).ToDictionary(d => d.Code + d.Tenant, a => a);
 
-            //if (tenantCourierPendingReason.Keys.Contains(courierPendingReasonDetails.Code))
-            //{
-            //    CourierPendingReason courierPendingReason = courierPendingReasonRepository.GetSingle(courierPendingReasonDetails.Code, tenantCourierPendingReason.Keys.);
-            //    courierPendingReason.LocalName = courierPendingReasonDetails.LocalName;
-            //    courierPendingReason.EnglishName = courierPendingReasonDetails.EnglishName;
-            //    courierPendingReason.SearchFields = (courierPendingReasonDetails.Code + "," + courierPendingReasonDetails.LocalName).ToLower();
-            //    courierPendingReasonRepository.Update(courierPendingReason);
-            //}
+            if (!tenantCourierPendingReason.Keys.Contains(courierPendingReasonDetails.Code + courierPendingReasonDetails.Tenant))
+            {
+				CourierPendingReason newCourierPendingReason = new CourierPendingReason()
+				{
+					Id = courierPendingReasonDetails.Code,
+					Code = courierPendingReasonDetails.Code,
+					Tenant = courierPendingReasonDetails.Tenant,
+					Inactive = courierPendingReasonDetails.Inactive,
+					ErrorPlace = courierPendingReasonDetails.ErrorPlace,
+					RequiresApproval = courierPendingReasonDetails.RequiresApproval,
+					RequiresPayment = courierPendingReasonDetails.RequiresPayment,
+					LocalName = courierPendingReasonDetails.LocalName,
+					EnglishName = courierPendingReasonDetails.EnglishName,
+					SearchFields = (courierPendingReasonDetails.Code + "," + courierPendingReasonDetails.LocalName + "," + courierPendingReasonDetails.EnglishName).ToLower()
+				};
+				courierPendingReasonRepository.Add(newCourierPendingReason);				
+            }
             //else
             //{
-            //    CourierPendingReason newCourierPendingReason = new CourierPendingReason()
-            //    {
-            //        Code = courierPendingReasonDetails.Code,
-            //        LocalName = courierPendingReasonDetails.LocalName,
-            //        EnglishName = courierPendingReasonDetails.EnglishName,
-            //        SearchFields = (courierPendingReasonDetails.Code + "," + courierPendingReasonDetails.LocalName).ToLower()
-            //    };
-            //    courierPendingReasonRepository.Add(newCourierPendingReason);
-            //}
+			//	CourierPendingReason courierPendingReason = courierPendingReasonRepository.GetSingle(courierPendingReasonDetails.Code, courierPendingReasonDetails.Tenant);
+			//	courierPendingReason.LocalName = courierPendingReasonDetails.LocalName;
+			//	courierPendingReason.EnglishName = courierPendingReasonDetails.EnglishName;
+			//	courierPendingReason.SearchFields = (courierPendingReasonDetails.Code + "," + courierPendingReasonDetails.LocalName).ToLower();
+			//	courierPendingReasonRepository.Update(courierPendingReason);
+			//}
         }
 
         public static void AddMamanSpecialAction(MamanSpecialAction mamanSpecialActionDetails, MamanSpecialActionRepository mamanSpecialActionRepository)
