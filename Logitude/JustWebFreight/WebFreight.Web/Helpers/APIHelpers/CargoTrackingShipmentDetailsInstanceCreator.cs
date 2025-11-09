@@ -9,7 +9,6 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.CargoTracking.BL.APIDataContract;
-using Logitude.CargoTracking.BL.CloseTables;
 using Logitude.CargoTracking.BL.EntityQueryServices;
 using Logitude.CargoTracking.BL.CoreBL;
 using Logitude.CargoTracking.Data;
@@ -26,6 +25,7 @@ using System.Security.Policy;
 using System.Windows.Forms;
 using Simplog.Server.Infrastructure;
 using NPOI.SS.Formula.Functions;
+using Logitude.CargoTracking.BL.Enums;
 
 
 namespace WebFreight.Web.Helpers.APIHelpers
@@ -36,8 +36,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
         ShipmentQuery query;
         List<MilestoneData> milestoneDatas;
         ICargoTrackingContext MyContext;
-        Dictionary<string, string> milestoneCodes;
-
 
         public CargoTrackingShipmentDetailsInstanceCreator(int tenant)
         {
@@ -147,7 +145,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         private List<MilestoneData> GetShipmentMilestones(CargoTrackingShipmentList cargoTrackingShipment)
         {
-            BuildMileStoneCodesDictionary();
             List<Milestone> allMilestones = GetAllShipmentMilestones(cargoTrackingShipment);
             if (allMilestones == null) { return null; }
             allMilestones.OrderBy(m => m.Weight);
@@ -162,43 +159,12 @@ namespace WebFreight.Web.Helpers.APIHelpers
             return FillStatusDetailsList(allEvent);
         }
 
-        private void BuildMileStoneCodesDictionary()
-        {
-            milestoneCodes = new Dictionary<string, string>(){
-                { CargoTrackingMilestoneValues.NoMilstone, "NOM"},
-                { CargoTrackingMilestoneValues.Created, "CRT"},
-                { CargoTrackingMilestoneValues.Booking, "BKN"},
-                { CargoTrackingMilestoneValues.Pickup, "PIC"},
-                { CargoTrackingMilestoneValues.FromWarehouse, "FWH"},
-                { CargoTrackingMilestoneValues.Departure, "DPT"},
-                { CargoTrackingMilestoneValues.Arrival, "ATA"},
-                { CargoTrackingMilestoneValues.ToWarehouse, "TWH"},
-                { CargoTrackingMilestoneValues.AssignedToCustomsBroker, "ASG"},
-                { CargoTrackingMilestoneValues.CustomsProcess, "CSP"},
-                { CargoTrackingMilestoneValues.GoodsClassification, "GDC"},
-                { CargoTrackingMilestoneValues.DocumentInspection, "DOC"},
-                { CargoTrackingMilestoneValues.PaymentRequested,  "PRQ"},
-                { CargoTrackingMilestoneValues.PaymentReceived,  "PRC"},
-                { CargoTrackingMilestoneValues.CustomsPayment, "RSH"},
-                { CargoTrackingMilestoneValues.Clearance, "RSG"},
-                { CargoTrackingMilestoneValues.GatepassArrived, "GTA"},
-                { CargoTrackingMilestoneValues.AssignedToTrucker, "TRG"},
-                { CargoTrackingMilestoneValues.DeliveryOut, "DTC"},
-                { CargoTrackingMilestoneValues.Delivered, "POD"},
-                { CargoTrackingMilestoneValues.Invoiced, "INV"},
-                { CargoTrackingMilestoneValues.DeliveryArrived,"DTA" },
-
-
-
-            };           
-        }
-
         private List<Milestone> GetAllShipmentMilestones(CargoTrackingShipmentList cargoTrackingShipment)
         {
             CargoTrackingShipmentQueryService cargoTrackingShipmentQueryService = new CargoTrackingShipmentQueryService(MyContext);
             var milestone = cargoTrackingShipmentQueryService.GetMilestonesDictionaryByCode();
             var cargoTrackingMilestoneBuilder = new CargoTrackingMilestoneBuilder();
-            return cargoTrackingMilestoneBuilder.BuildShipmentMilstones(cargoTrackingShipment, milestone, true);
+            return cargoTrackingMilestoneBuilder.BuildShipmentMilstones(cargoTrackingShipment, milestone);
         }
 
         private List<TraceEventPM> GetAllShipmentEvents(ShipmentPM shipment)
@@ -284,7 +250,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             {
                 EnglishName = cargoTrackingMilestone.EnglishName,
                 LocalName = cargoTrackingMilestone.LocalName,
-                Code = getMilestoneCode(milestone.Code),
+                Code = milestone.ExternalCode,
                 Date = milestone.Date?.ToString("dd/MM/yyyy"),
                 Time = milestone.Date?.ToString("HH:mm"),
                 EstimationDate = milestone.Date == null ? milestone.EstimationDate?.ToString("dd/MM/yyyy") : null,
@@ -292,11 +258,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Remarks = milestone.Notes,
             };
         }
-        private string getMilestoneCode(string milestoneId)
-        {
-            return milestoneCodes[milestoneId];
-        }
-
 
     }
 }

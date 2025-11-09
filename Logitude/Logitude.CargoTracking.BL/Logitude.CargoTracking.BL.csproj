@@ -165,9 +165,7 @@
     <Compile Include="CargoTrackingServices\ShipmentSearchFields.cs" />
     <Compile Include="CargoTrackingServices\SqlDataReaderConverter.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTrackingHeaderEntityTypeDetails.Generated.cs" />
-    <Compile Include="CloseTables\DetailsClassesGenerated\CargoTrackingMilestoneDetails.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CargoTrackingHeaderEntityTypeStruct.Generated.cs" />
-    <Compile Include="CloseTables\EnumGenerated\CargoTrackingMilestoneStruct.Generated.cs" />
     <Compile Include="CoreBL\Batch\BatchUpdateShipmentsForCargoIncremental.cs" />
     <Compile Include="CoreBL\Batch\BuildCargoTrackingShipments.cs" />
     <Compile Include="CoreBL\CargoTrackingEventsBuilder.cs" />
@@ -240,6 +238,7 @@
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingShipmentUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingTransportModeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoTrackingWatermarkUpdateService.Generated.cs" />
+    <Compile Include="Enums\CargoTrackingMilestoneStruct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\MixPanelTrackingService.cs" />
   </ItemGroup>

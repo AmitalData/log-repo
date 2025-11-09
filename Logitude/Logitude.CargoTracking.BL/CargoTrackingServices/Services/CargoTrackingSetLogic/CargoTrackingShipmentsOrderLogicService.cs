@@ -1,4 +1,4 @@
-﻿using Logitude.CargoTracking.BL.CloseTables;
+﻿using Logitude.CargoTracking.BL.Enums;
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using System;
 using System.Collections.Generic;
@@ -143,7 +143,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                         CheckMilestone(currentMilestoneArgs);
                     }
                     break;
-                case CargoTrackingMilestoneValues.FromWarehouse:
+                case CargoTrackingMilestoneValues.OriginWarehouse:
                     if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "FromWarehouseDone") && !currentMilestoneArgs.tableRow["FromWarehouseDone"].Equals("False"))
                     {
                         currentMilestoneArgs.date = currentMilestoneArgs.tableRow["FromWarehouseDate"];

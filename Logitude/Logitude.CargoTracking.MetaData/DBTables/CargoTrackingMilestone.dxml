@@ -53,15 +53,29 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Tenant"
+    Name="EventTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TenantId"
     Type="int">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="EventTypeId"
+    Name="ExternalCode"
     Type="varchar"
-    Size="15">
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>
