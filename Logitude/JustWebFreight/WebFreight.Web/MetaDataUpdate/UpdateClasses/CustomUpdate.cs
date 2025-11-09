@@ -17072,26 +17072,15 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             pendingErrorPlaceRepository.SubmitChanges();
         }
 
-        public void FillCourierPendingReasonTable(int tenant)
-        {
-			var customsSettingQueryService = new CustomsSettingQueryService(tenant);
-            if (customsSettingQueryService.IsCourierTenant(tenant))
-            {
-                CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(tenant);
-                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "900", EnglishName = "Collection", LocalName = "גביה", Inactive = false, ErrorPlace = "2",UnifreightStatusCode = "VPE", RequiresApproval = false, RequiresPayment = false }, courierPendingReasonRepository, tenant);
-                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "901", EnglishName = "Autonomy", LocalName = "אוטונומיה", Inactive = false, ErrorPlace = "1" }, courierPendingReasonRepository, tenant);
-                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "902", EnglishName = "Missing ID", LocalName = "חסר ת.ז.", Inactive = false, ErrorPlace = "1", RequiresApproval = false, RequiresPayment = false }, courierPendingReasonRepository, tenant);
-                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "903", EnglishName = "Invalid phone number", LocalName = "מספר טלפון לא תקין", Inactive = false, ErrorPlace = "1" }, courierPendingReasonRepository, tenant);
-                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "904", EnglishName = "Weight", LocalName = "משקל" ,Inactive = false,RequiresApproval = true, RequiresPayment = false }, courierPendingReasonRepository, tenant);
-                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "905", EnglishName = "Shipping not to Israel", LocalName = "משלוח לא לישראל" ,Inactive = false }, courierPendingReasonRepository, tenant);
-                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "906", EnglishName = "Commercial Customer", LocalName = "לקוח מסחרי" ,Inactive = false }, courierPendingReasonRepository, tenant);
-                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "907", EnglishName = "Quantity Of Goods", LocalName = "כמות סחורה", Inactive = false }, courierPendingReasonRepository, tenant);
-                AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "908", EnglishName = "required power of attorney", LocalName = "נדרש יפוי כח" , Inactive = false }, courierPendingReasonRepository, tenant);
-
-                courierPendingReasonRepository.SubmitChanges();
-            }
-        }
-        public void FillContainerizationStatusCodeTable(int tenant)
+		public void FillCourierPendingReasonTable(int tenant)
+		{
+			//CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(tenant);
+			//AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "900", EnglishName = "Payment", LocalName = "תשלום" }, courierPendingReasonRepository);
+			//AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "901", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
+			//AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "902", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
+			//courierPendingReasonRepository.SubmitChanges();
+		}
+		public void FillContainerizationStatusCodeTable(int tenant)
         {
             var repo = new ContainerizationStatusCodeRepository(tenant);
             var dic = repo.GetAll().ToDictionary<ContainerizationStatusCode, string, ContainerizationStatusCode>(rec => rec.Code, a => a);
