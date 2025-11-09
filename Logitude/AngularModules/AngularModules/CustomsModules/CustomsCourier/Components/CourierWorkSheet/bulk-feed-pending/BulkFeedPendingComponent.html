@@ -46,7 +46,7 @@
                 <tr>
                     <td>
                         <div class="ActionButton" style="width: 35px;height:23px; ">
-                            <CheckBox style="pointer-events:none;" [IsChecked]="_CourierWorksheetSharedDataService.connectedSelectAll" ></CheckBox>
+                            <CheckBox [IsChecked]="_CourierWorksheetSharedDataService.connectedSelectAll" (Checked)="$event ? OnAllBtnClickedNot() : OnNoneBtnClickedNot()"></CheckBox>
 
                         </div>
                     </td>
