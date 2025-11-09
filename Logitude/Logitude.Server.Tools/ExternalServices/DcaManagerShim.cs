@@ -85,10 +85,41 @@ namespace Logitude.Server.Tools.ExternalServices
 
         }
         private void SafeRename(SFTPService sftp, string src, string dst, ref string more,
-                        out string status, out string message)
+                         out string status, out string message)
         {
             sftp.Rename(src, dst, "1", ref more, out status, out message);
+            if (status == "0" || status == "1") return;
+
+            if (!IsExistsConflict(message)) return;
+
+            try
+            {
+                string archived = BuildShortArchiveName(dst, 240);
+
+                string st2, msg2;
+                sftp.Rename(dst, archived, "1", ref more, out st2, out msg2);
+                if (st2 != "0" && st2 != "1")
+                {
+                    status = st2; message = $"Failed to archive existing destination: {msg2}";
+                    return;
+                }
+
+                sftp.Rename(src, dst, "1", ref more, out status, out message);
+
+                if (status == "0" || status == "1")
+                {
+                    more = string.IsNullOrEmpty(more) ? archived : (more + "|" + archived);
+                    message = string.IsNullOrEmpty(message) ? $"Archived existing to '{archived}' and renamed to '{dst}'."
+                                                            : (message + $" Archived existing to '{archived}'.");
+                }
+            }
+            catch (Exception ex)
+            {
+                status = "-1";
+                message = $"SafeRename failed: {ex.Message}";
+            }
         }
+
 
         private static DateTime GetTimeStamp(string file)
         {
@@ -235,31 +266,21 @@ namespace Logitude.Server.Tools.ExternalServices
                 using (var sftp = new SFTPService(_sftpDeleteTempFiles))
                 {
                     string status, message;
-
-                    // Work from this base
                     var remoteBase = CombinePath(_config.RemotePath, appendFolder);
                     SftpLogin(sftp, remoteBase, out status, out message);
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
-                        $"SFTP DeleteIncomeFile: login status={status}, msg='{message}', base='{remoteBase}'");
-
                     if (status != "0") { error = true; log = message; return; }
 
                     SplitRemotePath(filename, out var srcDir, out var srcFile);
                     var targetRelDir = string.IsNullOrEmpty(srcDir) ? HistoryDir : CombinePath(HistoryDir, srcDir);
                     var targetRelPath = CombinePath(targetRelDir, srcFile);
 
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
-                        $"SFTP MOVE to History (no mkdir): base='{remoteBase}', from='{filename}', to='{targetRelPath}'");
-
                     sftp.Rename(filename, targetRelPath, "T", ref moreParams, out status, out message);
 
                     if (status != "0" && status != "1")
                     {
-                        error = true;
-                        log = $"Move to History failed (likely missing folder). " +
-                              $"Status={status}, msg='{message}'. " +
-                              $"Please create '{CombinePath(remoteBase, HistoryDir)}' on the SFTP server.";
-                        NetCommonHelper.Logger.DevLog.Instance.WriteError(log);
+                        sftp.DeleteFile(filename, out status, out message, toDir: true);
+                        if (status != "0" && status != "1") { error = true; log = $"Delete failed. Status={status}, msg='{message}'."; }
+                        else { log = "Deleted source (move to History skipped)."; }
                     }
                     else
                     {
@@ -279,22 +300,20 @@ namespace Logitude.Server.Tools.ExternalServices
 
 
         public void RenameIncomeFile(string filename, string newFilename, string appendFolder,
-    ref string moreParams, out bool error, out string log)
+     ref string moreParams, out bool error, out string log)
         {
             error = false; log = "";
-
             try
             {
                 using (var sftp = new SFTPService(_sftpDeleteTempFiles))
                 {
                     string status, message;
                     var remotePath = CombinePath(_config.RemotePath, appendFolder);
-
                     SftpLogin(sftp, remotePath, out status, out message);
                     if (status != "0") { error = true; log = message; return; }
 
-                    sftp.Rename(filename, newFilename, "T", ref moreParams, out status, out message);
-                    if (status != "0") error = true;
+                    SafeRename(sftp, filename, newFilename, ref moreParams, out status, out message);
+                    if (status != "0" && status != "1") error = true;
                     log = message;
 
                     sftp.Logoff(ref moreParams, out status, out message);
@@ -306,36 +325,28 @@ namespace Logitude.Server.Tools.ExternalServices
             }
         }
 
-
         public void MoveIncomeFileToDir(string filename, string renameFilename, string appendFolder,
-    string targetDir, ref string moreParams, out bool error, out string log)
+            string targetDir, ref string moreParams, out bool error, out string log)
         {
             error = false; log = "";
-
             try
             {
                 using (var sftp = new SFTPService(_sftpDeleteTempFiles))
                 {
                     string status, message;
                     var remoteBase = CombinePath(_config.RemotePath, appendFolder);
-
                     SftpLogin(sftp, remoteBase, out status, out message);
                     if (status != "0") { error = true; log = message; return; }
 
                     var toName = string.IsNullOrEmpty(renameFilename) ? filename : renameFilename;
-                    var targetRelPath = CombinePath(targetDir, toName);   // RELATIVE target!
+                    var targetRelPath = CombinePath(targetDir, toName)
 
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
-                        $"SFTP MOVE to '{targetDir}' (no mkdir): base='{remoteBase}', from='{filename}', to='{targetRelPath}'");
-
-                    sftp.Rename(filename, targetRelPath, "T", ref moreParams, out status, out message);
+                    SafeRename(sftp, filename, targetRelPath, ref moreParams, out status, out message);
 
                     if (status != "0" && status != "1")
                     {
                         error = true;
-                        log = $"Move to '{targetDir}' failed (likely missing folder). " +
-                              $"Status={status}, msg='{message}'. " +
-                              $"Create '{CombinePath(remoteBase, targetDir)}' on the SFTP server.";
+                        log = $"Move to '{targetDir}' failed. Status={status}, msg='{message}'.";
                         NetCommonHelper.Logger.DevLog.Instance.WriteError(log);
                     }
                     else
@@ -351,9 +362,6 @@ namespace Logitude.Server.Tools.ExternalServices
                 error = true; log = $"SFTP move error: {ex.Message}";
             }
         }
-
-
-
 
         private string CombinePath(string path1, string path2)
         {
@@ -424,6 +432,37 @@ namespace Logitude.Server.Tools.ExternalServices
                 return System.Text.Encoding.Convert(
                     System.Text.Encoding.BigEndianUnicode, System.Text.Encoding.UTF8, data, 2, data.Length - 2);
             return data; 
+        }
+        private static bool IsExistsConflict(string message)
+        {
+            if (string.IsNullOrEmpty(message)) return false;
+            return message.IndexOf("BlobAlreadyExists", StringComparison.OrdinalIgnoreCase) >= 0
+                || message.IndexOf("already exists", StringComparison.OrdinalIgnoreCase) >= 0
+                || message.IndexOf("File rename failed [4]", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        private static string BuildShortArchiveName(string candidatePath, int maxFileNameLen = 240)
+        {
+            // Same dir, short suffix; trim if needed to stay under maxFileNameLen
+            string p = (candidatePath ?? "").Replace('\\', '/');
+            int slash = p.LastIndexOf('/');
+            string dir = (slash >= 0) ? p.Substring(0, slash + 1) : "";
+            string file = (slash >= 0) ? p.Substring(slash + 1) : p;
+
+            string name = file;
+            string ext = "";
+            int dot = file.LastIndexOf('.');
+            if (dot > 0) { name = file.Substring(0, dot); ext = file.Substring(dot); }
+
+            // short fixed suffix so we don't bloat names
+            string stamp = DateTime.UtcNow.ToString("yyMMddHHmmss"); // 12 chars
+            string suffix = "_old_" + stamp;                         // 17 chars total with "_old_"
+            int allowedNameLen = Math.Max(1, maxFileNameLen - suffix.Length - ext.Length);
+
+            if (name.Length > allowedNameLen)
+                name = name.Substring(0, allowedNameLen);
+
+            return dir + name + suffix + ext;
         }
 
     }
