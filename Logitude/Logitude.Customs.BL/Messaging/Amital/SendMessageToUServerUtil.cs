@@ -129,6 +129,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
 				    	LoggingEntityId = communicationParam?.LoggingEntityId,
 				    	Subject = string.IsNullOrEmpty(communicationParam?.Subject)? "Send To URouter" : communicationParam?.Subject,
 				    	FolderName = "ExternalTasksQueue",
+                        AdditionalFields = communicationParam?.AdditionalFields,
 				    };
 
 				    List<QueueTask> queue1Tasks = new List<QueueTask>();
