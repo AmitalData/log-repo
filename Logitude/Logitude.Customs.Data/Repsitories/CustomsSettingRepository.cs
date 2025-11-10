@@ -29,6 +29,12 @@ namespace Logitude.Customs.Data.Repsitories
             return (from a in context.CustomsSettings
                     select a).FirstOrDefault();
         }
+        public DateTime? GetCB_LastUpdateDate(int tenant)
+        {
+            return (from a in context.CustomsSettings
+                    select a.CB_LastUpdateDate).FirstOrDefault();
+        }
+
 
         public CustomsSetting GetTenantByCustomsAgentId(string customsAgentId)
         {
