@@ -808,14 +808,14 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                       var vendorCurrencyList=  vendorCurrencyQueryService.GetVendorCurrencyByVendorId(ResolvedTenant(), this._MySupplierInvoicePM.VendorId);
                         if(vendorCurrencyList!=null&& vendorCurrencyList.Count() == 1)
 						{
-                            this._MySupplierInvoicePM.InvoiceCurrencyTypeCode = vendorCurrencyList[0].Currency;
+                            this._MySupplierInvoicePM.InvoiceCurrencyTypeCode = vendorCurrencyList[0].Currency == "" ? null : vendorCurrencyList[0].Currency;
                         }
                     }
                 }
             }
             if (!(!String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.InvoiceCurrencyTypeCode) && String.IsNullOrWhiteSpace(this._INVOICE.CURRENCYCODE)))
             {
-                this._MySupplierInvoicePM.InvoiceCurrencyTypeCode = this._INVOICE.CURRENCYCODE;
+                this._MySupplierInvoicePM.InvoiceCurrencyTypeCode = this._INVOICE.CURRENCYCODE == "" ? null : this._INVOICE.CURRENCYCODE;
             }
             if (this._INVOICE.INVOICEAMOUNT != null && !String.IsNullOrWhiteSpace(this._INVOICE.INVOICEAMOUNT))
             {
