@@ -28,7 +28,8 @@
         "report:merge": "mochawesome-merge --reportDir cypress/results/json > cypress/results/mochawesome-bundle.json",
         "report:generate": "marge cypress/results/mochawesome-bundle.json -o cypress/reports/html",
         "report:copyScreenshots": "cp -r cypress/screenshots cypress/results/html/screenshots",
-        "test:jest": "jest --runInBand"
+        "test:jest": "jest --runInBand",
+        "test:jest:shipment": "jest ShipmentModules/ShipmentSharedManifest/__tests__ --runInBand --coverage --coverageDirectory=coverage-jest/shipment"
     },
     "private": true,
     "dependencies": {

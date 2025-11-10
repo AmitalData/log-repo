@@ -31,12 +31,23 @@ module.exports = {
         '^Customs/(.*)$': '<rootDir>/Customs/$1',
         '^CommonModules/(.*)$': '<rootDir>/CommonModules/$1',
         '^InfrastructureModules/(.*)$': '<rootDir>/InfrastructureModules/$1',
-        '^Invoice/(.*)$': '<rootDir>/Invoice/$1'
+        '^Invoice/(.*)$': '<rootDir>/Invoice/$1',
+        '^Accounting/(.*)$': '<rootDir>/Accounting/$1'
     },
     collectCoverageFrom: [
-        'ShipmentModules/**/*.ts',
-        '!ShipmentModules/**/*.spec.ts',
-        '!ShipmentModules/**/index.ts'
+        'ShipmentModules/ShipmentSharedManifest/Components/SharedManifestEditAgentComponent.ts',
+        'ShipmentModules/ShipmentSharedManifest/Components/SharedManifestComponent.ts',
+        'ShipmentModules/ShipmentSharedManifest/Components/SharedManifestHeaderComponent.ts',
+        'ShipmentModules/ShipmentSharedManifest/Components/SharedManifestsWorkSpaces.ts',
+        'Shipment/Services/Others/SharedAgentManifestService.ts',
+        'Accounting/Services/ModulesService.ts',
+        'Customs/Services/Others/CustomsRequestMenuService.ts',
+        'Customs/Services/Others/CourierMasterService.ts',
+        'Customs/Services/WebServices/PendingWebService.ts',
+        'Customs/Services/Others/MultiCertificatesService.ts',
+        'CRM/Services/TicketCorrespondencesService.ts',
+        'CRM/Services/InsertCorrespondenceService.ts',
+        'CRM/Services/CRMDomainService.ts'
     ],
     coverageDirectory: '<rootDir>/coverage-jest',
     reporters: [

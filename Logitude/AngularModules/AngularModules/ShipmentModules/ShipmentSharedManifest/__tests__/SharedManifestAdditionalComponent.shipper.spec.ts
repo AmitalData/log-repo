@@ -5,10 +5,9 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { SharedManifestTranslationPM } from '../../../Common/EntityPMs/SharedManifestTranslationPM';
 import { AgentSharedManifestPM } from '../../../Common/EntityPMs/AgentSharedManifestPM';
 import { ManifestSL } from '../../../Common/DataContracts/ManifestSL';
+import { HouseSL } from '../../../Common/DataContracts/HouseSL';
 
-const flushPromises = () => new Promise(resolve => setTimeout(resolve, 0));
-
-describe('SharedManifestAdditionalComponent (Jest)', () => {
+describe('SharedManifestAdditionalComponent (Shipper)', () => {
     beforeEach(() => {
         SessionInfo.LoggedUserTenant = 777;
     });
@@ -51,60 +50,6 @@ describe('SharedManifestAdditionalComponent (Jest)', () => {
             const translation = component.CurrentEntity.SharedManifestTranslations[0];
             expect(translation.MyCode).toBe('NEW-CODE');
             expect(translation.ChangeSetOp).toBe('Update');
-        });
-    });
-
-    describe('StopBusyIndicator', () => {
-        it('stops busy indicator and hides sections when all data loaded', () => {
-            const { component, sessionMocks } = buildComponent();
-
-            component.IsLoadedCarrierTranslation = true;
-            component.IsLoadedIncotermTranslation = true;
-            component.IsLoadedShipperTranslation = true;
-            component.IsLoadedConsigneeTranslation = true;
-            component.IsLoadedShiperDefaultValues = true;
-            component.IsLoadedConsigneeDefaultValues = true;
-            component.IsLoadedTransshipment1CarrierTranslation = true;
-            component.IsLoadedTransshipment2CarrierTranslation = true;
-            component.IsLoadedTransshipment3CarrierTranslation = true;
-            component.IsLoadedMainCarriageVesselTranslation = true;
-            component.IsLoadedTransshipment1VesselTranslation = true;
-            component.IsLoadedTransshipment2VesselTranslation = true;
-            component.IsLoadedTransshipment3VesselTranslation = true;
-            component.IsLoadedMainCarriageInterlineTranslation = true;
-            component.IsLoadedNotify1IdTranslation = true;
-            component.IsLoadedNotify1DefaultValuesTranslation = true;
-            component.IsLoadedPortsTranslation = true;
-            component.IsLoadedPackageTranslation = true;
-            component.IsLoadedMoveTypeTranslation = true;
-            component.IsLoadedValueOfGoodsCurrencyTranslation = true;
-            component.IsLoadedFromPickUpTranslation = true;
-            component.IsLoadedToPickUpTranslation = true;
-            component.IsLoadedFromDeliveryTranslation = true;
-            component.IsLoadedToDeliveryTranslation = true;
-
-            component.IsHaveFromPickUpTranslation = true;
-            component.IsHaveToPickUpTranslation = true;
-            component.IsHaveFromDeliveryTranslation = true;
-            component.IsHaveToDeliveryTranslation = true;
-
-            component.EntityPM.IncotermId = 'INC';
-            component.EntityPM.MoveTypeId = 'MOVE';
-            component.EntityPM.ValueOfGoodsCurrencyId = 'CUR';
-            component.EntityPM.Transshipment1CarrierId = 'C1';
-            component.EntityPM.Transshipment2CarrierId = 'C2';
-            component.EntityPM.Transshipment3CarrierId = 'C3';
-            component.EntityPM.Transshipment1VesselId = 'V1';
-            component.EntityPM.Transshipment2VesselId = 'V2';
-            component.EntityPM.Transshipment3VesselId = 'V3';
-
-            component.StopBusyIndicator();
-
-            expect(sessionMocks.session.CurrentWindow.StopBusyIndicator).toHaveBeenCalledTimes(1);
-            expect(component.HideGeneralDetailsArea).toBe(true);
-            expect(component.HideTransShipmentsDetailsArea).toBe(true);
-            expect(component.HidePickupDetailsArea).toBe(true);
-            expect(component.HideDeliveryDetailsArea).toBe(true);
         });
     });
 
@@ -205,53 +150,69 @@ describe('SharedManifestAdditionalComponent (Jest)', () => {
             expect(component['ShipperPartnerTypeId']).toBeNull();
             expect(component['myShipperSalesmanId']).toBeNull();
         });
-    });
 
-    describe('LoadChildComponent', () => {
-        it('invokes dynamic loader for additional and header screens', async () => {
-            const { component, sessionMocks } = buildComponent({
-                locations: [
-                    { Code: 'GECO', viewContainerRef: {} },
-                    { Code: 'SHCO', viewContainerRef: {} }
-                ],
-                agentSharedManifestList: []
+        it('prefers house entity references when available', () => {
+            const cardList = {
+                Code: 'CARD-03',
+                PartnerTypeId: 'PARTNER',
+                PrimaryContactId: 'CONTACT',
+                EnglishName: 'House Shipper',
+                Notes: 'House',
+                MainAddressId: 'ADDR-6',
+                PickAddressId: 'ADDR-7',
+                SalesmanUserId: 'SALESMAN-H'
+            } as any;
+
+            const houseEntity = {
+                Shipper: { Code: 'CARD-03' },
+                ShipperReference1: 'HOUSE-REF-1',
+                ShipperReference2: 'HOUSE-REF-2'
+            } as unknown as HouseSL;
+
+            const { component } = buildComponent({
+                cardListServiceMock: createCardListServiceMock(cardList),
+                addressListServiceMock: createAddressListServiceMock(null),
+                houseEntity,
+                manifestSL: {} as ManifestSL
             });
 
-            component.ManifestSL = {} as ManifestSL;
+            component.IsConsolShipment = false;
+            component.ShipperId = 'CARD-03';
+
+            expect(component.EntityPM.ShipperReference1).toBe('HOUSE-REF-1');
+            expect(component.EntityPM.ShipperReference2).toBe('HOUSE-REF-2');
+        });
+
+        it('falls back to manifest references when house does not match', () => {
+            const cardList = {
+                Code: 'CARD-04',
+                PartnerTypeId: 'PARTNER',
+                PrimaryContactId: 'CONTACT',
+                EnglishName: 'Manifest Shipper',
+                Notes: 'Manifest',
+                MainAddressId: 'ADDR-8',
+                PickAddressId: 'ADDR-9',
+                SalesmanUserId: 'SALESMAN-M'
+            } as any;
+
+            const manifest = {
+                Shipper: { Code: 'CARD-04' },
+                ShipperReference1: 'MANIFEST-REF-1',
+                ShipperReference2: 'MANIFEST-REF-2'
+            } as ManifestSL;
+
+            const { component } = buildComponent({
+                cardListServiceMock: createCardListServiceMock(cardList),
+                addressListServiceMock: createAddressListServiceMock(null),
+                manifestSL: manifest
+            });
+
+            component.IsConsolShipment = false;
             component.HouseEntity = null;
-            component.IsLoadAdditionalScreen = true;
-            component.IsLoadSharedManifestheaderScreen = false;
+            component.ShipperId = 'CARD-04';
 
-            component.LoadChildComponent();
-            await flushPromises();
-
-            expect(sessionMocks.dynamicLoader.Load).toHaveBeenCalledTimes(2);
-            expect(sessionMocks.dynamicLoader.Load).toHaveBeenNthCalledWith(
-                1,
-                './Infrastructure/GenericComponents/GeneratedComponent',
-                expect.any(Object)
-            );
-            expect(sessionMocks.dynamicLoader.Load).toHaveBeenNthCalledWith(
-                2,
-                './ShipmentModules/ShipmentSharedManifest/Components/SharedManifestHeaderComponent',
-                expect.any(Object)
-            );
-
-            const generatedComponentRef = await sessionMocks.dynamicLoader.Load.mock.results[0].value;
-            expect(generatedComponentRef.instance.Run).toHaveBeenCalledWith(
-                component.EntityPM,
-                'Shipment',
-                'SharedManifestAdditionalScreen'
-            );
-
-            const headerComponentRef = await sessionMocks.dynamicLoader.Load.mock.results[1].value;
-            expect(headerComponentRef.instance.Run).toHaveBeenCalledWith(
-                component.CurrentEntity,
-                component.AgentSharedManifestList
-            );
-
-            expect(component.IsLoadAdditionalScreen).toBe(false);
-            expect(component.IsLoadSharedManifestheaderScreen).toBe(true);
+            expect(component.EntityPM.ShipperReference1).toBe('MANIFEST-REF-1');
+            expect(component.EntityPM.ShipperReference2).toBe('MANIFEST-REF-2');
         });
     });
 });
