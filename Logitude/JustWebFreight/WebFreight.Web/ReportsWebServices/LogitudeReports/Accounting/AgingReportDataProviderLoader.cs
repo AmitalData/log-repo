@@ -973,7 +973,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 {
                    
                         AgingPeriod record = new AgingPeriod();
-
+                        record.Tenant = tenant;
                         record.PeriodName = item.PeriodName;
                         record.AccountName = (item.AccountLocalName != null ? item.AccountLocalName : item.AccountEnglishName) + " / " + item.CurrencyCode;
                         record.AccountEnglishName = item.AccountEnglishName + " / " + item.CurrencyCode;
