@@ -115,7 +115,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
             return false;
         }
-        public void Create(DocumentsFilingPM theEntityPm, byte[] fileData = null, string loggedUserId = null, bool FromService = false, string documentId = null, bool isDocumentFromCloud = false)
+        public void Create(DocumentsFilingPM theEntityPm, byte[] fileData = null, string loggedUserId = null, bool FromService = false, string documentId = null)
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
@@ -384,7 +384,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             ///move after adding (was Devart.Data.Oracle.OracleException: ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_N1103284768) הופר - מפתח אב לא נמצא )
             if (!tenantPM.IsDocumentsArchive)
             {
-                AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId, isDocumentFromCloud);
+                AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId);
             }
             foreach (DocumentsFilingMetaDataValuePM itemPM in entityPM.DocumentsFilingMetaDataValues)
             {
@@ -1519,7 +1519,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        public void AddToTasksQueue(DocumentsFilingPM extDocPM, bool isnew, string loggedUserId, bool isDocumentFromCloud = false)
+        public void AddToTasksQueue(DocumentsFilingPM extDocPM, bool isnew, string loggedUserId)
         {
             if (LogitudeSettings.IsCostomsDeploy && extDocPM.IsHybrid)//avoid non stop 
             {
@@ -1668,7 +1668,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                 }
                                 bool sendHybridM = true;
 
-                                 if (extDocPM.ExternalEntityName == "CFIFILEM" && !extDocPM.IsFromCloud && isConnectedToUniFreight && !isDocumentFromCloud)
+                                 if (extDocPM.ExternalEntityName == "CFIFILEM" && !extDocPM.IsFromCloud && isConnectedToUniFreight)
                                 {
                                     sendHybridM = false;
                                     SendCustomsReferenceByTask(tenant, extDocPM.ExternalEntityReference, extDocPM.CustomReference, xmlstring, loggedUserId);
