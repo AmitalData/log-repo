@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "21b3fe9dbe2e8c0e63ed5869b09c1685";
+		public const string HashString = "75abbd728dccad1ad63c0e01afc19d0a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -965,12 +965,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencyId",
 					  						DefaultText =  "Currency",
-					  						FullLocalDefaultTextBack_up =  "מטבע",
-					  						FullLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
+					  						FullLocalDefaultTextBack_up =  "מזהה מטבע",
+					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXkdeiIg==",
 					  						ListFieldLable =  "CurrencyIdListLable",
 					  						ListLableDefaultText =  "Currency",
-					  						ListLocalDefaultTextBack_up =  "מטבע",
-					  						ListLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
+					  						ListLocalDefaultTextBack_up =  "מזהה מטבע",
+					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXkdeiIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Currency",
 					  						NavigationPropertyName =  "Currency",
@@ -2742,12 +2742,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencySign",
 					  						DefaultText =  "Currency",
-					  						FullLocalDefaultTextBack_up =  "מטבע",
-					  						FullLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
+					  						FullLocalDefaultTextBack_up =  "סימן מטבע",
+					  						FullLocalDefaultText =  "BS64:Iteh15nXntefINee15jXkdeiIg==",
 					  						ListFieldLable =  "CurrencySignListLable",
 					  						ListLableDefaultText =  "Currency",
-					  						ListLocalDefaultTextBack_up =  "מטבע",
-					  						ListLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
+					  						ListLocalDefaultTextBack_up =  "סימן מטבע",
+					  						ListLocalDefaultText =  "BS64:Iteh15nXntefINee15jXkdeiIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2809,12 +2809,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpenAmountCurrencySign",
 					  						DefaultText =  "Open Amount Currency Sign",
-					  						FullLocalDefaultTextBack_up =  "מטבע",
-					  						FullLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
+					  						FullLocalDefaultTextBack_up =  "סימן מטבע סכום פתוח",
+					  						FullLocalDefaultText =  "BS64:Iteh15nXntefINee15jXkdeiINeh15vXldedINek16rXldeXIg==",
 					  						ListFieldLable =  "OpenAmountCurrencySignListLable",
 					  						ListLableDefaultText =  "Open Amount Currency Sign",
-					  						ListLocalDefaultTextBack_up =  "מטבע",
-					  						ListLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
+					  						ListLocalDefaultTextBack_up =  "סימן מטבע סכום פתוח",
+					  						ListLocalDefaultText =  "BS64:Iteh15nXntefINee15jXkdeiINeh15vXldedINek16rXldeXIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
