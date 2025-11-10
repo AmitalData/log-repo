@@ -344,6 +344,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             MyBlance myBlance = new MyBlance() { SumForeignAmount = 0, SumLocalAmount = 0 };
             if (_Param.PageStartAtRecordIndex > 0)
             {
+                QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = LedgerTransactionListQueryService.SetOrderBy(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, _Param);
+
                 var ledgerPrevPages = QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId
                                     .Take(_Param.PageStartAtRecordIndex);
 
