@@ -17072,15 +17072,15 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             pendingErrorPlaceRepository.SubmitChanges();
         }
 
-        public void FillCourierPendingReasonTable(int tenant)
-        {
-            //CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(tenant);
-            //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "900", EnglishName = "Payment", LocalName = "תשלום" }, courierPendingReasonRepository);
-            //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "901", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
-            //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "902", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
-            //courierPendingReasonRepository.SubmitChanges();
-        }
-        public void FillContainerizationStatusCodeTable(int tenant)
+		public void FillCourierPendingReasonTable(int tenant)
+		{
+			//CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(tenant);
+			//AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "900", EnglishName = "Payment", LocalName = "תשלום" }, courierPendingReasonRepository);
+			//AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "901", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
+			//AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "902", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
+			//courierPendingReasonRepository.SubmitChanges();
+		}
+		public void FillContainerizationStatusCodeTable(int tenant)
         {
             var repo = new ContainerizationStatusCodeRepository(tenant);
             var dic = repo.GetAll().ToDictionary<ContainerizationStatusCode, string, ContainerizationStatusCode>(rec => rec.Code, a => a);
