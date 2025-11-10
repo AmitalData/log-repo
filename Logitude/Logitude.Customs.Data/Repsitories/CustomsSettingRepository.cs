@@ -27,7 +27,6 @@ namespace Logitude.Customs.Data.Repsitories
         public CustomsSetting GetSettingByTenant(int tenant)
         {
             return (from a in context.CustomsSettings
-                    where a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
