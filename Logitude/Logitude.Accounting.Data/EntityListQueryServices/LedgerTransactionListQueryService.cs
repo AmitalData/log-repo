@@ -181,20 +181,20 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return transactions;
         }
 
-        private IQueryable<LedgerTransactionList> SetOrderBy(IQueryable<LedgerTransactionList> transactions, LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter)
+        public static IQueryable<LedgerTransactionList> SetOrderBy(IQueryable<LedgerTransactionList> transactions, LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter)
         {
-            if (!string.IsNullOrEmpty(ledgerTransactionBalanceFilter.SortBy))
+            if (!string.IsNullOrEmpty(ledgerTransactionBalanceFilter.SortBy) && !string.IsNullOrEmpty(ledgerTransactionBalanceFilter.SortDirection))
             {
                 transactions = OrderByProperty(transactions, ledgerTransactionBalanceFilter.SortBy, ledgerTransactionBalanceFilter.SortDirection == "Ascending");
             }
             else
             {
-                transactions = transactions.OrderByDescending(d => d.AccountingDate);
+                transactions = transactions.OrderBy(rec => rec.AccountingDate).ThenBy(rec => rec.Id);
             }
             return transactions;
         }
 
-        private IQueryable<LedgerTransactionList> OrderByProperty(IQueryable<LedgerTransactionList> source, string propertyName, bool ascending = true)
+        private static IQueryable<LedgerTransactionList> OrderByProperty(IQueryable<LedgerTransactionList> source, string propertyName, bool ascending = true)
         {
             var parameter = Expression.Parameter(typeof(LedgerTransactionList), "x");
             var property = Expression.PropertyOrField(parameter, propertyName);
