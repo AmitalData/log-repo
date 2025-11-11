@@ -107,8 +107,9 @@ namespace CustomsBook
                     // Swap temp tables to main tables
                     foreach (string tempTable in tempTables)
                     {
-                        CustomsBookRepository.SwapTempToMainTable(tempTable);
+                      CustomsBookRepository.SwapTempToMainTable(tempTable);
                     }
+                    CustomsBookRepository.UpdateCB_LastUpdateDateForAllCustomsSettings();
 
 
                 }
@@ -135,7 +136,6 @@ namespace CustomsBook
                     Directory.GetFiles(folder).ToList().ForEach(File.Delete);
                 }
 
-                CustomsBookRepository.UpdateCB_LastUpdateDateForAllCustomsSettings();
             }
         }
         static List<string> FindFileNames()
@@ -216,11 +216,18 @@ namespace CustomsBook
                     customsItemId = id,
                     validToDate = DateTime.Now,
                 };
-                DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService messagingService = new DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService();
-                CustomItemRuleResponseData responseData = messagingService.Send(requestParamsData);
-                if (responseData != null && !responseData.Succeeded)
+                try
                 {
-                    throw new Exception(responseData.UserMessage);
+                    DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService messagingService = new DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService();
+                    CustomItemRuleResponseData responseData = messagingService.Send(requestParamsData);
+                    if (responseData != null && !responseData.Succeeded)
+                    {
+                        throw new Exception(responseData.UserMessage);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    SendEmailAlert(ex);
                 }
             }
             tempTables.Add("TEMP_CB_RuleClassifications");
