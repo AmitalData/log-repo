@@ -6,10 +6,14 @@ export interface DynamicLoaderMock {
 
 export interface WindowMock {
     StopBusyIndicator: jest.Mock<void, []>;
+    Close?: jest.Mock<void, [any?]>;
 }
 
 export interface SessionMock {
     CurrentWindow: WindowMock;
+    StartBusyIndicator: jest.Mock<void, [string?]>;
+    StopBusyIndicator: jest.Mock<void, []>;
+    StartBusyIndicatorLoading?: jest.Mock<void, [string?]>;
 }
 
 export interface SessionLocatorMocks {
@@ -35,8 +39,12 @@ export const createDynamicLoaderMock = (): DynamicLoaderMock => ({
 
 export const createSessionMock = (): SessionMock => ({
     CurrentWindow: {
-        StopBusyIndicator: jest.fn()
-    }
+        StopBusyIndicator: jest.fn(),
+        Close: jest.fn()
+    },
+    StartBusyIndicator: jest.fn(),
+    StopBusyIndicator: jest.fn(),
+    StartBusyIndicatorLoading: jest.fn()
 });
 
 export const configureSessionLocator = (overrides?: Partial<SessionLocatorMocks>): SessionLocatorMocks => {

@@ -3,15 +3,13 @@ import { of } from 'rxjs';
 import { ModulesService } from '../ModulesService';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 
-describe('Accounting ModulesService', () => {
-    const baseUrl = 'https://logitude/';
-    let httpClient: { get: jest.Mock };
+describe('ModulesService', () => {
+    const baseUrl = 'https://accounting/';
+    let httpClient: any;
 
     beforeEach(() => {
-        httpClient = {
-            get: jest.fn()
-        };
-        ServiceHelper.HttpClient = httpClient as any;
+        httpClient = { get: jest.fn() };
+        ServiceHelper.HttpClient = httpClient;
         jest.spyOn(ServiceHelper, 'GetLogitudeURL').mockReturnValue(baseUrl);
         jest.spyOn(ServiceHelper, 'GetHttpHeaders').mockReturnValue({ headers: { Authorization: 'token' } } as any);
         jest.spyOn(ServiceHelper, 'HandleServiceError').mockImplementation(error => {
@@ -19,36 +17,34 @@ describe('Accounting ModulesService', () => {
         });
     });
 
-    afterEach(() => {
-        jest.restoreAllMocks();
+    afterEach(() => jest.restoreAllMocks());
+
+    it('GetAccountPayablesSummary hits invoice domain endpoint', done => {
+        httpClient.get.mockReturnValue(of({ summary: 'ap' }));
+        const service = new ModulesService();
+
+        service.GetAccountPayablesSummary().subscribe(res => {
+            expect(httpClient.get).toHaveBeenCalledWith(
+                `${baseUrl}api/InvoiceDomain/GetAccountPayablesSummary`,
+                { headers: { Authorization: 'token' } }
+            );
+            expect(res).toEqual({ summary: 'ap' });
+            done();
+        });
     });
 
-    it('GetAccountPayablesSummary calls invoice domain endpoint', () => {
-        httpClient.get.mockReturnValue(of({ summary: [] }));
-
+    it('GetAccountingReceivablesSummary hits invoice domain endpoint', done => {
+        httpClient.get.mockReturnValue(of({ summary: 'ar' }));
         const service = new ModulesService();
-        service.GetAccountPayablesSummary().subscribe(result => {
-            expect(result).toEqual({ summary: [] });
+
+        service.GetAccountingReceivablesSummary().subscribe(res => {
+            expect(httpClient.get).toHaveBeenCalledWith(
+                `${baseUrl}api/InvoiceDomain/GetAccountingReceivablesSummary`,
+                { headers: { Authorization: 'token' } }
+            );
+            expect(res).toEqual({ summary: 'ar' });
+            done();
         });
-
-        expect(httpClient.get).toHaveBeenCalledWith(
-            `${baseUrl}api/InvoiceDomain/GetAccountPayablesSummary`,
-            { headers: { Authorization: 'token' } }
-        );
-    });
-
-    it('GetAccountingReceivablesSummary calls invoice domain endpoint', () => {
-        httpClient.get.mockReturnValue(of({ receivables: [] }));
-
-        const service = new ModulesService();
-        service.GetAccountingReceivablesSummary().subscribe(result => {
-            expect(result).toEqual({ receivables: [] });
-        });
-
-        expect(httpClient.get).toHaveBeenCalledWith(
-            `${baseUrl}api/InvoiceDomain/GetAccountingReceivablesSummary`,
-            { headers: { Authorization: 'token' } }
-        );
     });
 });
 

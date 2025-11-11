@@ -5,34 +5,32 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 
 describe('TicketCorrespondencesService', () => {
     const baseUrl = 'https://crm/';
-    let httpClient: { get: jest.Mock };
+    let httpClient: any;
 
     beforeEach(() => {
-        httpClient = {
-            get: jest.fn()
-        };
-        ServiceHelper.HttpClient = httpClient as any;
+        httpClient = { get: jest.fn() };
+        ServiceHelper.HttpClient = httpClient;
         jest.spyOn(ServiceHelper, 'GetLogitudeURL').mockReturnValue(baseUrl);
         jest.spyOn(ServiceHelper, 'GetHttpHeaders').mockReturnValue({ headers: { Authorization: 'token' } } as any);
-    });
-
-    afterEach(() => {
-        jest.restoreAllMocks();
-    });
-
-    it('GetCorrespondencesList calls ticket correspondences endpoint', () => {
-        const response = [{ id: '1' }];
-        httpClient.get.mockReturnValue(of(response));
-
-        const service = new TicketCorrespondencesService();
-        service.GetCorrespondencesList('TICKET-1').subscribe(result => {
-            expect(result).toEqual(response);
+        jest.spyOn(ServiceHelper, 'HandleServiceError').mockImplementation(error => {
+            throw error;
         });
+    });
 
-        expect(httpClient.get).toHaveBeenCalledWith(
-            `${baseUrl}api/TicketCorrespondences/GetTicketCorrespondences?entityId=TICKET-1`,
-            { headers: { Authorization: 'token' } }
-        );
+    afterEach(() => jest.restoreAllMocks());
+
+    it('GetCorrespondencesList fetches correspondence list', done => {
+        httpClient.get.mockReturnValue(of({ list: [] }));
+        const service = new TicketCorrespondencesService();
+
+        service.GetCorrespondencesList('TICKET').subscribe(res => {
+            expect(httpClient.get).toHaveBeenCalledWith(
+                `${baseUrl}api/TicketCorrespondences/GetTicketCorrespondences?entityId=TICKET`,
+                { headers: { Authorization: 'token' } }
+            );
+            expect(res).toEqual({ list: [] });
+            done();
+        });
     });
 });
 

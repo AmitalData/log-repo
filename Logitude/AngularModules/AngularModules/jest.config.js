@@ -43,6 +43,8 @@ module.exports = {
         'Accounting/Services/ModulesService.ts',
         'Customs/Services/Others/CustomsRequestMenuService.ts',
         'Customs/Services/Others/CourierMasterService.ts',
+        'Customs/Services/Others/GITITEMCacheService.ts',
+        'Customs/Services/Others/CacheCourierPendingReasonService.ts',
         'Customs/Services/WebServices/PendingWebService.ts',
         'Customs/Services/Others/MultiCertificatesService.ts',
         'CRM/Services/TicketCorrespondencesService.ts',

@@ -4,6 +4,8 @@ import { SharedAgentManifestService } from '../SharedAgentManifestService';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 
+const createService = () => new SharedAgentManifestService();
+
 describe('SharedAgentManifestService', () => {
     const baseUrl = 'https://api/';
     let httpClient: { get: jest.Mock; post: jest.Mock };
@@ -11,7 +13,7 @@ describe('SharedAgentManifestService', () => {
     beforeEach(() => {
         httpClient = {
             get: jest.fn(),
-            post: jest.fn()
+            post: jest.fn(),
         };
 
         ServiceHelper.HttpClient = httpClient as any;
@@ -26,12 +28,11 @@ describe('SharedAgentManifestService', () => {
     });
 
     it('getSharedAgentManifestTransLateIdByCode builds correct URL', done => {
-        const responseValue = { value: 'v' };
-        httpClient.get.mockReturnValue(of(responseValue));
-        const service = new SharedAgentManifestService();
+        httpClient.get.mockReturnValue(of({ value: 'v' }));
+        const service = createService();
 
         service.getSharedAgentManifestTransLateIdByCode('CODE', 5).subscribe(res => {
-            expect(res.Result).toEqual(responseValue);
+            expect(res.Result).toEqual({ value: 'v' });
             expect(httpClient.get).toHaveBeenCalledWith(
                 `${baseUrl}api/SharedAgentManifest/getSharedAgentManifestTransLateIdByCode?code=CODE&tenant=5`,
                 { headers: {} }
@@ -43,7 +44,7 @@ describe('SharedAgentManifestService', () => {
     it('getAgentSharedManifesRefShipmentListsByIds posts list ids', done => {
         const payload = ['REF-1', 'REF-2'];
         httpClient.post.mockReturnValue(of({ any: 'value' }));
-        const service = new SharedAgentManifestService();
+        const service = createService();
 
         service.getAgentSharedManifesRefShipmentListsByIds(payload).subscribe(res => {
             expect(res.Result).toEqual({ any: 'value' });
@@ -57,7 +58,7 @@ describe('SharedAgentManifestService', () => {
     });
 
     it('get uses MapJsonToEntityPM to shape response', async () => {
-        const service = new SharedAgentManifestService();
+        const service = createService();
         const mapSpy = jest.spyOn(service, 'MapJsonToEntityPM').mockReturnValue({ Id: 'PM-1' } as any);
         httpClient.get.mockReturnValue(of({ Id: 'raw' }));
 
@@ -73,7 +74,7 @@ describe('SharedAgentManifestService', () => {
 
     it('ShareAgentManifest passes logged tenant', () => {
         httpClient.get.mockReturnValue(of({}));
-        const service = new SharedAgentManifestService();
+        const service = createService();
 
         service.ShareAgentManifest('SHIP-1', true).subscribe();
 
@@ -85,7 +86,7 @@ describe('SharedAgentManifestService', () => {
 
     it('GetCheckIfAnyShipmentHaveMasterNumber forwards parameters', done => {
         httpClient.get.mockReturnValue(of('SHIP-42'));
-        const service = new SharedAgentManifestService();
+        const service = createService();
 
         service.GetCheckIfAnyShipmentHaveMasterNumber('MASTER', 'LONG', 9).subscribe(res => {
             expect(httpClient.get).toHaveBeenCalledWith(
@@ -99,7 +100,7 @@ describe('SharedAgentManifestService', () => {
 
     it('GetCheckIfMasterShipmentHaveHouseWithOtherAgent returns service response', done => {
         httpClient.get.mockReturnValue(of({ isConflict: true }));
-        const service = new SharedAgentManifestService();
+        const service = createService();
 
         service.GetCheckIfMasterShipmentHaveHouseWithOtherAgent('ENTITY', 'AGENT', 12).subscribe(res => {
             expect(httpClient.get).toHaveBeenCalledWith(
@@ -113,7 +114,7 @@ describe('SharedAgentManifestService', () => {
 
     it('getAgentSharedManifestsWorkspaceSummary wraps response', done => {
         httpClient.get.mockReturnValue(of({ summary: 'value' }));
-        const service = new SharedAgentManifestService();
+        const service = createService();
 
         service.getAgentSharedManifestsWorkspaceSummary().subscribe(res => {
             expect(httpClient.get).toHaveBeenCalledWith(
@@ -127,7 +128,7 @@ describe('SharedAgentManifestService', () => {
 
     it('GetIsAgentSharedManifests returns result payload', done => {
         httpClient.get.mockReturnValue(of(true));
-        const service = new SharedAgentManifestService();
+        const service = createService();
 
         service.GetIsAgentSharedManifests('AGT', 'ENT').subscribe(res => {
             expect(httpClient.get).toHaveBeenCalledWith(
@@ -141,7 +142,7 @@ describe('SharedAgentManifestService', () => {
 
     it('GetAgentSharedManifestsForDashBoard maps dashboard params', done => {
         httpClient.get.mockReturnValue(of({ count: 3 }));
-        const service = new SharedAgentManifestService();
+        const service = createService();
 
         service.GetAgentSharedManifestsForDashBoard(2, 5, 1).subscribe(res => {
             expect(httpClient.get).toHaveBeenCalledWith(
@@ -154,7 +155,7 @@ describe('SharedAgentManifestService', () => {
     });
 
     it('MapJsonToEntityPM clones when mapParent is true', () => {
-        const service = new SharedAgentManifestService();
+        const service = createService();
         const cloneSpy = jest.spyOn(service, 'clone');
         const entity = service.MapJsonToEntityPM({ Id: '1', UIProperties: 'skip' });
 
@@ -164,8 +165,8 @@ describe('SharedAgentManifestService', () => {
         expect(entity.OldEntityPM).toBeDefined();
     });
 
-    it('MapJsonToEntityPM respects mapParent flag false', () => {
-        const service = new SharedAgentManifestService();
+    it('MapJsonToEntityPM respects mapParent false', () => {
+        const service = createService();
         const existing: any = { Id: 'existing', OldEntityPM: {} };
 
         const result = service.MapJsonToEntityPM({ Id: '2' }, false, existing);
@@ -176,14 +177,14 @@ describe('SharedAgentManifestService', () => {
     });
 
     it('clone filters UI properties and copies fields', () => {
-        const service = new SharedAgentManifestService();
+        const service = createService();
         const source = {
             Id: 'ID',
             UIProperties: {},
             OldEntityPM: {},
             PropertyChanged: {},
             entityParentPM: {},
-            Value: 'value'
+            Value: 'value',
         };
 
         const cloned = service.clone(source);

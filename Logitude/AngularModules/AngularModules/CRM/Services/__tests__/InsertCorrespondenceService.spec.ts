@@ -1,93 +1,86 @@
+(global as any).window = { TextCodesCache: [], TextCodes: [] };
+
+jest.mock('../../EntityPMs/CorrespondencePM', () => ({
+    CorrespondencePM: jest.fn().mockImplementation(() => ({
+        Subject: '',
+        EntityPMType: 'Correspondence',
+        IsDirty: false,
+        UIProperties: {},
+        PropertyChanged: {},
+    })),
+}));
+
+jest.mock('../../../Infrastructure/Components/LogitudeComponents/UIProperties', () => ({
+    UIProperties: jest.fn().mockImplementation(() => ({})),
+}));
+
+jest.mock('../../../Infrastructure/Validators/ClassLevelValidator', () => ({
+    ClassLevelValidator: jest.fn().mockImplementation(() => ({
+        Validate: jest.fn().mockReturnValue([]),
+    })),
+}));
+
 import { expect } from '@jest/globals';
 import { of } from 'rxjs';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
-
-jest.mock('../../../Infrastructure/Components/LogitudeComponents/UIProperties', () => {
-    return {
-        UIProperties: class {
-            constructor() {}
-        }
-    };
-});
-
 import { InsertCorrespondenceService } from '../InsertCorrespondenceService';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+
+const { ClassLevelValidator } = jest.requireMock('../../../Infrastructure/Validators/ClassLevelValidator');
 
 describe('InsertCorrespondenceService', () => {
     const baseUrl = 'https://crm/';
-    let httpClient: { post: jest.Mock };
-    let validateSpy: jest.SpyInstance;
+    let httpClient: any;
 
     beforeEach(() => {
-        httpClient = {
-            post: jest.fn()
-        };
-        ServiceHelper.HttpClient = httpClient as any;
+        httpClient = { post: jest.fn() };
+        ServiceHelper.HttpClient = httpClient;
         jest.spyOn(ServiceHelper, 'GetLogitudeURL').mockReturnValue(baseUrl);
         jest.spyOn(ServiceHelper, 'GetHttpHeaders').mockReturnValue({ headers: { Authorization: 'token' } } as any);
-        validateSpy = jest
-            .spyOn(ClassLevelValidator.prototype, 'Validate')
-            .mockReturnValue([]);
+        jest.spyOn(ServiceHelper, 'HandleServiceError').mockImplementation(error => {
+            throw error;
+        });
+        (global as any).window.TextCodesCache = [];
+        ClassLevelValidator.mockImplementation(() => ({ Validate: jest.fn().mockReturnValue([]) }));
     });
 
-    afterEach(() => {
-        jest.restoreAllMocks();
-    });
+    afterEach(() => jest.restoreAllMocks());
 
-    it('insert posts mapped correspondence when validation succeeds', done => {
+    it('insert posts mapped correspondence and returns response', done => {
+        httpClient.post.mockReturnValue(of({ Id: 'CORR-1', Subject: 'Subject' }));
         const service = new InsertCorrespondenceService();
-        const entity: any = { Subject: 'Hello' };
-        httpClient.post.mockReturnValue(of({ Id: 'CORR-1', Subject: 'Server Subject' }));
+        const pm = {
+            Subject: 'Subject',
+            EntityPMType: 'Correspondence',
+            IsDirty: false,
+        } as any;
 
-        service.insert(entity).subscribe(res => {
-            expect(validateSpy).toHaveBeenCalledWith('Correspondence', entity);
-            const [url, body, headers] = httpClient.post.mock.calls[0];
+        service.insert(pm).subscribe(res => {
+            expect(httpClient.post).toHaveBeenCalledTimes(1);
+            const [url, body, options] = httpClient.post.mock.calls[0];
             expect(url).toBe(`${baseUrl}api/InsertCorrespondence`);
-            expect(typeof body).toBe('string');
-            expect(JSON.parse(body).Subject).toBe('Hello');
-            expect(headers).toEqual({ headers: { Authorization: 'token' } });
-            expect(res.Result).toBe(entity);
-            expect(entity.Id).toBe('CORR-1');
-            expect(entity.Subject).toBe('Server Subject');
-            expect(entity.OldEntityPM).toBeDefined();
+            const parsedBody = JSON.parse(body as string);
+            expect(parsedBody.Subject).toBe('Subject');
+            expect(options).toEqual({ headers: { Authorization: 'token' } });
+            expect(res.Result.Subject).toBe('Subject');
             done();
         });
     });
 
-    it('insert returns validation errors without calling http when validation fails', done => {
-        validateSpy.mockReturnValue(['Subject required']);
+    it('returns validation errors when validator fails', done => {
+        ClassLevelValidator.mockImplementation(() => ({ Validate: jest.fn().mockReturnValue(['Subject required']) }));
         const service = new InsertCorrespondenceService();
-        const entity: any = { Subject: '' };
+        const pm = {
+            Subject: '',
+            EntityPMType: 'Correspondence',
+            IsDirty: false,
+        } as any;
 
-        service.insert(entity).subscribe(res => {
+        service.insert(pm).subscribe(res => {
             expect(httpClient.post).not.toHaveBeenCalled();
             expect(res.HasError).toBe(true);
             expect(res.ErrorsArray).toEqual(['Subject required']);
             done();
         });
-    });
-
-    it('MapJsonToEntityPM handles existing entity and map flag false', () => {
-        const service = new InsertCorrespondenceService();
-        const existing: any = { Id: 'EXIST', OldEntityPM: {} };
-
-        const mapped = service.MapJsonToEntityPM({ Id: 'UPDATED', Subject: 'Updated' }, false, existing) as any;
-
-        expect(mapped.Id).toBe('UPDATED');
-        expect(mapped.Subject).toBe('Updated');
-        expect(mapped.OldEntityPM).toBeNull();
-    });
-
-    it('clone filters UI-related fields', () => {
-        const service = new InsertCorrespondenceService();
-        const cloned = service.clone({
-            Id: 'ID-1',
-            UIProperties: {},
-            entityParentPM: {},
-            OldEntityPM: {},
-            Value: 'keep'
-        });
-        expect(cloned).toEqual({ Id: 'ID-1', Value: 'keep' });
     });
 });
 

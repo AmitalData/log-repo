@@ -42,3 +42,33 @@ export const createListGetSingleMock = () =>
         getSingle: jest.fn().mockReturnValue(of(createServiceResponse(null)))
     }));
 
+export const createShipmentPMServiceMock = (response?: ServiceResponse) =>
+    createMock<any>(() => ({
+        insert: jest.fn().mockReturnValue(
+            of(response || createServiceResponse({ Id: 'SHIP-ID' }))
+        )
+    }));
+
+export const createAgentSharedManifestPMServiceMock = (response?: ServiceResponse) =>
+    createMock<any>(() => ({
+        update: jest.fn().mockReturnValue(
+            of(response || createServiceResponse({}))
+        )
+    }));
+
+const defaultServiceFactories: Record<string, () => MockWithSpies<any>> = {
+    myIncotermListService: createListGetSingleMock,
+    myAirlineListService: createListGetSingleMock,
+    myPartnersDomainService: createListGetSingleMock,
+    myPortListService: createListGetSingleMock,
+    countryListService: createListGetSingleMock,
+    myVesselListService: createListGetSingleMock,
+    myMoveTypeListService: createListGetSingleMock,
+    myCurrencyListService: createListGetSingleMock,
+    myPackageTypeService: createListGetSingleMock,
+    myShipmentPMService: () => createShipmentPMServiceMock(),
+    _sharedAgentManifestService: createNoopServiceMock,
+    _agentSharedManifestPMService: () => createAgentSharedManifestPMServiceMock(),
+    entityPMService: createNoopServiceMock
+};
+

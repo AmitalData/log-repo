@@ -15,7 +15,7 @@ const createDocsOutContext = () => ({
     invoiceType: 'INV',
 });
 
-const createHelper = (dataContext = createDocsOutContext()) => {
+const makeHelper = (dataContext = createDocsOutContext()) => {
     const helper = Object.create(BuildDocumentHelper.prototype) as BuildDocumentHelper;
     helper.DataContext = dataContext as any;
     helper.CurrentDocumentOut = dataContext.CurrentDocument as any;
@@ -66,8 +66,8 @@ describe('BuildDocumentHelper', () => {
         };
     });
 
-    it('UpdateDocumentsAutomatically loads copies and updates document when service returns result', () => {
-        const helper = createHelper();
+    it('UpdateDocumentsAutomatically loads copies and updates document', () => {
+        const helper = makeHelper();
 
         helper.UpdateDocumentsAutomatically();
 
@@ -79,7 +79,7 @@ describe('BuildDocumentHelper', () => {
     });
 
     it('UpdateDocumentsAutomatically skips update when service returns error', () => {
-        const helper = createHelper();
+        const helper = makeHelper();
         const docService = (helper as any)._documentOutPMService;
         docService.getSingleDocumentOutPM.mockReturnValue(of({ HasError: true }));
 
@@ -88,13 +88,36 @@ describe('BuildDocumentHelper', () => {
         expect((helper as any).UpdateDocument).not.toHaveBeenCalled();
     });
 
+    it('UpdateDocumentsAutomatically does nothing when document payload missing', () => {
+        const helper = makeHelper();
+        const docService = (helper as any)._documentOutPMService;
+        docService.getSingleDocumentOutPM.mockReturnValue(of({ HasError: false, Result: null }));
+
+        helper.UpdateDocumentsAutomatically();
+
+        expect((helper as any).UpdateDocument).not.toHaveBeenCalled();
+        expect(helper.CurrentDocumentOut.Id).toBe('DOC-1');
+    });
+
     it('LoadDocumentCustomFields populates args and invokes service', () => {
-        const helper = createHelper();
+        const helper = makeHelper();
+
         helper.LoadDocumentCustomFields();
 
         const customFieldService = (helper as any)._documentTypeCustomFieldService;
         expect(helper.DocumentCustomFieldsArgs).toBeDefined();
         expect(customFieldService.getDocumentTypeCustomFieldsByDocument).toHaveBeenCalledWith(77, 'TYPE-1');
+    });
+
+    it('LoadDocumentCustomFields skips service when additional printing fields active', () => {
+        const helper = makeHelper();
+        helper.IsSystemAdditionalPrintingFields = true;
+
+        helper.LoadDocumentCustomFields();
+
+        const customFieldService = (helper as any)._documentTypeCustomFieldService;
+        expect(customFieldService.getDocumentTypeCustomFieldsByDocument).not.toHaveBeenCalled();
+        expect(helper.DocumentCustomFieldsArgs.DocumentTypeId).toBe('TYPE-1');
     });
 });
 

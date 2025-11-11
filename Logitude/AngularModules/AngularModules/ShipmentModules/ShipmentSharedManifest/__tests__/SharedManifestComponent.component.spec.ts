@@ -146,6 +146,17 @@ describe('SharedManifestComponent', () => {
         );
     });
 
+    it('ChangeStatusAgentSharedManifest reactivates cancelled manifests without logging decline', () => {
+        const { component } = createComponent();
+        const updateSpy = jest.spyOn(component, 'UpDateAgentSharedManifest').mockImplementation(() => undefined);
+        component.CurrentEntity = createAgentSharedManifestPM({ StatusCode: 'CANC' });
+
+        component.ChangeStatusAgentSharedManifest();
+
+        expect(updateSpy).toHaveBeenCalledWith('WAIT');
+        expect(ServiceLocator.SendTotangoUserActivity).not.toHaveBeenCalled();
+    });
+
     it('SetWindowArgs loads data, maps houses, and updates labels', () => {
         const { component, services, session } = createComponent();
         const manifest = createManifestSL({
@@ -231,6 +242,19 @@ describe('SharedManifestComponent', () => {
         expect(component.IsNoHouses).toBe(true);
         expect(component.ManifestSL.EntityId).toBe('MASTER-ONLY');
         expect(component.IsShowMarkASCompleted).toBe(false);
+    });
+
+    it('UpDateAgentSharedManifest stops the busy indicator even when update fails', () => {
+        const { component, services, session } = createComponent();
+        services.pmService.update.mockReturnValue(of({ HasError: true }));
+        const refreshSpy = jest.spyOn(component, 'RefreshSharedManifiestoStatus').mockImplementation(() => undefined);
+        component.CurrentEntity = createAgentSharedManifestPM({ StatusCode: 'WAIT' });
+
+        component.UpDateAgentSharedManifest('WAIT');
+
+        expect(session.CurrentWindow.StopBusyIndicator).toHaveBeenCalled();
+        expect(component.isEntityChange).toBe(true);
+        expect(refreshSpy).toHaveBeenCalled();
     });
 });
 
