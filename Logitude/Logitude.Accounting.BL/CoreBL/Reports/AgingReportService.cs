@@ -104,6 +104,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var repoLedgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
             _myGLAccountQueryService = new GLAccountQueryService(_AccountingContext);
             _myGLAccountRepository = new GLAccountRepository(_AccountingContext);
+            string creditLineNotes = "החזרת שיק ללקוח";
 
 
             if (!FilterAccountPopulation())
@@ -408,7 +409,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                           TotalOpenShipments = card != null ? card.TotalOpenShipments : (applCard != null ? (opf != null ? opf.TotalOpenFilesAmount : 0) : 0),
                           TotalFutureOpenCheques = moredata != null ? (decimal)moredata.TotFutureOpenChequesInLocalCur : 0,
                           TotalOpenCheques = AllARPaymentChequeJoin
-                         .Where(A => A.ValueDate <= DateTime.Now && A.Notes != "החזרת שיק ללקוח")
+                         .Where(A => A.ValueDate <= DateTime.Now && A.Notes != creditLineNotes)
                          .Sum(A => (decimal?)A.LocalAmountCredit) ?? 0,
                           IsMultiCurrency = acc.IsMultiCurrency,
                           AccountEnglishName = acc.EnglishName,

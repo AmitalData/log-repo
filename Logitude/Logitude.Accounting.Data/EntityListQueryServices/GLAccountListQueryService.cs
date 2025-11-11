@@ -34,7 +34,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 tenant = iQueryable.FirstOrDefault().Tenant;
             }
 
-            string creditLineNotes = "החזרת שיק ללקוח";
+            string  creditLineNotes = "החזרת שיק ללקוח";
             bool calculateWithTotalPastOpenCheques = FeatureToggleHelper.HasFeatureToggle("CTPC", tenant);
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
