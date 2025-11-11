@@ -34,6 +34,12 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public decimal? TotalAmountWithPostponedCheques { get; set; }
         public List<InterestReportFlatLine> InterestReportFlatLineList { get; set; }
 
+        public string ReportCurrencyName { get; set; }
+        public string ReportCurrencyLocalName { get; set; }
+
+        public string ReportCurrencyCode { get; set; }
+
+
     }
 
     public class InterestReportLinesByDateProvider
@@ -117,7 +123,9 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         
         public string CalculationDetails { get; set; }
         public bool IsOpenBalanceLine { get; set; }
-     }
+
+        public decimal? AmountInCurrencyReport { get; set; }
+    }
 
     public class FutureInterestTransactionProvider 
     {
@@ -146,5 +154,7 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public string Notes { get; set; }
 
         public string Reference1 { get; set; }
+
+        public decimal?  AmountInCurrencyReport { get; set; }
     }
 }

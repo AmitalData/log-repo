@@ -119,6 +119,7 @@ namespace Logitude.FullAccounting.Test.Models
         public string SplitCurrencyAccount { get; set; }
         public string ParentName { get; set; }
         public DateTime? MarkDate { get; set; }
+        public bool ForeignCurrencyInterest { get; set; }
 
 
     }

@@ -51,6 +51,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePM(cardPM.GLAccountId, entityPM.Tenant);
                     if (gLAccountPM != null)
                     {
+                        if (gLAccountPM.ForeignCurrencyInterest)
+                        {
+                            entityPM.IsForeignCurrency = true;
+                            entityPM.ReportCurrencyId = gLAccountPM.CurrencyId;
+                        }
                         InterestReportQueryService interestReportQueryService = new InterestReportQueryService(entityPM.Tenant);
                         List<InterestReportPM> interestReportPMs = interestReportQueryService.GetInterestReportsForCustomer(entityPM.CustomerId, cardPM.GLAccountId, entityPM.Tenant);
                         if (interestReportPMs == null || interestReportPMs.Count == 0)
@@ -82,6 +87,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             }
 
                             entityPM.OpenBalance = gLAccountPM.InterestOpenBalance;
+                           
                         }
                     }
                 }

@@ -266,6 +266,21 @@ export class InterestReportPM {
     public set CalculatedPostponedChequesCommision(newValue: number) { if (this.calculatedPostponedChequesCommision != newValue) { this.calculatedPostponedChequesCommision = newValue; this.MarkAsDirty("CalculatedPostponedChequesCommision"); } }
        
 	 
+    private isForeignCurrency: boolean;
+    public get IsForeignCurrency() { return this.isForeignCurrency; }
+    public set IsForeignCurrency(newValue: boolean) { if (this.isForeignCurrency != newValue) { this.isForeignCurrency = newValue; this.MarkAsDirty("IsForeignCurrency"); } }
+       
+	 
+    private reportCurrencyId: string;
+    public get ReportCurrencyId() { return this.reportCurrencyId; }
+    public set ReportCurrencyId(newValue: string) { if (this.reportCurrencyId != newValue) { this.reportCurrencyId = newValue; this.MarkAsDirty("ReportCurrencyId"); } }
+       
+	 
+    private reportCurrencyCode: string;
+    public get ReportCurrencyCode() { return this.reportCurrencyCode; }
+    public set ReportCurrencyCode(newValue: string) { if (this.reportCurrencyCode != newValue) { this.reportCurrencyCode = newValue; this.MarkAsDirty("ReportCurrencyCode"); } }
+       
+	 
 
     public OldEntityPM: InterestReportPM;
 		

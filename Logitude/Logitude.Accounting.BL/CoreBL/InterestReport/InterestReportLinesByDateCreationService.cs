@@ -15,7 +15,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         private int tenant;
         public List<InterestReportLinesByDatePM> CreateInterestReportLinesByDate(InterestReportLinesByDateCreationParams interestReportLinesByDateCreationParams)
         {
-            List<InterestTransactionsGroupedByDate> interestTransactionsGroupedByDates = GetInterestTransactionsGroupedByDate(interestReportLinesByDateCreationParams.InterestTransactionPMs);
+            List<InterestTransactionsGroupedByDate> interestTransactionsGroupedByDates = GetInterestTransactionsGroupedByDate(interestReportLinesByDateCreationParams.InterestTransactionPMs , interestReportLinesByDateCreationParams.InterestReportPM);
             List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = new List<InterestReportLinesByDatePM>();
             int sequence = 1;
             decimal accumulatedAmount = interestReportLinesByDateCreationParams.InterestReportPM.OpenBalance != null ? interestReportLinesByDateCreationParams.InterestReportPM.OpenBalance.Value : 0;
@@ -309,14 +309,14 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             }
         }
 
-        public virtual List<InterestTransactionsGroupedByDate> GetInterestTransactionsGroupedByDate(List<InterestTransactionPM> interestTransactionPMs)
+        public virtual List<InterestTransactionsGroupedByDate> GetInterestTransactionsGroupedByDate(List<InterestTransactionPM> interestTransactionPMs, InterestReportPM interestReportPM)
         {
             List<InterestTransactionsGroupedByDate> interestTransactionsGroupedByDates = (from interestTransaction in interestTransactionPMs
                                                                                           group interestTransaction by interestTransaction.InterestValueDate.Date into groupByDate
                                                                                           select new InterestTransactionsGroupedByDate()
                                                                                           {
                                                                                               GroupInterestValueDate = groupByDate.Key,
-                                                                                              TotalLocalAmount = groupByDate.Sum(d => d.LocalAmount),
+                                                                                              TotalLocalAmount = groupByDate.Sum(d => interestReportPM.IsForeignCurrency && d.ForeignAmount.HasValue ? d.ForeignAmount.Value : d.LocalAmount),
                                                                                               IsOpenBalanceLine = groupByDate.Any(d => d.InterestEntityTypeCode == InterestEntities.OpenBalance)
 
                                                                                           }).OrderBy(d => d.GroupInterestValueDate).ToList();

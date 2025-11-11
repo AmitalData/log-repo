@@ -3821,6 +3821,35 @@ namespace Logitude.Accounting.Def.EntityPMs
 
             }
         }
+
+
+        private bool foreignCurrencyInterest;
+
+
+        [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+        [DataMember]
+        public bool ForeignCurrencyInterest
+        {
+
+            get
+            {
+                return foreignCurrencyInterest;
+            }
+            set
+            {
+                if (foreignCurrencyInterest != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "ForeignCurrencyInterest", OldValue = foreignCurrencyInterest, NewValue = value, PropertyType = "bool" };
+                    NotifyPropertyChanged(values);
+                    foreignCurrencyInterest = value;
+                }
+
+            }
+        }
+
+
+
+
     }
    
 }
