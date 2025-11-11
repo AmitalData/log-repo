@@ -1670,13 +1670,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                 }
                                 bool sendHybridM = true;
 
-                                 if (!(docChildTable.Name == "Customs.PaymentOrder") && extDocPM.ExternalEntityName == "CFIFILEM" && !extDocPM.IsFromCloud && isConnectedToUniFreight)
+                                 if (!(docChildTable?.Name == "Customs.PaymentOrder") && extDocPM.ExternalEntityName == "CFIFILEM" && !extDocPM.IsFromCloud && isConnectedToUniFreight)
                                 {
                                     sendHybridM = false;
                                     SendCustomsReferenceByTask(tenant, extDocPM.ExternalEntityReference, extDocPM.CustomReference, xmlstring, loggedUserId);
                                 }
 
-                                if (docChildTable.Name == "Customs.PaymentOrder" ||( sendHybridM && !extDocPM.IsFromCloud))
+                                if (docChildTable?.Name == "Customs.PaymentOrder" ||( sendHybridM && !extDocPM.IsFromCloud))
                                 {
                                     List<QueueTask> queue1Tasks = new List<QueueTask>();
 
