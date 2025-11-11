@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "df9f5a65a52df7795d6d4b05f8ccvx0bf";
+		public const string HashString = "1ebb5a1fb8d09f71a18af6b1cff94405";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -15147,17 +15147,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_AgingReportORunReportImmediately = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.RunReportImmediately", DefaultText = "Run Immediately",LocalDefaultText = @"BS64:IteU16jXpSDXnteZ15nXk9eZ16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
+ 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountList", DefaultText = "GLAccount List",LocalDefaultText = @"רשימת כרטיסים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountList", DefaultText = "GLAccount List",LocalDefaultText = @"רשימת כרטיסים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLTransactionReportORequiredFieldsForNew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.RequiredFieldsForNew", DefaultText = "One of the following filters is required: GLAccount /GLAccounts range/Chartofaccount/ Chart Of Accounts Type / Category / Salesman",LocalDefaultText = @"חובה לתחום אחת מהאפשרויות הבאות : כרטיס/טווח כרטיסים/קבוצת מאזן/סוג קבוצת מאזן / קטגוריה/איש מכירות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLTransactionReportORequiredFieldsForNew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.RequiredFieldsForNew", DefaultText = "One of the following filters is required: GLAccount /GLAccounts range/Chartofaccount/ Chart Of Accounts Type / Category / Salesman",LocalDefaultText = @"חובה לתחום אחת מהאפשרויות הבאות : כרטיס/טווח כרטיסים/קבוצת מאזן/סוג קבוצת מאזן / קטגוריה/איש מכירות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLTransactionReportOFromGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.FromGLAccount", DefaultText = "From GLAccount",LocalDefaultText = @"מכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLTransactionReportOFromGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.FromGLAccount", DefaultText = "From GLAccount",LocalDefaultText = @"מכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLTransactionReportOToGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.ToGLAccount", DefaultText = "To GLAccount ",LocalDefaultText = @"עד כרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLTransactionReportOToGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.ToGLAccount", DefaultText = "To GLAccount ",LocalDefaultText = @"עד כרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-
- 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountsRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountsRange", DefaultText = "GLAccount range by Display Number",LocalDefaultText = @"טווח כרטיסים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountsRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountsRange", DefaultText = "GLAccount range by Display Number",LocalDefaultText = @"טווח כרטיסים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
