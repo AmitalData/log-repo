@@ -952,8 +952,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                             rfrConfirm.Width = 390;
                             rfrConfirm.ShowCancelButton = true;
                             
-                            let textMessage = `${TextCodeTranslator.Translate("Accounting.O.General.RFRDiff1")} ${this.TotalLocalDifference} ${SessionLocator.TenantPM.CurrencySign}.\
- ${TextCodeTranslator.Translate("Accounting.O.General.RFRDiff2")}`;
+                            let textMessage = `${TextCodeTranslator.Translate("Accounting.General.O.RFRDiff1")} ${this.TotalLocalDifference} ${SessionLocator.TenantPM.CurrencySign}.\
+ ${TextCodeTranslator.Translate("Accounting.General.O.RFRDiff2")}`;
 
                             rfrConfirm.Show(textMessage);
 
