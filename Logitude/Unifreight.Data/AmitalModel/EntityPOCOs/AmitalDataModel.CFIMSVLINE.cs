@@ -727,6 +727,35 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
         private string _PRATMEHES2;
 
+        public virtual decimal? WEIGHT
+        {
+            get { return _WEIGHT; }
+            set
+            {
+                if (_WEIGHT != value)
+                {
+                    _WEIGHT = value;
+                    OnPropertyChanged("WEIGHT");
+                }
+            }
+        }
+        private decimal? _WEIGHT;
+
+        public virtual string WEIGHT_UNIT
+        {
+            get { return _WEIGHT_UNIT; }
+            set
+            {
+                if (_WEIGHT_UNIT != value)
+                {
+                    _WEIGHT_UNIT = value;
+                    OnPropertyChanged("WEIGHT_UNIT");
+                }
+            }
+        }
+        private string _WEIGHT_UNIT;
+    
+
         #endregion
 
         #region Extensibility Method Definitions
