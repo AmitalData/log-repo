@@ -44,6 +44,28 @@ using System.Threading;
 using System.Transactions;
 using System.Web;
 using static Simplog.Server.Infrastructure.DbContextBase;
+using Logitude.Accounting.BL.CoreBL.Reports.Aging;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.CoreBL;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Logitude.Accounting.BL.DataContract;
+using Logitude.Accounting.BL.Utils;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.CommonDataModel;
+using Newtonsoft.Json;
+using Microsoft.Practices.Unity;
+using System.Collections;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.Server.Tools.Utils;
+using CsvHelper.Configuration;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 
 namespace Logitude.Accounting.BL.CoreBL
@@ -121,24 +143,27 @@ namespace Logitude.Accounting.BL.CoreBL
 			catch (Exception ex)
 			{
 				LogMessagingUtil.Instance.AppendLine($"[usp_AccountingStreaming] Error in AccountingStreamingInNewSerializableTransaction! JournalPM?.Id={_JournalPM?.Id} | Exception: {ex.Message}");
+				NetCommonHelper.Logger.DevLog.Instance.WriteError($"[usp_AccountingStreaming] Error in AccountingStreamingInNewSerializableTransaction! JournalPM?.Id={_JournalPM?.Id} (took: {sw.Elapsed.ToString()}) | Exception: {ex}");
 
-				NetCommonHelper.Logger.DevLog.Instance.WriteError(
-				$"[usp_AccountingStreaming] Error in AccountingStreamingInNewSerializableTransaction! JournalPM?.Id={_JournalPM?.Id} | Exception: {ex}");
+                var result = new ResultApproveJournalM()
+                {
+                    Success = false,
+                    FailDue = ex.Message
+                };
 
-				if (_JournalPM?.StatusCode == "6" && !_JournalPM.IsLedgerCreated)
+                if (_JournalPM?.StatusCode == "6" && !_JournalPM.IsLedgerCreated)
 				{
 					try
 					{
-						using (var scope = new TransactionScope(TransactionScopeOption.Suppress))
+                        var accountingContext = AccountingContext.GetContext(_Tenant);
+                        using (var scope = new TransactionScope(TransactionScopeOption.Suppress))
 						{
-							var updater = new JournalUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
+							var updater = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
 							updater.SetStatusCodeFailed(_SeedJournalId, _Tenant);
                              scope.Complete();
 						}
-                        var journalQueryService = new JournalQueryService(_AccountingContext);
-                        journalQueryService.FixFailedReconcileJournals(_Tenant);
 
-
+                        FixFailedReconcileJournals(_Tenant, accountingContext, _JournalPM?.Id, result);
                     }
                     catch (Exception updateEx)
 					{
@@ -146,12 +171,8 @@ namespace Logitude.Accounting.BL.CoreBL
 							$"[usp_AccountingStreaming] Failed to update journal status after primary exception. JournalId={_JournalPM?.Id} | Update Exception: {updateEx}");
 					}
 				}
-				return new ResultApproveJournalM()
-				{
-					Success = false,
-                    FailDue = ex.Message
-				};
-			}
+                return result;
+            }
 			finally
             {
                 LogMessagingUtil.Instance.AppendLine("SubmitApprove(" + _SeedJournalId + ") took:" + sw.Elapsed.ToString());
@@ -613,9 +634,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
 					scope.Dispose();
 					LogMessagingUtil.Instance.AppendLine($"AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id={_JournalPM?.Id} | Exception: {e.Message}");
-					NetCommonHelper.Logger.DevLog.Instance.WriteError("AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + e );
-                    throw e;
-
+					NetCommonHelper.Logger.DevLog.Instance.WriteError("AccountingStreamingInNewSerializableTransaction failure (journal id: " + _JournalPM?.Id + "). Error: " + e);
+                    throw;
                 }
                 finally
                 {
@@ -1304,6 +1324,8 @@ namespace Logitude.Accounting.BL.CoreBL
             int tenant = -1;
             string qpJournalId = null;
             bool isSubmitApprove = false;
+            var res = new ResultApproveJournalM() { Success = false, FailDue = "not done" };
+
             try
             {
 
@@ -1325,7 +1347,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 JournalApproveService.MyActions actions =
             JournalApproveService.MyActions.BuildLedgerTransaction | JournalApproveService.MyActions.BuildGLAccountTotalByMonths;
                 var myJournalApproveService = new JournalApproveService(tenant, qpJournalId, MessageId, selectedQueue);
-                var res = myJournalApproveService.SubmitApprove(actions);
+                res = myJournalApproveService.SubmitApprove(actions);
 
                 if (res.Success)
                 {
@@ -1336,14 +1358,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-                    var ex1 = new Exception("AccountingJournalApproveWR.JournalApproveService(" + tenant.ToString() + "," + MessageId.ToString() + ").SubmitApprove():FailDue=" + res.FailDue);
-                    //ExceptionHandler.HandleException(ex1, DateTime.Now, 0, "", "WorkerRole", "AccountingJournalApproveWR: ProcessMessage() Method", null);
-                    OnException(myDbQueueService, message, qpJournalId, tenant, ex1);
+                    var ex1 = new Exception("AccountingJournalApproveWR.JournalApproveService(tenant:" + tenant.ToString() + ",msg id:" + MessageId.ToString() + ").SubmitApprove():FailDue=" + res.FailDue);
+                    OnException(myDbQueueService, message, qpJournalId, tenant, ex1, res);
                 }
-
-
-
-
             }
             catch (JournalApproveException ex)
             {
@@ -1359,7 +1376,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     case WhatTODOJournalApproveEnum.MakeItFailed:
                     default:
                         {
-                            OnException(myDbQueueService, message, qpJournalId, tenant, ex);
+                            OnException(myDbQueueService, message, qpJournalId, tenant, ex, res);
                         }
 
                         break;
@@ -1438,7 +1455,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        private static void OnException(DbQueueService myDbQueueService, QueueResponse message, string seedJournalId, int tenant, Exception ex)
+        private static void OnException(DbQueueService myDbQueueService, QueueResponse message, string seedJournalId, int tenant, Exception ex, ResultApproveJournalM result = null)
         {
 
             LogMessagingUtil.Instance.AppendLine(message?.MessageId?.ToString() + " " + ex.ToString());
@@ -1479,11 +1496,31 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (markAsFailed)
                 {
-                    var journalQueryService = new JournalQueryService(accountingContext);
-                    journalQueryService.FixFailedReconcileJournals(tenant);
+                    FixFailedReconcileJournals(tenant, accountingContext, seedJournalId, result);
                 }
             }
         }
+
+        private static void FixFailedReconcileJournals(int tenant, IAccountingContext accountingContext, string journalId, ResultApproveJournalM result)
+        {
+            try
+            {
+                if (result == null || (result != null && result.FixFailedReconcileDone != true))
+                {
+                    var journalQueryService = new JournalQueryService(accountingContext);
+                    journalQueryService.FixFailedReconcileJournals(tenant);
+                    if (result != null)
+                    {
+                        result.FixFailedReconcileDone = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogMessagingUtil.Instance.AppendLine($"Failed to fix failed reconcile for journal id: {journalId} | Exception: {ex.Message}");
+            }
+        }
+
         /// <summary>
         /// Task 52385: Journals & Transactions - after the Journal transform to LedgerTransaction >Update field IsLedgerCreated = True in Journals
         /// </summary>
@@ -1491,183 +1528,156 @@ namespace Logitude.Accounting.BL.CoreBL
         /// <param name="allGLAccountTotalByMonths"></param>
         private void Exec_usp_AccountingStreaming(List<LedgerTransactionPM> myLedgerTransactionsWithCounters, List<GLAccountTotalByMonthPM> allGLAccountTotalByMonths, List<GLAccountAgingDataPM> gLAccountAgingDataPMs)
         {
-
-            //_JournalPM.Tenant, _JournalPM.Id, _QMessageId
-
+            var sw = Stopwatch.StartNew();
             var stringBuilder = new StringBuilder();
             bool complete = false;
             try
             {
-
-
-                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
+                string strConnString = TenantServerConfigration.GetDbConnection(_Tenant);
+                QueueResponse response = new QueueResponse();
+                DataTable tblQueue = new DataTable();
+                if (LogitudeSettings.DatabaseManagementSystem == "oracle")
                 {
-                    string strConnString = TenantServerConfigration.GetDbConnection(_Tenant);
-                    QueueResponse response = new QueueResponse();
-                    DataTable tblQueue = new DataTable();
-                    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
-                    {
-                        throw new ApplicationException();
-                    }
-
-                    using (SqlConnection myConnection = new SqlConnection(strConnString))
-                    {
-
-
-                        myConnection.InfoMessage += (sender, e) =>
-                        {
-                            stringBuilder.AppendLine(e.Message);
-                        };
-
-
-                        SqlCommand cmd = new SqlCommand("[dbo].[usp_AccountingStreaming]", myConnection);
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        SqlParameter journalIdPar = new SqlParameter("@pJournalId", SqlDbType.VarChar);
-                        journalIdPar.Direction = ParameterDirection.Input;
-                        journalIdPar.Value = _JournalPM.Id;
-
-                        SqlParameter pTenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
-                        pTenantPar.Direction = ParameterDirection.Input;
-                        pTenantPar.Value = _JournalPM.Tenant;
-
-
-                        SqlParameter messageIdPar = new SqlParameter("@pQMessageId", SqlDbType.VarChar);
-                        messageIdPar.Direction = ParameterDirection.Input;
-                        messageIdPar.Value = _QMessageId;
-
-                        var DBTypeLedgerTransactionsWithCounters = myLedgerTransactionsWithCounters
-                            .Select(r =>
-                          new DBTypeLedgerTransaction()
-                          {
-                              //Id = r.JournalId,
-
-                              Tenant = r.Tenant,
-                              JournalId = r.JournalId,
-
-                              JournalLineNumber = r.JournalLineNumber,
-                              Id = r.Id,
-
-                              CreateDate = r.CreateDate ?? DateTime.MinValue,
-                              ControlAccountId = r.ControlAccountId,
-                              AccountId = r.AccountId,
-
-                              DocumentDate = r.DocumentDate,
-                              DueDate = r.DueDate,
-                              AccountingDate = r.AccountingDate,
-                              LocalAmountDebit = r.LocalAmountDebit,
-                              LocalAmountCredit = r.LocalAmountCredit,
-                              CurrencyId = r.CurrencyId,
-                              ForeignAmountDebit = r.ForeignAmountDebit,
-                              ForeignAmountCredit = r.ForeignAmountCredit,
-                              ExchangeRate = r.ExchangeRate,
-                              Reference1 = r.Reference1,
-                              Reference2 = r.Reference2,
-                              Reference3 = r.Reference3,
-                              OpenAmount = r.OpenAmount,
-
-                              OppositeAccountId = r.OppositeAccountId,
-                              SearchFields = r.SearchFields,
-                              OpenAmountCurrencyId = r.OpenAmountCurrencyId,
-                              Notes = r.Notes,
-                              AmountToReconcile = r.AmountToReconcile,
-
-                              Mark = r.Mark,
-                              //IsReconciled = 
-                              //(this._SelectedQueue == K_AccountingJournalApproveWR && r.OpenAmount == 0) 
-                              //? true : r.IsReconciled,
-                              IsReconciled = r.IsReconciled,
-                              IsExternalReconcile = r.IsExternalReconcile
-                          }
-                    ).ToList();
-
-                        var tableLTRans = DBTypeLedgerTransactionsWithCounters.ToDataTable();
-
-                        SqlParameter tLedgerTransactionsTypePar = new SqlParameter("@tLedgerTransactionsType", SqlDbType.Structured);
-                        tLedgerTransactionsTypePar.Direction = ParameterDirection.Input;
-                        tLedgerTransactionsTypePar.Value = tableLTRans;
-
-                        var listGLAccountTotalByMonth =
-                            allGLAccountTotalByMonths.Select(r => new DBTypeAccountTotalByMonth()
-                            {
-                                AccountId = r.AccountId,
-                                DateTypeCode = r.DateTypeCode,
-                                Year = r.Year,
-                                Month = r.Month,
-                                CurrencyId = r.CurrencyId,
-                                Tenant = r.Tenant,
-                                LocalAmountCredit = r.LocalAmountCredit,
-                                LocalAmountDebit = r.LocalAmountDebit,
-                                ForeignAmountCredit = r.ForeignAmountCredit,
-                                ForeignAmountDebit = r.ForeignAmountDebit,
-
-
-                            }).ToList();
-                        var tableGLAccountTotalByMonths = listGLAccountTotalByMonth.ToDataTable();
-
-                        SqlParameter tGLAccountTotalByMonthsTypePar = new SqlParameter("@tGLAccountTotalByMonthsType", SqlDbType.Structured);
-                        tGLAccountTotalByMonthsTypePar.Direction = ParameterDirection.Input;
-                        tGLAccountTotalByMonthsTypePar.Value = tableGLAccountTotalByMonths;
-                        //tLedgerTransactionsTypePar.
-
-
-
-
-                        SqlParameter tGLAccountAgingDataType = GettGLAccountAgingDataType(gLAccountAgingDataPMs);
-
-                        cmd.Parameters.Add(journalIdPar);
-                        cmd.Parameters.Add(pTenantPar);
-
-                        cmd.Parameters.Add(messageIdPar);
-                        cmd.Parameters.Add(tGLAccountTotalByMonthsTypePar);
-                        cmd.Parameters.Add(tLedgerTransactionsTypePar);
-                        cmd.Parameters.Add(tGLAccountAgingDataType);
-
-
-
-
-
-
-                        myConnection.Open();
-                        var output = cmd.ExecuteNonQuery();
-                        myConnection.Close();
-
-
-                    }
-
-
-                    scope.Complete();
-                    complete = true;
+                    throw new ApplicationException();
                 }
+
+                using (SqlConnection myConnection = new SqlConnection(strConnString))
+                {
+
+
+                    myConnection.InfoMessage += (sender, e) =>
+                    {
+                        stringBuilder.AppendLine(e.Message);
+                    };
+
+
+                    SqlCommand cmd = new SqlCommand("[dbo].[usp_AccountingStreaming]", myConnection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 180;
+                    SqlParameter journalIdPar = new SqlParameter("@pJournalId", SqlDbType.VarChar);
+                    journalIdPar.Direction = ParameterDirection.Input;
+                    journalIdPar.Value = _JournalPM.Id;
+
+                    SqlParameter pTenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
+                    pTenantPar.Direction = ParameterDirection.Input;
+                    pTenantPar.Value = _JournalPM.Tenant;
+
+
+                    SqlParameter messageIdPar = new SqlParameter("@pQMessageId", SqlDbType.VarChar);
+                    messageIdPar.Direction = ParameterDirection.Input;
+                    messageIdPar.Value = _QMessageId;
+
+                    var DBTypeLedgerTransactionsWithCounters = myLedgerTransactionsWithCounters
+                        .Select(r =>
+                      new DBTypeLedgerTransaction()
+                      {
+                          //Id = r.JournalId,
+
+                          Tenant = r.Tenant,
+                          JournalId = r.JournalId,
+
+                          JournalLineNumber = r.JournalLineNumber,
+                          Id = r.Id,
+
+                          CreateDate = r.CreateDate ?? DateTime.MinValue,
+                          ControlAccountId = r.ControlAccountId,
+                          AccountId = r.AccountId,
+
+                          DocumentDate = r.DocumentDate,
+                          DueDate = r.DueDate,
+                          AccountingDate = r.AccountingDate,
+                          LocalAmountDebit = r.LocalAmountDebit,
+                          LocalAmountCredit = r.LocalAmountCredit,
+                          CurrencyId = r.CurrencyId,
+                          ForeignAmountDebit = r.ForeignAmountDebit,
+                          ForeignAmountCredit = r.ForeignAmountCredit,
+                          ExchangeRate = r.ExchangeRate,
+                          Reference1 = r.Reference1,
+                          Reference2 = r.Reference2,
+                          Reference3 = r.Reference3,
+                          OpenAmount = r.OpenAmount,
+
+                          OppositeAccountId = r.OppositeAccountId,
+                          SearchFields = r.SearchFields,
+                          OpenAmountCurrencyId = r.OpenAmountCurrencyId,
+                          Notes = r.Notes,
+                          AmountToReconcile = r.AmountToReconcile,
+
+                          Mark = r.Mark,
+                          //IsReconciled = 
+                          //(this._SelectedQueue == K_AccountingJournalApproveWR && r.OpenAmount == 0) 
+                          //? true : r.IsReconciled,
+                          IsReconciled = r.IsReconciled,
+                          IsExternalReconcile = r.IsExternalReconcile
+                      }
+                ).ToList();
+
+                    var tableLTRans = DBTypeLedgerTransactionsWithCounters.ToDataTable();
+
+                    SqlParameter tLedgerTransactionsTypePar = new SqlParameter("@tLedgerTransactionsType", SqlDbType.Structured);
+                    tLedgerTransactionsTypePar.Direction = ParameterDirection.Input;
+                    tLedgerTransactionsTypePar.Value = tableLTRans;
+
+                    var listGLAccountTotalByMonth =
+                        allGLAccountTotalByMonths.Select(r => new DBTypeAccountTotalByMonth()
+                        {
+                            AccountId = r.AccountId,
+                            DateTypeCode = r.DateTypeCode,
+                            Year = r.Year,
+                            Month = r.Month,
+                            CurrencyId = r.CurrencyId,
+                            Tenant = r.Tenant,
+                            LocalAmountCredit = r.LocalAmountCredit,
+                            LocalAmountDebit = r.LocalAmountDebit,
+                            ForeignAmountCredit = r.ForeignAmountCredit,
+                            ForeignAmountDebit = r.ForeignAmountDebit,
+
+
+                        }).ToList();
+                    var tableGLAccountTotalByMonths = listGLAccountTotalByMonth.ToDataTable();
+
+                    SqlParameter tGLAccountTotalByMonthsTypePar = new SqlParameter("@tGLAccountTotalByMonthsType", SqlDbType.Structured);
+                    tGLAccountTotalByMonthsTypePar.Direction = ParameterDirection.Input;
+                    tGLAccountTotalByMonthsTypePar.Value = tableGLAccountTotalByMonths;
+                    //tLedgerTransactionsTypePar.
+
+
+
+
+                    SqlParameter tGLAccountAgingDataType = GettGLAccountAgingDataType(gLAccountAgingDataPMs);
+
+                    cmd.Parameters.Add(journalIdPar);
+                    cmd.Parameters.Add(pTenantPar);
+
+                    cmd.Parameters.Add(messageIdPar);
+                    cmd.Parameters.Add(tGLAccountTotalByMonthsTypePar);
+                    cmd.Parameters.Add(tLedgerTransactionsTypePar);
+                    cmd.Parameters.Add(tGLAccountAgingDataType);
+
+
+
+
+
+
+                    myConnection.Open();
+                    var output = cmd.ExecuteNonQuery();
+                    myConnection.Close();
+
+
+                }
+
+                complete = true;
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-				LogMessagingUtil.Instance.AppendLine($"usp_AccountingStreaming AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id {_JournalPM?.Id} | Err: {ex.Message}");
-
-				NetCommonHelper.Logger.DevLog.Instance.WriteError(" usp_AccountingStreaming AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + ex);
-                if (_JournalPM?.StatusCode == "6" && !_JournalPM.IsLedgerCreated)
+                if (ex.Number == -2)
                 {
-                    try
-                    {
-                        using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Suppress))
-                        {
-                            var up = new JournalUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
-                            up.SetStatusCodeFailed(_SeedJournalId, _Tenant);
-                            scope.Complete();
-                        }
-                        var journalQueryService = new JournalQueryService(_AccountingContext);
-                        journalQueryService.FixFailedReconcileJournals(_Tenant);
-
-
-                    }
-                    catch (Exception updateEx)
-                    {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteError("Failed to update journal status in exception handling. JournalId: " + _JournalPM?.Id + " Err:" + updateEx);
-                    }
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"Streaming Timeout exceeded when executing Exec_usp_AccountingStreaming (journal id: {_JournalPM?.Id}). Took: {sw.Elapsed.ToString()}. Error: { ex.Message}");
                 }
+                throw;
             }
             finally
             {
-
                 if (!complete)
                 {
                     LogMessagingUtil.Instance.AppendLine("Not streamed !!");
@@ -1677,12 +1687,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
 
                     this.CreateJournalAdditionalDataWhenApprovingJournal(this._JournalPM);
-
                 }
-
             }
-
         }
+
         private void CreateJournalAdditionalDataWhenApprovingJournal(JournalPM journal)
         {
             CreateJournalAdditionalDataForEachDebitInputLine(journal);
@@ -2362,8 +2370,8 @@ namespace Logitude.Accounting.BL.CoreBL
         public class ResultApproveJournalM
         {
             public bool Success { get; set; }
-
             public string FailDue { get; set; }
+            public bool? FixFailedReconcileDone { get; set; }
         }
     }
  
