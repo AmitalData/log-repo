@@ -1,14 +1,58 @@
 <style>
-.disabled-div {
-    pointer-events: none; 
-    opacity: 0.7; 
-  }
+    .disabled-div {
+        pointer-events: none;
+        opacity: 0.7;
+    }
 </style>
-
-<div *ngIf="isReady" [class.disabled-div]="disabled" >
-    <tr   style="height: 100px">
+<tr
+    *ngIf="validationErrorsList != null && validationErrorsList.length > 0"
+    style="height: 1px; width: 100%"
+>
+    <td style="width: 450px">
+        <ValidationSummary
+            [ItemsSource]="validationErrorsList"
+        ></ValidationSummary>
+    </td>
+</tr>
+<div *ngIf="isReady" [class.disabled-div]="disabled">
+    <tr style="height: 100px">
         <td style="vertical-align: top">
             <table>
+                <tr style="height: 1px">
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td
+                                    style="width: 75px"
+                                    [style.text-align]="isRTL ? 'right' : 'left'"
+                                >
+                                    {{'ExpenseAllocationSetting.O.StartDateTime'
+                                    | TextCodeTranslationPipe}}
+                                </td>
+                                <td style="width: 10px">
+                                    <div></div>
+                                </td>
+                                <td style="width: 100px">
+                                    <div style="width: 95px">
+                                        <LogDatePicker
+                                            [ObjectFieldName]="'StartDateTime'"
+                                            [DataContext]="dataContext"
+                                            [SelectedDateValue]="StartDateTime"
+                                            [HideColumns]="true"
+                                            [NoObjectField]="true"
+                                        ></LogDatePicker>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr style="height: 10px"></tr>
+
                 <tr style="height: 1px">
                     <td>
                         <table>
@@ -20,7 +64,7 @@
                                         [Name]="'TriggerRadio'"
                                         [IsChecked]="IsWeekly == true"
                                         (Checked)="setTrigger('W')"
-                                        [Text]="'Weekly'"
+                                        [Text]="'ExpenseAllocationSetting.O.Weekly' | TextCodeTranslationPipe"
                                         [Top]="5"
                                     ></RadioButton>
                                 </td>
@@ -30,7 +74,7 @@
                                         [Name]="'TriggerRadio'"
                                         [IsChecked]="IsMonthly == true"
                                         (Checked)="setTrigger('M')"
-                                        [Text]="'Monthly'"
+                                        [Text]= "'ExpenseAllocationSetting.O.Monthly' | TextCodeTranslationPipe"
                                         [Top]="5"
                                     ></RadioButton>
                                 </td>
@@ -55,7 +99,7 @@
                                     <td style="width: 10px">
                                         <div></div>
                                     </td>
-                                    <div style="display: flex">
+                                    <div style="display: flex; width: 250px;">
                                         <div
                                             style="
                                                 height: 22px;
@@ -92,14 +136,15 @@
                                                         *ngFor="let type of allocationTypes"
                                                         (click)="onSelectAllocationType(type);"
                                                     >
-                                                        {{ getDisplayText(type) }}
+                                                        {{ getDisplayText(type)
+                                                        }}
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
                                         <div style="width: 5px"></div>
                                         <div
-                                            *ngIf="!IsSpecificDateEnabled"
+                                            *ngIf="!IsSpecificDateEnabled && !IsDayDisabled"
                                             style="
                                                 height: 22px;
                                                 width: 95px;
@@ -134,9 +179,10 @@
                                                         [style.text-align]="isRTL ? 'right' : 'left'"
                                                         *ngFor="let type of days"
                                                         (click)="onSelectDay(type);"
-                                                        [disabled]="IsDayDisabled"
+                                                      
                                                     >
-                                                        {{ getDisplayTextOfDay(type)
+                                                        {{
+                                                        getDisplayTextOfDay(type)
                                                         }}
                                                     </button>
                                                 </div>
@@ -147,19 +193,18 @@
                                             style="
                                                 height: 22px;
                                                 width: 95px;
-                                                position: relative;                                            
+                                                position: relative;
                                             "
                                             [style.text-align]="isRTL ? 'right' : 'left'"
                                         >
                                             <tr>
-                                               
                                                 <td style="width: 5px">
                                                     <div></div>
                                                 </td>
                                                 <td style="width: 95px">
                                                     <div
                                                         style="
-                                                            width: 95px;                                                        
+                                                            width: 95px;
                                                             position: relative;
                                                             top: 10px;
                                                         "
@@ -203,7 +248,7 @@
                                             ></NumberInput>
                                         </div>
                                     </td>
-    
+
                                     <td
                                         style="width: 25px"
                                         [style.text-align]="isRTL ? 'right' : 'left'"
@@ -211,34 +256,11 @@
                                         {{'ExpenseAllocationSetting.O.Months' |
                                         TextCodeTranslationPipe}}
                                     </td>
-                                </tr>
-                                <tr class="FormFieldRow">
-                                    <td
-                                        style="width: 75px"
-                                        [style.text-align]="isRTL ? 'right' : 'left'"
-                                    >
-                                        {{'ExpenseAllocationSetting.O.StartDateTime'
-                                        | TextCodeTranslationPipe}}
-                                    </td>
-                                    <td style="width: 10px">
-                                        <div></div>
-                                    </td>
-                                    <td style="width: 100px">
-                                        <div style="width: 95px">
-                                            <LogDatePicker
-                                                [ObjectFieldName]="'StartDateTime'"
-                                                [DataContext]="dataContext"
-                                                [SelectedDateValue]="StartDateTime"
-                                                [HideColumns]="true"
-                                                [NoObjectField]="true"
-                                            ></LogDatePicker>
-                                        </div>
-                                    </td>
-    
-                                    <td>
+                                    <td style="width: 80px">
                                         <div></div>
                                     </td>
                                 </tr>
+                               
                             </table>
                         </div>
                     </td>
@@ -246,7 +268,7 @@
             </table>
         </td>
     </tr>
-    <tr  style="height: 70px">
+    <tr style="height: 70px">
         <td style="vertical-align: top">
             <table>
                 <tr style="height: 10px"></tr>
@@ -259,9 +281,11 @@
                                         <table>
                                             <tr>
                                                 <td style="width: 7px">
-                                                    <div style="width: 7px"></div>
+                                                    <div
+                                                        style="width: 7px"
+                                                    ></div>
                                                 </td>
-    
+
                                                 <td style="width: 100px">
                                                     <div
                                                         class="RadioButton"
@@ -277,7 +301,9 @@
                                                         />
                                                         <label
                                                             for="recurrenceCountRadio"
-                                                            style="font-size: 12px"
+                                                            style="
+                                                                font-size: 12px;
+                                                            "
                                                         >
                                                             {{'ExpenseAllocationSetting.O.RecurrenceCount'
                                                             |
@@ -285,11 +311,13 @@
                                                         </label>
                                                     </div>
                                                 </td>
-    
+
                                                 <td style="width: 5px">
-                                                    <div style="width: 5px"></div>
+                                                    <div
+                                                        style="width: 5px"
+                                                    ></div>
                                                 </td>
-    
+
                                                 <td style="width: 100px">
                                                     <div
                                                         class="RadioButton"
@@ -305,9 +333,11 @@
                                                         />
                                                         <label
                                                             for="endDateRadio"
-                                                            style="font-size: 12px"
+                                                            style="
+                                                                font-size: 12px;
+                                                            "
                                                         >
-                                                            {{'ExpenseAllocationSetting.F.EndDateTime'|TextCodeTranslationPipe}}
+                                                            {{'ExpenseAllocationSetting.O.EndDateTime'|TextCodeTranslationPipe}}
                                                         </label>
                                                     </div>
                                                 </td>
@@ -317,7 +347,7 @@
                                     </td>
                                     <td style="width: 100px"></td>
                                 </tr>
-    
+
                                 <tr
                                     *ngIf="typeRadio == 'EndDateTime'"
                                     class="FormFieldRow"
@@ -340,7 +370,7 @@
                                         <div></div>
                                     </td>
                                 </tr>
-    
+
                                 <tr
                                     *ngIf="typeRadio == 'RecurrenceCount'"
                                     class="FormFieldRow"
@@ -365,7 +395,7 @@
                                         <div></div>
                                     </td>
                                 </tr>
-    
+
                                 <tr>
                                     <td>
                                         <div></div>
@@ -378,7 +408,7 @@
             </table>
         </td>
     </tr>
-    
+
     <tr style="height: 70px">
         <td style="vertical-align: top">
             <table style="width: 100%">
@@ -386,15 +416,15 @@
                     <td>
                         <table *ngIf="IsWeekly">
                             <tr>
-                                <td style="width: 100px">
+                                <td style="width: 50px">
                                     <LogLabel
                                         [NoObjectField]="true"
                                         [ObjectFieldName]="'Days'"
                                         [DataContext]="dataContext"
-                                        [Text]="'Days'"
+                                        [Text]="'ExpenseAllocationSetting.O.Days' | TextCodeTranslationPipe"
                                     ></LogLabel>
                                 </td>
-    
+
                                 <td colspan="2">
                                     <table>
                                         <tr style="height: 28px">
@@ -414,11 +444,11 @@
                                                                 [Top]="5"
                                                             ></RadioButton>
                                                         </td>
-    
+
                                                         <td style="width: 10px">
                                                             <div></div>
                                                         </td>
-    
+
                                                         <td style="width: 20px">
                                                             <RadioButton
                                                                 style="
@@ -432,11 +462,11 @@
                                                                 [Top]="5"
                                                             ></RadioButton>
                                                         </td>
-    
+
                                                         <td style="width: 10px">
                                                             <div></div>
                                                         </td>
-    
+
                                                         <td style="width: 20px">
                                                             <RadioButton
                                                                 style="
@@ -450,11 +480,11 @@
                                                                 [Top]="5"
                                                             ></RadioButton>
                                                         </td>
-    
+
                                                         <td style="width: 10px">
                                                             <div></div>
                                                         </td>
-    
+
                                                         <td style="width: 20px">
                                                             <RadioButton
                                                                 style="
@@ -468,19 +498,9 @@
                                                                 [Top]="5"
                                                             ></RadioButton>
                                                         </td>
-    
-                                                        <td>
+                                                        <td style="width: 10px">
                                                             <div></div>
                                                         </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-    
-                                        <tr style="height: 28px">
-                                            <td>
-                                                <table>
-                                                    <tr>
                                                         <td style="width: 20px">
                                                             <RadioButton
                                                                 style="
@@ -494,11 +514,11 @@
                                                                 [Top]="5"
                                                             ></RadioButton>
                                                         </td>
-    
+
                                                         <td style="width: 10px">
                                                             <div></div>
                                                         </td>
-    
+
                                                         <td style="width: 20px">
                                                             <RadioButton
                                                                 style="
@@ -512,11 +532,11 @@
                                                                 [Top]="5"
                                                             ></RadioButton>
                                                         </td>
-    
+
                                                         <td style="width: 10px">
                                                             <div></div>
                                                         </td>
-    
+
                                                         <td style="width: 20px">
                                                             <RadioButton
                                                                 style="
@@ -530,7 +550,6 @@
                                                                 [Top]="5"
                                                             ></RadioButton>
                                                         </td>
-    
                                                         <td>
                                                             <div></div>
                                                         </td>
@@ -538,6 +557,8 @@
                                                 </table>
                                             </td>
                                         </tr>
+
+                                       
                                     </table>
                                 </td>
                             </tr>
@@ -635,24 +656,24 @@
             </table>
         </td>
     </tr> -->
-    <tr  style="height: 32px">
+    <tr style="height: 32px">
         <td style="vertical-align: bottom">
             <table style="height: 22px">
                 <tr>
                     <td>
                         <div></div>
                     </td>
-    
+
                     <td style="width: 57px">
                         <button class="Button" (click)="cancelButtonClicked()">
                             {{'General.B.Cancel' | TextCodeTranslationPipe}}
                         </button>
                     </td>
-    
+
                     <td style="width: 5px">
                         <div></div>
                     </td>
-    
+
                     <td style="width: 57px">
                         <button class="RedButton" (click)="okButtonClicked()">
                             {{'General.B.Ok' | TextCodeTranslationPipe}}
@@ -662,7 +683,4 @@
             </table>
         </td>
     </tr>
-    
-
-
 </div>

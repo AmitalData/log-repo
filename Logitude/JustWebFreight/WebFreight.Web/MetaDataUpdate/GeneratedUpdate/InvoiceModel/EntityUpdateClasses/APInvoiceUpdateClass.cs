@@ -25,7 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceUpdateClass
    {  		
-		public const string HashString = "2bffd869d04482b17f02d11359b8f64f";
+		public const string HashString = "f84d269aaaa50f7e34a1cf837b9ff2ec";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -9884,6 +9884,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APInvoiceTextCode_APInvoiceOExpenseAllocationSettingIsRequiredForPrepaidExpenses = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.ExpenseAllocationSettingIsRequiredForPrepaidExpenses", DefaultText = "Expense allocation setting is required for prepaid expenses",LocalDefaultText = @"BS64:Iteg15PXqNep16og15TXkteT16jXqiDXpNeo15nXodeqINeU15XXpteQ15XXqiDXoteR15XXqCDXlNeV16bXkNeV16og157XqNeQ16kuIg==", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode APInvoiceTextCode_APInvoiceOExpenseAllocationSettingStartDateError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.ExpenseAllocationSettingStartDateError", DefaultText = "The start date of the expense allocation cannot be earlier than the accounting date.",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNeS15PXmdeoINeq15DXqNeZ15og15TXqteX15zXlCDXqdecINek16jXmdeh16og15TXlNeV16bXkNeV16og157Xlden15PXnSDXnteU16rXkNeo15nXmiDXlNeX16nXkdeV16DXkNeZIg==", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode APInvoiceTextCode_APInvoiceOExpenseAllocationSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.ExpenseAllocationSetting", DefaultText = "Expense Allocation Setting",LocalDefaultText = @"BS64:IteU15LXk9eo15XXqiDXpNeo15nXodeUIg==", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
