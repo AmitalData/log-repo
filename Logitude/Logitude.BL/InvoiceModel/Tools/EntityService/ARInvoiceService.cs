@@ -5162,15 +5162,15 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
 
         }
 
-        public void BuildDocumentsForNewInvoice(ARInvoicePM aRInvoicePM, InterestReportPM interestReport)
+        public void BuildDocumentsForNewInvoice(ARInvoicePM aRInvoicePM, InterestReportPM interestReportPM)
         {
 
-            ObjectTableQuery objectTableQuery = new ObjectTableQuery(interestReport.Tenant);
+            ObjectTableQuery objectTableQuery = new ObjectTableQuery(interestReportPM.Tenant);
             string InterestReportObjectTableId = objectTableQuery.GetObjectTableIdByName("InterestReport");
             string ARInvoiceObjectTableId = objectTableQuery.GetObjectTableIdByName("ARInvoice");
             string ARInvoiceChildEntityReference = !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) ? aRInvoicePM.InvoiceNumber : "Draft: " + aRInvoicePM.DraftNumber;
             BuildDocument(aRInvoicePM.Id, "999G", ARInvoiceObjectTableId, ARInvoiceChildEntityReference , aRInvoicePM.CreatedByUserId, aRInvoicePM.Tenant);
-            BuildDocument(interestReport.Id, "ITDT", InterestReportObjectTableId, interestReport.ReportNumber, aRInvoicePM.CreatedByUserId, aRInvoicePM.Tenant);
+            BuildDocument(interestReportPM.Id, "ITDT", InterestReportObjectTableId, interestReportPM.ReportNumber, aRInvoicePM.CreatedByUserId, aRInvoicePM.Tenant);
         }
 
         public void BuildDocumentsForNewInvoiceLite(ARInvoicePM aRInvoicePM, InterestReport interestReport)
