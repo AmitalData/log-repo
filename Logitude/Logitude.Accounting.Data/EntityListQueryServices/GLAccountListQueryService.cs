@@ -67,10 +67,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                          join MoreDatas in context.GLAccountMoreDatas on a.Id equals MoreDatas.AccountId
 
                          from FollowUpDatas in FollowUpDatasjoin.DefaultIfEmpty()
+                         
                          join AllARPaymentCheque in context.AllARPaymentChequesViews on a.Id equals AllARPaymentCheque.AccountId
 
                        into AllARPaymentChequeJoin
-                         from AllARPaymentCheque in AllARPaymentChequeJoin.DefaultIfEmpty()
                         let totalOpenChequesInLocalCur = AllARPaymentChequeJoin
                            .Where(A => A.ValueDate <= DateTime.Now && A.Notes != creditLineNotes)
                            .Sum(A => (decimal?)A.LocalAmountCredit) ?? 0
@@ -327,7 +327,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                          join AllARPaymentCheque in context.AllARPaymentChequesViews on a.Id equals AllARPaymentCheque.AccountId
 
                          into AllARPaymentChequeJoin
-                         from AllARPaymentCheque in AllARPaymentChequeJoin.DefaultIfEmpty()
 
                          let totalOpenChequesInLocalCur = AllARPaymentChequeJoin
                                            .Where(A => A.ValueDate <= DateTime.Now && A.Notes != creditLineNotes)
