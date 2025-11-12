@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.InterestService.HelperClasses;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
@@ -31,6 +32,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IdentityModel;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
@@ -351,7 +353,7 @@ namespace Logitude.Accounting.BL.InterestService
             if (copy == null)
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteError("No valid document copy found for printing.");
-                return false;
+                return true;
             }
             UserRepository userRep = new UserRepository((int)tenant);
             User printedBy = null;
