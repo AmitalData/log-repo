@@ -479,7 +479,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                     break;
                 case "IsReconciled": {
                     this.IsReconciled = queryFilterItem.FieldValue;
-                    this.AttachedGLAccountCheckBox = queryFilterItem.FieldValue == null;
+                    this.AttachedGLAccountCheckBox = queryFilterItem.FieldValue !== false;
                     break;
                 }
                 case "SalesmanUserId":
