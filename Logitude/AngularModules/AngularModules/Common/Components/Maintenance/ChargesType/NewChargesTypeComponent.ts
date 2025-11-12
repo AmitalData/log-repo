@@ -12,6 +12,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import {VatTypeList} from '../../../EntityLists/VatTypeList';
 import {VatTypeListService} from '../../../Services/StandardLists/VatTypeListService';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ChargesTypePMInitService } from 'Common/EntityPMInitServices/ChargesTypePMInitService';
 
 @Component({
     
@@ -25,18 +26,14 @@ export class NewChargesTypeComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public MeasurementsQueryFilters: ApiQueryFilters;
     public IsChargeTypesRestrictedFeatureToggleOn = false;
+    public _chargesTypePMService: ChargesTypePMService = new ChargesTypePMService();
 
     constructor() {
         super();
 
-        this.EntityPM = new ChargesTypePM();
-        this.EntityPM.Tenant = SessionLocator.Tenant;
+        this.EntityPM = this._chargesTypePMService.GetNewEntityPM();
+        ChargesTypePMInitService.InitValues(this.EntityPM, true);
         this.EntityPM.AddedManually = true;
-        this.IsAir = true;
-        this.IsInland = true;
-        this.IsOcean = true;
-        this.AWBPrintDescription = true;
-        this.ViewOrder = 100;
 
         if (SessionLocator.TenantPM.TenantVATManagement == false) {
             var myService = new VatTypeListService();
@@ -382,8 +379,7 @@ export class NewChargesTypeComponent extends BaseComponent {
 
             this.CurrentSession.StartBusyIndicatorSaving();
             
-            var myService: ChargesTypePMService = new ChargesTypePMService();
-            myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+            this._chargesTypePMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
                 this.CurrentSession.StopBusyIndicator();
 
