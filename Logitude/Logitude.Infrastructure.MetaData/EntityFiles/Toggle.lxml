@@ -44,7 +44,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;0809&quot;"
+  Code="&quot;57be&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -1058,9 +1058,9 @@
       SearchFields="&quot;TRO,Tax Report Journal Optimization&quot;"
       Description="&quot;Tax Report Journal Optimization&quot;" />
     <Record
-      Code="&quot;CTPC&quot;"
+      Code="&quot;CTP&quot;"
       Name="&quot;Calculate With Total Past Open Cheques&quot;"
-      SearchFields="&quot;Calculate With Total Past Open Cheques,CTPC&quot;"
+      SearchFields="&quot;Calculate With Total Past Open Cheques,CTP&quot;"
       Description="&quot;Calculate With Total Past Open Cheques&quot;" />
   </Records>
   <DataContracts />

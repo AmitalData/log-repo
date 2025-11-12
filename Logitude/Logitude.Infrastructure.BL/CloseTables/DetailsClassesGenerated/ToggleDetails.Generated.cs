@@ -1060,9 +1060,9 @@ namespace Logitude.Infrastructure.BL
             });
             all.Add(new ToggleDetails()
             {
-                Code = "CTPC",
+                Code = "CTP",
                 Name = "Calculate With Total Past Open Cheques",
-                SearchFields = "CTPC,Calculate With Total Past Open Cheques",
+                SearchFields = "CTP,Calculate With Total Past Open Cheques",
                 Description = "Calculate With Total Past Open Cheques",
             });
             return all;
