@@ -734,7 +734,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 status = "new",
                 xml_status = xmlStatus,
                 status_id = status_id,
-                status_DateTime = DateTime.Now,
+                status_DateTime = dirtyCourierMasterPM.LandingDate.GetValueOrDefault(),
                 comments = comments,
                 OwnerUnifreightUserCode = user?.EnglishName,
             };
@@ -749,7 +749,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
-            var statusDateTime = DateTime.Now;
             var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyCourierMasterPM.Tenant).IsConnectedToUniFreight;
 
             string entNameTarget = isUnifreightLeadingFile ? "CFIFILEM" : "MASTER";
