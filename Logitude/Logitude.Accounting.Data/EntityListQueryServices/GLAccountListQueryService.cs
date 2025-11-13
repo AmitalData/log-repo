@@ -35,7 +35,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             }
 
             string  creditLineNotes = "החזרת שיק ללקוח";
-            bool calculateWithTotalPastOpenCheques = FeatureToggleHelper.HasFeatureToggle("CTPC", tenant);
+            bool calculateWithTotalPastOpenCheques = FeatureToggleHelper.HasFeatureToggle("CTP", tenant);
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);

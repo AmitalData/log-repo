@@ -62,7 +62,7 @@ namespace WebFreight.Web.DataProviders
 
         public decimal TotalToCollect { get { return AccountingBalance + TotalOpenShipments; } }
         public decimal FutureChequesTotal { get { return TotalFutureOpenCheques + ExternalTransactionsTotal; } }
-        public decimal Obligo { get { return TotalToCollect + FutureChequesTotal + (FeatureToggleHelper.HasFeatureToggle("CTPC", Tenant) ? (TotalOpenCheques) : 0); } }
+        public decimal Obligo { get { return TotalToCollect + FutureChequesTotal + (FeatureToggleHelper.HasFeatureToggle("CTP", Tenant) ? (TotalOpenCheques) : 0); } }
         public decimal CreditUsed { get { return CreditLimit - Obligo; } }
 
         public decimal TotalLocal { get; set; } = 0;
