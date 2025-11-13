@@ -972,5 +972,7 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         public IDbSet<ReferenceType> ReferenceTypes => throw new NotImplementedException();
         public IDbSet<ShipmentReferance> ShipmentReferances => throw new NotImplementedException();
         public IDbSet<FreightForwarderReference> FreightForwarderReferences => throw new NotImplementedException();
+
+        public IDbSet<OceanCarrierStatusAPIconfig> OceanCarrierStatusAPIconfigs => throw new NotImplementedException();
     }
 }

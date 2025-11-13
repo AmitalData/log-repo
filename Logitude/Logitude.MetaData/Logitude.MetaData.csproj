@@ -1879,6 +1879,7 @@
     <None Include="EntityFiles\ShipmentsModel\InsideShipmentPackage.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ManifestStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\MessagingStockUsageHistory.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\OceanCarrierStatusAPIconfig.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OtherParticipantId.lxml" />
     <None Include="EntityFiles\ShipmentsModel\PayableProratedAmount.lxml" />
     <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryFromToType.lxml" />

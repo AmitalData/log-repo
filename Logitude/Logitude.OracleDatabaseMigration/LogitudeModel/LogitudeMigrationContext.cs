@@ -1636,6 +1636,11 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             get;
             set;
         }
+        public IDbSet<OceanCarrierStatusAPIconfig> OceanCarrierStatusAPIconfigs
+        {
+            get;
+            set;
+        }
         public IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts
         {
             get;
@@ -4821,6 +4826,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new OceanInsightsStatusesMap());
             modelBuilder.Configurations.Add(new OceanInsightsRequestMap());
             modelBuilder.Configurations.Add(new OceanInsightsRequestsCountMap());
+            modelBuilder.Configurations.Add(new OceanCarrierStatusAPIconfigMap());
+
             modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
             // modelBuilder.Configurations.Add(new EntityChangesAutomationMap());
             modelBuilder.Configurations.Add(new EntityChangeMap());

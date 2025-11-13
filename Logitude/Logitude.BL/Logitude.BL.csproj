@@ -1006,6 +1006,8 @@
     <Compile Include="Security\ContactInfo.cs" />
     <Compile Include="ShipmentsModel\EntityLists\FreightForwarderReferenceList.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\FreightForwarderReferencePM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\OceanCarrierStatusAPIconfigPM.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\OceanCarrierStatusAPIconfigQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ReferenceTypeListQueryService.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ScreenSectionQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\SearchIndexQuery.cs" />
