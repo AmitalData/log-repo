@@ -15,22 +15,26 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 this.HasKey(e => e.Id);
 
                 this.Property(e => e.Id)
-                    .HasColumnType("varchar(15)")
+                    .HasColumnType("varchar")
+                    .HasMaxLength(15)
                     .IsRequired();
 
                 this.Property(e => e.Tenant)
                     .IsRequired();
 
                 this.Property(e => e.SCACCode)
-                    .HasColumnType("varchar(4)")
+                    .HasColumnType("varchar")
+                    .HasMaxLength(4)
                     .IsRequired();
 
                 this.Property(e => e.URL)
-                    .HasColumnType("varchar(250)")
+                    .HasColumnType("varchar")
+                    .HasMaxLength(250)
                     .IsRequired();
 
                 this.Property(e => e.ResponseFormat)
-                    .HasColumnType("varchar(4)")
+                    .HasColumnType("varchar")
+                    .HasMaxLength(4)
                     .IsRequired();
 
                 this.Property(e => e.Frequency)
