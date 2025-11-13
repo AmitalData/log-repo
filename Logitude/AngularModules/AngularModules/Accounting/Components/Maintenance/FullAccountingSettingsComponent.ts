@@ -36,6 +36,10 @@ import { CopyFromTenant0PM } from 'Accounting/EntityPMs/CopyFromTenant0PM';
 import { List } from 'cypress/types/lodash';
 import { CopyFromTenant0PMService } from 'Accounting/Services/StandardPMs/CopyFromTenant0PMService';
 import { any } from 'cypress/types/bluebird';
+import { ChargesTypeListService } from 'Common/Services/StandardLists/ChargesTypeListService';
+import { ChargesTypePMService } from 'Common/Services/StandardPMs/ChargesTypePMService';
+import { ChargesTypePM } from 'Common/EntityPMs/ChargesTypePM';
+import { ChargesTypePMInitService } from 'Common/EntityPMInitServices/ChargesTypePMInitService';
 const DebtorsAndCreditorsChartOfAccountTypeCode = '7';
 @Component({
 
@@ -69,6 +73,8 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     date = new Date()
     user = "amital "
     private indexHyphenSholudInHSMTokken = [8,13,18,23];
+    _chargesTypeListService = new ChargesTypeListService();
+    _chargesTypePMService = new ChargesTypePMService();
 
     constructor(public serviceArgs: ServiceArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
@@ -830,8 +836,10 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
                 if (!AppTool.IsNullOrEmpty(ControlAccountId)) {
                     this.FullAccountingAddControl(ControlAccountId);
                 }
+                if (SessionLocator.TenantPM.IsHybrid) {
+                    this.AddOtherChargeType();
+                }
             }
-
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
                 this.CurrentSession.StopBusyIndicator();
@@ -1054,6 +1062,24 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
     }
 
+    AddOtherChargeType() {
+        var filters = new ApiQueryFilters(true);
+        const chargeTypeCode = "OTHC";
+        filters.addAdditionalFilter("Code", chargeTypeCode, null, null, "Equals", false, false, false, "string");
+
+        this._chargesTypeListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null && !myResponse.HasError && myResponse?.Result?.length == 0) {
+                var chargesTypePM = this._chargesTypePMService.GetNewEntityPM();
+                ChargesTypePMInitService.InitValuesForAccounting(chargesTypePM, true);
+                chargesTypePM.Code = chargeTypeCode;
+                chargesTypePM.LocalName = "Other Charges (from Unifreight)";
+                chargesTypePM.EnglishName = "Other Charges (from Unifreight)";
+
+                this._chargesTypePMService.insert(chargesTypePM).subscribe((myResponse: ServiceResponse) => {
+                });
+            }
+        });
+    }
 
     public ShowLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
      //public isRTL = ObjectsLocator.GlobalSetting ? (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl") : false;
