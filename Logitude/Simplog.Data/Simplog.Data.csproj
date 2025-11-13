@@ -961,6 +961,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\LogitudeOceanInsightsRequest.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\LogitudeOceanInsightsResponse.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\OBLType.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\OceanCarrierStatusAPIconfig.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\OceanInsightsStatusLog.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\OceanInsightsRequestsCount.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\PayableProratedAmount.cs" />
@@ -1004,6 +1005,7 @@
     <Compile Include="ShipmentsModel\Mapping\INTTRAStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\LogitudeOceanInsightsRequestMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\LogitudeOceanInsightsResponseMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\OceanCarrierStatusAPIconfigMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\OceanInsightsStatusLogMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ReferenceTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentAnalyticMap.cs" />
@@ -1438,6 +1440,7 @@
     <Compile Include="ShipmentsModel\Repositories\INTTRASIStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRAStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OBLTypeRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\OceanCarrierStatusAPIconfigRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsStatusLogRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsRequestsCountRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsStatusesRepository.cs" />

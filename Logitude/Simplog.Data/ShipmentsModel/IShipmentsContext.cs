@@ -71,6 +71,8 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ShipmentDigitalField> ShipmentDigitalFields { get; }
         IDbSet<ContainersExternalData> ContainersExternalDatas { get; }
         IDbSet<OceanInsightsRequest> OceanInsightsRequests { get; }
+        IDbSet<OceanCarrierStatusAPIconfig> OceanCarrierStatusAPIconfigs { get; }
+
         IDbSet<LogitudeOceanInsightsRequest> LogitudeOceanInsightsRequests { get; }
         IDbSet<LogitudeOceanInsightsResponse> LogitudeOceanInsightsResponses { get; }
         IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts { get; }
