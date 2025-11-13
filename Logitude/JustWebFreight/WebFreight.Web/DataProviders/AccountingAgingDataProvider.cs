@@ -109,7 +109,7 @@ namespace WebFreight.Web.DataProviders
               
             } }
 		public decimal? FutureChequesTotal { get { return TotalFutureOpenCheques + ExternalTransactionsTotal; } }
-        public decimal? Obligo { get { return TotalToCollect + FutureChequesTotal + (FeatureToggleHelper.HasFeatureToggle("CTPC", Tenant) ? TotalOpenCheques : 0) ; } }
+        public decimal? Obligo { get { return TotalToCollect + FutureChequesTotal + (FeatureToggleHelper.HasFeatureToggle("CTP", Tenant) ? TotalOpenCheques : 0) ; } }
 
         public decimal? CreditUsed { get { return CreditLimit - Obligo; } }
 
