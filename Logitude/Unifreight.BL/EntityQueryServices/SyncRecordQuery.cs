@@ -211,7 +211,7 @@ namespace Unifreight.BL.EntityQueryServices
             IEnumerable<Dictionary<string, string>> data = dt.Rows.Cast<DataRow>()
                     .Select(dr => columns.ToDictionary(c => c, c =>
                      dr[c] is DateTime datetime ?
-                            datetime.ToString("M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture) :
+                            datetime.ToString("d/M/yyyy h:mm:ss tt", CultureInfo.InvariantCulture) :
                             dr[c]?.ToString()
                     ));
 
