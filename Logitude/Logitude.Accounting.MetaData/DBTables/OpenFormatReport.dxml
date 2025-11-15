@@ -53,13 +53,13 @@
   </Column>
   <Column
     Name="FromDate"
-    Type="datetime">
+    Type="date">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="ToDate"
-    Type="datetime">
+    Type="date">
     <Constraints
       Nullable="false" />
   </Column>
