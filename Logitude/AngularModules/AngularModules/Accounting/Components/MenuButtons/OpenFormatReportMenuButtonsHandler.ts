@@ -31,6 +31,8 @@ export class OpenFormatReportMenuButtonsHandler{
     INIDocumentType: any;
     DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
     private CurrentSession = SessionLocator.SelectedSession;
+    processStatus = '2';
+    watchInterval = 10000; 
     openFormatReportPMService: OpenFormatReportPMService = new OpenFormatReportPMService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -212,9 +214,9 @@ export class OpenFormatReportMenuButtonsHandler{
     
     watcher: any;
     startWatching() {
-        if (this.EntityPM.StatusTypeCode === '2') {
+        if (this.EntityPM.StatusTypeCode === this.processStatus) {
             
-            this.watcher = interval(10000) 
+            this.watcher = interval(this.watchInterval) 
             .pipe(
               switchMap(() => this.openFormatReportPMService.get(this.EntityPM.Id)
             )
@@ -222,7 +224,7 @@ export class OpenFormatReportMenuButtonsHandler{
             .subscribe({
               next: res => {
                 if (!res?.HasError) {
-                  if (res.Result.StatusTypeCode !== '2' || !this.CurrentSession.CurrentEditComponent) {
+                  if (res.Result.StatusTypeCode !== this.processStatus || !this.CurrentSession.CurrentEditComponent) {
                     this.watcher?.unsubscribe();
                     this.EntityPM = res.Result;
                     this.CurrentSession.CurrentEditComponent?.ReloadEntityPM();
