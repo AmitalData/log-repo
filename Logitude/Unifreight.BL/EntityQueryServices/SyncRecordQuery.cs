@@ -18,6 +18,7 @@ using System.Text;
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections.Concurrent;
 
 namespace Unifreight.BL.EntityQueryServices
 {
@@ -59,7 +60,7 @@ namespace Unifreight.BL.EntityQueryServices
 
         public List<EntityRecord> GetUnsyncRecordsAndMarkAsInProcess(int tenant, string item, int? customsFileNo, bool allTask)
         {
-            List<SyncRecord> notExistsRecord = new List<SyncRecord>();
+            ConcurrentBag<SyncRecord> notExistsRecord = new ConcurrentBag<SyncRecord>();
 
             if (customsFileNo.HasValue)
             {
@@ -133,7 +134,7 @@ namespace Unifreight.BL.EntityQueryServices
             Task.WaitAll(entityRecordTasks.ToArray());
             throttler.Dispose();
 
-            repository.UpdateStatus(notExistsRecord, SyncRecordStatus.SyncedAndUpdated);
+            repository.UpdateStatus(notExistsRecord.ToList(), SyncRecordStatus.SyncedAndUpdated);
 
             return entityRecords;
         }
@@ -199,13 +200,15 @@ namespace Unifreight.BL.EntityQueryServices
             }
 
             string query = queryBuilder.ToString();
-
-            SqlConnection conn = (repository.Context as IContext).GetActiveDbContext().Database.Connection as SqlConnection;
-            conn.Open();
-            SqlDataReader dataReader = new SqlCommand(query, conn).ExecuteReader();
             DataTable dt = new DataTable();
-            dt.Load(dataReader);
-            conn.Close();
+
+            using (SqlConnection conn = (repository.Context as IContext).GetActiveDbContext().Database.Connection as SqlConnection)
+            {
+                conn.Open();
+                SqlDataReader dataReader = new SqlCommand(query, conn).ExecuteReader();
+                dt.Load(dataReader);
+                conn.Close();
+            }
 
             string[] columns = dt.Columns.Cast<DataColumn>().Select(c => c.ColumnName).ToArray();
             IEnumerable<Dictionary<string, string>> data = dt.Rows.Cast<DataRow>()
@@ -217,10 +220,10 @@ namespace Unifreight.BL.EntityQueryServices
 
             JsonSerializerOptions jsonOptions = new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
 
-            int theardNumber;
-            if (!int.TryParse(Environment.GetEnvironmentVariable("theardNumberForSync") ?? "", out theardNumber))
-                theardNumber = 20;
-            ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = theardNumber };
+            int threadNumber;
+            if (!int.TryParse(Environment.GetEnvironmentVariable("theardNumberForSync") ?? "", out threadNumber))
+                threadNumber = 20;
+            ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = threadNumber };
 
             Parallel.ForEach(
                 syncRecordsWithJson
