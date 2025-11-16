@@ -138,7 +138,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             paymentPoco = new ARPayment();
 
             InitializeComponent();
+            if (paymentPoco.StatusCode == DraftStatusCode)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"ARPayment created in Draft status PaymentNo: {paymentPoco.PaymentNo}, tenant :{paymentPoco.Tenant}");
+                throw new ApplicationException("ARPayment created in Draft status");
 
+            }
             ARPaymentValidator.Validate(paymentPM, paymentPoco, isNewEntity, objectContext, PaymentCashbook);
             ARPaymentTracing.Trace(_arpaymentPM, paymentPoco, isNewEntity);
 
@@ -150,6 +155,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var setVoided = _arpaymentPM.SetVoided;
 
             ARPaymentMapping.MapEntity(_arpaymentPM, paymentPoco, isNewEntity);
+            
             paymentRepository.Add(paymentPoco);
             paymentRepository.SubmitChanges();
 
@@ -323,13 +329,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.paymentPoco = paymentRepository.GetSingleARPayment(theEntityPm.Id);
             var isDraftPayment = paymentPoco.StatusCode == DraftStatusCode;
             bool isErrorInTransfer = this.paymentPoco.TransferStatusCode == "ET" ? true : false;
+            if (isDraftPayment)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"ARPayment created in Draft status PaymentNo: {paymentPoco.PaymentNo}, tenant :{paymentPoco.Tenant}");
+                throw new ApplicationException("ARPayment created in Draft status");
 
+            }
             this.ValidateHigherStatus();
 
             this.InitializeComponent();
 
             ARPaymentValidator.Validate(paymentPM, paymentPoco, isNewEntity, objectContext, PaymentCashbook);
-
+            
+            
             ARPaymentTracing.Trace(theEntityPm, paymentPoco, isNewEntity);
 
             if (mapComposition)
