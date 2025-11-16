@@ -416,13 +416,13 @@
 
                     <div *ngIf="FieldName == 'Status'">
                         <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;"
-                             [style.text-align]="isRTL ? 'right' : 'left'">
+                             [style.text-align]="isRTL ? 'right' : 'left'" [style.color]="textColor">
                             {{
                             FieldValue
                             }}
                         </div>
                         <div *ngIf="!IsHeaderScreenTemplate" style=" padding-left: 3px;"
-                             [style.text-align]="isRTL ? 'right' : 'left'">
+                             [style.text-align]="isRTL ? 'right' : 'left'" [style.color]="textColor">
                             {{
                             FieldValue
                             }}
