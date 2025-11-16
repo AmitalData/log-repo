@@ -42,7 +42,7 @@ export class ARInvoiceMenuButtonsHandler {
     public myEntityPMService: ARInvoicePMService = new ARInvoicePMService()
     public statusCode: string;  
     public approvedDate: Date;  
-    
+    private CheckCreationStatusInterval = 2000;
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
@@ -973,11 +973,13 @@ export class ARInvoiceMenuButtonsHandler {
     }
     private subscription: Subscription | null = null;
 
- 
+    ngOnDestroy() {
+        if (this.subscription) this.subscription.unsubscribe();
+    }
     
     StartCheckingStatus(id: string) {
  
-        this.subscription = interval(5000)
+        this.subscription = interval(this.CheckCreationStatusInterval)
             .pipe(
                 takeWhile(() => !(this.EntityPM.StatusCode !== "PR" && this.EntityPM.ApprovalInProgress), true),
                 switchMap(() => this.GetInvoiceStatus(id)) 
