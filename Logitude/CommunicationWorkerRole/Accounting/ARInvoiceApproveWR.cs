@@ -42,7 +42,7 @@ namespace CommunicationWorkerRole
         private DbQueueService _DbQueueService;
         private string _ObjectTable = "ARInvoice";
         private static DateTime _freeTenantsDateTime = DateTime.Now;
-
+        private bool TenantIdled = false;
 
         public override void Run()
         {
@@ -186,37 +186,25 @@ namespace CommunicationWorkerRole
 
                 if (response != null && response.Tenant != 0)
                 {
+                    this.TenantIdled = false;
                     try
                     {
-
-                        if (response.MessageValues.ContainsKey("ARInvoiceId"))
-                        {
-                            this.UpdateInvoice(response);
-                        }
-
-                    }
-                    catch
-                    {
-                        throw;
+                        this.UpdateInvoice(response);
                     }
                     finally
                     {
                         SetTenantIdle(response.Tenant);
                     }
                 }
-
-
-
                 Thread.Sleep(10);
             }
         }
+
         private void UpdateInvoice(QueueResponse response)
         {
-
             string arinvoiceId = response.MessageValues["ARInvoiceId"].ToString();
             int tenant = 0;
             string invoiceApiCommunicationLogId = null;
-            string InvoiceApiCommunicationLogMessageBody = null;
             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
             string interestReportId = response.MessageValues.ContainsKey("InterestReportId") && response.MessageValues["InterestReportId"] != null
                         ? response.MessageValues["InterestReportId"].ToString()
@@ -248,6 +236,8 @@ namespace CommunicationWorkerRole
                     invoiceService.Update(aRInvoicePM, true);
                    
                     _DbQueueService.Complete();
+                    SetTenantIdle(tenant);
+
                     if (!string.IsNullOrEmpty(invoiceApiCommunicationLogId))
                     {
                         try
@@ -369,14 +359,17 @@ namespace CommunicationWorkerRole
 
         private void SetTenantIdle(int tenant)
         {
-            TenantIdleStatusRepository tenantRepository = new TenantIdleStatusRepository(tenant);
-            TenantIdleStatus tenantObj = tenantRepository.GetAllByObjectTable(tenant, _ObjectTable).FirstOrDefault();
-            if (tenantObj == null) return;
-            tenantObj.Idle = false;
-            tenantObj.UpdateDate = DateTime.Now;
-            tenantRepository.Update(tenantObj);
-            tenantRepository.SubmitChanges();
-
+            if (!this.TenantIdled)
+            {
+                TenantIdleStatusRepository tenantRepository = new TenantIdleStatusRepository(tenant);
+                TenantIdleStatus tenantObj = tenantRepository.GetAllByObjectTable(tenant, _ObjectTable).FirstOrDefault();
+                if (tenantObj == null) return;
+                tenantObj.Idle = false;
+                tenantObj.UpdateDate = DateTime.Now;
+                tenantRepository.Update(tenantObj);
+                tenantRepository.SubmitChanges();
+                this.TenantIdled = true;
+            }
         }
 
 
