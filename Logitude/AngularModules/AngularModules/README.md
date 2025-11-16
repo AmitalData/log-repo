@@ -16,7 +16,9 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test` to execute the existing Karma/Jasmine suite.
+
+Jest is available for targeted logic tests (for example, `SharedManifestAdditionalComponent`). Execute `npm run test:jest` to run Jest specs located under `__tests__/`.
 
 ## Running end-to-end tests
 

@@ -1,5 +1,6 @@
 using System;
 using System.Web;
+using System.Threading;
 
 using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -15,10 +16,38 @@ namespace Simplog.Data.Helpers
 {
     public static class TenantServerConfigration
     {
+        private static readonly object OverrideLock = new object();
+        private static Func<int, DateTime> _getCurrentDateTimeOverride;
+
+        public static IDisposable OverrideGetCurrentDateTime(Func<int, DateTime> overrideFunc)
+        {
+            if (overrideFunc == null)
+            {
+                throw new ArgumentNullException(nameof(overrideFunc));
+            }
+
+            lock (OverrideLock)
+            {
+                var previous = _getCurrentDateTimeOverride;
+                _getCurrentDateTimeOverride = overrideFunc;
+                return new OverrideScope(() =>
+                {
+                    lock (OverrideLock)
+                    {
+                        _getCurrentDateTimeOverride = previous;
+                    }
+                });
+            }
+        }
 
 
         public static DateTime GetCurrentDateTime(int tenant)
         {
+            var overrideAccessor = _getCurrentDateTimeOverride;
+            if (overrideAccessor != null)
+            {
+                return overrideAccessor(tenant);
+            }
 
             if (LogitudeSettings.IsCostomsDeploy)
             {
@@ -164,6 +193,22 @@ namespace Simplog.Data.Helpers
         public static DateTime GetStartOfMonthDate(DateTime todayDate)
         {
             return new DateTime(todayDate.Year, todayDate.Month, 1, 0, 0, 0, 0);
+        }
+
+        private sealed class OverrideScope : IDisposable
+        {
+            private Action _onDispose;
+
+            public OverrideScope(Action onDispose)
+            {
+                _onDispose = onDispose ?? throw new ArgumentNullException(nameof(onDispose));
+            }
+
+            public void Dispose()
+            {
+                var action = Interlocked.Exchange(ref _onDispose, null);
+                action?.Invoke();
+            }
         }
     }
 
