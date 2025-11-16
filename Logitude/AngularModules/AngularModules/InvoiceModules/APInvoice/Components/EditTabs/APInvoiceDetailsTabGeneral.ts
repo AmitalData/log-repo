@@ -919,6 +919,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (this.EntityPM.AmountInInvoiceCurrency != setValue) {
             this.EntityPM.AmountInInvoiceCurrency = setValue;
             this.EntityPM.InvoiceExpectedAmount = setValue;
+            this.ComputeTotals();
 
            
         }
