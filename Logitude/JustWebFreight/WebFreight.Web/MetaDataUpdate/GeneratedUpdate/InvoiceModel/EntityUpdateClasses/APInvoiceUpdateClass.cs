@@ -25,7 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceUpdateClass
    {  		
-		public const string HashString = "f84d269aaaa50f7e34a1cf837b9ff2ec";
+		public const string HashString = "985a9d71215671a087d007ca0ba31eb0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -9885,6 +9885,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APInvoiceTextCode_APInvoiceOExpenseAllocationSettingStartDateError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.ExpenseAllocationSettingStartDateError", DefaultText = "The start date of the expense allocation cannot be earlier than the accounting date.",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNeS15PXmdeoINeq15DXqNeZ15og15TXqteX15zXlCDXqdecINek16jXmdeh16og15TXlNeV16bXkNeV16og157Xlden15PXnSDXnteU16rXkNeo15nXmiDXlNeX16nXkdeV16DXkNeZIg==", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode APInvoiceTextCode_APInvoiceOExpenseAllocationSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.ExpenseAllocationSetting", DefaultText = "Expense Allocation Setting",LocalDefaultText = @"BS64:IteU15LXk9eo15XXqiDXpNeo15nXodeUIg==", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode APInvoiceTextCode_APInvoiceOPrepaidExpensesLineRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.PrepaidExpensesLineRequired", DefaultText = "Prepaid expenses line selection is required.",LocalDefaultText = @"BS64:IteX15XXkdeUINec16HXntefINep15XXqNeUINec15TXldem15DXldeqINee16jXkNepIg==", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

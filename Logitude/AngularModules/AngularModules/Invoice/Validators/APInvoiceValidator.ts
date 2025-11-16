@@ -94,6 +94,12 @@ export class APInvoiceValidator {
                 if (this.EntityPM.AmountInInvoiceCurrency != this.EntityPM.AmountInInvoiceCurrency_Summary) {
                     this.Errors.push(TextCodeTranslator.Translate("APInvoice.M.InvoiceAmountNotMatched"));
                 }
+                if(this.EntityPM.IsPrepaidExpenses){
+                  
+                   if (!this.EntityPM.InvoiceLines.some(line => line.IsPrepaidExpenses)) {
+                      this.Errors.push(TextCodeTranslator.Translate("APInvoice.O.PrepaidExpensesLineRequired"));
+                   }
+                }
             }
         }
         this.CheckSpecialCharacters();
