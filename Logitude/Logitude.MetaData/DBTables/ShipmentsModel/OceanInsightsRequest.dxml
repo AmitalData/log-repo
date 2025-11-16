@@ -95,7 +95,7 @@
   <Column
    Name="OriginalResponse"
    Type="varchar"
-   Size="max">
+   Size="4000">
 	  <Constraints
 		  Nullable="true" />
   </Column>
