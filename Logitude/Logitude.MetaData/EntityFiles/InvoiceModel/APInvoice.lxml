@@ -13471,6 +13471,13 @@
       LocalDefaultText="&quot;BS64:IteU15LXk9eo15XXqiDXpNeo15nXodeUIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APInvoice.O.PrepaidExpensesLineRequired&quot;"
+      DefaultText="&quot;Prepaid expenses line selection is required.&quot;"
+      LocalDefaultTextBack_up="&quot;חובה לסמן שורה להוצאות מראש&quot;"
+      LocalDefaultText="&quot;BS64:IteX15XXkdeUINec16HXntefINep15XXqNeUINec15TXldem15DXldeqINee16jXkNepIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
