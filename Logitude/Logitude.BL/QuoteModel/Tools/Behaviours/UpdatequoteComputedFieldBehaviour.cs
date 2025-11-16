@@ -1,11 +1,20 @@
-﻿using Logitude.BL.QuoteModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.Tools.Initializers;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Logitude.BL.QuoteModel.Tools.Behaviours
@@ -16,7 +25,8 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
         private QuoteComputedField quoteComputedField;
         private QuotePM quoteEntityPM;
         private List<QuoteChargePM> quoteCharges;
-        public void Handle(IServiceInitializer initializer)
+        private string accountingCurrencyId;
+		public void Handle(IServiceInitializer initializer)
         {
             this.initializer = (QuoteServiceInitializer)initializer;
             if (this.initializer.QuoteComputedFieldPOCO != null)
@@ -27,7 +37,10 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
             {
                 this.quoteEntityPM = this.initializer.EntityPM;
             }
-            this.HandleBehaviour();
+			TenantQuery tenantQuery = new TenantQuery(this.initializer.Tenant);
+			TenantPM tPM = tenantQuery.GetSinglePM(this.initializer.Tenant);
+			accountingCurrencyId = tPM?.CurrencyId;
+			this.HandleBehaviour();
         }
         private void HandleBehaviour()
         {
@@ -209,12 +222,49 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
         private void MapEstimatedPayablesInSalesCurrencyField()
         {
             if (quoteEntityPM.QuoteCharges != null)
-            {
-                quoteComputedField.EstimatedPayablesInSales = quoteCharges.Sum(d => d.CostAmountInSaleCurrency);
-            }
-        }
+            {		
+				var quoteChargesCost = quoteCharges.Where(d =>  d.CostTotalAmount.HasValue).ToList();
+				if (!quoteChargesCost.Any())
+					return;
 
-        private void MapEstimatedReceivablesInLocalCurrencyField()
+				var distinctCurrencies = quoteChargesCost.Select(d => d.CostCurrencyId).Distinct().ToList();
+				var costCurrencyId = distinctCurrencies.Count == 1 ? distinctCurrencies[0] : quoteEntityPM.SaleCurrencyId;
+
+
+				var costTotalAmount = quoteChargesCost.Sum(d =>
+				{
+					return d.CostCurrencyId == costCurrencyId
+						  ? d.CostTotalAmount
+						  : ConvertCurrency(d.CostTotalAmount, d.CostCurrencyId, costCurrencyId, accountingCurrencyId);
+				});
+
+
+				quoteComputedField.EstimatedPayablesInSales = costTotalAmount;
+			}
+		}	
+
+		private double? ConvertCurrency(double? amount, string fromCurrencyId, string toCurrencyId, string accountingCurrencyId)
+		{
+			if (amount == null)
+				return 0;
+
+			var ratesTablesRepository = new RatesTableRepository(initializer.Tenant);
+			var ratesTableQuery = new RatesTableQuery(ratesTablesRepository);
+
+
+			RatesTablePM rateFrom = ratesTableQuery.GetLastRateByValueDate(initializer.Tenant, fromCurrencyId, accountingCurrencyId, quoteEntityPM.OpenDate);
+			RatesTablePM rateTo = ratesTableQuery.GetLastRateByValueDate(initializer.Tenant, toCurrencyId, accountingCurrencyId, quoteEntityPM.OpenDate);
+
+			double fromRate = rateFrom?.Rate ?? 1.0;
+			double toRate = rateTo?.Rate ?? 1.0;
+
+
+			if (toRate == 0)
+				throw new InvalidOperationException($"Invalid currency rate for {toCurrencyId}: rate cannot be zero.");
+
+			return (amount.Value * fromRate) / toRate;
+		}
+		private void MapEstimatedReceivablesInLocalCurrencyField()
         {
             if (quoteEntityPM.QuoteCharges != null)
             {
