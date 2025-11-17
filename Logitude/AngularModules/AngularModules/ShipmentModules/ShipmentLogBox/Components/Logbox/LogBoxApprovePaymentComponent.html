@@ -1,3 +1,4 @@
+
 <style>
     .emptyticket {
         border: 1px solid #8C8C8C;
@@ -385,14 +386,14 @@
             </div>
             <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="width:420px;margin-right: 5px;" [style.float]="Language == 'HB' ? 'right' : 'left'">
                 <LogCheckBox [Checked]="IsAccepted" (ValueChanged)="IsAcceptedChanged($event)" [ObjectFieldName]="'IsAccepted'" [DataContext]="DataContext" style="margin-top:2px;" [style.float]="Language == 'HB' ? 'right' : 'left'"></LogCheckBox>
-                <label *ngIf="Language == 'HB'" style="margin-right:-10px;">{{'Shipment.O.Agreement1' | TextCodeTranslationPipe}}</label><br *ngIf="Language == 'HB'" />
-                <label *ngIf="Language == 'HB'" style="margin-right: 24px;">  {{'Shipment.O.Agreement2' | TextCodeTranslationPipe}}</label>
+                <label *ngIf="Language == 'HB'" style="margin-right:-10px;">אני הח"מ מצהיר בזה כי אני מודע לנתונים המפורטים בהצהרת היבוא,</label><br *ngIf="Language == 'HB'" />
+                <label *ngIf="Language == 'HB'" style="margin-right: 24px;">  לתוכנם ונכונותם של הצרופות ומאשר הגשתם למכס</label>
                 <label *ngIf="Language != 'HB'" style="margin-left:-10px;">I Declare that I accept all data and documents content and</label><br *ngIf="Language != 'HB'" />
                 <label *ngIf="Language != 'HB'" style="margin-left: 24px;"> approve sending it to Customs.</label><!--<br *ngIf="Language != 'HB'" />-->
                 <!--<label *ngIf="Language != 'HB'" style="margin-right:23px;"> the attached declaration</label>-->
                 <!--<input type="checkbox" for="Cancel" [(ngModel)]="ShowDeleted" />
-     <label style="margin-right:-10px;">{{'Shipment.O.Agreement1' | TextCodeTranslationPipe}}</label><br />
-    <label style="margin-right:23px;">{{'Shipment.O.Agreement2' | TextCodeTranslationPipe}}</label>-->
+     <label style="margin-right:-10px;">אני הח"מ מצהיר בזה כי אני מודע לנתונים המפורטים בהצהרת היבוא,</label><br />
+    <label style="margin-right:23px;">לתוכנם ונכונותם של הצרופות ומאשר הגשתם למכס</label>-->
                 <!--<label *ngIf="SessionLocator.TenantPM.Language == 'HB'" style="margin-right:-10px;">{{'Shipment.O.Agreement1' | TextCodeTranslationPipe}} </label><br *ngIf="SessionLocator.TenantPM.Language == 'HB'" />
                 <label *ngIf="SessionLocator.TenantPM.Language == 'HB'" style="margin-right:23px;"> {{'Shipment.O.Agreement2' | TextCodeTranslationPipe}}</label>-->
 

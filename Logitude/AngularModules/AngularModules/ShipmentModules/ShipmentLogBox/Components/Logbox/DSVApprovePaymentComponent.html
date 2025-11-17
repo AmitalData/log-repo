@@ -117,7 +117,7 @@
             <table [style.direction]="Language == 'HB' ? 'rtl' : 'ltr'">
                 <!--<tr style="height: 10px;">
                     <td style="height: 10px;">
-                        <div style="float:right;">{{ 'DSVApprovePayment.O.ImporterApprovalForSubmissionOfImportDeclarationToCustoms' | TextCodeTranslationPipe }}</div>
+                        <div style="float:right;">אישור היבואן להגשת הצהרת יבוא למכס</div>
                     </td>
                     <td style="height: 10px;">
                         <div style="float:left;">DSV</div>
@@ -355,14 +355,14 @@
             </div>
             <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="width:420px;margin-right: 5px;" [style.float]="Language == 'HB' ? 'right' : 'left'">
                 <LogCheckBox [Checked]="IsAccepted" (ValueChanged)="IsAcceptedChanged($event)" [ObjectFieldName]="'IsAccepted'" [DataContext]="DataContext" style="margin-top:2px;" [style.float]="Language == 'HB' ? 'right' : 'left'"></LogCheckBox>
-                <label *ngIf="Language == 'HB'" style="margin-right:-10px;">{{ 'DSVApprovePayment.O.IAmAwareOfTheDataInTheImportDeclaration' | TextCodeTranslationPipe }} </label><br *ngIf="Language == 'HB'" />
-                <label *ngIf="Language == 'HB'" > {{ 'DSVApprovePayment.O.AndToTheContentAndCorrectnessOfTheAttachmentsAndAuthorizeTheirSubmissionToCustoms' | TextCodeTranslationPipe }}</label>
+                <label *ngIf="Language == 'HB'" style="margin-right:-10px;">אני הח"מ מצהיר בזה כי אני מודע לנתונים המפורטים בהצהרת היבוא, </label><br *ngIf="Language == 'HB'" />
+                <label *ngIf="Language == 'HB'" > לתוכנם ונכונותם של הצרופות ומאשר הגשתם למכס</label>
                 <label *ngIf="Language != 'HB'">I, the undersigned, hereby declare that I am aware of the goods and of</label><br *ngIf="Language != 'HB'" />
                 <label *ngIf="Language != 'HB'" style="margin-right:-25px;"> the attachments submitted to Customs in the attached declaration</label><!--<br *ngIf="Language != 'HB'" />-->
                 <!--<label *ngIf="Language != 'HB'" style="margin-right:23px;"> the attached declaration</label>-->
                 <!--<input type="checkbox" for="Cancel" [(ngModel)]="ShowDeleted" />
-     <label style="margin-right:-10px;">{{ 'DSVApprovePayment.O.IAmAwareOfTheDataInTheImportDeclaration' | TextCodeTranslationPipe }}</label><br />
-    <label style="margin-right:23px;">{{ 'DSVApprovePayment.O.AndToTheContentAndCorrectnessOfTheAttachmentsAndAuthorizeTheirSubmissionToCustoms' | TextCodeTranslationPipe }}</label>-->
+     <label style="margin-right:-10px;">אני הח"מ מצהיר בזה כי אני מודע לנתונים המפורטים בהצהרת היבוא,</label><br />
+    <label style="margin-right:23px;">לתוכנם ונכונותם של הצרופות ומאשר הגשתם למכס</label>-->
                 <!--<label *ngIf="SessionLocator.TenantPM.Language == 'HB'" style="margin-right:-10px;">{{'Shipment.O.Agreement1' | TextCodeTranslationPipe}} </label><br *ngIf="SessionLocator.TenantPM.Language == 'HB'" />
                 <label *ngIf="SessionLocator.TenantPM.Language == 'HB'" style="margin-right:23px;"> {{'Shipment.O.Agreement2' | TextCodeTranslationPipe}}</label>-->
 

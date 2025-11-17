@@ -30,7 +30,7 @@
                 <!-- Request Fields -->
 
                 <tr style="height:35px">
-                    <td style="width:40px;text-align:right"><span style="font-size:11px;color:dimgray">{{'HelpResource.F.File' | TextCodeTranslationPipe}}:</span></td>
+                    <td style="width:40px;text-align:right"><span style="font-size:11px;color:dimgray">קובץ:</span></td>
                     <td style="width:150px; ">
                         <LogTextBox [ObjectFieldName]="'FileName'" [Placeholder]="Placeholder" [ObjectTableName]="ObjectTableName"
                                     [HideColumns]="true" [Text]="FileName" [DataContext]="DataContext"></LogTextBox>
@@ -64,7 +64,7 @@
             <table>
                 <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.ValidateBankPageAgaintDBErrors!=null && _ResultLoadBankPage.ValidateBankPageAgaintDBErrors.length>0">
                     <td colspan="10">
-                        <div style="color:orangered">{{'General.O.ErrorsFound' | TextCodeTranslationPipe}} </div>
+                        <div style="color:orangered">שגיאות שנמצאו </div>
                     </td>
                 </tr>
                 <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.ValidateBankPageAgaintDBErrors!=null && _ResultLoadBankPage.ValidateBankPageAgaintDBErrors.length>0">
@@ -80,7 +80,7 @@
 
                 <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.DBExceptionPageList!=null && _ResultLoadBankPage.DBExceptionPageList.length>0">
                     <td colspan="10">
-                        <div style="color:red">{{'LBL_ERRORS_IN_BUILDING_BANK_PAGES' | TextCodeTranslationPipe}} </div>
+                        <div style="color:red">שגיאות בבנית דפי בנק </div>
                     </td>
                 </tr>
                 <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.DBExceptionPageList!=null && _ResultLoadBankPage.DBExceptionPageList.length>0">
@@ -97,7 +97,7 @@
 
                 <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.DBSuccessPageList!=null && _ResultLoadBankPage.DBSuccessPageList.length>0">
                     <td colspan="10">
-                        <div style="color:green">{{'LBL_PAGES_ABSORBED' | TextCodeTranslationPipe}}</div>
+                        <div style="color:green">דפים שנקלטו</div>
                     </td>
                 </tr>
                 <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.DBSuccessPageList!=null && _ResultLoadBankPage.DBSuccessPageList.length>0">

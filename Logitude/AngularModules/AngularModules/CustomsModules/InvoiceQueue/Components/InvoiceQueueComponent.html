@@ -264,7 +264,7 @@
                 <table>
                     <tr>
                         <td class="LeftCenter" style="width: 80px;">
-                            <label style="width: 80px; font-size:14px; color: #4db6ea;">{{'Customs.CourierMaster.O.MoreActions' | TextCodeTranslationPipe}}</label> <!--{{'Customs.CourierMaster.O.MoreActions' | TextCodeTranslationPipe}}-->
+                            <label style="width: 80px; font-size:14px; color: #4db6ea;">פעולות נוספות</label> <!--{{'Customs.CourierMaster.O.MoreActions' | TextCodeTranslationPipe}}-->
                             <!--<img src="./Images/Icons/Actions.png" />-->
                         </td>
                         <td class="CenterCenter" style="width: 10px;"></td>
@@ -276,11 +276,11 @@
             </div>
 
             <div class="ToggleButtonMenu" style="width:115px; left: 0px; right: initial ;top:22px;text-align:center">
-                <button style="text-align:right" (click)="ShowDisbursement()">{{'LBL_BILLING' | TextCodeTranslationPipe}}</button>
-                <button style="text-align:right" (click)="ShowPayments()">{{'LBL_LIST_OF_EXPENSES' | TextCodeTranslationPipe}}</button>
+                <button style="text-align:right" (click)="ShowDisbursement()">בילינג</button>
+                <button style="text-align:right" (click)="ShowPayments()">רשימת הוצאות</button>
                 <button style="text-align:right" (click)="ShowDA()">DA</button>
-                <button style="text-align:right" (click)="ShowDelivery()">{{'LBL_LAND_TRANSPORT' | TextCodeTranslationPipe}}</button>
-                <button style="text-align:right" (click)="ShowImportFile()">{{'LBL_SHIPMENT_FILE' | TextCodeTranslationPipe}}</button>
+                <button style="text-align:right" (click)="ShowDelivery()">הובלות יבשתיות</button>
+                <button style="text-align:right" (click)="ShowImportFile()">תיק שילוח</button>
             </div>
         </div>
     </div>
@@ -288,7 +288,7 @@
         <tr style="height:25px;">
             <td>
                 <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
-                    {{'LBL_FILE_NO' | TextCodeTranslationPipe}}:
+                    מספר תיק:
                 </span>
                 <span _ngcontent-c14="" class="Counter" style="font-size: 18px; ">
                     <!--style="font-size:12px;"-->
@@ -299,7 +299,7 @@
             <td>
                 <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
 
-                    {{'LBL_CUSTOMER_NAME' | TextCodeTranslationPipe}}:
+                    שם לקוח:
                 </span>
 
                 <span _ngcontent-c14="" class="Counter cut-text" data-toggle="tooltip" data-placement="bottom" title="{{declaration.CustomerName}}" style="font-size: 18px;">
@@ -312,7 +312,7 @@
             <td>
                 <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
 
-                    {{'LBL_DECLARATION_NUMBER' | TextCodeTranslationPipe}}:
+                    מספר הצהרה:
                 </span>
 
 
@@ -325,7 +325,7 @@
             <td></td>
             <td>
                 <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
-                    {{'LBL_DECLARATION_DATE' | TextCodeTranslationPipe}}:
+                    תאריך הצהרה:
                 </span>
 
 
@@ -337,7 +337,7 @@
             <td></td>
             <td>
                 <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
-                    {{'LBL_CUSTOMS_STATION' | TextCodeTranslationPipe}}:
+                    תחנת מכס:
                 </span>
 
 
@@ -350,7 +350,7 @@
             <td></td>
             <td>
                 <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
-                    {{'LBL_STORAGE_SITE' | TextCodeTranslationPipe}}:
+                    אתר אחסון:
                 </span>
 
                 <span class="Counter cut-text" data-toggle="tooltip" data-placement="bottom" title="{{declaration.StorageSiteName}}" style="font-size: 18px;">
@@ -365,7 +365,7 @@
             <td>
                 <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
 
-                    {{'LBL_INCOTERMS' | TextCodeTranslationPipe}}:
+                    תנאי מכר:
                 </span>
 
                 <span _ngcontent-c14="" class="Counter cut-text" data-toggle="tooltip" data-placement="bottom" title="{{  declaration.SupplierInvoices[0].IncotermCode}}" style="font-size: 18px;" *ngIf="declaration.SupplierInvoices && declaration.SupplierInvoices[0]">
@@ -377,7 +377,7 @@
             <td>
                 <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
 
-                    {{'LBL_FORWARDER' | TextCodeTranslationPipe}}:
+                    משלח:
                 </span>
 
                 <span _ngcontent-c14="" class="Counter cut-text " data-toggle="tooltip" data-placement="bottom" title="{{GeneralDetails.Forwarder}}" style="font-size: 18px;" *ngIf="GeneralDetails">
@@ -388,7 +388,7 @@
             <td></td>
             <td>
                 <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
-                    {{'LBL_SHIPMENT_TYPE' | TextCodeTranslationPipe}}:
+                    סוג משלוח:
                 </span>
 
                 <span _ngcontent-c14="" class="Counter cut-text" data-toggle="tooltip" data-placement="bottom" title="{{GeneralDetails.TypeOfDelivery}}" style="font-size: 18px;" *ngIf="GeneralDetails">
@@ -399,7 +399,7 @@
             <td></td>
             <td>
                 <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
-                    {{'LBL_PROCESS_TYPE' | TextCodeTranslationPipe}}:
+                    סוג תהליך:
                 </span>
 
 
@@ -412,7 +412,7 @@
             <td></td>
             <td>
                 <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
-                    {{'LBL_GOODS_DESCRIPTION' | TextCodeTranslationPipe}}:
+                    תיאור טובין:
                 </span>
 
 
@@ -425,7 +425,7 @@
             <td></td>
             <td>
                 <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
-                    {{'LBL_TRANSPORT_RESPONSIBILITY' | TextCodeTranslationPipe}}:
+                    אחריות הובלה:
                 </span>
 
 
@@ -452,7 +452,7 @@
             <td colspan="12" style="right:55%">
                 <br />
                 <b>
-                    <span style="font-size: 16px;color:red;">{{'LBL_INVOICE_GENERATION_FOR_A_CASE_WILL_BE_DONE_AT_THE_OPENING_OF_AN_ACCOUNTING_MONTH' | TextCodeTranslationPipe}}</span>
+                    <span style="font-size: 16px;color:red;">הפקת חשבונית לתיק תבוצע בפתיחת חודש חשבונאי</span>
                 </b>
             </td>
         </tr>
@@ -500,7 +500,7 @@
             <td style="width: 55% ; height : 100%" rowspan="2">
                 <div style="height : 100%">
 
-                    <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;">{{'LBL_ITEMS_FOR_CUSTOMER_DEBIT' | TextCodeTranslationPipe}}</span>
+                    <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;">סעיפים לחיוב לקוח</span>
 
                     <br />
                     <br />
@@ -509,7 +509,7 @@
 
                         <logitude-edit-grid [IsDarkHeader]="'true'" GridWidth="100%" [GridHeight]="5" [ItemSource]="InvoiceLineList">
 
-                            <log-column [header]="'LBL_ITEM_CODE' | TextCodeTranslationPipe"
+                            <log-column [header]="'קוד סעיף'"
                                         [binding]="'ServiceCode'"
                                         [width]="'80'" [Alignment]="'Right'">
                                 <ng-template let-item>
@@ -522,7 +522,7 @@
                                 </ng-template>
                             </log-column>
 
-                            <log-column [header]="'LBL_ITEM_NAME' | TextCodeTranslationPipe"
+                            <log-column [header]="'שם סעיף'"
                                         [width]="'120'" [Alignment]="'Right'"
                                         [binding]="'ServiceName'">
                                 <ng-template let-item>
@@ -534,7 +534,7 @@
                                     </log-cell-template>
                                 </ng-template>
                             </log-column>
-                            <log-column [header]="'LBL_FOR_DEBIT' | TextCodeTranslationPipe"
+                            <log-column [header]="'לחיוב'"
                                         [width]="'120'" [Alignment]="'Right'"
                                         [binding]="'PayType'">
                                 <ng-template let-item>
@@ -547,7 +547,7 @@
                                 </ng-template>
                             </log-column>
 
-                            <log-column [header]="'LBL_AMOUNT_IN_NIS' | TextCodeTranslationPipe"
+                            <log-column [header]="'סכום בשח'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'AmountNIS'">
                                 <ng-template let-item>
@@ -559,7 +559,7 @@
                                     </log-cell-template>
                                 </ng-template>
                             </log-column>
-                            <log-column [header]="'LBL_CURRENCY' | TextCodeTranslationPipe"
+                            <log-column [header]="'מטבע'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'Currency'">
                                 <ng-template let-item>
@@ -571,7 +571,7 @@
                                     </log-cell-template>
                                 </ng-template>
                             </log-column>
-                            <log-column [header]="'LBL_AMOUNT_IN_FC' | TextCodeTranslationPipe"
+                            <log-column [header]="'סכום במטח'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'AmountForeign'">
                                 <ng-template let-item>
@@ -620,7 +620,7 @@
             <td style="width: 40% ; height : 40%">
                 <div style="height : 100%">
 
-                    <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;">{{'LBL_STATUSES' | TextCodeTranslationPipe}}</span>
+                    <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;">סטטוסים</span>
 
                     <br />
                     <br />
@@ -630,7 +630,7 @@
 
                         <logitude-edit-grid [IsDarkHeader]="'true'" GridWidth="100%" [GridHeight]="10" [ItemSource]="StatusList">
 
-                            <log-column [header]="'LBL_STATUS_CODE' | TextCodeTranslationPipe"
+                            <log-column [header]="'קוד סטטוס'"
                                         [binding]="'Code'"
                                         [width]="'80'" [Alignment]="'Right'">
                                 <ng-template let-item>
@@ -644,7 +644,7 @@
 
                             </log-column>
 
-                            <log-column [header]="'LBL_STATUS_NAME' | TextCodeTranslationPipe"
+                            <log-column [header]="'שם סטטוס'"
                                         [width]="'80'" [Alignment]="'Right'"
                                         [binding]="'Name'">
                                 <ng-template let-item>
@@ -656,7 +656,7 @@
                                     </log-cell-template>
                                 </ng-template>
                             </log-column>
-                            <log-column [header]="'LBL_DATE' | TextCodeTranslationPipe"
+                            <log-column [header]="'תאריך'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'Date'">
                                 <ng-template let-item>
@@ -669,7 +669,7 @@
                                 </ng-template>
                             </log-column>
 
-                            <log-column [header]="'LBL_TIME' | TextCodeTranslationPipe"
+                            <log-column [header]="'שעה'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'Time'">
                                 <ng-template let-item>
@@ -681,7 +681,7 @@
                                     </log-cell-template>
                                 </ng-template>
                             </log-column>
-                            <log-column [header]="'LBL_COMMENTS' | TextCodeTranslationPipe"
+                            <log-column [header]="'הערות'"
                                         [width]="'190'" [Alignment]="'Right'"
                                         [binding]="'Comments'">
                                 <ng-template let-item>
@@ -697,7 +697,7 @@
                                 <ng-template let-item>
                                     <log-cell-template #logcelltemplate>
                                         <div *ngIf="item.Comments != null ">
-                                            <button class="Button" (click)="ExpandComment(item , $event)"><img class="CenterCenter" title="{{'LBL_VIEW_REMARK' | TextCodeTranslationPipe}}" src="./Images/Icons/expand.png" /></button>
+                                            <button class="Button" (click)="ExpandComment(item , $event)"><img class="CenterCenter" title="לצפייה בהערה" src="./Images/Icons/expand.png" /></button>
                                         </div>
                                     </log-cell-template>
                                 </ng-template>
@@ -714,7 +714,7 @@
             <td style="width: 35%;bottom:13%;height: 90px;">
                 <div style="height : 100%">
 
-                    <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;">{{'LBL_SHIPPING_INVOICE_INTEGRATED' | TextCodeTranslationPipe}}</span>
+                    <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;">חשבונית שילוח / משולבת</span>
 
                     <br />
                     <br />
@@ -723,7 +723,7 @@
 
                         <logitude-edit-grid [IsDarkHeader]="'true'" GridWidth="100%" GridHeight="100%" [ItemSource]="IntegratedInvoiceList">
 
-                            <log-column [header]="'LBL_SHIPPING_INVOICE' | TextCodeTranslationPipe"
+                            <log-column [header]="'חשבונית שילוח'"
                                         [binding]="'InvoiceNumber'"
                                         [width]="'120'" [Alignment]="'Right'">
                                 <ng-template let-item>
@@ -736,7 +736,7 @@
                                 </ng-template>
                             </log-column>
 
-                            <log-column [header]="'LBL_SHIPMENT_FILE' | TextCodeTranslationPipe"
+                            <log-column [header]="'תיק שילוח'"
                                         [width]="'80'" [Alignment]="'Right'"
                                         [binding]="'ForwarderFile'">
                                 <ng-template let-item>
@@ -748,7 +748,7 @@
                                     </log-cell-template>
                                 </ng-template>
                             </log-column>
-                            <log-column [header]="'LBL_CUSTOMER' | TextCodeTranslationPipe"
+                            <log-column [header]="'לקוח'"
                                         [width]="'80'" [Alignment]="'Right'"
                                         [binding]="'BillTo'">
                                 <ng-template let-item>
@@ -760,7 +760,7 @@
                                     </log-cell-template>
                                 </ng-template>
                             </log-column>
-                            <log-column [header]="'LBL_CURRENCY' | TextCodeTranslationPipe"
+                            <log-column [header]="'מטבע'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'InvoiceCurrency'">
                                 <ng-template let-item>
@@ -773,7 +773,7 @@
                                 </ng-template>
                             </log-column>
 
-                            <log-column [header]="'LBL_AMOUNT' | TextCodeTranslationPipe"
+                            <log-column [header]="'סכום'"
                                         [width]="'100'" [Alignment]="'Right'"
                                         [binding]="'InvoiceAmount'">
                                 <ng-template let-item>
@@ -793,18 +793,18 @@
         </tr>
         <tr>
             <td style="width: 55%; top:50px;">
-                <span style="font-size: 15px;">{{'LBL_TOTAL_IN_NIS' | TextCodeTranslationPipe}}: </span>
+                <span style="font-size: 15px;">סה"כ בש"ח: </span>
                 <span style="font-size: 15px; direction:ltr; unicode-bidi:bidi-override;"> {{LabelSumAmountNIS}} </span>
                 <br />
                 <br />
-                <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;"> {{'LBL_INVOICE_REMARKS' | TextCodeTranslationPipe}} </span>
+                <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;"> הערות לחשבוניות </span>
                 <br />
                 <br />
                 <textarea [(ngModel)]="Remarks" id="remarks" name="remarks" rows="2" cols="50" style="height:100px;"></textarea>
             </td>
             <td style="width: 5%;"></td>
             <td style="width: 40%; bottom:13%;">
-                <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;"> {{'LBL_INVOICE_LIST' | TextCodeTranslationPipe}} </span>
+                <span _ngcontent-c14="" class="Counter" style="font-size: 14px; color: #1B90CB;"> רשימת חשבוניות </span>
 
                 <br />
                 <br />
@@ -813,7 +813,7 @@
 
                     <logitude-edit-grid [IsDarkHeader]="'true'" GridWidth="100%" GridHeight="100%" [ItemSource]="InvoiceListList">
 
-                        <log-column [header]="'LBL_CUSTOMER_TO_CHARGE' | TextCodeTranslationPipe"
+                        <log-column [header]="'לקוח לחיוב'"
                                     [binding]="'InvoiceBillTo'"
                                     [width]="'120'" [Alignment]="'Right'">
                             <ng-template let-item>
@@ -826,7 +826,7 @@
                             </ng-template>
                         </log-column>
 
-                        <log-column [header]="'LBL_INVOICE_TYPE' | TextCodeTranslationPipe"
+                        <log-column [header]="'סוג חשבונית'"
                                     [width]="'80'" [Alignment]="'Right'"
                                     [binding]="'InvoiceType'">
                             <ng-template let-item>
@@ -838,7 +838,7 @@
                                 </log-cell-template>
                             </ng-template>
                         </log-column>
-                        <log-column [header]="'LBL_INVOICE_DATE' | TextCodeTranslationPipe"
+                        <log-column [header]="'תאריך חשבונית'"
                                     [width]="'100'" [Alignment]="'Right'"
                                     [binding]="'InvoiceDate'">
                             <ng-template let-item>
@@ -851,7 +851,7 @@
                             </ng-template>
                         </log-column>
 
-                        <log-column [header]="'LBL_CURRENCY_TO_CHARGE' | TextCodeTranslationPipe"
+                        <log-column [header]="'מטבע לחיוב'"
                                     [width]="'100'" [Alignment]="'Right'"
                                     [binding]="'InvoiceCurrency'">
                             <ng-template let-item>
@@ -863,7 +863,7 @@
                                 </log-cell-template>
                             </ng-template>
                         </log-column>
-                        <log-column [header]="'LBL_AMOUNT' | TextCodeTranslationPipe"
+                        <log-column [header]="'סכום'"
                                     [width]="'100'" [Alignment]="'Right'"
                                     [binding]="'InvoiceAmount'">
                             <ng-template let-item>
@@ -884,7 +884,7 @@
     <div style="float:left ;width:160px;margin-left: 5%;">
         <button class="x-button" [disabled]="CreateQInvoiceButtonDim"
                 (click)="CreateQInvoice()" style="min-width: 120px; border-radius: 5px 5px 5px 0px;">
-            {{'LBL_INVOICE_GENERATION' | TextCodeTranslationPipe}}
+            הפקת חשבונית
         </button>
     </div>
 </div>
