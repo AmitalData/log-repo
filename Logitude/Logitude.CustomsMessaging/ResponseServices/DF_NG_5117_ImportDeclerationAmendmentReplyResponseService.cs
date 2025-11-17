@@ -14,36 +14,22 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnifreightIIG.Common.ImportDeclarationServiceReference;
 using UnifreightIIG.Common.MessageLib.Fault;
 using UnifreightIIG.Common.MessageLib.ID;
 using UnifreightIIG.Common.MessageLib.Collateral;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
-using System.Reflection;
 using System.Xml.Serialization;
 using Logitude.Customs.BL.TraceEvents;
 using Simplog.Data.CommonDataModel.Repositories;
-using Declaration = UnifreightIIG.Common.MessageLib.ID.Declaration;
 using System.Diagnostics;
-using Response = UnifreightIIG.Common.MessageLib.ID.Response;
-using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO;
-using Unifreight.Data.AmitalModel;
-using Unifreight.BL.EntityQueryServices;
-using ResponseError = UnifreightIIG.Common.MessageLib.ID.ResponseError;
-using DeclarationGoodsShipment = UnifreightIIG.Common.MessageLib.ID.DeclarationGoodsShipment;
-using DeclarationGoodsShipmentCustomsValuation = UnifreightIIG.Common.MessageLib.ID.DeclarationGoodsShipmentCustomsValuation;
 using UnifreightIIG.Common.MessageLib.Ransom;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.Customs;
-using Unifreight.BL.EntityPMs.UGenerated;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.CustomsMessaging.Helpers;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -124,8 +110,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         status = AdditionalInformation.FirstOrDefault(x => x.Content != null && x.StatementTypeCode.Value == "32").Content.Value;
                     }
                     if (customResponse.Response.Declaration != null && (status == "2" || status == "1"))
+                    {
+                        var swMap = Stopwatch.StartNew();
                         _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false, isUpdateAfterAccept: true, isDCA: isDCA);
-
+                        LogMessagingUtil.Instance.AppendLine($"5117.Update – MapResponseToDeclaration (status {status}) took {swMap.ElapsedMilliseconds} ms");
+                    }
                 }
                 else
                 {
@@ -698,7 +687,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                         this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                        var swUpdateDec = Stopwatch.StartNew();
                         myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
+                        LogMessagingUtil.Instance.AppendLine($"5117.Update – myDeclarationUpdateService.Update (AmendmentStatus={_MyDeclarationPM.AmendmentStatus}) took {swUpdateDec.ElapsedMilliseconds} ms");
 
 
 
@@ -745,7 +736,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
 
                         this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                        var swUpdateDec2 = Stopwatch.StartNew(); 
                         myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
+                        LogMessagingUtil.Instance.AppendLine($"5117.Update – myDeclarationUpdateService.Update (else branch) took {swUpdateDec2.ElapsedMilliseconds} ms");
+
 
                     }
                     if (customResponse.Response.Declaration != null && (_MyDeclarationPM.AmendmentStatus == "6" || _MyDeclarationPM.AmendmentStatus == "3"))
@@ -827,7 +821,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     }
                     var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
+                    var swMasof = Stopwatch.StartNew();
                     mySend2MasofIfNeededService.Send2Masof(_MyDeclarationPM, false, _MyDeclarationPM, true);
+                    LogMessagingUtil.Instance.AppendLine($"5117.Update – Send2Masof took {swMasof.ElapsedMilliseconds} ms");
 
 
                     SendManifest(_MyDeclarationPM, requestParams);
@@ -933,7 +929,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 systemMessagesList.Add(myError);
                             }
                         }
+                        var swCorrections = Stopwatch.StartNew();
                         this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointer(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant);
+                        LogMessagingUtil.Instance.AppendLine($"5117.Update – AnalyzeCorrectionsPointer took {swCorrections.ElapsedMilliseconds} ms");
                     }
                     if (_MyDeclarationPM.UserNotes == "LoadTestOnProgress")
                     {
