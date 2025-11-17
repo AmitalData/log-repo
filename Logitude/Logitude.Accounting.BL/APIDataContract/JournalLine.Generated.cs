@@ -38,6 +38,8 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
         public DateTime AccountingDate { get; set; }
 
+        public DateTime? ReferenceDate { get; set; }
+
         public DateTime DueDate { get; set; }
 
         public decimal LocalAmount { get; set; }
