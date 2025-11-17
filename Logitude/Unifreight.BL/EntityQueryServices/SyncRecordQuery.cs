@@ -14,6 +14,8 @@ using NetCommonHelper.Logger;
 using System.Text.Encodings.Web;
 using Simplog.Server.Infrastructure;
 using Unifreight.Data.AmitalModel;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Unifreight.BL.EntityQueryServices
 {
@@ -21,7 +23,7 @@ namespace Unifreight.BL.EntityQueryServices
     {
         SyncRecordRepository repository;
         static DevLog logger = DevLog.Instance;
-      
+
         public SyncRecordQuery(int tenant)
         {
             repository = new SyncRecordRepository(tenant);
@@ -56,42 +58,65 @@ namespace Unifreight.BL.EntityQueryServices
         public List<EntityRecord> GetUnsyncRecordsAndMarkAsInProcess(int tenant, string item, int? customsFileNo, bool allTask)
         {
             List<SyncRecord> notExistsRecord = new List<SyncRecord>();
-            
-            if(customsFileNo.HasValue)
+            if (customsFileNo.HasValue)
             {
                 item = repository.GetFileNo(tenant, customsFileNo.Value).ToString();
-                if(string.IsNullOrEmpty(item))
+                if (string.IsNullOrEmpty(item))
                     throw new Exception($"fileNo for customsFileNo {customsFileNo} and tenant {tenant} not found");
             }
-
             List<SyncRecord> groupRecord = repository.GetUnsyncAndMarkAsInProcess(tenant, item, allTask);
             AddGGGQC(groupRecord);
 
             string offset = GetTimeZone(tenant);
-            List<EntityRecord> entityRecords = groupRecord.Select(syncRecord =>
+
+            List<Task<EntityRecord>> entityRecordTasks = new List<Task<EntityRecord>>();
+            int tasksNumber;
+            if (!int.TryParse(Environment.GetEnvironmentVariable("tasksNumberForSync") ?? "", out tasksNumber))
+                tasksNumber = 200;
+            SemaphoreSlim throttler = new SemaphoreSlim(tasksNumber);
+
+            foreach (SyncRecord syncRecord in groupRecord)
             {
-                string recordAsJson = GetRecordOfRowNeedSync(syncRecord);
-                if (recordAsJson == null)
-                {
-                    if(syncRecord.Entname == "GGGQC")
-                        return null;
-                    else
-                        notExistsRecord.Add(syncRecord);
-                }
+                throttler.Wait();
 
-                return new EntityRecord
+                Task<EntityRecord> task = Task.Run(() =>
                 {
-                    Key = syncRecord.KeyVal,
-                    TrigAction = syncRecord.TrigAction,
-                    Entname = syncRecord.Entname,
-                    RecordAsJson = recordAsJson,
-                    UpdateDate = syncRecord.SyncDT,
-                    CraeteDate = syncRecord.CreateDate,
-                    CreateDate = syncRecord.CreateDate,
-                    DbOffset = offset
+                    try
+                    {
+                        string recordAsJson = new SyncRecordQuery(tenant).GetRecordOfRowNeedSync(syncRecord);
+                        if (recordAsJson == null)
+                        {
+                            if (syncRecord.Entname == "GGGQC")
+                                return null;
+                            else
+                                notExistsRecord.Add(syncRecord);
+                        }
 
-                };
-            }).Where(x => x != null).ToList();
+                        return new EntityRecord
+                        {
+                            Key = syncRecord.KeyVal,
+                            TrigAction = syncRecord.TrigAction,
+                            Entname = syncRecord.Entname,
+                            RecordAsJson = recordAsJson,
+                            UpdateDate = syncRecord.SyncDT,
+                            CraeteDate = syncRecord.CreateDate,
+                            CreateDate = syncRecord.CreateDate,
+                            DbOffset = offset
+                        };
+                    }
+                    finally
+                    {
+                        throttler.Release();
+                    }
+                });
+                entityRecordTasks.Add(task);
+            }
+            Task.WaitAll(entityRecordTasks.ToArray());
+
+            List<EntityRecord> entityRecords = entityRecordTasks
+                .Select(t => t.Result)
+                .Where(x => x != null)
+                .ToList();
 
             repository.UpdateStatus(notExistsRecord, SyncRecordStatus.SyncedAndUpdated);
 
@@ -190,7 +215,7 @@ namespace Unifreight.BL.EntityQueryServices
 
         public List<SyncRecord> GetNeedToReturnToQueue() => repository.GetNeedToReturnToQueue();
 
-        public string GetTimeZone(int tenant) => 
-            CacheHelper.GetFromCache("SyncRecord_timeZone_" + tenant,() => repository.GetTimeZone());
+        public string GetTimeZone(int tenant) =>
+            CacheHelper.GetFromCache("SyncRecord_timeZone_" + tenant, () => repository.GetTimeZone());
     }
 }

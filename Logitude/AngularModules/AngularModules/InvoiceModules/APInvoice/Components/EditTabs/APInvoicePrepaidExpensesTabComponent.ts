@@ -15,6 +15,7 @@ import { JournalPMService } from 'Accounting/Services/StandardPMs/JournalPMServi
 import { JournalPM } from 'Accounting/EntityPMs/JournalPM';
 import { FullAccountingSettingPMService } from 'Accounting/Services/StandardPMs/FullAccountingSettingPMService';
 import { FullAccountingSettingPM } from 'Accounting/EntityPMs/FullAccountingSettingPM';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     templateUrl: './APInvoicePrepaidExpensesTabComponent.html',
@@ -105,9 +106,10 @@ export class APInvoicePrepaidExpensesTabComponent implements OnInit {
             SelectedDayByWeek: selectedDayByWeek,
             Disabled : true
         };
-        logWindow.Width = 600;
-        logWindow.Height = 450;
-        logWindow.Title = 'Recurring Schedule Settings';
+        logWindow.Width = 550;
+        logWindow.Height = 380;
+        logWindow.Title = TextCodeTranslator.Translate("APInvoice.O.ExpenseAllocationSetting");
+
         logWindow.ShowCloseButton = true;
         logWindow.ComponentLoaded.subscribe((comp) => {
             logWindow.WindowClosed.subscribe((s) => {});

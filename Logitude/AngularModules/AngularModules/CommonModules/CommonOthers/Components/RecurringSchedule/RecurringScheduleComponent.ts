@@ -18,6 +18,8 @@ export class RecurringScheduleComponent extends BaseComponent {
     public isReady = false;
     public disabled = false;
     public IsDayDisabled = false;
+    public validationErrorsList: string[];
+
     public typeRadio: 'RecurrenceCount' | 'EndDateTime' = 'RecurrenceCount';
 
     private currentSession = SessionLocator.SelectedSession;
@@ -433,6 +435,8 @@ export class RecurringScheduleComponent extends BaseComponent {
         this.currentSession.CloseCurrentWindowEmit('ok');
     }
     validateDate(): boolean {
+        this.validationErrorsList = [];
+
         if (this.minDate && new Date(this.startDateTime) < new Date(this.minDate)) {
             this.UIProperties.SetValidity(
                 'StartDateTime',
@@ -441,7 +445,12 @@ export class RecurringScheduleComponent extends BaseComponent {
                 TextCodeTranslator.Translate(
                     'ExpenseAllocationSetting.O.EndDateError'
                 )
+
             );
+            this.validationErrorsList.push(TextCodeTranslator.Translate(
+                'ExpenseAllocationSetting.O.EndDateError'
+            ));
+
             return false;
         } 
         else if( this.EndDateTime && new Date(this.startDateTime) > new Date(this.EndDateTime)) {
@@ -453,6 +462,10 @@ export class RecurringScheduleComponent extends BaseComponent {
                     'ExpenseAllocationSetting.O.StartDateAfterEndDateError'
                 )
             );
+            this.validationErrorsList.push(TextCodeTranslator.Translate(
+                'ExpenseAllocationSetting.O.StartDateAfterEndDateError'
+            ));
+
             return false;
         }
         else if(this.startDateTime < DateTool.GetCurrentDateAsUtc()) {
@@ -464,6 +477,10 @@ export class RecurringScheduleComponent extends BaseComponent {
                     'ExpenseAllocationSetting.O.PastDateError'
                 )
             );
+            this.validationErrorsList.push(TextCodeTranslator.Translate(
+                'ExpenseAllocationSetting.O.PastDateError'
+            ));
+
             return false;
         }
         else {

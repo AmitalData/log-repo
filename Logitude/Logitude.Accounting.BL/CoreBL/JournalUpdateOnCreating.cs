@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -205,7 +206,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     try
                     {
-                        invoices = LogitudeXmlSerializer.DeserializeObject<List<APIDataContract.ApiV1.Invoice >>( journalPM.InvoicesXml);
+                    invoices = JsonSerializer.Deserialize<List<APIDataContract.ApiV1.Invoice>>(journalPM.InvoicesXml);
+
                     }
                     catch (Exception jex)
                     {
@@ -300,8 +302,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 Line = journalLinePM.Line,
                 LedgerTransactionId = transaction.Id,
                 CurrencyId = transaction.OpenAmountCurrencyId,
-                ReconciliationAmount = reconciliationAmount,
-                IsPartial = Math.Abs(reconciliationAmount) != Math.Abs(transaction.OpenAmount)
+                ReconciliationAmount = transaction.OpenAmount,
+                IsPartial =  false
             });
         }
 

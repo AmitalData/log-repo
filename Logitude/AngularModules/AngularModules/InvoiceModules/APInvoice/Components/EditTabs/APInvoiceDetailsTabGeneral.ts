@@ -919,6 +919,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (this.EntityPM.AmountInInvoiceCurrency != setValue) {
             this.EntityPM.AmountInInvoiceCurrency = setValue;
             this.EntityPM.InvoiceExpectedAmount = setValue;
+            this.ComputeTotals();
 
            
         }
@@ -1238,9 +1239,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             SelectedDayByWeek: selectedDayByWeek
             }
             ;
-        logWindow.Width = 600;
-        logWindow.Height = 450;
-        logWindow.Title = "Recurring Schedule Settings";
+        logWindow.Width = 550;
+        logWindow.Height = 380;
+        logWindow.Title = TextCodeTranslator.Translate("APInvoice.O.ExpenseAllocationSetting");
         logWindow.ShowCloseButton =  true;
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {

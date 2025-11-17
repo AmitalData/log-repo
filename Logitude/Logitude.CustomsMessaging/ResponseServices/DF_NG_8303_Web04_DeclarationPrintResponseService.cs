@@ -386,7 +386,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-            documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId, true);
+            documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
             LogMessagingUtil.Instance.AppendLine("Filed document " + documentsFilingPM.Code + "Created For declaration " + _MyDeclarationPM.DeclarationNumber + " documentsFilingPM.ID= " + documentsFilingPM.Id);
 
 

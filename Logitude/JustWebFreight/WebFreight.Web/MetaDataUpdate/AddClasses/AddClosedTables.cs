@@ -3205,10 +3205,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 };
                 pendingErrorPlaceRepository.Add(newPendingErrorPlace);
             }
-        }
-
-
-        public static void AddMamanSpecialAction(MamanSpecialAction mamanSpecialActionDetails, MamanSpecialActionRepository mamanSpecialActionRepository)
+		}
+		public static void AddMamanSpecialAction(MamanSpecialAction mamanSpecialActionDetails, MamanSpecialActionRepository mamanSpecialActionRepository)
         {
             Dictionary<string, MamanSpecialAction> tenant = mamanSpecialActionRepository.GetAll().ToDictionary(d => d.Code, a => a);
 

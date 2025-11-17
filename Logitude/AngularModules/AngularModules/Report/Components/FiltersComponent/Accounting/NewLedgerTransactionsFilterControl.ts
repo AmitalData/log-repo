@@ -479,7 +479,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                     break;
                 case "IsReconciled": {
                     this.IsReconciled = queryFilterItem.FieldValue;
-                    this.AttachedGLAccountCheckBox = queryFilterItem.FieldValue == null;
+                    this.AttachedGLAccountCheckBox = queryFilterItem.FieldValue !== false;
                     break;
                 }
                 case "SalesmanUserId":
@@ -530,7 +530,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                     break;
                 }
                 case "FromGLAccountDisplayNumber":{
-                    this.FromGLAccountId = queryFilterItem.FieldValue2 ? queryFilterItem.FieldValue2 : null;
+                    this.FromGLAccountId = this.GetLookUpFieldValue(queryFilterItem.FieldValue2);
                     if (!AppTool.IsNullOrEmpty(this.FromGLAccountId)) {
                         this.filterGlAccountSelectedValue = "filter_glaccounts_range";
                         this.IsRangGLAccounts = true;
@@ -539,10 +539,10 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                 }
                     
                 case "ToGLAccountDisplayNumber":
-                    this.ToGLAccountId = queryFilterItem.FieldValue2 ? queryFilterItem.FieldValue2 : null;
+                    this.ToGLAccountId = this.GetLookUpFieldValue(queryFilterItem.FieldValue2);
                     break;
                 case "GLAccountId":
-                    this.GLAccountId = queryFilterItem.FieldValue;
+                    this.GLAccountId = this.GetLookUpFieldValue(queryFilterItem.FieldValue);
                     if (!AppTool.IsNullOrEmpty(this.GLAccountId)) {
                          this.filterGlAccountSelectedValue = 'filter_glaccount';
                          this.IsListGLAccounts = false;

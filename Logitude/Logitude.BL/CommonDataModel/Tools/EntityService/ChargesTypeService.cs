@@ -5,7 +5,8 @@ using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.Helpers;
@@ -18,6 +19,7 @@ using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -57,6 +59,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (!string.IsNullOrEmpty(entityPM.ChargesGroupCode))
             {
                 FullChargesGroupId(entityPM);
+            }
+            if (!string.IsNullOrEmpty(entityPM.MeasurementCode))
+            {
+                FillMeasurementId(entityPM);
             }
 
             foreach (ChargeTypeAccountingPM item in entityPM.ChargeTypeAccountings)
@@ -230,6 +236,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (chargesGroupPM != null)
             {
                 entityPM.ChargesGroupId = chargesGroupPM.Id;
+            }
+        }
+
+        private static void FillMeasurementId(ChargesTypePM entityPM)
+        {
+            MeasurementQuery measurementQuery = new MeasurementQuery(entityPM.Tenant);
+            MeasurementPM measurementPM = measurementQuery.GetSinglePMByCode(entityPM.MeasurementCode, entityPM.Tenant);
+            if (measurementPM != null)
+            {
+                entityPM.MeasurementId = measurementPM.Id;
             }
         }
     }

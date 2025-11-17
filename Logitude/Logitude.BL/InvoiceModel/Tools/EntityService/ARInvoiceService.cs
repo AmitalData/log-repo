@@ -61,6 +61,7 @@ using Logitude.Accounting.Data.Enums;
 using AccountingEntityValues = Logitude.BL.InvoiceModel.CloseTables.AccountingEntityValues;
 using Logitude.Server.Tools.QueueService;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InvoiceModel.Tools.Exceptions;
 
 
 
@@ -736,7 +737,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.SetApproved = false;
                 entityPM.StatusCode = "AC";
-                this.GenerateInvoiceNumber();
             }
             if (invoice.StatusCode == "AR")
             {
@@ -757,7 +757,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (invoice.ApprovedDate != null)
                 {
-                    throw new ApplicationException("This invoice is already approved");
+                    throw new InvoiceAlreadyApprovedException("This invoice is already approved");
                 }
             }
 
@@ -767,7 +767,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.ValidateHigherStatus();
-
+            if (entityPM.IsAutoCredit && entityPM.SetApprovedAutoCredit)
+            {
+                this.GenerateInvoiceNumber();
+            }
             if (entityPM.SetCancelDraft)
             {
                 this.CancelDraftInvoice();
@@ -1161,7 +1164,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             }
                         }
 
-                        throw new ApplicationException(msg);
+                        throw new InvoiceAlreadyApprovedException(msg);
                     }
                 }
 
@@ -4195,9 +4198,14 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                     if (entityPM.StatusCode == InvoiceAutoCreditStatus)
                         AutoReconcileAutoCreditInvoiceWithAutoCreditedInvoice(journal);
 
+                    AccountingEntityJournalRepository accountingEntityJournalRepository = new AccountingEntityJournalRepository(tenant);
+                    bool accountingEntityJournalExists = accountingEntityJournalRepository.Exists(journal.Tenant, journal.AccountingEntityId, journal.AccountingEntityCode, AccountingEntityJournalActions.ARInvoiceApprove, null);
 
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
-                    AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.ARInvoiceApprove);
+                    if (!accountingEntityJournalExists)
+                    {
+                        AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.ARInvoiceApprove);
+                    }
                     journalUpdate.Update(journal);
                     if (interestTransaction != null)
                     {
@@ -5159,15 +5167,15 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
 
         }
 
-        public void BuildDocumentsForNewInvoice(ARInvoicePM aRInvoicePM, InterestReportPM interestReport)
+        public void BuildDocumentsForNewInvoice(ARInvoicePM aRInvoicePM, InterestReportPM interestReportPM)
         {
 
-            ObjectTableQuery objectTableQuery = new ObjectTableQuery(interestReport.Tenant);
+            ObjectTableQuery objectTableQuery = new ObjectTableQuery(interestReportPM.Tenant);
             string InterestReportObjectTableId = objectTableQuery.GetObjectTableIdByName("InterestReport");
             string ARInvoiceObjectTableId = objectTableQuery.GetObjectTableIdByName("ARInvoice");
             string ARInvoiceChildEntityReference = !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) ? aRInvoicePM.InvoiceNumber : "Draft: " + aRInvoicePM.DraftNumber;
             BuildDocument(aRInvoicePM.Id, "999G", ARInvoiceObjectTableId, ARInvoiceChildEntityReference , aRInvoicePM.CreatedByUserId, aRInvoicePM.Tenant);
-            BuildDocument(interestReport.Id, "ITDT", InterestReportObjectTableId, interestReport.ReportNumber, aRInvoicePM.CreatedByUserId, aRInvoicePM.Tenant);
+            BuildDocument(interestReportPM.Id, "ITDT", InterestReportObjectTableId, interestReportPM.ReportNumber, aRInvoicePM.CreatedByUserId, aRInvoicePM.Tenant);
         }
 
         public void BuildDocumentsForNewInvoiceLite(ARInvoicePM aRInvoicePM, InterestReport interestReport)

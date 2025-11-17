@@ -27,7 +27,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    public class GLAccountUpdateClass
    {  		
 
-		public const string HashString = "1ebb5a1fb8d09f71a18af6b1cff94405";
+
+		public const string HashString = "d275a83952d658c05c4b1a053a003be9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -12924,6 +12925,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
+
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
@@ -15228,6 +15231,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountsRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountsRange", DefaultText = "GLAccount range by Display Number",LocalDefaultText = @"טווח כרטיסים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_AgingReportORunReportImmediately = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.RunReportImmediately", DefaultText = "Run Immediately",LocalDefaultText = @"BS64:IteU16jXpSDXnteZ15nXk9eZ16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+
 
  		   TextCode GLAccountTextCode_GLAccountsOErrForeignInterestMultiCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ErrForeignInterestMultiCurrency", DefaultText = "Interest in foreign currency cannot be set for a multi-currency",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNeS15PXmdeoINeo15nXkdeZ16og15HXnteYIteWINec15vXqNeY15nXoSDXqNeRINee15jXkdei15ki", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 

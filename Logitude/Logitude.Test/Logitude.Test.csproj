@@ -180,12 +180,6 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Telerik.JustMock, Version=2012.3.1016.3, Culture=neutral, PublicKeyToken=8b221631f7271365, processorArchitecture=MSIL">
-      <HintPath>..\General\Dlls\Telerik.JustMock.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.JustMock.Container, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8b221631f7271365, processorArchitecture=MSIL">
-      <HintPath>..\General\Dlls\Telerik.JustMock.Container.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
       <Private>True</Private>
@@ -265,6 +259,7 @@
     <Compile Include="CommonDataModel\VesselTests.cs" />
     <Compile Include="CommonDataModel\WarehouseTests.cs" />
     <Compile Include="CommonDataModel\WeightUnitTests.cs" />
+    <Compile Include="TestSupport\TenantContext.cs" />
     <Compile Include="GeneralTests\GeneralTesting.cs" />
     <Compile Include="Helpers\GeneralMocking.cs" />
     <Compile Include="InfrastructureModel\ChargesGroupTests.cs" />
@@ -316,6 +311,9 @@
     <Compile Include="ShipmentModel\ShipmentTests.cs" />
     <Compile Include="ShipmentModel\ShipmentTypeTests.cs" />
     <Compile Include="SystemLogsModel\SystemLogTests.cs" />
+    <Compile Include="Accounting\JournalLinePMExtTests.cs" />
+    <Compile Include="Shipments\ShipmentComputedFieldsHelperTests.cs" />
+    <Compile Include="Utilities\ServiceResponseAssertions.cs" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">

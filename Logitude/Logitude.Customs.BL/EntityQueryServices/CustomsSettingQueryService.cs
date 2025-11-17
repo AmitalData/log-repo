@@ -260,8 +260,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
         public DateTime? GetCustomsBookLastUpdateDateByTenant(int tenant)
         {
-            CustomsSetting poco = repository.GetSettingByTenant(tenant);
-            return poco.CB_LastUpdateDate;
+            DateTime? CB_LastUpdateDate = repository.GetCB_LastUpdateDate(tenant);
+            return CB_LastUpdateDate;
         }
 
         public int GetTheFirstTenantWithCustomsAgentId()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.Server.Tools.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -21,6 +22,8 @@ namespace WebFreight.Web.DataProviders
         {
             Periods = new List<StatusPeriod>();
         }
+        public int Tenant { get; set; }
+
         public string CustomerName { get; set; }
         public string CustomerLocalName { get; set; }
         public string CustomerDisplayNumber { get; set; }
@@ -59,7 +62,7 @@ namespace WebFreight.Web.DataProviders
 
         public decimal TotalToCollect { get { return AccountingBalance + TotalOpenShipments; } }
         public decimal FutureChequesTotal { get { return TotalFutureOpenCheques + ExternalTransactionsTotal; } }
-        public decimal Obligo { get { return TotalToCollect + FutureChequesTotal; } }
+        public decimal Obligo { get { return TotalToCollect + FutureChequesTotal + (FeatureToggleHelper.HasFeatureToggle("CTP", Tenant) ? (TotalOpenCheques) : 0); } }
         public decimal CreditUsed { get { return CreditLimit - Obligo; } }
 
         public decimal TotalLocal { get; set; } = 0;

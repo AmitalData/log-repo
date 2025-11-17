@@ -314,6 +314,8 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
             modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
             modelBuilder.Configurations.Add(new OceanInsightsRequestMap());
+            modelBuilder.Configurations.Add(new OceanCarrierStatusAPIconfigMap());
+
             modelBuilder.Configurations.Add(new OceanInsightsRequestsCountMap());
             modelBuilder.Configurations.Add(new OceanInsightsStatusesMap());
             modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
@@ -405,6 +407,8 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ContainersExternalData> ContainersExternalDatas { get; set; }
         public IDbSet<ShipmentAdditionalCloudData> ShipmentAdditionalCloudDatas { get; set; }
         public IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts { get; set; }
+        public IDbSet<OceanCarrierStatusAPIconfig> OceanCarrierStatusAPIconfigs { get; set; }
+
         public IDbSet<OceanInsightsRequest> OceanInsightsRequests { get; set; }
         public IDbSet<LogitudeOceanInsightsRequest> LogitudeOceanInsightsRequests { get; set; }
         public IDbSet<LogitudeOceanInsightsResponse> LogitudeOceanInsightsResponses { get; set; }

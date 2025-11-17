@@ -25,6 +25,8 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 		private QuoteComputedField quoteComputedField;
 		private QuotePM quoteEntityPM;
 		private List<QuoteChargePM> quoteCharges;
+        private string accountingCurrencyId;
+
 		public void Handle(IServiceInitializer initializer)
 		{
 			this.initializer = (QuoteServiceInitializer)initializer;
@@ -36,6 +38,9 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 			{
 				this.quoteEntityPM = this.initializer.EntityPM;
 			}
+			TenantQuery tenantQuery = new TenantQuery(this.initializer.Tenant);
+			TenantPM tPM = tenantQuery.GetSinglePM(this.initializer.Tenant);
+			accountingCurrencyId = tPM?.CurrencyId;
 			this.HandleBehaviour();
 		}
 		private void HandleBehaviour()
@@ -220,10 +225,28 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 		private void MapEstimatedPayablesInSalesCurrencyField()
 		{
 			if (quoteEntityPM.QuoteCharges != null)
-			{
-				quoteComputedField.EstimatedPayablesInSales = quoteCharges.Sum(d => d.CostAmountInSaleCurrency);
+            {		
+
+				var quoteChargesCost = quoteCharges.Where(d =>  d.CostTotalAmount.HasValue).ToList();
+				if (!quoteChargesCost.Any())
+					return;
+
+				var distinctCurrencies = quoteChargesCost.Select(d => d.CostCurrencyId).Distinct().ToList();
+				var costCurrencyId = distinctCurrencies.Count == 1 ? distinctCurrencies[0] : quoteEntityPM.SaleCurrencyId;
+
+
+				var costTotalAmount = quoteChargesCost.Sum(d =>
+				{
+					return d.CostCurrencyId == costCurrencyId
+						  ? d.CostTotalAmount
+						  : ConvertCurrency(d.CostTotalAmount, d.CostCurrencyId, costCurrencyId, accountingCurrencyId);
+				});
+
+
+				quoteComputedField.EstimatedPayablesInSales = costTotalAmount;
 			}
-		}
+		}	
+
 
 		private void MapEstimatedReceivablesInLocalCurrencyField()
 		{
@@ -263,9 +286,6 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 
 			ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(initializer.Tenant);
 			CurrencyRepository currencyRepository = new CurrencyRepository(initializer.Tenant);
-			TenantQuery tenantQuery = new TenantQuery(initializer.Tenant);
-			TenantPM tPM = tenantQuery.GetSinglePM(initializer.Tenant);
-			string accountingCurrencyId = tPM.CurrencyId;
 
 			var chargesTypes = chargesTypeRepository.GetChargesTypesOfVAL(initializer.Tenant).ToHashSet();
 			var quoteChargesVal = quoteCharges
