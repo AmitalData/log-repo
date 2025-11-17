@@ -394,7 +394,7 @@
                 <td class="DocsListButton" (click)="IsDocsPanelVisible = !IsDocsPanelVisible"
                     [class.BrdrRt]="IsDocsPanelVisible">
                     <img src="./Images/Split/split-doc-icon.png" alt="" style="padding-left: 5px;" />
-                    {{'LBL_LINKED_DOCUMENTS' | TextCodeTranslationPipe}}
+                    מסמכים מקושרים
                 </td>
             </tr>
         </table>
@@ -404,7 +404,7 @@
     <div class="BodyBox" [attr.id]="DocumentViewerImageId">
         <div (mousewheel)="OnMouseWheel($event)">
 
-            <div *ngIf="IsNoDocumentSelected" class="NoDocumentSelected">{{'LBL_SELECT_A_DOCUMENT_FROM_THE_DOCUMENT_LIST' | TextCodeTranslationPipe}}</div>
+            <div *ngIf="IsNoDocumentSelected" class="NoDocumentSelected">בחר מסמך מרשימת המסמכים</div>
 
             <!-- tiff document -->
             <ng-container *ngIf="!showPdfDocument">
@@ -412,8 +412,8 @@
                 <!--In case the document has no TIF file display a message - “Document wasn't converted to TIF” (המסמך הנ”ל לא הומר ל TIF - יש לשנות את הגדרות הספריה בניהול המסמכים)  "ImgScaleValue + ' ' + ImgRotationValue"-->
                 <div *ngIf="!IsNoDocumentSelected &&  this.base64Document==null "
                     style="display: inline-block;color:#ff8025;white-space: pre-line;" class="NoDocumentSelected">
-                    {{'LBL_THIS_DOCUMENT_WAS_NOT_CONVERTED_TO_TIF' | TextCodeTranslationPipe}}
-                    {{'LBL_PLEASE_CHECK_THE_LIBRARY_SETTINGS_IN_FILING' | TextCodeTranslationPipe}}
+                    מסמך זה לא הומר ל TIF
+                    אנא בדוק הגדרות הספריה בתיוק
                 </div>
 
                 <div [style.transform]="ImgScaleValue" [style.transform-origin]="'top right'" [style.height]="ImgHeight"
@@ -475,7 +475,7 @@
                         <ul class="FiltersMenu" style="direction:rtl;float:right; margin-right:10px ">
                             <li id="all" (click)="DocumentFilterItemClicked('all')" class="FilterItem"
                                 style="width:50px" [class.SelectedFilter]="DocumentFilterSelectedValue === 'all'">
-                                {{'LBL_ALL' | TextCodeTranslationPipe}}
+                                הכל
                             </li>
 
                             <li id="forwarding" (click)="DocumentFilterItemClicked('forwarding')" class="FilterItem"

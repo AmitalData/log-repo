@@ -1,3 +1,4 @@
+
 <style>
     .BlueTitle{
         font-size:20px;
@@ -113,12 +114,12 @@
                         <table>
                             <tr>
                                 <td>
-                                    <span style="font-size:20px;border-bottom:1px solid #BCBEC0;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">{{ 'Shipment.O.ImporterApprovalForSubmissionOfImportDeclarationToCustoms' | TextCodeTranslationPipe }}</span>
+                                    <span style="font-size:20px;border-bottom:1px solid #BCBEC0;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">אישור היבואן להגשת הצהרת יבוא למכס</span>
                                     <table style="height:150px;margin-right:5px;">
                                         <tr>
                                             <td style="height: 22px;width:40%;">
                                                 <label class="MyLabel">
-                                                    {{'Shipment.O.CustomsFileNo' | TextCodeTranslationPipe}}
+                                                    מספר תיק עמילות
                                                 </label>
                                             </td>
                                             <td style="height: 22px;">
@@ -130,7 +131,7 @@
                                         <tr>
                                             <td style="height: 22px;width:40%;">
                                                 <label class="MyLabel">
-                                                    {{'Shipment.O.DeclarationNo' | TextCodeTranslationPipe}}
+                                                    מספר הצהרה
                                                 </label>
                                             </td>
                                             <td style="height: 22px;">
@@ -142,7 +143,7 @@
                                         <tr>
                                             <td style="height: 22px;width:40%;">
                                                 <label class="MyLabel">
-                                                    {{'Shipment.O.MishgorDescOfGoods' | TextCodeTranslationPipe}}
+                                                    תאור טובין
                                                 </label>
                                             </td>
                                             <td style="height: 22px;">
@@ -154,7 +155,7 @@
                                         <tr>
                                             <td style="height: 22px;width:40%;">
                                                 <label class="MyLabel">
-                                                    {{ 'Shipment.O.GoodsValueInNIS' | TextCodeTranslationPipe }}
+                                                    ערך סחורה בש"ח
                                                 </label>
                                             </td>
                                             <td style="height: 22px;">
@@ -166,7 +167,7 @@
                                         <tr>
                                             <td style="height: 22px;width:40%;">
                                                 <label class="MyLabel">
-                                                    {{ 'Shipment.O.CifValue' | TextCodeTranslationPipe }}
+                                                    ערך סחורה בסיף
                                                 </label>
                                             </td>
                                             <td style="height: 22px;">
@@ -178,7 +179,7 @@
                                         <tr>
                                             <td style="height: 22px;width:40%;">
                                                 <label class="MyLabel">
-                                                    {{ 'Shipment.O.TotalTaxForPayment' | TextCodeTranslationPipe }}
+                                                    סה"כ מיסים לתשלום
                                                 </label>
                                             </td>
                                             <td style="height: 22px;">
@@ -190,7 +191,7 @@
                                         <tr>
                                             <td style="height: 22px;width:40%;">
                                                 <label class="MyLabel">
-                                                    {{ 'Shipment.O.YourReference' | TextCodeTranslationPipe }}
+                                                    מספרכם
                                                 </label>
                                             </td>
                                             <td style="height: 22px;">
@@ -213,7 +214,7 @@
                                         <tr>
                                             <td style="height: 22px;width:40%;">
                                                 <label class="MyLabel">
-                                                    {{ 'Shipment.O.Quantity' | TextCodeTranslationPipe }}
+                                                    כמות
                                                 </label>
                                             </td>
                                             <td style="height: 22px;">
@@ -225,7 +226,7 @@
                                         <tr>
                                             <td style="height: 22px;width:40%;">
                                                 <label class="MyLabel">
-                                                    {{ 'Shipment.O.Weight' | TextCodeTranslationPipe }}
+                                                    משקל
                                                 </label>
                                             </td>
                                             <td style="height: 22px;">
@@ -263,7 +264,7 @@
                                                 <span style="text-align:center;font-size:13px;font-family:sans-serif;">{{item.Description}}</span>
                                             </td>
                                             <td style="height:20px;width:10%;">
-                                                <span style="text-align:center;color: #1B90CB;font-size:13px;font-family:sans-serif;" (click)="DownloadDocumentFile(item)">{{ 'Shipment.O.Show' | TextCodeTranslationPipe }}</span>
+                                                <span style="text-align:center;color: #1B90CB;font-size:13px;font-family:sans-serif;" (click)="DownloadDocumentFile(item)">הצג</span>
                                             </td> 
                                             <td>
                                                 <div></div>
@@ -288,7 +289,7 @@
         <td>
             <div [class.Disable]="DimApproveButton || DimDenyButton" style="float:right;margin-right: 5px;direction: rtl;">
                 <LogCheckBox [Checked]="IsAccepted" (ValueChanged)="IsAcceptedChanged($event)" [ObjectFieldName]="'IsAccepted'" [DataContext]="DataContext" style="float:right;margin-top:2px;"></LogCheckBox>
-                <label style="margin-right:-10px;font-size:12px;font-family:sans-serif;" class="TextTrimming">{{ 'Shipment.O.IDeclareThatIHaveCheckedTheShipmentDetailsAndDocumentsAndTheyAreAllCorrect' | TextCodeTranslationPipe }}</label><br />
+                <label style="margin-right:-10px;font-size:12px;font-family:sans-serif;" class="TextTrimming">הנני מצהיר כי בדקתי את פרטי המשלוח והמסמכים וכולם תקינים</label><br />
             </div>
             <!--<div style="float:right;width:25px;margin-right: 5px;direction: rtl;" class="tooltip">
                 <div class="tooltiptext">
@@ -311,14 +312,14 @@
         <td>
            
             <div style="float:left;margin-left:10px;">
-                <button class="Button" [class.Disable]="DimApproveButton || DimDenyButton" (click)="DenyButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;" title="Deny Declaration">{{'Shipment.O.DenyDeclaration' | TextCodeTranslationPipe}}</button>
+                <button class="Button" [class.Disable]="DimApproveButton || DimDenyButton" (click)="DenyButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;" title="Deny Declaration">דחה הצהרה</button>
             </div>
             <div style="float:left;margin-left:10px;">
-                <button class="GreenButton" [class.Disable]="DimApproveButton || IsAccepted || DimDenyButton" (click)="ApproveButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;" title="Approve Declaration">{{'Shipment.O.ApproveDeclaration' | TextCodeTranslationPipe}}</button>
+                <button class="GreenButton" [class.Disable]="DimApproveButton || IsAccepted || DimDenyButton" (click)="ApproveButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;" title="Approve Declaration">אשר הצהרה</button>
             </div>
          
             <!--<div style="float:left;margin-left:10px;">
-                <button class="Button" (click)="CloseButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;" title="Close">{{'Shipment.O.Close' | TextCodeTranslationPipe}}</button>
+                <button class="Button" (click)="CloseButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;" title="Close">סגור</button>
             </div>-->
            
         </td>
@@ -338,7 +339,7 @@
         </td>
         <td style="text-align:center;" *ngIf="DimDenyButton == true">
             <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;word-wrap: break-word;white-space: normal;">
-                {{ 'Shipment.O.ThisVersionHasBeenRejected' | TextCodeTranslationPipe }}
+                גרסה זו נדחתה
             </span>
         </td> 
         <td style="text-align:center;" *ngIf="ShowFinalMessage == true">
@@ -353,9 +354,9 @@
     <tr style="height:30px;">
         <td>
             <div>
-                <span class="BlueTitle">{{ 'Shipment.O.SupplierAccountDetails' | TextCodeTranslationPipe }}</span>
+                <span class="BlueTitle">פרטי חשבון ספק</span>
 
-                <button class="Button BackButton" (click)="CloseGoodsButtonClicked()">{{ 'Shipment.O.Back' | TextCodeTranslationPipe }}</button>
+                <button class="Button BackButton" (click)="CloseGoodsButtonClicked()">חזרה</button>
             </div>
         </td>
     </tr>
@@ -371,28 +372,28 @@
                     <td>
                         <table>
                             <tr>
-                                <td style="width: 100px; max-width: 100px;padding-right: 4px;color:#1B90CB;">{{ 'Shipment.O.SupplierAccountNo' | TextCodeTranslationPipe }}</td>
+                                <td style="width: 100px; max-width: 100px;padding-right: 4px;color:#1B90CB;">מס' חשבון ספק</td>
                                 <td class="CellStretched TextTrimming" style="width: 100px; max-width: 100px;padding-right: 4px;">
                                     {{item.SupAccount | CustomNumbersPipe:0}}
                                 </td>
                             </tr>
 
                             <tr>
-                                <td style="width: 100px; max-width: 100px;padding-right: 4px;color:#1B90CB;">{{ 'Shipment.O.Incoterm' | TextCodeTranslationPipe }}</td>
+                                <td style="width: 100px; max-width: 100px;padding-right: 4px;color:#1B90CB;">תנאי מכר</td>
                                 <td class="CellStretched TextTrimming" style="width: 100px; max-width: 100px;padding-right: 4px;">
                                     {{item.IncotermId}}
                                 </td>
                             </tr>
 
                             <tr>
-                                <td style="width: 100px; max-width: 100px;padding-right: 4px;color:#1B90CB;">{{ 'Shipment.O.AccountAmount' | TextCodeTranslationPipe }}</td>
+                                <td style="width: 100px; max-width: 100px;padding-right: 4px;color:#1B90CB;">סכום חשבון</td>
                                 <td class="CellStretched TextTrimming" style="width: 100px; max-width: 100px;padding-right: 4px;">
                                     {{item.Value | CustomNumbersPipe:0}}
                                 </td>
                             </tr>
 
                             <tr>
-                                <td style="width: 100px; max-width: 100px;padding-right: 4px;color:#1B90CB;">{{ 'Shipment.O.Currency' | TextCodeTranslationPipe }}</td>
+                                <td style="width: 100px; max-width: 100px;padding-right: 4px;color:#1B90CB;">מטבע</td>
                                 <td class="CellStretched TextTrimming" style="width: 100px; max-width: 100px;padding-right: 4px;">
                                     {{item.CurrencyName}}
                                 </td>
@@ -402,21 +403,21 @@
                     <td>
                         <table>
                             <tr>
-                                <td style="width: 100px; max-width: 100px;padding-right: 4px;color:#1B90CB;">{{ 'Shipment.O.AccountCountry' | TextCodeTranslationPipe }}</td>
+                                <td style="width: 100px; max-width: 100px;padding-right: 4px;color:#1B90CB;">ארץ חשבון</td>
                                 <td class="CellStretched TextTrimming" style="width: 100px; max-width: 100px;padding-right: 4px;">
                                     {{item.CountryName}}
                                 </td>
                             </tr>
 
                             <tr>
-                                <td style="width: 100px; max-width: 100px;padding-right: 4px;color:#1B90CB;">{{ 'Shipment.O.Supplier' | TextCodeTranslationPipe }}</td>
+                                <td style="width: 100px; max-width: 100px;padding-right: 4px;color:#1B90CB;">ספק</td>
                                 <td class="CellStretched TextTrimming" style="width: 100px; max-width: 100px;padding-right: 4px;">
                                     {{item.SupplierName}}
                                 </td>
                             </tr>
 
                             <tr>
-                                <td style="width: 100px; max-width: 100px;padding-right: 4px;color:#1B90CB;">{{ 'Shipment.O.FreightData' | TextCodeTranslationPipe }}</td>
+                                <td style="width: 100px; max-width: 100px;padding-right: 4px;color:#1B90CB;">נתוני הובלה</td>
                                 <td class="CellStretched TextTrimming" style="width: 100px; max-width: 100px;padding-right: 4px;">
                                     {{item.SupplierFreight | CustomNumbersPipe:0}}
                                 </td>
@@ -443,7 +444,7 @@
     <!--<tr style="height:32px;">
         <td>
             <div style="float:left;margin-left:10px;">
-                <button class="RedButton" (click)="CloseGoodsButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;">{{'Shipment.O.Close' | TextCodeTranslationPipe}}</button>
+                <button class="RedButton" (click)="CloseGoodsButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;">סגור</button>
             </div>
         </td>
     </tr>-->
@@ -453,8 +454,8 @@
     <tr style="height:30px;">
         <td>
             <div>
-                <span class="BlueTitle">{{ 'Shipment.O.TaxDetails' | TextCodeTranslationPipe }}</span>
-                <button class="Button BackButton" (click)="CloseTaxesButtonClicked()">{{ 'Shipment.O.Back' | TextCodeTranslationPipe }}</button>
+                <span class="BlueTitle">פרטי מס</span>
+                <button class="Button BackButton" (click)="CloseTaxesButtonClicked()">חזרה</button>
             </div> 
         </td>
     </tr>
@@ -470,21 +471,21 @@
                     <td>
                         <table>
                             <tr>
-                                <td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;">{{ 'Shipment.O.TaxItemForPayment' | TextCodeTranslationPipe }}</td>
+                                <td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;">סעיף מס לתשלום</td>
                                 <td class="CellStretched TextTrimming" style="width: 125px; max-width: 125px;padding-right: 4px;">
                                     {{item.Taxtypename}}
                                 </td>
                             </tr>
 
                             <tr>
-                                <td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;">{{ 'Shipment.O.TaxCalculationBaseInNIS' | TextCodeTranslationPipe }}</td>
+                                <td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;">בסיס לחישוב מס בש"ח</td>
                                 <td class="CellStretched TextTrimming" style="width: 125px; max-width: 125px;padding-right: 4px;">
                                     {{item.TaxBasis | CustomNumbersPipe:0}}
                                 </td>
                             </tr>
 
                             <tr>
-                                <td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;">{{ 'Shipment.O.TaxToPay' | TextCodeTranslationPipe }}</td>
+                                <td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;">מס לשלם</td>
                                 <td class="CellStretched TextTrimming" style="width: 125px; max-width: 125px;padding-right: 4px;">
                                     {{item.TaxAmount | CustomNumbersPipe:0}}
                                 </td>
@@ -494,14 +495,14 @@
                     <td>
                         <table>
                             <tr>
-                                <td style="width: 110px; max-width: 110px;padding-right: 4px;color:#1B90CB;">{{ 'Shipment.O.AmountToPayInNIS' | TextCodeTranslationPipe }}</td>
+                                <td style="width: 110px; max-width: 110px;padding-right: 4px;color:#1B90CB;">סכום לתשלום בש"ח</td>
                                 <td class="CellStretched TextTrimming" style="width: 110px; max-width: 110px;padding-right: 4px;">
                                     {{item.TaxToPay | CustomNumbersPipe:0}}
                                 </td>
                             </tr>
 
                             <tr>
-                                <td style="width: 110px; max-width: 110px;padding-right: 4px;color:#1B90CB;">{{ 'Shipment.O.DeferredTax' | TextCodeTranslationPipe }}</td>
+                                <td style="width: 110px; max-width: 110px;padding-right: 4px;color:#1B90CB;">מס נדחה</td>
                                 <td class="CellStretched TextTrimming" style="width: 110px; max-width: 110px;padding-right: 4px;">
                                     {{item.TaxPostponed | CustomNumbersPipe:0}}
                                 </td>
@@ -519,7 +520,7 @@
                 <tr style="height:30px;border-bottom:1px solid #BCBEC0;width:100%;font-family:sans-serif;">
                     <td colspan="2">
                         <div style="padding-right: 4px;color:#1B90CB;text-align:center;font-weight:bold;height:16px; text-align:left;float:right;">
-                            <span >{{ 'Shipment.O.TotalAmountToPayInNIS' | TextCodeTranslationPipe }}</span>
+                            <span style="">סה"כ סכום לתשלום בש"ח</span>
                             <span style="font-weight:bold;margin-right: 20px;">{{TotalAmount | CustomNumbersPipe:0}}</span>
                         </div>
                     </td> 
@@ -537,8 +538,8 @@
 <table class="LogitudeWindow" *ngIf="ShowDenyScreen == true" style="direction:rtl;">
     <tr style="height:30px;">
         <td>
-            <span class="BlueTitle">{{ 'Shipment.O.ExplanationForDenialOfDeclaration' | TextCodeTranslationPipe }}</span>
-            <button class="Button BackButton" (click)="CloseDenyButtonClicked()" >{{ 'Shipment.O.Back' | TextCodeTranslationPipe }}</button>
+            <span class="BlueTitle">הסבר לדחיית הצהרה</span>
+            <button class="Button BackButton" (click)="CloseDenyButtonClicked()" >חזרה</button>
         </td>
     </tr>
     <tr style="height:12px;">
@@ -555,7 +556,7 @@
     <tr>
         <td>
             <div class="MediaFill" style="height:120px;">
-                <LogTextBox [Placeholder]="'{{ 'Shipment.O.PleaseFillInTheExplanationForDenialOfTheDeclaration' | TextCodeTranslationPipe }}'" [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'DenyReason'" [IsMultiline]="true" [DataContext]="DataContext" [Text]="DenyReason"></LogTextBox>
+                <LogTextBox [Placeholder]="'אנא מלא את ההסבר לדחיית ההצהרה'" [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'DenyReason'" [IsMultiline]="true" [DataContext]="DataContext" [Text]="DenyReason"></LogTextBox>
             </div>
         </td>
     </tr>
@@ -567,10 +568,10 @@
     <tr style="height:32px;">
         <td>
             <div style="float:left;margin-left:10px;">
-                <button class="RedButton" (click)="SendButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;">{{ 'Shipment.O.Send' | TextCodeTranslationPipe }}</button>
+                <button class="RedButton" (click)="SendButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;">שלח</button>
             </div>
             <!--<div style="float:left;margin-left:10px;">
-                <button class="Button" (click)="CloseDenyButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;">{{ 'Shipment.O.Back' | TextCodeTranslationPipe }}</button>
+                <button class="Button" (click)="CloseDenyButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;">חזרה</button>
             </div>-->
         </td>
     </tr>

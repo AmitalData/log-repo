@@ -28,7 +28,8 @@
 
                 <tr style="height:20px;vertical-align:top">
                     <td style="font-size:13px">
-                        {{ 'Deposition.O.RenewDigitalForm' | TextCodeTranslationPipe }}
+                        על מנת לחדש את התצהיר יש למלא דיגיטלית את הטופס הבא ( <a (click)="NewDepositionFormClcik()" class="CustomLink" style="font-size:13px;width:130px;vertical-align:central">לינק</a> ) באתר רשות המיסים
+
                     </td>
                 </tr>
 
@@ -39,7 +40,7 @@
                     <td>
                         <table>
                             <tr style="height:20px">
-                                <td style="width:140px;font-size:13px">{{ 'Deposition.O.VendorNumber' | TextCodeTranslationPipe }}</td>
+                                <td style="width:140px;font-size:13px">מספר ספק</td>
                 
                                 <td>
                                     
@@ -47,7 +48,7 @@
                                     
                                     </span>
 
-                                    <a   *ngIf="VendorCode" class="CustomLink"  style="font-size:13px;" (click)="CopyTextButtonClicked()">{{ 'Deposition.O.Copy' | TextCodeTranslationPipe }}</a>
+                                    <a   *ngIf="VendorCode" class="CustomLink"  style="font-size:13px;" (click)="CopyTextButtonClicked()">העתק</a>
 
                                     <!--<img title="copy" src="./_Resources/Images/Icons/All/copy.png" style="width:24px;height:24px;cursor:pointer" (click)="CopyTextButtonClicked()"  *ngIf="VendorCode"  />-->
                                 </td>
@@ -57,7 +58,7 @@
                             <tr style="height:5px"><td colspan="2"></td></tr>
 
                             <tr style="height:20px">
-                                <td style="width:140px;font-size:13px">{{ 'Deposition.O.VendorName' | TextCodeTranslationPipe }}</td>
+                                <td style="width:140px;font-size:13px">שם ספק</td>
                  
                                 <td style="font-size:13px">{{VendorName}}</td>
                             </tr>
@@ -81,12 +82,12 @@
         <td>
        
             <div style="float:left">
-                <button class="GreenButton" (click)="MarkAsComplete()" style="float: right;margin-left: 7px;width:60px;">{{ 'Deposition.B.MarkAsTreated' | TextCodeTranslationPipe }}</button>
+                <button class="GreenButton" (click)="MarkAsComplete()" style="float: right;margin-left: 7px;width:60px;">סמן כטופל</button>
             </div>
 
             <div style="float:left;">
 
-                <button class="Button" (click)="CloseButtonClicked()" style="float: right;margin-left: 7px;width:45px;" title="Close">{{ 'General.O.Close' | TextCodeTranslationPipe }}</button>
+                <button class="Button" (click)="CloseButtonClicked()" style="float: right;margin-left: 7px;width:45px;" title="Close">סגור</button>
             </div>
 
         </td>
