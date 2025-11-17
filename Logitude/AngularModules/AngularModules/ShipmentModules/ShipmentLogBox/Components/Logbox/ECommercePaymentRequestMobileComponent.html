@@ -140,7 +140,8 @@
                                                                     [style.font-size]="FontTitleSize.toString() + 'px'"
                                                                     [style.width]="(ScreenWidth-178).toString() + 'px'"
                                                                     class="TextTrimming"
-                                                                    style="color:#212E62;float:left;font-family:sans-serif;">{{ 'ECommercePayment.O.SecureDigitalPaymentForShipment' | TextCodeTranslationPipe }}</span>
+                                                                    style="color:#212E62;float:left;font-family:sans-serif;">תשלום
+                                                                    דיגיטלי מאובטח למשלוח</span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -174,7 +175,7 @@
                                                     style="height: 22px">
                                                     <div [style.width]="(ScreenWidth/3).toString() + 'px'"
                                                         class="MyLabel">
-                                                        {{ 'ECommercePayment.O.For' | TextCodeTranslationPipe }}
+                                                        לכבוד
                                                     </div>
                                                 </td>
                                                 <td style="width:10px;"><span></span></td>
@@ -195,7 +196,7 @@
                                                     style="height:22px;">
                                                     <div [style.width]="(ScreenWidth/3).toString() + 'px'"
                                                         class="MyLabel">
-                                                        {{ 'ECommercePayment.O.Address' | TextCodeTranslationPipe }}
+                                                        כתובת
                                                     </div>
                                                 </td>
                                                 <td style="width:10px"><span></span></td>
@@ -236,7 +237,7 @@
                                                     style="height: 22px">
                                                     <div [style.width]="(ScreenWidth/3).toString() + 'px'"
                                                         class="MyLabel">
-                                                        {{ 'ECommercePayment.O.SenderDetails' | TextCodeTranslationPipe }}
+                                                        פרטי השולח
                                                     </div>
                                                 </td>
                                                 <td style="width:10px;"><span></span></td>
@@ -257,7 +258,7 @@
                                                     style="height:22px;">
                                                     <div [style.width]="(ScreenWidth/3).toString() + 'px'"
                                                         class="MyLabel">
-                                                        {{ 'ECommercePayment.O.GoodsDescription' | TextCodeTranslationPipe }}
+                                                        תיאור טובין
                                                     </div>
                                                 </td>
                                                 <td style="width:10px"><span></span></td>
@@ -291,7 +292,7 @@
                                             <tr>
                                                 <td style="height: 22px;width:40%;">
                                                     <label class="MyLabel">
-                                                        {{ 'ECommercePayment.O.ShipmentValue' | TextCodeTranslationPipe }}
+                                                        ערך משלוח
                                                     </label>
                                                 </td>
                                                 <td style="height: 22px;">
@@ -303,7 +304,7 @@
                                             <tr>
                                                 <td style="height: 22px;width:40%;">
                                                     <label class="MyLabel">
-                                                        {{ 'ECommercePayment.O.PackagesQuantity' | TextCodeTranslationPipe }}
+                                                        כמות אריזות
                                                     </label>
                                                 </td>
                                                 <td style="height: 22px;">
@@ -315,7 +316,7 @@
                                             <tr>
                                                 <td style="height: 22px;width:40%;">
                                                     <label class="MyLabel">
-                                                        {{ 'ECommercePayment.O.WeightInKg' | TextCodeTranslationPipe }}
+                                                        משקל בק"ג
                                                     </label>
                                                 </td>
                                                 <td style="height: 22px;">
@@ -327,7 +328,7 @@
                                             <tr>
                                                 <td style="height: 22px;width:40%;">
                                                     <label class="MyLabel">
-                                                        {{ 'ECommercePayment.O.TotalForPaymentInNIS' | TextCodeTranslationPipe }}
+                                                        סה"כ לתשלום בש"ח
                                                     </label>
                                                 </td>
                                                 <td style="height: 22px;">
@@ -342,7 +343,7 @@
                                                                 <label
                                                                     style="text-decoration: underline;color: lightskyblue;font-size:18px;"
                                                                     (click)="PaymentDetailsClick()">
-                                                                    {{ 'ECommercePayment.O.Details' | TextCodeTranslationPipe }}{{dsvStyle ? '' : ('LBL_COSTS' | TextCodeTranslationPipe)}}
+                                                                    פירוט {{dsvStyle ? '' : 'עלויות'}}
                                                                 </label>
                                                             </td>
                                                         </tr>
@@ -448,10 +449,10 @@
                                                             style="float:right;"></LogCheckBox>
                                                         <label
                                                             style="margin-right:-10px;font-size:13px;font-family:sans-serif;"
-                                                            class="TextTrimming">{{ 'ECommercePayment.O.IAgreeToThe' | TextCodeTranslationPipe }} {{dsvStyle ? ('LBL_AGREEMENT' | TextCodeTranslationPipe) :
-                                                            ('LBL_TERMS' | TextCodeTranslationPipe)}} <span
+                                                            class="TextTrimming">אני מאשר\ת את {{dsvStyle ? 'הסכם' :
+                                                            'תנאי'}} <span
                                                                 style="color:lightskyblue;text-decoration: underline;font-size:13px;"
-                                                                (click)="ViewAggreement()"> {{ 'ECommercePayment.O.Service' | TextCodeTranslationPipe }}</span> </label><br />
+                                                                (click)="ViewAggreement()"> השירות</span> </label><br />
                                                     </div>
                                                 </td>
                                             </tr>
@@ -468,21 +469,24 @@
                                                         <span *ngIf="!dsvStyle"
                                                             style="margin-right:-10px;margin-left: 10px;font-size:13px;font-family:sans-serif;"
                                                             class="TextTrimming">
-                                                            {{'LBL_FOR_INQUIRIES_ABOUT_COSTS_OR_ANY_OTHER_INFORMATION_ABOUT_THE_SHIPMENT' | TextCodeTranslationPipe}}
+                                                            לבירורים בנושא עלויות או כל מידע נוסף אודות המשלוח
                                                             <a style="color:lightskyblue;font-size:13px;"
-                                                                href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">{{'LBL_CLICK_HERE' | TextCodeTranslationPipe}}</a>
+                                                                href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ
+                                                                כאן</a>
                                                         </span>
 
                                                         <span *ngIf="dsvStyle"
                                                             style="font-size:13px;font-family:sans-serif;"
                                                             class="TextTrimming">
-                                                            <span>{{'LBL_FOR_INQUIRIES_ABOUT_COSTS_OR_ANY_OTHER_INFORMATION_ABOUT_THE_SHIPMENT' | TextCodeTranslationPipe}}</span>
+                                                            <span>לבירורים בנושא עלויות או כל מידע נוסף אודות
+                                                                המשלוח</span>
                                                             <br>
                                                             <span>
-                                                                {{'LBL_CONTACT_US_BY_EMAIL' | TextCodeTranslationPipe}}
+                                                                יצירת קשר במייל
                                                                 <a style="color:lightskyblue;font-size:13px;"
-                                                                    href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">{{'LBL_CLICK_HERE' | TextCodeTranslationPipe}}</a>
-                                                                , {{'LBL_CONTACT_US_ON_WHATSAPP' | TextCodeTranslationPipe}} -->
+                                                                    href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ
+                                                                    כאן</a>
+                                                                , יצירת קשר ב WhatsApp -->
                                                             </span>
                                                         </span>
 
@@ -512,7 +516,8 @@
                                                             style="width:225px;height:35px;background-color:cornflowerblue;display:inline-block;font-size:13px;padding-top:5px;border:1px solid cornflowerblue;border-radius:9px;margin-top: 10px;">
                                                             <span style="text-align:center;font-size:13px;">
                                                                 <a
-                                                                    style="color:white;font-size:18px;font-family: sans-serif;">{{ 'ECommercePayment.B.SecurePayment' | TextCodeTranslationPipe }}</a>
+                                                                    style="color:white;font-size:18px;font-family: sans-serif;">לתשלום
+                                                                    מאובטח</a>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -538,11 +543,13 @@
                                                     </div>
                                                     <span
                                                         style="font-size:11px;color:black;font-family:sans-serif;white-space: normal;display: inline-block;margin: 0 2px;">
-                                                        {{ 'ECommercePayment.O.DSVIsTheThirdLargestInternationalShippingCompanyInTheWorld' | TextCodeTranslationPipe }}
-                                                        <br>{{ 'ECommercePayment.O.TheCompanyOffersSupplyChainManagementSolutionsInOver80Countries' | TextCodeTranslationPipe }}
-                                                        <br>{{ 'ECommercePayment.O.DSVIsraelHasBeenALeaderInTheInternationalShippingAndCustomsBrokerageIndustryForOver50Years' | TextCodeTranslationPipe }}
-                                                        <br>{{ 'ECommercePayment.O.DSVeCommerceDealsWithTheReleaseOfEcommerceShipmentsFromVariousWebsites' | TextCodeTranslationPipe }}
-                                                        <br><br>{{ 'ECommercePayment.O.LinkToWebsite' | TextCodeTranslationPipe }}: <a style="font-size: 11px;"
+                                                        חברת DSV הינה חברת שילוח בין לאומי השלישית בגודלה בעולם.
+                                                        <br>החברה מציעה פתרונות לניהול שרשרת האספקה בלמעלה מ-80 מדינות.
+                                                        <br>חברת DSV ישראל מובילה בענף שילוח בינלאומי והעמילות מעל 50
+                                                        שנה.
+                                                        <br>חברת DSV eCommerce עוסקת בשחרור משלוחי איקומרס שמגיעים מאתרי
+                                                        אינטרנט שונים בינהם עבור עליאקספרס, ועוד.
+                                                        <br><br>לינק לאתר האינטרנט: <a style="font-size: 11px;"
                                                             href="https://il.dsv.com/about-dsv/israel-dsv/">https://il.dsv.com/about-dsv/israel-dsv/</a>
                                                     </span>
                                                 </td>
@@ -600,8 +607,8 @@
                 <tr style="height:30px;">
                     <td>
                         <div>
-                            <span class="BlueTitle">{{ 'ECommercePayment.O.BillingDetails' | TextCodeTranslationPipe }}</span>
-                            <button class="Button BackButton" (click)="ClosePaymentDetailsButtonClicked()">{{ 'ECommercePayment.B.Back' | TextCodeTranslationPipe }}</button>
+                            <span class="BlueTitle">פירוט חיובים</span>
+                            <button class="Button BackButton" (click)="ClosePaymentDetailsButtonClicked()">חזרה</button>
                         </div>
                     </td>
                 </tr>
@@ -626,7 +633,7 @@
                                 <td>
                                     <table>
                                         <tr>
-                                            <!--<td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;">{{ 'ECommercePayment.O.BillingItem' | TextCodeTranslationPipe }}</td>-->
+                                            <!--<td style="width: 125px; max-width: 125px;padding-right: 4px;color:#1B90CB;">סעיף חיוב</td>-->
                                             <td class="CellStretched TextTrimming PaymentDetailsLabel"
                                                 style="width: 125px; max-width: 125px;padding-right: 4px;">
                                                 {{item.LocalName}}
@@ -643,7 +650,7 @@
                                 <td>
                                     <table>
                                         <tr>
-                                            <!--<td style="width: 110px; max-width: 110px;padding-right: 4px;color:#1B90CB;">{{ 'ECommercePayment.O.Amount' | TextCodeTranslationPipe }}</td>-->
+                                            <!--<td style="width: 110px; max-width: 110px;padding-right: 4px;color:#1B90CB;">סכום</td>-->
                                             <td class="CellStretched TextTrimming PaymentDetailsLabel"
                                                 style="width: 110px; max-width: 110px;padding-right: 4px;">
                                                 {{item.AmountInNIS}}
@@ -663,7 +670,7 @@
                                 <td colspan="2">
                                     <div
                                         style="padding-right: 4px;color:#1B90CB;text-align:center;font-weight:bold;height:16px; text-align:left;float:right;">
-                                        <span style="font-family: sans-serif; font-size: 20px;">{{ 'ECommercePayment.O.TotalInNIS' | TextCodeTranslationPipe }}</span>
+                                        <span style="font-family: sans-serif; font-size: 20px;">סה"כ בש"ח</span>
                                         <span
                                             style="font-weight: bold; margin-right: 20px; font-family: sans-serif; font-size: 20px;">{{TotalAmount
                                             | CustomNumbersPipe:0}}</span>
@@ -677,11 +684,12 @@
                                     </div>
                                     <span
                                         style="font-size:11px;color:black;font-family:sans-serif;white-space: normal;display: inline-block;margin: 10px 2px;">
-                                        {{ 'ECommercePayment.O.DSVIsTheThirdLargestInternationalShippingCompanyInTheWorld' | TextCodeTranslationPipe }}
-                                        <br>{{ 'ECommercePayment.O.TheCompanyOffersSupplyChainManagementSolutionsInOver80Countries' | TextCodeTranslationPipe }}
-                                        <br>{{ 'ECommercePayment.O.DSVIsraelHasBeenALeaderInTheInternationalShippingAndCustomsBrokerageIndustryForOver50Years' | TextCodeTranslationPipe }}
-                                        <br>{{ 'ECommercePayment.O.DSVeCommerceDealsWithTheReleaseOfEcommerceShipmentsFromVariousWebsites' | TextCodeTranslationPipe }}
-                                        <br><br>{{ 'ECommercePayment.O.LinkToWebsite' | TextCodeTranslationPipe }}: <a style="font-size: 11px;"
+                                        חברת DSV הינה חברת שילוח בין לאומי השלישית בגודלה בעולם.
+                                        <br>החברה מציעה פתרונות לניהול שרשרת האספקה בלמעלה מ-80 מדינות.
+                                        <br>חברת DSV ישראל מובילה בענף שילוח בינלאומי והעמילות מעל 50 שנה.
+                                        <br>חברת DSV eCommerce עוסקת בשחרור משלוחי איקומרס שמגיעים מאתרי אינטרנט שונים
+                                        בינהם עבור עליאקספרס, ועוד.
+                                        <br><br>לינק לאתר האינטרנט: <a style="font-size: 11px;"
                                             href="https://il.dsv.com/about-dsv/israel-dsv/">https://il.dsv.com/about-dsv/israel-dsv/</a>
                                     </span>
                                 </td>
@@ -708,8 +716,8 @@
                 <div class="section-header-right">
                     <h1 class="header">PAY SAFE</h1>
                     <div>
-                        <h3 class="subheader">{{ 'ECommercePayment.O.SecureDigitalPayment' | TextCodeTranslationPipe }}</h3>
-                        <h3 class="shipment">{{ 'ECommercePayment.O.Shipment' | TextCodeTranslationPipe }} # {{Hawb}}</h3>
+                        <h3 class="subheader">תשלום דיגיטלי מאובטח</h3>
+                        <h3 class="shipment">משלוח # {{Hawb}}</h3>
                     </div>
                 </div>
                 <div class="section-header-left">
@@ -719,50 +727,50 @@
 
             <div class="details">
                 <section class="section">
-                    <h3>{{ 'ECommercePayment.O.CustomerDetails' | TextCodeTranslationPipe }}</h3>
-                    <p><span>{{ 'ECommercePayment.O.For' | TextCodeTranslationPipe }}: {{CustomerName}}</span></p>
-                    <p><span>{{ 'ECommercePayment.O.Address' | TextCodeTranslationPipe }}: {{CustomerAddress}}</span></p>
+                    <h3>פרטי הלקוח</h3>
+                    <p><span>לכבוד: {{CustomerName}}</span></p>
+                    <p><span>כתובת: {{CustomerAddress}}</span></p>
                 </section>
 
                 <section class="section">
-                    <h3>{{ 'ECommercePayment.O.SenderDetails' | TextCodeTranslationPipe }}</h3>
-                    <p><span>{{ 'ECommercePayment.O.From' | TextCodeTranslationPipe }}: {{SenderDetails}}</span></p>
-                    <p><span>{{ 'ECommercePayment.O.GoodsDescription' | TextCodeTranslationPipe }}: {{GoodsDescritpion}}</span></p>
+                    <h3>פרטי השולח</h3>
+                    <p><span>מאת: {{SenderDetails}}</span></p>
+                    <p><span>תיאור טובין: {{GoodsDescritpion}}</span></p>
                 </section>
 
                 <section class="section">
-                    <h3>{{ 'ECommercePayment.O.PackageDetails' | TextCodeTranslationPipe }}</h3>
-                    <p><span>{{ 'ECommercePayment.O.ShipmentValue' | TextCodeTranslationPipe }}: {{ForeignCurrencyValue | number : '1.0-1'}} {{ForeignCurrency}}</span></p>
-                    <p><span>{{ 'ECommercePayment.O.PackagesQuantity' | TextCodeTranslationPipe }}: {{Quantity}}</span></p>
-                    <p><span>{{ 'ECommercePayment.O.Weight' | TextCodeTranslationPipe }}: {{Weight}} ק"ג</span></p>
+                    <h3>פרטי חבילה</h3>
+                    <p><span>ערך משלוח: {{ForeignCurrencyValue | number : '1.0-1'}} {{ForeignCurrency}}</span></p>
+                    <p><span>כמות אריזות: {{Quantity}}</span></p>
+                    <p><span>משקל: {{Weight}} ק"ג</span></p>
                 </section>
             </div>
 
             <div class="section-3">
                 <div>
-                    <h4 class="amount">{{ 'ECommercePayment.O.TotalForPayment' | TextCodeTranslationPipe }}: {{TotalChargesInNIS}} ש"ח <a class="cost-breakdown" href="#"
-                            (click)="$event.preventDefault();PaymentDetailsClick()">{{ 'ECommercePayment.O.CostsBreakdown' | TextCodeTranslationPipe }}</a></h4>
+                    <h4 class="amount">סה"כ לתשלום: {{TotalChargesInNIS}} ש"ח <a class="cost-breakdown" href="#"
+                            (click)="$event.preventDefault();PaymentDetailsClick()">פירוט עלויות</a></h4>
                     <p class="checkbox">
                         <!-- <input type="checkbox">  -->
                         <LogCheckBox [IsDisabled]="ShowFinalMessage" [Checked]="IsAgreed"
                             (ValueChanged)="IsAggreeChicked($event)" [ObjectFieldName]="'IsAggree'"
                             [DataContext]="DataContext"></LogCheckBox>
-                        {{ 'ECommercePayment.O.IAgree' | TextCodeTranslationPipe }} <a href="#" (click)="$event.preventDefault();ViewAggreement()">{{ 'ECommercePayment.O.ServiceAgreement' | TextCodeTranslationPipe }}</a>
+                        אני מאשר את הסכם <a href="#" (click)="$event.preventDefault();ViewAggreement()">השירות</a>
                     </p>
                 </div>
             </div>
 
             <div class="btn-payment">
-                <button [class.Disable]="IsAgreed == false" (click)="OnPayClick()">{{ 'ECommercePayment.B.SecurePayment' | TextCodeTranslationPipe }}</button>
+                <button [class.Disable]="IsAgreed == false" (click)="OnPayClick()">לתשלום מאובטח</button>
             </div>
 
             <p class="vlidation-msg" *ngIf="ShowFinalMessage">{{FinalMessage}}</p>
 
             <div class="footer">
                 <div class="footer-right">
-                    <span>{{ 'ECommercePayment.O.ForInquiriesAboutCostsOrAnyAdditionalInformationAboutTheShipment' | TextCodeTranslationPipe }}</span>
+                    <span>לברורים בנושא עלויות או כל מידע נוסף אודות המשלוח</span>
                     <br>
-                    <a href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">{{ 'ECommercePayment.O.ClickHere' | TextCodeTranslationPipe }}</a>
+                    <a href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כאן</a>
                 </div>
                 <div class="footer-left">
                     <img src="./Images/mobile_payment/orian_logo_mobile.png" />
@@ -780,8 +788,8 @@
                 <div class="section-header-right">
                     <h1 class="header">DETAILS</h1>
                     <div>
-                        <h3 class="subheader">{{ 'ECommercePayment.O.BillingDetails' | TextCodeTranslationPipe }}</h3>
-                        <h3 class="shipment">{{ 'ECommercePayment.O.Shipment' | TextCodeTranslationPipe }} # {{Hawb}}</h3>
+                        <h3 class="subheader">פירוט חיובים</h3>
+                        <h3 class="shipment">משלוח # {{Hawb}}</h3>
                     </div>
                 </div>
                 <div class="section-header-left">
@@ -792,8 +800,8 @@
             <div class="details">
                 <section class="section first-section">
                     <p>
-                        <span>{{ 'ECommercePayment.O.BillingItem' | TextCodeTranslationPipe }}</span>
-                        <span>{{ 'ECommercePayment.O.Amount' | TextCodeTranslationPipe }}</span>
+                        <span>סעיף חיוב</span>
+                        <span>סכום</span>
                     </p>
                 </section>
 
@@ -806,19 +814,19 @@
             </div>
 
             <div class="section-3">
-                <h4 class="amount">{{ 'ECommercePayment.O.TotalForPayment' | TextCodeTranslationPipe }}: {{TotalAmount | CustomNumbersPipe:0}} ש"ח</h4>
+                <h4 class="amount">סה"כ לתשלום: {{TotalAmount | CustomNumbersPipe:0}} ש"ח</h4>
             </div>
 
             <div class="btn-payment">
                 <button (click)="ClosePaymentDetailsButtonClicked()"><img src="./Images/mobile_payment/back_arrow.png"
-                        alt=""> {{ 'ECommercePayment.O.BackToSecurePayment' | TextCodeTranslationPipe }}</button>
+                        alt=""> חזרה לתשלום מאובטח</button>
             </div>
 
             <div class="footer">
                 <div class="footer-right">
-                    <span>{{ 'ECommercePayment.O.ForInquiriesAboutCostsOrAnyAdditionalInformationAboutTheShipment' | TextCodeTranslationPipe }}</span>
+                    <span>לברורים בנושא עלויות או כל מידע נוסף אודות המשלוח</span>
                     <br>
-                    <a href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">{{ 'ECommercePayment.O.ClickHere' | TextCodeTranslationPipe }}</a>
+                    <a href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כאן</a>
                 </div>
                 <div class="footer-left">
                     <img src="./Images/mobile_payment/orian_logo_mobile.png" />

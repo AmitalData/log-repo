@@ -1,3 +1,4 @@
+
 <style type="text/css">
     .TabCloseIcon:hover {
         background: url('./Images/Tab.X.Blue.png') no-repeat;
@@ -534,13 +535,13 @@
                                             <td style="width:70px;right: 10px;">
                                                 <div *ngIf="LayoutDirection != 'rtl'">
                                                     <span *ngIf="IsDailyCurrenciesRatesVisible && !this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">Daily Currencies Rates</span>
-                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">{{'General.O.CurrencyRatesTable' | TextCodeTranslationPipe}}</span>
+                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">טבלת שערי מטבע</span>
                                                     <span *ngIf="IsDailyCurrenciesRatesVisible && USDLastUpdate != null">{{'General.O.DollarRateUpdated' | TextCodeTranslationPipe}}{{USDLastUpdate}}</span>
                                                 </div>
                                                 <div *ngIf="LayoutDirection == 'rtl'">
                                                     <span *ngIf="IsDailyCurrenciesRatesVisible && USDLastUpdate != null">{{'General.O.DollarRateUpdated' | TextCodeTranslationPipe}}{{USDLastUpdate}}</span>
                                                     <span *ngIf="IsDailyCurrenciesRatesVisible && !this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">Daily Currencies Rates</span>
-                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">{{'General.O.CurrencyRatesTable' | TextCodeTranslationPipe}}</span>
+                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">טבלת שערי מטבע</span>
                                                 </div>
                                             </td>
                                             <td style="width:5px"></td>
