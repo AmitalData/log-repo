@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Transactions;
 using Unifreight.BL.EntityPMs;
@@ -734,7 +735,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 status = "new",
                 xml_status = xmlStatus,
                 status_id = status_id,
-                status_DateTime = dirtyCourierMasterPM.LandingDate.GetValueOrDefault(),
+                status_DateTime = dirtyCourierMasterPM.LandingDate.HasValue ? Convert.ToDateTime(dirtyCourierMasterPM.LandingDate) : DateTime.Now,
                 comments = comments,
                 OwnerUnifreightUserCode = user?.EnglishName,
             };
