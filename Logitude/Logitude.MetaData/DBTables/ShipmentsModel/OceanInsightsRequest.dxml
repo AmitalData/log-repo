@@ -103,6 +103,6 @@
     Name="ApiStatus"
     Type="bit">
 	    <Constraints
-		  Nullable="false" />
+		  Nullable="true" />
   </Column>
 </Table>
