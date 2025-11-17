@@ -21,7 +21,16 @@ namespace Logitude.Accounting.Data.Repositories
 			throw new NotImplementedException();
         }
 
-   }
+        public bool Exists(int tenant, string accountingEntityId, string accountingEntityCode, string action, string childEntityId)
+        {
+            return (from a in context.AccountingEntitiesJournals
+                    where a.AccountingEntityId == accountingEntityId && a.AccountingEntityCode == accountingEntityCode
+                    && a.Action == action && a.ChildEntityId == childEntityId
+                    && a.Tenant == tenant
+                    select a).Any();
+        }
+
+    }
 
 }
    
