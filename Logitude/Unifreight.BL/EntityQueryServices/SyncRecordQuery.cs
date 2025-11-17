@@ -24,6 +24,7 @@ namespace Unifreight.BL.EntityQueryServices
 {
     public class SyncRecordQuery
     {
+        private readonly static string[] unifreightTablesSync = new string[] { "CCUPAYHAND", "CCUSIGNUM", "CCUMSHGR", "GGGQ", "CCUCARL", "CCUCUSTITEMS", "CCUCRREQ", "CCUFILEM", "CCUACCSUP", "CCUTAX", "CCUSUPITEMSI", "CCUSUPITEMS", "CCUTRANSPVAL", "CCUPAYLINEF", "YCULTASK" };
         SyncRecordRepository repository;
         static DevLog logger = DevLog.Instance;
 
@@ -76,12 +77,12 @@ namespace Unifreight.BL.EntityQueryServices
             string offset = GetTimeZone(tenant);
             List<IGrouping<string, SyncRecord>> groupedByEntname = groupRecord.GroupBy(r => r.Entname).ToList();
 
-            List<EntityRecord> entityRecords = new List<EntityRecord>();
+            ConcurrentBag<EntityRecord> entityRecords = new ConcurrentBag<EntityRecord>();
             List<Task> entityRecordTasks = new List<Task>();
             int tasksNumber;
             if (!int.TryParse(Environment.GetEnvironmentVariable("tasksNumberForSync") ?? "", out tasksNumber))
                 tasksNumber = 20;
-            
+
             SemaphoreSlim throttler = new SemaphoreSlim(tasksNumber);
 
             groupedByEntname.ForEach(group =>
@@ -117,11 +118,11 @@ namespace Unifreight.BL.EntityQueryServices
                                 DbOffset = offset
                             };
                         }).Where(x => x != null).ToList();
-                        entityRecords.AddRange(entityRecordsInGroup);
+                        entityRecordsInGroup.ForEach(record => entityRecords.Add(record));
                     }
                     catch (Exception ex)
                     {
-                        logger.WriteFatal(ex, $"Error processing sync records of entname: {group?.Key}");                        
+                        logger.WriteFatal(ex, $"Error processing sync records of entname: {group?.Key}");
                     }
                     finally
                     {
@@ -131,12 +132,20 @@ namespace Unifreight.BL.EntityQueryServices
                 entityRecordTasks.Add(task);
 
             });
-            Task.WaitAll(entityRecordTasks.ToArray());
+            try
+            {
+                Task.WaitAll(entityRecordTasks.ToArray());
+            }
+            catch (AggregateException ex)
+            {
+                foreach (var inner in ex.InnerExceptions)
+                    logger.WriteFatal(inner, "Error in parallel entity record tasks");
+            }
             throttler.Dispose();
 
             repository.UpdateStatus(notExistsRecord.ToList(), SyncRecordStatus.SyncedAndUpdated);
 
-            return entityRecords;
+            return entityRecords.ToList();
         }
 
         private static void AddGGGQC(List<SyncRecord> syncRecords)
@@ -173,14 +182,21 @@ namespace Unifreight.BL.EntityQueryServices
 
         public List<SyncRecordWithJson> GetRecordOfRowNeedSync(List<SyncRecord> syncRecords, string tableName)
         {
+            if (unifreightTablesSync.Contains(tableName.ToUpper()) == false)
+            {
+                logger.WriteError($"Table {tableName} is not allowed to sync to Unifreight");
+                throw new Exception($"Table {tableName} is not allowed to sync to Unifreight");
+            }
+
             StringBuilder queryBuilder = new StringBuilder();
             queryBuilder.Append($"SELECT * FROM {tableName} ");
             bool firstCondition = true;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
             List<SyncRecordWithJson> syncRecordsWithJson = syncRecords.Select(sr => new SyncRecordWithJson { SyncRecord = sr, RecordAsJson = "[]" }).ToList();
 
-            syncRecordsWithJson.ForEach(syncRecordssWithJson =>
+            syncRecordsWithJson.ForEach(syncRecordWithJson =>
             {
-                SyncRecord syncRecord = syncRecordssWithJson.SyncRecord;
+                SyncRecord syncRecord = syncRecordWithJson.SyncRecord;
                 if (syncRecord == null || string.IsNullOrEmpty(syncRecord.KeyVal) || syncRecord.TrigAction == "D")
                     return;
 
@@ -188,9 +204,33 @@ namespace Unifreight.BL.EntityQueryServices
                 if (firstCondition)
                     firstCondition = false;
 
-                queryBuilder.Append(syncRecord.Entname.ToLower() == "ccumshgr" ?
-                    " ( FILE_NO = '" + syncRecord.FileNo + "') " :
-                    " (" + syncRecord.KeyVal.Replace(",", " and ").Replace("=NULL", " is null ") + ") ");
+                if (syncRecord.Entname.ToLower() == "ccumshgr")
+                {
+                    string paramName = "@FileNo_" + syncRecord.FileNo;
+                    sqlParameters.Add(new SqlParameter(paramName, syncRecord.FileNo));
+                    queryBuilder.Append($" ( FILE_NO = {paramName} ) ");
+                }
+                else
+                {
+                    queryBuilder.Append(" ( ");
+                    bool conditionsFirst = true;
+                    syncRecord.KeyVal.Split(',').ToList().ForEach(str =>
+                    {
+                        if (!conditionsFirst)
+                            queryBuilder.Append(" AND ");
+                        else
+                            conditionsFirst = false;
+
+                        string[] split = str.Split('=');
+                        string value = split[1].Replace("'", "");
+                        string key = split[0];
+                        string paramName = $"@{key}_{syncRecord.Id.Replace("-", "_")}";
+                        string conditionWithValue = value == "NULL" ? " is null " : $" = {paramName}";
+                        queryBuilder.Append($" {key} {conditionWithValue} ");
+                        sqlParameters.Add(new SqlParameter(paramName, value));
+                    });
+                    queryBuilder.Append(" ) ");
+                }
             });
 
             if (firstCondition)
@@ -202,26 +242,41 @@ namespace Unifreight.BL.EntityQueryServices
             string query = queryBuilder.ToString();
             DataTable dt = new DataTable();
 
-            using (SqlConnection conn = (repository.Context as IContext).GetActiveDbContext().Database.Connection as SqlConnection)
+            try
             {
-                conn.Open();
-                SqlDataReader dataReader = new SqlCommand(query, conn).ExecuteReader();
-                dt.Load(dataReader);
-                conn.Close();
+                using (SqlConnection conn = (repository.Context as IContext).GetActiveDbContext().Database.Connection as SqlConnection)
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        if (sqlParameters.Count > 0)
+                            cmd.Parameters.AddRange(sqlParameters.ToArray());
+                        using (SqlDataReader dataReader = cmd.ExecuteReader())
+                        {
+                            dt.Load(dataReader);
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                logger.WriteFatal(e, $"failed to get date from unifreith table {tableName} ");
+                logger.WriteDebug( $"failed to get date from unifreith table {tableName}, query: {query}, parameters: {string.Join(", ", sqlParameters.Select(x => $"name: {x.ParameterName} value: {x.Value} "))} ");
             }
 
             string[] columns = dt.Columns.Cast<DataColumn>().Select(c => c.ColumnName).ToArray();
             IEnumerable<Dictionary<string, string>> data = dt.Rows.Cast<DataRow>()
                     .Select(dr => columns.ToDictionary(c => c, c =>
-                     dr[c] is DateTime datetime ?
-                            datetime.ToString("d/M/yyyy h:mm:ss tt", CultureInfo.InvariantCulture) :
-                            dr[c]?.ToString()
+                         dr[c] is DateTime datetime ?
+                                datetime.ToString("d/M/yyyy h:mm:ss tt", CultureInfo.InvariantCulture) :
+                                dr[c]?.ToString()
                     ));
 
             JsonSerializerOptions jsonOptions = new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
 
             int threadNumber;
-            if (!int.TryParse(Environment.GetEnvironmentVariable("theardNumberForSync") ?? "", out threadNumber))
+            if (!int.TryParse(Environment.GetEnvironmentVariable("threadNumberForSync") ?? "", out threadNumber))
                 threadNumber = 20;
             ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = threadNumber };
 
