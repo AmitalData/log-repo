@@ -2,9 +2,12 @@
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -79,7 +82,15 @@ namespace Logitude.Accounting.BL.CoreBL
                         GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(MyContext);
                         GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
                         GLAccountPM cleanGLAccountPM = null;
-                        GLAccountPM gLAccountPM = gLAccountQueryService.GetByInternalNumber(accLineDTO.InternalNumber, tenant);
+                        GLAccountPM gLAccountPM = null;
+                        if (accLineDTO.InternalNumber == "get")
+                        {
+                            accLineDTO.InternalNumber = /*CodeCounter*/(new CodeCounterWrapper(true)).GetNumber("GLAccount", tenant).ToString();
+                        }
+                        else 
+                        {
+                            gLAccountPM = gLAccountQueryService.GetByInternalNumber(accLineDTO.InternalNumber, tenant);
+                        }
                         if (gLAccountPM == null)
                         {
                             gLAccountPM = new GLAccountPM()
@@ -87,19 +98,6 @@ namespace Logitude.Accounting.BL.CoreBL
                                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                                 Tenant = tenant,
                                 InternalNumber = accLineDTO.InternalNumber,
-                                //Id = "get",
-                                //RevenueExpenseType = "get",
-                                //ExcludeFromDeductionReport = false,
-                                //CreateDate = DateTime.Now,
-                                //UpdateDate = DateTime.Now,
-                                //AllowEditChequePayToName = false,
-                                //ActiveForInterest = false,
-                                //ActiveForInterestCreditInvoice = false,
-                                //Smallcashbook = false,
-                                //DeductionTypeId = "get",
-                                //DeductionFileTypeId = "get",
-                                //AssessingOfficeCode = "get",
-                                //CreatedByUserId = _resolveLoggingUserId,
                             };
                         }
                         else
@@ -794,7 +792,7 @@ namespace Logitude.Accounting.BL.CoreBL
         //public string APS_Reference { get; private set; }
         //public string OutputOrInput { get; private set; }
         //public string LineTypeCode { get; private set; }
-        public string InternalNumber { get; private set; }
+        public string InternalNumber { get; set; }
         public string DisplayNumber { get; private set; }
         public string LocalName { get; private set; }
         public string EnglishName { get; private set; }
@@ -833,7 +831,7 @@ namespace Logitude.Accounting.BL.CoreBL
             int count = values.Count();
             if (count > 0) rec.ChartType = values[0];
             if (count > 1) rec.InternalNumber = values[1].TrimStart('0');
-            if (count > 2) rec.DisplayNumber = values[2].TrimStart('0');
+            if (count > 2) rec.DisplayNumber = values[2].TrimStart('G');
             if (count > 3) rec.LocalName = values[3];
             if (count > 4) rec.EnglishName = values[4];
             if (count > 5) rec.ChartCode = values[5].TrimStart('0');
