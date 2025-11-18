@@ -9,7 +9,7 @@
                 <table>
                     <tr>
                         <td class="HeaderScreenLable" style="width: 40px">
-                            {{'Accounting.General.O.OriginalAmount' | TextCodeTranslationPipe}}
+                            {{'ExpenseAllocationFlow.O.TotalExpensesAllocation' | TextCodeTranslationPipe}}
                         </td>
                         <td
                             style="
@@ -22,7 +22,7 @@
                             NumbersPipe:'N2'}}
                         </td>
                         <td class="HeaderScreenLable" style="width: 40px">
-                            {{'ExpenseAllocationFlow.O.AmountPaid' | TextCodeTranslationPipe}}
+                            {{'ExpenseAllocationFlow.O.RecognizedExpense' | TextCodeTranslationPipe}}
                         </td>
                         <td
                             style="
@@ -34,7 +34,7 @@
                             {{isVoided ? 0 : (amountPaid | NumbersPipe:'N2')}}
                         </td>
                         <td class="HeaderScreenLable" style="width: 40px">
-                            {{'ExpenseAllocationFlow.O.AmountDue' | TextCodeTranslationPipe}}
+                            {{'ExpenseAllocationFlow.O.UnrecognizedExpenses' | TextCodeTranslationPipe}}
                         </td>
                         <td
                             style="
