@@ -53,12 +53,6 @@ namespace Unifreight.BL.EntityQueryServices
             return tenant;
         }
 
-        public List<SyncRecord> get()
-        {
-            List<SyncRecord> a = repository.Context.SyncRecord.ToList();
-            return a;
-        }
-
         public List<EntityRecord> GetUnsyncRecordsAndMarkAsInProcess(int tenant, string item, int? customsFileNo, bool allTask)
         {
             ConcurrentBag<SyncRecord> notExistsRecord = new ConcurrentBag<SyncRecord>();
@@ -114,7 +108,6 @@ namespace Unifreight.BL.EntityQueryServices
                                 RecordAsJson = recordAsJson,
                                 UpdateDate = syncRecord.SyncDT,
                                 CraeteDate = syncRecord.CreateDate,
-                                CreateDate = syncRecord.CreateDate,
                                 DbOffset = offset
                             };
                         }).Where(x => x != null).ToList();
@@ -269,7 +262,7 @@ namespace Unifreight.BL.EntityQueryServices
             IEnumerable<Dictionary<string, string>> data = dt.Rows.Cast<DataRow>()
                     .Select(dr => columns.ToDictionary(c => c, c =>
                          dr[c] is DateTime datetime ?
-                                datetime.ToString("d/M/yyyy h:mm:ss tt", CultureInfo.InvariantCulture) :
+                                datetime.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture) :
                                 dr[c]?.ToString()
                     ));
 
