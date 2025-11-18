@@ -15,6 +15,8 @@ export class CertificateOfOriginTypeCodeEnumList {
 	Inactive: boolean;
 	IsCustomApprovalRequired: boolean;
 	IsCriterionMandatory: boolean;
+	IsCustomsItemMandatory: boolean;
+	IsZipcodeMandatory: boolean;
 	
 }
  
