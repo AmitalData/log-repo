@@ -61,6 +61,7 @@ using Logitude.Accounting.Data.Enums;
 using AccountingEntityValues = Logitude.BL.InvoiceModel.CloseTables.AccountingEntityValues;
 using Logitude.Server.Tools.QueueService;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InvoiceModel.Tools.Exceptions;
 
 
 
@@ -736,7 +737,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.SetApproved = false;
                 entityPM.StatusCode = "AC";
-                this.GenerateInvoiceNumber();
             }
             if (invoice.StatusCode == "AR")
             {
@@ -757,7 +757,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (invoice.ApprovedDate != null)
                 {
-                    throw new ApplicationException("This invoice is already approved");
+                    throw new InvoiceAlreadyApprovedException("This invoice is already approved");
                 }
             }
 
@@ -767,7 +767,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.ValidateHigherStatus();
-
+            if (entityPM.IsAutoCredit && entityPM.SetApprovedAutoCredit)
+            {
+                this.GenerateInvoiceNumber();
+            }
             if (entityPM.SetCancelDraft)
             {
                 this.CancelDraftInvoice();
@@ -1163,7 +1166,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             }
                         }
 
-                        throw new ApplicationException(msg);
+                        throw new InvoiceAlreadyApprovedException(msg);
                     }
                 }
 

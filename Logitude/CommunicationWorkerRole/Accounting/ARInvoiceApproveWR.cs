@@ -31,6 +31,7 @@ using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Server.Tools;
+using Logitude.BL.InvoiceModel.Tools.Exceptions;
 
 namespace CommunicationWorkerRole
 {
@@ -316,6 +317,10 @@ namespace CommunicationWorkerRole
                     }
 
                 }
+                catch (InvoiceAlreadyApprovedException) 
+                {
+                    _DbQueueService.CompleteAsFailed();
+                }
                 catch (BusinessErrorException ex)
                 {
                     
@@ -406,9 +411,6 @@ namespace CommunicationWorkerRole
             {
                 aRInvoice.InvoiceNumber = aRInvoice.Id;
                 UpdateARInvoiceInRepository(aRInvoice, repository);
-               
-
-
             }
         }
 
