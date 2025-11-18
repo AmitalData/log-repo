@@ -1489,16 +1489,9 @@ namespace Logitude.Accounting.BL.CoreBL
         private static void FixFailedReconcileJournals(int tenant, IAccountingContext accountingContext, string journalId, ResultApproveJournalM result)
         {
             try
-            {
-                if (result == null || (result != null && result.FixFailedReconcileDone != true))
-                {
+            {                            
                     var journalQueryService = new JournalQueryService(accountingContext);
                     journalQueryService.FixFailedReconcileJournals(tenant);
-                    if (result != null)
-                    {
-                        result.FixFailedReconcileDone = true;
-                    }
-                }
             }
             catch (Exception ex)
             {
