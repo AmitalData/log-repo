@@ -22,7 +22,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool FromPushPage { get; set; }
 		public string System { get; set; }
         public bool IsClosed { get; set; }
-
+        public string Method { get; set; }
+        public string OriginalResponse { get; set; }
+        public bool? ApiStatus { get; set; }
 
     }
 

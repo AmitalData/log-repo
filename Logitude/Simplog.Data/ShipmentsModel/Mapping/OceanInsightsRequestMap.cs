@@ -23,6 +23,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FromPushPage).IsRequired();
 			this.Property(t => t.System).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IsClosed).IsRequired();
+            this.Property(t => t.Method).HasMaxLength(10).IsUnicode(false);
+            this.Property(t => t.OriginalResponse).HasMaxLength(4000).IsUnicode(false);
 
             this.ToTable("OceanInsightsRequests");
             this.Property(t => t.Id).HasColumnName("Id"); 
@@ -37,6 +39,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FromPushPage).HasColumnName("FromPushPage");
 			this.Property(t => t.System).HasColumnName("System");
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
+            this.Property(t => t.Method).HasColumnName("Method");
+            this.Property(t => t.OriginalResponse).HasColumnName("OriginalResponse");
+            this.Property(t => t.ApiStatus).HasColumnName("ApiStatus");
+
 
 
 

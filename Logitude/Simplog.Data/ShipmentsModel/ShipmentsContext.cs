@@ -351,7 +351,6 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ShipmentUnassignedFieldMap());
             modelBuilder.Configurations.Add(new ShipmentDocsFieldMap());
             modelBuilder.Configurations.Add(new ShipmentAnalyticMap());
-            modelBuilder.Configurations.Add(new OceanInsightsStatusLogMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -440,8 +439,6 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ShipmentAnalytic> ShipmentAnalytics { get; set; }
         public IDbSet<ContainerAnalytic> ContainerAnalytics { get; set; }
         public IDbSet<ContainerDiscrepancy> ContainerDiscrepancies { get; set; }
-        public IDbSet<OceanInsightsStatusLog> OceanInsightsStatusLogs { get; set; }
-
 
         [DbFunction("ShipmentsContext", "udf_ShipmentSearch")]
         public IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields)
