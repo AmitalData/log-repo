@@ -1,32 +1,34 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.EntityKeys;
-using Simplog.Server.Infrastructure;
-using System.Data.Entity.Core.Objects;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Threading;
-using System.Reflection.Emit;
 //using Simplog.Server.Infrastructure.Helpers;
 
 using Logitude.Accounting.Data.DataContract;
-using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data.EntityListQueryServices;
-using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using System.Runtime.InteropServices;
-using Logitude.Server.Tools;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Enums;
-using System.Data.Entity.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.DataContracts;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity; 
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 
 namespace Logitude.Accounting.Data.Repositories
@@ -1686,7 +1688,8 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
             int days = DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
             DateTime endOfTaxReportDate = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days, 23, 59, 59);
-
+            bool useAccountingDateForAPTax = FeatureToggleHelper.HasFeatureToggle("CTL", tenant);
+            string apInvoice = "4";
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
             FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
 
@@ -1695,7 +1698,8 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                     join m in context.JournalAdditionalDatas on new { ledger.JournalId, ledger.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
 
                     where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode == null || j.IsVoided == true)
-                            && ledger.DocumentDate <= endOfTaxReportDate
+                       && ( (j.AccountingEntityCode != apInvoice ? ledger.DocumentDate
+                                   : (useAccountingDateForAPTax ? ledger.AccountingDate  : ledger.DocumentDate ) )  <= endOfTaxReportDate)
                             && ledger.AccountId == setting.VATInputsGLAccountId
                             && ledger.Tenant == tenant
                             && ledger.LocalAmountDebit != 0

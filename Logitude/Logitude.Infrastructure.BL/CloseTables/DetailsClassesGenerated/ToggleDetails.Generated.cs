@@ -1058,6 +1058,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "TRO,Tax Report Journal Optimization",
                 Description = "Tax Report Journal Optimization ",
             });
+            all.Add(new ToggleDetails()
+            {
+                Code = "UAT",
+                Name = "Use Accounting Date for AP Tax Report",
+                SearchFields = "Use Accounting Date for AP Tax Report,UAT",
+                Description = "Use Accounting Date for AP Tax Report ",
+            });
             return all;
        }
 
