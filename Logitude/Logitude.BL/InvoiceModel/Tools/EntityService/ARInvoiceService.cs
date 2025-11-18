@@ -4349,9 +4349,14 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                     if (entityPM.StatusCode == InvoiceAutoCreditStatus)
                         AutoReconcileAutoCreditInvoiceWithAutoCreditedInvoice(journal);
 
+                    AccountingEntityJournalRepository accountingEntityJournalRepository = new AccountingEntityJournalRepository(tenant);
+                    bool accountingEntityJournalExists = accountingEntityJournalRepository.Exists(journal.Tenant, journal.AccountingEntityId, journal.AccountingEntityCode, AccountingEntityJournalActions.ARInvoiceApprove, null);
 
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
-                    AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.ARInvoiceApprove);
+                    if (!accountingEntityJournalExists)
+                    {
+                        AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.ARInvoiceApprove);
+                    }
                     journalUpdate.Update(journal);
                     if (interestTransaction != null)
                     {
