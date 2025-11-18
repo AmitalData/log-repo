@@ -1125,6 +1125,7 @@
     <Compile Include="Controllers\AccountingModel\TaxDeductionReportDataController.cs" />
     <Compile Include="Controllers\AccountingModel\InvoiceApiCommunicationLogController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\GatepassRequestController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\DefaultAndConfigurationExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ObjectTableExtendedController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxDeductionReportDataController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\AdditionalCurrencyRateViewsController.Generated.cs" />
