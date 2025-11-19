@@ -16,7 +16,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 itemPoco.Id = itemPM.Id;
                 itemPoco.Tenant = itemPM.Tenant;
                 itemPoco.CreateDate = DateTime.Now;
-                
+                itemPoco.IsClosed = false;
+                itemPoco.OriginalResponse = null;
+                itemPoco.ApiStatus = null;
+
             }
 
             itemPoco.ContainerNumber = itemPM.ContainerNumber; 
@@ -27,8 +30,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.BLNumber = itemPM.BLNumber;
             itemPoco.FromPushPage = itemPM.FromPushPage;
 			itemPoco.System = itemPM.System;
-            itemPoco.IsClosed = itemPM.IsClosed;
-
+            itemPoco.Method = itemPM.Method;
 
         }
     }

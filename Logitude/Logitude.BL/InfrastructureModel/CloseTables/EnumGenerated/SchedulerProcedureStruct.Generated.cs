@@ -25,7 +25,8 @@ namespace Logitude.BL.InfrastructureModel.CloseTables
        public const string DeleteTaskSchedulerHistoriesTask = "DeleteTaskSchedulerHistoriesTask";  
        public const string FTPSchedulerTask = "FTPSchedulerTask";  
        public const string FutureOpenChequesTask = "FutureOpenChequesTask";  
-       public const string PayableARPaymentChequeTask = "PayableARPaymentChequeTask";  
+       public const string PayableARPaymentChequeTask = "PayableARPaymentChequeTask";
+       public const string OceanCarrierAPITask = "OceanCarrierAPITask";
        public const string RetriesAndReschedulingTask = "RetriesAndReschedulingTask";  
        public const string SFTPSchedulerTask = "SFTPSchedulerTask";  
        public const string TestLoggingInfoWithExceptionIfCurrentMinuteisEvenTask = "TestLoggingInfoWithExceptionIfCurrentMinuteisEvenTask";  
