@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Scheduler Procedure&quot;"
-  Code="&quot;11bb&quot;"
+  Code="&quot;dca7&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -650,6 +650,12 @@
       Name="&quot;IntegrityCheckTask&quot;"
       SearchFields="&quot;IntegrityCheckTask&quot;"
       Description="&quot;IntegrityCheckTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;OceanCarrierAPITask&quot;"
+      Name="&quot;OceanCarrierAPITask&quot;"
+      SearchFields="&quot;OceanCarrierAPITask,OceanCarrierAPITask&quot;"
+      Description="&quot;OceanCarrierAPITask&quot;"
       IsInternallyDefined="false" />
   </Records>
   <DataContracts />

@@ -310,6 +310,13 @@ namespace Logitude.BL.InfrastructureModel
                 Description = "IntegrityCheckTask", 
                 IsInternallyDefined = false, 
 			});
+
+            all.Add(new SchedulerProcedureDetails()
+            {
+                Code = "OceanCarrierAPITask",
+                Name = "OceanCarrierAPITask",
+                SearchFields = "OceanCarrierAPITask,OceanCarrierAPITask",
+            });
 			
             return all;
        }

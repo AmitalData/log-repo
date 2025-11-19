@@ -714,6 +714,7 @@
     <Compile Include="Services\SAT\UpdateCanceledSATEntitiesStatusesService.cs" />
     <Compile Include="Tasks\IntegrityCheckTask.cs" />
     <Compile Include="Tasks\InvoiceApiQueryTask.cs" />
+    <Compile Include="Tasks\OceanCarrierAPITask.cs" />
     <Compile Include="Tasks\ReconcileInProgressCleanupTask.cs" />
     <Compile Include="Tasks\QueryReport.cs" />
     <Compile Include="Tasks\UpdateCanceledSATEntitiesStatusesTask.cs" />
