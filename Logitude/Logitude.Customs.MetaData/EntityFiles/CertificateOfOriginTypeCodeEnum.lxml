@@ -50,7 +50,7 @@
   Code="&quot;c8e3&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;LocalName&quot;"
+  CloseTableName="&quot;EnglishName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
   ServerModuleName="&quot;Customs&quot;"
@@ -653,6 +653,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsCustomsItemMandatory&quot;"
     ListPropertyPath="&quot;IsCustomsItemMandatory&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -731,6 +732,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsZipcodeMandatory&quot;"
     ListPropertyPath="&quot;IsZipcodeMandatory&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -809,26 +811,36 @@
       <QueryColumn
         QueryCode="&quot;CertificateOfOriginTypeEnum&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;IsCustomApprovalRequired&quot;"
+        ObjectFieldName="&quot;IsCustomsItemMandatory&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CertificateOfOriginTypeEnum&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;IsCriterionMandatory&quot;"
+        ObjectFieldName="&quot;IsZipcodeMandatory&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CertificateOfOriginTypeEnum&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;LocalName&quot;"
+        ObjectFieldName="&quot;IsCustomApprovalRequired&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CertificateOfOriginTypeEnum&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;EnglishName&quot;"
+        ObjectFieldName="&quot;IsCriterionMandatory&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CertificateOfOriginTypeEnum&quot;"
         IndexOrder="5"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CertificateOfOriginTypeEnum&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CertificateOfOriginTypeEnum&quot;"
+        IndexOrder="7"
         ObjectFieldName="&quot;Inactive&quot;"
         ColumnWidth="50" />
     </QueryColumns>
