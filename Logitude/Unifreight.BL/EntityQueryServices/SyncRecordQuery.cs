@@ -108,6 +108,7 @@ namespace Unifreight.BL.EntityQueryServices
                                 RecordAsJson = recordAsJson,
                                 UpdateDate = syncRecord.SyncDT,
                                 CraeteDate = syncRecord.CreateDate,
+                                CreateDate = syncRecord.CreateDate,
                                 DbOffset = offset
                             };
                         }).Where(x => x != null).ToList();
@@ -255,15 +256,15 @@ namespace Unifreight.BL.EntityQueryServices
             catch (Exception e)
             {
                 logger.WriteFatal(e, $"failed to get date from unifreith table {tableName} ");
-                logger.WriteDebug( $"failed to get date from unifreith table {tableName}, query: {query}, parameters: {string.Join(", ", sqlParameters.Select(x => $"name: {x.ParameterName} value: {x.Value} "))} ");
+                logger.WriteDebug($"failed to get date from unifreith table {tableName}, query: {query}, parameters: {string.Join(", ", sqlParameters.Select(x => $"name: {x.ParameterName} value: {x.Value} "))} ");
             }
 
             string[] columns = dt.Columns.Cast<DataColumn>().Select(c => c.ColumnName).ToArray();
             IEnumerable<Dictionary<string, string>> data = dt.Rows.Cast<DataRow>()
                     .Select(dr => columns.ToDictionary(c => c, c =>
                          dr[c] is DateTime datetime ?
-                                datetime.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture) :
-                                dr[c]?.ToString()
+                            datetime.ToString("dd-MM-yy HH:mm:ss", CultureInfo.InvariantCulture) :
+                            dr[c]?.ToString()
                     ));
 
             JsonSerializerOptions jsonOptions = new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
