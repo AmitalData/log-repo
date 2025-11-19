@@ -103,7 +103,8 @@ namespace WebFreight.Web.WcfApi
                 {
 
                     IShipmentsContext objectContext = ShipmentsContext.GetContext(Tenant);
-                    bool hasActiveCarrierConfig = objectContext.OceanCarrierStatusAPIconfigs.Any(c => c.SCACCode == ScacCode && c.Tenant == Tenant && !c.Inactive);
+                    OceanCarrierStatusAPIconfigQuery carrierConfigQuery = new OceanCarrierStatusAPIconfigQuery(Tenant);
+                    bool hasActiveCarrierConfig = carrierConfigQuery.HasActiveConfig(ScacCode, Tenant);
                     OceanInsightsRequestPM oceanInsightsRequestPm = new OceanInsightsRequestPM();
 
                     if (hasActiveCarrierConfig)
