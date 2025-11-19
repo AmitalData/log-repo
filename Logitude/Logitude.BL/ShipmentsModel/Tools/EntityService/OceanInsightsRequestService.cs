@@ -40,7 +40,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.entityPM = theEntityPm;
             this.entityPM.Id = IdCounter.GetNumber("OceanInsightsRequest", tenant).ToString();
             this.Poco = new OceanInsightsRequest();
-            this.Poco.Id = this.entityPM.Id; 
+            this.Poco.Id = this.entityPM.Id;
+
+            bool hasConfig = objectContext.OceanCarrierStatusAPIconfigs.Any(c => c.SCACCode == entityPM.SCACCode && c.Tenant == entityPM.Tenant);
+            if (hasConfig)
+            {
+                entityPM.Method = "API";
+                entityPM.OceanInsigntId = this.entityPM.Id;
+            }
+
             OceanInsightsRequestMapping.MapOceanInsightsRequest(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
