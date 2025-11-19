@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginTypeCodeEnumUpdateClass
    {  		
-		public const string HashString = "c5fae318f6d6cc9c21d07c163b0aab85";
+		public const string HashString = "a1d35ec2eb2933f094c8fdb98826f675";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    Code =  "c8e3",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
-			      				    CloseTableName =  "LocalName",
+			      				    CloseTableName =  "EnglishName",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
@@ -593,6 +593,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsCustomsItemMandatory",
 					  						ListPropertyPath =  "IsCustomsItemMandatory",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -660,6 +661,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsZipcodeMandatory",
 					  						ListPropertyPath =  "IsZipcodeMandatory",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -737,15 +739,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.Code" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.IsCustomApprovalRequired" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.IsCustomsItemMandatory" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.IsCriterionMandatory" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.IsZipcodeMandatory" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.LocalName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.IsCustomApprovalRequired" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.EnglishName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.IsCriterionMandatory" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.Inactive" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
+			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.LocalName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+
+			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.EnglishName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+
+			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.Inactive" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures,contextTenant);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries,contextTenant);
