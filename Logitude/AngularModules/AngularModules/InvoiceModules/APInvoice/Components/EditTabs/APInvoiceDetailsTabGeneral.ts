@@ -416,7 +416,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     saveExpenseAllocationSetting(){
-        var allIsPrepaidExpenses = this.EntityPM.InvoiceLines.every(line => line.IsPrepaidExpenses === true);
         var approved = this.EntityPM?.StatusCode === "AD";
         if(this.EntityPM?.Id){
             this.expenseAllocationSetting.EntityId = this.EntityPM?.Id;
@@ -426,9 +425,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     if (!res.HasError) {
                         this.expenseAllocationSetting = res.Result;
                         if(approved){
-                            if(!allIsPrepaidExpenses){
-                                this.addExpenseAllocationFlow(this.EntityPM?.JournalId);
-                            }
+                            
                             this.addExpenseAllocationFlow();
 
                         }
@@ -448,9 +445,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     if (!res.HasError) {
                         this.expenseAllocationSetting = res.Result;
                         if(approved){
-                            if(!allIsPrepaidExpenses){
-                                this.addExpenseAllocationFlow(this.EntityPM?.JournalId);
-                            }
+                            
                             this.addExpenseAllocationFlow();
                         }
                         else{
