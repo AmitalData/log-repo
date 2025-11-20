@@ -18,6 +18,7 @@ import { FullAccountingSettingPM } from 'Accounting/EntityPMs/FullAccountingSett
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { RecurringScheduleComponent } from 'CommonModules/CommonOthers/Components/RecurringSchedule/RecurringScheduleComponent';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     templateUrl: './APInvoicePrepaidExpensesTabComponent.html',
