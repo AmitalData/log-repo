@@ -1,0 +1,22 @@
+{
+	"maxWorkers": 4,
+	"maxOldSpaceMB": 12288,
+	"mode": "sequential",
+	"projects": [
+		"shipment-modules",
+		"shipment",
+		"accounting",
+		"customs",
+		"crm",
+		"common-modules",
+		"infrastructure-modules",
+		"invoice",
+		"controls",
+		"common"
+	],
+	"detailed": true,
+	"enableJUnit": true,
+	"collectCoverage": true
+}
+
+
