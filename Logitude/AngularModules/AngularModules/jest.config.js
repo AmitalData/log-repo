@@ -30,7 +30,8 @@ const base = {
 		'^Invoice/(.*)$': '<rootDir>/Invoice/$1',
 		'^Accounting/(.*)$': '<rootDir>/Accounting/$1'
 	},
-	reporters: ['default']
+	reporters: ['default'],
+	maxWorkers: 6  // Force 6 workers for parallel execution
 };
 
 function project(displayName, relDir) {

@@ -142,7 +142,45 @@ function writeSummaryHeader() {
 	);
 }
 
-function appendSummaryFromJson(project, jsonPath, detailed) {
+function getCoveragePercentage(project, collectCoverage) {
+	if (!collectCoverage) return null;
+	
+	// Try to read coverage-summary.json from coverage directory
+	const coverageSummaryPath = path.join(repoRoot, 'coverage-jest', project, 'coverage-summary.json');
+	if (!fs.existsSync(coverageSummaryPath)) {
+		// Try root coverage-summary.json (for parallelAll mode)
+		const rootCoveragePath = path.join(repoRoot, 'coverage', 'coverage-summary.json');
+		if (fs.existsSync(rootCoveragePath)) {
+			const coverageData = readJson(rootCoveragePath);
+			if (coverageData && coverageData.total) {
+				const total = coverageData.total;
+				const statements = total.statements?.pct || 0;
+				const branches = total.branches?.pct || 0;
+				const functions = total.functions?.pct || 0;
+				const lines = total.lines?.pct || 0;
+				// Calculate average coverage
+				const avgCoverage = (statements + branches + functions + lines) / 4;
+				return Math.round(avgCoverage * 100) / 100;
+			}
+		}
+		return null;
+	}
+	
+	const coverageData = readJson(coverageSummaryPath);
+	if (coverageData && coverageData.total) {
+		const total = coverageData.total;
+		const statements = total.statements?.pct || 0;
+		const branches = total.branches?.pct || 0;
+		const functions = total.functions?.pct || 0;
+		const lines = total.lines?.pct || 0;
+		// Calculate average coverage
+		const avgCoverage = (statements + branches + functions + lines) / 4;
+		return Math.round(avgCoverage * 100) / 100;
+	}
+	return null;
+}
+
+function appendSummaryFromJson(project, jsonPath, detailed, collectCoverage = true) {
 	const data = readJson(jsonPath);
 	if (!data) return;
 	const {
@@ -175,6 +213,12 @@ function appendSummaryFromJson(project, jsonPath, detailed) {
 	lines.push(
 		`Tests:  total=${numTotalTests}, passed=${numPassedTests}, failed=${numFailedTests}, skipped=${numPendingTests}`
 	);
+	
+	// Add coverage percentage if available
+	const coveragePct = getCoveragePercentage(project, collectCoverage);
+	if (coveragePct !== null) {
+		lines.push(`Coverage: ${coveragePct}%`);
+	}
 
 	// CSV aggregate row
 	const csvAgg = [
@@ -294,10 +338,11 @@ async function main() {
 	const baseArgs = [
 		'--maxWorkers',
 		String(maxWorkers),
-		'--passWithNoTests',
-		'--verbose'
+		'--passWithNoTests'
+		// Removed --verbose for speed (adds overhead)
 	];
 	if (collectCoverage) baseArgs.push('--coverage');
+	// Removed --detectOpenHandles by default (only enable for debugging, adds significant overhead)
 	if (detectOpenHandles) baseArgs.push('--detectOpenHandles');
 
 	const env = {};
@@ -330,13 +375,13 @@ async function main() {
 		];
 		console.log(`\n=== Running project: ${singleProject} (workers=${maxWorkers}, heap=${maxOldSpaceMB}MB) ===`);
 		exitCode = await runJestOnce(args, env, { filterNgccWarnings: true, progress, label: singleProject });
-		appendSummaryFromJson(singleProject, outJson, detailed);
+		appendSummaryFromJson(singleProject, outJson, detailed, collectCoverage);
 	} else if (mode === 'parallelAll') {
 		const outJson = path.join(jsonDir, `jest-results-all.json`);
 		const args = ['--json', '--outputFile', outJson, ...baseArgs, '--reporters', ...reporters];
 		console.log(`\n=== Running ALL projects in one Jest (workers=${maxWorkers}, heap=${maxOldSpaceMB}MB) ===`);
 		exitCode = await runJestOnce(args, env, { filterNgccWarnings: true, progress, label: 'all-projects' });
-		appendSummaryFromJson('all', outJson, detailed);
+		appendSummaryFromJson('all', outJson, detailed, collectCoverage);
 	} else {
 		// sequential
 		for (let i = 0; i < projects.length; i++) {
@@ -355,7 +400,7 @@ async function main() {
 			];
 			console.log(`\n=== Running project: ${p} (workers=${maxWorkers}, heap=${maxOldSpaceMB}MB) ===`);
 			const code = await runJestOnce(args, env, { filterNgccWarnings: true, progress, label: `${p} [${i + 1}/${projects.length}]` });
-			appendSummaryFromJson(p, outJson, detailed);
+			appendSummaryFromJson(p, outJson, detailed, collectCoverage);
 			if (code !== 0) exitCode = code; // keep last non-zero
 		}
 	}

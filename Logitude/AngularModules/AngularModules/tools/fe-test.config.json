@@ -1,7 +1,7 @@
 {
-    "maxWorkers":  8,
-    "maxOldSpaceMB":  12288,
-    "mode":  "sequential",
+    "maxWorkers":  6,
+    "maxOldSpaceMB":  16384,
+    "mode":  "parallelAll",
     "projects":  [
                      "shipment-modules",
                      "shipment",
