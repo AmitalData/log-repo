@@ -3492,5 +3492,27 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 repository.Add(newType);
             }
         }
+
+        public static void AddOrUpdateSIIRequestLineStatus(SIIRequestLineStatus status,SIIRequestLineStatusRepository repository)
+        {
+            var existing = repository.GetSingle(status.Code);
+            if (existing != null)
+            {
+                existing.LocalName = status.LocalName;
+                existing.SearchFields = string.Format("{0},{1}", status.Code, status.LocalName).ToLower();
+                repository.Update(existing);
+            }
+            else
+            {
+                var newStatus = new SIIRequestLineStatus
+                {
+                    Code = status.Code,
+                    Name = status.Name,
+                    LocalName = status.LocalName,
+                    SearchFields = string.Format("{0},{1}", status.Code, status.LocalName).ToLower()
+                };
+                repository.Add(newStatus);
+            }
+        }
     }
 }
