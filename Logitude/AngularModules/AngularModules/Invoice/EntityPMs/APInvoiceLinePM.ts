@@ -276,7 +276,10 @@ export class APInvoiceLinePM {
     private payableDebitGLAcountId: string;
     public get PayableDebitGLAcountId() { return this.payableDebitGLAcountId; }
     public set PayableDebitGLAcountId(newValue: string) { if (this.payableDebitGLAcountId != newValue) { this.payableDebitGLAcountId = newValue; this.MarkAsDirty("PayableDebitGLAcountId"); } }
-       
+
+    private operationalDate: Date;
+    public get OperationalDate() { return this.operationalDate; }
+    public set OperationalDate(newValue: Date) { if (this.operationalDate != newValue) { this.operationalDate = newValue; this.MarkAsDirty("OperationalDate"); } }
 	 
 
     public OldEntityPM: APInvoiceLinePM;
@@ -313,4 +316,4 @@ export class APInvoiceLinePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

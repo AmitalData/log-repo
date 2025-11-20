@@ -216,7 +216,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("VATNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("OperationalDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AccountingDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, false);
@@ -233,7 +232,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VATNumber", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, true);
-            this.UIProperties.SetEnabled("OperationalDate", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("AccountingDate", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, true);
@@ -1117,13 +1115,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
 
-    get OperationalDate() { return this.EntityPM.OperationalDate; }
-    set OperationalDate(newValue: Date) {
-        if (this.ShowOperationalDate && this.EntityPM.OperationalDate != newValue) {
-            this.EntityPM.OperationalDate = newValue;
-        }
-    }
-
     get ConfirmationNumber() { return this.EntityPM.ConfirmationNumber; }
     set ConfirmationNumber(newValue: string) {
         if (this.EntityPM.ConfirmationNumber != newValue) {
@@ -1392,6 +1383,12 @@ export class APInvoiceLineItem extends BaseComponent {
      set PayableDebitGLAcountName(value: string) {
       if (this.invoiceLinePM.PayableDebitGLAcountName != value) {
             this.invoiceLinePM.PayableDebitGLAcountName = value;
+        }
+    }
+    get OperationalDate() { return this.invoiceLinePM.OperationalDate }
+    set OperationalDate(value: Date) {
+      if (this.invoiceLinePM.OperationalDate != value) {
+            this.invoiceLinePM.OperationalDate = value;
         }
     }
     get ForiegnExchangeRate() { return this.invoiceLinePM.ForiegnExchangeRate; }

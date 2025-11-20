@@ -249,6 +249,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ContainerTypeId = entityPM.ContainerTypeId;
             entity.Quantity = entityPM.Quantity;
             entity.ExcludeFromTaxReport = entityPM.ExcludeFromTaxReport;
+            entity.OperationalDate = entityPM.OperationalDate;
+
             MapJournalAmount(entityPM);
 
         }

@@ -95,5 +95,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
       public string PayableDebitGLAcountName { get; set; }
         public string PayableDebitGLAcountId { get; set; }
         public bool? ExcludeFromTaxReport { get; set; }
+        public DateTime? OperationalDate { get; set; }
     }
 }
