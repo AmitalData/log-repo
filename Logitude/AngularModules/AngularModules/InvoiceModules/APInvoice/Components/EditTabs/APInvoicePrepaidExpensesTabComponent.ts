@@ -23,6 +23,7 @@ import { RecurringScheduleComponent } from 'CommonModules/CommonOthers/Component
     templateUrl: './APInvoicePrepaidExpensesTabComponent.html',
 })
 export class APInvoicePrepaidExpensesTabComponent extends BaseComponent implements OnInit {
+    public isRTL = false;
     public EntityPM: APInvoicePM = null;
     public journalPM: JournalPM = null;
     public ObjectTableName = 'APInvoice';
@@ -54,6 +55,8 @@ export class APInvoicePrepaidExpensesTabComponent extends BaseComponent implemen
         this.isVoided = this.EntityPM.StatusCode === 'VD';
         var table = window.ObjectTables.filter((d) => d.Name == 'APInvoice')[0];
         if (table) this.objectTableId = table.Id;
+        this.isRTL = ObjectsLocator.GlobalSetting?.LayoutDirection === 'rtl';
+
     }
     private GetResources() {
         this.entityResourceService
