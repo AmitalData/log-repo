@@ -62,6 +62,7 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("ReportExecutionLogWR");
 			_CBWorkerRole.Items.Add("DocumentAzureQueueWR");
 			_CBWorkerRole.Items.Add("DocumentSFTPAnalyzeWR");
+            _CBWorkerRole.Items.Add("SiiStatusAzureQueueWR");
 
 			NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Env:");
            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(LogitudeSettings.LogitudeURL);
@@ -305,7 +306,14 @@ namespace AmitalCustomsWindowsService.Tester
 						{ ServiceStarted = true, };
 					}
 					break;
-				default:
+                case "SiiStatusAzureQueueWR":
+                    {
+                        d = new AmitalCustomsWindowsService.BL.WorkerOnce<SiiStatusAzureQueueWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+                        { ServiceStarted = true, };
+                    }
+                    break;
+                default:
                     return;
             }
 
@@ -791,7 +799,13 @@ namespace AmitalCustomsWindowsService.Tester
 
 					}
 					break;
-				default:
+                case "SiiStatusAzureQueueWR":
+                    {
+                        var siiStatusAzureQueueWR = new SiiStatusAzureQueueWR();
+                        siiStatusAzureQueueWR.DebugStep();
+                    }
+                    break;
+                default:
                     CustomsWorkerRole.Test.clsTester.DebugRQStep(
                 _CBInterfaceID.Text, GetTenant(), _TBID.Text,
                 _CBWorkerRole.Text);

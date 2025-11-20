@@ -63,6 +63,8 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? StatisticQuantity  { get; set; }
        [DataMember]
        public string StatisticQuantityType  { get; set; }
+       [DataMember]
+       public string StatusCode  { get; set; }
    }
 
 }

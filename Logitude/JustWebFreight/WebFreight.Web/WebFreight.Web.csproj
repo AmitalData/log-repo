@@ -1104,6 +1104,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\NDMessageActionCodeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SecurityClearenceTypeCodeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SignStationViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SIIRequestLineStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StuffingSiteTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SupplierInvioceItemCertificatDefaultViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SupplierPartyTypeViewsController.Generated.cs" />
@@ -4606,6 +4607,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferantTeamUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferenceInputTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferenceStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SIIRequestLineStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\GeneralLockUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ExpenseAllocationFlowUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ExpenseAllocationSettingUpdateClass.cs" />
