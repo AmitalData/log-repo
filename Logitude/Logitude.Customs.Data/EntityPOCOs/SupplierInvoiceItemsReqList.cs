@@ -70,6 +70,15 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ItemNo { get; set; }
         [Column("ItemName")]
 	    public string ItemName { get; set; }
+        [ForeignKey("SIIRequestLineStatus")]
+        [Column("StatusCode")]
+	    public string StatusCode { get; set; }
+	      
+        public virtual SIIRequestLineStatus SIIRequestLineStatus { get; set; }
+        [Column("StatusDate")]
+	    public DateTime? StatusDate { get; set; }
+        [Column("DistApprovalAttachmentPath")]
+	    public string DistApprovalAttachmentPath { get; set; }
     }
 }
 	 

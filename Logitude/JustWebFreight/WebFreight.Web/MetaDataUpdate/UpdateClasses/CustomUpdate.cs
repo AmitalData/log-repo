@@ -17581,6 +17581,19 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "101", LocalName = "אחר" }, sIIDocumentTypeRepository);
             sIIDocumentTypeRepository.SubmitChanges();
         }
+        public void FillSIIRequestLineStatus(int tenant)
+        {
+            var repo = new SIIRequestLineStatusRepository(tenant);
+
+            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "1", LocalName = "אישור ניפוק ומכירה" }, repo);
+            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "2", LocalName = "איסור ניפוק ומכירה" }, repo);
+            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "3", LocalName = "שחרור למכס תחת התחייבות ואיסור ניפוק ומכירה" }, repo);
+            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "4", LocalName = "הודעה על קריאה להשבת מוצר (ריקול)" }, repo);
+            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "5", LocalName = "אישור הצהרת עמידה לתקן" }, repo);
+            AddClosedTables.AddOrUpdateSIIRequestLineStatus(new SIIRequestLineStatus { Code = "6", LocalName = "אין אישור הצהרת עמידה לתקן" }, repo);
+
+            repo.SubmitChanges();
+        }
 
     }
 
