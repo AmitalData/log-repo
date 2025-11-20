@@ -240,7 +240,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         {
                             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
                             var tenantCurrencyId = tenantQuery.GetLocalCurrencyFromTenant(entityPM.Tenant);
-                            CreateRevaluationJournal(entityPM, glAccountPM.ControlAccountId, tenantCurrencyId);
+                            CreateRevaluationJournal(entityPM, glAccountPM.ControlAccountId, tenantCurrencyId, entityPM.RevalJrnlRef1);
                         }
                     }
                 }
@@ -258,7 +258,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
 
 
-        private void CreateRevaluationJournal(ReconciliationPM reconciliationPM, string controlAccountId, string tenantCurrencyId)
+        public void CreateRevaluationJournal(ReconciliationPM reconciliationPM, string controlAccountId, string tenantCurrencyId, string revalJrnlRef1)
         {
             try
             {
@@ -319,6 +319,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             LocalAmount = groupLocalRecoAmount,
                             ForeignAmount = 0,
                             CurrencyId = group.Key,
+                            Reference1 = revalJrnlRef1,
                             Notes = "Revaluation on Foreign Currency Reco.",
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                         });
@@ -338,6 +339,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             LocalAmount = groupLocalRecoAmount,
                             ForeignAmount = 0,
                             CurrencyId = group.Key,
+                            Reference1 = revalJrnlRef1,
                             Notes = "Revaluation on Foreign Currency Reco.",
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                         });
