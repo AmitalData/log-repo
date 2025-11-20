@@ -155,6 +155,7 @@ namespace AmitalCustomsWindowsService
                 AddWorkerFromAppSetting<CustomsHSMSignWR>();
                 AddWorkerFromAppSetting<ReportExecutionLogWR>();
 				AddWorkerFromAppSetting<DocumentAzureQueueWR>();
+                AddWorkerFromAppSetting<SiiStatusAzureQueueWR>(); 
 
 				bool courierFeaturePackageExist = true;
                 if (courierFeaturePackageExist)
@@ -251,7 +252,9 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new RabbitMQReceiveWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
 			listOfWorkerEntryPoint.Add(new DocumentAzureQueueWR());
-			bool testCustomsSchedularWR = false;
+            listOfWorkerEntryPoint.Add(new SiiStatusAzureQueueWR());
+
+            bool testCustomsSchedularWR = false;
             if (testCustomsSchedularWR)
             {
                 listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();

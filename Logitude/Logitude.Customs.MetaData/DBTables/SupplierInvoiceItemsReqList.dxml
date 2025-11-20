@@ -118,6 +118,26 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="StatusCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StatusDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DistApprovalAttachmentPath"
+    Type="varchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber"
     ReferencedTable="SupplierInvoiceItems"
@@ -126,6 +146,11 @@
   <Relation
     ForeignKeyColumn="ManufactureCountryCode"
     ReferencedTable="CustomsCountries"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="StatusCode"
+    ReferencedTable="SIIRequestLineStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

@@ -41,5 +41,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var EntityPM = GetEntityPM(entity);
             return EntityPM;
         }
+        public SupplierInvoiceItemsReqListPM GetLineForSiiStatusUpdate(string requestNumber,int lineNumber,string modelCode,int tenant)
+        {
+            var entity = repository.GetLineForSiiStatusUpdate(requestNumber, lineNumber, modelCode,tenant);
+
+            if (entity == null)
+                return null;
+
+            return GetEntityPM(entity);
+        }
+
     }
 }

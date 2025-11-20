@@ -171,6 +171,26 @@ export class SupplierInvoiceItemsReqListPM {
     public set VendorName(newValue: string) { if (this.vendorName != newValue) { this.vendorName = newValue; this.MarkAsDirty("VendorName"); } }
        
 	 
+    private statusCode: string;
+    public get StatusCode() { return this.statusCode; }
+    public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
+       
+	 
+    private statusDate: Date;
+    public get StatusDate() { return this.statusDate; }
+    public set StatusDate(newValue: Date) { if (this.statusDate != newValue) { this.statusDate = newValue; this.MarkAsDirty("StatusDate"); } }
+       
+	 
+    private distApprovalAttachmentPath: string;
+    public get DistApprovalAttachmentPath() { return this.distApprovalAttachmentPath; }
+    public set DistApprovalAttachmentPath(newValue: string) { if (this.distApprovalAttachmentPath != newValue) { this.distApprovalAttachmentPath = newValue; this.MarkAsDirty("DistApprovalAttachmentPath"); } }
+       
+	 
+    private statusName: string;
+    public get StatusName() { return this.statusName; }
+    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoiceItemsReqListPM;
 		
