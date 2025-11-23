@@ -395,7 +395,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.getSupplierInvoiceItemsReqListPMDataAndopenLogWindow()
     }
 
-    supplierInvoiceItemsReqListPM: SupplierInvoiceItemsReqListPM = new SupplierInvoiceItemsReqListPM();
+    supplierInvoiceItemsReqListPM: SupplierInvoiceItemsReqListPM = new SupplierInvoiceItemsReqListPM(this.entityPM);
     getSupplierInvoiceItemsReqListPMDataAndopenLogWindow() {
         let args: any = {
             Decalaration: this.DecalarationData,

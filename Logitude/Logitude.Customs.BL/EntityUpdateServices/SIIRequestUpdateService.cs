@@ -30,7 +30,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (string.IsNullOrEmpty(entityPM.Id))
                 entityPM.Id = IdCounter.GetNumber("Customs.SIIRequest", entityPM.Tenant);
         }
-   }
+        protected override void UpdateComposition(SIIRequestPM entityPM)
+        {
+            SupplierInvoiceItemsReqListUpdateService supplierInvoiceItemsReqListUpdateService = new SupplierInvoiceItemsReqListUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), entityPM.Tenant);
+            supplierInvoiceItemsReqListUpdateService.UpdateMulti(entityPM.SupplierInvoiceItemsReqLists, entityPM.DeletedSupplierInvoiceItemsReqLists, entityPM, false);
+
+            base.UpdateComposition(entityPM);
+        }
+
+    }
 
 }
 	 

@@ -2,6 +2,7 @@
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.DataContracts.SIIRequest;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.RestRequestExecutor;
 using Newtonsoft.Json.Linq;
 using Simplog.Server.Infrastructure;
@@ -41,9 +42,9 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 ValidationMessages = apiResp.Result?.ValidationMessages,
                 FormApplicationId = dto.releaseRequestForm.formApplicationId
             };
-            UpdateSIIRequest(entity);
+            UpdateSIIRequest(entity,dto);
         }
-        private void UpdateSIIRequest(SIIRequestApiCallLog response)
+        private void UpdateSIIRequest(SIIRequestApiCallLog response, ReleaseRequestApiDto  dto)
         {
             var ctx = CustomContext.GetContext(_tenant);
             try
@@ -71,7 +72,11 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 }
 
                 if (code == SIIResponseCode.Success)
+                {
                     siiReq.RequestNo = response.RequestNumber;
+                    UpdateRequestLinesAfterSuccessOnComposition(siiReq, dto);
+
+                }
 
                 siiReq.ChangeSetOp = ChangeSetOperation.Update;
                 updater.Update(siiReq, true);
@@ -81,6 +86,42 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 if (ctx is IDisposable d) d.Dispose();
             }
         }
+
+        private void UpdateRequestLinesAfterSuccessOnComposition(SIIRequestPM siiReq, ReleaseRequestApiDto dto)
+        {
+            if (dto == null ||
+                   dto.releaseRequestForm == null ||
+                   dto.releaseRequestForm.releaseRequestLinesForm == null)
+                return;
+
+            var dtoLines = dto.releaseRequestForm.releaseRequestLinesForm;
+            var children = siiReq.SupplierInvoiceItemsReqLists;
+
+            if (children == null || children.Count == 0)
+                return;
+
+            foreach (var lineDto in dtoLines)
+            {
+                SupplierInvoiceItemsReqListPM matchedChild = null;
+
+                foreach (var child in children)
+                {
+                    if (child.InvoiceCounterKey == lineDto.InvoiceCounterKey &&
+                        child.InvoiceItemLineNumber == lineDto.InvoiceItemLineNumber)
+                    {
+                        matchedChild = child;
+                        break;
+                    }
+                }
+
+                if (matchedChild == null)
+                    continue;
+
+                matchedChild.LineNumber = lineDto.lineSerialNumber;
+                matchedChild.ChangeSetOp = ChangeSetOperation.Update;
+            }
+        }
+
         private static int? TryExtractResponseCode(string errorMessage)
         {
             if (string.IsNullOrWhiteSpace(errorMessage))
@@ -102,6 +143,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 return null;   // malformed JSON – ignore
             }
         }
+
         private class SIIRequestApiCallLog
         {
             public string SIIRequestId { get; set; }
