@@ -194,6 +194,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="OperationalDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="APInvoiceId"
     ReferencedTable="APInvoices"
