@@ -99,8 +99,8 @@
                             {{'Accounting.General.O.Difference' | TextCodeTranslationPipe}}
                         </td>
                     
-                        <td style="width: 180px;" >
-                            <div style="font-size: 15px; "  text-start>{{TotalLocalDifference | NumbersPipe:'N2'}}</div>
+                        <td style="width: 180px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                            <div style="font-size: 15px; "  >{{TotalLocalDifference | NumbersPipe:'N2'}}</div>
                         </td>
                         <td><div></div></td>
                     </tr>
@@ -110,8 +110,8 @@
                     <tr class="FormFieldRow">
                         <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Reconciliation.F.AccountName' | TextCodeTranslationPipe}}</td>
 
-                        <td style="width: 280px;"   class="truncate" [dir]="isRTL ? 'rtl' : 'ltr'">
-                            <div style="font-size: 12px; "  text-start>{{AccountName}}</div>
+                        <td style="width: 280px;"  [style.text-align]="isRTL ? 'right' : 'left'" class="truncate" [dir]="isRTL ? 'rtl' : 'ltr'">
+                            <div style="font-size: 12px; "  >{{AccountName}}</div>
                         </td>
 
 
@@ -119,10 +119,10 @@
                     </tr>
 
                     <tr class="FormFieldRow">
-                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'FullAccountingSetting.F.DefaultDifferencesGLAccountId' | TextCodeTranslationPipe}}</td>
+                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{DiffAccount}}</td>
 
-                        <td style="width: 280px;"  class="truncate" [dir]="isRTL ? 'rtl' : 'ltr'">
-                            <div style="font-size: 12px; "  text-start>{{RevaluationsGLAccountName}}</div>
+                        <td style="width: 280px;" [style.text-align]="isRTL ? 'right' : 'left'" class="truncate" [dir]="isRTL ? 'rtl' : 'ltr'">
+                            <div style="font-size: 12px; "  >{{RevaluationsGLAccountName}}</div>
                         </td>
                         <td><div></div></td>
                     </tr>

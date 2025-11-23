@@ -47,8 +47,6 @@ export class JournalRevaluationComponent extends BaseComponent implements OnInit
     constructor(private CD: ChangeDetectorRef) {
         super();
 
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
         this.fullAccountingSettingListService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var res = myResponse.Result;
@@ -112,8 +110,19 @@ export class JournalRevaluationComponent extends BaseComponent implements OnInit
 
     txt_Reference: string = TextCodeTranslator.Translate("Accounting.General.O.Reference");
     txt_Amount: string = TextCodeTranslator.Translate("JournalLine.F.LocalAmount");
+    txt_DiffAccount: string = TextCodeTranslator.Translate("Accounting.General.O.GLAccountForRevaluation");
+
+    get DiffAccount() { 
+        return this.txt_DiffAccount; 
+    }
+
 
     ngOnInit() {
+
+        if (ObjectsLocator.GlobalSetting) {
+            this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection === "rtl";
+        }
+
         this.CurrentSession.LostFocusEvent.subscribe((res) => {
             if (this.CD) {
                 var isDestroyed: boolean = this.CD['destroyed'];
