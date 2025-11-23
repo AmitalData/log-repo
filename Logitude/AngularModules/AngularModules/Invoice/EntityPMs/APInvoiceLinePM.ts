@@ -281,9 +281,6 @@ export class APInvoiceLinePM {
     public get OperationalDate() { return this.operationalDate; }
     public set OperationalDate(newValue: Date) { if (this.operationalDate != newValue) { this.operationalDate = newValue; this.MarkAsDirty("OperationalDate"); } }
 	 
-    private isPrepaidExpenses: boolean;
-    public get IsPrepaidExpenses() { return this.isPrepaidExpenses; }
-    public set IsPrepaidExpenses(newValue: boolean) { if (this.isPrepaidExpenses != newValue) { this.isPrepaidExpenses = newValue; this.MarkAsDirty("IsPrepaidExpenses"); } }
 
     public OldEntityPM: APInvoiceLinePM;
 	    
