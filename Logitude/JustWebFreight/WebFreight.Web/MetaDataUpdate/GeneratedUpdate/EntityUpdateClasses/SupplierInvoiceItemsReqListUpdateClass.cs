@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsReqListUpdateClass
    {  		
-		public const string HashString = "830fb324d70c4a750cc34edbc7772e1d";
+		public const string HashString = "a08d7925110c430611a28660a9ab8012";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -57,13 +57,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
+			      				    IsMain =  false,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "DeclarationId",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
-			      				    IsComposition =  false,
+			      				    IsComposition =  true,
 			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
@@ -72,7 +72,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultTextBack_up =  "רשימת בקשות",
 			      				    LocalDefaultText =  "BS64:Iteo16nXmdee16og15HXp9ep15XXqiI=",
 			      				    DefaultText =  "Supplier Invoice Items Request List",
-			      				    Code =  "c71d",
+			      				    Code =  "02b0",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2246,13 +2246,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext,int contextTenant)
-	    {  
-		   ObjectTable SupplierInvoiceItemsReqListObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SupplierInvoiceItemsReqList" && d.Tenant == 0).FirstOrDefault(); 
-
-		   Feature SupplierInvoiceItemsReqListFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoiceItemsReqList.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceItemsReqListObjectTable,contextTenant);
-		   Feature SupplierInvoiceItemsReqListFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoiceItemsReqList.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceItemsReqListObjectTable,contextTenant);
-		   Feature SupplierInvoiceItemsReqListFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoiceItemsReqList.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceItemsReqListObjectTable,contextTenant);
-		   Feature SupplierInvoiceItemsReqListFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoiceItemsReqList.Features.PackageFeature", NameTextCodeDefaultText = "SupplierInvoiceItemsReqList Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceItemsReqListObjectTable,contextTenant);    
+	    {     
 	    
 		}
 

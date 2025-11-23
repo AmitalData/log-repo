@@ -72,7 +72,14 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
         public IdProductDutchGroup productDutchGroup { get; set; }
         [JsonIgnore]         
         [XmlIgnore]         
-        public int? UiLineNumber { get; set; }   
+        public int? UiLineNumber { get; set; }
+        [JsonIgnore]
+        [XmlIgnore]
+        public int InvoiceCounterKey { get; set; }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        public int InvoiceItemLineNumber { get; set; }
     }
 
     public class FormAttachmentDto

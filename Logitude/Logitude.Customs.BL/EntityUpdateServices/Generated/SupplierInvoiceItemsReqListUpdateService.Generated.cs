@@ -32,7 +32,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class SupplierInvoiceItemsReqListUpdateService:EntityUpdateService<POCO.SupplierInvoiceItemsReqList,SupplierInvoiceItemsReqListPM,EntityPM>
+   public partial class SupplierInvoiceItemsReqListUpdateService:EntityUpdateService<POCO.SupplierInvoiceItemsReqList,SupplierInvoiceItemsReqListPM,SIIRequestPM>
    {
    
         SupplierInvoiceItemsReqListRepository entityRepository;

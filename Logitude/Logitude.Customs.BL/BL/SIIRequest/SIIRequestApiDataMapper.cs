@@ -301,7 +301,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             SiiSelectedRowDto key,
             SupplierInvoiceItemsReqListQueryService service)
         {
-            var item = service.GetRequest(
+            var item = service.GetRequestLine(
                 key.SIIRequestID,
                 key.DeclarationId,
                 key.InvoiceCounterKey,
@@ -353,7 +353,9 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                                           .Replace(item.VendorName, "")
                                           .Trim().Length)),
                 formAttachmentIndexes = new List<int>(),
-               UiLineNumber = key.UiIndex
+                UiLineNumber = key.UiIndex,
+                InvoiceCounterKey = key.InvoiceCounterKey,
+                InvoiceItemLineNumber = key.InvoiceItemLineNumber,
             };
 
             if (string.IsNullOrWhiteSpace(item.ProductFileNumber))
