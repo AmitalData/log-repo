@@ -14,14 +14,20 @@ using NetCommonHelper.Logger;
 using System.Text.Encodings.Web;
 using Simplog.Server.Infrastructure;
 using Unifreight.Data.AmitalModel;
+using System.Text;
+using System.Globalization;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Collections.Concurrent;
 
 namespace Unifreight.BL.EntityQueryServices
 {
     public class SyncRecordQuery
     {
+        private readonly static string[] unifreightTablesSync = new string[] { "CCUPAYHAND", "CCUSIGNUM", "CCUMSHGR", "GGGQ", "CCUCARL", "CCUCUSTITEMS", "CCUCRREQ", "CCUFILEM", "CCUACCSUP", "CCUTAX", "CCUSUPITEMSI", "CCUSUPITEMS", "CCUTRANSPVAL", "CCUPAYLINEF", "YCULTASK" };
         SyncRecordRepository repository;
         static DevLog logger = DevLog.Instance;
-      
+
         public SyncRecordQuery(int tenant)
         {
             repository = new SyncRecordRepository(tenant);
@@ -47,55 +53,93 @@ namespace Unifreight.BL.EntityQueryServices
             return tenant;
         }
 
-        public List<SyncRecord> get()
-        {
-            List<SyncRecord> a = repository.Context.SyncRecord.ToList();
-            return a;
-        }
-
         public List<EntityRecord> GetUnsyncRecordsAndMarkAsInProcess(int tenant, string item, int? customsFileNo, bool allTask)
         {
-            List<SyncRecord> notExistsRecord = new List<SyncRecord>();
-            
-            if(customsFileNo.HasValue)
+            ConcurrentBag<SyncRecord> notExistsRecord = new ConcurrentBag<SyncRecord>();
+
+            if (customsFileNo.HasValue)
             {
                 item = repository.GetFileNo(tenant, customsFileNo.Value).ToString();
-                if(string.IsNullOrEmpty(item))
+                if (string.IsNullOrEmpty(item))
                     throw new Exception($"fileNo for customsFileNo {customsFileNo} and tenant {tenant} not found");
             }
 
             List<SyncRecord> groupRecord = repository.GetUnsyncAndMarkAsInProcess(tenant, item, allTask);
+
             AddGGGQC(groupRecord);
 
             string offset = GetTimeZone(tenant);
-            List<EntityRecord> entityRecords = groupRecord.Select(syncRecord =>
+            List<IGrouping<string, SyncRecord>> groupedByEntname = groupRecord.GroupBy(r => r.Entname).ToList();
+
+            ConcurrentBag<EntityRecord> entityRecords = new ConcurrentBag<EntityRecord>();
+            List<Task> entityRecordTasks = new List<Task>();
+            int tasksNumber;
+            if (!int.TryParse(Environment.GetEnvironmentVariable("tasksNumberForSync") ?? "", out tasksNumber))
+                tasksNumber = 20;
+
+            SemaphoreSlim throttler = new SemaphoreSlim(tasksNumber);
+
+            groupedByEntname.ForEach(group =>
             {
-                string recordAsJson = GetRecordOfRowNeedSync(syncRecord);
-                if (recordAsJson == null)
+                throttler.Wait();
+                Task task = Task.Run(() =>
                 {
-                    if(syncRecord.Entname == "GGGQC")
-                        return null;
-                    else
-                        notExistsRecord.Add(syncRecord);
-                }
+                    try
+                    {
+                        List<SyncRecord> recordsInGroup = group.ToList();
+                        string tableName = group.Key;
+                        List<SyncRecordWithJson> syncRecordsWithJson = new SyncRecordQuery(tenant).GetRecordOfRowNeedSync(recordsInGroup, tableName);
 
-                return new EntityRecord
-                {
-                    Key = syncRecord.KeyVal,
-                    TrigAction = syncRecord.TrigAction,
-                    Entname = syncRecord.Entname,
-                    RecordAsJson = recordAsJson,
-                    UpdateDate = syncRecord.SyncDT,
-                    CraeteDate = syncRecord.CreateDate,
-                    CreateDate = syncRecord.CreateDate,
-                    DbOffset = offset
+                        List<EntityRecord> entityRecordsInGroup = syncRecordsWithJson.Select(syncRecordWithJson =>
+                        {
+                            string recordAsJson = syncRecordWithJson.RecordAsJson;
+                            SyncRecord syncRecord = syncRecordWithJson.SyncRecord;
 
-                };
-            }).Where(x => x != null).ToList();
+                            if ((recordAsJson == null || recordAsJson == "[]") && tableName == "GGGQC")
+                                return null;
+                            else if (recordAsJson == null)
+                                notExistsRecord.Add(syncRecord);
 
-            repository.UpdateStatus(notExistsRecord, SyncRecordStatus.SyncedAndUpdated);
+                            return new EntityRecord
+                            {
+                                Key = syncRecord.KeyVal,
+                                TrigAction = syncRecord.TrigAction,
+                                Entname = syncRecord.Entname,
+                                RecordAsJson = recordAsJson,
+                                UpdateDate = syncRecord.SyncDT,
+                                CraeteDate = syncRecord.CreateDate,
+                                CreateDate = syncRecord.CreateDate,
+                                DbOffset = offset
+                            };
+                        }).Where(x => x != null).ToList();
+                        entityRecordsInGroup.ForEach(record => entityRecords.Add(record));
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.WriteFatal(ex, $"Error processing sync records of entname: {group?.Key}");
+                    }
+                    finally
+                    {
+                        throttler.Release();
+                    }
+                });
+                entityRecordTasks.Add(task);
 
-            return entityRecords;
+            });
+            try
+            {
+                Task.WaitAll(entityRecordTasks.ToArray());
+            }
+            catch (AggregateException ex)
+            {
+                foreach (var inner in ex.InnerExceptions)
+                    logger.WriteFatal(inner, "Error in parallel entity record tasks");
+            }
+            throttler.Dispose();
+
+            repository.UpdateStatus(notExistsRecord.ToList(), SyncRecordStatus.SyncedAndUpdated);
+
+            return entityRecords.ToList();
         }
 
         private static void AddGGGQC(List<SyncRecord> syncRecords)
@@ -130,42 +174,128 @@ namespace Unifreight.BL.EntityQueryServices
             SyncRecordCache.ClearCacheLastSync(itemUpdate, tenant);
         }
 
-        public string GetRecordOfRowNeedSync(SyncRecord syncRecord)
+        public List<SyncRecordWithJson> GetRecordOfRowNeedSync(List<SyncRecord> syncRecords, string tableName)
         {
-            if (syncRecord == null || string.IsNullOrEmpty(syncRecord.KeyVal) || syncRecord.TrigAction == "D")
+            if (unifreightTablesSync.Contains(tableName.ToUpper()) == false)
             {
-                DevLog.Instance.WriteInfo($"GetRecordOfRowNeedSync, keyVal is empty or null or is delete, id: {syncRecord?.Id}, trigAction: {syncRecord?.TrigAction}");
-                return "[]";
+                logger.WriteError($"Table {tableName} is not allowed to sync to Unifreight");
+                throw new Exception($"Table {tableName} is not allowed to sync to Unifreight");
             }
 
-            string query = $"SELECT * FROM {syncRecord.Entname}";
+            StringBuilder queryBuilder = new StringBuilder();
+            queryBuilder.Append($"SELECT * FROM {tableName} ");
+            bool firstCondition = true;
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+            List<SyncRecordWithJson> syncRecordsWithJson = syncRecords.Select(sr => new SyncRecordWithJson { SyncRecord = sr, RecordAsJson = "[]" }).ToList();
 
-            if (syncRecord.Entname.ToLower() == "ccumshgr")
-                query += " WHERE FILE_NO = '" + syncRecord.FileNo + "'";
-            else
-                query += " WHERE " + syncRecord.KeyVal.Replace(",", " and ").Replace("=NULL", " is null ");
-
-            SqlConnection conn = (repository.Context as IContext).GetActiveDbContext().Database.Connection as SqlConnection;
-            conn.Open();
-            SqlDataReader dataReader = new SqlCommand(query, conn).ExecuteReader();
-            DataTable dt = new DataTable();
-            dt.Load(dataReader);
-            conn.Close();
-
-            if (dt.Rows.Count != 1 && syncRecord.Entname.ToLower() != "ccumshgr")
+            syncRecordsWithJson.ForEach(syncRecordWithJson =>
             {
-                DevLog.Instance.WriteError($"record not found once for table: {syncRecord.Entname: name} and keyVal: {syncRecord.KeyVal.Replace(",", " and ")}");
-                return null;
+                SyncRecord syncRecord = syncRecordWithJson.SyncRecord;
+                if (syncRecord == null || string.IsNullOrEmpty(syncRecord.KeyVal) || syncRecord.TrigAction == "D")
+                    return;
+
+                queryBuilder.Append(firstCondition ? " WHERE " : " OR ");
+                if (firstCondition)
+                    firstCondition = false;
+
+                if (syncRecord.Entname.ToLower() == "ccumshgr")
+                {
+                    string paramName = "@FileNo_" + syncRecord.FileNo;
+                    sqlParameters.Add(new SqlParameter(paramName, syncRecord.FileNo));
+                    queryBuilder.Append($" ( FILE_NO = {paramName} ) ");
+                }
+                else
+                {
+                    queryBuilder.Append(" ( ");
+                    bool conditionsFirst = true;
+                    syncRecord.KeyVal.Split(',').ToList().ForEach(str =>
+                    {
+                        if (!conditionsFirst)
+                            queryBuilder.Append(" AND ");
+                        else
+                            conditionsFirst = false;
+
+                        string[] split = str.Split('=');
+                        string value = split[1].Replace("'", "");
+                        string key = split[0];
+                        string paramName = $"@{key}_{syncRecord.Id.Replace("-", "_")}";
+                        string conditionWithValue = value == "NULL" ? " is null " : $" = {paramName}";
+                        queryBuilder.Append($" {key} {conditionWithValue} ");
+                        sqlParameters.Add(new SqlParameter(paramName, value));
+                    });
+                    queryBuilder.Append(" ) ");
+                }
+            });
+
+            if (firstCondition)
+            {
+                DevLog.Instance.WriteInfo($"GetRecordOfRowNeedSync, keyVal is empty or null or is delete, id: {syncRecordsWithJson.FirstOrDefault().SyncRecord?.Id}, trigAction: {syncRecordsWithJson.FirstOrDefault().SyncRecord?.TrigAction}");
+                return syncRecordsWithJson;
+            }
+
+            string query = queryBuilder.ToString();
+            DataTable dt = new DataTable();
+
+            try
+            {
+                using (SqlConnection conn = (repository.Context as IContext).GetActiveDbContext().Database.Connection as SqlConnection)
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        if (sqlParameters.Count > 0)
+                            cmd.Parameters.AddRange(sqlParameters.ToArray());
+                        using (SqlDataReader dataReader = cmd.ExecuteReader())
+                        {
+                            dt.Load(dataReader);
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                logger.WriteFatal(e, $"failed to get date from unifreith table {tableName} ");
+                logger.WriteDebug($"failed to get date from unifreith table {tableName}, query: {query}, parameters: {string.Join(", ", sqlParameters.Select(x => $"name: {x.ParameterName} value: {x.Value} "))} ");
             }
 
             string[] columns = dt.Columns.Cast<DataColumn>().Select(c => c.ColumnName).ToArray();
             IEnumerable<Dictionary<string, string>> data = dt.Rows.Cast<DataRow>()
-                    .Select(dr => columns.ToDictionary(c => c, c => dr[c].ToString()));
+                    .Select(dr => columns.ToDictionary(c => c, c =>
+                         dr[c] is DateTime datetime ?
+                            datetime.ToString("dd-MM-yy HH:mm:ss", CultureInfo.InvariantCulture) :
+                            dr[c]?.ToString()
+                    ));
 
             JsonSerializerOptions jsonOptions = new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
-            string recordAsJson = JsonSerializer.Serialize(data, jsonOptions);
 
-            return recordAsJson;
+            int threadNumber;
+            if (!int.TryParse(Environment.GetEnvironmentVariable("threadNumberForSync") ?? "", out threadNumber))
+                threadNumber = 20;
+            ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = threadNumber };
+
+            Parallel.ForEach(
+                syncRecordsWithJson
+                    .Where(sr => !(sr.SyncRecord == null || string.IsNullOrEmpty(sr.SyncRecord.KeyVal) || sr.SyncRecord.TrigAction == "D"))
+                    .ToList(),
+                options,
+                sr =>
+                {
+                    Dictionary<string, string> conditions = new Dictionary<string, string>();
+                    sr.SyncRecord.KeyVal.Split(',').ToList().ForEach(str =>
+                    {
+                        string[] split = str.Split('=');
+                        conditions.Add(split[0], split[1].Replace("'", ""));
+                    });
+                    sr.RecordAsJson = JsonSerializer.Serialize(
+                        data.Where(row =>
+                            conditions.All(condition => row[condition.Key] == condition.Value)),
+                        jsonOptions
+                    );
+                }
+            );
+
+            return syncRecordsWithJson;
         }
 
         public DateTime? GetLastSyncDate(int tenant, string fileNo) => SyncRecordCache.GetLastSyncDate(fileNo, tenant);
@@ -190,7 +320,13 @@ namespace Unifreight.BL.EntityQueryServices
 
         public List<SyncRecord> GetNeedToReturnToQueue() => repository.GetNeedToReturnToQueue();
 
-        public string GetTimeZone(int tenant) => 
-            CacheHelper.GetFromCache("SyncRecord_timeZone_" + tenant,() => repository.GetTimeZone());
+        public string GetTimeZone(int tenant) =>
+            CacheHelper.GetFromCache("SyncRecord_timeZone_" + tenant, () => repository.GetTimeZone());
+
+        public class SyncRecordWithJson
+        {
+            public SyncRecord SyncRecord { get; set; }
+            public string RecordAsJson { get; set; }
+        }
     }
 }
