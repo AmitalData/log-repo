@@ -1340,7 +1340,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                         HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
                         HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                         IsCustomTemplate: true,
-                        
+                        DisplayFieldName: "LedgerTransaction.O.TotalLocalAmount",
                     },
                     CumulativeLocalAmount: {
                         HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
@@ -1352,7 +1352,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                         HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
                         HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                         IsCustomTemplate: true,
-                        
+                        DisplayFieldName: "LedgerTransaction.O.TotalForeignAmount",
                     },
                     CumulativeForeignAmount: {
                         HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
@@ -1448,6 +1448,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                         if (settings.HtmlListComponentUrl) column.HtmlListComponentUrl = settings.HtmlListComponentUrl;
                         if (settings.IsCustomTemplate) column.IsCustomTemplate = true;
                         if (settings.AdditionalDataCustom) column.AdditionalDataCustom = settings.AdditionalDataCustom;
+                        if (settings.DisplayFieldName) {
+                            column.Display = TextCodeTranslator.Translate(settings.DisplayFieldName);
+                            queryCol.ObjectFieldListLabelTextCodeCode = settings.DisplayFieldName;
+                        }
                     }
     
                     if (field.FieldName === 'ForeignAmountCredit' && this.EntityPM.CurrencyId === SessionLocator.TenantPM.CurrencyId) return;

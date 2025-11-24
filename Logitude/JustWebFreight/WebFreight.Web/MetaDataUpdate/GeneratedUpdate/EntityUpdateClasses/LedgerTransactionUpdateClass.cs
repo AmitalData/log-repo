@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "75abbd728dccad1ad63c0e01afc19d0a";
+		public const string HashString = "94c7ad10c68880ef592546460f6a0011";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -5872,6 +5872,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOVatRreporting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.VatRreporting", DefaultText = "VAT Reporting",LocalDefaultText = @"BS64:IteT15XXldeXINeU157XoiLXniI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOReconciledInDraft = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReconciledInDraft", DefaultText = "There are lines that have been reconciled, the references must be disconnected from the draft: ",LocalDefaultText = @"BS64:IteZ16nXoNedINep15XXqNeV16og16nXlNeV16rXkNee15UgLNeZ16kg15zXoNeq16cg15DXqiDXlNeQ16HXnteb16rXkNeV16og157XlNeY15nXldeY15Q6ICI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOTotalLocalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.TotalLocalAmount", DefaultText = "TotalLocalAmount",LocalDefaultText = @"BS64:Iteh15vXldedINeR16ki15ci", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOTotalForeignAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.TotalForeignAmount", DefaultText = "Total Foreign Amount",LocalDefaultText = @"BS64:Iteh15vXldedINeR157XmCLXliI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

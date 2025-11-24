@@ -7196,6 +7196,20 @@
       LocalDefaultText="&quot;BS64:IteZ16nXoNedINep15XXqNeV16og16nXlNeV16rXkNee15UgLNeZ16kg15zXoNeq16cg15DXqiDXlNeQ16HXnteb16rXkNeV16og157XlNeY15nXldeY15Q6ICI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.TotalLocalAmount&quot;"
+      DefaultText="&quot;TotalLocalAmount&quot;"
+      LocalDefaultTextBack_up="&quot;סכום בש&quot;ח&quot;"
+      LocalDefaultText="&quot;BS64:Iteh15vXldedINeR16ki15ci&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.TotalForeignAmount&quot;"
+      DefaultText="&quot;Total Foreign Amount&quot;"
+      LocalDefaultTextBack_up="&quot;סכום במט&quot;ז&quot;"
+      LocalDefaultText="&quot;BS64:Iteh15vXldedINeR157XmCLXliI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

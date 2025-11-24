@@ -25,6 +25,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 		private QuoteComputedField quoteComputedField;
 		private QuotePM quoteEntityPM;
 		private List<QuoteChargePM> quoteCharges;
+		private string accountingCurrencyId;
 		public void Handle(IServiceInitializer initializer)
 		{
 			this.initializer = (QuoteServiceInitializer)initializer;
@@ -36,6 +37,9 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 			{
 				this.quoteEntityPM = this.initializer.EntityPM;
 			}
+			TenantQuery tenantQuery = new TenantQuery(this.initializer.Tenant);
+			TenantPM tPM = tenantQuery.GetSinglePM(this.initializer.Tenant);
+			accountingCurrencyId = tPM?.CurrencyId;
 			this.HandleBehaviour();
 		}
 		private void HandleBehaviour()
@@ -263,9 +267,6 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 
 			ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(initializer.Tenant);
 			CurrencyRepository currencyRepository = new CurrencyRepository(initializer.Tenant);
-			TenantQuery tenantQuery = new TenantQuery(initializer.Tenant);
-			TenantPM tPM = tenantQuery.GetSinglePM(initializer.Tenant);
-			string accountingCurrencyId = tPM.CurrencyId;
 
 			var chargesTypes = chargesTypeRepository.GetChargesTypesOfVAL(initializer.Tenant).ToHashSet();
 			var quoteChargesVal = quoteCharges
