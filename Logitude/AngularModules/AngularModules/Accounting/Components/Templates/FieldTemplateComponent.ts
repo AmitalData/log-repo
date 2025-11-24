@@ -142,6 +142,15 @@ export class FieldTemplateComponent {
             else {
                 this.FieldValue = this.Entity.StatusLocalName;
             }
+            if (this.Entity.StatusTypeCode == "2") {
+                this.textColor = "orange";
+            }
+            else if (this.Entity.StatusTypeCode == "3") {
+                this.textColor = "green";
+            }
+            else if (this.Entity.StatusTypeCode == "4") {
+                this.textColor = "red";
+            }
         }
 
         if (this.ObjectTableName == "InterestReport") {
