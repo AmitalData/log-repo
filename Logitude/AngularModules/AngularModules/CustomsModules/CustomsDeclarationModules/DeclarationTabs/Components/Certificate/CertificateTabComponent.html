@@ -1,3 +1,4 @@
+
 <style>
     .GrayBox {
         height: 70px;
@@ -9,6 +10,8 @@
         padding: 10px;
           border-radius: 5px;
     }
+        .GrayBox:hover {
+        }
 
     .CertTicketWrapper {
         direction: ltr; /* abdullah: To force the scrollbar to be on the right */
@@ -198,7 +201,7 @@
                                             <div class="DisbleBox">
                                                 {{DisplayOnlyMessage}}
                                                 <span style="padding: 0px 16px;">-</span>
-                                                <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">{{'LBL_REFRESH' | TextCodeTranslationPipe}}</span>
+                                                <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
                                             </div>
                                         </div>
                                         <div *ngIf="!IsDisplayOnly && (ShowStorageStatusMessage||IsDisplayMessage)" style="width: 100%;text-align:center">
@@ -263,13 +266,13 @@
 
 
                                         <td style="width:80px">
-                                            <button *ngIf="TaxExemptCode92" (click)="SaveBeforeUpdate()" [disabled]="DeclarationPM.Direction == 'E'?isDisableBtn92:IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">{{'LBL_BLANKET_EXEMPTION_92' | TextCodeTranslationPipe}}</button>
+                                            <button *ngIf="TaxExemptCode92" (click)="SaveBeforeUpdate()" [disabled]="DeclarationPM.Direction == 'E'?isDisableBtn92:IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">פטור 92 גורף</button>
                                         </td>
 
                                         <td style="width:5px"></td>
 
                                         <td  style="width:80px">
-                                            <button *ngIf="DeclarationPM.Direction != 'E'" (click)="CreateCertificateForCustomsItems()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">{{'LBL_ADD_CERTIFICATE' | TextCodeTranslationPipe}}</button>
+                                            <button *ngIf="DeclarationPM.Direction != 'E'" (click)="CreateCertificateForCustomsItems()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">הוספת אישור</button>
                                         </td>
                                         <td></td>
                                         <td style="width: 30px;">
@@ -281,7 +284,7 @@
                                         <td colspan="2">
                                             <table>
                                                 <tr>
-                                                    <td style="width: 70px;">{{'LBL_CERTIFICATE_TYPE' | TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 70px;">סוג אישור</td>
 
                                                     <td style="width:75px;left:79px">
                                                         <LogLov [ObjectFieldName]="'ConfirmationTypeCode'"
