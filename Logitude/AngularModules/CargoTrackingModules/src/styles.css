@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'vanilla-cookieconsent/dist/cookieconsent.css';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -13,3 +14,31 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .clickable:hover{
     cursor: pointer;
 }
+
+html.cc--light-funky #cc-main {
+    color-scheme: light;
+    --cc-bg: #f9faff;
+    --cc-primary-color: #0071CE;
+    --cc-btn-primary-bg: #0071CE;
+    --cc-btn-primary-hover-bg: #005499;
+    --cc-btn-secondary-bg: #dfe7f9;
+    --cc-btn-secondary-color: var(--cc-primary-color);
+    --cc-cookie-category-block-bg: #ebeff9;
+    --cc-overlay-bg: rgba(219, 232, 255, .85) !important;
+    --cc-modal-border-radius: var(--cc-btn-border-radius);
+}
+
+#cc-main  {
+ direction: ltr;
+}
+
+
+#cc-main .section__toggle:checked ~ .toggle__icon {
+    background-color: #0071CE;
+}
+
+#cc-main .toggle__icon-on svg  {
+    stroke: #0071CE;
+}
+
+
