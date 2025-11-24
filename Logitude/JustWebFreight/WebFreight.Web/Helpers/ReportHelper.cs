@@ -2570,7 +2570,7 @@ namespace WebFreight.Web.Helpers
 
 		#region UpdateReport
 
-        public void CopyFromTenant0(int tenant, int tenantToCopy)
+        public void CopyFromTenant0(int tenant, int tenantToCopy, string reportCode = null)
         {
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenantToCopy);
             reportsTemplateRepository = new ReportsTemplateRepository(commonDataContext);
@@ -2583,7 +2583,7 @@ namespace WebFreight.Web.Helpers
             ReportGroupQuery reportGroupQuery = new ReportGroupQuery(tenantToCopy);
             string accountingReportGroupId = reportGroupQuery.GetReportGroupPMsByTenant(0).Where(a => a.Code == "RACC").Select(a => a.Id).FirstOrDefault();
             tenantZeroReportsTemplate = reportsTemplateRepository.GetReportsTemplates(0)
-                .Where(d => d.IsCopiedAtSignup && d.Report.ReportGroupId == accountingReportGroupId).ToList();
+                .Where(d => d.IsCopiedAtSignup && d.Report.ReportGroupId == accountingReportGroupId && !d.InActive).ToList();
             tenantZeroReportsTemplatesVersionLists = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(tenantZeroReportsTemplate.Select(d => d.Id).ToList(), 0);
             documentLists = documentRepository.GetDocumentsByIds(tenantZeroReportsTemplatesVersionLists.Select(d => d.ReportDocumentId).ToList());
             List<Report> tenantZeroReports = tenantZeroReportsTemplate.Select(a => a.Report).Distinct().ToList();
@@ -2592,6 +2592,11 @@ namespace WebFreight.Web.Helpers
             myTenantReportsTemplatesVersion = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(myTenantReportsTemplate.Select(d => d.Id).ToList(), tenantToCopy);
             ReportRepository reportRepository = new ReportRepository(commonDataContext);
             List<Report> myReports = reportRepository.GetReports(tenantToCopy).ToList();
+
+			if (!string.IsNullOrEmpty(reportCode))
+			{
+				tenantZeroReports = tenantZeroReports.Where(a => a.Code == reportCode).ToList();
+            }
 
             tenantZeroReports.ForEach(report => CreateReportTemplates(report, tenantToCopy, userId, myReports));
 
