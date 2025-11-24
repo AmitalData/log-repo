@@ -5187,6 +5187,40 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
         public void PrintOrSendInvoice(string id, int tenant) {
         }
 
+
+        public void PrintOrSendInvoice(string id, string reference, int tenant, string userId)
+        {
+            try
+            {
+                ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
+                Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ARInvoice", tenant, true);
+                DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
+                string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant("999G", tenant);
+                CreateDocumentOutArgs documentOutArgs = new CreateDocumentOutArgs()
+                {
+                    EntityId = id,
+                    Tenant = tenant,
+                    ObjectTableId = objectTable?.Id,
+                    SignHSM = true,
+                    DocumentTypeId = documentTypeId,
+                    ChildReference = reference,
+
+                };
+                DocumentHelper documentHelper = new DocumentHelper();
+                DocumentOutPM documentOutPM = documentHelper.PutCreateDocumentOut(documentOutArgs, userId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+
+
+        }
+
+
         public class ConfirmationNumberAPI
         {
             public string Invoice_ID { get; set; }
