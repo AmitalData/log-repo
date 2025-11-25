@@ -5188,7 +5188,7 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
         }
 
 
-        public void PrintOrSendInvoice(string id, string reference, int tenant, string userId)
+       /* public void PrintOrSendInvoice(string id, string reference, int tenant, string userId)
         {
             try
             {
@@ -5219,7 +5219,7 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
 
 
         }
-
+       */
 
         public class ConfirmationNumberAPI
         {
