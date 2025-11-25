@@ -1005,19 +1005,23 @@ namespace Logitude.BL.Helpers
             var objectTable = objectTableRepository.GetObjectTableByName(objectTableName, tenant, true);
 
 
+            string documentFileName = TranslateTextsClass.Translate(objectTableName, tenant, true);
+
             if (IsDigitalSign)
             {
                 var doc = documentTypePM.DocumentTypeCopies.FirstOrDefault();
-                exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, Id, objectTable.Id, null, null, documentsFiling.Id, tenant, doc.Id, resolveLoggingUserId);
+                exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, Id, objectTable.Id, null, null, documentsFiling.Id, tenant, doc.Id, resolveLoggingUserId, documentFileName);
             }
             else
             {
-                documentTypePM.DocumentTypeCopies.ForEach(doc =>
+                for (int i = 0; i < documentTypePM.DocumentTypeCopies.Count; i++)
                 {
-                    exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, Id, objectTable.Id, null, null, documentsFiling.Id, tenant, doc.Id, resolveLoggingUserId);
-                });
-            }
+                    var doc = documentTypePM.DocumentTypeCopies[i];
+                    var fileName = $"{documentFileName}_{i + 1}";
 
+                    exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, Id, objectTable.Id, null, null, documentsFiling.Id, tenant, doc.Id, resolveLoggingUserId, fileName);
+                }
+            }
         }
 
         public void CreateDocumentInterestReport(int tenant, string arinvoiceId ,string loggedContactId)
