@@ -1,0 +1,20 @@
+{
+    "maxWorkers":  6,
+    "maxOldSpaceMB":  16384,
+    "mode":  "parallelAll",
+    "projects":  [
+                     "shipment-modules",
+                     "shipment",
+                     "accounting",
+                     "customs",
+                     "crm",
+                     "common-modules",
+                     "infrastructure-modules",
+                     "invoice",
+                     "controls",
+                     "common"
+                 ],
+    "detailed":  true,
+    "enableJUnit":  true,
+    "collectCoverage":  true
+}
