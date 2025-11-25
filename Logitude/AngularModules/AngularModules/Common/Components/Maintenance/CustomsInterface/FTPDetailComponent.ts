@@ -129,7 +129,22 @@ export class FTPDetailComponent extends BaseComponent {
         if (this.EntityPM.InActive != value) {
             this.EntityPM.InActive = value;
         }
-  }
+    }
+
+    get PrivateKey() { return this.EntityPM.PrivateKey; }
+    set PrivateKey(value: string) {
+        if (this.EntityPM.PrivateKey != value) {
+            this.EntityPM.PrivateKey = value;
+        }
+    }
+
+    get Port() { return this.EntityPM.Port; }
+    set Port(value: string) {
+        if (this.EntityPM.Port != value) {
+            this.EntityPM.Port = value;
+        } 
+    }
+    
 
   get UseSFTP() { return this.EntityPM.UseSFTP; }
   set UseSFTP(value: boolean) {

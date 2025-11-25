@@ -210,6 +210,17 @@
     <Reference Include="NLog.Loki, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8dab11a1448ce9d0, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.Targets.Loki.2.2.0\lib\netstandard2.0\NLog.Loki.dll</HintPath>
     </Reference>
+    <Reference Include="nsoftware.IPWorksSSH, Version=20.0.8318.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\nsoftware.IPWorksSSH.20.0.8318\lib\net40\nsoftware.IPWorksSSH.dll</HintPath>
+    </Reference>
+    <Reference Include="nsoftware.IPWorksSSH.Design">
+      <HintPath>..\packages\nsoftware.IPWorksSSH.20.0.8318\lib\net40\nsoftware.IPWorksSSH.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="nsoftware.IPWorksSSH.System, Version=20.0.8318.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\nsoftware.IPWorksSSH.20.0.8318\lib\net40\nsoftware.IPWorksSSH.System.dll</HintPath>
+    </Reference>
     <Reference Include="RabbitMQ.Client, Version=6.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.6.8.1\lib\net462\RabbitMQ.Client.dll</HintPath>
     </Reference>
