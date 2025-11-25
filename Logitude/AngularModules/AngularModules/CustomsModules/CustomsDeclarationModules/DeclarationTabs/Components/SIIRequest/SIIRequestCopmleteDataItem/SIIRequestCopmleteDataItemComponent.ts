@@ -74,8 +74,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.IsNewOrEdit = args.IsNewOrEdit;
         this.isAllowChange = args.isAllowChange;
         this.filterAgrs = args.filterAgrs;
-        this.entityArgs.EntityPM = this.EntityPM;
-        this.entityArgs.ObjectTableName = "Customs.SupplierInvoiceItemsReqList";
         this.entityPM = args.entityPMSupplierInvoiceItemsReqListPM;
         this.oldRequestRequiredStatus = this.entityPM?.RequestRequiredStatus;
     }
@@ -282,21 +280,8 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     }
 
     private saveItemCompletionData() {
-        this.entityPM.DeclarationId = AppTool.IsNullOrEmpty(this.entityPM.DeclarationId) ? this.DecalarationData?.Id : this.entityPM.DeclarationId;
-        this.entityPM.InvoiceCounterKey = AppTool.IsNullOrEmpty(this.entityPM.InvoiceCounterKey) ? this.invoiceItemReq?.InvoiceCounterKey : this.entityPM.InvoiceCounterKey;
-        this.entityPM.InvoiceItemLineNumber = AppTool.IsNullOrEmpty(this.entityPM.InvoiceItemLineNumber) ? this.invoiceItemReq?.InvoiceLineNumber : this.entityPM.InvoiceItemLineNumber;
 
-        if (!this.currentSiiRequest.SupplierInvoiceItemsReqLists) {
-            this.currentSiiRequest.SupplierInvoiceItemsReqLists = [];
-        }
 
-        const children = this.currentSiiRequest.SupplierInvoiceItemsReqLists;
-
-        if (children.indexOf(this.entityPM) === -1) {
-            this.currentSiiRequest.AddSupplierInvoiceItemsReqList(this.entityPM);
-        }
-
-        this.currentSiiRequest.IsDirty = true;
 
         this.siiRequestPMService.update(this.currentSiiRequest).subscribe({
             next: (myResult: ServiceResponse) => {

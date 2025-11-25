@@ -17,8 +17,8 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<SupplierInvoiceItemsReqList> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+            SIIRequestKeys sIIRequestKeys = entityKeys as SIIRequestKeys;
+            return context.SupplierInvoiceItemsReqLists.Where(a => a.SIIRequestID == sIIRequestKeys.Id).ToList();
         }
         public SupplierInvoiceItemsReqList GetRequest(string siiRequestId, string declarationid, int invoicecounterkey, int invoiceitemlinenumber, int tenant)
         {
