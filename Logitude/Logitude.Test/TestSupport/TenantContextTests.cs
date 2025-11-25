@@ -14,6 +14,7 @@ namespace Logitude.Test.TestSupport
     public class TenantContextTests
     {
         [TestMethod]
+        [Timeout(10000)] // 10 second timeout to prevent hangs
         public void FreezeClock_WhenApplied_ControlsTenantServerConfiguration()
         {
             var anchor = new DateTime(2024, 4, 15, 13, 45, 30, DateTimeKind.Utc);
@@ -26,6 +27,7 @@ namespace Logitude.Test.TestSupport
         }
 
         [TestMethod]
+        [Timeout(10000)] // 10 second timeout to prevent hangs
         public void OverrideGetContext_WithDelegate_CallsFactoryInsteadOfDefaultResolution()
         {
             int capturedTenant = 0;
@@ -44,6 +46,7 @@ namespace Logitude.Test.TestSupport
         }
 
         [TestMethod]
+        [Timeout(10000)] // 10 second timeout to prevent hangs
         public void ClockEchoService_UsesFrozenClockAndReportsSuccess()
         {
             var anchor = new DateTime(2024, 7, 1, 9, 30, 0, DateTimeKind.Utc);
@@ -86,6 +89,11 @@ namespace Logitude.Test.TestSupport
         }
     }
 }
+
+
+
+
+
 
 
 
