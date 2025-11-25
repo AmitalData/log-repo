@@ -1,0 +1,4 @@
+# MultiQueueDistributor secrets
+/multiqueuedistributor/MultiQueueDistributor/appsettings.json
+/multiqueuedistributor/MultiQueueDistributor/appsettings.Development.json
+/multiqueuedistributor/MultiQueueDistributor/appsettings.Local.json
