@@ -1638,7 +1638,7 @@ export class APInvoiceLineItem extends BaseComponent {
         this.IsEditingEnabled = this.EditControlIsEnabled;
 
         this.UIProperties.SetEnabled("OpenAmount", this.ObjectTableName, this.OpenAmountIsEnabled);
-
+        this.UIProperties.SetEnabled("OperationalDate", this.ObjectTableName, this.EditControlIsEnabled);
         this.UIProperties.SetEnabled("ForiegnCurrencyAmount", this.ObjectTableName, this.EditControlIsEnabled);
         this.UIProperties.SetEnabled("InvoiceCurrencyAmount", this.ObjectTableName, this.EditControlIsEnabled);
 
