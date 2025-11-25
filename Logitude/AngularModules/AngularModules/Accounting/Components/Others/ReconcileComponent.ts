@@ -972,6 +972,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                                 }
                             });
                         }
+                        else  {
+                            this.CurrentSession.StartBusyIndicatorSaving();
+                            var entity = this.CreateReconciliation();
+                            this.SubmitChanges(entity);
+                        }
                     }
                     else {
                         this.CurrentSession.StartBusyIndicatorSaving();
