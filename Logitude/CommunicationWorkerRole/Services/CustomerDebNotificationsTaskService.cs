@@ -135,11 +135,11 @@ namespace CommunicationWorkerRole.Services
 					schedulerDetails.ReportDetails.Recepients.To = GetAllContatByGLAccountId(reportTask.Tenant, glaccount.Id);
                     if (string.IsNullOrEmpty(schedulerDetails.ReportDetails.Recepients.To))
                     {
-                        this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("No recepients found for GLAccount: " + glaccount.DisplayNumber + " EnglishName: " + glaccount.EnglishName + ". Task cancelled."));
+                        this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine($"No recipients found for GLAccount: {glaccount.EnglishName} ({glaccount.DisplayNumber}). Task cancelled."));
                         return;
                     }
 				}
-				this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report scheduler details GLAccount: " + glaccount.DisplayNumber + " EnglishName: " +  glaccount.EnglishName));
+				this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine($"Preparing report scheduler details for GLAccount: {glaccount.EnglishName} ({glaccount.DisplayNumber})"));
 				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
 				this.trackerCounter += 1;
 
@@ -197,7 +197,7 @@ namespace CommunicationWorkerRole.Services
 			}
 
 			if (!isDebt)
-				this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("No Debt for GLAccount: " + glaccount.DisplayNumber + " EnglishName: " + glaccount.EnglishName + " Reason: " + reason + "task cancelled"));
+				this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine($"No Debt for GLAccount: {glaccount.EnglishName} ({glaccount.DisplayNumber}). Reason: {reason}. Task cancelled."));
 
 			return isDebt;
 		}
