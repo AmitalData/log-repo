@@ -17,5 +17,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             this.repository = repository;
         }
+
+        public bool HasActiveConfig(string scacCode, int tenant)
+        {
+            return repository.HasActiveConfig(scacCode, tenant);
+        }
+
     }
 }

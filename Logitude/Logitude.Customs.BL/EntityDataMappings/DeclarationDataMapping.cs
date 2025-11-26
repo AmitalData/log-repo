@@ -607,7 +607,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
                 CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(entityPOCO.Tenant);
                 CourierMasterPM courierMasterPM = courierMasterQueryService.GetByDeclarationIdCache(entityPOCO.Id, entityPOCO.Tenant);
-                if (courierMasterPM != null)
+                if (courierMasterPM == null) {
+					 courierMasterPM = courierMasterQueryService.GetCourierMasterByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
+				}
+				if (courierMasterPM != null)
                 {
                     entityPM.CourierMasterId = courierMasterPM.Id;
                     entityPM.MAWBCourierMaster = courierMasterPM.MAWB;

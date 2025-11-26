@@ -65,8 +65,7 @@ namespace Logitude.Accounting.BL.Utils
         {
             IInvoiceContext objectContext = InvoiceContext.GetContext(tenant);
 
-            using (var scope = TransactionFactory.GetNewTransaction())
-            {
+            
                 var expenseAllocationFlowRepository = new ExpenseAllocationFlowRepository(objectContext);
                 var expenseAllocationFlowService = new ExpenseAllocationFlowService(objectContext, tenant);
                 var today = DateTime.UtcNow.Date;
@@ -75,8 +74,13 @@ namespace Logitude.Accounting.BL.Utils
                 {
                     try
                     {
-                        expenseAllocationFlowService.RunTaskNow(record);
-                        _ResponseText += $"Expense Allocation Flow {record.Id} processed successfully.\n";
+                        using (var scope = TransactionFactory.GetNewTransaction())
+                        {
+                            expenseAllocationFlowService.RunTaskNow(record);
+                            _ResponseText += $"Expense Allocation Flow {record.Id} processed successfully.\n";
+
+                            scope.Complete();
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -84,9 +88,7 @@ namespace Logitude.Accounting.BL.Utils
                         _StatusCode = HttpStatusCode.InternalServerError;
                     }
                 }
-                scope.Complete();
-
-            }
+                
 
 
         }

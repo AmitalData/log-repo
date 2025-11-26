@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Expense Allocation Flows&quot;"
-  Code="&quot;5bb8&quot;"
+  Code="&quot;2013&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"
@@ -654,17 +654,17 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;ExpenseAllocationFlow.O.AmountDue&quot;"
-      DefaultText="&quot;Amount Due:&quot;"
-      LocalDefaultTextBack_up="&quot;נשאר לשלם:&quot;"
-      LocalDefaultText="&quot;BS64:Iteg16nXkNeoINec16nXnNedOiI=&quot;"
+      Code="&quot;ExpenseAllocationFlow.O.UnrecognizedExpenses&quot;"
+      DefaultText="&quot;Unrecognized Expenses:&quot;"
+      LocalDefaultTextBack_up="&quot;הוצאות שטרם הוכרו:&quot;"
+      LocalDefaultText="&quot;BS64:IteU15XXpteQ15XXqiDXqdeY16jXnSDXlNeV15vXqNeVOiI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;ExpenseAllocationFlow.O.AmountPaid&quot;"
-      DefaultText="&quot;amount Paid &quot;"
-      LocalDefaultTextBack_up="&quot;שולם עד כה:&quot;"
-      LocalDefaultText="&quot;BS64:Itep15XXnNedINei15Mg15vXlDoi&quot;"
+      Code="&quot;ExpenseAllocationFlow.O.RecognizedExpense&quot;"
+      DefaultText="&quot;Recognized Expense:&quot;"
+      LocalDefaultTextBack_up="&quot;הוצאה שהוכרה:&quot;"
+      LocalDefaultText="&quot;BS64:IteU15XXpteQ15Qg16nXlNeV15vXqNeUOiI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -672,6 +672,13 @@
       DefaultText="&quot;Invoice Voided&quot;"
       LocalDefaultTextBack_up="&quot;חשבונית בוטלה&quot;"
       LocalDefaultText="&quot;BS64:IteX16nXkdeV16DXmdeqINeR15XXmNec15Qi&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExpenseAllocationFlow.O.TotalExpensesAllocation&quot;"
+      DefaultText="&quot;Total Expenses for Allocation:&quot;"
+      LocalDefaultTextBack_up="&quot;סה&quot;כ הוצאות לפריסה:&quot;"
+      LocalDefaultText="&quot;BS64:Iteh15Qi15sg15TXldem15DXldeqINec16TXqNeZ16HXlDoi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -250,6 +250,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.Quantity = entityPM.Quantity;
             entity.ExcludeFromTaxReport = entityPM.ExcludeFromTaxReport;
             entity.IsPrepaidExpenses = entityPM.IsPrepaidExpenses;
+            entity.OperationalDate = entityPM.OperationalDate;
+
             MapJournalAmount(entityPM);
 
         }

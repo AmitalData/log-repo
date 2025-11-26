@@ -61,6 +61,12 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ItemNo).HasColumnName("ItemNo").HasMaxLength(30).IsUnicode(false);
 
             this.Property(t => t.ItemName).HasColumnName("ItemName").HasMaxLength(256).IsUnicode(true);
+
+            this.Property(t => t.StatusCode).HasColumnName("StatusCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.StatusDate).HasColumnName("StatusDate");
+
+            this.Property(t => t.DistApprovalAttachmentPath).HasColumnName("DistApprovalAttachmentPath").HasMaxLength(500).IsUnicode(false);
         }
     }
 }

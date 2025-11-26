@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Scheduler Procedure&quot;"
-  Code="&quot;ad06&quot;"
+  Code="&quot;dca7&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -656,6 +656,12 @@
       Name="&quot;ExpenseAllocationTask&quot;"
       SearchFields="&quot;ExpenseAllocationTask&quot;"
       Description="&quot;ExpenseAllocationTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;OceanCarrierAPITask&quot;"
+      Name="&quot;OceanCarrierAPITask&quot;"
+      SearchFields="&quot;OceanCarrierAPITask,OceanCarrierAPITask&quot;"
+      Description="&quot;OceanCarrierAPITask&quot;"
       IsInternallyDefined="false" />
   </Records>
   <DataContracts />

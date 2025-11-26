@@ -665,7 +665,7 @@ namespace CommunicationWorkerRole
                         string calculatedFileName = "";
                         if (ca.Document != null && !string.IsNullOrEmpty(ca.Document.CalculatedFileName))
                         {
-                            calculatedFileName = ca.Document.CalculatedFileName.Replace(" ", "") + "." + ca.Document.Extension;
+                            calculatedFileName = ca.Document.CalculatedFileName + "." + ca.Document.Extension;
                         }
                         else if (docCopy != null)
                         {

@@ -120,7 +120,7 @@
                                                 [style.text-align]="isRTL ? 'right' : 'left'"
                                             >
                                                 <label
-                                                    >{{getDisplayText(AllocationDateType)}}</label
+                                                    >{{RecurringScheduleComponent.getDisplayText(AllocationDateType)}}</label
                                                 >
                                                 <img
                                                     src="./Images/ToggleIcon.png"
@@ -136,7 +136,7 @@
                                                         *ngFor="let type of allocationTypes"
                                                         (click)="onSelectAllocationType(type);"
                                                     >
-                                                        {{ getDisplayText(type)
+                                                        {{ RecurringScheduleComponent.getDisplayText(type)
                                                         }}
                                                     </button>
                                                 </div>
@@ -164,7 +164,7 @@
                                                 [style.text-align]="isRTL ? 'right' : 'left'"
                                             >
                                                 <label
-                                                    >{{getDisplayTextOfDay(selectedDay)}}</label
+                                                    >{{RecurringScheduleComponent.getDisplayTextOfDay(selectedDay)}}</label
                                                 >
                                                 <img
                                                     src="./Images/ToggleIcon.png"
@@ -182,7 +182,7 @@
                                                       
                                                     >
                                                         {{
-                                                        getDisplayTextOfDay(type)
+                                                        RecurringScheduleComponent.getDisplayTextOfDay(type)
                                                         }}
                                                     </button>
                                                 </div>

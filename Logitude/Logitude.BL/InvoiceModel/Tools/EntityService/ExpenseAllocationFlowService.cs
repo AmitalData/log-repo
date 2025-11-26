@@ -213,8 +213,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                         DebitAccountId = d.ChargeTypeGLAccountId,
                                                         CreditAccountId = accountingSettings?.PrepaidExpensesGLAccountId,
                                                         Line = ++counter,
-                                                        DocumentDate = theEntityPm.InvoiceDate.Value,
-                                                        AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
+                                                        DocumentDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                                                        AccountingDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                                                         DueDate = theEntityPm.DueDate.Value,
                                                         LocalAmount = (Math.Round(d.VatRecognizedPercentage == null ? (decimal)d.LocalCurrencyAmount.Value : (decimal)d.LocalAmountWithVatRecognized.Value, 2)) / settingPM.NumberOfPayments,
                                                         CurrencyId = d.ForiegnCurrencyId,
@@ -327,8 +327,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalLine.Line = lineNo;
             journalLine.ActionCode = AccountingActionCodes.Credit;
             journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Credit;
-            journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
-            journalLine.AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
+            journalLine.DocumentDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            journalLine.AccountingDate =  TenantServerConfigration.GetCurrentDateTime(tenant);
             journalLine.DueDate = theEntityPm.DueDate.Value;
 
             journalLine.Reference1 = theEntityPm.InvoiceNumber;

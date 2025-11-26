@@ -197,7 +197,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                 ContainerTypeId = a.ContainerTypeId,
                                 Quantity = a.Quantity,
                                 ExcludeFromTaxReport = a.ExcludeFromTaxReport,
-                                IsPrepaidExpenses =a.IsPrepaidExpenses
+                                IsPrepaidExpenses =a.IsPrepaidExpenses,
+                                OperationalDate = a.OperationalDate,
                             }).ToList();
 
                 ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(tenant);

@@ -17,8 +17,8 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<SupplierInvoiceItemsReqList> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+            SIIRequestKeys sIIRequestKeys = entityKeys as SIIRequestKeys;
+            return context.SupplierInvoiceItemsReqLists.Where(a => a.SIIRequestID == sIIRequestKeys.Id).ToList();
         }
         public SupplierInvoiceItemsReqList GetRequest(string siiRequestId, string declarationid, int invoicecounterkey, int invoiceitemlinenumber, int tenant)
         {
@@ -28,6 +28,20 @@ namespace Logitude.Customs.Data.Repsitories
             a.DeclarationId == declarationid &&
             a.InvoiceCounterKey == invoicecounterkey &&
             a.InvoiceItemLineNumber == invoiceitemlinenumber);
+        }
+
+        public SupplierInvoiceItemsReqList GetLineForSiiStatusUpdate(string requestNumber,int linenumber,string modelCode,int tenant)
+        {
+            var query =from line in context.SupplierInvoiceItemsReqLists
+                       join req in context.SIIRequests
+                       on line.SIIRequestID equals req.Id
+                       where  req.RequestNo == requestNumber && req.Tenant == tenant && line.LineNumber == linenumber && line.Tenant == tenant
+                       select line;
+            if (!string.IsNullOrWhiteSpace(modelCode))
+            {
+                query = query.Where(l => l.ItemNo == modelCode);
+            }
+            return query.FirstOrDefault();
         }
     }
 

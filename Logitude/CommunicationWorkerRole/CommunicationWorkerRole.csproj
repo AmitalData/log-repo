@@ -709,7 +709,7 @@
       <Compile Include="Tasks\QueryReport.cs" />
     <Compile Include="Tasks\CustomerDebNotificationsTask.cs" />
     <Compile Include="Tasks\IntegrityCheckTask.cs" />
-    <Compile Include="Tasks\ExpenseAllocationTask.cs" />
+    <Compile Include="Tasks\OceanCarrierAPITask.cs" />
     <Compile Include="Tasks\ReconcileInProgressCleanupTask.cs" />
     <Compile Include="Tasks\UpdateCanceledSATEntitiesStatusesTask.cs" />
     <Compile Include="Tasks\ResetFullTextSearchIndexChangeTrackingTask.cs" />

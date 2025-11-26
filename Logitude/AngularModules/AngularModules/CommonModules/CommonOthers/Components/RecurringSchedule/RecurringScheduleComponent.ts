@@ -19,7 +19,7 @@ export class RecurringScheduleComponent extends BaseComponent {
     public disabled = false;
     public IsDayDisabled = false;
     public validationErrorsList: string[];
-
+    RecurringScheduleComponent = RecurringScheduleComponent;
     public typeRadio: 'RecurrenceCount' | 'EndDateTime' = 'RecurrenceCount';
 
     private currentSession = SessionLocator.SelectedSession;
@@ -193,8 +193,7 @@ export class RecurringScheduleComponent extends BaseComponent {
         this.currentSession.CloseCurrentWindow();
     }
 
-    public getDisplayText(type: string): string {
-        if (!this.isRTL) return type;
+    public static getDisplayText(type: string,): string {
 
         const map: Record<string, string> = {
             [AllocationDateType.StartOfMonth]: TextCodeTranslator.Translate(
@@ -222,8 +221,8 @@ export class RecurringScheduleComponent extends BaseComponent {
         return map[type] || type;
     }
 
-    public getDisplayTextOfDay(day: string): string {
-        if (!this.isRTL) return day;
+    public static getDisplayTextOfDay(day: string): string {
+        
 
         const map: Record<string, string> = {
             Sunday: TextCodeTranslator.Translate(

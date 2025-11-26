@@ -65,5 +65,14 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             Context.SaveChanges();
         }
 
+        public bool HasActiveConfig(string scacCode, int tenant)
+        {
+            return Context.OceanCarrierStatusAPIconfigs.Any(c =>
+                c.SCACCode == scacCode &&
+                c.Tenant == tenant &&
+                !c.Inactive);
+        }
+
+
     }
 }

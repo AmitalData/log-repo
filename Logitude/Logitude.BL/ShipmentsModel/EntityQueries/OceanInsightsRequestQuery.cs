@@ -38,7 +38,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          BLNumber = a.BLNumber,
                                                          FromPushPage = a.FromPushPage,
 														 System = a.System,
-                                                         IsClosed = a.IsClosed
+                                                         IsClosed = a.IsClosed,
+                                                         Method = a.Method,
+                                                         OriginalResponse = a.OriginalResponse,
+                                                         ApiStatus = a.ApiStatus
+                                                         
 											   }).FirstOrDefault();
 
               
@@ -62,7 +66,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    BLNumber = a.BLNumber,
                                                    FromPushPage = a.FromPushPage,
 												   System = a.System,
-                                                   IsClosed = a.IsClosed
+                                                   IsClosed = a.IsClosed,
+                                                   Method = a.Method,
+                                                   OriginalResponse = a.OriginalResponse,
+                                                   ApiStatus = a.ApiStatus
                                                }).FirstOrDefault();
 
 
@@ -86,7 +93,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    BLNumber = a.BLNumber,
                                                    FromPushPage = a.FromPushPage,
 												   System = a.System,
-                                                   IsClosed = a.IsClosed
+                                                   IsClosed = a.IsClosed,
+                                                   Method = a.Method,
+                                                   OriginalResponse = a.OriginalResponse,
+                                                   ApiStatus = a.ApiStatus
                                                }).FirstOrDefault();
 
 
@@ -110,7 +120,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    BLNumber = a.BLNumber,
                                                    FromPushPage = a.FromPushPage,
 												   System = a.System,
-                                                   IsClosed = a.IsClosed
+                                                   IsClosed = a.IsClosed,
+                                                   Method = a.Method,
+                                                   OriginalResponse = a.OriginalResponse,
+                                                   ApiStatus = a.ApiStatus
                                                }).ToList();
 
 
@@ -134,7 +147,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    BLNumber = a.BLNumber,
                                                    FromPushPage = a.FromPushPage,
 												   System = a.System,
-                                                   IsClosed = a.IsClosed
+                                                   IsClosed = a.IsClosed,
+                                                   Method = a.Method,
+                                                   OriginalResponse = a.OriginalResponse,
+                                                   ApiStatus = a.ApiStatus
                                                }).FirstOrDefault();
 
 
@@ -157,7 +173,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
                                                    FromPushPage = a.FromPushPage,
-                                                   IsClosed = a.IsClosed
+                                                   IsClosed = a.IsClosed,
+                                                   Method = a.Method,
+                                                   OriginalResponse = a.OriginalResponse,
+                                                   ApiStatus = a.ApiStatus
                                                }).FirstOrDefault();
 
 
@@ -182,7 +201,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 												   BLNumber = a.BLNumber,
 												   FromPushPage = a.FromPushPage,
 												   System = a.System,
-                                                   IsClosed = a.IsClosed
+                                                   IsClosed = a.IsClosed,
+                                                   Method = a.Method,
+                                                   OriginalResponse = a.OriginalResponse,
+                                                   ApiStatus = a.ApiStatus
                                                }).FirstOrDefault();
 
 
@@ -206,7 +228,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 												   BLNumber = a.BLNumber,
 												   FromPushPage = a.FromPushPage,
 												   System = a.System,
-                                                   IsClosed = a.IsClosed
+                                                   IsClosed = a.IsClosed,
+                                                   Method = a.Method,
+                                                   OriginalResponse = a.OriginalResponse,
+                                                   ApiStatus = a.ApiStatus
                                                }).FirstOrDefault();
 
 
@@ -230,7 +255,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          BLNumber = a.BLNumber,
                                                          FromPushPage = a.FromPushPage,
 														 System = a.System,
-                                                         IsClosed = a.IsClosed
+                                                         IsClosed = a.IsClosed,
+                                                         Method = a.Method,
+                                                         OriginalResponse = a.OriginalResponse,
+                                                         ApiStatus = a.ApiStatus
                                                      }).ToList(); 
             return myResult;
         }

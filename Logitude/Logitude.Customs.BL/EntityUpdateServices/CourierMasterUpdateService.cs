@@ -1,6 +1,7 @@
 ﻿using Devart.Data.Oracle;
 using Logitude.AmitalMessaging.Infrastructure.FuStatus;
 using Logitude.AmitalMessaging.Utils;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.TraceEvents;
@@ -288,7 +289,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            if (entityPOCO != null)
+            FeatureQuery featureQuery = new FeatureQuery(entityPM.Tenant);
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
+            var feature = features.Features.FirstOrDefault(x => x.Code == "RaiseStatusOnLandingDate");
+            if (entityPOCO != null && feature != null)
             {
                 var oldLanding = entityPOCO.LandingDate;
                 var newLanding = entityPM.LandingDate;

@@ -103,73 +103,130 @@ namespace WebFreight.Web.WcfApi
                 {
 
                     IShipmentsContext objectContext = ShipmentsContext.GetContext(Tenant);
-                    OceanInsightsRequestRepository oceanInsightsRequestRepository = new OceanInsightsRequestRepository(objectContext);
+                    OceanCarrierStatusAPIconfigQuery carrierConfigQuery = new OceanCarrierStatusAPIconfigQuery(Tenant);
+                    bool hasActiveCarrierConfig = carrierConfigQuery.HasActiveConfig(ScacCode, Tenant);
+                    OceanInsightsRequestPM oceanInsightsRequestPm = new OceanInsightsRequestPM();
 
+                    if (hasActiveCarrierConfig)
+                    {
+                        OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, Tenant);
 
-                    if (string.IsNullOrEmpty(ScacCode))
-                    {
-                        response.HasError = true;
-                        response.ErrorMessage = "ScacCode must have value";
-                        return response;
+                        if (Type == "c_id")
+                        {
+                            oceanInsightsRequestPm.ContainerNumber = ReferenceNo;
+                        }
+
+                        else
+                        {
+                            oceanInsightsRequestPm.BLNumber = ReferenceNo;
+                        }
+
+                        oceanInsightsRequestPm.SCACCode = ScacCode;
+                        oceanInsightsRequestPm.Tenant = Tenant;
+                        oceanInsightsRequestPm.Type = Type;
+      
+
+                        service.Create(oceanInsightsRequestPm);
+
                     }
-                    if (string.IsNullOrEmpty(ReferenceNo))
-                    {
-                        response.HasError = true;
-                        response.ErrorMessage = "ReferenceNo # must have value";
-                        return response;
-                    }
-                    if (response.HasError)
-                    {
-                        return response;
-                    }
-                    OceanInsightsRequestQuery query = new OceanInsightsRequestQuery(Tenant);
-                    OceanInsightsRequestPM OceanInsightsRequestPm;// = new OceanInsightsRequestPM();
-                    if (Type == "c_id")
-                    {
-                        OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant);
-                    }
+
                     else
                     {
-                        OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByCareierScacBLNoTenant(ScacCode, ReferenceNo, Tenant);
-                        if (OceanInsightsRequestPm == null)
+                        OceanInsightsRequestRepository oceanInsightsRequestRepository = new OceanInsightsRequestRepository(objectContext);
+
+
+                        if (string.IsNullOrEmpty(ScacCode))
                         {
-                            OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant);
+                            response.HasError = true;
+                            response.ErrorMessage = "ScacCode must have value";
+                            return response;
                         }
-                    }
-
-                    //Hashtable Table = new Hashtable();
-                    //Table.Add("CONTAINER_NO", ContainerNo);
-                    //Table.Add("CARRIER_SCAC", ScacCode);
-                    //Table.Add("TOKEN", "a020db8267898a2502414e8479215ed32de41106");
-                    //Table.Add("REQ_ID","142707");
-                    bool UseOIV2 = FeatureToggleHelper.HasFeatureToggle("OI2", 0);
-                    ContainerTasks Task = new ContainerTasks(UseOIV2);
-                    string Result;
-                    string Status;
-                    string Errors;
-                    object Temp = null;//STARTMONITOR
-                    if (OceanInsightsRequestPm == null)
-                    {
-                        OceanInsightsRequestPm = new OceanInsightsRequestPM();
-
-                            Task.StartMonitor(ScacCode, ReferenceNo, OIToken, out Result, out Status, out Errors,Type);
-
-
-                        if (!string.IsNullOrEmpty(Errors) || !string.IsNullOrWhiteSpace(Errors))
+                        if (string.IsNullOrEmpty(ReferenceNo))
                         {
-                            string SearchErrors;
-                            Task.StartMonitorForExistedRequest(ReferenceNo, OIToken, out Result, out Status, out SearchErrors);
-                            if (!string.IsNullOrEmpty(SearchErrors) || !string.IsNullOrWhiteSpace(SearchErrors))
+                            response.HasError = true;
+                            response.ErrorMessage = "ReferenceNo # must have value";
+                            return response;
+                        }
+                        if (response.HasError)
+                        {
+                            return response;
+                        }
+                        OceanInsightsRequestQuery query = new OceanInsightsRequestQuery(Tenant);
+                        if (Type == "c_id")
+                        {
+                            oceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant);
+                        }
+                        else
+                        {
+                            oceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByCareierScacBLNoTenant(ScacCode, ReferenceNo, Tenant);
+                            if (oceanInsightsRequestPm == null)
                             {
-                                response.HasError = true;
-                                response.ErrorMessage = SearchErrors;
-                                return response;
+                                oceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant);
+                            }
+                        }
+
+                        //Hashtable Table = new Hashtable();
+                        //Table.Add("CONTAINER_NO", ContainerNo);
+                        //Table.Add("CARRIER_SCAC", ScacCode);
+                        //Table.Add("TOKEN", "a020db8267898a2502414e8479215ed32de41106");
+                        //Table.Add("REQ_ID","142707");
+                        bool UseOIV2 = FeatureToggleHelper.HasFeatureToggle("OI2", 0);
+                        ContainerTasks Task = new ContainerTasks(UseOIV2);
+                        string Result;
+                        string Status;
+                        string Errors;
+                        object Temp = null;//STARTMONITOR
+
+                        if (oceanInsightsRequestPm == null)
+                        {
+                            oceanInsightsRequestPm = new OceanInsightsRequestPM();
+
+                            Task.StartMonitor(ScacCode, ReferenceNo, OIToken, out Result, out Status, out Errors, Type);
+
+
+                            if (!string.IsNullOrEmpty(Errors) || !string.IsNullOrWhiteSpace(Errors))
+                            {
+                                string SearchErrors;
+                                Task.StartMonitorForExistedRequest(ReferenceNo, OIToken, out Result, out Status, out SearchErrors);
+                                if (!string.IsNullOrEmpty(SearchErrors) || !string.IsNullOrWhiteSpace(SearchErrors))
+                                {
+                                    response.HasError = true;
+                                    response.ErrorMessage = SearchErrors;
+                                    return response;
+                                }
+                                else
+                                {
+                                    XmlDocument xmldoc = new XmlDocument();
+                                    xmldoc.LoadXml(Result);
+                                    XmlNodeList nodeList = xmldoc.GetElementsByTagName("shipmentsubscription_id");
+                                    string Id = string.Empty;
+                                    foreach (XmlNode item in nodeList)
+                                    {
+                                        Id = item.InnerText;
+                                    }
+                                    OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, Tenant);
+                                    if (Type == "c_id")
+                                    {
+                                        oceanInsightsRequestPm.ContainerNumber = ReferenceNo;
+                                    }
+                                    else
+                                    {
+                                        oceanInsightsRequestPm.BLNumber = ReferenceNo;
+                                    }
+                                    oceanInsightsRequestPm.SCACCode = ScacCode;
+                                    oceanInsightsRequestPm.Tenant = Tenant;
+                                    oceanInsightsRequestPm.OceanInsigntId = Id;
+                                    oceanInsightsRequestPm.Type = Type;
+
+
+                                    service.Create(oceanInsightsRequestPm);
+                                }
                             }
                             else
                             {
                                 XmlDocument xmldoc = new XmlDocument();
                                 xmldoc.LoadXml(Result);
-                                XmlNodeList nodeList = xmldoc.GetElementsByTagName("shipmentsubscription_id");
+                                XmlNodeList nodeList = xmldoc.GetElementsByTagName("id");
                                 string Id = string.Empty;
                                 foreach (XmlNode item in nodeList)
                                 {
@@ -178,74 +235,48 @@ namespace WebFreight.Web.WcfApi
                                 OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, Tenant);
                                 if (Type == "c_id")
                                 {
-                                    OceanInsightsRequestPm.ContainerNumber = ReferenceNo;
+                                    oceanInsightsRequestPm.ContainerNumber = ReferenceNo;
                                 }
                                 else
                                 {
-                                    OceanInsightsRequestPm.BLNumber = ReferenceNo;
+                                    oceanInsightsRequestPm.BLNumber = ReferenceNo;
                                 }
-                                OceanInsightsRequestPm.SCACCode = ScacCode;
-                                OceanInsightsRequestPm.Tenant = Tenant;
-                                OceanInsightsRequestPm.OceanInsigntId = Id;
-                                OceanInsightsRequestPm.Type = Type;
+                                oceanInsightsRequestPm.SCACCode = ScacCode;
+                                oceanInsightsRequestPm.Tenant = Tenant;
+                                oceanInsightsRequestPm.OceanInsigntId = Id;
+                                oceanInsightsRequestPm.Type = Type;
 
-
-                                service.Create(OceanInsightsRequestPm);
+                                service.Create(oceanInsightsRequestPm);
                             }
                         }
-                        else
+                        if (string.IsNullOrEmpty(oceanInsightsRequestPm.OceanInsigntId))
                         {
-                            XmlDocument xmldoc = new XmlDocument();
-                            xmldoc.LoadXml(Result);
-                            XmlNodeList nodeList = xmldoc.GetElementsByTagName("id");
-                            string Id = string.Empty;
-                            foreach (XmlNode item in nodeList)
+                            Task.StartMonitorForExistedRequest(ReferenceNo, OIToken, out Result, out Status, out Errors);
+                            if (!string.IsNullOrEmpty(Errors) || !string.IsNullOrWhiteSpace(Errors))
                             {
-                                Id = item.InnerText;
-                            }
-                            OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, Tenant);
-                            if (Type == "c_id")
-                            {
-                                OceanInsightsRequestPm.ContainerNumber = ReferenceNo;
+                                response.HasError = true;
+                                response.ErrorMessage = Errors;
+                                return response;
                             }
                             else
                             {
-                                OceanInsightsRequestPm.BLNumber = ReferenceNo;
+                                XmlDocument xmldoc = new XmlDocument();
+                                xmldoc.LoadXml(Result);
+                                XmlNodeList nodeList = xmldoc.GetElementsByTagName("shipmentsubscription_id");
+                                string Id = string.Empty;
+                                //foreach (XmlNode item in nodeList)
+                                //{
+                                Id = nodeList.Item(0).InnerText;//item.InnerText;
+                                                                //}
+                                OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, Tenant);
+                                oceanInsightsRequestPm.OceanInsigntId = Id;
+
+                                service.Update(oceanInsightsRequestPm);
                             }
-                            OceanInsightsRequestPm.SCACCode = ScacCode;
-                            OceanInsightsRequestPm.Tenant = Tenant;
-                            OceanInsightsRequestPm.OceanInsigntId = Id;
-                            OceanInsightsRequestPm.Type = Type;
+                        }
 
-                            service.Create(OceanInsightsRequestPm);
-                        }
                     }
-                    if (string.IsNullOrEmpty(OceanInsightsRequestPm.OceanInsigntId))
-                    {
-                        Task.StartMonitorForExistedRequest(ReferenceNo, OIToken, out Result, out Status, out Errors);
-                        if (!string.IsNullOrEmpty(Errors) || !string.IsNullOrWhiteSpace(Errors))
-                        {
-                            response.HasError = true;
-                            response.ErrorMessage = Errors;
-                            return response;
-                        }
-                        else
-                        {
-                            XmlDocument xmldoc = new XmlDocument();
-                            xmldoc.LoadXml(Result);
-                            XmlNodeList nodeList = xmldoc.GetElementsByTagName("shipmentsubscription_id");
-                            string Id = string.Empty;
-                            //foreach (XmlNode item in nodeList)
-                            //{
-                            Id = nodeList.Item(0).InnerText;//item.InnerText;
-                                                            //}
-                            OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, Tenant);
-                            OceanInsightsRequestPm.OceanInsigntId = Id;
-
-                            service.Update(OceanInsightsRequestPm);
-                        }
-                    }
-                    response.Result = OceanInsightsRequestPm.OceanInsigntId;
+                    response.Result = oceanInsightsRequestPm.OceanInsigntId;
                     scope.Complete();
                     return response;
                 }

@@ -395,27 +395,97 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.getSupplierInvoiceItemsReqListPMDataAndopenLogWindow()
     }
 
-    supplierInvoiceItemsReqListPM: SupplierInvoiceItemsReqListPM = new SupplierInvoiceItemsReqListPM();
+    supplierInvoiceItemsReqListPM: SupplierInvoiceItemsReqListPM;
     getSupplierInvoiceItemsReqListPMDataAndopenLogWindow() {
-        let args: any = {
-            Decalaration: this.DecalarationData,
-            SIIRequest: this.entityPM,
-            invoiceItemReq: this.SelectedRow,
-            entityPMSupplierInvoiceItemsReqListPM: this.supplierInvoiceItemsReqListPM,
-            IsNewOrEdit: SiiRequestMode.IsEdit,
-            filterAgrs: this.initfilterAgrs,
-            isAllowChange: this.isAllowChange,
-        };
+        let existingChild: SupplierInvoiceItemsReqListPM | undefined;
 
-        this.supplierInvoiceItemsReqListWebService.getBySiiRequest(this.DecalarationData.Id, this.SelectedRow.LineNumber, this.SelectedRow.InvoiceCounterKey, this.SelectedRow.InvoiceLineNumber, this.entityPM?.Id).subscribe(myResult => {
-            let myResponse: ServiceResponse = myResult;
-            if (!myResponse?.HasError && myResponse?.Result) {
-                this.supplierInvoiceItemsReqListPM = myResponse.Result;
-                args.entityPMSupplierInvoiceItemsReqListPM = this.supplierInvoiceItemsReqListPM;
-                args.errorMassage = [];
+        if (this.entityPM && this.entityPM.SupplierInvoiceItemsReqLists) {
+            existingChild = this.entityPM.SupplierInvoiceItemsReqLists.find(x =>
+                x.DeclarationId === this.DecalarationData.Id &&
+                x.InvoiceCounterKey === this.SelectedRow.InvoiceCounterKey &&
+                x.InvoiceItemLineNumber === this.SelectedRow.InvoiceLineNumber &&
+                x.Tenant === this.entityPM.Tenant
+            );
+        }
+
+        if (existingChild) {
+            // Found in memory – use it, NO extra select, NO duplicate instance
+            this.supplierInvoiceItemsReqListPM = existingChild;
+
+            const args: any = {
+                Decalaration: this.DecalarationData,
+                SIIRequest: this.entityPM,
+                invoiceItemReq: this.SelectedRow,
+                entityPMSupplierInvoiceItemsReqListPM: this.supplierInvoiceItemsReqListPM,
+                IsNewOrEdit: SiiRequestMode.IsEdit,
+                filterAgrs: this.initfilterAgrs,
+                isAllowChange: this.isAllowChange,
+                errorMassage: []
+            };
+
+            this.openLogWindow(args);
+            return;
+        }
+
+        this.supplierInvoiceItemsReqListWebService
+            .getBySiiRequest(
+                this.DecalarationData.Id,
+                this.SelectedRow.LineNumber,
+                this.SelectedRow.InvoiceCounterKey,
+                this.SelectedRow.InvoiceLineNumber,
+                this.entityPM?.Id
+            )
+            .subscribe(myResult => {
+                const myResponse: ServiceResponse = myResult as ServiceResponse;
+
+                let linePM: SupplierInvoiceItemsReqListPM;
+
+                if (!myResponse?.HasError && myResponse?.Result) {
+                    linePM = myResponse.Result as SupplierInvoiceItemsReqListPM;
+                } else {
+                    linePM = new SupplierInvoiceItemsReqListPM(this.entityPM);
+                    linePM.DeclarationId = this.DecalarationData.Id;
+                    linePM.SIIRequestID = this.entityPM.Id;
+                    linePM.Tenant = this.entityPM.Tenant;
+                    linePM.InvoiceCounterKey = this.SelectedRow.InvoiceCounterKey;
+                    linePM.InvoiceItemLineNumber = this.SelectedRow.InvoiceLineNumber;
+                    linePM.LineNumber = this.SelectedRow.LineNumber;
+                }
+
+                linePM.EntityParentPM = this.entityPM;
+
+                if (!this.entityPM.SupplierInvoiceItemsReqLists) {
+                    this.entityPM.SupplierInvoiceItemsReqLists = [];
+                }
+
+                const alreadyInParent = this.entityPM.SupplierInvoiceItemsReqLists.find(x =>
+                    x.DeclarationId === linePM.DeclarationId &&
+                    x.InvoiceCounterKey === linePM.InvoiceCounterKey &&
+                    x.InvoiceItemLineNumber === linePM.InvoiceItemLineNumber &&
+                    x.Tenant === linePM.Tenant
+                );
+
+                if (!alreadyInParent) {
+                    this.entityPM.AddSupplierInvoiceItemsReqList(linePM);
+                } else {
+                    linePM = alreadyInParent;
+                }
+
+                this.supplierInvoiceItemsReqListPM = linePM;
+
+                const args: any = {
+                    Decalaration: this.DecalarationData,
+                    SIIRequest: this.entityPM,
+                    invoiceItemReq: this.SelectedRow,
+                    entityPMSupplierInvoiceItemsReqListPM: this.supplierInvoiceItemsReqListPM,
+                    IsNewOrEdit: SiiRequestMode.IsEdit,
+                    filterAgrs: this.initfilterAgrs,
+                    isAllowChange: this.isAllowChange,
+                    errorMassage: []
+                };
+
                 this.openLogWindow(args);
-            }
-        });
+            });
     }
 
     openLogWindow(args) {

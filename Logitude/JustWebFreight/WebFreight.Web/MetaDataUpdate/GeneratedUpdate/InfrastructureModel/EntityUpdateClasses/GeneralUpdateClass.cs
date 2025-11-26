@@ -23,8 +23,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "e3b7b14a62cfd5018d241e3a75b60f9c";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
+        public const string HashString = "3f9c2a1bd7e4f085c6a9b3d1ee72c4fa";
+        public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -1457,7 +1457,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralBAdjust = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.Adjust", DefaultText = "Adjust",LocalDefaultText = @"BS64:IteQ15nXqdeV16gg15TXpNeo16nXmdedIg==", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GeneralTextCode_AccountingGeneralBAutomaticReconcile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.AutomaticReconcile", DefaultText = "AutomaticReconcile",LocalDefaultText = @"BS64:IteU16rXkNee15Qg15DXldeY15XXnteY15nXqiI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+            TextCode GeneralTextCode_AccountingGeneralBRevaluationJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.RevaluationJournal", DefaultText = "Revaluation Journal", LocalDefaultText = @"BS64:Itek16fXldeT16og16nXoteo15XXmiI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode GeneralTextCode_AccountingGeneralBAutomaticReconcile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.AutomaticReconcile", DefaultText = "AutomaticReconcile",LocalDefaultText = @"BS64:IteU16rXkNee15Qg15DXldeY15XXnteY15nXqiI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GeneralTextCode_AccountingGeneralBView = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.View", DefaultText = "View",LocalDefaultText = @"BS64:Item16TXmdeZ15Qi", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 

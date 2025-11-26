@@ -28,11 +28,10 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
 
         protected override bool IsEqual(SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt mehesTableRow, CertificateOfOriginTypeCodeEnumPM curDbPM)
         {
-            var gov = mehesTableRow.MyCertificateOfOriginTypeCodeEnum ?? new CertificateOfOriginTypeCodeEnum();
+            CertificateOfOriginTypeCodeEnum gov = mehesTableRow.MyCertificateOfOriginTypeCodeEnum ?? new CertificateOfOriginTypeCodeEnum();
             return base.IsEqual(mehesTableRow, curDbPM)
-                && gov.IsCustomApprovalRequired == curDbPM.IsCustomApprovalRequired && gov.IsCriterionMandatory == curDbPM.IsCriterionMandatory;
-
-
+                && gov.IsCustomApprovalRequired == curDbPM.IsCustomApprovalRequired && gov.IsCriterionMandatory == curDbPM.IsCriterionMandatory
+                && gov.IsCustomsItemMandatory == curDbPM.IsCustomsItemMandatory && gov.IsZipcodeMandatory == curDbPM.IsZipcodeMandatory;
         }
 
         protected override void SetOtherFields(SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt mehesTableRow, CertificateOfOriginTypeCodeEnumPM curDbPM)
@@ -41,6 +40,8 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
             var gov = mehesTableRow.MyCertificateOfOriginTypeCodeEnum ?? new CertificateOfOriginTypeCodeEnum();
             curDbPM.IsCustomApprovalRequired = gov.IsCustomApprovalRequired;
             curDbPM.IsCriterionMandatory = gov.IsCriterionMandatory;
+            curDbPM.IsCustomsItemMandatory = gov.IsCustomsItemMandatory;
+            curDbPM.IsZipcodeMandatory = gov.IsZipcodeMandatory;
         }
     }
 }

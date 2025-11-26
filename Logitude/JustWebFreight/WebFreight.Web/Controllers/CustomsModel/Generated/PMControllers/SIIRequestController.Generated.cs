@@ -54,7 +54,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("Customs.SIIRequest", "READ", authToken.Tenant);
+	                
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 SIIRequestQueryService sIIRequestQuery = new SIIRequestQueryService(MyContext);
 				sIIRequestQuery.InitializeSettings();
@@ -86,7 +87,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    
+                        SecurityUtility.CheckContactFeature("Customs.SIIRequest", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("SIIRequest", entityPM.Tenant, authToken.Tenant);
+	                    
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         SIIRequestUpdateService service = new SIIRequestUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -132,7 +135,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                        SecurityUtility.CheckContactFeature("Customs.SIIRequest", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("SIIRequest", entityPM.Tenant, authToken.Tenant);
+	
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         SIIRequestUpdateService service = new SIIRequestUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);

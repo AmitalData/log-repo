@@ -319,6 +319,13 @@ namespace Logitude.BL.InfrastructureModel
                 Description = "ExpenseAllocationTask", 
                 IsInternallyDefined = false, 
 			});
+
+            all.Add(new SchedulerProcedureDetails()
+            {
+                Code = "OceanCarrierAPITask",
+                Name = "OceanCarrierAPITask",
+                SearchFields = "OceanCarrierAPITask,OceanCarrierAPITask",
+            });
 			
             return all;
        }

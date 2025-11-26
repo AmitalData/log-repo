@@ -1074,6 +1074,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CTP,Calculate With Total Past Open Cheques",
                 Description = "Calculate With Total Past Open Cheques",
             });
+            all.Add(new ToggleDetails()
+            {
+                Code = "UAT",
+                Name = "Use Accounting Date for AP Tax Report",
+                SearchFields = "Use Accounting Date for AP Tax Report,UAT",
+                Description = "Use Accounting Date for AP Tax Report ",
+            });
             return all;
        }
 
