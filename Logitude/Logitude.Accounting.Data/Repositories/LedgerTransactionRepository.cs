@@ -1688,7 +1688,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
             int days = DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
             DateTime endOfTaxReportDate = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days, 23, 59, 59);
-            bool useAccountingDateForAPTax = FeatureToggleHelper.HasFeatureToggle("CTL", tenant);
+            bool useAccountingDateForAPTax = FeatureToggleHelper.HasFeatureToggle("UAT", tenant);
             string apInvoice = "4";
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
             FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
