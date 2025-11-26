@@ -656,3 +656,5 @@ __pycache__/
 /Logitude/AngularModules/AngularModules/package-lock.json
 /Logitude/AngularModules/AngularModules/update_confluence_docs.py
 /Logitude/scripts/run-fe-features.ps1
+/Logitude/AngularModules/AngularModules/.jest-cache
+*.md
