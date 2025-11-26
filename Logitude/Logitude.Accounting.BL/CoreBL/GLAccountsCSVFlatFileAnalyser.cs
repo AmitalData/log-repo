@@ -834,7 +834,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (count > 2) rec.DisplayNumber = values[2].TrimStart('G');
             if (count > 3) rec.LocalName = values[3];
             if (count > 4) rec.EnglishName = values[4];
-            if (count > 5) rec.ChartCode = values[5].TrimStart('0');
+            if (count > 5) rec.ChartCode = values[5].TrimStart('G');
             if (count > 6) rec.CurrencyCode = values[6].ToUpperInvariant();
             if (count > 7) 
             { 
