@@ -4,17 +4,28 @@ const base = {
 	setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
 	globalSetup: 'jest-preset-angular/global-setup',
 	testEnvironment: 'jsdom',
+	
+	// Performance: Order matters - check TypeScript first
 	moduleFileExtensions: ['ts', 'html', 'js', 'json', 'mjs'],
+	
+	// Performance: Optimize transform with isolatedModules (skips type checking)
+	// Note: SWC not compatible with jest-preset-angular, using ts-jest with isolatedModules
 	transform: {
 		'^.+\\.(ts|mjs|html)$': 'ts-jest'
 	},
 	globals: {
 		'ts-jest': {
 			tsconfig: '<rootDir>/tsconfig.jest.json',
-			diagnostics: { warnOnly: true }
+			diagnostics: { warnOnly: true },
+			isolatedModules: true
 		}
 	},
-	transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
+	
+	// Performance: Skip more node_modules transformations
+	transformIgnorePatterns: [
+		'node_modules/(?!.*\\.mjs$|@angular|@azure|@microsoft|ag-grid|primeng|ng-zorro)'
+	],
+	
 	moduleNameMapper: {
 		'\\.(css|scss|sass|less)$': '<rootDir>/__mocks__/styleMock.js',
 		'\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/__mocks__/fileMock.js',
@@ -30,8 +41,41 @@ const base = {
 		'^Invoice/(.*)$': '<rootDir>/Invoice/$1',
 		'^Accounting/(.*)$': '<rootDir>/Accounting/$1'
 	},
+	
+	// Performance: Enable caching explicitly
+	cache: true,
+	cacheDirectory: '<rootDir>/.jest-cache',
+	
+	// Performance: Clean mocks between tests for isolation
+	clearMocks: true,
+	restoreMocks: true,
+	
+	// Performance: Optimized timeout (reduced from 10000ms for faster feedback)
+	testTimeout: 5000,
+	
+	// Performance: Optimize module resolution
+	moduleDirectories: ['node_modules', '<rootDir>'],
+	
+	// Performance: Only collect coverage from source files, not tests
+	collectCoverageFrom: [
+		'**/*.ts',
+		'!**/*.spec.ts',
+		'!**/*.d.ts',
+		'!**/__tests__/**',
+		'!**/node_modules/**',
+		'!**/dist/**',
+		'!**/coverage/**'
+	],
+	coveragePathIgnorePatterns: [
+		'/node_modules/',
+		'/dist/',
+		'/coverage/',
+		'\\.spec\\.ts$',
+		'\\.d\\.ts$'
+	],
+	
 	reporters: ['default'],
-	maxWorkers: 6  // Force 6 workers for parallel execution
+	maxWorkers: 4  // Optimized: 4 workers showed best performance (233s vs 318s with 6)
 };
 
 function project(displayName, relDir) {
