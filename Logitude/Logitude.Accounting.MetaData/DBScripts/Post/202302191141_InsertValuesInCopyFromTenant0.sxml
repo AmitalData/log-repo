@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Accounting">
-  <Sql Version="8">
+  <Sql Version="9">
     <![CDATA[
    INSERT INTO CopyFromTenant0 (Id, Tenant, TableName, AlwaysEnabled)
 SELECT *
