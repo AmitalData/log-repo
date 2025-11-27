@@ -27,8 +27,6 @@ namespace Logitude.Customs.Data.EntityLists
        [Key]
        [DataMember]
        public string DeclarationId  { get; set; }
-
-       [Key]
        [DataMember]
        public int LineNumber  { get; set; }
 

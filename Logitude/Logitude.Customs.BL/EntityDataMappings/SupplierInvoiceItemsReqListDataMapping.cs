@@ -125,6 +125,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.StatisticQuantityType =
                     muQS.GetSingle(item.StatisticQuantityType, false, true)?.LocalName;
             }
+            if (!String.IsNullOrWhiteSpace(entityPOCO.StatusCode))
+            {
+                var sIIRequestLineStatusQueryService = new SIIRequestLineStatusQueryService(entityPOCO.Tenant);
+                var pm = sIIRequestLineStatusQueryService.GetSingle(entityPOCO.StatusCode, false, true);
+                entityPM.StatusName = pm?.LocalName;
+            }
         }
     }
 

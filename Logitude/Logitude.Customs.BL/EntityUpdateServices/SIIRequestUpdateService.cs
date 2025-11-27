@@ -29,6 +29,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             if (string.IsNullOrEmpty(entityPM.Id))
                 entityPM.Id = IdCounter.GetNumber("Customs.SIIRequest", entityPM.Tenant);
+            entityPM.RequestDate = DateTime.Now;
         }
         protected override void UpdateComposition(SIIRequestPM entityPM)
         {

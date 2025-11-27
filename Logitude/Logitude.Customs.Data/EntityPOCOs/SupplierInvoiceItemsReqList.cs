@@ -35,7 +35,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DeclarationId { get; set; }
 	      
         public virtual SupplierInvoiceItem SupplierInvoiceItem { get; set; }
-     [Key]
         [Column("LineNumber" ,Order = 4)]
 	    public int LineNumber { get; set; }
      [Key]
