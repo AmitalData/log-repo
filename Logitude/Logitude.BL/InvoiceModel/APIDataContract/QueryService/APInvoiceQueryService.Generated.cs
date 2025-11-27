@@ -6,6 +6,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityOtherServices;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
@@ -296,7 +297,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 						{
 							if (!String.IsNullOrWhiteSpace(MyEntity.VATNumber))
 							{
-								string aPInvoiceVatNumberNormalized = CheckVATValidation(MyEntity.VATNumber);
+								string aPInvoiceVatNumberNormalized = APInvoiceMessageHelper.CheckVATValidation(MyEntity.VATNumber);
 								if (MyEntity.VATNumber != "999999999" && MyEntity.VATNumber != "999999998" && MyEntity.VATNumber == aPInvoiceVatNumberNormalized)
 								{
 									temp.VATNumber = MyEntity.VATNumber;
@@ -819,72 +820,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 			return rv;
         }
 
-        private static string CheckVATValidation(string vat)
-        {
-			try
-			{
-				//for each VAT number that contains letters replace with 999999998
-				//for each one that contains no letters make the following validation :
-				//1- separate the 9 numbers to an array
-				//2- multiply 1 2 1 2 1 2 1 2 1 to the VAT number array cells
-				//3- go by the cells one by one , if the number is greater from 9, add both of its digits (check the link in the example)
-				//4- sum all the cells
-				//5- if the sum MOD 10 = 0 , write as is , else replace with 999999998
-				vat = vat.Trim();
-				string result = string.Empty;
-				double Num;
-				bool isVatNum = double.TryParse(vat, out Num);
-
-				if (isVatNum)
-				{
-					int[] add = { 1, 2, 1, 2, 1, 2, 1, 2, 1 };
-					char[] array = vat.ToCharArray();
-					int[] res = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-					int parse = 0;
-					int sumRes = 0;
-
-					for (int i = 0; i < array.Length; i++)
-					{
-						parse = int.Parse(array[i].ToString());
-						res[i] = add[i] * parse;
-					}
-
-					for (int i = 0; i < res.Length; i++)
-					{
-						if (res[i] > 9)
-						{
-							int one = 1;
-							int two = res[i] % 10;
-							res[i] = one + two;
-						}
-						sumRes += res[i];
-					}
-
-					if (sumRes % 10 == 0)
-					{
-						result = vat;
-					}
-					else
-					{
-						result = "999999998";
-					}
-
-				}
-				else
-				{
-					result = "999999998";
-				}
-
-				return result;
-			}
-			catch (Exception e)
-			{
-                NetCommonHelper.Logger.DevLog.Instance.WriteError($"{e.Message}, VAT validation failed.");
-
-                // Return a safe fallback value
-                return "999999998";
-            }
-        }
 
         private static string ModifyVatNumber(string vatNumber)
         {
