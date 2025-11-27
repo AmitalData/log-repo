@@ -276,4 +276,6 @@ export class SupplierInvoiceItemsForSIIRequest {
     LineNumber: number;
     HasDemandState: boolean;
     Counter: number;
+    StatusName: string;
+    DistApprovalAttachmentPath: string;
 }

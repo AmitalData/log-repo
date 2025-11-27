@@ -97,9 +97,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private int lineNumber ;
-	  
-       [Key]
-	  
+	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]

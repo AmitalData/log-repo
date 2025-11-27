@@ -240,6 +240,9 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 ? sii.FromApplicationId
                 : $"{GetSiiCompanyName()}-{siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1}";
 
+            var applicantSystemIdStr = GetMandatoryDefault(_tenant, "SIIApplicantSystemId");
+            var applicantSystemId = ToLong(applicantSystemIdStr, "SIIApplicantSystemId");
+
             var contactName = contact?.LocalName;
 
             return new ReleaseRequestFormDto
@@ -262,6 +265,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 importerFax = SanitizePhone(sii.ContactFax),
 
                 applicantFullName = contactName,
+                applicantSystemId = applicantSystemId,
                 applicantIdNumber = contact == null
                     ? null
                     : new UserQuery(_tenant).GetPersonalIdByUserId(contact.Id, _tenant),

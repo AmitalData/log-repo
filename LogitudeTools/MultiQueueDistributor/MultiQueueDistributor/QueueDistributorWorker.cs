@@ -1,4 +1,5 @@
-﻿using Azure.Messaging.ServiceBus;
+﻿using Azure;
+using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -8,6 +9,8 @@ using System.Collections.Concurrent;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
+
 
 namespace MultiQueueDistributor
 {
@@ -17,6 +20,7 @@ namespace MultiQueueDistributor
         private readonly ServiceBusClient _serviceBusClient;
         private readonly ServiceBusAdministrationClient _adminClient;
         private readonly ServiceBusOptions _options;
+        private readonly IHostApplicationLifetime _appLifetime;
 
         private ServiceBusProcessor _processor;
         private readonly ConcurrentDictionary<string, ServiceBusSender> _senderCache =
@@ -31,12 +35,14 @@ namespace MultiQueueDistributor
             ILogger<QueueDistributorWorker> logger,
             ServiceBusClient serviceBusClient,
             ServiceBusAdministrationClient adminClient,
-            IOptions<ServiceBusOptions> options)
+            IOptions<ServiceBusOptions> options,
+            IHostApplicationLifetime appLifetime)
         {
             _logger = logger;
             _serviceBusClient = serviceBusClient;
             _adminClient = adminClient;
             _options = options.Value ?? throw new ArgumentNullException(nameof(options));
+            _appLifetime = appLifetime ?? throw new ArgumentNullException(nameof(appLifetime));
         }
 
         public override async Task StartAsync(CancellationToken cancellationToken)
@@ -70,7 +76,7 @@ namespace MultiQueueDistributor
             _processor = _serviceBusClient.CreateProcessor(_options.SourceQueue, new ServiceBusProcessorOptions
             {
                 AutoCompleteMessages = false,
-                MaxConcurrentCalls = 1 // for safety: only one at a time
+                MaxConcurrentCalls = 1 
             });
 
             _processor.ProcessMessageAsync += OnMessageReceivedAsync;
@@ -117,18 +123,6 @@ namespace MultiQueueDistributor
         {
             var message = args.Message;
 
-            // Safety: respect MaxMessages at the top
-            if (_options.MaxMessages > 0 && _processedCount >= _options.MaxMessages)
-            {
-                _logger.LogWarning(
-                    "MaxMessages ({MaxMessages}) already reached. Abandoning message {MessageId} and stopping processor.",
-                    _options.MaxMessages, message.MessageId);
-
-                await args.AbandonMessageAsync(message);
-                await _processor.StopProcessingAsync();
-                return;
-            }
-
             try
             {
                 string routingKey = ResolveRoutingKey(message, _options.RoutingProperty);
@@ -160,6 +154,7 @@ namespace MultiQueueDistributor
                         await args.AbandonMessageAsync(message);
                     }
 
+                    IncrementAndMaybeStop();
                     return;
                 }
 
@@ -201,11 +196,44 @@ namespace MultiQueueDistributor
             }
             catch (Exception ex)
             {
+                if (IsAuthError(ex))
+                {
+                    _logger.LogCritical(ex,
+                        "Fatal Service Bus authentication/authorization error while processing message {MessageId}. " +
+                        "Stopping processor and shutting down host so we don't continue with an invalid token.",
+                        message.MessageId);
+
+                    try
+                    {
+                        if (_processor != null)
+                        {
+                            await _processor.StopProcessingAsync();
+                        }
+                    }
+                    catch (Exception stopEx)
+                    {
+                        _logger.LogError(stopEx, "Error while stopping processor after auth failure.");
+                    }
+
+                    _appLifetime.StopApplication();
+
+                    throw;
+                }
+
                 _logger.LogError(ex,
                     "Error processing message {MessageId}. Abandoning message so it can be retried.",
                     message.MessageId);
 
-                await args.AbandonMessageAsync(message);
+                try
+                {
+                    await args.AbandonMessageAsync(message);
+                }
+                catch (Exception abandonEx)
+                {
+                    _logger.LogError(abandonEx,
+                        "Error abandoning message {MessageId} after processing failure.",
+                        message.MessageId);
+                }
             }
         }
 
@@ -222,18 +250,46 @@ namespace MultiQueueDistributor
                     "MaxMessages limit reached ({MaxMessages}). Stopping processor.",
                     _options.MaxMessages);
 
-                _ = _processor.StopProcessingAsync();
+                if (_processor != null)
+                {
+                    _ = _processor.StopProcessingAsync();
+                }
             }
         }
 
-        private Task OnErrorAsync(ProcessErrorEventArgs args)
+        private async Task OnErrorAsync(ProcessErrorEventArgs args)
         {
-            _logger.LogError(args.Exception,
-                "Service Bus processing error. Entity: {EntityPath}, ErrorSource: {ErrorSource}",
-                args.EntityPath, args.ErrorSource);
+            var ex = args.Exception;
 
-            return Task.CompletedTask;
+            if (IsAuthError(ex))
+            {
+                _logger.LogCritical(ex,
+                    "Fatal Service Bus authentication/authorization error. Entity: {Entity}, Source: {ErrorSource}. " +
+                    "Stopping processor and shutting down host so we don't continue with an invalid token.",
+                    args.EntityPath, args.ErrorSource);
+
+                try
+                {
+                    if (_processor != null)
+                    {
+                        await _processor.StopProcessingAsync();
+                    }
+                }
+                catch (Exception stopEx)
+                {
+                    _logger.LogError(stopEx,
+                        "Error while stopping processor after auth failure in ProcessErrorAsync.");
+                }
+
+                _appLifetime.StopApplication();
+                return;
+            }
+
+            _logger.LogError(ex,
+                "Service Bus processing error. Entity: {Entity}, ErrorSource: {ErrorSource}",
+                args.EntityPath, args.ErrorSource);
         }
+
 
         private async Task EnsureQueueExistsAsync(string queueName)
         {
@@ -293,92 +349,90 @@ namespace MultiQueueDistributor
 
         private string ResolveRoutingKey(ServiceBusReceivedMessage message, string routingProperty)
         {
-            // 1. ApplicationProperties
             if (message.ApplicationProperties != null &&
                 message.ApplicationProperties.TryGetValue(routingProperty, out var valueFromAppProps) &&
                 valueFromAppProps != null)
             {
-                var routingKey = valueFromAppProps.ToString();
-                if (!string.IsNullOrWhiteSpace(routingKey))
+                var routingKeyFromAppProps = valueFromAppProps.ToString();
+                if (!string.IsNullOrWhiteSpace(routingKeyFromAppProps))
                 {
                     _logger.LogDebug(
                         "Routing key '{RoutingProperty}' resolved from ApplicationProperties: {RoutingKey}",
-                        routingProperty, routingKey);
-
-                    return routingKey;
+                        routingProperty, routingKeyFromAppProps);
+                    return routingKeyFromAppProps;
                 }
             }
 
             string bodyText = null;
 
-            // 2. JSON body
             try
             {
                 bodyText = message.Body.ToString();
-                if (!string.IsNullOrWhiteSpace(bodyText))
+                if (string.IsNullOrWhiteSpace(bodyText))
                 {
-                    using var doc = JsonDocument.Parse(bodyText);
-                    if (doc.RootElement.ValueKind == JsonValueKind.Object &&
-                        doc.RootElement.TryGetProperty(routingProperty, out var prop))
+                    _logger.LogWarning(
+                        "Message body is empty or null when resolving routing key '{RoutingProperty}'.",
+                        routingProperty);
+                    return null;
+                }
+
+                using var doc = JsonDocument.Parse(bodyText);
+                var root = doc.RootElement;
+
+                if (root.ValueKind == JsonValueKind.Object &&
+                    root.TryGetProperty(routingProperty, out var rootProp))
+                {
+                    var rk = ExtractJsonValue(rootProp);
+                    if (!string.IsNullOrWhiteSpace(rk))
                     {
-                        string routingKey = prop.ValueKind switch
-                        {
-                            JsonValueKind.String => prop.GetString(),
-                            JsonValueKind.Number => prop.GetRawText(),
-                            JsonValueKind.True => "true",
-                            JsonValueKind.False => "false",
-                            _ => prop.GetRawText()
-                        };
+                        _logger.LogDebug(
+                            "Routing key '{RoutingProperty}' resolved from root JSON: {RoutingKey}",
+                            routingProperty, rk);
+                        return rk;
+                    }
+                }
 
-                        if (!string.IsNullOrWhiteSpace(routingKey))
-                        {
-                            _logger.LogDebug(
-                                "Routing key '{RoutingProperty}' resolved from JSON body: {RoutingKey}",
-                                routingProperty, routingKey);
-
-                            return routingKey;
-                        }
+                if (root.ValueKind == JsonValueKind.Object &&
+                    root.TryGetProperty("Params", out var paramsElem) &&
+                    paramsElem.ValueKind == JsonValueKind.Object &&
+                    paramsElem.TryGetProperty(routingProperty, out var paramsProp))
+                {
+                    var rk = ExtractJsonValue(paramsProp);
+                    if (!string.IsNullOrWhiteSpace(rk))
+                    {
+                        _logger.LogDebug(
+                            "Routing key '{RoutingProperty}' resolved from Params: {RoutingKey}",
+                            routingProperty, rk);
+                        return rk;
                     }
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogWarning(ex,
-                    "Failed to parse body as JSON when resolving routing key '{RoutingProperty}'.",
+                    "Failed to parse body JSON when resolving routing key '{RoutingProperty}'.",
                     routingProperty);
             }
 
-            // === EXTRA LOGGING WHEN WE FAIL ===
-
             try
             {
-                // Log available application property keys
                 if (message.ApplicationProperties != null && message.ApplicationProperties.Count > 0)
                 {
                     var keys = string.Join(", ", message.ApplicationProperties.Keys);
-                    _logger.LogWarning(
-                        "Available ApplicationProperties keys: {Keys}",
-                        keys);
+                    _logger.LogWarning("Available ApplicationProperties keys: {Keys}", keys);
                 }
                 else
                 {
                     _logger.LogWarning("No ApplicationProperties found on message.");
                 }
 
-                // Log a preview of the body
                 if (bodyText == null)
-                {
                     bodyText = message.Body.ToString();
-                }
 
                 if (!string.IsNullOrWhiteSpace(bodyText))
                 {
-                    var preview = bodyText.Length > 500 ? bodyText.Substring(0, 500) + "..." : bodyText;
+                    var preview = bodyText.Length > 500 ? bodyText[..500] + "..." : bodyText;
                     _logger.LogWarning("Body preview: {Preview}", preview);
-                }
-                else
-                {
-                    _logger.LogWarning("Message body is empty or null.");
                 }
             }
             catch (Exception ex)
@@ -391,6 +445,30 @@ namespace MultiQueueDistributor
                 routingProperty);
 
             return null;
+        }
+        private static bool IsAuthError(Exception ex)
+        {
+            if (ex is UnauthorizedAccessException)
+                return true;
+
+            if (ex is RequestFailedException rfe && rfe.Status == 401)
+                return true;
+
+            if (ex.InnerException != null)
+                return IsAuthError(ex.InnerException);
+
+            return false;
+        }
+        private static string ExtractJsonValue(JsonElement prop)
+        {
+            return prop.ValueKind switch
+            {
+                JsonValueKind.String => prop.GetString(),
+                JsonValueKind.Number => prop.GetRawText(),
+                JsonValueKind.True => "true",
+                JsonValueKind.False => "false",
+                _ => prop.GetRawText()
+            };
         }
     }
 }

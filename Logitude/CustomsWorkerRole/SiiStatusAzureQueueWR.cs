@@ -1,6 +1,8 @@
-﻿using Azure.Messaging.ServiceBus;
+﻿using Azure;
+using Azure.Messaging.ServiceBus;
 using Logitude.BL.Helpers;
 using Logitude.Customs.BL.BL.SIIRequest;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data.DataContracts.SIIRequest;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
@@ -21,6 +23,8 @@ namespace CustomsWorkerRole
     {
         static string _connectionString;
         static string _queueName;
+        static string _queuePrefix;
+
         int _tenant = 0;
         bool _onStartDone = false;
         bool _hasConfig = false;
@@ -69,7 +73,21 @@ namespace CustomsWorkerRole
                 _tenant = tenantConfig;
 
                 _connectionString = GetMandatoryDefault(_tenant, "SIIStatusQueueConn");
-                _queueName = GetMandatoryDefault(_tenant, "SIIStatusQueueName");
+                _queuePrefix = GetMandatoryDefault(_tenant, "SIIStatusQueuePrefix");
+
+                var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
+                var consumerId = setting?.CustomsAgentId;
+                if (string.IsNullOrWhiteSpace(consumerId))
+                {
+                    throw new ConfigurationErrorsException(
+                        string.Format("CustomsAgentId is missing or empty in Customs settings for tenant {0}.", _tenant));
+                }
+
+                _queueName = _queuePrefix + consumerId;
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(
+                    string.Format("SII Status WR: Tenant={0}, Queue={1}, ConsumerId={2}",
+                        _tenant, _queueName, consumerId));
 
                 _hasConfig = true;
             }
@@ -112,7 +130,7 @@ namespace CustomsWorkerRole
                 string.IsNullOrWhiteSpace(_queueName))
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo(
-                    string.Format("SII Status WR: configuration incomplete. ConnectionString or QueueName is empty. Processor will not start."));
+                    "SII Status WR: configuration incomplete. ConnectionString or QueueName is empty. Processor will not start.");
                 return null;
             }
 
@@ -172,6 +190,27 @@ namespace CustomsWorkerRole
                 }
                 catch (Exception e)
                 {
+                    if (IsAuthError(e))
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError(
+                            string.Format(
+                                "SII Status FATAL auth error while processing message. Error={0} Body={1}. Disabling worker until restart.",
+                                e, rawBody));
+
+                        try
+                        {
+                            await args.AbandonMessageAsync(args.Message);
+                        }
+                        catch (Exception abandonEx)
+                        {
+                            NetCommonHelper.Logger.DevLog.Instance.WriteError(
+                                string.Format("SII Status error abandoning message after auth failure. Error={0}", abandonEx));
+                        }
+
+                        _hasConfig = false;
+                        return;
+                    }
+
                     NetCommonHelper.Logger.DevLog.Instance.WriteError(
                         string.Format("SII Status processing error. Error={0} Body={1}", e, rawBody));
                 }
@@ -181,12 +220,37 @@ namespace CustomsWorkerRole
                 }
             };
 
-            processor.ProcessErrorAsync += (args) =>
+            processor.ProcessErrorAsync += async (args) =>
             {
+                var ex = args.Exception;
+
+                if (IsAuthError(ex))
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(
+                        string.Format(
+                            "SII Status queue FATAL auth error. ErrorSource={0}, Exception={1}. Stopping processor and disabling worker until restart.",
+                            args.ErrorSource, ex));
+
+                    try
+                    {
+                        await processor.StopProcessingAsync();
+                    }
+                    catch (Exception stopEx)
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError(
+                            string.Format(
+                                "SII Status queue error while stopping after auth failure: {0}",
+                                stopEx));
+                    }
+
+                    _hasConfig = false;
+
+                    return;
+                }
+
                 NetCommonHelper.Logger.DevLog.Instance.WriteError(
                     string.Format("SII Status queue error. ErrorSource={0}, Exception={1}",
-                        args.ErrorSource, args.Exception));
-                return Task.CompletedTask;
+                        args.ErrorSource, ex));
             };
 
             processor.StartProcessingAsync().GetAwaiter().GetResult();
@@ -197,6 +261,20 @@ namespace CustomsWorkerRole
         {
             ConnectClient();
             ExecuteQueue();
+        }
+
+        private static bool IsAuthError(Exception ex)
+        {
+            if (ex is UnauthorizedAccessException)
+                return true;
+
+            if (ex is RequestFailedException rfe && rfe.Status == 401)
+                return true;
+
+            if (ex.InnerException != null)
+                return IsAuthError(ex.InnerException);
+
+            return false;
         }
 
         private static string GetMandatoryDefault(int tenant, string key)
