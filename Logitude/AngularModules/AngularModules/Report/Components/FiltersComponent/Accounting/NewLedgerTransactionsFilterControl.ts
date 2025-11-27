@@ -495,7 +495,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                     this.SelectedItemChanged(this.GetLookUpFieldValue(queryFilterItem.FieldValue));
                     break;
                 case "CategoryValue":
-                    //CategoryValue
+                    this.DataContext[this.SelectedCategory?.replace(' ', '')] = queryFilterItem.FieldValue;
                     break;
                 case "ChartOfAccountsTypeCode":
                    {               
