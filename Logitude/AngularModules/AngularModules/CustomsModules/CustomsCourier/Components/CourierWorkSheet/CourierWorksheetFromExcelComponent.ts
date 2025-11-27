@@ -2166,7 +2166,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
 
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = "הטענת םקסל למסך עבודה";
+        logitudeWindow.Title = "הטענת אקסל למסך עבודה";
         logitudeWindow.ShowCloseButton = true;
         logitudeWindow.Height = 600;
         logitudeWindow.Width = 700;
@@ -2214,7 +2214,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     SendDelayForm() {
 
         var titleText = "הפקת תעודת עיכוב";
-        var questionText = "םשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
+        var questionText = "אשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
         var confirm = new ConfirmWindow();
         confirm.Width = 350;
         confirm.Height = 200;
@@ -2394,11 +2394,11 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.IsWorkSheetFromExcel = true;
 
         currRequestParams.PendingCode = [];
-        let text = "נם םשר םישור פנדינג גורף";
+        let text = "נא אשר אישור פנדינג גורף";
         currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Key);
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-            text = "נם םשר לבצע םישור רק לשורות שסומנו";
+            text = "נא אשר ביצוע אישור רק לשורות שסומנו";
         }
 
         var confirmWindow = new ConfirmWindow();
