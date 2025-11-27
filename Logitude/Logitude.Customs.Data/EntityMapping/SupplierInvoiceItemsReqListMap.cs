@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("SupplierInvoiceItemsReqLists", "Customs");
 		
-		    this.HasKey(t => new { t.DeclarationId, t.LineNumber, t.SIIRequestID, t.InvoiceCounterKey, t.InvoiceItemLineNumber });
+		    this.HasKey(t => new { t.DeclarationId, t.SIIRequestID, t.InvoiceCounterKey, t.InvoiceItemLineNumber });
 	 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
@@ -36,7 +36,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.LineNumber).HasColumnName("LineNumber").HasDatabaseGeneratedOption(null);
+            this.Property(t => t.LineNumber).HasColumnName("LineNumber").IsRequired();
 
             this.Property(t => t.SIIRequestID).HasColumnName("SIIRequestID").HasMaxLength(15).IsUnicode(false);
 

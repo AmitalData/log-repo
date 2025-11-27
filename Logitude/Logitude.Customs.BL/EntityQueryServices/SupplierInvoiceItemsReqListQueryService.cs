@@ -10,9 +10,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
     public partial class SupplierInvoiceItemsReqListQueryService : EntityQueryService<SupplierInvoiceItemsReqList, SupplierInvoiceItemsReqListKeys, SupplierInvoiceItemsReqListPM, SIIRequestPM, SIIRequestKeys>
     {
-        public SupplierInvoiceItemsReqListPM GetOrCreate(string siiRequestId, string declarationid, int linenumber, int invoicecounterkey, int invoiceitemlinenumber,int tenant)
+        public SupplierInvoiceItemsReqListPM GetOrCreate(string siiRequestId, string declarationid, int invoicecounterkey, int invoiceitemlinenumber,int tenant)
         {
-            var pm = GetSingle(declarationid, linenumber, siiRequestId, invoicecounterkey, invoiceitemlinenumber, true, false);
+            var pm = GetSingle(declarationid, siiRequestId, invoicecounterkey, invoiceitemlinenumber, true, false);
             if(pm != null)
             {
                 return pm;
@@ -21,6 +21,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var newPo = new SupplierInvoiceItemsReqList
             {
                 Tenant = tenant,
+                SIIRequestID = siiRequestId,
                 DeclarationId = declarationid,
                 LineNumber = 0, 
                 InvoiceCounterKey = invoicecounterkey,

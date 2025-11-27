@@ -24,6 +24,7 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
         public string importerCellPhone { get; set; }
         public string importerFax { get; set; }
         public string applicantIdNumber { get; set; }
+        public long applicantSystemId { get; set; }
         public string applicantFullName { get; set; }
         public long customsAgentRegisteredNumber { get; set; }
         public string customsAgentName { get; set; }

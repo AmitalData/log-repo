@@ -236,7 +236,7 @@
                         <table>
                             <tr>
                                 <td style="height:25px;width:35px; ">
-                                    <div *ngIf="IsCheckBoxVisible">
+                                    <div *ngIf="IsCheckBoxVisible && !IsDisplayOnly">
                                         <div class="Button" style="width: 29px;height:25px;">
                                             <CheckBox style="right:3px; top:1.5px" [IsChecked]="IsSelected"
                                                 [IsEnabled]="!IsDisplayOnly" (Checked)="IsSelected = $event ">
@@ -259,16 +259,14 @@
                                                                 (SelectedItemChanged)="OnRowSelected($event)"
                                                                 [SelectedRow]="SelectedRow"
                                                                 [ItemSource]="supplierInvoiceItemsCollection"
-                                                                [SelectedRows]="SelectedInvoiceItemsReqList.Collection"
-                                                                [Disabled]="IsDisplayOnly">
-                                                                <log-column [header]="" [binding]="" [width]="'30'"
-                                                                    [Alignment]="'right'">
+                                                                [SelectedRows]="SelectedInvoiceItemsReqList.Collection">
+                                                                <log-column *ngIf="!IsDisplayOnly" [header]=""
+                                                                    [binding]="" [width]="'30'" [Alignment]="'right'">
                                                                     <ng-template let-item>
                                                                         <log-cell-template [IgnoreMods]="true"
                                                                             [IsEnabled]="!IsDisplayOnly">
                                                                             <CheckBox style="right:3px; top:1.5px"
                                                                                 [IsChecked]="item.IsSelected"
-                                                                                [IsEnabled]="!IsDisplayOnly"
                                                                                 (Checked)="item.OnRowSelected(item, $event)">
                                                                             </CheckBox>
                                                                         </log-cell-template>
@@ -279,8 +277,7 @@
                                                                     [binding]="'LineNumber'" [width]="'30'"
                                                                     [Alignment]="'right'">
                                                                     <ng-template let-item>
-                                                                        <log-cell-template [IgnoreMods]="true"
-                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                        <log-cell-template [IgnoreMods]="true">
                                                                             <div style="text-align:right">
                                                                                 <span>{{item.Counter}}</span>
                                                                             </div>
@@ -292,8 +289,7 @@
                                                                     [binding]="'InvoiceNumber'" [width]="'75'"
                                                                     [Alignment]="'right'">
                                                                     <ng-template let-item>
-                                                                        <log-cell-template [IgnoreMods]="true"
-                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                        <log-cell-template [IgnoreMods]="true">
                                                                             <div style="text-align:right">
                                                                                 <span>{{item.InvoiceNumber}}</span>
                                                                             </div>
@@ -305,8 +301,7 @@
                                                                     [binding]="'ClassificationCode'" [width]="'80'"
                                                                     [Alignment]="'right'">
                                                                     <ng-template let-item>
-                                                                        <log-cell-template [IgnoreMods]="true"
-                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                        <log-cell-template [IgnoreMods]="true">
                                                                             <div style="text-align:right">
                                                                                 <span>{{item.ClassificationCode}}</span>
                                                                             </div>
@@ -318,8 +313,7 @@
                                                                     [binding]="'ItemCode'" [width]="'75'"
                                                                     [Alignment]="'right'">
                                                                     <ng-template let-item>
-                                                                        <log-cell-template [IgnoreMods]="true"
-                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                        <log-cell-template [IgnoreMods]="true">
                                                                             <div style="text-align:right">
                                                                                 <span>{{item.ItemCode}}</span>
                                                                             </div>
@@ -331,8 +325,7 @@
                                                                     [binding]="'ItemDescription'" [width]="'90'"
                                                                     [Alignment]="'right'">
                                                                     <ng-template let-item>
-                                                                        <log-cell-template [IgnoreMods]="true"
-                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                        <log-cell-template [IgnoreMods]="true">
                                                                             <div style="text-align:right">
                                                                                 <span>{{item.ItemDescription}}</span>
                                                                             </div>
@@ -344,8 +337,7 @@
                                                                     [binding]="'OriginCountryName'" [width]="'75'"
                                                                     [Alignment]="'right'">
                                                                     <ng-template let-item>
-                                                                        <log-cell-template [IgnoreMods]="true"
-                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                        <log-cell-template [IgnoreMods]="true">
                                                                             <div style="text-align:right">
                                                                                 <span>{{item.OriginCountryName}}</span>
                                                                             </div>
@@ -357,8 +349,7 @@
                                                                     [binding]="'TradeAgreementName'" [width]="'75'"
                                                                     [Alignment]="'right'">
                                                                     <ng-template let-item>
-                                                                        <log-cell-template [IgnoreMods]="true"
-                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                        <log-cell-template [IgnoreMods]="true">
                                                                             <div style="text-align:right">
                                                                                 <span>{{item.TradeAgreementName}}</span>
                                                                             </div>
@@ -370,8 +361,7 @@
                                                                     [binding]="'InvoiceQuantityTypeName'" [width]="'80'"
                                                                     [Alignment]="'right'">
                                                                     <ng-template let-item>
-                                                                        <log-cell-template [IgnoreMods]="true"
-                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                        <log-cell-template [IgnoreMods]="true">
                                                                             <div style="text-align:right">
                                                                                 <span>{{item.InvoiceQuantityTypeName}}</span>
                                                                             </div>
@@ -383,8 +373,7 @@
                                                                     [binding]="'InvoiceQuantity'" [width]="'75'"
                                                                     [Alignment]="'right'">
                                                                     <ng-template let-item>
-                                                                        <log-cell-template [IgnoreMods]="true"
-                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                        <log-cell-template [IgnoreMods]="true">
                                                                             <div style="text-align:right">
                                                                                 <span>{{item.InvoiceQuantity}}</span>
                                                                             </div>
@@ -396,8 +385,7 @@
                                                                     [binding]="'ItemPrice'" [width]="'75'"
                                                                     [Alignment]="'right'">
                                                                     <ng-template let-item>
-                                                                        <log-cell-template [IgnoreMods]="true"
-                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                        <log-cell-template [IgnoreMods]="true">
                                                                             <div style="text-align:right">
                                                                                 <span>{{item.ItemPrice}}</span>
                                                                             </div>
@@ -409,16 +397,16 @@
                                                                     [binding]="'ItemPriceCurrencyCode'" [width]="'100'"
                                                                     [Alignment]="'right'">
                                                                     <ng-template let-item>
-                                                                        <log-cell-template [IgnoreMods]="true"
-                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                        <log-cell-template [IgnoreMods]="true">
                                                                             <div style="text-align:right">
                                                                                 <span>{{item.ItemPriceCurrencyCode}}</span>
                                                                             </div>
                                                                         </log-cell-template>
                                                                     </ng-template>
                                                                 </log-column>
-                                                                <log-column [width]="'35'" [Editable]="true"
-                                                                    [Alignment]="'right'" [visibility]="'visibile'">
+                                                                <log-column *ngIf="!IsDisplayOnly" [width]="'35'"
+                                                                    [Editable]="true" [Alignment]="'right'"
+                                                                    [visibility]="'visibile'">
                                                                     <ng-template let-item>
                                                                         <log-cell-template [IgnoreMods]="true"
                                                                             #logcelltemplate>
@@ -454,6 +442,36 @@
                                                                         </log-cell-template>
                                                                     </ng-template>
                                                                 </log-column>
+                                                                <log-column *ngIf="IsDisplayOnly"
+                                                                    [header]="'Customs.SupplierInvoiceItemsReqList.F.StatusName' | TextCodeTranslationPipe"
+                                                                    [binding]="'StatusName'" [width]="'90'"
+                                                                    [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true">
+                                                                            <div style="text-align:right">
+                                                                                <span>{{ item.StatusName }}</span>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                                <log-column *ngIf="IsDisplayOnly"
+                                                                    [header]="'Customs.SupplierInvoiceItemsReqList.F.DistApprovalAttachmentPath' | TextCodeTranslationPipe"
+                                                                    [binding]="'DistApprovalAttachmentPath'"
+                                                                    [width]="'60'" [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true">
+                                                                            <div
+                                                                                style="display:flex; justify-content:center;align-items:flex-end;">
+                                                                                <button class="Button"
+                                                                                    style="height:20px; width:18px; padding:0; color:#000; opacity:1; filter:none; min-width:18px;"
+                                                                                    *ngIf="item.DistApprovalAttachmentPath"
+                                                                                    (click)="openDistApprovalAttachment(item)">
+                                                                                    🔗
+                                                                                </button>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
                                                             </logitude-edit-grid>
                                                         </div>
                                                     </td>
@@ -483,7 +501,8 @@
                         |TextCodeTranslationPipe}}</button>
                 </div>
             </div>
-            <div style="display: flex; align-items: flex-end; justify-content: space-around; width: 225px; margin-left: 3vh;">
+            <div
+                style="display: flex; align-items: flex-end; justify-content: space-around; width: 225px; margin-left: 3vh;">
                 <div style="width: 57px;vertical-align: bottom;">
                     <button class="Button" (click)="CancelSiiRequest()">{{'Customs.General.B.Cancel'
                         |TextCodeTranslationPipe}}</button>
@@ -494,7 +513,8 @@
                 </div>
 
                 <div style="width: 57px;vertical-align: bottom;">
-                    <button class="x-button x-button-main" (click)="SendSiiRequest()" [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.Send' |
+                    <button class="x-button x-button-main" (click)="SendSiiRequest()"
+                        [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.Send' |
                         TextCodeTranslationPipe}}</button>
                 </div>
 

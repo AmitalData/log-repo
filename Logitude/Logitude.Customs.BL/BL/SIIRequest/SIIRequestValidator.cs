@@ -22,6 +22,10 @@ internal static class SIIRequestValidator
         Check(f.importerNumber, "importerNumber", errors);
         Check(f.importerEmail, "importerEmail", errors);
         Check(f.applicantIdNumber, "applicantIdNumber", errors);
+
+        if (f.applicantSystemId <= 0)
+            errors.Add("applicantSystemId");
+
         Check(f.applicantFullName, "applicantFullName", errors);
         Check(f.customsAgentRegisteredNumber, "customsAgentRegisteredNumber", errors);
         Check(f.customsAgentName, "customsAgentName", errors);

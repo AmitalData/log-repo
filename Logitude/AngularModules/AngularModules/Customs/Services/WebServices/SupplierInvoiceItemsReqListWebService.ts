@@ -38,13 +38,13 @@ export class SupplierInvoiceItemsReqListWebService {
         });
     }
 
-    getBySiiRequest(declarationId: string, lineNumber: number, invoiceCounterKey: number, invoiceItemLineNumber: number, siiRequestId: string) {
+    getBySiiRequest(declarationId: string, invoiceCounterKey: number, invoiceItemLineNumber: number, siiRequestId: string) {
         return defer(() => {
             let authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
             let serviceResponse: ServiceResponse = new ServiceResponse();
-            return this._http.get(this._apiUrl + "/GetSingle/?declarationid=" + declarationId + "&linenumber=" + lineNumber + "&invoicecounterkey=" + invoiceCounterKey + "&invoiceitemlinenumber=" + invoiceItemLineNumber + "&siirequestid=" + siiRequestId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetSingle/?declarationid=" + declarationId  + "&invoicecounterkey=" + invoiceCounterKey + "&invoiceitemlinenumber=" + invoiceItemLineNumber + "&siirequestid=" + siiRequestId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 serviceResponse.Result = response;
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));

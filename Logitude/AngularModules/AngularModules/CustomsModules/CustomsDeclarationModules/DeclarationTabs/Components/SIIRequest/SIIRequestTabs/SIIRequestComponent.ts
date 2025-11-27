@@ -68,6 +68,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public isUnCompleted: CompleteStatuses = CompleteStatuses.UnCompleted;
     public isPartiallyCompleted: CompleteStatuses = CompleteStatuses.PartiallyCompleted;
     public isFullyCompleted: CompleteStatuses = CompleteStatuses.FullyCompleted;
+    public isRequestNumberViewMode: boolean = false;
 
     constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef) {
         super();
@@ -95,6 +96,8 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     buildSupplierInvoiceItemsCollection(): void {
         this.supplierInvoiceItemsCollection.Clear();
         this.originalSupplierInvoiceItemsCollection.Clear();
+
+
         this.supplierInvoiceItemsForSIIRequest.forEach((item, index) => {
             const supplierInvoiceItemLine = new SupplierInvoiceItemsForSIIRequestLine(item, this);
             supplierInvoiceItemLine.Counter = index + 1;
@@ -108,8 +111,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
     }
+
     oldEntityPM: SIIRequestPM = new SIIRequestPM();
     ErrorsList: string[] = [];
+
     SetWindowArgs(args: any) {
         this.entityPM = args.SIIRequest;
         this.oldEntityPM = args.SIIRequest;
@@ -124,14 +129,61 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.supplierInvoiceItemsForSIIRequest = args.supplierInvoiceItemsForSIIRequest;
         this.supplierInvoiceItemsCollection = new ObservableCollection([]);
         this.originalSupplierInvoiceItemsCollection = new ObservableCollection([]);
+
+        if (!AppTool.IsNullOrEmpty(this.entityPM?.RequestNo)) {
+            this.isAllowChange = false;
+            this.IsDisplayOnly = true;
+        }
+
         this.initFullData();
     }
 
+
+
     initFullData() {
+        const hasRequest = !AppTool.IsNullOrEmpty(this.entityPM?.RequestNo);
+        const children = this.entityPM.SupplierInvoiceItemsReqLists || [];
+        let invoices = this.supplierInvoiceItemsForSIIRequest || [];
+
+        if (hasRequest && children.length > 0 && invoices.length > 0) {
+            const linkedKeys = new Set(
+                children.map(l =>
+                    `${l.DeclarationId}|${l.InvoiceCounterKey}|${l.InvoiceItemLineNumber}|${l.Tenant}`
+                )
+            );
+
+            invoices = invoices.filter(i => {
+                const key = `${this.DecalarationData.Id}|${i.InvoiceCounterKey}|${i.InvoiceLineNumber}|${this.entityPM.Tenant}`;
+                return linkedKeys.has(key);
+            });
+
+            const childByKey = new Map<string, any>();
+            children.forEach(ch => {
+                const key = `${ch.DeclarationId}|${ch.InvoiceCounterKey}|${ch.InvoiceItemLineNumber}|${ch.Tenant}`;
+                childByKey.set(key, ch);
+            });
+
+            invoices.forEach(i => {
+                const key = `${this.DecalarationData.Id}|${i.InvoiceCounterKey}|${i.InvoiceLineNumber}|${this.entityPM.Tenant}`;
+                const child = childByKey.get(key);
+                if (!child) return;
+
+                i.StatusName = child.StatusName;
+                i.DistApprovalAttachmentPath = child.DistApprovalAttachmentPath;
+            });
+
+            this.supplierInvoiceItemsForSIIRequest = invoices;
+        }
+
         this.buildSupplierInvoiceItemsCollection();
         this.DemandStateFilterItemClicked(this.filterOptionsWithResponse);
-        if (!AppTool.IsNullOrEmpty(this.entityPM?.ContactId)) this.getContactData(this.entityPM.ContactId);
+
+        if (!AppTool.IsNullOrEmpty(this.entityPM?.ContactId)) {
+            this.getContactData(this.entityPM.ContactId);
+        }
     }
+
+
 
     // #region Actions:
     CancelSiiRequest() {
@@ -166,41 +218,68 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
     //#region SaveSiiRequest
     SaveSiiRequest() {
-        if (this.IsNewOrEdit === SiiRequestMode.IsNew) {
-            this.siiRequestPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
-                if (response.ErrorsArray.length === 0 && response?.Result) {
-                    this.entityPM = response.Result;
-                    this.IsNewOrEdit = SiiRequestMode.IsEdit;
-                    this.IsDisplayOnly = false;
-                    this.isAllowChange = true;
-                    this.RefreshEntity();
-                    if (this.closeAfterSave) {
-                        this.CurrentSession.CloseCurrentWindow();
-                        this.closeAfterSave = false;
-                    }
+        this.saveSiiRequestCore()
+            .then(() => {
+                if (this.closeAfterSave) {
+                    this.CurrentSession.CloseCurrentWindow();
+                    this.closeAfterSave = false;
                 }
-                else if (response.ErrorsArray.length > 0) {
-                    this.validationErrors = response.ErrorsArray;
-                    this.checkMandatoryCustomsFields(this.validationErrors);
-                }
+            })
+            .catch(() => {
             });
-        }
-        if (this.IsNewOrEdit === SiiRequestMode.IsEdit) {
-            this.siiRequestPMService.update(this.entityPM).subscribe((response: ServiceResponse) => {
-                if (response?.Result) {
-                    this.entityPM = response.Result;
-                    this.RefreshEntity();
-                    if (this.closeAfterSave) {
-                        this.CurrentSession.CloseCurrentWindow();
-                        this.closeAfterSave = false;
+    }
+
+
+    private saveSiiRequestCore(): Promise<SIIRequestPM> {
+        return new Promise((resolve, reject) => {
+
+            if (this.IsNewOrEdit === SiiRequestMode.IsNew) {
+                this.siiRequestPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
+                    if (response?.ErrorsArray?.length === 0 && response?.Result) {
+                        this.entityPM = response.Result as SIIRequestPM;
+                        this.IsNewOrEdit = SiiRequestMode.IsEdit;
+                        this.IsDisplayOnly = false;
+                        this.isAllowChange = true;
+                        this.RefreshEntity();
+                        resolve(this.entityPM);
+                    } else if (response?.ErrorsArray?.length > 0) {
+                        this.validationErrors = response.ErrorsArray;
+                        this.checkMandatoryCustomsFields(this.validationErrors);
+                        reject(response.ErrorsArray);
+                    } else {
+                        const err = ['Unknown error'];
+                        this.validationErrors = err;
+                        reject(err);
                     }
-                }
-                else if (response.ErrorsArray.length > 0) {
-                    this.validationErrors = response.ErrorsArray;
-                    this.checkMandatoryCustomsFields(this.validationErrors);
-                }
-            });
-        }
+                }, err => {
+                    const msg = err?.message || 'Unknown error';
+                    this.validationErrors = [msg];
+                    reject([msg]);
+                });
+            }
+            else {
+                this.siiRequestPMService.update(this.entityPM).subscribe((response: ServiceResponse) => {
+                    if (response?.Result) {
+                        this.entityPM = response.Result as SIIRequestPM;
+                        this.RefreshEntity();
+                        resolve(this.entityPM);
+                    } else if (response?.ErrorsArray?.length > 0) {
+                        this.validationErrors = response.ErrorsArray;
+                        this.checkMandatoryCustomsFields(this.validationErrors);
+                        reject(response.ErrorsArray);
+                    } else {
+                        const err = ['Unknown error'];
+                        this.validationErrors = err;
+                        reject(err);
+                    }
+                }, err => {
+                    const msg = err?.message || 'Unknown error';
+                    this.validationErrors = [msg];
+                    reject([msg]);
+                });
+            }
+
+        });
     }
 
     ViewDocumentsComponent(): void {
@@ -273,6 +352,9 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
     //#region SendSiiRequest
     SendSiiRequest() {
+        if (!AppTool.IsNullOrEmpty(this.entityPM?.RequestNo) || this.IsDisplayOnly || !this.isAllowChange) {
+            return;
+        }
         const selectedItems = (this.supplierInvoiceItemsCollection.Collection || [])
             .filter(i => i.IsSelected);
 
@@ -396,7 +478,19 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
 
     supplierInvoiceItemsReqListPM: SupplierInvoiceItemsReqListPM;
-    getSupplierInvoiceItemsReqListPMDataAndopenLogWindow() {
+    async getSupplierInvoiceItemsReqListPMDataAndopenLogWindow() {
+        if (AppTool.IsNullOrEmpty(this.entityPM?.Id)) {
+            try {
+                await this.saveSiiRequestCore();
+            } catch (e) {
+                console.error('Cannot open Complete Data window because SIIRequest failed to save:', e);
+                return;
+            }
+        }
+        if (AppTool.IsNullOrEmpty(this.entityPM.DeclarationId) && this.DecalarationData?.Id) {
+            this.entityPM.DeclarationId = this.DecalarationData.Id;
+        }
+
         let existingChild: SupplierInvoiceItemsReqListPM | undefined;
 
         if (this.entityPM && this.entityPM.SupplierInvoiceItemsReqLists) {
@@ -409,7 +503,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         }
 
         if (existingChild) {
-            // Found in memory – use it, NO extra select, NO duplicate instance
             this.supplierInvoiceItemsReqListPM = existingChild;
 
             const args: any = {
@@ -430,7 +523,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.supplierInvoiceItemsReqListWebService
             .getBySiiRequest(
                 this.DecalarationData.Id,
-                this.SelectedRow.LineNumber,
                 this.SelectedRow.InvoiceCounterKey,
                 this.SelectedRow.InvoiceLineNumber,
                 this.entityPM?.Id
@@ -684,7 +776,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                 this.SelectedInvoiceNumber = null;
                 this.SelectedCounterKey = null;
                 let items: SupplierInvoiceItemsForSIIRequestLine[] = this.originalSupplierInvoiceItemsCollection.Collection;
-                // Filter by DemandState and InvoiceNumber:
                 if (this.LevelSelectionFilterSelectedValue === this.filterOptionsDeclarationConect) {
                     const original: SupplierInvoiceItemsForSIIRequestLine[] = items;
                     items = this.DemandStateFilterSelectedValue === this.filterOptionsAll ? original : original.filter(i => i.HasDemandState === true);
@@ -700,6 +791,14 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             }
         }
     }
+
+    openDistApprovalAttachment(item: SupplierInvoiceItemsForSIIRequestLine): void {
+        const url = item?.DistApprovalAttachmentPath;
+        if (url) {
+            window.open(url, '_blank');
+        }
+    }
+
     //#endregion LevelSelection Filter Methods   
 
     //#region contact data
@@ -897,7 +996,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 //#region SupplierInvoiceItemsForSIIRequestLine properties:
 export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public entityPM: SupplierInvoiceItemsForSIIRequest;
-    public ObjectTableName: string = "Customs.CertificateOfOriginItem";
     public DataContext = this;
     Parent: SIIRequestComponent;
 
@@ -1032,6 +1130,19 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public set Counter(newValue: number) {
         this.entityPM.Counter = newValue;
     }
+    public get StatusName(): string {
+        return this.entityPM.StatusName;
+    }
+    public set StatusName(newValue: string) {
+        this.entityPM.StatusName = newValue;
+    }
+    public get DistApprovalAttachmentPath(): string {
+        return this.entityPM.DistApprovalAttachmentPath;
+    }
+    public set DistApprovalAttachmentPath(newValue: string) {
+        this.entityPM.DistApprovalAttachmentPath = newValue;
+    }
+
 }
 
 export enum FilterOptions {

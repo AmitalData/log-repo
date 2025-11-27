@@ -104,6 +104,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.SearchFields = entityPM.SearchFields;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
+            {
+				entityPOCO.LineNumber = entityPM.LineNumber;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestType))
             {
 				entityPOCO.RequestType = entityPM.RequestType;
@@ -279,6 +284,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
                 oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
+            {
+                oldEntityPM.LineNumber = entityPM.LineNumber;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestType))

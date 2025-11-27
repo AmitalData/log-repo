@@ -44,7 +44,7 @@
   LocalDefaultTextBack_up="&quot;בקשות למכון תקנים&quot;"
   LocalDefaultText="&quot;BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==&quot;"
   DefaultText="&quot;SIIRequest&quot;"
-  Code="&quot;b4bb&quot;"
+  Code="&quot;be96&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -2101,6 +2101,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SupplierInvoiceItemsReqLists&quot;"
     ListPropertyPath="&quot;SupplierInvoiceItemsReqLists&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2717,6 +2718,13 @@
       DefaultText="&quot;SII request succeeded. Request number: {0}&quot;"
       LocalDefaultTextBack_up="&quot;התקבל משוב תקין ממכון תקנים עם מספר בקשה- {0}&quot;"
       LocalDefaultText="&quot;BS64:IteU16rXp9eR15wg157XqdeV15Eg16rXp9eZ158g157Xnteb15XXnyDXqten16DXmdedINei150g157Xodek16gg15HXp9ep15QtIHswfSI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.ApplicantSystemId&quot;"
+      DefaultText="&quot;ApplicantSystemId&quot;"
+      LocalDefaultTextBack_up="&quot;מזהה מערכת שולחת&quot;"
+      LocalDefaultText="&quot;BS64:Itee15bXlNeUINee16LXqNeb16og16nXldec15fXqiI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

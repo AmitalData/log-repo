@@ -136,13 +136,26 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
 
   AddNewSIIRequest(siiRequestMode: SiiRequestMode) {
     const newSIIRequestPM = new SIIRequestPM();
-    newSIIRequestPM.DeclarationId = AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? this.EntityPM.Id : this.EntityPM.AmendmentOriginalDeclartation;
+    newSIIRequestPM.DeclarationId = AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation)
+      ? this.EntityPM.Id
+      : this.EntityPM.AmendmentOriginalDeclartation;
     newSIIRequestPM.Tenant = this.EntityPM.Tenant;
+
+    const isEdit = (siiRequestMode === SiiRequestMode.IsEdit);
+    const siiRequest = isEdit ? this.selectedSIIRequest : newSIIRequestPM;
+
+    let isAllowChange = this.IsAllowChange;
+
+    if (isEdit && !AppTool.IsNullOrEmpty(siiRequest?.RequestNo)) {
+      isAllowChange = false;
+    }
+
     let args: any = {
       Decalaration: this.EntityPM,
-      SIIRequest: SiiRequestMode.IsEdit === siiRequestMode ? this.selectedSIIRequest : newSIIRequestPM,
+      SIIRequest: siiRequest,
       IsNewOrEdit: siiRequestMode,
-      filterAgrs: this.initFilterArgs()
+      filterAgrs: this.initFilterArgs(),
+      isAllowChange: isAllowChange   
     };
 
     if (siiRequestMode === SiiRequestMode.IsNew)
@@ -158,7 +171,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
         this.selectedSIIRequest = myResponse.Result;
         args.SIIRequest = myResponse.Result;
         args.errorMassage = [];
-        this.siiRequestWebService.getSupplierInvoiceItemsForSIIRequest(declarationId,this.selectedSIIRequest?.Id).subscribe(myResult => {
+          this.siiRequestWebService.getSupplierInvoiceItemsForSIIRequest(declarationId, this.selectedSIIRequest?.Id).subscribe(myResult => {
           let myResponse: ServiceResponse = myResult;
           if (!myResponse?.HasError && myResponse?.Result) {
             this.supplierInvoiceItemsForSIIRequest = myResponse.Result;
