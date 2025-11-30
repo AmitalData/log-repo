@@ -1212,32 +1212,18 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.GetAnyRequest(interfaceTypeCode, this.EntityPM.CustomFileNo, this.EntityPM.Tenant)
             .subscribe((response: ServiceResponse) => {
-                if (!response.HasError) {
-                    var requestSheets = response.Result;
-                    var haveRS2755: boolean = false;
-                    const analyzed = "30";
-                    if (requestSheets == null || requestSheets.length == 0) {
-                    } else {
-                        haveRS2755 = true;
-                    }
-                    if (haveRS2755) {
-                        if (this.EntityPM.Direction == 'E') {
-                            canResetDeclaration = false;
-                        } else {
-                            for (let request of requestSheets) {
-                                if (request.RequestStatusCode != analyzed) {
-                                    canResetDeclaration = false;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if (canResetDeclaration) {
-                        this.ResetDeclaration();
-                    } else {
-                        this.ShowResetDeclarationMessage(message);
-                    }
+                if (response.HasError) {
+                    this.ShowResetDeclarationMessage(message);
+                    return;
                 }
+                const hasBlockingRequests: boolean = !!response.Result;
+                const canReset: boolean = canResetDeclaration && !hasBlockingRequests;
+                if (canReset) {
+                    this.ResetDeclaration();
+                } else {
+                    this.ShowResetDeclarationMessage(message);
+                }
+
             });
     }
     private ResetDeclaration() {
@@ -2033,7 +2019,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     }
 
     DisplayOnlyCheck() {
-        
+
         if (this.CurrentSession.CurrentEditComponent) {
             this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         }
