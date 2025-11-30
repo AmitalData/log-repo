@@ -1,16 +1,13 @@
- 
-using Logitude.Customs.Data.EntityKeys;
-using Logitude.Customs.Data.EntityPOCOs;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
+
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Customs.Data.EntityPOCOs;
+using Simplog.Server.Infrastructure;
+using System.Data.Entity;
 
 namespace Logitude.Customs.Data.Repsitories
 {
