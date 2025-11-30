@@ -1504,16 +1504,9 @@ namespace Logitude.Accounting.BL.CoreBL
         private static void FixFailedReconcileJournals(int tenant, IAccountingContext accountingContext, string journalId, ResultApproveJournalM result)
         {
             try
-            {
-                if (result == null || (result != null && result.FixFailedReconcileDone != true))
-                {
+            {                            
                     var journalQueryService = new JournalQueryService(accountingContext);
                     journalQueryService.FixFailedReconcileJournals(tenant);
-                    if (result != null)
-                    {
-                        result.FixFailedReconcileDone = true;
-                    }
-                }
             }
             catch (Exception ex)
             {
@@ -1946,89 +1939,83 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     return actualResult;
                 }
-                public void WorkUntilQEmptyQueueDBMultiThreaded(TimeSpan? timeSpan = null, string selectedQueue = null)
+            public void WorkUntilQEmptyQueueDBMultiThreaded(TimeSpan? timeSpan = null, string selectedQueue = null)
+            {
+
+                string[] stacklines = JournalApproveWorker.GetStack(0);
+                string logtext = "JournalApproveService.cs JournalApproveWorker.WorkUntilQEmptyQueueDBMultiThreaded(), Point 1, selectedQueue " + selectedQueue;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
+
+                selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveMutliThreadingWR;
+                Stopwatch stopwatch = null;
+                if (timeSpan != null)
+                {
+                    stopwatch = Stopwatch.StartNew();
+                }
+
+                QueueResponse response = null;
+                while (true)
                 {
 
-                    string[] stacklines = JournalApproveWorker.GetStack(0);
-                    string logtext = "JournalApproveService.cs JournalApproveWorker.WorkUntilQEmptyQueueDBMultiThreaded(), Point 1, selectedQueue " + selectedQueue;
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WorkUntilQEmptyQueueDBMultiThreaded inloop selected queue: " + selectedQueue
+    + ", workerRoleName: " + LogitudeSettings.WorkerRoleName
+    + ", _NextDueDoneAt.Date" + _NextDueDoneAt.Date.ToString()
+    + ", _NextDueDoneAt.Time" + _NextDueDoneAt.TimeOfDay.ToString());
 
-                    selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveMutliThreadingWR;
-                    Stopwatch stopwatch = null;
-                    if (timeSpan != null)
+                    if (stopwatch != null && timeSpan != null)
                     {
-                        stopwatch = Stopwatch.StartNew();
-                    }
-
-                    QueueResponse response = null;
-                    while (true)
-                    {
-
-                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WorkUntilQEmptyQueueDBMultiThreaded inloop selected queue: " + selectedQueue
-        + ", workerRoleName: " + LogitudeSettings.WorkerRoleName
-        + ", _NextDueDoneAt.Date" + _NextDueDoneAt.Date.ToString()
-        + ", _NextDueDoneAt.Time" + _NextDueDoneAt.TimeOfDay.ToString());
-
-                        if (stopwatch != null && timeSpan != null)
+                        if (stopwatch.Elapsed > timeSpan)
                         {
-                            if (stopwatch.Elapsed > timeSpan)
-                            {
-                                return;
-                            }
+                            return;
                         }
-                        DbQueueService queueservice = null;
-                        try
+                    }
+                    DbQueueService queueservice = null;
+                    try
+                    {
+                        queueservice = new DbQueueService(selectedQueue, 0);
+                        if (DateTime.Now.Subtract(_freeTenantsDateTime) >= TimeSpan.FromMinutes(10))
                         {
-                            queueservice = new DbQueueService(selectedQueue, 0);
-                            if (DateTime.Now.Subtract(_freeTenantsDateTime) >= TimeSpan.FromMinutes(10))
-                            {
-                                _freeTenantsDateTime = DateTime.Now;
+                            _freeTenantsDateTime = DateTime.Now;
 
                             queueservice.FreeTenants("Journal");
-                            }
-
-                        response = queueservice.ReceiveDetailsByTenant("Journal",new TimeSpan(0, 0, 0, 5));
-                        }
-                        catch (Exception)
-                        {
-
-                            throw;
                         }
 
+                        response = queueservice.ReceiveDetailsByTenant("Journal", new TimeSpan(0, 0, 0, 5));
+                    }
+                    catch (Exception)
+                    {
 
-                        if (response == null || (response != null && response.MessageId == null))
-                        {
-                            break;
-                        }
+                        throw;
+                    }
 
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 0, tenant {0}, selectedQueue {1}", response.Tenant, selectedQueue));
+
+                    if (response == null || (response != null && response.MessageId == null))
+                    {
+                        break;
+                    }
+
+                    try
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 0, tenant {0}, selectedQueue {1}", response.Tenant, selectedQueue));
 
                         if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR
                             && response != null && response.Tenant != 0)
                         {
-                            try
+                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 1, tenant {0}", response.Tenant));
+
+                            if (_NextDueDoneDict == null) _NextDueDoneDict = new Dictionary<int, DateTime>();
+                            if (!_NextDueDoneDict.ContainsKey(response.Tenant))
+                                _NextDueDoneDict.Add(response.Tenant, DateTime.MinValue);
+
+                            if (DateTime.UtcNow.Date > _NextDueDoneDict[response.Tenant].Date)
                             {
-                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 1, tenant {0}", response.Tenant));
+                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 2, tenant {0}, date {1} ", response.Tenant, _NextDueDoneDict[response.Tenant].Date));
 
-                                if (_NextDueDoneDict == null) _NextDueDoneDict = new Dictionary<int, DateTime>();
-                                if (!_NextDueDoneDict.ContainsKey(response.Tenant))
-                                    _NextDueDoneDict.Add(response.Tenant, DateTime.MinValue);
-
-                                if (DateTime.UtcNow.Date > _NextDueDoneDict[response.Tenant].Date)
-                                {
-                                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 2, tenant {0}, date {1} ", response.Tenant, _NextDueDoneDict[response.Tenant].Date));
-
-                                    _NextDueDoneDict[response.Tenant] = DateTime.UtcNow.Date;
-                                    var myDueLocalBalanceService = new DueLocalBalanceService();
-                                    myDueLocalBalanceService.RunOneTenantFast(response.Tenant);
-                                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 3, tenant {0}", response.Tenant));
-                                }
-                            }
-                            catch (Exception)
-                            {
-                                SetTenantIdle(response.Tenant);
-                                throw;
+                                _NextDueDoneDict[response.Tenant] = DateTime.UtcNow.Date;
+                                var myDueLocalBalanceService = new DueLocalBalanceService();
+                                myDueLocalBalanceService.RunOneTenantFast(response.Tenant);
+                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 3, tenant {0}", response.Tenant));
                             }
                         }
                         CheckCreateIntegrity();
@@ -2042,7 +2029,6 @@ namespace Logitude.Accounting.BL.CoreBL
                             NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 4, tenant {0}", response.Tenant));
                             UpdateGLAccountAgingData(communicationLogId, queueservice, tenant);
                             NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("JournalApproveService, Point 5, tenant {0}", response.Tenant));
-                            SetTenantIdle(response.Tenant);
                         }
                         else
                         {
@@ -2051,12 +2037,17 @@ namespace Logitude.Accounting.BL.CoreBL
                             {
                                 LogDoneItemInMemoryAction?.Invoke(1);
                             }
-                            SetTenantIdle(response.Tenant);
                         }
-
-                        Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                     }
+                    finally
+                    {
+                        SetTenantIdle(response.Tenant);
+                    }
+
+                    Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
+            }
+
                 public void CheckCreateIntegrity()
                 {
 

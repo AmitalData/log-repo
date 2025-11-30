@@ -1,6 +1,7 @@
 ﻿using Devart.Data.Oracle;
 using Logitude.AmitalMessaging.Infrastructure.FuStatus;
 using Logitude.AmitalMessaging.Utils;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.TraceEvents;
@@ -25,6 +26,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Transactions;
 using Unifreight.BL.EntityPMs;
@@ -287,7 +289,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            if (entityPOCO != null)
+            FeatureQuery featureQuery = new FeatureQuery(entityPM.Tenant);
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
+            var feature = features.Features.FirstOrDefault(x => x.Code == "RaiseStatusOnLandingDate");
+            if (entityPOCO != null && feature != null)
             {
                 var oldLanding = entityPOCO.LandingDate;
                 var newLanding = entityPM.LandingDate;
@@ -734,7 +739,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 status = "new",
                 xml_status = xmlStatus,
                 status_id = status_id,
-                status_DateTime = dirtyCourierMasterPM.LandingDate.GetValueOrDefault(),
+                status_DateTime = dirtyCourierMasterPM.LandingDate.HasValue ? Convert.ToDateTime(dirtyCourierMasterPM.LandingDate) : DateTime.Now,
                 comments = comments,
                 OwnerUnifreightUserCode = user?.EnglishName,
             };
