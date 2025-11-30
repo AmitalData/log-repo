@@ -63,7 +63,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             if (string.IsNullOrEmpty(entityId) && string.IsNullOrEmpty(childEntityId))
                 return null;
-            DocumentOut documentOut = (from a in context.DocumentOuts.Include("DocumentsFiling").Include("DocumentsFiling.DocumentType").Include("DocumentsFiling.CreatedByUser.Contact")
+            DocumentOut documentOut = (from a in context.DocumentOuts.Include("DocumentsFiling")
                                        where a.DocumentsFiling.EntityId == entityId && a.DocumentsFiling.ChildEntityId == childEntityId && a.Tenant == tenant
                                        select a).FirstOrDefault();
             return documentOut;

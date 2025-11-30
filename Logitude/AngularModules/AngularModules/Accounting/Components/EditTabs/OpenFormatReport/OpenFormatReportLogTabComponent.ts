@@ -27,13 +27,16 @@ export class OpenFormatReportLogTabComponent extends BaseComponent{
     showLocals: boolean = false;
     _DocumentsFilingViewsExtService: DocumentsFilingViewsExtService = new DocumentsFilingViewsExtService();
     docFilingPM: any;
-
+    notDone: boolean = true;
+    doneStatusCode: string = "3";
+    
     constructor(private entityArgs: EntityArgs) {
         super();
         this.entityPM = entityArgs.EntityPM;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.showLocals = !SessionLocator.LoggedUserPM.DontShowLocal;
         this.UIProperties.SetEnabled("ErrorMessage","OpenFormatReport",false)
+        this.notDone = this.entityPM.StatusTypeCode !==this.doneStatusCode;
     }
 
     get ErrorMessage() { return this.entityPM.ErrorMessage; }
