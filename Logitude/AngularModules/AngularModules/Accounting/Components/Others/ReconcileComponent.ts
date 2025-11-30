@@ -1773,6 +1773,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             else {
                 lineCurrAmountToReconcile = +line.AmountToReconcile;
                 lineLocalAmountToReconcile = +line.AmountToReconcile;
+                if (rate === 0 && +(line.ledgerTransaction.ForeignAmountDebit - line.ledgerTransaction.ForeignAmountCredit) !== 0) {
+                    line.CurrencyRate = +(line.ledgerTransaction.LocalAmountDebit - line.ledgerTransaction.LocalAmountCredit) / +(line.ledgerTransaction.ForeignAmountDebit - line.ledgerTransaction.ForeignAmountCredit);
+                }
             }
 
 
@@ -1921,7 +1924,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             newLine.Line = i;
             newLine.CurrencyId = selectedTransaction.OpenAmountCurrencyId;
             newLine.TransactionId = selectedTransaction.Id;
-            newLine.CurrencyRate = selectedTransaction.ExchangeRate;
+
+            const rate = selectedTransaction.ledgerTransaction.ExchangeRate;
+
+            newLine.CurrencyRate =
+                rate === 0 || rate == null
+                    ? selectedTransaction.CurrencyRate
+                    : rate;
+
             newLine.ReconciliationAmount = selectedTransaction.AmountToReconcile;
             newLine.DueDate = selectedTransaction.DueDate;
             newLine.IsPartial = selectedTransaction.IsPartial;
