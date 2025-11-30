@@ -172,14 +172,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 CustomsRequestsSheetQueryService customsRequestsSheetQuery = new CustomsRequestsSheetQueryService(customContext);
-                List<CustomsRequestsSheetPM> requestSheets = customsRequestsSheetQuery.GetCustomsRequestsSheetByCustomFileNumberPM(CustomFileNo, Tenant);
-                requestSheets  =requestSheets.Where(r => r.InterfaceTypeCode == InterfaceTypeCode && r.RequestStatusCode !="99").ToList();
-
-
-
-
-
-                return Request.CreateResponse(HttpStatusCode.OK, requestSheets);
+                bool hasBlockingRequests = customsRequestsSheetQuery.HasBlockingRequests(CustomFileNo, tenant, InterfaceTypeCode);
+                return Request.CreateResponse(HttpStatusCode.OK, hasBlockingRequests);
             }
 
             catch (Exception ex)
