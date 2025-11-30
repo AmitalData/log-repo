@@ -285,6 +285,7 @@
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_Global.sxml" />
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_MAIN.sxml" />
     <None Include="DBScripts\Pre\20230310_CreateTypeVarcharTable.sxml" />
+    <None Include="DBScripts\Pre\202511301341_UpdateBankCodeNotNull.sxml" />
     <None Include="DBScripts\Pre\202507010_VerifyOrAddSQLRowVer.sxml" />
     <None Include="DBScripts\Pre\20250727_ObjTblFieldNameChanges.sxml" />
     <None Include="DBScripts\Pre\20250709_AddDateTime2.sxml" />

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+    
+     BEGIN
+        EXECUTE IMMEDIATE 
+        'update CUSTOMBANKS set BRANCHCODE= 0 where BRANCHCODE is null';
+      END;
+      
+  ]]>
+  </Oracle>
+</Script>
