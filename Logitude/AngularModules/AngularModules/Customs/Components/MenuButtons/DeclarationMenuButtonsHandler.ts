@@ -1153,27 +1153,22 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     ResetDeclarationNumberMethod() {
         this._DeclarationNumberandVersionId = null;//itzik:clear onstart on the house !!!
         if (this.EntityPM.Direction == "E") {
-            this.GetAnyRequestBeforeResetDeclaration("2755E", TextCodeTranslator.Translate("Customs.Declaration.O.CantResetDeclarationNumberSubmissionExsist"));
+            this.GetAnyRequestBeforeResetDeclaration("2755E", TextCodeTranslator.Translate("Customs.Declaration.O.CantResetDeclarationNumberSubmissionExsist"), "9079");
         } else {
-            this.GetAnyRequestBeforeResetDeclaration("2755", TextCodeTranslator.Translate("Customs.Declaration.O.CantResetDeclarationNumberDifferentFromAnalyzed"));
+            this.GetAnyRequestBeforeResetDeclaration("2755", TextCodeTranslator.Translate("Customs.Declaration.O.CantResetDeclarationNumberDifferentFromAnalyzed"), "8373");
         }
     }
-    private GetAnyRequestBeforeResetDeclaration(interfaceTypeCode: string, message: string) {
-        var canResetDeclaration: boolean = this.EntityPM.Direction == 'E' ? true : this.EntityPM.PaymentDate == null;
+    private GetAnyRequestBeforeResetDeclaration(interfaceTypeCode: string, message: string, responseName: string) {
+        const canResetDeclaration: boolean = this.EntityPM.PaymentDate == null;
         if (canResetDeclaration) {
-            if (this.EntityPM.Direction != 'E') {
-                this.RestoreDeclaration(interfaceTypeCode, message, canResetDeclaration)
-            }
-            else {
-                this.CheackIsAnyRequest(interfaceTypeCode, message, canResetDeclaration)
-            }
-
-
+            this.RestoreDeclaration(interfaceTypeCode, message, canResetDeclaration, responseName);
         } else {
-            this.ShowResetDeclarationMessage(TextCodeTranslator.Translate("Customs.Declaration.O.CantResetDeclarationNumberPaymentDate"));
+            this.ShowResetDeclarationMessage(
+                TextCodeTranslator.Translate("Customs.Declaration.O.CantResetDeclarationNumberPaymentDate")
+            );
         }
     }
-    private RestoreDeclaration(interfaceTypeCode, message, canResetDeclaration) {
+    private RestoreDeclaration(interfaceTypeCode, message, canResetDeclaration, responseName: string) {
         SessionLocator.SelectedSession.StartBusyIndicator("checking");
 
         var _DeclarationMessagesService = new DeclarationMessagesService();
@@ -1187,8 +1182,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         currRequestParams.DeclarationNumber = this.EntityPM.DeclarationNumber;
         currRequestParams.CustomsFile = this.EntityPM.CustomFileNo;
         currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
-        currRequestParams.ResponseName = "8373"
-        currRequestParams.RequestName = "Restore From ResetDeclaration"
+        currRequestParams.ResponseName = responseName;
+        currRequestParams.RequestName = "Restore From ResetDeclaration";
 
         _DeclarationMessagesService.PostDeclarationRequest(currRequestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
@@ -1212,32 +1207,18 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.GetAnyRequest(interfaceTypeCode, this.EntityPM.CustomFileNo, this.EntityPM.Tenant)
             .subscribe((response: ServiceResponse) => {
-                if (!response.HasError) {
-                    var requestSheets = response.Result;
-                    var haveRS2755: boolean = false;
-                    const analyzed = "30";
-                    if (requestSheets == null || requestSheets.length == 0) {
-                    } else {
-                        haveRS2755 = true;
-                    }
-                    if (haveRS2755) {
-                        if (this.EntityPM.Direction == 'E') {
-                            canResetDeclaration = false;
-                        } else {
-                            for (let request of requestSheets) {
-                                if (request.RequestStatusCode != analyzed) {
-                                    canResetDeclaration = false;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if (canResetDeclaration) {
-                        this.ResetDeclaration();
-                    } else {
-                        this.ShowResetDeclarationMessage(message);
-                    }
+                if (response.HasError) {
+                    this.ShowResetDeclarationMessage(message);
+                    return;
                 }
+                const hasBlockingRequests: boolean = !!response.Result;
+                const canReset: boolean = canResetDeclaration && !hasBlockingRequests;
+                if (canReset) {
+                    this.ResetDeclaration();
+                } else {
+                    this.ShowResetDeclarationMessage(message);
+                }
+
             });
     }
     private ResetDeclaration() {
@@ -2035,7 +2016,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     }
 
     DisplayOnlyCheck() {
-        
+
         if (this.CurrentSession.CurrentEditComponent) {
             this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         }
