@@ -44,7 +44,7 @@
   LocalDefaultTextBack_up="&quot;בקשות למכון תקנים&quot;"
   LocalDefaultText="&quot;BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==&quot;"
   DefaultText="&quot;SIIRequest&quot;"
-  Code="&quot;be96&quot;"
+  Code="&quot;6cac&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -2725,6 +2725,13 @@
       DefaultText="&quot;ApplicantSystemId&quot;"
       LocalDefaultTextBack_up="&quot;מזהה מערכת שולחת&quot;"
       LocalDefaultText="&quot;BS64:Itee15bXlNeUINee16LXqNeb16og16nXldec15fXqiI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRquest.O.Error&quot;"
+      DefaultText="&quot;Error&quot;"
+      LocalDefaultTextBack_up="&quot;שגיאות&quot;"
+      LocalDefaultText="&quot;BS64:Itep15LXmdeQ15XXqiI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -432,7 +432,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                     (err: HttpErrorResponse) => {
                         const dlg = new ConfirmWindow();
                         dlg.YesButtonText = TextCodeTranslator.Translate('General.B.Close');
-                        dlg.Title = TextCodeTranslator.Translate('Customs.General.B.OK');
+                        dlg.Title = TextCodeTranslator.Translate('Customs.SIIRquest.O.Error');
                         dlg.ShowNoButton = false;
                         dlg.IsMultipleMessages = true;
                         dlg.ShowErorImage = true;
