@@ -11,8 +11,9 @@
 		<div class="searchResults_close">
 			<a role="button" (click)="clearResults.emit()">
 				<i role="img" aria-hidden="true" class="icon-close"></i>
-				<span>{{'General.O.ClearResults' | TextCodeTranslationPipe}}</span>
+				<span>ניקוי תוצאות</span>
 			</a>
 		</div>
+		<app-filter-popup (filterClick)="filterClickEvent($event)" />
 	</div>
 </div>

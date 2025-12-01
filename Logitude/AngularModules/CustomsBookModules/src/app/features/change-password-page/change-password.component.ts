@@ -3,14 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChangePasswordParameter, LoginExtendedService } from '../../core/Services/login-extended.service';
-import { Pipes } from '../../core/Infrastructure/ModuleDeclarations';
 
 @Component({
     selector: 'app-change-password',
 	standalone: true,
     templateUrl: './change-password.component.html',
     styleUrls: ['./change-password.component.css'],
-    imports: [FormsModule, CommonModule, Pipes],
+    imports: [FormsModule, CommonModule],
 })
 
 export class ChangePasswordComponent implements OnInit {

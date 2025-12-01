@@ -1,5 +1,6 @@
 import { ErrorHandler } from '@angular/core';
 // import {MessageWindow} from '../../Controls/Windows/MessageWindow';
+import { Guid } from '../Utilities/Guid';
 import { SessionInfo } from '../Utilities/SessionInfo';
 import { SessionLocator } from '../Utilities/SessionLocator';
 declare var window, OrginalError, Contexting: any;
@@ -43,7 +44,7 @@ export class LogitudeErrorHandler implements ErrorHandler {
 		try {
 			if (error.message && error.stack) {
 				var errorLog: ErrorLogPM = new ErrorLogPM();
-				errorLog.Id = crypto.randomUUID();
+				errorLog.Id = Guid.newGuid();
 				errorLog.ClientDate = new Date();
 				errorLog.Tenant = SessionInfo.LoggedUserTenant;
 				errorLog.Tier = 'Client';

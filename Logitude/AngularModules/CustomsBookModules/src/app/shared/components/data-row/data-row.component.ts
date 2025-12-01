@@ -10,12 +10,11 @@ import { API_MainService } from '../../../core/API_MainService';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { SearchBy, SearchService } from '../page-top/service/top-page.service';
 import { PreferencesService, PreferenceType } from '../preference-menu/PreferencesService';
-import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 
 @Component({
 	selector: 'app-data-row',
 	standalone: true,
-	imports: [FontAwesomeModule, NgIf, NgClass, NgStyle, Pipes],
+	imports: [FontAwesomeModule, NgIf, NgClass, NgStyle],
 	templateUrl: './data-row.component.html',
 	styleUrl: './data-row.component.css',
 })

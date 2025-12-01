@@ -1,31 +1,17 @@
 import { Routes } from '@angular/router';
+import { LoginComponent } from '../features/login-page/login.component';
+import { MainPageComponent } from '../features/main-page/main-page.component';
 import { AuthGuardService as AuthGuard } from './Services/auth-guard.service';
+import { ResetPasswordComponent } from '../features/reset-password-page/reset-password.component';
+import { ChangePasswordComponent } from '../features/change-password-page/change-password.component';
 
 export const routes: Routes = [
-    {
-        path: 'login',
-        loadComponent: () => import('../features/login-page/login.component').then(c => c.LoginComponent)
-    },
-    {
-        path: 'resetpassword',
-        loadComponent: () => import('../features/reset-password-page/reset-password.component').then(c => c.ResetPasswordComponent)
-    },
-    {
-        path: 'changepassword',
-        loadComponent: () => import('../features/change-password-page/change-password.component').then(c => c.ChangePasswordComponent)
-    },
-    {
-        path: 'customs-book',
-        loadComponent: () => import('../features/main-page/main-page.component').then(c => c.MainPageComponent),
-        canActivate: [AuthGuard]
-    },
-    {
-        path: '',
-        redirectTo: 'customs-book',
-        pathMatch: 'full'
-    },
-    {
-        path: '**',
-        redirectTo: 'customs-book'
-    },
+    // { path: 'Customs-Book', redirectTo: "customs-book/login", pathMatch: "full" },
+    // { path: 'login', component: MainPageComponent, canActivate: [AuthGuard] },
+    { path: 'resetpassword', component: ResetPasswordComponent },
+    { path: 'changepassword', component: ChangePasswordComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'customs-book', component: MainPageComponent, canActivate: [AuthGuard] },
+    { path: '', component: MainPageComponent, canActivate: [AuthGuard]  },
+    { path: '**', component:  MainPageComponent, canActivate: [AuthGuard]  },
 ];

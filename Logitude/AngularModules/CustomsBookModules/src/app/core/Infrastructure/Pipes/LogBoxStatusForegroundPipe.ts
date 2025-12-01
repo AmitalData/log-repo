@@ -1,7 +1,7 @@
 ﻿import {Pipe} from '@angular/core';
 import {AppTool} from '../Tools';
 
-@Pipe({ name: 'LogBoxStatusForegroundPipe', standalone: true })
+@Pipe({ name: 'LogBoxStatusForegroundPipe' })
 
 export class LogBoxStatusForegroundPipe {
 

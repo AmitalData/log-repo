@@ -2,6 +2,7 @@ import { ServiceResponse } from '../DataContracts/ServiceResponse';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { AppTool, DateTool } from '../Tools';
 // import { MessageWindow } from '../../Controls/Windows/MessageWindow';
+import { Guid } from '../Utilities/Guid';
 import { SessionInfo } from '../Utilities/SessionInfo';
 import { SessionLocator } from '../Utilities/SessionLocator';
 import { LogitudeErrorHandler } from '../Utilities/LogitudeErrorHandler';

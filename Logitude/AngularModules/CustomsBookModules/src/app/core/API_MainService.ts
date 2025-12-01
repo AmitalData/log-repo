@@ -117,7 +117,6 @@ export class API_MainService extends BaseService {
 		return this.Post(url, filters);
 	}
 
-
 	GetCustomsBookTaxRates(customsItemId: number) {
 		const url = `${this._apiUrl}CB_TariffExtended/GetCustomsBookTaxRates?customsItemId=${customsItemId}`;
 		return this.Get(url);

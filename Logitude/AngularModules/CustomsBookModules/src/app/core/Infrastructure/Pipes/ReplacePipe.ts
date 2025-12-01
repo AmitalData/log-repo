@@ -1,7 +1,7 @@
 ﻿import {Pipe} from '@angular/core';
 import {AppTool} from '../Tools';
 
-@Pipe({ name: 'ReplacePipe', standalone: true })
+@Pipe({ name: 'ReplacePipe' })
 
 export class ReplacePipe {
     transform(text: string, replaceFrom: string, replaceTo: string): string {
