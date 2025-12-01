@@ -31,6 +31,7 @@ export class AddEditTaskSchedulerComponent  {
     schedulerExtendedPMService: SchedulerExtendedPMService;
     IsEnableSaveButton: boolean = false;
     ShowDateFields: boolean = false;
+    ShowRunTaskNowButton: boolean = true;
     @ViewChild('GeneralSectionLocation', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -44,6 +45,7 @@ export class AddEditTaskSchedulerComponent  {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
         this.ShowDateFields = this.EntityPM?.ProcedureCode === "InvoiceApiQueryTask";
+        this.ShowRunTaskNowButton = SessionLocator.TenantPM.AccountingActivated && !(this.DataContext.Type === "FTP" || this.DataContext.Type === "SFTP");
         if (this.ShowDateFields) {
             this.RunNowFromDate = DateTool.GetCurrentDateAsUtc();
             this.RunNowFromDate.setDate(this.RunNowFromDate.getDate() - 1);
