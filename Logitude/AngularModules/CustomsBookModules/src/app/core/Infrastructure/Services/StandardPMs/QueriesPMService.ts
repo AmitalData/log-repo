@@ -241,10 +241,10 @@ export class QueriesPMService {
             var newSharedUserQueryPM: SharedUserQueryPM;
 
             if (mapParent) {
-                newSharedUserQueryPM = new SharedUserQueryPM();
+                newSharedUserQueryPM = new SharedUserQueryPM(entityPM);
             }
             else {
-                newSharedUserQueryPM = new SharedUserQueryPM();
+                newSharedUserQueryPM = new SharedUserQueryPM(null);
             }
 
             var pmKeysArray = Object.keys(jItem);
@@ -288,7 +288,7 @@ export class QueriesPMService {
 
                     if (oldSharedUserQueries[itemKey]) {
                         var oldItemJson = oldSharedUserQueries[itemKey];
-                        var deletedPM: SharedUserQueryPM = new SharedUserQueryPM();
+                        var deletedPM: SharedUserQueryPM = new SharedUserQueryPM(null);
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 

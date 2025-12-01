@@ -4,7 +4,6 @@ import { AuthService } from '../../core/Services/auth.service';
 import { LoginExtendedService } from '../../core/Services/login-extended.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Pipes } from '../../core/Infrastructure/ModuleDeclarations';
 
 function getBaseUrl(): string {
     return document.getElementsByTagName('base')[0].href;
@@ -20,7 +19,7 @@ export const BASE_URL = new InjectionToken<string>('BaseURL', {
     standalone: true,
     templateUrl: './reset-password.component.html',
     styleUrls: ['./reset-password.component.css'],
-    imports: [FormsModule, CommonModule, Pipes],
+    imports: [FormsModule, CommonModule],
 })
 export class ResetPasswordComponent implements OnInit {
     public Email: string = "";

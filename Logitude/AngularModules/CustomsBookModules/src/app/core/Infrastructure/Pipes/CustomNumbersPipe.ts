@@ -1,6 +1,6 @@
 ﻿import {Pipe} from '@angular/core';
 
-@Pipe({ name: 'CustomNumbersPipe', standalone: true })
+@Pipe({ name: 'CustomNumbersPipe' })
 
 export class CustomNumbersPipe {
     transform(myNumber: number, myFractionDigits: number): string {

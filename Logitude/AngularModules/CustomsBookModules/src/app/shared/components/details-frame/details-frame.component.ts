@@ -12,13 +12,12 @@ import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { NgClass, NgFor, NgForOf, NgIf } from '@angular/common';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { RulesComponent } from "../rules/rules.component";
-import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 
 
 @Component({
   selector: 'app-details-frame',
   standalone: true,
-  imports: [NgClass, FontAwesomeModule, AccordionComponent, CommentsComponent, RulesComponent, NgFor, NgForOf, NgIf, Pipes],
+  imports: [NgClass, FontAwesomeModule, AccordionComponent, CommentsComponent, RulesComponent, NgFor, NgForOf, NgIf],
   templateUrl: './details-frame.component.html',
   styleUrl: './details-frame.component.css'
 })
