@@ -8,13 +8,12 @@ import { BehaviorSubject } from 'rxjs';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { SearchService } from '../page-top/service/top-page.service';
 import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 
 
 @Component({
   selector: 'app-comments',
   standalone: true,
-  imports: [FontAwesomeModule, NgIf, NgFor, NgClass, Pipes],
+  imports: [FontAwesomeModule, NgIf, NgFor, NgClass],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.css'
 })

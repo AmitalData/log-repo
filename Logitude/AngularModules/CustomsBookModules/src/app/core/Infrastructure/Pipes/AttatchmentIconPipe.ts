@@ -1,7 +1,7 @@
 import {Pipe} from '@angular/core';
 import {AppTool} from '../Tools';
 
-@Pipe({ name: 'AttatchmentIconPipe', standalone: true })
+@Pipe({ name: 'AttatchmentIconPipe' })
 
 export class AttatchmentIconPipe {
 

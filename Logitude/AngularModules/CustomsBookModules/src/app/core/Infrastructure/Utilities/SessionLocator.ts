@@ -5,6 +5,7 @@ import { TenantPM } from '../../Infrastructure/EntityPMs/TenantPM';
 import { AccountingSettingPM } from '../../Infrastructure/EntityPMs/AccountingSettingPM';
 import { VATTypesGroupPM } from '../../Infrastructure/EntityPMs/VATTypesGroupPM';
 // import {HomeComponent} from "../Components/HomeComponent/HomeComponent";
+import { ExternalParams } from './ExternalParams';
 import { LocalStorageManager } from './LocalStorageManager';
 import { SignalRChannelService } from '../Services/SignalRServices/SignalRChannelService';
 import { SATInterfaceSettingPM } from '../../Infrastructure/EntityPMs/SATInterfaceSettingPM';
@@ -24,7 +25,7 @@ export class SessionLocator {
 	// public static HomeComponent: HomeComponent;
 	public static DynamicLoader: any = null;
 	public static IsProduction: boolean = false;
-	public static ExternalParams: any = null;
+	public static ExternalParams: ExternalParams = null;
 	public static Index: number = 0;
 	public static Tenant: number = null;
 	public static LoggedUserId: string = null;

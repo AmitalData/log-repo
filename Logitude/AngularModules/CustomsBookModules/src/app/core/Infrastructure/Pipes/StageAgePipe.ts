@@ -2,7 +2,7 @@
 import {AppTool, DateTool} from '../Tools';
 import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
 
-@Pipe({ name: 'StageAgePipe', standalone: true })
+@Pipe({ name: 'StageAgePipe' })
 
 export class StageAgePipe {
 

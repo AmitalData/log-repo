@@ -1,7 +1,7 @@
 ﻿import {Pipe} from '@angular/core';
-import {AppTool} from '../Tools';
+import {AppTool, FormatTool} from '../Tools';
 
-@Pipe({ name: 'TimeToHoursMinutesPipe', standalone: true })
+@Pipe({ name: 'TimeToHoursMinutesPipe' })
 
 export class TimeToHoursMinutesPipe {
 

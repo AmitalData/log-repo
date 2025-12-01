@@ -4,7 +4,7 @@
 	opacity: 0;
 	position: absolute;
 	left: 280px;
-	top: 55px;
+	top: 45px;
 	transform: translate(-50%, 0);
 	width: 210px;
 	background-color: white;
@@ -27,6 +27,9 @@
 	}
 }
 .searchResults_filterToggle a {
+	position: absolute;
+	left: 300px;
+	top: 10px;
 	color: var(--blue);
 	text-decoration: none;
 }
@@ -48,14 +51,14 @@
 i[role='img'] {
 	display: inline;
 }
-.searchResults_filterToggle{
-	margin-top: 2px;
-}
 
 .searchResults_filterToggle a i:nth-child(2) {
 	display: inline;
 }
 
+.searchResults_filterPop {
+	display: block;
+}
 
 .searchResults_filterPop_title {
 	display: flex;

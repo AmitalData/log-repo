@@ -5,7 +5,7 @@ import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
 
 import {AppTool} from '../Tools';
 
-@Pipe({ name: 'ExchangeRateDatePipe', standalone: true })
+@Pipe({ name: 'ExchangeRateDatePipe' })
 
 export class ExchangeRateDatePipe {
     transform(value: Date): string {

@@ -1,8 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'highlight',
-    standalone: true
+    name: 'highlight'
 })
 export class HighlightSearch implements PipeTransform {
 
