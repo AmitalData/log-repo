@@ -499,10 +499,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
 				NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("TICKET key {2} id:{0} dec {1}", _DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant, key));
 
-				using (var disposableToken =
-                     ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key, "UCBUD2LT.CRS", true)
-                    )
-                {
+				
 					Stopwatch _Stopwatch;
 					_Stopwatch = Stopwatch.StartNew();
 					NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("TICKET CreateCRS tenant: {0} id: {1} decId: {2}", tenant, _DocumentsFilingPM.Id, declarationPM.Id));
@@ -510,7 +507,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId, _DocumentsFilingPM, declarationPM.Id);
                      NetCommonHelper.Logger.DevLog.Instance.WriteError(string.Format("TICKET crs {2} id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo, crs));
 
-                }
 
             }
             catch (Exception E)
