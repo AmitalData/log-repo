@@ -4,12 +4,13 @@ import { FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebS
 @Component({
     selector: 'app-SearchListDDL',
     template: `
-        <div *ngIf="showDropdown && dropdownOptions?.length > 0" class="dropdown-container">
+        <div *ngIf="showDropdown && dropdownOptions?.length > 0" class="dropdown-container" [style.left.px]="left">
             <table class="dropdown-list" [style.width]="DDLWidth">
                 <tr *ngFor="let option of getTopResults()" (click)="optionSelected.emit(option)" class="dropdown-item">
                     <ng-container *ngFor="let label of labels; let first = first;" [ngSwitch]="label.name">
                         <td *ngIf="!first && label.lengthTemp !== 0" >&nbsp;|&nbsp;</td>
                         <td><img *ngSwitchCase="'transportModeId'"  [src]="'./Images/' + (option[label.name] === 'O' ? 'Vessel' : option[label.name] === 'A' ? 'Airline' : 'Trucker') + '.png'" alt="{{ option[label.name] }}" /></td>
+                        <td> <span *ngSwitchCase="'entityCode'"  [class]="'SourceTypeIcon color-' + option[label.name]">{{option['iconCode']}}</span></td>
                         <td *ngSwitchCase="'createDateTime'">{{ option[label.name] | DateTimePipe:'D' }}</td>
                         <td *ngSwitchDefault [style.width]="label.lengthTemp > 0 ? (label.lengthTemp.toString() + 'px') : 'auto'"
                         [style.maxWidth]="label.lengthTemp > 0 ? (label.lengthTemp.toString() + 'px') : 'auto'">{{ option[label.name] }}</td>
@@ -27,7 +28,7 @@ import { FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebS
     styles: [`
         .dropdown-container {
             position: absolute;
-            left: 0;
+           
             z-index: 1;
             border: 1px solid #ccc;
             background: #fff;
@@ -90,10 +91,14 @@ export class SearchListDDLComponent implements OnInit {
     @Input() showTopResults: number = null;
     labels: DDLLable[] = [];
     DDLWidth: string = '250px';
+    left: number = 0;
+
     public set settings(settings: FastSearchSettings) {
         if (!settings) return;
         this.displayPattern = settings.ddlHtmlLine;
         this.showTopResults = settings.showTopResults;
+        this.left = settings.left === -1 ? null : (settings.left ?? 0);
+
         if (settings.DDLWidth) 
             this.DDLWidth = settings.DDLWidth;        
     }

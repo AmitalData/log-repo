@@ -381,6 +381,7 @@
     <Compile Include="AmitalContextUtil.cs" />
     <Compile Include="AzureSearch\AzureSearchServiceFilterHelper.cs" />
     <Compile Include="AzureSearch\CustomsBookAzureSearchService.cs" />
+    <Compile Include="AzureSearch\JournalAzureSearchService.cs" />
     <Compile Include="BL\AutomatedCourierMessagingService.cs" />
     <Compile Include="BL\AutoMsgScope.cs" />
     <Compile Include="AzureSearch\DeclarationAzureSearchService.cs" />

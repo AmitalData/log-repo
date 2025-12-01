@@ -94,4 +94,6 @@ export interface FastSearchResult {
     addAsteriskToNumberSearch: string;
     DDLWidth: string;
     minimumSearchQueryLength: number;
+    left: number;
+
 }

@@ -20,7 +20,10 @@ namespace Logitude.Customs.BL.AzureSearch
 
         private static readonly Dictionary<string, Func<FastSearchService>> _indexRegistry = new Dictionary<string, Func<FastSearchService>>()
         {
-            { "declarations", () => new DeclarationAzureSearchService() }
+            { "declarations", () => new DeclarationAzureSearchService() },
+             {"journallines" ,()=> new JournalAzureSearchService()}
+
+
         };
 
         public static DefaultAndConfiguration_Ext GetAzureSearchAISettings(int tenant) => DefaultService.Instance.Get(tenant, AzureSearchAISettingsSetKey, "Customs");
