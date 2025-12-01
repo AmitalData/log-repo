@@ -663,7 +663,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     ];
     SelectedCategory: string;
     SelectedItemChanged(item) {
-        this.SelectedCategory = item;
+        this.SelectedCategory = item.replace(' ', '');
     }
 
     private SetGLAccountChanged(value: string) {
