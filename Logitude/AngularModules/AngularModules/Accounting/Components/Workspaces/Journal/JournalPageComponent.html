@@ -27,7 +27,7 @@
                     <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">{{'Accounting.General.O.Search' | TextCodeTranslationPipe}}:</td>
 
                     <td style="width: 300px;">
-                        <SearchBox [ObjectTableName]="'Journal'" [IsQuickSearch]="true" (ItemClicked)="EditJournal($event)"></SearchBox>
+                        <SearchTextBox  (optionSelected)="searchDropdownSelected($event)" (click)="showRecentSearches()" (ItemClicked)="EditJournal($event)"  [appSearchListDDL]="searchDropdownOptions" [DDLsettings]="fastSearchSettings" [ObjectTableName]="'Journal'"  (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
                     </td>
 
                     <td>
