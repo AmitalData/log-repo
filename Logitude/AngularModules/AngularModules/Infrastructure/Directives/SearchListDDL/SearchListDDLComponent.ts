@@ -109,6 +109,7 @@ export class SearchListDDLComponent implements OnInit {
 
         matches.forEach(word => {
             const val = word.slice(1, -1).split(':');
+            if(val[0].trim() === "id" || val[0].trim() === "iconCode") return; 
             this.labels.push({
                 name: val[0].trim(),
                 length: val[1] ? parseInt(val[1]) : null
