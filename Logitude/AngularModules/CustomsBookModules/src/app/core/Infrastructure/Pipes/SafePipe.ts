@@ -2,7 +2,7 @@
 import {DomSanitizer} from '@angular/platform-browser';
 import {AppTool} from '../Tools';
 
-@Pipe({ name: 'SafePipe', standalone: true })
+@Pipe({ name: 'SafePipe' })
 
 export class SafePipe implements PipeTransform {
     constructor(private sanitizer: DomSanitizer) { }

@@ -2,7 +2,7 @@
 
 export class MenuButtonGroupPM {
 	constructor() {
-		// this.UIProperties = new UIProperties();
+		this.UIProperties = new UIProperties();
 		this.IsDirty = false;
 	}
 

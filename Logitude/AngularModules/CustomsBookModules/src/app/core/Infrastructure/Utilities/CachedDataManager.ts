@@ -484,12 +484,12 @@
 //                     }
 //                     window.TextCodes.push(item);
 
-//                     var oldItemCached = window.TextCodesCache?.filter(t => t.Id == item.Id)[0];
+//                     var oldItemCached = window.TextCodesCache.filter(t => t.Id == item.Id)[0];
 //                     if (oldItemCached) {
-//                         var index = window.TextCodesCache?.indexOf(oldItemCached);
-//                         window.TextCodesCache?.splice(index, 1);
+//                         var index = window.TextCodesCache.indexOf(oldItemCached);
+//                         window.TextCodesCache.splice(index, 1);
 //                     }
-//                     window.TextCodesCache?.push(item);
+//                     window.TextCodesCache.push(item);
 
 //                     //var index = window.TextCodes.indexOf(item);
 //                     //if (index > -1) {
@@ -531,7 +531,7 @@
 //                     }
 //                     window.ObjectFields.push(item);
 
-//                     var oldItemCached = window.TextCodesCache?.filter(t => t.Id == item.Id)[0];
+//                     var oldItemCached = window.TextCodesCache.filter(t => t.Id == item.Id)[0];
 //                     if (oldItemCached) {
 //                         var index = window.ObjectFieldsCache.indexOf(oldItemCached);
 //                         window.ObjectFieldsCache.splice(index, 1);

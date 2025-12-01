@@ -3,6 +3,7 @@ import {DirectionTransportFilter} from './DirectionTransportFilter';
 import {DashBoardClass} from './DashBoardClass';
 import {GroupByClass} from './GroupByClass';
 import {DateTool} from '../../Tools';
+import {GroupByPipe} from '../../Pipes/GroupByPipe';
 import {ChartingDataClass} from './ChartingDataClass';
 
 export class FunctionsCRM {

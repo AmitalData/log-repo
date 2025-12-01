@@ -3,7 +3,7 @@ import {AppTool, DateTool} from '../Tools';
 import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
 import {SessionLocator} from '../Utilities/SessionLocator';
 
-@Pipe({ name: 'DateTimeToShortDatePipe', standalone: true })
+@Pipe({ name: 'DateTimeToShortDatePipe' })
 
 export class DateTimeToShortDatePipe {
 

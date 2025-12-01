@@ -9,12 +9,11 @@ import { NgFor, NgForOf } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { ClasisificationGuidanceComponent } from "../clasisification-guidance/clasisification-guidance.component";
-import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 
 @Component({
   selector: 'app-accordion',
   standalone: true,
-  imports: [FontAwesomeModule, GenericTableComponent, ClasisificationGuidanceComponent, CommonModule, NgFor, NgForOf, NgStyle, Pipes],
+  imports: [FontAwesomeModule, GenericTableComponent, ClasisificationGuidanceComponent, CommonModule, NgFor, NgForOf, NgStyle],
   templateUrl: './accordion.component.html',
   styleUrl: './accordion.component.css',
 })

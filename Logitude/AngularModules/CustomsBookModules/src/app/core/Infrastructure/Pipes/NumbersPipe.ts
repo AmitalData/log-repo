@@ -1,7 +1,7 @@
 ﻿import {Pipe} from '@angular/core';
 import {FormatTool} from '../Tools';
 
-@Pipe({ name: 'NumbersPipe', standalone: true })
+@Pipe({ name: 'NumbersPipe' })
 
 export class NumbersPipe {
     transform(myNumber: number, myFormat: string): string {

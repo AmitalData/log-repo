@@ -1,14 +1,13 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { TableTopService } from './service/table-top.service';
 import { NgClass, NgFor, NgIf, NgStyle, } from '@angular/common';
 import { FilterPopupComponent } from '../filter-popup/filter-popup.component';
 import { FiltersSearch } from '../filter-popup/service/filter-popup.service';
-import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 
 @Component({
 	selector: 'app-table-top',
 	standalone: true,
-	imports: [NgIf, NgFor, FilterPopupComponent, NgClass, NgStyle, Pipes],
+	imports: [NgIf, NgFor, FilterPopupComponent, NgClass, NgStyle],
 	templateUrl: './table-top.component.html',
 	styleUrl: './table-top.component.css',
 })
