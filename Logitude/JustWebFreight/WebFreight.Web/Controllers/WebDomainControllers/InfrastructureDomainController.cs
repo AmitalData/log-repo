@@ -565,7 +565,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     Tenant = tenant,
                                     Id = IdCounter.GetNumber("FeatureChange", tenant).ToString(),
                                     EventDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
-                                    Notes = myFeatureChanges,
                                     UserId = loggedUserId,
                                 };
 
@@ -1011,7 +1010,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                         Id = d.Id,
                                                         Tenant = d.Tenant,
                                                         Name = d.Name,
-                                                        Notes = d.Notes,
                                                         EventDateTime = d.EventDateTime,
                                                         PackageCode = d.PackageCode,
                                                         RoleId = d.RoleId,
@@ -1051,7 +1049,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                         Id = d.Id,
                                                         Tenant = d.Tenant,
                                                         Name = d.Name,
-                                                        Notes = d.Notes,
                                                         EventDateTime = d.EventDateTime,
                                                         PackageCode = d.PackageCode,
                                                         RoleId = d.RoleId,

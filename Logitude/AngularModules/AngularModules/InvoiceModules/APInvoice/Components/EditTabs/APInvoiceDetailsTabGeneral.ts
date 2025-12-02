@@ -914,6 +914,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.EntityPM.InvoiceExpectedAmount = setValue;
             this.ComputeTotals();
 
+
            
         }
     }
