@@ -15,6 +15,7 @@ import { ChildDirective } from './Directives/ChildDirective';
         <img *ngIf="!IsLoginScreenLoaded" class="CenterCenter" src="./_Resources/Images/Gif/Bluespin.gif" />
         <div ChildDirective></div>
     </div>
+    <cookieconsent></cookieconsent>
     `,
 })
 
