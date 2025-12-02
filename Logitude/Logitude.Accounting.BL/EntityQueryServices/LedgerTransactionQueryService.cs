@@ -1011,9 +1011,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     AccountingEntityReferenceType = null,
 
                     // You still need these for ResolveReferenceType
-                    _Lt = x.LedgerTransaction,
-                    _J = x.Journal,
-                    _CJ = x.CancelledJournal
+                    _LedgerTransaction = x.LedgerTransaction,
+                    _Journal = x.Journal,
+                    _CancelledJournal = x.CancelledJournal
                 })
                 .AsNoTracking()
                 .ToList();
@@ -1023,16 +1023,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             {
                 b.AccountingEntityReferenceType =
                     ResolveReferenceType(
-                        b._Lt,
-                        b._CJ ?? b._J,
+                        b._LedgerTransaction,
+                        b._CancelledJournal ?? b._Journal,
                         tenant,
                         OpenFormatDocumentTypes.Fallback
                     );
 
                 // Optional cleanup to reduce memory
-                b._Lt = null;
-                b._J = null;
-                b._CJ = null;
+                b._LedgerTransaction = null;
+                b._Journal = null;
+                b._CancelledJournal = null;
             }
 
             return result;

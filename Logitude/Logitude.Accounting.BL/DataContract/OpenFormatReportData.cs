@@ -40,9 +40,9 @@ namespace Logitude.Accounting.BL.DataContract
         public string OppositGLAccount { get; set; }
         public string LedgerTransactionId { get; set; }
         public string AccountingEntityReferenceType { get; set; }
-        public LedgerTransaction _Lt { get; set; }
-        public Journal _J { get; set; }
-        public Journal _CJ { get; set; }
+        public LedgerTransaction _LedgerTransaction { get; set; }
+        public Journal _Journal { get; set; }
+        public Journal _CancelledJournal { get; set; }
     }
 
     public class B110Data
