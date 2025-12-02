@@ -291,54 +291,56 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
 						if (!IsLocalVendor(myVendorPM, Tenant))
 						{
-							temp.VATNumber = MyEntity.VATNumber;
+							temp.VATNumber = MyEntity.VATNumber; // Take VAT Number from the input message
 						}
-						else if (FeatureToggleHelper.HasFeatureToggle("VPI", Tenant))
+						else // All the logics are there for the Local Vendors only 
 						{
-							if (!String.IsNullOrWhiteSpace(MyEntity.VATNumber))
+							if (FeatureToggleHelper.HasFeatureToggle("VPI", Tenant))
 							{
-								string aPInvoiceVatNumberNormalized = APInvoiceMessageHelper.CheckVATValidation(MyEntity.VATNumber);
-								if (MyEntity.VATNumber != "999999999" && MyEntity.VATNumber != "999999998" && MyEntity.VATNumber == aPInvoiceVatNumberNormalized)
+								if (!String.IsNullOrWhiteSpace(MyEntity.VATNumber))
 								{
-									temp.VATNumber = MyEntity.VATNumber;
-								}
-								else if (myVendorPM != null)
-								{
-									temp.VATNumber = myVendorPM.VatNumber;
-									temp.VATNumber = ModifyVatNumber(temp.VATNumber);
+									string aPInvoiceVatNumberNormalized = APInvoiceMessageHelper.CheckVATValidation(MyEntity.VATNumber);
+									if (MyEntity.VATNumber != "999999999" && MyEntity.VATNumber != "999999998" && MyEntity.VATNumber == aPInvoiceVatNumberNormalized)
+									{
+										temp.VATNumber = MyEntity.VATNumber;
+									}
+									else if (myVendorPM != null)
+									{
+										temp.VATNumber = myVendorPM.VatNumber;
+										temp.VATNumber = ModifyVatNumber(temp.VATNumber);
+									}
 								}
 							}
-						}
-						else
-						{
-							temp.VATNumber = MyEntity.VATNumber;
-                        }
+							else
+							{
+								temp.VATNumber = MyEntity.VATNumber;
+							}
 
 
-						if (string.IsNullOrEmpty(temp.VATNumber) && myVendorPM != null)
-                        {
-                            temp.VATNumber = myVendorPM.VatNumber;
-                            temp.VATNumber = ModifyVatNumber(temp.VATNumber);
-                        }
+							if (string.IsNullOrEmpty(temp.VATNumber) && myVendorPM != null)
+							{
+								temp.VATNumber = myVendorPM.VatNumber;
+								temp.VATNumber = ModifyVatNumber(temp.VATNumber);
+							}
 
-						if ((String.IsNullOrWhiteSpace(temp.VATNumber) || temp.VATNumber == "999999999" || temp.VATNumber == "999999998") && temp.VendorGLAccountId != null)
-						{
-							CardQuery cardQuery = new CardQuery(Tenant);
-							var glAccountCards = cardQuery.GetCardsByGLAccountIds(new List<string> { temp.VendorGLAccountId }, Tenant);
-                            if (glAccountCards.Count != 0)
-                            {
-                                var vatNumber = glAccountCards.Count > 1
-                                    ? glAccountCards.FirstOrDefault(c => c.VatNumber != null)?.VatNumber
-                                    : glAccountCards[0].VatNumber;
+							if ((String.IsNullOrWhiteSpace(temp.VATNumber) || temp.VATNumber == "999999999" || temp.VATNumber == "999999998") && temp.VendorGLAccountId != null)
+							{
+								CardQuery cardQuery = new CardQuery(Tenant);
+								var glAccountCards = cardQuery.GetCardsByGLAccountIds(new List<string> { temp.VendorGLAccountId }, Tenant);
+								if (glAccountCards.Count != 0)
+								{
+									var vatNumber = glAccountCards.Count > 1
+										? glAccountCards.FirstOrDefault(c => c.VatNumber != null)?.VatNumber
+										: glAccountCards[0].VatNumber;
 
-                                if (vatNumber != null)
-                                {
-                                    temp.VATNumber = ModifyVatNumber(vatNumber);
-                                }
-                            }
+									if (vatNumber != null)
+									{
+										temp.VATNumber = ModifyVatNumber(vatNumber);
+									}
+								}
 
-                        }
-                            
+							}
+						}  
 
                         temp.InvoiceNumber = MyEntity.InvoiceNumber;
 
