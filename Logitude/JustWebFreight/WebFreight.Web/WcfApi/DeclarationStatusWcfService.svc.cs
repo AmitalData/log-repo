@@ -77,6 +77,7 @@ namespace WebFreight.Web.WcfApi
                     {
                         pm.Tenant = tenant;
                         pm.DeclarationId = entityPoco.Id;
+                        pm.StatusUser = null;
                         if (!string.IsNullOrEmpty(pm.StatusID) && codeToId.TryGetValue(pm.StatusID, out var mapped))
                         {
                             pm.StatusID = mapped;
