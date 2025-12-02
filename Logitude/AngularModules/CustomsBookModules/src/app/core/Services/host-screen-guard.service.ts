@@ -46,6 +46,16 @@ export class HostScreenGuardService implements CanActivate {
       'tenant',
       window.location.href
     );
+    let searchValue = this.getParameterByName(
+      'searchValue',
+      window.location.href
+    );
+    if (searchValue) {
+      sessionStorage.setItem('searchValue', searchValue);
+    }
+    else {
+      sessionStorage.removeItem('searchValue');
+    }
     if (AmitalSSOAngular) {
       sessionStorage.setItem('AmitalSSOAngular', AmitalSSOAngular);
     }

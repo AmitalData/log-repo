@@ -18,5 +18,6 @@ export class HostScreenService {
         sessionStorage.removeItem('Token');
         sessionStorage.removeItem('AmitalSSOAngular');
         sessionStorage.removeItem('Tenant');
+        sessionStorage.removeItem('searchValue');
     }
 }

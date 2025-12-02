@@ -16,6 +16,7 @@ import { InfrastructureDomainService } from '../../core/Infrastructure/Services/
 import { FeatureLocator } from '../../core/Infrastructure/Utilities/FeatureLocator';
 import { PreferenceMenuComponent } from '../../shared/components/preference-menu/preference-menu';
 import { CB_Preference, PreferencesService } from '../../shared/components/preference-menu/PreferencesService';
+import { AppTool } from '../../core/Infrastructure/Tools';
 
 @Component({
 	selector: 'app-main-page',
@@ -42,6 +43,14 @@ export class MainPageComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		const searchValue: string = sessionStorage.getItem('searchValue');
+		if (!AppTool.IsNullOrEmpty(searchValue)) {
+			this.isLoadingMode.next(true);
+			this.searchService.isNumeric(searchValue);
+			this.searchService.SetSearchText(searchValue);
+			this.SearchByText(this.searchService.selectSearchBy);
+		}
+
 		this.API_MainService.GetCB_PreferenceByUserIdAndTenant(SessionInfo.LoggedUserId, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
 			let PreferencesList: CB_Preference[] = data?.body;
 			this.preferencesService.allPreferences.next(PreferencesList);
@@ -50,6 +59,7 @@ export class MainPageComponent implements OnInit {
 			}
 		});
 	}
+
 	getByIsDiscountCodes() {
 		this.headerService.IsDiscountCodes.subscribe((value) => {
 			this.IsDiscountCodes = value;
@@ -94,8 +104,6 @@ export class MainPageComponent implements OnInit {
 			filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
 			filters.Reamarks = false;
 			filters.Rules = false;
-			// filters.Reamarks = true;
-			// filters.Rules = true;
 		}
 
 		if (filters.CustomsItemHierarchic == "6" || filters.CustomsItemHierarchic == "7" || filters.CustomsItemHierarchic == "6,7") {
@@ -109,7 +117,6 @@ export class MainPageComponent implements OnInit {
 		if (filters.SearchFields === "") return;
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
 			this.isLoadingMode.next(true); // update loading mode
-
 			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe(
 				(data: any) => {
 					const result: CB_CustomsItemComputedDataList[] = data.body;

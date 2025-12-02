@@ -23,6 +23,8 @@ import { RomanToolService } from '../../services/roman-tool.service';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { PreferenceMenuComponent } from '../preference-menu/preference-menu';
 import { PreferencesService } from '../preference-menu/PreferencesService';
+import { AppTool } from '../../../core/Infrastructure/Tools';
+
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
@@ -104,10 +106,10 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	getCustomsBookLastUpdateDate() {
-		
+
 		this.API_MainService.GetCustomsBookLastUpdateDateByTenant(SessionInfo.LoggedUserTenant).subscribe(
 			(data: any) => {
-				
+
 				const result = data.body;
 				if (!result) return;
 				console.log(result);
@@ -159,38 +161,35 @@ export class MainDisplayComponent implements OnInit {
 
 	IsDiscountCodes: boolean = false;
 	GetAllCustomsBookMainView() {
+		this.searchValue = sessionStorage.getItem('searchValue');
+		if (AppTool.IsNullOrEmpty(this.searchValue)) {
+			this.isLoadingMode.next(true);
+			let filters: Filters = {
+				CustomsBookType: this.searchState,
+				Tenant: SessionInfo.LoggedUserTenant,
+				SearchFields: ''
+			};
+			filters.IsDiscountCodes = this.headerService.IsDiscountCodes?.getValue();
+			this.getRulesData();
+			this.getCommentsData(SessionInfo.LoggedUserTenant);
 
-		this.isLoadingMode.next(true);
-		let filters: Filters = {
-			CustomsBookType: this.searchState,
-			Tenant: SessionInfo.LoggedUserTenant,
-			SearchFields: ''
-		};
+			this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
+				const result: CB_CustomsItemComputedDataList[] = data.body;
+				if (!result) return; // TODO: add error message
+				this.countSearchResult = 0;
+				this.handleClearResults();
 
-		filters.IsDiscountCodes = this.headerService.IsDiscountCodes?.getValue();
+				this.data = this.orderedData(result);
+				if (this.data.length > 0) {
+					if (this.IsDiscountCodes) this.originalDataByIsDiscountCodes = this.data;
+					else this.fullData = this.data;
+				}
 
-		this.getRulesData();
-		this.getCommentsData(SessionInfo.LoggedUserTenant);
-
-
-
-		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
-			const result: CB_CustomsItemComputedDataList[] = data.body;
-			if (!result) return; // TODO: add error message
-			this.countSearchResult = 0;
-			this.handleClearResults();
-
-
-			this.data = this.orderedData(result);
-			if (this.data.length > 0) {
-				if (this.IsDiscountCodes) this.originalDataByIsDiscountCodes = this.data;
-				else this.fullData = this.data;
-			}
-
-			this.searchMode = TableTopState.ViewAll;
-			this.isLoadingMode.next(false);
-			this.isFeaturePermessionCB.next(false);
-		});
+				this.searchMode = TableTopState.ViewAll;
+				this.isLoadingMode.next(false);
+				this.isFeaturePermessionCB.next(false);
+			});
+		}
 	}
 
 	allRulesData = [];
