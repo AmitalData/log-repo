@@ -38,7 +38,7 @@ import { AmitalGatewayUtil, UnifreightMessageM } from '../../Utilities/AmitalGat
 import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/AccountingIntegrityCheckPM';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, throttleTime } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, take } from 'rxjs/operators';
 import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGridComponent';
 import { LogGridComponentV2 } from '../LogitudeComponents/LogGridComponent/LogGridComponentV2';
 import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
@@ -67,7 +67,6 @@ import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
 import { FastSearchResult, FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebService';
 import { FastSearchService } from './FastSearchService';
-
  
 @Component({
 
@@ -387,6 +386,117 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
     }
 
+    //ApplyPreDefinedFilters() {
+    //    if (this.SelectedQuery != null) {
+    //        this.MethodName = this.SelectedQuery.QuerySection;
+    //        this.SelectedQueryId = this.SelectedQuery.Id;
+    //        if (this.listArgs && this.listArgs.Filters && !AppTool.IsNullOrEmpty(this.listArgs.Filters.SortBy)) {
+    //            this.dataSource.sortingCol = this.listArgs.Filters.SortBy;
+    //        }
+    //        else {
+    //            this.dataSource.sortingCol = this.SelectedQuery.DefaultSortColumn;
+    //        }
+    //        if (this.listArgs && this.listArgs.Filters && !AppTool.IsNullOrEmpty(this.listArgs.Filters.SortDirection)) {
+    //            this.dataSource.sortingDir = this.listArgs.Filters.SortDirection;
+    //        }
+    //        else {
+    //            this.dataSource.sortingDir = this.SelectedQuery.DefaultSortDirection;
+    //        }
+
+    //        this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
+    //    }
+    //    this.CurrentQueryFilters = new ApiQueryFilters();
+    //    if (window.PreDefinedFilters.filter(d => d.QueryId == this.SelectedQuery.Id) != null) {
+    //        var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryId == this.SelectedQuery.Id);
+    //        predefinedFilters.forEach((filter, key) => {
+    //            var filterOperator = (!AppTool.IsNullOrEmpty(filter.Operator)) ? filter.Operator : filter.ObjectFieldOperator;
+    //            var value1 = filter.PredefinedValue;
+    //            var value2 = filter.PredefinedValue2;
+    //            if (value2 != null) {
+    //                filterOperator = "Between";
+    //            }
+    //            if (filter.DataTypeCode == "DateTime") {
+    //                var TodayDate = new Date();
+    //                if (value1 == '#today') value1 = new Date(TodayDate.getFullYear(), TodayDate.getMonth(), TodayDate.getDate(), 0, 0, 0);
+    //                if (value2 == '#today') value2 = new Date(TodayDate.getFullYear(), TodayDate.getMonth(), TodayDate.getDate(), 23, 59, 59);
+
+    //                var TommorowDate = new Date();
+    //                DateTool.AddDays(TommorowDate, 1);
+    //                TommorowDate.setHours(0, 0, 0, 0);
+    //                var TodayDate = new Date();
+    //                TodayDate.setHours(0, 0, 0, 0);
+    //                var YesterdayDate = DateTool.AddDays((new Date()), -1);
+    //                YesterdayDate.setHours(0, 0, 0, 0);
+    //                var LastSevenDaysDate = DateTool.AddDays((new Date()), -7)
+    //                LastSevenDaysDate.setHours(0, 0, 0, 0);
+    //                var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
+    //                LastThirtyDaysDate.setHours(0, 0, 0, 0);
+    //                var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+    //                CurrentYearFromDate.setHours(0, 0, 0, 0);
+    //                var CurrentYearToDate = new Date();
+    //                DateTool.AddDays(CurrentYearToDate, 1);
+    //                CurrentYearToDate.setHours(0, 0, 0, 0);
+    //                var LastYearFromDate = DateTool.AddDays((new Date()), -365);
+    //                LastYearFromDate.setHours(0, 0, 0, 0);
+    //                var LastYearToDate = new Date();
+    //                DateTool.AddDays(LastYearToDate, 1);
+    //                LastYearToDate.setHours(0, 0, 0, 0);
+
+    //                if (value1 == "Today") {
+    //                    value1 = TodayDate;
+    //                    value2 = TommorowDate;
+    //                    filterOperator = "Between";
+    //                }
+    //                else if (value1 == "Yesterday") {
+    //                    value1 = YesterdayDate;
+    //                    value2 = TodayDate;
+    //                    filterOperator = "Between";
+    //                }
+    //                else if (value1 == "Last 7 Days") {
+    //                    value1 = LastSevenDaysDate;
+    //                    value2 = TommorowDate;
+    //                    filterOperator = "Between";
+    //                }
+    //                else if (value1 == "Last 30 Days") {
+    //                    value1 = LastThirtyDaysDate;
+    //                    value2 = TommorowDate;
+    //                    filterOperator = "Between";
+    //                }
+    //                else if (value1 == "Current Year") {
+    //                    value1 = CurrentYearFromDate;
+    //                    value2 = CurrentYearToDate;
+    //                    filterOperator = "Between";
+    //                }
+    //                else if (value1 == "Last Year") {
+    //                    value1 = LastYearFromDate;
+    //                    value2 = LastYearToDate;
+    //                    filterOperator = "Between";
+    //                }
+    //                else if (value1 == "NoDate" || value1 == "No Date") {
+    //                    value1 = "NoDate";
+    //                    filterOperator = "NoDate";
+    //                }
+    //            }
+    //            var field = window.ObjectFields.filter(a => a.Id == filter.ObjectFieldId)[0];
+    //            if (field) {
+    //                this.CurrentQueryFilters.addAdditionalFilter(filter.ObjectFieldName, value1, value2, null, filterOperator, field.IsCustomFilter, filter.DisplayInList, field.IsCustom, filter.DataTypeCode);
+    //            }
+    //        });
+    //    }
+
+    //    if (!AppTool.IsNullOrEmpty(this.SelectedQuery.DefaultSortColumn) && AppTool.IsNullOrEmpty(this.CurrentQueryFilters.SortBy)) {
+    //        this.CurrentQueryFilters.SortBy = this.SelectedQuery.DefaultSortColumn;
+    //    }
+    //    if (!AppTool.IsNullOrEmpty(this.SelectedQuery.DefaultSortDirection) && AppTool.IsNullOrEmpty(this.CurrentQueryFilters.SortDirection)) {
+    //        this.CurrentQueryFilters.SortDirection = this.SelectedQuery.DefaultSortDirection;
+    //    }
+    //    if (this.listArgs.SelectedTransportMode != "All") {
+    //        this.CurrentQueryFilters.addAdditionalFilter("TransportModeId", this.listArgs.SelectedTransportMode, null, null, "Equals", false, true, false, "string", (this.listArgs.SelectedTransportMode == "All" ? true : false));
+    //    }
+    //    if (this.listArgs.SelectedDirection != "All") {
+    //        this.CurrentQueryFilters.addAdditionalFilter("DirectionId", this.listArgs.SelectedDirection, null, null, "Equals", false, true, false, "string", (this.listArgs.SelectedDirection == "All" ? true : false));
+    //    }
+    //}
 
     public rowData: Array<any>;
     public showGrid: boolean;
@@ -399,12 +509,18 @@ export class ListComponent implements OnInit, AfterViewInit {
         sortingCol: "",//"CreateDateTime",
         sortingDir: "",//"Descending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
+            //console.log("dataSource.getRows callback function searchFields", searchFields);
+            //console.log("sortingCol", sortingCol, "sortingDir", sortingDir);
+            //if (sortingCol == '' || sortingDir == '') {
+            //    return this.getRows(skip, take, "CreateDateTime", "Descending", getCount, searchFields);
+            //}
+            //else {
             this.currentSortingCol = sortingCol;
             this.currentSortingDir = sortingDir;
             this.currentSearchFields = searchFields;
             this.currentFilters = filters;
-
             return this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+            //}
         },
     };
 
@@ -671,6 +787,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
         }
         this.Filterchangeevent = new LogEvents.EventManager();
+        var subscription = this.pubSubAdvanceQueryFiltersService.Stream.subscribe(customer => this.processAdvanceQueryFilters(customer));
 
         this.Listen();
         //this.CD.detectChanges();
@@ -1221,10 +1338,11 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.Title = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
         }
         if (this.SelectedQuery != null) {
-
+            //console.log(this.SelectedQuery);
             this.SelectedQueryId = this.SelectedQuery.Id;
             this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
 
+            //this.Query = this.SelectedQuery;
 
             if (this.listArgs && this.listArgs.Filters && !AppTool.IsNullOrEmpty(this.listArgs.Filters.SortBy)) {
                 this.dataSource.sortingCol = this.listArgs.Filters.SortBy;
@@ -1243,7 +1361,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     this.dataSource.sortingDir = this.SelectedQuery.DefaultSortDirection;
                 }
             }
-
+            //console.log("dataSource", this.dataSource);
             this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => {
                 this.ResourcesLoaded = true;
                 this.GetQueryColumns(this.SelectedQuery.UniqueCode, this.UserId);
@@ -1274,7 +1392,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
     }
     GetQueryColumns(queryCode, userId) {
-
+        //var queryId = window.Queries.filter(x => x.Code === queryCode)[0].Id;
         this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + queryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + userId + "&getfromsystemlevel=false")
             .subscribe((response: any) => {
                 this.QueryColumns = response;
@@ -1398,7 +1516,58 @@ export class ListComponent implements OnInit, AfterViewInit {
                         var LastYearToDate = DateTool.AddDays((new Date()), 1);
                         LastYearToDate.setUTCHours(0, 0, 0, 0);
 
-                    
+                        //var TodayDate = new Date();
+                        //var YesterdayDate = DateTool.AddDays((new Date()), -1);
+                        //var LastSevenDaysDate = DateTool.AddDays((new Date()), -7)
+                        //var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
+                        //var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+                        //var CurrentYearToDate = new Date();
+                        //var LastYearFromDate = DateTool.AddDays((new Date()), -365);
+                        //var LastYearToDate = new Date();
+                        /*
+                          case "Today":
+                    {
+                        this.Text = "Today " + this.Today;
+                        //this.SetDisplayText();
+                        this.SelectedItemChanged.emit({ FromDate: this.TodayDate, ToDate: this.TommorowDate, Operation: "Between" });
+                        break;
+                    }
+                case "Yesterday":
+                    {
+                        this.Text = "Yesterday " + this.Yesterday;
+                        //this.SetDisplayText();
+                        this.SelectedItemChanged.emit({ FromDate: this.YesterdayDate, ToDate: this.TodayDate, Operation: "Between" });
+                        break;
+                    }
+                case "Last 7 Days":
+                    {
+                        this.Text = "Last 7 Days " + this.LastSevenDays;
+                        //this.SetDisplayText();
+                        this.SelectedItemChanged.emit({ FromDate: this.LastSevenDaysDate, ToDate: this.TommorowDate, Operation: "Between" });
+                        break;
+                    }
+                case "Last 30 Days":
+                    {
+                        this.Text = "Last 30 Days " + this.LastThirtyDays;
+                        //this.SetDisplayText();
+                        this.SelectedItemChanged.emit({ FromDate: this.LastThirtyDaysDate, ToDate: this.TommorowDate, Operation: "Between" });
+                        break;
+                    }
+                case "Current Year":
+                    {
+                        this.Text = "Current Year " + this.CurrentYear;
+                        //this.SetDisplayText();
+                        this.SelectedItemChanged.emit({ FromDate: this.CurrentYearFromDate, ToDate: this.CurrentYearToDate, Operation: "Between" });
+                        break;
+                    }
+                case "Last Year":
+                    {
+                        this.Text = "Last Year " + this.LastYear;
+                        //this.SetDisplayText();
+                        this.SelectedItemChanged.emit({ FromDate: this.LastYearFromDate, ToDate: this.LastYearToDate, Operation: "Between" });
+                        break;
+                    }
+                        */
                         if (value1 == "Today") {
                             value1 = TodayDate;
                             value2 = TommorowDate;
