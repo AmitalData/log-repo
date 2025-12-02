@@ -2778,6 +2778,43 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         result.Message = bl.RunOperationalClose(tenant, request.SelectedIds, out reqList);
                         result.RequestInProgressList = reqList;
                         break;
+                    case "DeclarationRestore":
+                        {
+                            string buildFailList;
+                            var restoreRequests = bl.BuildDeclarationRestoreRequests(
+                                tenant,
+                                request.SelectedIds,
+                                out buildFailList);
+
+                            int okSend = 0;
+                            int failSend = 0;
+
+                            foreach (var rp in restoreRequests)
+                            {
+                                try
+                                {
+                                    var messagingService = new DF_NG_9079_Web05_RetrieveExportOrTransshipmentDeclarationMessagingService();
+                                    var responseData = messagingService.Send(rp);
+
+                                    if (responseData != null && !responseData.HasException && responseData.Succeeded)
+                                        okSend++;
+                                    else
+                                        failSend++;
+                                }
+                                catch
+                                {
+                                    failSend++;
+                                }
+                            }
+
+                            result.Message = okSend.ToString();
+
+                            int buildFail = 0;
+                            int.TryParse(buildFailList, out buildFail);
+                            var totalFail = buildFail + failSend;
+                            result.RequestInProgressList = totalFail.ToString();
+                            break;
+                        }
 
                     default:
                         throw new Exception("Action not supported");
