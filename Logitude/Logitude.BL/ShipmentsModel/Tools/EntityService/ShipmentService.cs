@@ -71,6 +71,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Xml.Linq;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -3635,6 +3636,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             return shipmentChangeTracking;
         }
 
+        private string NormalizeXml(string xml, string nodeNameToIgnore)
+        {
+            if (string.IsNullOrWhiteSpace(xml))
+                return xml;
+
+            var xdoc = XDocument.Parse(xml);
+
+            foreach (var node in xdoc.Descendants(nodeNameToIgnore).ToList())
+            {
+                node.Remove();
+            }
+
+            return xdoc.ToString(SaveOptions.DisableFormatting);
+        }
+
         private void InitializeComponent()
         {
             entityPM.CalculateProfit = false;
@@ -3679,7 +3695,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
                 shipmentAdditionalCloudData.ShipmentAddtionalDataXML = ShipmentAdditionalDataService.SerializeShipmentAdditionalXmlData(entityPM.ShipmentAdditionalData);
 
-                if (!string.IsNullOrEmpty(entityPM.PaymentRequestXML) && shipmentAdditionalCloudData.PaymentRequestXML != entityPM.PaymentRequestXML)
+
+                var newPaymentRequestXML = NormalizeXml(entityPM.PaymentRequestXML, "TermsOfUseDocumentId");
+                var oldPaymentRequestXML = NormalizeXml(shipmentAdditionalCloudData.PaymentRequestXML, "TermsOfUseDocumentId");
+
+                if (!string.IsNullOrEmpty(entityPM.PaymentRequestXML) && newPaymentRequestXML != oldPaymentRequestXML)
                 {
                     shipmentAdditionalCloudData.IsPaymentRequired = true;
                     shipmentAdditionalCloudData.PaymentRequestXML = entityPM.PaymentRequestXML;
@@ -3996,7 +4016,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             shipmentAdditionalCloudData.ShipmentAddtionalDataXML = ShipmentAdditionalDataService.SerializeShipmentAdditionalXmlData(entityPM.ShipmentAdditionalData);
                         }
 
-                        if (!string.IsNullOrEmpty(entityPM.PaymentRequestXML) && shipmentAdditionalCloudData.PaymentRequestXML != entityPM.PaymentRequestXML)
+                        var newPaymentRequestXML = NormalizeXml(entityPM.PaymentRequestXML, "TermsOfUseDocumentId");
+                        var oldPaymentRequestXML = NormalizeXml(shipmentAdditionalCloudData.PaymentRequestXML, "TermsOfUseDocumentId");
+
+                        if (!string.IsNullOrEmpty(entityPM.PaymentRequestXML) && newPaymentRequestXML != oldPaymentRequestXML)
                         {
                             shipmentAdditionalCloudData.IsPaymentRequired = true;
                             shipmentAdditionalCloudData.PaymentRequestXML = entityPM.PaymentRequestXML;

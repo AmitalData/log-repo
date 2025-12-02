@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginTypeCodeEnumUpdateClass
    {  		
-		public const string HashString = "72391113dce7fdd48e621488ef3fe34b";
+		public const string HashString = "a1d35ec2eb2933f094c8fdb98826f675";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -42,6 +42,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  false,
+			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -69,18 +70,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "קוד סוג תעודת מקור ",
+			      				    LocalDefaultTextBack_up =  "קוד סוג תעודת מקור ",
+			      				    LocalDefaultText =  "BS64:Iten15XXkyDXodeV15Ig16rXoteV15PXqiDXnten15XXqCAi",
 			      				    DefaultText =  "Certificate Of Origin Type Code Enum",
 			      				    Code =  "c8e3",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
-			      				    CloseTableName =  "LocalName",
+			      				    CloseTableName =  "EnglishName",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
+			      				    ShowFastSearch =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -138,10 +141,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
 					  						DefaultText =  "Code",
-					  						FullLocalDefaultText =  "קוד",
+					  						FullLocalDefaultTextBack_up =  "קוד",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyI=",
 					  						ListFieldLable =  "CodeListLable",
 					  						ListLableDefaultText =  "Code",
-					  						ListLocalDefaultText =  "קוד",
+					  						ListLocalDefaultTextBack_up =  "קוד",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -152,6 +157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -203,10 +209,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
 					  						DefaultText =  "Local Name",
-					  						FullLocalDefaultText =  "שם מקומי",
+					  						FullLocalDefaultTextBack_up =  "שם מקומי",
+					  						FullLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSI=",
 					  						ListFieldLable =  "LocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
-					  						ListLocalDefaultText =  "שם מקומי",
+					  						ListLocalDefaultTextBack_up =  "שם מקומי",
+					  						ListLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -217,6 +225,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -279,6 +288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -330,10 +340,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם אנגלית",
+					  						FullLocalDefaultTextBack_up =  "שם אנגלית",
+					  						FullLocalDefaultText =  "BS64:Itep150g15DXoNeS15zXmdeqIg==",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם אנגלית",
+					  						ListLocalDefaultTextBack_up =  "שם אנגלית",
+					  						ListLocalDefaultText =  "BS64:Itep150g15DXoNeS15zXmdeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -344,6 +356,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -395,10 +408,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive",
-					  						FullLocalDefaultText =  "לא פּעיל",
+					  						FullLocalDefaultTextBack_up =  "לא פּעיל",
+					  						FullLocalDefaultText =  "BS64:Itec15Ag16TWvNei15nXnCI=",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultText =  "לא פּעיל",
+					  						ListLocalDefaultTextBack_up =  "לא פּעיל",
+					  						ListLocalDefaultText =  "BS64:Itec15Ag16TWvNei15nXnCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -409,6 +424,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -460,10 +476,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCustomApprovalRequired",
 					  						DefaultText =  "Is Custom Approval Required",
-					  						FullLocalDefaultText =  "האם נדרש אישור מכס",
+					  						FullLocalDefaultTextBack_up =  "האם נדרש אישור מכס",
+					  						FullLocalDefaultText =  "BS64:IteU15DXnSDXoNeT16jXqSDXkNeZ16nXldeoINee15vXoSI=",
 					  						ListFieldLable =  "IsCustomApprovalRequiredListLable",
 					  						ListLableDefaultText =  "Is Custom Approval Required",
-					  						ListLocalDefaultText =  "האם נדרש אישור מכס",
+					  						ListLocalDefaultTextBack_up =  "האם נדרש אישור מכס",
+					  						ListLocalDefaultText =  "BS64:IteU15DXnSDXoNeT16jXqSDXkNeZ16nXldeoINee15vXoSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -474,6 +492,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -525,10 +544,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCriterionMandatory",
 					  						DefaultText =  "Is Criterion Mandatory",
-					  						FullLocalDefaultText =  "האם קריטריון העדפה חובה",
+					  						FullLocalDefaultTextBack_up =  "האם קריטריון העדפה חובה",
+					  						FullLocalDefaultText =  "BS64:IteU15DXnSDXp9eo15nXmNeo15nXldefINeU16LXk9ek15Qg15fXldeR15Qi",
 					  						ListFieldLable =  "IsCriterionMandatoryListLable",
 					  						ListLableDefaultText =  "Is Criterion Mandatory",
-					  						ListLocalDefaultText =  "האם קריטריון העדפה חובה",
+					  						ListLocalDefaultTextBack_up =  "האם קריטריון העדפה חובה",
+					  						ListLocalDefaultText =  "BS64:IteU15DXnSDXp9eo15nXmNeo15nXldefINeU16LXk9ek15Qg15fXldeR15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -539,6 +560,143 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsCustomsItemMandatory",
+					  						ObjectTableName =  "Customs.CertificateOfOriginTypeCodeEnum",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsCustomsItemMandatory",
+					  						ListPropertyPath =  "IsCustomsItemMandatory",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CertificateOfOriginTypeCodeEnum",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsCustomsItemMandatory",
+					  						DefaultText =  "Is Customs Item Mandatory",
+					  						FullLocalDefaultTextBack_up =  "האם פריט מכס חובה",
+					  						FullLocalDefaultText =  "BS64:IteU15DXnSDXpNeo15nXmCDXnteb16Eg15fXldeR15Qi",
+					  						ListFieldLable =  "IsCustomsItemMandatoryListLable",
+					  						ListLableDefaultText =  "Is Customs Item Mandatory",
+					  						ListLocalDefaultTextBack_up =  "האם פריט מכס חובה",
+					  						ListLocalDefaultText =  "BS64:IteU15DXnSDXpNeo15nXmCDXnteb16Eg15fXldeR15Qi",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsZipcodeMandatory",
+					  						ObjectTableName =  "Customs.CertificateOfOriginTypeCodeEnum",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsZipcodeMandatory",
+					  						ListPropertyPath =  "IsZipcodeMandatory",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CertificateOfOriginTypeCodeEnum",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsZipcodeMandatory",
+					  						DefaultText =  "Is Zipcode Mandatory ",
+					  						FullLocalDefaultTextBack_up =  "האם מיקוד חובה",
+					  						FullLocalDefaultText =  "BS64:IteU15DXnSDXnteZ16fXldeTINeX15XXkdeUIg==",
+					  						ListFieldLable =  "IsZipcodeMandatoryListLable",
+					  						ListLableDefaultText =  "Is Zipcode Mandatory ",
+					  						ListLocalDefaultTextBack_up =  "האם מיקוד חובה",
+					  						ListLocalDefaultText =  "BS64:IteU15DXnSDXnteZ16fXldeTINeX15XXkdeUIg==",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -570,7 +728,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode CertificateOfOriginTypeCodeEnumTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CertificateOfOriginTypeCodeEnum.Q.CertificateOfOriginTypeCodeEnum", DefaultText = @"Certificate Of Origin Type Code Enum",LocalDefaultText = "קוד סוג תעודת מקור ", ObjectTableId = CertificateOfOriginTypeCodeEnumObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode CertificateOfOriginTypeCodeEnumTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CertificateOfOriginTypeCodeEnum.Q.CertificateOfOriginTypeCodeEnum", DefaultText = @"Certificate Of Origin Type Code Enum",LocalDefaultText = "BS64:Iten15XXkyDXodeV15Ig16rXoteV15PXqiDXnten15XXqCAi", ObjectTableId = CertificateOfOriginTypeCodeEnumObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature CertificateOfOriginTypeCodeEnumFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CertificateOfOriginTypeCodeEnum.Q.CertificateOfOriginTypeCodeEnum", ObjectTableId = CertificateOfOriginTypeCodeEnumObjectTable.Id, Tenant = 0, NameTextCodeCode = "CertificateOfOriginTypeCodeEnum.Features.CertificateOfOriginTypeCodeEnum", NameTextCodeDefaultText = "CertificateOfOriginTypeCodeEnum", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CertificateOfOriginTypeCodeEnumObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -581,15 +739,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.Code" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.IsCustomApprovalRequired" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.IsCustomsItemMandatory" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.IsCriterionMandatory" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.IsZipcodeMandatory" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.LocalName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.IsCustomApprovalRequired" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.EnglishName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.IsCriterionMandatory" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.Inactive" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
+			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.LocalName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+
+			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.EnglishName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+
+			 QueryColumn CertificateOfOriginTypeEnumQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeEnumQuery.Id,QueryCode = CertificateOfOriginTypeEnumQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.Inactive" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures,contextTenant);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries,contextTenant);
