@@ -1088,6 +1088,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "Use Accounting Date for AP Tax Report,UAT",
                 Description = "Use Accounting Date for AP Tax Report ",
             });
+            all.Add(new ToggleDetails()
+            {
+                Code = "SWR",
+                Name = "Second Worker Role",
+                SearchFields = "SWR,Second Worker Role",
+                Description = "Second Worker Role",
+            });
             return all;
        }
 

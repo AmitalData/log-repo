@@ -44,7 +44,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;50a7&quot;"
+  Code="&quot;60eb&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -1072,6 +1072,11 @@
       Code="&quot;UAT&quot;"
       SearchFields="&quot;Use Accounting Date for AP Tax Report,UAT&quot;"
       Description="&quot;Use Accounting Date for AP Tax Report&quot;" />
+    <Record
+      Code="&quot;SWR&quot;"
+      Name="&quot;Second Worker Role&quot;"
+      SearchFields="&quot;SWR,Second Worker Role&quot;"
+      Description="&quot;Second Worker Role&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

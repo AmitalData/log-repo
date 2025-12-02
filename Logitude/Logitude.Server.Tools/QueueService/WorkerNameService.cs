@@ -2,6 +2,7 @@
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -16,8 +17,14 @@ namespace Logitude.Server.Tools.QueueService
 {
     public class WorkerNameService
     {
-        public static int GetWorkerWaitingStatusForSending(int tenant)
+        public static int GetWorkerWaitingStatusForSending(int tenant, string queueCode = null)
         {
+            int? result = GetWaitingStatusForSecondWorkerRole(tenant, queueCode);
+            if (result != null)
+            {
+                return result.Value;
+            }
+
             int waitingStatus = 0;
             string workerName = GetCurrentWorkerName();
             if (FeatureToggleHelper.HasFeatureToggle("NWR", tenant))
@@ -39,8 +46,46 @@ namespace Logitude.Server.Tools.QueueService
             { 
                 waitingStatus = GetWatingStatusByWorkerRoleName(tenant, workerName);
             }
-            
+
             return waitingStatus;
+        }
+
+        private static int? GetWaitingStatusForSecondWorkerRole(int tenant, string queueCode)
+        {
+            try
+            {
+                string key = $"SecondWorkerRoleWaitingStatus{tenant}";
+                string cached = (string)CacheManager.CacheWrapper.Get(key);
+                if (cached == null)
+                {
+                    int? waitingStatus = null;
+                    if (!(queueCode?.StartsWith("externaltasksqueue", StringComparison.OrdinalIgnoreCase) ?? false)
+                        && FeatureToggleHelper.HasFeatureToggle("SWR", tenant))
+                    {
+                        DefaultAndConfigurationRepository defaultAndConfigurationRepository = new DefaultAndConfigurationRepository(tenant);
+                        waitingStatus = int.TryParse(defaultAndConfigurationRepository.GetDefaultAndConfigurations(0)
+                            .Where(d => d.SetKey == "SecondWorkerRoleWaitingStatus")
+                            .Select(a => a.Value1)
+                            .FirstOrDefault(),
+                            out var parsed) ? parsed : -1035;
+                    }
+
+                    CacheManager.CacheWrapper.Insert(key, waitingStatus?.ToString() ?? "null", null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    return waitingStatus;
+                }
+                else
+                {
+                    if (cached == "null")
+                        return null;
+
+                    return int.TryParse(cached, out int parsedCached) ? parsedCached : (int?)null;
+                }
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Error when getting waiting status for second worker role: {ex.Message}");
+                return null;
+            }
         }
 
         public static int GetWorkerWaitingStatusForReceiving(int tenant)
