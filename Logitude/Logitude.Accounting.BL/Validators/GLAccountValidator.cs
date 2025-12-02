@@ -119,7 +119,7 @@ namespace Logitude.Accounting.BL.Validators
                 bool otherCurrencyExists = CheckIfLedgerTransactionOtherCurrencyExist(myGLAccountPM.Id, myGLAccountPM.CurrencyId, myGLAccountPM.Tenant);
                 if (otherCurrencyExists == true)
                 {
-                    return new ValidationResult(TextCodesTranslator.TranslateText("ThereTransactions4GLAwithexistingCurrency", 0) + ":GLAccount " + myGLAccountPM.Id);
+                    return new ValidationResult(TextCodesTranslator.TranslateText("Accounting.General.O.ThereTransactions4GLAwithexistingCurrency", 0) + ":GLAccount " + myGLAccountPM.Id);
                 }
             }
 
