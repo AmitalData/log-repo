@@ -1187,6 +1187,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
         _DeclarationMessagesService.PostDeclarationRequest(currRequestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 if (!myServiceResponse?.Result?.HasException) {
                     if (myServiceResponse?.Result?.Succeeded) {
@@ -1204,9 +1206,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             });
     }
     private CheackIsAnyRequest(interfaceTypeCode: string, message: string, canResetDeclaration: boolean) {
+        SessionLocator.SelectedSession.StartBusyIndicator("checking");
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.GetAnyRequest(interfaceTypeCode, this.EntityPM.CustomFileNo, this.EntityPM.Tenant)
             .subscribe((response: ServiceResponse) => {
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 if (response.HasError) {
                     this.ShowResetDeclarationMessage(message);
                     return;
