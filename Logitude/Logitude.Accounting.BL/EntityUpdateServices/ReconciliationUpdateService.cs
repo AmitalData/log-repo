@@ -352,24 +352,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                         });
 
-
-                        List<ReconciliationLinePM> recoLines = reconciliationPM.ReconciliationLines
-                            .Where(x => x.CurrencyId == group.Key)
-                            .ToList();
-                        newJournalReconcilesHS.Union(from item in recoLines
-                                                     select new JournalReconcilePM()
-                                                     {
-                                                         ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                                                         Tenant = reconciliationPM.Tenant,
-                                                         LedgerTransactionId = item.TransactionId,
-                                                         Line = item.Line,
-                                                         CurrencyId = tenantCurrencyId,
-                                                         ReconciliationAmount = groupLocalRecoAmount,
-                                                         IsPartial = item.IsPartial,
-
-                                                     }).ToHashSet();
-
-
                     }
                 }
 
