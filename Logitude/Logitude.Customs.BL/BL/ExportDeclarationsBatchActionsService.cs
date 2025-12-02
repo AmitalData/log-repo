@@ -174,7 +174,7 @@ namespace Logitude.Customs.BL.BL
                 DeclarationId = decl.Id,
                 DeclarationNumber = decl.DeclarationNumber,
                 CustomsFile = decl.CustomFileNo,
-                RequestVIA = SendRequestVIA.WebServiceInteractive,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
                 ResponseName = "9079",
                 RequestName = "Declaration Restore From BatchAction"
             };
