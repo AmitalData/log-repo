@@ -42,7 +42,6 @@ export class MainPageComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// this.preferencesService.getPreferencesByUserId(SessionInfo.LoggedUserId, SessionInfo.LoggedUserTenant);
 		this.API_MainService.GetCB_PreferenceByUserIdAndTenant(SessionInfo.LoggedUserId, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
 			let PreferencesList: CB_Preference[] = data?.body;
 			this.preferencesService.allPreferences.next(PreferencesList);

@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { FeatureLocator } from '../../core/Infrastructure/Utilities/FeatureLocator';
 import { LoginService } from '../../core/Infrastructure/Services/LoginService';
 import { InfrastructureDomainService } from '../../core/Infrastructure/Services/InfrastructureDomainService';
+import { HostScreenService } from '../../core/Services/host-screen.service';
 
 @Component({
     selector: 'app-login',
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
     public Tenant: number;
     public ShowbusyIndicator: boolean = false;
     public MainColor: string = "rgb(25, 105, 180)"; // "#000000";;
-    public SecondaryColor: string = "rgb(184, 189, 229)"; // "#002664";
+    public SecondaryColor: string = "rgb(184, 189, 229)"; // "#00266";
     public BackGroundImg: string = "url('assets/images/map-bg.svg')";
 
 
@@ -42,12 +43,14 @@ export class LoginComponent implements OnInit {
         public routeReuseStrategy: RouteReuseStrategy,
         private loginExtendedService: LoginExtendedService,
         private authService: AuthService,
+        private hostScreenService: HostScreenService,
         private loginService: LoginService,
         private myInfrastructureDomainService: InfrastructureDomainService) {
-        this.RouteToMainPage();
-
-        // close the session
         this.authService.closeSession();
+    }
+
+    ngOnInit() {
+        this.InitRouteHostScreen();
     }
 
     RedirectAppToHttps() {
@@ -56,18 +59,6 @@ export class LoginComponent implements OnInit {
         if (!isLocally && location.protocol === 'http:') {
             window.location.href = location.href.replace('http', 'https');
         }
-    }
-
-    ngOnInit() {
-        this.initComponent();
-    }
-
-    clearRouteReuseStrategy() {
-        // TODO?
-        // (this.routeReuseStrategy as CustomRouteReuseStrategy).clear();
-    }
-    private initComponent() {
-        // document.body.style.background = "#fff";
     }
 
     public passEyeClicked() {
@@ -107,11 +98,6 @@ export class LoginComponent implements OnInit {
             }
             else this.Login(LoginParams, userData);
         });
-    }
-
-    private IsCustomsBookDomain() {
-        const domain = window.location.href;
-        return domain?.indexOf("customs-book") > -1;
     }
 
     private LoginFailed(userData: any) {
@@ -222,7 +208,58 @@ export class LoginComponent implements OnInit {
     }
 
     private RouteToMainPage() {
-        if (this.authService.redirectUrl) {
+        if (this.hostScreenService.redirectUrl) {
+            this.router.navigate([this.hostScreenService.redirectUrl]);
+            this.hostScreenService.redirectUrl = null;
+        }
+        else if (this.authService.redirectUrl) {
+            this.router.navigate([this.authService.redirectUrl]);
+            this.authService.redirectUrl = null;
+        }
+        else if (sessionStorage.getItem("Token")) {
+            this.router.navigate([this.authService.DefaultPageCustomsBook])
+        }
+    }
+
+    private InitRouteHostScreen() {
+        let userData: any = sessionStorage.getItem("userdata");
+        if (userData) {
+            userData = JSON.parse(userData);
+            userData.Tenant = userData.CurrentTenant;
+        }
+
+        if (this.hostScreenService.redirectUrl) {
+            this.ShowbusyIndicator = false;
+            SessionInfo.IsAdmin = userData.IsAdmin;
+            if (userData) {
+                SessionInfo.LoggedUserTenant = userData.Tenant;
+                if (SessionInfo.LoggedUserTenant != 0) {
+                    SessionInfo.Token = userData.Token;
+                    this.loginService
+                        .GetObjectTables()
+                        .subscribe((myResult: any) => {
+                            window.ObjectTables = myResult;
+                            this.myInfrastructureDomainService
+                                .GetAllowedFeaturesForLoggedUser()
+                                .subscribe((myResponse: any) => {
+                                    if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
+                                        this.errorMessage = "You have no permission to access this feature";
+                                        return;
+                                    }
+                                    else {
+                                        this.FillSessionInfoData(userData);
+                                        this.RouteToMainPage();
+                                    }
+                                });
+                        });
+                }
+                else {
+                    this.FillSessionInfoData(userData);
+                    this.RouteToMainPage();
+                }
+            }
+        }
+        else if (this.authService.redirectUrl) {
             this.router.navigate([this.authService.redirectUrl]);
             this.authService.redirectUrl = null;
         }
