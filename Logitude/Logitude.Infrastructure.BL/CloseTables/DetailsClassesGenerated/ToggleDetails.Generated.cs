@@ -1046,7 +1046,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "AV2,Israel Invoices Do Not Activate V2",
                 Description = "חשבוניות ישראל לא להפעיל V2 ",
             });
-			all.Add(new ToggleDetails()
+            all.Add(new ToggleDetails()
+            {
+                Code = "BMO",
+                Name = "Open Format Report Optimization",
+                SearchFields = "BMO,Open Format Report Optimization",
+                Description = "דוח במבנה אחיד - אופטימיזציה",
+            }); 
+            all.Add(new ToggleDetails()
 			{
 				Code = "STQ",
 				Name = "Add Task Scheduler To Queue By Date",

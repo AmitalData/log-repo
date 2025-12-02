@@ -1043,6 +1043,11 @@
       Description="&quot;חשבוניות ישראל לא להפעיל V2&quot;"
       SearchFields="&quot;AV2 ,Israel Invoices Do Not Activate V2&quot;" />
     <Record
+     Code="&quot;BMO&quot;"
+     Name="&quot;Open Format Report Optimization&quot;"
+     SearchFields="&quot;BMO,Open Format Report Optimization&quot;"
+     Description="&quot;דוח במבנה אחיד - אופטימיזציה&quot;" />
+    <Record
       Code="&quot;STQ&quot;"
       Name="&quot;Add Task Scheduler To Queue By Date&quot;"
       SearchFields="&quot;STQ ,Add Task Scheduler To Queue&quot;"
