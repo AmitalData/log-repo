@@ -2140,9 +2140,9 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
 
     GetRowCount(reload: boolean = false) {
         var firstRow = Math.floor(this.scrollTop / this.rowHeight);
-        if (reload == true) {
-           this.controller.ClearCache();
-        }
+        //if (reload == true) {
+        //    this.controller.ClearCache();
+        //}
 
         this.controllerForCount.getRow(firstRow, AppTool.IsNullOrEmpty(this.dataSource.sortingCol) ? "" : this.dataSource.sortingCol, AppTool.IsNullOrEmpty(this.dataSource.sortingDir) ? "" : this.dataSource.sortingDir, true, this.searchFields, false, this.Filters, reload, false, this.viewportSize, this.SearchFieldChanged);
 
