@@ -1,29 +1,31 @@
+using Logitude.BL.CommonDataModel.APIDataContract;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityOtherServices;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
+using Logitude.BL.QuoteModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.InvoiceModel;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using Simplog.Server.Infrastructure;
-using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
-using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
-using Logitude.BL.QuoteModel.EntityPMs;
-using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
-using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
-
-using Logitude.BL.Helpers;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.InvoiceModel.Tools.EntityService;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Simplog.Data.InvoiceModel;
-using Logitude.BL.CommonDataModel.APIDataContract;
+using static Logitude.Customs.BL.Messaging.Amital.UnifreightQInvoiceList;
 
 namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 { 
@@ -261,11 +263,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
 					}  
 
-					
+					CardPM myVendorPM = null;
 					VendorQueryService VendorVendorService = new VendorQueryService(Tenant);
 					if(MyEntity.Vendor != null)
 					{
-						var myVendorPM = VendorVendorService.VendorDataMappingAndValidatin(MyEntity.Vendor,Tenant,ComputingPartnerName,IsUpdate);
+						myVendorPM = VendorVendorService.VendorDataMappingAndValidatin(MyEntity.Vendor,Tenant,ComputingPartnerName,IsUpdate);
 						
 						if(myVendorPM != null)
 						{ 
@@ -286,10 +288,62 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
 					if (!IsUpdate)
 					{
-						temp.VATNumber = MyEntity.VATNumber;
+						temp.VendorGLAccountId = MyEntity.VendorGLAccount;
+
+						if (!IsLocalVendor(myVendorPM, Tenant))
+						{
+							temp.VATNumber = MyEntity.VATNumber; // Take VAT Number from the input message
+						}
+						else // All the logics are there for the Local Vendors only 
+						{
+							if (FeatureToggleHelper.HasFeatureToggle("VPI", Tenant))
+							{
+								if (!String.IsNullOrWhiteSpace(MyEntity.VATNumber))
+								{
+									string aPInvoiceVatNumberNormalized = APInvoiceMessageHelper.CheckVATValidation(MyEntity.VATNumber);
+									if (MyEntity.VATNumber != "999999999" && MyEntity.VATNumber != "999999998" && MyEntity.VATNumber == aPInvoiceVatNumberNormalized)
+									{
+										temp.VATNumber = MyEntity.VATNumber;
+									}
+									else if (myVendorPM != null)
+									{
+										temp.VATNumber = myVendorPM.VatNumber;
+										temp.VATNumber = ModifyVatNumber(temp.VATNumber);
+									}
+								}
+							}
+							else
+							{
+								temp.VATNumber = MyEntity.VATNumber;
+							}
 
 
-						temp.InvoiceNumber = MyEntity.InvoiceNumber;
+							if (string.IsNullOrEmpty(temp.VATNumber) && myVendorPM != null)
+							{
+								temp.VATNumber = myVendorPM.VatNumber;
+								temp.VATNumber = ModifyVatNumber(temp.VATNumber);
+							}
+
+							if ((String.IsNullOrWhiteSpace(temp.VATNumber) || temp.VATNumber == "999999999" || temp.VATNumber == "999999998") && temp.VendorGLAccountId != null)
+							{
+								CardQuery cardQuery = new CardQuery(Tenant);
+								var glAccountCards = cardQuery.GetCardsByGLAccountIds(new List<string> { temp.VendorGLAccountId }, Tenant);
+								if (glAccountCards.Count != 0)
+								{
+									var vatNumber = glAccountCards.Count > 1
+										? glAccountCards.FirstOrDefault(c => c.VatNumber != null)?.VatNumber
+										: glAccountCards[0].VatNumber;
+
+									if (vatNumber != null)
+									{
+										temp.VATNumber = ModifyVatNumber(vatNumber);
+									}
+								}
+
+							}
+						}  
+
+                        temp.InvoiceNumber = MyEntity.InvoiceNumber;
 
 					}  
 
@@ -663,9 +717,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
 						temp.MainEntityReference = MyEntity.EntityReference;
 
-
-						temp.VendorGLAccountId = MyEntity.VendorGLAccount;
-
 					}
 
 					if (!String.IsNullOrEmpty(MyEntity.VendorGLAccount) && differentCurrencies) 
@@ -732,7 +783,55 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             } 
         }
 
+        private bool IsLocalVendor(CardPM myVendorPM, int tenant)
+        {
+            bool rv = true;
+			const string LOCAL_CODE = "IL";
+			if (myVendorPM != null)
+			{
+                rv = false;
+                if (myVendorPM.CountryCode == LOCAL_CODE)
+				{  
+					rv = true; 
+				}
+				else if (myVendorPM.CountryId != null)
+				{
+                    CountryQuery countryQuery = new CountryQuery(tenant);
+					var country = countryQuery.GetSinglePM(myVendorPM.CountryId, tenant);
+					if (country != null)
+					{
+						rv = country.Code == LOCAL_CODE;
+					}
+                }
+				else
+				{
+					AddressQuery addressQuery = new AddressQuery(tenant);
+					var address = addressQuery.GetAddressByCardId(myVendorPM.Id, tenant);
+                    if (address.CountryCode == LOCAL_CODE)
+                    {
+                        rv = true;
+                    }
+                    else if (address.CountryId != null)
+                    {
+                        CountryQuery countryQuery = new CountryQuery(tenant);
+                        var country = countryQuery.GetSinglePM(myVendorPM.CountryId, tenant);
+                        if (country != null)
+                        {
+                            rv = country.Code == LOCAL_CODE;
+                        }
+                    }
+                }
+			}
+			return rv;
+        }
 
-						   
-   }
+
+        private static string ModifyVatNumber(string vatNumber)
+        {
+            return (vatNumber != null && vatNumber.Length >= 9) ? vatNumber.Substring(0, 9) : vatNumber;
+
+        }
+
+
+    }
 }
