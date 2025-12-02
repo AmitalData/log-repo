@@ -1058,6 +1058,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "TRO,Tax Report Journal Optimization",
                 Description = "Tax Report Journal Optimization ",
             });
+            all.Add(new ToggleDetails()
+            {
+                Code = "SWR",
+                Name = "Second Worker Role",
+                SearchFields = "SWR,Second Worker Role",
+                Description = "Second Worker Role",
+            });
             return all;
        }
 
