@@ -49,7 +49,7 @@ export class CountersComponent implements OnInit {
                 list.forEach(item => {
                     var ObjectTable: ObjectTablePM = window.ObjectTables.filter(x => x.Id === item.ObjectTableId)[0];
                     if (ObjectTable) {
-                        if (FeatureLocator.HasFeaturePermession(ObjectTable.Name, "Module")) {
+                        //if (FeatureLocator.HasFeaturePermession(ObjectTable.Name, "Module")) {
 
                             if (item.Code == "CNST") {
                                 if (FeatureLocator.HasFeaturePermession("ARInvoice", "Consolidation.Constituent")) {
@@ -68,7 +68,7 @@ export class CountersComponent implements OnInit {
                             else {
                                 myCounters.push(new CounterItem(item));
                             }
-                        }
+                      //  }
                     }
                 });
 
@@ -105,7 +105,12 @@ export class CountersComponent implements OnInit {
                     logWindow.Show("./InfrastructureModules/InfrastructureGettingStarted/Components/Counters/EditComponents/CounterAdvancedComponent");
                     break;
                 }
-
+                case "CADC": {
+                    logWindow.IsFillScreen = true;
+                    logWindow.Title = "Card Counters";
+                    logWindow.Show("./InfrastructureModules/InfrastructureGettingStarted/Components/Counters/EditComponents/CounterCardComponent");
+                    break;
+                }
                 default: {
                     logWindow.Show("./InfrastructureModules/InfrastructureGettingStarted/Components/Counters/EditComponents/CounterTableComponent");
                     break;

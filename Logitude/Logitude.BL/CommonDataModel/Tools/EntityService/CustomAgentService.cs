@@ -218,7 +218,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 if (!entityPM.IsHybrid)
                 {
-                    entityPM.Code = CodeCounter.GetNumber("CustomAgent", entityPM.Tenant).ToString();
+                    entityPM.Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CG") ?  TableCounter.GetNumber(tenant, "CADC", "CG", null, null, true) :  CodeCounter.GetNumber("CustomAgent", entityPM.Tenant).ToString();
+
                 }
                 }
 

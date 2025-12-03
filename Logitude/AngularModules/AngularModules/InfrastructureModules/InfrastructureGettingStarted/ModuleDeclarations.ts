@@ -22,6 +22,7 @@ import { DefaultRatiosComponent } from './Components/SystemDefaults/DefaultRatio
  import { CustomizedARInvoiceCounterComponent } from './Components/Counters/EditComponents/CustomizedARInvoiceCounterComponent';
   
  import {ReleaseSettingsComponent} from './Components/Workspaces/ReleaseSettingsComponent';
+import { CounterCardComponent } from './Components/Counters/EditComponents/CounterCardComponent';
 
  export const Components =
     [
@@ -48,6 +49,7 @@ import { DefaultRatiosComponent } from './Components/SystemDefaults/DefaultRatio
          ShaamTokensComponent,
          CustomizedARInvoiceCounterComponent,
          ReleaseSettingsComponent,
+         CounterCardComponent
     ];
  
 export class ModuleDeclarations {
@@ -79,6 +81,7 @@ export class ModuleDeclarations {
              case "ShaamTokensComponent": { myResult = ShaamTokensComponent; break; }  
              case "CustomizedARInvoiceCounterComponent": { myResult = CustomizedARInvoiceCounterComponent; break; }
             case "ReleaseSettingsComponent": { myResult = ReleaseSettingsComponent; break; }
+            case "CounterCardComponent": { myResult = CounterCardComponent; break; }
 
          }
 

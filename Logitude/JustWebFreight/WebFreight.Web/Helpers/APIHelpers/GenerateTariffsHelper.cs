@@ -3,12 +3,14 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.ExtendedServices;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.TariffModule.Data;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -105,7 +107,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     VatNumber = "customervat " + i,
                     Tenant = tenant,
                     IsHybrid = true,
-                    Code = CodeCounter.GetNumber("Customer", tenant).ToString(),
+                    Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CS") ? CodeCounter.GetNumber("Customer", tenant).ToString() :TableCounter.GetNumber(tenant, "CADC", "CS", null, null, true),
                     PartnerTypeId = "CS",
                     CustomerStatusCode = "ACT",
                     IsCustomer = true,
@@ -124,7 +126,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     VatNumber = "agentvat " + i,
                     Tenant = tenant,
                     IsHybrid = true,
-                    Code = CodeCounter.GetNumber("Agent", tenant).ToString(),
+                    Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "AG") ?  TableCounter.GetNumber(tenant, "CADC", "AG", null, null, true)  : CodeCounter.GetNumber("Agent", tenant).ToString(),
                     PartnerTypeId = "AG",
                 };
                 agent.Addresses.Add(address);
@@ -176,7 +178,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     VatNumber = "vendorvat " + i,
                     Tenant = tenant,
                     IsHybrid = true,
-                    Code = CodeCounter.GetNumber("Vendor", tenant).ToString(),
+                    Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "VD") ?TableCounter.GetNumber(tenant, "CADC", "VD", null, null, true) : CodeCounter.GetNumber("Vendor", tenant).ToString(),
                     PartnerTypeId = "VD",
                 };
                 vendor.Addresses.Add(address);
@@ -193,7 +195,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     VatNumber = "customAgentvat " + i,
                     Tenant = tenant,
                     IsHybrid = true,
-                    Code = CodeCounter.GetNumber("Agent", tenant).ToString(),
+                    Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "AG") ? TableCounter.GetNumber(tenant, "CADC", "AG", null, null, true) : CodeCounter.GetNumber("Agent", tenant).ToString(),
                     PartnerTypeId = "CG",
                 };
                 customAgent.Addresses.Add(address);

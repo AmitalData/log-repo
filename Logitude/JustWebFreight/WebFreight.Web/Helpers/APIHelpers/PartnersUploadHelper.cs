@@ -4,7 +4,8 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.ExtendedServices;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -23,8 +24,10 @@ using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Helpers.APIHelpers
 {
@@ -792,7 +795,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = CodeCounter.GetNumber("Vendor", tenant).ToString(),
+                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "VD") ?TableCounter.GetNumber(tenant, "CADC", "VD", null, null, true) : CodeCounter.GetNumber("Vendor", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,
@@ -820,7 +823,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = CodeCounter.GetNumber("AccountingPartner", tenant).ToString(),
+                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "AC") ?TableCounter.GetNumber(tenant, "CADC", "AC", null, null, true) : CodeCounter.GetNumber("AccountingPartner", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,
@@ -877,7 +880,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = CodeCounter.GetNumber("ShippingLine", tenant).ToString(),
+                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "SL") ?TableCounter.GetNumber(tenant, "CADC", "SL", null, null, true) : CodeCounter.GetNumber("ShippingLine", tenant).ToString(),
                 CarrierTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,
@@ -897,7 +900,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = CodeCounter.GetNumber("Airline", tenant).ToString(),
+                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "AL") ?TableCounter.GetNumber(tenant, "CADC", "AL", null, null, true) : CodeCounter.GetNumber("Airline", tenant).ToString(),
                 CarrierTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,
@@ -947,7 +950,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = CodeCounter.GetNumber("ShippingAgent", tenant).ToString(),
+                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "SG") ?TableCounter.GetNumber(tenant, "CADC", "SG", null, null, true) :  CodeCounter.GetNumber("ShippingAgent", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,
@@ -975,7 +978,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = CodeCounter.GetNumber("CustomAgent", tenant).ToString(),
+                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CG") ? TableCounter.GetNumber(tenant, "CADC", "CG", null, null, true) : CodeCounter.GetNumber("CustomAgent", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,
@@ -1004,7 +1007,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = CodeCounter.GetNumber("Customer", tenant).ToString(),
+                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CS") ? TableCounter.GetNumber(tenant, "CADC", "CS", null, null, true) : CodeCounter.GetNumber("Customer", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 CustomerStatusCode = item.Type == "PO" ? "POT" : "ACT",
                 IsCustomer = true,
@@ -1034,7 +1037,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = CodeCounter.GetNumber("Customer", tenant).ToString(),
+                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CS") ? TableCounter.GetNumber(tenant, "CADC", "CS", null, null, true) :  CodeCounter.GetNumber("Customer", tenant).ToString(),
                 PartnerTypeId = "CS",
                 CustomerStatusCode = "ACT",
                 IsCustomer = false,
@@ -1064,7 +1067,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 VatNumber = item.VatNO,
                 Tenant = tenant,
                 IsHybrid = true,
-                Code = CodeCounter.GetNumber("Agent", tenant).ToString(),
+                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "AG") ? TableCounter.GetNumber(tenant, "CADC", "AG", null, null, true) : CodeCounter.GetNumber("Agent", tenant).ToString(),
                 PartnerTypeId = item.Type,
                 UploadingUniqueKey = item.UniqueCode,
                 ReceivablesAccountingCard = item.ReceivablesExternalID,
