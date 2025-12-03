@@ -197,6 +197,49 @@ namespace Logitude.Customs.Data.Repsitories
             }
         }
 
+        public List<CustomsItemValidationResult> GetCustomsBookMainViewByList(string customsItems, string customsBookType, bool isDiscountCodes)
+        {
+            try
+            {
+                List<CustomsItemValidationResult> results = new List<CustomsItemValidationResult>();
+                string strConnString = GetConnection(0);
+                using (SqlConnection connection = new SqlConnection(strConnString))
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+                    command.CommandText = "usp_CustomsBookMainViewByList";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    AddSqlParameter(command, "@Items", customsItems);
+                    AddSqlParameter(command, "@CustomsBookType", customsBookType);
+                    command.Parameters.AddWithValue("@IsDiscountCodes", isDiscountCodes);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var result = new CustomsItemValidationResult
+                            {
+                                InputFullClassification = reader["InputFullClassification"] != DBNull.Value ? (string)reader["InputFullClassification"] : null,
+                                ExistsInSystem = reader["ExistsInSystem"] != DBNull.Value && (reader["ExistsInSystem"].ToString().ToLower() == "true" || reader["ExistsInSystem"].ToString().ToLower() == "false") ? Convert.ToBoolean(reader["ExistsInSystem"]) : false,
+                                IsValid = reader["IsValid"] != DBNull.Value && (reader["IsValid"].ToString().ToLower() == "true" || reader["IsValid"].ToString().ToLower() == "false") ? Convert.ToBoolean(reader["IsValid"]) : false,
+                                StartDate = reader["StartDate"] != DBNull.Value ? (DateTime?)reader["StartDate"] : null,
+                                EndDate = reader["EndDate"] != DBNull.Value ? (DateTime?)reader["EndDate"] : null,
+                                CustomsItemID = reader["CustomsItemId"] != DBNull.Value ? (int)reader["CustomsItemId"] : 0,
+                            };
+                            results.Add(result);
+                        }
+                    }
+                    connection.Close();
+                }
+
+                return results;
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }
+        }
 
         private void AddSqlParameter(SqlCommand command, string paramName, string paramValue)
         {
@@ -228,4 +271,13 @@ namespace Logitude.Customs.Data.Repsitories
     }
 
 }
-   
+
+public class CustomsItemValidationResult
+{
+    public string InputFullClassification { get; set; }
+    public bool ExistsInSystem { get; set; }
+    public bool IsValid { get; set; }
+    public DateTime? StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
+    public int CustomsItemID { get; set; }
+}

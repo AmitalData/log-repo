@@ -60,6 +60,46 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
+        [HttpPost]
+        public HttpResponseMessage GetCustomsBookMainViewByList([FromBody] CustomsBookListRequest request)
+        {
+            try
+            {
+                Filters filters = new Filters
+                {
+                    CustomsBookType = request.CustomsBookType,
+                    Tenant = request.Tenant,
+                    IsDiscountCodes = request.IsDiscountCodes
+                };
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                if (token == null)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest,
+                        ApiExceptionBuilder.BuildException(
+                            new Exception("Token is missing")));
+
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(request.Tenant);
+
+                CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService =
+                    new CB_CustomsItemComputedDataQueryService(request.Tenant);
+
+                List<CustomsItemValidationResult> result =
+                    customsItemComputedDataQueryService.GetCustomsBookMainViewByList(
+                        request.Items,
+                        filters.CustomsBookType,
+                        filters.IsDiscountCodes
+                    );
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest,
+                    ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetDefaultCB_CollapseSearchHierarchy(int tenant)
         {
             try
@@ -460,11 +500,18 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         }
     }
 
-
+    public class CustomsBookListRequest
+    {
+        public string Items { get; set; }
+        public string CustomsBookType { get; set; }
+        public int Tenant { get; set; }
+        public bool IsDiscountCodes { get; set; }
+    }
     public class Filters
     {
         public string CustomsBookType { get; set; } = "1";
-        public int Tenant { get; set; } = 0;
+        public int Tenant { get; set; } = 0;    
+
         public string SearchFields { get; set; } = null;
         public string CustomsItemHierarchic { get; set; } = null;
         public bool Reamarks { get; set; } = false;
