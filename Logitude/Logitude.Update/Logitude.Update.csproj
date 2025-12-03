@@ -677,6 +677,10 @@
     <Content Include="logo_tr_AVr_icon.ico" />
     <Content Include="UpdateSettings.xml" />
   </ItemGroup>
+  <PropertyGroup>
+    <!-- Ensure System.Text.Encoding.CodePages is available during license compilation -->
+    <AssemblySearchPaths>$(AssemblySearchPaths);$(SolutionDir)packages\System.Text.Encoding.CodePages.8.0.0\lib\net462</AssemblySearchPaths>
+  </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>

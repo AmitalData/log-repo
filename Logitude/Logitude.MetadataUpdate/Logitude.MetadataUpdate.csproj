@@ -204,6 +204,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
+  <PropertyGroup>
+    <!-- Ensure System.Text.Encoding.CodePages is available during license compilation -->
+    <AssemblySearchPaths>$(AssemblySearchPaths);$(SolutionDir)packages\System.Text.Encoding.CodePages.8.0.0\lib\net462</AssemblySearchPaths>
+  </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
