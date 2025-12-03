@@ -1,0 +1,5 @@
+<Fakes xmlns="http://schemas.microsoft.com/fakes/2011/">
+  <Assembly Name="Logitude.Accounting.BL"/>
+</Fakes>
+
+

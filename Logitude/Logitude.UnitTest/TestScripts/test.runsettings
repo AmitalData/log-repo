@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <!-- MSTest adapter settings -->
+  <MSTest>
+    <Parallelize>
+      <Workers>32</Workers>
+      <!-- 0 = auto-detect, or specify number of workers -->
+      <Scope>ClassLevel</Scope>
+      <!-- MethodLevel or ClassLevel -->
+    </Parallelize>
+  </MSTest>
+  <!-- Test execution settings -->
+  <RunConfiguration>
+    <MaxCpuCount>32</MaxCpuCount>
+    <!-- 0 = use all available cores, or specify number -->
+    <ResultsDirectory>.\TestResults</ResultsDirectory>
+  </RunConfiguration>
+  <!-- Data collection settings -->
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0" assemblyQualifiedName="Microsoft.VisualStudio.Coverage.DynamicCoverageDataCollector, Microsoft.VisualStudio.TraceCollector, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+        <Configuration>
+          <CodeCoverage>
+            <ModulePaths>
+              <Exclude>
+                <ModulePath>.*\\Migrations\\.*</ModulePath>
+                <ModulePath>.*\\Generated\\.*</ModulePath>
+              </Exclude>
+            </ModulePaths>
+          </CodeCoverage>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>
