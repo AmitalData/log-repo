@@ -694,7 +694,148 @@ namespace WebFreight.Web.MetaDataUpdate
             }
             #endregion
 
-         
+            #region Card Counters
+
+            if (!zeroCounters.Where(c => c.Code == "CADC" && c.Tenant == 0).Any())
+            {
+                Counter cardCounter = new Counter()
+                {
+                    Id = IdCounter.GetNumber("Counter", 0).ToString(),
+                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "Card").FirstOrDefault().Id,//APPaymentObject.Id,
+                    Code = "CADC",
+                    Tenant = 0,
+                    Name = "Card",
+                };
+
+                CounterDefinition AccountingPartner_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = cardCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "AC",
+                };
+
+                CounterRepository.Add(cardCounter);
+                CounterDefinitionRepository.Add(AccountingPartner_CounterDef);
+                CounterDefinition Agent_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = cardCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 10000,
+                    Parameter1 = "AG",
+                };
+                CounterDefinitionRepository.Add(Agent_CounterDef);
+                CounterDefinition AirLine_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = cardCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "AL",
+                };
+                CounterDefinitionRepository.Add(AirLine_CounterDef);
+                CounterDefinition CustomAgent_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = cardCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 20000,
+                    Parameter1 = "CG",
+                };
+                CounterDefinitionRepository.Add(CustomAgent_CounterDef);
+                CounterDefinition Coloader_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = cardCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "CO",
+                };
+                CounterDefinitionRepository.Add(Coloader_CounterDef);
+
+                CounterDefinition Customer_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = cardCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 70000,
+                    Parameter1 = "CS",
+                };
+                CounterDefinitionRepository.Add(Customer_CounterDef);
+
+                CounterDefinition Others_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = cardCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "OT",
+                };
+                CounterDefinitionRepository.Add(Others_CounterDef);
+
+                CounterDefinition PotentialCustomer_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = cardCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "PO",
+                };
+                CounterDefinitionRepository.Add(PotentialCustomer_CounterDef);
+
+                CounterDefinition ShippingAgent_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = cardCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 30000,
+                    Parameter1 = "SG",
+                };
+                CounterDefinitionRepository.Add(ShippingAgent_CounterDef);
+                CounterDefinition ShippingLine_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = cardCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "SL",
+                };
+                CounterDefinitionRepository.Add(ShippingLine_CounterDef);
+                CounterDefinition Trucker_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = cardCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "TR",
+                };
+                CounterDefinitionRepository.Add(Trucker_CounterDef);
+                CounterDefinition Vendor_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = cardCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "VD",
+                };
+                CounterDefinitionRepository.Add(Vendor_CounterDef);
+                CounterDefinition Warehouse_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = cardCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "WH",
+                };
+                CounterDefinitionRepository.Add(Warehouse_CounterDef);
+
+            }
+            #endregion
+
+
+
             this.ObjectContext.SaveChanges();
         }
 
