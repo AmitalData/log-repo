@@ -15,7 +15,6 @@ using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -208,7 +207,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 try
                 {
-                    invoices = JsonConvert.DeserializeObject<List<APIDataContract.ApiV1.Invoice>>(journalPM.InvoicesXml);
+                    invoices = JsonSerializer.Deserialize<List<APIDataContract.ApiV1.Invoice>>(journalPM.InvoicesXml);
                 }
                 catch (Exception jex)
                 {
