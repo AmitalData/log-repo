@@ -40,6 +40,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool? IsCustomApprovalRequired { get; set; }
         [Column("IsCriterionMandatory")]
 	    public bool? IsCriterionMandatory { get; set; }
+        [Column("IsCustomsItemMandatory")]
+	    public bool? IsCustomsItemMandatory { get; set; }
+        [Column("IsZipcodeMandatory")]
+	    public bool? IsZipcodeMandatory { get; set; }
     }
 }
 	 

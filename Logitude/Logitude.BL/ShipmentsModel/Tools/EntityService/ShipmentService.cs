@@ -4016,7 +4016,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             shipmentAdditionalCloudData.ShipmentAddtionalDataXML = ShipmentAdditionalDataService.SerializeShipmentAdditionalXmlData(entityPM.ShipmentAdditionalData);
                         }
 
-                        if (!string.IsNullOrEmpty(entityPM.PaymentRequestXML) && shipmentAdditionalCloudData.PaymentRequestXML != entityPM.PaymentRequestXML)
+                        var newPaymentRequestXML = NormalizeXml(entityPM.PaymentRequestXML, "TermsOfUseDocumentId");
+                        var oldPaymentRequestXML = NormalizeXml(shipmentAdditionalCloudData.PaymentRequestXML, "TermsOfUseDocumentId");
+
+                        if (!string.IsNullOrEmpty(entityPM.PaymentRequestXML) && newPaymentRequestXML != oldPaymentRequestXML)
                         {
                             shipmentAdditionalCloudData.IsPaymentRequired = true;
                             shipmentAdditionalCloudData.PaymentRequestXML = entityPM.PaymentRequestXML;
