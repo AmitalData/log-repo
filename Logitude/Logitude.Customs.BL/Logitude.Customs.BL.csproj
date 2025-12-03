@@ -1929,7 +1929,6 @@
     <Compile Include="EntityQueryServices\Generated\ExportReferenceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ProceduralFaultQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SIIRequestLineStatusQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\InterfaceTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\SIIDocumentTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\UnloadingSiteTypeQueryService.cs" />
