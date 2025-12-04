@@ -1035,7 +1035,7 @@ ResetEditableField(field: EditableFieldPosition){
                 .then(cmpRef => {
                     const instance = cmpRef.instance;
                     instance.ComponentRef = cmpRef;
-                    instance.Run({ EntityId: reportId, ObjectTableName: "Report" });
+                    instance.Run({ EntityId: reportId, ObjectTableName: "Report", SelectedTabCode: "RPTP" });
 
                     const loadTemplates = (runReport: boolean, isRefreshDefaultTemplate: boolean = true) => {
                         const entity = instance.EntityPM;
