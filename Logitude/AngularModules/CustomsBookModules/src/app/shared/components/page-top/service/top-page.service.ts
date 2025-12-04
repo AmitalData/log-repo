@@ -42,15 +42,4 @@ export class SearchService {
   SetSearchText(value: string) {
     this._searchTextSubject.next(value);
   }
-
-  isNumeric(value: string): boolean {
-    let res = /^\d*$/.test(value);
-    if (res) {
-      this.SearchBy('searchBy_form01');
-    }
-    else {
-      this.SearchBy('pageSearch_form02');
-    }
-    return res;
-  }
 }

@@ -77,6 +77,7 @@ export class MainDisplayComponent implements OnInit {
 
 
 	ngOnInit() {
+		sessionStorage.removeItem('FullClassification');
 		this.headerService.searchState$.subscribe((data) => {
 			if (!searchState[data]) return;
 
@@ -85,7 +86,7 @@ export class MainDisplayComponent implements OnInit {
 				this.InitData();
 			}
 		});
-
+		
 		this.checkDefaultCB_CollapseSearchHierarchy();
 		this.ListenToItemsSearched();
 		this.getByIsDiscountCodes();
@@ -161,35 +162,32 @@ export class MainDisplayComponent implements OnInit {
 
 	IsDiscountCodes: boolean = false;
 	GetAllCustomsBookMainView() {
-		this.searchValue = sessionStorage.getItem('searchValue');
-		if (AppTool.IsNullOrEmpty(this.searchValue)) {
-			this.isLoadingMode.next(true);
-			let filters: Filters = {
-				CustomsBookType: this.searchState,
-				Tenant: SessionInfo.LoggedUserTenant,
-				SearchFields: ''
-			};
-			filters.IsDiscountCodes = this.headerService.IsDiscountCodes?.getValue();
-			this.getRulesData();
-			this.getCommentsData(SessionInfo.LoggedUserTenant);
+		this.isLoadingMode.next(true);
+		let filters: Filters = {
+			CustomsBookType: this.searchState,
+			Tenant: SessionInfo.LoggedUserTenant,
+			SearchFields: ''
+		};
+		filters.IsDiscountCodes = this.headerService.IsDiscountCodes?.getValue();
+		this.getRulesData();
+		this.getCommentsData(SessionInfo.LoggedUserTenant);
 
-			this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
-				const result: CB_CustomsItemComputedDataList[] = data.body;
-				if (!result) return; // TODO: add error message
-				this.countSearchResult = 0;
-				this.handleClearResults();
+		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
+			const result: CB_CustomsItemComputedDataList[] = data.body;
+			if (!result) return; // TODO: add error message
+			this.countSearchResult = 0;
+			this.handleClearResults();
 
-				this.data = this.orderedData(result);
-				if (this.data.length > 0) {
-					if (this.IsDiscountCodes) this.originalDataByIsDiscountCodes = this.data;
-					else this.fullData = this.data;
-				}
+			this.data = this.orderedData(result);
+			if (this.data.length > 0) {
+				if (this.IsDiscountCodes) this.originalDataByIsDiscountCodes = this.data;
+				else this.fullData = this.data;
+			}
 
-				this.searchMode = TableTopState.ViewAll;
-				this.isLoadingMode.next(false);
-				this.isFeaturePermessionCB.next(false);
-			});
-		}
+			this.searchMode = TableTopState.ViewAll;
+			this.isLoadingMode.next(false);
+			this.isFeaturePermessionCB.next(false);
+		});
 	}
 
 	allRulesData = [];
@@ -325,6 +323,9 @@ export class MainDisplayComponent implements OnInit {
 			this.updateShowDetailsClick();
 		}
 		this.currentItem.next(item);
+		if (item?.FullClassification)
+			sessionStorage.setItem('FullClassification', item?.FullClassification);
+
 		return this.showDetails;
 	}
 
@@ -477,7 +478,6 @@ export class MainDisplayComponent implements OnInit {
 		this.searchValue = "";
 		this.countSearchResult = 0;
 		this.filterPopupService.toggleFilterPopup(false);
-		// this.data = this.fullData;
 		this.data = !this.IsDiscountCodes ? this.fullData : this.originalDataByIsDiscountCodes;
 		if (this.IsDiscountCodes && this.originalDataByIsDiscountCodes?.length == 0) this.GetAllCustomsBookMainView();
 		this.toggleVisibility(false, this.data);

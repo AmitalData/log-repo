@@ -45,9 +45,10 @@ export class PageTopComponent implements AfterViewInit {
 		this.headerService.searchState$.subscribe((searchText) => {
 			this.currentSearchState = searchText;
 		});
-		
-		let searchValue = sessionStorage.getItem('searchValue');
-		this.textToSearch = !AppTool.IsNullOrEmpty(searchValue) ? searchValue : '';				
+		this.searchService.searchText$.subscribe((searchText) => {
+			this.textToSearch = searchText;
+			this.clickSearch();
+		});
 	}
 
 	// #112160
@@ -98,11 +99,6 @@ export class PageTopComponent implements AfterViewInit {
 
 		this.searchClick.emit(this.searchByNumOrText);
 		this.filterPopupService.toggleFilterPopup(false);
-
-		this.searchService.searchText$.subscribe((searchText) => {
-			// reset search input in html:
-			if (searchText === "") this.textToSearch = "";
-		});
 	}
 
 	onCustomsItemSelected(textToSearch: string) {

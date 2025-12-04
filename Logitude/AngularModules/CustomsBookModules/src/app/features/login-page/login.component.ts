@@ -227,10 +227,8 @@ export class LoginComponent implements OnInit {
             userData = JSON.parse(userData);
             userData.Tenant = userData.CurrentTenant;
         }
-
         if (this.hostScreenService.redirectUrl) {
             this.ShowbusyIndicator = false;
-            SessionInfo.IsAdmin = userData.IsAdmin;
             if (userData) {
                 SessionInfo.LoggedUserTenant = userData.Tenant;
                 if (SessionInfo.LoggedUserTenant != 0) {

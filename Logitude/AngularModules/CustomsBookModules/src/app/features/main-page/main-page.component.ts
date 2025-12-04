@@ -43,13 +43,7 @@ export class MainPageComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		const searchValue: string = sessionStorage.getItem('searchValue');
-		if (!AppTool.IsNullOrEmpty(searchValue)) {
-			this.isLoadingMode.next(true);
-			this.searchService.isNumeric(searchValue);
-			this.searchService.SetSearchText(searchValue);
-			this.SearchByText(this.searchService.selectSearchBy);
-		}
+		this.getSearchFromHostScreen();
 
 		this.API_MainService.GetCB_PreferenceByUserIdAndTenant(SessionInfo.LoggedUserId, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
 			let PreferencesList: CB_Preference[] = data?.body;
@@ -58,6 +52,14 @@ export class MainPageComponent implements OnInit {
 				this.preferencesService.AddAllCB_Preferences(this.preferencesService.defualtDataPreferences);
 			}
 		});
+	}
+
+	getSearchFromHostScreen() {
+		const searchValue: string = sessionStorage.getItem('searchValue');
+		if (!AppTool.IsNullOrEmpty(searchValue)) {
+			this.isLoadingMode.next(true);
+			this.searchService.SetSearchText(searchValue);
+		}
 	}
 
 	getByIsDiscountCodes() {

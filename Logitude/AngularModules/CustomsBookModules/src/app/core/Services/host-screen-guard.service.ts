@@ -65,10 +65,10 @@ export class HostScreenGuardService implements CanActivate {
     if (amitaltenant) {
       sessionStorage.setItem('Tenant', amitaltenant);
     }
-
+    
     if (!AppTool.IsNullOrEmpty(AmitalSSOAngular) &&
-      !AppTool.IsNullOrEmpty(amitaltoken) &&
-      !AppTool.IsNullOrEmpty(amitaltenant)) {
+    !AppTool.IsNullOrEmpty(amitaltoken) &&
+    !AppTool.IsNullOrEmpty(amitaltenant)) {
       if (this.hostScreen.isAuthenticated()) {
         return this.initLoginHost();
       }
