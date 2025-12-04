@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class TenantUpdateClass
    {  		
-		public const string HashString = "b76058ded59fb65b1038f7d98ff19d94";
+		public const string HashString = "076058ded59fb65b1038f7d98ff19d94";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -11056,10 +11056,78 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
+
+               AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+               {
+
+											FieldName = "HebrewTenant",
+											ObjectTableName = "Tenant",
+											FieldsDataType = "Boolean",
+											MinLength = 0,
+											MaxLength = 0,
+											IsRequired = false,
+											CopyToDW = false,
+											DisplayOnLookUp = false,
+											DisplayOnLookUpLocal = false,
+											CanFilter = false,
+											DisplayOnly = false,
+											SystemRequired = false,
+											SystemMaxLength = 0,
+											DisplayInList = false,
+											IsCustomFilter = false,
+											IsListFilter = false,
+											Operator = "Equals",
+											MultiLine = false,
+											IsTimeFrameFilter = false,
+											DisplayInSearchWindowList = false,
+											PMPropertyPath = "HebrewTenant",
+											ListPropertyPath = "HebrewTenant",
+											DisplayInLookUpIndex = 0,
+											AutomaticField = false,
+											UniqueField = false,
+											DisplayInSearchWindowListIndex = 0,
+											IsMulti = false,
+											DependencyFilter1IsList = false,
+											DependencyFilter2IsList = false,
+											DependencyFilter3IsList = false,
+											ValidForQuerySection1 = "Tenant",
+											IsRestrictable = false,
+											DisplayInEntityVariables = true,
+											Code = "HebrewTenant",
+											AllowedInCustomerFieldsSettings = false,
+											DisplayInSearchWindowFilters = false,
+											DisplayInSearchWindowFiltersIndex = 0,
+											DisplayInDocumentReferences = false,
+											NumberOfDigits = 0,
+											DigitsAfterPoint = 0,
+											InActive = false,
+											DisplayLongName = false,
+											FullFieldLable = "HebrewTenant",
+											DefaultText = "Hebrew Tenant",
+										    FullLocalDefaultTextBack_up = "דייר בעברית",
+										    FullLocalDefaultText = "BS64:IteT15nXmdeoINeR16LXkdeo15nXqiI=",
+											IsForeignKey = false,
+											IsMaxLength = false,
+											NoMetaDataField = false,
+											IsFixedLength = false,
+											EnableAutoFill = false,
+											IncludeInSearchField = false,
+											AllowedinAutomationConditions = false,
+											AutomationEmailRecipient = false,
+											CanAutomateSetValue = false,
+											DisplayInAutomationAsEnitity = false,
+											DisplayInRequiredFields = false,
+											HasTemplate = false,
+											IsCustom = false,
+											HelpTextCode = "HebrewTenant",
+											EnableFullscreenTextBox = false,
+
+               }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes, contextTenant);
+
+        }
+
+        public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
 	    {    
 	    }
 
