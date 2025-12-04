@@ -49,7 +49,7 @@ export class CountersComponent implements OnInit {
                 list.forEach(item => {
                     var ObjectTable: ObjectTablePM = window.ObjectTables.filter(x => x.Id === item.ObjectTableId)[0];
                     if (ObjectTable) {
-                        //if (FeatureLocator.HasFeaturePermession(ObjectTable.Name, "Module")) {
+                       if (FeatureLocator.HasFeaturePermession(ObjectTable.Name, "Module")) {
 
                             if (item.Code == "CNST") {
                                 if (FeatureLocator.HasFeaturePermession("ARInvoice", "Consolidation.Constituent")) {
@@ -68,7 +68,7 @@ export class CountersComponent implements OnInit {
                             else {
                                 myCounters.push(new CounterItem(item));
                             }
-                      //  }
+                      }
                     }
                 });
 
