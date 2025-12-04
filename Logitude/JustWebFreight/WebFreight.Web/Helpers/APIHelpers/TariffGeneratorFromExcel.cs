@@ -4,14 +4,16 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.ExtendedServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
 using Logitude.TariffModule.Data;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Syncfusion.XlsIO;
 using System;
@@ -110,7 +112,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     VatNumber = "customervat " + i,
                     Tenant = tenant,
                     IsHybrid = true,
-                    Code = CodeCounter.GetNumber("Customer", tenant).ToString(),
+                    Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CS") ? TableCounter.GetNumber(tenant, "CADC", "CS", null, null, true) :  CodeCounter.GetNumber("Customer", tenant).ToString(),
                     PartnerTypeId = "CS",
                     CustomerStatusCode = "ACT",
                     IsCustomer = true,

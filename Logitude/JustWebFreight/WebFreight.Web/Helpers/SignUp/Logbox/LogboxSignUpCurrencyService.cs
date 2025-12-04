@@ -78,7 +78,7 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
                 CountryName = signUpInfoClass.CountryName,
                 CityName = signUpInfoClass.City,
                 PrimaryContactPhone = signUpInfoClass.Phone,
-                Code = CodeCounter.GetNumber("Agent", tenant).ToString(),
+                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "AG") ? TableCounter.GetNumber(tenant, "CADC", "AG", null, null, true) : CodeCounter.GetNumber("Agent", tenant).ToString(),
                 PartnerTypeId = AgentPartnerTypeCode,
             };
 

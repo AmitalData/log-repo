@@ -206,7 +206,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 if (!entityPM.IsHybrid)
                 {
-                    entityPM.Code = CodeCounter.GetNumber("ShippingAgent", tenant).ToString();
+                    entityPM.Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "SG") ? TableCounter.GetNumber(tenant, "CADC", "SG", null, null, true) : CodeCounter.GetNumber("ShippingAgent", tenant).ToString();
                 }
             }
 

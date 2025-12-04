@@ -230,7 +230,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 if (!entityPM.IsHybrid && (string.IsNullOrEmpty(entityPM.Code) || entityPM.Code == "new"))
                 {
-                    entityPM.Code = CodeCounter.GetNumber("Vendor", tenant).ToString();
+                    entityPM.Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "VD")  ? TableCounter.GetNumber(tenant, "CADC", "VD", null, null, true) : CodeCounter.GetNumber("Vendor", tenant).ToString();
                 }
 
                 if (!string.IsNullOrEmpty(entityPM.TenantAddressId))

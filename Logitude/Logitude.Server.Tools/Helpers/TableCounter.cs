@@ -1,22 +1,22 @@
+using Confluent.Kafka;
+using Devart.Data.Oracle;
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Transactions;
-
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
-
-
-using System.Data.Common;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
-using Devart.Data.Oracle;
-using Simplog.Data.Helpers;
+using System.Web.UI.WebControls;
 namespace Logitude.Server.Tools.Helpers
 {
     public partial class TableCounter
@@ -349,6 +349,21 @@ namespace Logitude.Server.Tools.Helpers
             // Store the new value
             counterState[key] = lastValue;
             
+        }
+
+        public static bool DoesCounterDefinitionExist(string counterCode, int tenant, string parameter1)
+        {
+            var counterRepository = new CounterRepository(tenant);
+            var definitionRepository = new CounterDefinitionRepository(tenant);
+
+            var counter = counterRepository.GetCounterByCode(counterCode, tenant);
+            if (counter?.Id == null)
+                return false;
+
+            var definitions = definitionRepository
+                .GetCounterDefinitionsByCounterId(counter.Id, tenant);
+
+            return definitions.Any(d => d.Parameter1 == parameter1 && d.StartNumber != -1);
         }
     }
 }
