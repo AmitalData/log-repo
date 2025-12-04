@@ -72,7 +72,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     ColumnsWidths: any[] = [];
     public IsUsingVirtuallization: boolean = false;
     public GLAccountsFilterItems: ApiQueryFilters;
-    public ShowOperationalDate: boolean = false;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -151,9 +150,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (hideVatTypesFeature) {
             this.AllowVatTypes = false;
         }
-
-        const invoiceReferenceDate = FeatureLocator.Features.filter(f => f.Code == "InvoiceReferenceDate");
-        this.ShowOperationalDate = invoiceReferenceDate?.length > 0;
     }
 
 
@@ -226,7 +222,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("VATNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("OperationalDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AccountingDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, false);
@@ -244,7 +239,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VATNumber", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, true);
-            this.UIProperties.SetEnabled("OperationalDate", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("AccountingDate", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, true);
@@ -1285,13 +1279,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.EntityPM.InvoiceDate = newValue;
             InvoiceTool.ComputeAPInvoiceDueDate(this.EntityPM);
             this.OnInvoiceDateChangedLoad();
-        }
-    }
-
-    get OperationalDate() { return this.EntityPM.OperationalDate; }
-    set OperationalDate(newValue: Date) {
-        if (this.ShowOperationalDate && this.EntityPM.OperationalDate != newValue) {
-            this.EntityPM.OperationalDate = newValue;
         }
     }
 
