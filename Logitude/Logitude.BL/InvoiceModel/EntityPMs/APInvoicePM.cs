@@ -39,7 +39,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? DueDate { get; set; }
-        public DateTime? ReferenceDate { get; set; }
         public double? InvoiceCurrencyExchangeRate { get; set; }
         public DateTime? ExchangeRateDate { get; set; }
 
