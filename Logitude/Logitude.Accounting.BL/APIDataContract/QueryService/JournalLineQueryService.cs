@@ -111,7 +111,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                         }
                     }
 
-                    temp.DocumentDate = item.ReferenceDate.HasValue ? item.ReferenceDate.Value : item.DocumentDate;
+                    temp.DocumentDate = item.DocumentDate;
                     temp.AccountingDate = item.AccountingDate;
                     temp.DueDate = item.DueDate;
                     temp.LocalAmount = item.LocalAmount;
@@ -178,7 +178,6 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     temp.Line = item.Line;
                     temp.Tenant = item.Tenant;
                     temp.DocumentDate = item.DocumentDate;
-                    temp.ReferenceDate = item.DocumentDate;
                     temp.AccountingDate = item.AccountingDate;
                     temp.DueDate = item.DueDate;
                     temp.LocalAmount = item.LocalAmount;
