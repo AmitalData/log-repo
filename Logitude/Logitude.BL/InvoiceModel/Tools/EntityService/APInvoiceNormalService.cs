@@ -173,6 +173,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.BuildShipmentsNumbers();
             this.UpdateInvoiceLines();
             this.BuildSearchFields();
+            this.SetOperationalDate();
 
             var setApproved = entityPM.SetApproved;
             var setVoided = entityPM.SetVoided;
@@ -363,6 +364,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             return amountInTariffCurr;
+        }
+
+        private void SetOperationalDate()
+        {
+            FeatureQuery featureQuery = new FeatureQuery(tenant);
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
+            var featureClosingAutoExpDec = features.Features.FirstOrDefault(x => x.Code == "InvoiceReferenceDate");
+
+            if (entityPM.OperationalDate == null || featureClosingAutoExpDec == null)
+            {
+                entityPM.OperationalDate = entityPM.InvoiceDate;
+            }
         }
 
         private string GetTenantCurrency(int tenant)
@@ -2189,6 +2202,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journal.UpdatedByUserId = theEntityPm.UpdatedByUserId;
                     journal.ApproveDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                     journal.ApprovedByUserId = theEntityPm.ApprovedByUserId;
+                    journal.DocumentDate = theEntityPm.OperationalDate.HasValue ? theEntityPm.OperationalDate.Value : theEntityPm.InvoiceDate.Value;
                     journal.ChangeSetOp = ChangeSetOperation.Insert;
 
                     // Insert Journal Lines 
@@ -2249,7 +2263,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             DebitAccountId = d.IsPrepaidExpenses == true ? accountingSettings?.PrepaidExpensesGLAccountId :  d.ChargeTypeGLAccountId,
                                                             CreditAccountId = theEntityPm.VendorGLAccountId,
                                                             Line = ++counter,
-                                                            DocumentDate = d.OperationalDate.HasValue? d.OperationalDate.Value : theEntityPm.InvoiceDate.Value,
+                                                            DocumentDate = theEntityPm.OperationalDate.HasValue ? theEntityPm.OperationalDate.Value : theEntityPm.InvoiceDate.Value,
                                                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                                                             DueDate = theEntityPm.DueDate.Value,
                                                             LocalAmount = Math.Round(d.VatRecognizedPercentage == null ? (decimal)d.LocalCurrencyAmount.Value : (decimal)d.LocalAmountWithVatRecognized.Value, 2),
@@ -2287,7 +2301,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             JournalId = journal.Id,
                             DebitAccountId = accountingSettings != null ? accountingSettings.VATInputsGLAccountId : string.Empty,
                             Line = ++counter,
-                            DocumentDate = theEntityPm.InvoiceDate.Value, //?
+                            DocumentDate = theEntityPm.OperationalDate.HasValue? theEntityPm.OperationalDate.Value: theEntityPm.InvoiceDate.Value,
                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                             DueDate = theEntityPm.DueDate.Value,
                             LocalAmount = vat.LocalVatAmountWithVatRecognized,
@@ -2323,7 +2337,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             journalLine.Line = ++counter;
                             journalLine.ActionCode = AccountingActionCodes.Credit;
                             journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Credit;
-                            journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
+                            journalLine.DocumentDate = theEntityPm.OperationalDate.HasValue? theEntityPm.OperationalDate.Value: theEntityPm.InvoiceDate.Value;
                             journalLine.AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
                             journalLine.DueDate = theEntityPm.DueDate.Value;
                             journalLine.LocalAmount = localForVAT;
@@ -2367,7 +2381,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalLine.Line = lineNo;
             journalLine.ActionCode = AccountingActionCodes.Credit;
             journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Credit;
-            journalLine.DocumentDate = theEntityPm.InvoiceDate.Value; //?
+            journalLine.DocumentDate = theEntityPm.OperationalDate.HasValue ? theEntityPm.OperationalDate.Value : theEntityPm.InvoiceDate.Value;
             journalLine.AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
             journalLine.DueDate = theEntityPm.DueDate.Value;
 

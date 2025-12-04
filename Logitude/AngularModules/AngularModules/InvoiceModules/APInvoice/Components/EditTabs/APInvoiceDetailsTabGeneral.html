@@ -769,42 +769,6 @@
                                        </log-cell-template>
                                    </ng-template>
                                   </log-column>
-                                  <log-column [width]="'100'" [header]="'APInvoiceLine.F.IsPrepaidExpenses' | TextCodeTranslationPipe" 
-                                  [Alignment]="'center'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                            <div class="MediaFill"
-                                                style="padding:0 !important; text-indent: 0 !important;">
-                                                <div style="width: 16px; height: 16px;" class="CenterCenter">
-                                                    <CheckBox [IsChecked]="item.IsPrepaidExpenses"
-                                                        (Checked)="item.IsPrepaidExpenses = $event"
-                                                        [IsEnabled]="item.IsScreenEnabled && IsPrepaidExpenses"></CheckBox>
-                                                </div>                                                
-                                            </div>
-                                       </log-cell-template>
-                                   </ng-template>
-                                  </log-column>
-
-                                    <!-- Operational Date -->
-                                    <log-column *ngIf="ShowOperationalDate" [width]="'120'"
-                                        [header]="'APInvoiceLine.CH.OperationalDate' | TextCodeTranslationPipe"
-                                        [Alignment]="'center'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1"
-                                                [CellColor]="item.AmountCellBackground">
-                                                <div style="width: 100%;">
-                                                    <LogDatePicker style="width: 120px;" 
-                                                        [FocusOnMe]="'true'"
-                                                        [ObjectFieldName]="'OperationalDate'" 
-                                                        [SelectedDateValue]="item.OperationalDate" 
-                                                        [ObjectTableName]="item.ObjectTableName" 
-                                                        [InputType]="'date'" [HideColumns]="true"
-                                                        [DataContext]="item.DataContext"></LogDatePicker>
-                                                </div>
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
-
                                     <!-- Tool -->
                                     <log-column [width]="'55'">
                                         <ng-template let-item>
