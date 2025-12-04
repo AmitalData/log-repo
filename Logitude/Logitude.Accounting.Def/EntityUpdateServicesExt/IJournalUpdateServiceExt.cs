@@ -21,7 +21,6 @@ namespace Logitude.Accounting.Def.EntityUpdateServicesExt
 
 
         public DateTime? AccountingDate { get; set; }
-        public DateTime? DocumentDate { get; set; }
         public string LineNotes { get; set; }
     }
 }

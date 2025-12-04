@@ -72,7 +72,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     ColumnsWidths: any[] = [];
     public IsUsingVirtuallization: boolean = false;
     public GLAccountsFilterItems: ApiQueryFilters;
-    public ShowOperationalDate: boolean = false;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -151,9 +150,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (hideVatTypesFeature) {
             this.AllowVatTypes = false;
         }
-
-        const invoiceReferenceDate = FeatureLocator.Features.filter(f => f.Code == "InvoiceReferenceDate");
-        this.ShowOperationalDate = invoiceReferenceDate?.length > 0;
     }
 
 
@@ -1573,12 +1569,6 @@ export class APInvoiceLineItem extends BaseComponent {
      set PayableDebitGLAcountName(value: string) {
       if (this.invoiceLinePM.PayableDebitGLAcountName != value) {
             this.invoiceLinePM.PayableDebitGLAcountName = value;
-        }
-    }
-    get OperationalDate() { return this.invoiceLinePM.OperationalDate }
-    set OperationalDate(value: Date) {
-      if (this.invoiceLinePM.OperationalDate != value) {
-            this.invoiceLinePM.OperationalDate = value;
         }
     }
     get ForiegnExchangeRate() { return this.invoiceLinePM.ForiegnExchangeRate; }

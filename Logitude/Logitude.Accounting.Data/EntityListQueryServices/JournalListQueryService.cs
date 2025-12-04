@@ -66,7 +66,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            IsVoided = a.IsVoided,
                                                            IsLedgerCreated = a.IsLedgerCreated,
                                                            IsExternalEntity = a.ExternalSystem != null ? true : false,
-                                                           DocumentDate = a.DocumentDate,
+
+
+
+
+
+
+
+
                                              });
             return query;
 		}

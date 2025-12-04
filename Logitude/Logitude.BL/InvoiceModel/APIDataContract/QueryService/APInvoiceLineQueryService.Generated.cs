@@ -110,8 +110,7 @@ using Logitude.Server.Tools;
 					   				   }
 				   
 				   temp.Quantity = item.Quantity;
-                    temp.ExcludeFromTaxReport = item.ExcludeFromTaxReport;
-                    temp.ReferenceDate = item.OperationalDate;
+					temp.ExcludeFromTaxReport = item.ExcludeFromTaxReport;
 
                     MyList.Add(temp);
 				}
@@ -386,7 +385,7 @@ using Logitude.Server.Tools;
                     if (!IsUpdate)
                     {
                         temp.ExcludeFromTaxReport = item.ExcludeFromTaxReport;
-                        temp.OperationalDate = item.ReferenceDate;
+
                     }
 
 
