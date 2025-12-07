@@ -392,19 +392,37 @@
                                                                         </log-cell-template>
                                                                     </ng-template>
                                                                 </log-column>
-                                                                <log-column
-                                                                    [header]="'Customs.SupplierInvoiceItem.F.ItemPriceCurrencyCode' | TextCodeTranslationPipe"
-                                                                    [binding]="'ItemPriceCurrencyCode'" [width]="'100'"
+                                                                <log-column *ngIf="IsDisplayOnly"
+                                                                    [header]="'Customs.SupplierInvoiceItemsReqList.F.StatusName' | TextCodeTranslationPipe"
+                                                                    [binding]="'StatusName'" [width]="'90'"
                                                                     [Alignment]="'right'">
                                                                     <ng-template let-item>
                                                                         <log-cell-template [IgnoreMods]="true">
                                                                             <div style="text-align:right">
-                                                                                <span>{{item.ItemPriceCurrencyCode}}</span>
+                                                                                <span>{{ item.StatusName }}</span>
                                                                             </div>
                                                                         </log-cell-template>
                                                                     </ng-template>
                                                                 </log-column>
-                                                                <log-column *ngIf="!IsDisplayOnly" [width]="'35'"
+                                                                <log-column *ngIf="IsDisplayOnly"
+                                                                    [header]="'Customs.SupplierInvoiceItemsReqList.F.DistApprovalAttachmentPath' | TextCodeTranslationPipe"
+                                                                    [binding]="'DistApprovalAttachmentPath'"
+                                                                    [width]="'60'" [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true">
+                                                                            <div
+                                                                                style="display:flex; justify-content:center;align-items:flex-end;">
+                                                                                <button class="Button"
+                                                                                    style="height:20px; width:18px; padding:0; color:#000; opacity:1; filter:none; min-width:18px;"
+                                                                                    *ngIf="item.DistApprovalAttachmentPath"
+                                                                                    (click)="openDistApprovalAttachment(item)">
+                                                                                    🔗
+                                                                                </button>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
+                                                                  <log-column  [width]="'35'"
                                                                     [Editable]="true" [Alignment]="'right'"
                                                                     [visibility]="'visibile'">
                                                                     <ng-template let-item>
@@ -437,36 +455,6 @@
                                                                                     tabindex="-1">
                                                                                     <img class="tickImg"
                                                                                         src="./Images/Buttons/EditWithX.png" />
-                                                                                </button>
-                                                                            </div>
-                                                                        </log-cell-template>
-                                                                    </ng-template>
-                                                                </log-column>
-                                                                <log-column *ngIf="IsDisplayOnly"
-                                                                    [header]="'Customs.SupplierInvoiceItemsReqList.F.StatusName' | TextCodeTranslationPipe"
-                                                                    [binding]="'StatusName'" [width]="'90'"
-                                                                    [Alignment]="'right'">
-                                                                    <ng-template let-item>
-                                                                        <log-cell-template [IgnoreMods]="true">
-                                                                            <div style="text-align:right">
-                                                                                <span>{{ item.StatusName }}</span>
-                                                                            </div>
-                                                                        </log-cell-template>
-                                                                    </ng-template>
-                                                                </log-column>
-                                                                <log-column *ngIf="IsDisplayOnly"
-                                                                    [header]="'Customs.SupplierInvoiceItemsReqList.F.DistApprovalAttachmentPath' | TextCodeTranslationPipe"
-                                                                    [binding]="'DistApprovalAttachmentPath'"
-                                                                    [width]="'60'" [Alignment]="'right'">
-                                                                    <ng-template let-item>
-                                                                        <log-cell-template [IgnoreMods]="true">
-                                                                            <div
-                                                                                style="display:flex; justify-content:center;align-items:flex-end;">
-                                                                                <button class="Button"
-                                                                                    style="height:20px; width:18px; padding:0; color:#000; opacity:1; filter:none; min-width:18px;"
-                                                                                    *ngIf="item.DistApprovalAttachmentPath"
-                                                                                    (click)="openDistApprovalAttachment(item)">
-                                                                                    🔗
                                                                                 </button>
                                                                             </div>
                                                                         </log-cell-template>
