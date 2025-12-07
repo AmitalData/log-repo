@@ -387,6 +387,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
 
 						temp.AccountingDate = MyEntity.AccountingDate;
+
 					}  
 
 					

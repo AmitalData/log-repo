@@ -404,7 +404,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     AddAccountingEntitieJournal(journalPM, AccountingEntityJournalActions.APInvoiceVoid, journalPM.Id);
                     journalUpdate.Update(journalPM, new StornoOverrideM()
                     {
-                        DocumentDate = journalPM.DocumentDate,
                         AccountingEntityCode = "4",
                         AccountingEntityId = entityPM.Id,
                         AccountingEntityReference = entityPM.InvoiceNumber
@@ -2249,7 +2248,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             DebitAccountId = d.IsPrepaidExpenses == true ? accountingSettings?.PrepaidExpensesGLAccountId :  d.ChargeTypeGLAccountId,
                                                             CreditAccountId = theEntityPm.VendorGLAccountId,
                                                             Line = ++counter,
-                                                            DocumentDate = d.OperationalDate.HasValue? d.OperationalDate.Value : theEntityPm.InvoiceDate.Value,
+                                                            DocumentDate = theEntityPm.InvoiceDate.Value,
                                                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                                                             DueDate = theEntityPm.DueDate.Value,
                                                             LocalAmount = Math.Round(d.VatRecognizedPercentage == null ? (decimal)d.LocalCurrencyAmount.Value : (decimal)d.LocalAmountWithVatRecognized.Value, 2),
@@ -2287,7 +2286,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             JournalId = journal.Id,
                             DebitAccountId = accountingSettings != null ? accountingSettings.VATInputsGLAccountId : string.Empty,
                             Line = ++counter,
-                            DocumentDate = theEntityPm.InvoiceDate.Value, //?
+                            DocumentDate = theEntityPm.InvoiceDate.Value,
                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                             DueDate = theEntityPm.DueDate.Value,
                             LocalAmount = vat.LocalVatAmountWithVatRecognized,
@@ -2367,7 +2366,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalLine.Line = lineNo;
             journalLine.ActionCode = AccountingActionCodes.Credit;
             journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Credit;
-            journalLine.DocumentDate = theEntityPm.InvoiceDate.Value; //?
+            journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
             journalLine.AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
             journalLine.DueDate = theEntityPm.DueDate.Value;
 

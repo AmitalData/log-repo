@@ -367,7 +367,7 @@ namespace CommunicationWorkerRole
 
                     CustomerPM customerPM = new CustomerPM()
                     {
-                        Code = CodeCounter.GetNumber("Customer", crmTenant).ToString(),
+                        Code = TableCounter.DoesCounterDefinitionExist("CADC",crmTenant, "CS") ? TableCounter.GetNumber(crmTenant, "CADC", "CS", null, null, true): CodeCounter.GetNumber("Customer", crmTenant).ToString(),
                         PartnerTypeId = "PO",
                         Tenant = crmTenant,
                         EnglishName = TruncateLongString(lead.CompanyName, 70),

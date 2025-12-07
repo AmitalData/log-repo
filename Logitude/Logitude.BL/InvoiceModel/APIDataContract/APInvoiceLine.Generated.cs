@@ -68,8 +68,5 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public bool? ExcludeFromTaxReport { get; set; }
         public bool? IsPrepaidExpenses { get; set; }
 
-    public DateTime? ReferenceDate { get; set; }
-
-
     }
 } 

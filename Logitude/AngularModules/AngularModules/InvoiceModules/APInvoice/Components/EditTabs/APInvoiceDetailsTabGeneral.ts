@@ -72,7 +72,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     ColumnsWidths: any[] = [];
     public IsUsingVirtuallization: boolean = false;
     public GLAccountsFilterItems: ApiQueryFilters;
-    public ShowOperationalDate: boolean = false;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -151,9 +150,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (hideVatTypesFeature) {
             this.AllowVatTypes = false;
         }
-
-        const invoiceReferenceDate = FeatureLocator.Features.filter(f => f.Code == "InvoiceReferenceDate");
-        this.ShowOperationalDate = invoiceReferenceDate?.length > 0;
     }
 
 
@@ -1575,12 +1571,6 @@ export class APInvoiceLineItem extends BaseComponent {
             this.invoiceLinePM.PayableDebitGLAcountName = value;
         }
     }
-    get OperationalDate() { return this.invoiceLinePM.OperationalDate }
-    set OperationalDate(value: Date) {
-      if (this.invoiceLinePM.OperationalDate != value) {
-            this.invoiceLinePM.OperationalDate = value;
-        }
-    }
     get ForiegnExchangeRate() { return this.invoiceLinePM.ForiegnExchangeRate; }
     set ForiegnExchangeRate(value: number) {
         if (this.invoiceLinePM != null) {
@@ -1639,7 +1629,7 @@ export class APInvoiceLineItem extends BaseComponent {
         this.IsEditingEnabled = this.EditControlIsEnabled;
 
         this.UIProperties.SetEnabled("OpenAmount", this.ObjectTableName, this.OpenAmountIsEnabled);
-        this.UIProperties.SetEnabled("OperationalDate", this.ObjectTableName, this.EditControlIsEnabled);
+
         this.UIProperties.SetEnabled("ForiegnCurrencyAmount", this.ObjectTableName, this.EditControlIsEnabled);
         this.UIProperties.SetEnabled("InvoiceCurrencyAmount", this.ObjectTableName, this.EditControlIsEnabled);
 

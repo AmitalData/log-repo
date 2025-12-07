@@ -39,16 +39,13 @@ export class JournalPageComponent implements AfterViewInit {
 
     searchDropdownOptions: FastSearchResult[] = [];    
     fastSearchSettings: FastSearchSettings = null;
-
+    enableFastSearch = false;
     constructor(private CD: ChangeDetectorRef, private fastSearchService: FastSearchService) {
 
-        // this.LoadAllScreenData();
+        this.enableFastSearch = FeatureLocator.HasFeaturePermession("General", "FASTSEARCH");
         this.getResources();
-
-
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-
 
     }
 
@@ -83,7 +80,9 @@ export class JournalPageComponent implements AfterViewInit {
         var objectTable= window.ObjectTables.filter(d=> d.Name == "Journal")[0];
         await this.fastSearchService.initFastSearch(objectTable, "Journal", "Journal", true ,"journalline");
         this.fastSearchSettings = this.fastSearchService.Settings;
-        this.fastSearchSettings.left = this.isRTL ? -1 : 0;
+        if (this.fastSearchSettings) {
+            this.fastSearchSettings.left = this.isRTL ? -1 : 0;
+        }
 
     }
 

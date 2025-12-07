@@ -1,9 +1,17 @@
-﻿using Logitude.Server.Tools.Counters;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,12 +19,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Windows.Forms;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Simplog.Global.Data.GlobalModel;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using System.Collections;
 
 namespace LogitudeDataLoading
 {
@@ -179,7 +181,7 @@ namespace LogitudeDataLoading
                                                     VatNumber = vatNumber,
                                                     Tenant = tenant,
                                                     IsHybrid = true,
-                                                    Code = CodeCounter.GetNumber("Customer", tenant).ToString(),
+                                                    Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CS") ? TableCounter.GetNumber(tenant, "CADC", "CS", null, null, true) :  CodeCounter.GetNumber("Customer", tenant).ToString(),
                                                     PartnerTypeId = "CS",
                                                     //AccountingCard = accountingCards != null ? (accountingCards.Length > 24 ? accountingCards.Substring(0, 24) : accountingCards) : null,
 
@@ -671,7 +673,7 @@ namespace LogitudeDataLoading
                                                         VatNumber = vatNumber,
                                                         Tenant = tenant,
                                                         IsHybrid = true,
-                                                        Code = CodeCounter.GetNumber("Agent", tenant).ToString(),
+                                                        Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "AG") ? TableCounter.GetNumber(tenant, "CADC", "AG", null, null, true) : CodeCounter.GetNumber("Agent", tenant).ToString(),
                                                         PartnerTypeId = "AG",
                                                         ReceivablesAccountingCard = receivablesAccountingCard,
                                                         PayablesAccountingCard = payablesAccountingCard,
@@ -1932,7 +1934,7 @@ namespace LogitudeDataLoading
                                                         VatNumber = vatNumber,
                                                         Tenant = tenant,
                                                         IsHybrid = true,
-                                                        Code = CodeCounter.GetNumber("Vendor", tenant).ToString(),
+                                                        Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "VD") ?TableCounter.GetNumber(tenant, "CADC", "VD", null, null, true) : CodeCounter.GetNumber("Vendor", tenant).ToString(),
                                                         PartnerTypeId = "VD",
                                                         ReceivablesAccountingCard = receivablesAccountingCard,
                                                         PayablesAccountingCard = payablesAccountingCard,

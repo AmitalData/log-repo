@@ -785,26 +785,6 @@
                                    </ng-template>
                                   </log-column>
 
-                                    <!-- Operational Date -->
-                                    <log-column *ngIf="ShowOperationalDate" [width]="'120'"
-                                        [header]="'APInvoiceLine.F.OperationalDate' | TextCodeTranslationPipe"
-                                        [Alignment]="'center'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1"
-                                                [CellColor]="item.AmountCellBackground">
-                                                <div style="width: 100%;">
-                                                    <LogDatePicker style="width: 120px;" 
-                                                        [FocusOnMe]="'true'"
-                                                        [ObjectFieldName]="'OperationalDate'" 
-                                                        [SelectedDateValue]="item.OperationalDate" 
-                                                        [ObjectTableName]="item.ObjectTableName" 
-                                                        [InputType]="'date'" [HideColumns]="true"
-                                                        [DataContext]="item.DataContext"></LogDatePicker>
-                                                </div>
-                                        </log-cell-template>
-                                    </ng-template>
-                                </log-column>
-
                                     <!-- Tool -->
                                     <log-column [width]="'55'">
                                         <ng-template let-item>

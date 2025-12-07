@@ -176,8 +176,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ExcludeFromTaxReport"
-    Type="bit">
+  Name="ExcludeFromTaxReport"
+  Type="bit">
     <Constraints
       Nullable="true" />
   </Column>
@@ -191,12 +191,6 @@
   <Column
     Name="IsPrepaidExpenses"
     Type="bit">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OperationalDate"
-    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
