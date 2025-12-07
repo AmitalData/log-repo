@@ -51,15 +51,15 @@ namespace Logitude.UnitTest.Accounting
             A.CallTo(() => fakeIAccountingContext.GLAccounts)
                 .Returns(new MockObjectSet<GLAccount>(pocoGLAccountList));
 
-            var JournalActionTypeList = new List<JournalActionType>()
+            var JournalActionTypeList = new List<Logitude.Accounting.Data.EntityPOCOs.JournalActionType>()
             {
-                new JournalActionType() { Tenant=1, Code="1", Id="1", EnglishName ="Credit" },
-                new JournalActionType() { Tenant=1, Code="2", Id="2", EnglishName ="Debit " },
-                new JournalActionType() { Tenant=1, Code="3", Id="3", EnglishName ="Debit And Credit" },
-         //     new JournalActionType() { Tenant=1, Code="4", Id="4", EnglishName ="Debit, Credit And Vat deduction " },
+                new Logitude.Accounting.Data.EntityPOCOs.JournalActionType() { Tenant=1, Code="1", Id="1", EnglishName ="Credit" },
+                new Logitude.Accounting.Data.EntityPOCOs.JournalActionType() { Tenant=1, Code="2", Id="2", EnglishName ="Debit " },
+                new Logitude.Accounting.Data.EntityPOCOs.JournalActionType() { Tenant=1, Code="3", Id="3", EnglishName ="Debit And Credit" },
+         //     new Logitude.Accounting.Data.EntityPOCOs.JournalActionType() { Tenant=1, Code="4", Id="4", EnglishName ="Debit, Credit And Vat deduction " },
             };
             A.CallTo(() => fakeIAccountingContext.JournalActionTypes)
-                .Returns(new MockObjectSet<JournalActionType>(JournalActionTypeList));
+                .Returns(new MockObjectSet<Logitude.Accounting.Data.EntityPOCOs.JournalActionType>(JournalActionTypeList));
             return fakeIAccountingContext;
         }
 

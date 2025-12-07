@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{04E15311-C97C-40ED-B40D-0C617103C026}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.Test.Infrastructure</RootNamespace>
+    <AssemblyName>Logitude.Test.Infrastructure</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Library\Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Library\Bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MSTest.TestFramework.3.4.3\lib\net462\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="FakeItEasy, Version=8.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FakeItEasy.8.2.0\lib\net462\FakeItEasy.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.Accounting.BL\Logitude.Accounting.BL.csproj">
+      <Project>{00e5d96d-dd45-47e8-aaa3-fdbfd8add61a}</Project>
+      <Name>Logitude.Accounting.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
+      <Project>{A3799525-14A2-42FC-A2DE-69ED3FD1C5D1}</Project>
+      <Name>Logitude.Accounting.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.Def\Logitude.Accounting.Def.csproj">
+      <Project>{91564685-7EE1-466D-AFCD-183A1BF62259}</Project>
+      <Name>Logitude.Accounting.Def</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
+      <Project>{BD959AB6-4476-48B3-AA4D-CFD7ED120E55}</Project>
+      <Name>Logitude.Infrastructure.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
+      <Project>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</Project>
+      <Name>Simplog.Data.Global</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Container\TestContainerScope.cs" />
+    <Compile Include="Factories\AccountingFakeFactory_MSTest.cs" />
+    <Compile Include="Factories\FakeFactory_MSTest.cs" />
+    <Compile Include="Factories\LogitudeServerToolsFactory_MSTest.cs" />
+    <Compile Include="Factories\SimplogDataFakeFactory_MSTest.cs" />
+    <Compile Include="Helpers\GeneralMocking_MSTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBase_MSTest.cs" />
+    <Compile Include="Utilities\MSTestFakeRegistry.cs" />
+    <Compile Include="Utilities\TenantFixture_MSTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Container\" />
+    <Folder Include="Factories\" />
+    <Folder Include="Fakes\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Utilities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
