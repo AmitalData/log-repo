@@ -1,4 +1,4 @@
-<#
+﻿<#
     CI/CD Test Runner Script for Jenkins
     Runs tests with code coverage and outputs results in Jenkins-friendly format
 
@@ -108,30 +108,7 @@ if ($coverletMsbuild -and (Test-Path $coverletMsbuild.FullName)) {
     $coverlet = $coverletConsole
 }
 
-# Find test DLL (will be built by MSBuild if using coverlet.msbuild with VSTest target)
-$testDll = 'Library\Bin\Logitude.UnitTest.dll'
-if (-not (Test-Path $testDll)) {
-    $testDll = "Logitude.UnitTest\bin\$Configuration\Logitude.UnitTest.dll"
-}
 
-# Only check for DLL if not using coverlet.msbuild with MSBuild VSTest (MSBuild will build it)
-$checkDll = $true
-if ($useCoverlet -and $coverletMsbuild) {
-    # Will use MSBuild VSTest which builds automatically
-    $checkDll = $false
-}
-
-if ($checkDll -and -not (Test-Path $testDll)) {
-    Write-Error "Test DLL not found: $testDll"
-    exit 1
-}
-
-if ($checkDll) {
-    Write-Host "Test DLL: $testDll" -ForegroundColor Green
-    Write-Host ""
-}
-
-# Coverage file paths
 $coverageFile = Join-Path $OutputDir "coverage.cobertura.xml"
 $coverageJson = Join-Path $OutputDir "coverage.json"
 $trxFile = Join-Path $OutputDir "test-results.trx"
@@ -163,20 +140,7 @@ if ($msbuild -and (Test-Path $msbuild)) {
     Write-Host "  [WARN] MSBuild not found - packages may need manual restore" -ForegroundColor Yellow
 }
 
-# Display coverlet status (already detected earlier)
-if ($useCoverlet -and $coverletMsbuild) {
-    Write-Host "Coverlet.msbuild found: $($coverletMsbuild.FullName)" -ForegroundColor Green
-    Write-Host "Coverage will be collected during test execution via MSBuild." -ForegroundColor Green
-} elseif ($useCoverlet -and $coverlet) {
-    Write-Host "Coverlet.console found: $($coverlet.FullName)" -ForegroundColor Green
-} else {
-    Write-Host "Coverlet not found. Running tests without coverage collection." -ForegroundColor Yellow
-    Write-Host "To enable coverage, install coverlet.msbuild NuGet package to Logitude.UnitTest project." -ForegroundColor Yellow
-    Write-Host "  Option 1: Visual Studio -> Right-click project -> Manage NuGet Packages -> Install coverlet.msbuild" -ForegroundColor Gray
-    Write-Host "  Option 2: Run .\install-coverlet.ps1 for installation instructions" -ForegroundColor Gray
-}
 
-Write-Host ""
 
 # Run tests
 Write-Host "Running tests..." -ForegroundColor Cyan
@@ -572,5 +536,6 @@ if ($overallPass) {
     }
     exit 1
 }
+
 
 

@@ -410,7 +410,7 @@
     <Compile Include="BL\SIIRequest\SiiStatusUpdateService.cs" />
     <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
     <Compile Include="CloseTables\Codes\DeclarationDirection.cs" />
-    <Compile Include="CloseTables\Codes\EventStatuses.cs" />
+     <Compile Include="CloseTables\Codes\EventStatuses.cs" />
     <Compile Include="CloseTables\Codes\UserCodes.cs" />
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
@@ -630,7 +630,7 @@
     <Compile Include="CloseTables\EnumGenerated\AmendmentFieldReasonTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AmendmentFieldStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AmendmentRequestStatusStruct.Generated.cs" />
-    <Compile Include="CloseTables\EnumGenerated\AmendmentStatusStruct.Generated.cs" />
+     <Compile Include="CloseTables\EnumGenerated\AmendmentStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AmendRequestRejectReasonTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AssigneeNotificationTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AttachmentTypeStruct.Generated.cs" />
