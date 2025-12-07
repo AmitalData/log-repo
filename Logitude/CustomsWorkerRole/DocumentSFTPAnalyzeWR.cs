@@ -61,19 +61,8 @@ namespace CommunicationWorkerRole
 				{
 					try
 					{
-						AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-						AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueueBySubject("DocumentSFTP");
-
-						if (analyzeQueue != null)
-						{
-							ExecuteQueue(analyzeQueue);
-						}
-						else
-						{
-							Thread.Sleep(3000);
-						}
+						WorkOnce();
 					}
-
 					catch (Exception e)
 					{
 						ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "TranzilaPaymentMessageAnalyzeWR : Run() Method", null);
@@ -86,8 +75,29 @@ namespace CommunicationWorkerRole
 				}
 			}
 		}
-		public void ExecuteQueue(AnalyzeQueue analyzeQueue)
+		public override void WorkOnce()
 		{
+			try
+			{
+				OnStart();
+				ExecuteQueue();
+
+			}
+			catch (Exception exception)
+			{
+				Thread.Sleep(new TimeSpan(0, 0, 1));
+				_OnStartDone = false;
+				NetCommonHelper.Logger.DevLog.Instance.WriteError(exception.Message.ToString());
+			}
+
+		}
+		public void ExecuteQueue()
+		{
+			AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+			AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueueBySubject("DocumentSFTP");
+			if (analyzeQueue != null)
+			{
+			
 			string communicationLogId = string.Empty;
 			logs = string.Empty;
 			Response response = new Response();
@@ -146,7 +156,6 @@ namespace CommunicationWorkerRole
 						{						
 							DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "D");
 
-							AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
 							analyzeQueue.Status = "D";
 							analyzeQueueRepository.Update(analyzeQueue);
 							analyzeQueueRepository.SubmitChanges();
@@ -181,7 +190,7 @@ namespace CommunicationWorkerRole
 			{
 				stopwatch.Stop();
 			}
-
+			}
 		}
 		private Response SaveDocument(string commId, byte[] filedataByte)
 		{
@@ -485,14 +494,8 @@ namespace CommunicationWorkerRole
 			}
 		}
 		public void DebugStep()
-		{
-			AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-			AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueueBySubject("DocumentSFTP");
-
-			if (analyzeQueue != null)
-			{
-				ExecuteQueue(analyzeQueue);
-			}
+		{		
+			ExecuteQueue();
 		}
 	}
 }
