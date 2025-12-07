@@ -510,7 +510,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityPM.Email = entityPM.Email.ToLower();
 
             Contact newContact = new Contact();
-			newContact.DontShowLocalLabels = LogitudeSettings.WorkEnvironment == "customs" ? false : true; // Mohammad & Islam: related to bug 44449
+			newContact.DontShowLocalLabels = LogitudeSettings.WorkEnvironment == "customs" || entityPM.DontShowLocalLabels == false ? false : true;
 
 			MapUserToContact(entityPM, newContact);
 

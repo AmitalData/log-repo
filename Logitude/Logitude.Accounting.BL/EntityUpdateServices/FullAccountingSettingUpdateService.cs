@@ -71,6 +71,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             tenant.PaymentTermId = entityPM.TenantPaymentTermId;
             tenant.AccountingActivationDate = entityPM.AccountingActivationDate;
             tenant.AccountingActivated = entityPM.AccountingActivated;
+            tenant.HebrewTenant = entityPM.HebrewTenant;
             tenantRepository.Update(tenant);
             tenantRepository.SubmitChanges();
 
