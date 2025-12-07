@@ -19,6 +19,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using CsvHelper;
+using CsvHelper.Configuration;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -45,7 +47,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 string fileContent = ConvertFromDosHebrewToWinHebrew(FileContent);
                 int? tenantFromPage4Tester = null;
-                FileContent = fileContent.Replace("\"", "");
+             // FileContent = fileContent.Replace("\"", "");
                 _GLAccountSrcLinesDTO = CreateGLAccountSrcLinesDTOFromFile(FileContent, out tenantFromPage4Tester);
 
                 if (tenantFromPage4Tester.HasValue)
@@ -654,7 +656,25 @@ namespace Logitude.Accounting.BL.CoreBL
                     accLine.ErrorInLine = true;
 
                 }
+                if (!accLine.ErrorInLine)
+                {
+                    GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
+                    var existing = gLAccountQueryService.GetByDisplayNumber(accLine.DisplayNumber, tenant);
+                    if (existing != null && existing.Count > 0)
+                    {
+                        text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
+                        if (String.IsNullOrEmpty(text)) text = "Account Line #";
 
+                        text_44 = TranslateTextsClassTranslate("InterestTransactionsCSV.O.AlreadyFound", 0, useLocal);
+                        if (String.IsNullOrEmpty(text_44)) text_44 = "already found";
+
+                        text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.DisplayNumber", 0, useLocal);
+                        if (String.IsNullOrEmpty(text_2)) text_2 = "Display Number";
+
+                        this.AddErrorRow($"{text}{count} ({accLine.InternalNumber}) {text_2} {text_44} ");
+                        accLine.ErrorInLine = true;
+                    }
+                }
                 count++;
                 if (!accLine.ErrorInLine)
                     this._goodCount++;
@@ -773,49 +793,72 @@ namespace Logitude.Accounting.BL.CoreBL
 
         internal static GLAccountSrcLineDTO Create(string rawLine)
         {
-
-            rawLine = rawLine ?? "";
-            bool startsWithRowTypeOk = false;
-            string actualRowType = "";
-            if (rawLine.Length >= 1)
+            try
             {
-                actualRowType = rawLine.Substring(0, 1);
-                if (RowType.Contains(actualRowType)) startsWithRowTypeOk = true;
-            }
+                rawLine = rawLine ?? "";
+                bool startsWithRowTypeOk = false;
+                string actualRowType = "";
+                if (rawLine.Length >= 1)
+                {
+                    actualRowType = rawLine.Substring(0, 1);
+                    if (RowType.Contains(actualRowType)) startsWithRowTypeOk = true;
+                }
 
-            if (!startsWithRowTypeOk || actualRowType == "")
+                if (!startsWithRowTypeOk || actualRowType == "")
+                {
+                    string text = TranslateTextsClassTranslate("GLAccountsCSV.O.DoesntStartWithCoAType", 0, useLocal);
+                    throw new ApplicationException($"{text} {RowType.ToString()} ");
+                }
+
+                var rec = new GLAccountSrcLineDTO();
+                rec.RawLine = rawLine;
+
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    HasHeaderRecord = false,
+                    IgnoreBlankLines = false,
+                    TrimOptions = TrimOptions.Trim,
+                };
+
+                string[] values = null;
+
+                using (var reader = new StringReader(rawLine))
+                using (var csv = new CsvReader(reader, config))
+                {
+                    if (csv.Read())   
+                    {
+                        values = csv.Parser.Record;
+                    }
+                }
+                //string[] values = rawLine.Split(',').Select(sValue => sValue.Trim()).ToArray();
+                int count = values.Count();
+                if (count > 0) rec.ChartType = values[0];
+                if (count > 1) rec.InternalNumber = values[1].TrimStart('0');
+                if (count > 2) rec.DisplayNumber = values[2].TrimStart('G');
+                if (count > 3) rec.LocalName = values[3].Trim().Trim('"');
+                if (count > 4) rec.EnglishName = values[4].Trim().Trim('"');
+                if (count > 5) rec.ChartCode = values[5].TrimStart('G');
+                if (count > 6) rec.CurrencyCode = values[6].ToUpperInvariant();
+                if (count > 7)
+                {
+                    rec.MultiCurrency = values[7];
+                    rec.IsMulti = (rec.MultiCurrency == "1" || rec.MultiCurrency == "Y" || rec.MultiCurrency == "y");
+                }
+                if (count > 8) rec.RecoMethod = values[8];
+                if (count > 9)
+                {
+                    rec.Exempt = values[9];
+                    rec.IsExempt = (rec.Exempt == "1" || rec.Exempt == "Y" || rec.Exempt == "y");
+                }
+
+
+
+                return rec;
+            }
+            catch (Exception e)
             {
-                string text = TranslateTextsClassTranslate("GLAccountsCSV.O.DoesntStartWithCoAType", 0, useLocal);
-                throw new ApplicationException($"{text} {RowType.ToString()} ");
+                throw;
             }
-
-            var rec = new GLAccountSrcLineDTO();
-            rec.RawLine = rawLine;
-
-            string[] values = rawLine.Split(',').Select(sValue => sValue.Trim()).ToArray();
-            int count = values.Count();
-            if (count > 0) rec.ChartType = values[0];
-            if (count > 1) rec.InternalNumber = values[1].TrimStart('0');
-            if (count > 2) rec.DisplayNumber = values[2].TrimStart('G');
-            if (count > 3) rec.LocalName = values[3];
-            if (count > 4) rec.EnglishName = values[4];
-            if (count > 5) rec.ChartCode = values[5].TrimStart('G');
-            if (count > 6) rec.CurrencyCode = values[6].ToUpperInvariant();
-            if (count > 7) 
-            { 
-                rec.MultiCurrency = values[7];
-                rec.IsMulti = (rec.MultiCurrency == "1" || rec.MultiCurrency == "Y" || rec.MultiCurrency == "y");
-            }
-            if (count > 8) rec.RecoMethod = values[8];
-            if (count > 9)
-            {
-                rec.Exempt = values[9];
-                rec.IsExempt = (rec.Exempt == "1" || rec.Exempt == "Y" || rec.Exempt == "y");
-            }
-
-
-
-            return rec;
         }
 
     }
