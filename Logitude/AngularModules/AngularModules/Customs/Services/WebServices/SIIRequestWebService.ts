@@ -7,9 +7,9 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { SIIRequestPM } from '../../EntityPMs/SIIRequestPM';
 import { SupplierInvoiceItemsReqListPM } from '../../EntityPMs/SupplierInvoiceItemsReqListPM';
-import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
 
 @Injectable()
 
@@ -33,11 +33,20 @@ export class SIIRequestWebService {
             serviceResponse = new ServiceResponse();
             return this._http.get(this._apiUrl + "/GetSingle/?declarationId=" + declarationId + "&id=" + id, ServiceHelper.GetHttpHeaders()).pipe(
                 map((response: HttpResponse<any>) => {
-                    var entity: SIIRequestPM;
+                    let entity: SIIRequestPM = null;
+
                     if (response) {
                         entity = this.MapJsonToEntityPM(response);
+                        if (entity) {
+                            entity.IsDirty = false;
+
+                            if (entity.SupplierInvoiceItemsReqLists) {
+                                entity.SupplierInvoiceItemsReqLists.forEach(x => x.IsDirty = false);
+                            }
+                        }
                     }
-                    var serviceResponse: ServiceResponse = new ServiceResponse();
+
+                    const serviceResponse = new ServiceResponse();
                     serviceResponse.Result = entity;
                     return serviceResponse;
                 }), catchError(ServiceHelper.HandleServiceError));
