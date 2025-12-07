@@ -18,7 +18,7 @@ import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo'
 import { FeatureLocator } from '../../../core/Infrastructure/Utilities/FeatureLocator';
 import { InfrastructureDomainService } from '../../../core/Infrastructure/Services/InfrastructureDomainService';
 import { LoginService } from '../../../core/Infrastructure/Services/LoginService';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RomanToolService } from '../../services/roman-tool.service';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { PreferenceMenuComponent } from '../preference-menu/preference-menu';
@@ -69,7 +69,7 @@ export class MainDisplayComponent implements OnInit {
 	defualtCbCollapseSearchHierarchy: boolean = false;
 
 	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private preferencesService: PreferencesService,
-		private filterPopupService: FilterPopupService, private addCommentService: AddCommentService, private loginService: LoginService,
+		private route: ActivatedRoute, private filterPopupService: FilterPopupService, private addCommentService: AddCommentService, private loginService: LoginService,
 		private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService) {
 		this.screenWidth = window.innerWidth;
 	}
@@ -86,7 +86,7 @@ export class MainDisplayComponent implements OnInit {
 				this.InitData();
 			}
 		});
-		
+
 		this.checkDefaultCB_CollapseSearchHierarchy();
 		this.ListenToItemsSearched();
 		this.getByIsDiscountCodes();
@@ -463,8 +463,20 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	handleClearResultsClick() {
+		this.clearSearchValue();
 		this.handleClearResults();
 		this.searchService.SetSearchText("");
+	}
+
+	clearSearchValue() {
+		const url = this.searchService.getDecodeUrl(window.location.href);
+		let searchValue = this.searchService.getParameterByName('searchValue', url);
+		if (!AppTool.IsNullOrEmpty(searchValue)) {
+			const currentUrl = new URL(url);
+			currentUrl.searchParams.set("searchValue", "");
+			window.history.replaceState({}, "", currentUrl.toString());
+			window.location.reload();
+		}
 	}
 
 	handleClearResults() {

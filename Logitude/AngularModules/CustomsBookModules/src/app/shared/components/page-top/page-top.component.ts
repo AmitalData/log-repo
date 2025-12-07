@@ -45,7 +45,7 @@ export class PageTopComponent implements AfterViewInit {
 		this.headerService.searchState$.subscribe((searchText) => {
 			this.currentSearchState = searchText;
 		});
-		this.searchService.searchText$.subscribe((searchText) => {
+		this.searchService.searchTextFromHost.subscribe((searchText) => {
 			this.textToSearch = searchText;
 			this.clickSearch();
 		});

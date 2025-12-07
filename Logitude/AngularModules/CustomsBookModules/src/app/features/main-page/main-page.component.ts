@@ -59,6 +59,7 @@ export class MainPageComponent implements OnInit {
 		if (!AppTool.IsNullOrEmpty(searchValue)) {
 			this.isLoadingMode.next(true);
 			this.searchService.SetSearchText(searchValue);
+			this.searchService.searchTextFromHost.next(searchValue);
 		}
 	}
 

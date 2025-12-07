@@ -4,12 +4,13 @@ import { HostScreenService } from './host-screen.service';
 import { AppTool } from '../Infrastructure/Tools';
 import { LoginService } from '../Infrastructure/Services/LoginService';
 import { SessionLocator } from '../Infrastructure/Utilities/SessionLocator';
+import { SearchService } from '../../shared/components/page-top/service/top-page.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HostScreenGuardService implements CanActivate {
-  constructor(public hostScreen: HostScreenService, public router: Router, public activatedRoute: ActivatedRoute, private loginService: LoginService) { }
+  constructor(private searchService: SearchService, public hostScreen: HostScreenService, public router: Router, public activatedRoute: ActivatedRoute, private loginService: LoginService) { }
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     let url = state.url;
@@ -34,19 +35,19 @@ export class HostScreenGuardService implements CanActivate {
 
 
   checkHostScreen(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> | boolean {
-    let AmitalSSOAngular = this.getParameterByName(
+    let AmitalSSOAngular = this.searchService.getParameterByName(
       'AmitalSSOAngular',
       window.location.href
     );
-    let amitaltoken = this.getParameterByName(
+    let amitaltoken = this.searchService.getParameterByName(
       'token',
       window.location.href
     );
-    let amitaltenant = this.getParameterByName(
+    let amitaltenant = this.searchService.getParameterByName(
       'tenant',
       window.location.href
     );
-    let searchValue = this.getParameterByName(
+    let searchValue = this.searchService.getParameterByName(
       'searchValue',
       window.location.href
     );
@@ -77,15 +78,6 @@ export class HostScreenGuardService implements CanActivate {
       }
     }
 
-  }
-  getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-      results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
 
   private initLoginHost(): Promise<boolean> {
