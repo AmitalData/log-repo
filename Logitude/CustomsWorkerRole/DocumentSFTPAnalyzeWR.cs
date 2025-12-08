@@ -41,13 +41,10 @@ using WebFreight.Web.Security;
 
 namespace CommunicationWorkerRole
 {
-	public class DocumentSFTPAnalyzeWR : WorkerEntryPoint
+	public class DocumentSFTPAnalyzeWR : CustomsWorkerEntryPoint
 	{
 		AnalyzeQueue AnalyzeQueue;
-		DocumentApiExecutionService DocumentApiExecutionService;
-		UnifreightFillingService UnifreightFillingService;
-		static string connectionString;
-		static string queueName;
+		
 		static string logs;
 		int tenant = 0;
 		bool _OnStartDone = false;
@@ -55,24 +52,24 @@ namespace CommunicationWorkerRole
 		//DbQueueService queueservice;
 		public override void Run()
 		{
-			while (IsRunning)
+			while (true)
 			{
-				if (LogitudeSettings.WorkerRoleName.ToLower() != "staging")
+				if (!General.IsUpdating())
 				{
 					try
 					{
 						WorkOnce();
+						Thread.Sleep(TimeSpan.FromSeconds(1));
+
 					}
-					catch (Exception e)
+					catch (Exception exception)
 					{
-						ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "TranzilaPaymentMessageAnalyzeWR : Run() Method", null);
-						Thread.Sleep(5000);
+						Thread.Sleep(new TimeSpan(0, 0, 1));
+						NetCommonHelper.Logger.DevLog.Instance.WriteError(exception.Message.ToString());
+
 					}
 				}
-				else
-				{
-					Thread.Sleep(60000);
-				}
+				else Thread.Sleep(new TimeSpan(0, 0, 1));
 			}
 		}
 		public override void WorkOnce()
@@ -474,25 +471,14 @@ namespace CommunicationWorkerRole
 		}
 		public override bool OnStart()
 		{
-			// Set the maximum number of concurrent connections 
-			ServicePointManager.DefaultConnectionLimit = 12;
 
 			ThreadId = Guid.NewGuid().ToString();
 			DoneItemsInRange = new Dictionary<DateTime, int>();
-			RoleEnvironment.Changing += RoleEnvironmentChanging;
 
 			return base.OnStart();
 		}
 
-		private void RoleEnvironmentChanging(object sender, RoleEnvironmentChangingEventArgs e)
-		{
-			// If a configuration setting is changing
-			if (e.Changes.Any(change => change is RoleEnvironmentConfigurationSettingChange))
-			{
-				// Set e.Cancel to true to restart this role instance
-				e.Cancel = true;
-			}
-		}
+		
 		public void DebugStep()
 		{		
 			ExecuteQueue();
