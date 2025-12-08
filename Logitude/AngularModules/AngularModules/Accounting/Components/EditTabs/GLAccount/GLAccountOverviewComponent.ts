@@ -809,7 +809,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
     GetTotalObligo() {
         return this.OpenShipments +
             ((this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)) +
-            (this.GLAccountMoreData.BalanceInLocalCurrency ?this. GLAccountMoreData.BalanceInLocalCurrency : 0);
+            (this.GLAccountMoreData.BalanceInLocalCurrency ?this. GLAccountMoreData.BalanceInLocalCurrency : 0) +
+             (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTP")[0]? this.EntityPM.TotalOpenChequesInLocalCur : 0);
+            
     }
     //
 

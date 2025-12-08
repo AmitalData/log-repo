@@ -1058,6 +1058,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "TRO,Tax Report Journal Optimization",
                 Description = "Tax Report Journal Optimization ",
             });
+            all.Add(new ToggleDetails()
+            {
+                Code = "CTP",
+                Name = "Calculate With Total Past Open Cheques",
+                SearchFields = "CTP,Calculate With Total Past Open Cheques",
+                Description = "Calculate With Total Past Open Cheques",
+            });
             return all;
        }
 
