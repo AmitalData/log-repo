@@ -35,7 +35,7 @@ namespace Logitude.Server.Tools.QueueService
 
         public DbQueueService(string queueCode, int tenant)
         {
-            int? tenantConfig = SettingUtil.GetTenantDBFromConfig();
+            int? tenantConfig = SettingUtil.GetCurrentTenant();
 
 
             this.InitializeQueue(queueCode, tenantConfig ?? tenant);
