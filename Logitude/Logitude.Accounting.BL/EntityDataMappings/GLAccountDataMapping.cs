@@ -1,16 +1,7 @@
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using Logitude.Server.Tools;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -20,19 +11,29 @@ using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.Global
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
-using System.Web;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.Interfaces;
-using Microsoft.Practices.Unity;
-using Logitude.BL.Helpers;
-using Logitude.BL.Resolvers;
-using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Enums;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.Interfaces;
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -602,12 +603,22 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 if (entityPM.Access == false)
                     ResetAccountBalances(entityPM);
             }
-            
-             entityPM.TotalOpenChequesInLocalCur = GetTotalOpenChequesInLocalCur(entityPM);
-           
-           
+            if(entityPM.AccountTypeCode == GLAccountTypeValues.Client) 
+            {
+			  entityPM.CustomerDebtNotification = GetCustomerDebtNotificationByAccountId(entityPM);
+            }
+
+            entityPM.TotalOpenChequesInLocalCur = GetTotalOpenChequesInLocalCur(entityPM);
         }
-        private static void ResetAccountBalances(GLAccountPM account)
+
+        private CustomerDebtNotificationPM GetCustomerDebtNotificationByAccountId(GLAccountPM accountPM)
+        {
+			IAccountingContext MyContext = AccountingContext.GetContext(accountPM.Tenant);
+			CustomerDebtNotificationQueryService customerDebtNotificationQueryServiceQuery = new CustomerDebtNotificationQueryService(MyContext);
+			return customerDebtNotificationQueryServiceQuery.GetCustomerDebtNotificationByAccountId(accountPM.Tenant, accountPM.Id);
+		}
+
+		private static void ResetAccountBalances(GLAccountPM account)
         {
             account.BalanceInForeignCurrency = 0;
             account.BalanceInLocalCurrency = 0;

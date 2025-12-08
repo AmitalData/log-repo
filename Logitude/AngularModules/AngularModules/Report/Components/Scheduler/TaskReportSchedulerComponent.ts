@@ -29,7 +29,10 @@ export class TaskReportSchedulerComponent implements OnInit {
     public BIReportEntity: any;
     public IsBIReport: boolean;
     public IsQueryReport: any;
-
+    public IsCustomerDebNotification: any;
+    public GLAccountId: string;
+    public TaskSchedulerId: string;
+    public TaskSchedulerIdMaintenance: string
     filterAgrs: ApiQueryFilters;
     SchedulerType: string = "Report";
     IsEditReportSchedulerEventAlreadyExist: boolean = false;
@@ -66,7 +69,11 @@ export class TaskReportSchedulerComponent implements OnInit {
         this.ReportList = windowArgs.ReportList;
         this.BIReportEntity = windowArgs.BIReportEntity;
         this.IsQueryReport = windowArgs.IsQueryReport;
-     
+        this.IsCustomerDebNotification = windowArgs.IsCustomerDebNotification;
+        this.GLAccountId = windowArgs.GLAccountId;
+        this.TaskSchedulerId = !AppTool.IsNullOrEmpty(windowArgs.TaskSchedulerId) ? windowArgs.TaskSchedulerId : "empty";
+        this.TaskSchedulerIdMaintenance = windowArgs.TaskSchedulerIdMaintenance;
+
         if (this.BIReportEntity) {
             this.IsBIReport = true;
         }
@@ -113,6 +120,10 @@ export class TaskReportSchedulerComponent implements OnInit {
         windowArgs.ReportList = this.ReportList;
         windowArgs.BIReportEntity = this.BIReportEntity;
         windowArgs.IsQueryReport = this.IsQueryReport;
+        windowArgs.IsCustomerDebNotification = this.IsCustomerDebNotification;
+        windowArgs.GLAccountId = this.GLAccountId;
+        windowArgs.TaskSchedulerIdMaintenance = this.TaskSchedulerIdMaintenance;
+
         var logWindow = new LogitudeWindow();
         logWindow.Height = 820;
         logWindow.Width = 1250;
@@ -121,6 +132,9 @@ export class TaskReportSchedulerComponent implements OnInit {
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
         logWindow.WindowClosed.subscribe(closed => {
+            if(this.IsCustomerDebNotification){
+               this.TaskSchedulerId = closed;
+            }
             this.IsEditReportSchedulerEventAlreadyExist = false;
         });
     }
@@ -136,6 +150,9 @@ export class TaskReportSchedulerComponent implements OnInit {
         windowArgs.BIReportEntity = this.BIReportEntity;
         windowArgs.TasksSchedulerId = DataContext.EntityPM.Id;
         windowArgs.IsQueryReport =  DataContext.EntityPM.ProcedureCode == 'QueryReport' ? true : false;
+        windowArgs.IsCustomerDebNotification =  DataContext.EntityPM.ProcedureCode == 'CustomerDebNotificationsTask' ? true : false;
+        windowArgs.GLAccountId = this.GLAccountId;
+        
         var logWindow = new LogitudeWindow();
         DataContext.fatherComponent = this;
         logWindow.DataContext = DataContext;
@@ -145,6 +162,9 @@ export class TaskReportSchedulerComponent implements OnInit {
         logWindow.Width = 1250;
         logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
         logWindow.WindowClosed.subscribe(closed => {
+            if(this.IsCustomerDebNotification){
+                this.TaskSchedulerId = closed;
+             }
             this.IsEditReportSchedulerEventAlreadyExist = false;
         });
     }
@@ -307,9 +327,11 @@ export class TaskReportSchedulerComponent implements OnInit {
         filters.addAdditionalFilter("EntityId", entityId, null, null, "Equals", true, false, false, "String");
 
 
-        let taskProcedureCode = this.IsBIReport ? "BIReportSchedulerTask" :this.IsQueryReport? "QueryReport" : "ReportSchedulerTask";
+        let taskProcedureCode = this.IsBIReport ? "BIReportSchedulerTask" :this.IsQueryReport? "QueryReport" :this.IsCustomerDebNotification? "CustomerDebNotificationsTask" : "ReportSchedulerTask";
         filters.addAdditionalFilter("ProcedureCode", taskProcedureCode, null, null, "Equals", true, false, false, "String");
-
+        if (this.IsCustomerDebNotification) {
+            filters.addAdditionalFilter("Id", this.TaskSchedulerId, null, null, "Equals", false, false, false, "String");
+        }
         
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
             filters.addAdditionalFilter("Name", this.SearchFilter, null, null, "Contains", true, false, false, "String");
@@ -349,7 +371,10 @@ export class TaskReportSchedulerComponent implements OnInit {
         }
 
         this.filterAgrs.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
-
+        
+        if (this.IsCustomerDebNotification) {
+            this.filterAgrs.addAdditionalFilter("Id", this.TaskSchedulerId, null, null, "Equals", false, false, false, "String");
+        }
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
             this.filterAgrs.addAdditionalFilter("Name", this.SearchFilter, null, null, "Contains", true, false, false, "String");
         }

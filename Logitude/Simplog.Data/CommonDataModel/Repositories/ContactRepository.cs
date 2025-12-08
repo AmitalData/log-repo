@@ -649,8 +649,22 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return contacts?.Id.ToString(); 
         }
+		public List<Contact> GetContactsForAccountingByGLAccountId(string glAccountId, int tenant)
+		{
+			var contacts = (
+			from contact in context.Contacts
+			join cardContact in context.CardContacts on contact.Id equals cardContact.ContactId
+			join card in context.Cards on cardContact.CardId equals card.Id
+			where contact.ContactForAccounting == true
+			&& card.GLAccountId == glAccountId
+			&& card.Tenant == tenant
+			select contact
+			).Distinct().ToList();
 
-        public Contact GetContactByEmail(string email, int tenant)
+			return contacts;
+		}
+
+		public Contact GetContactByEmail(string email, int tenant)
         {
             return context.Contacts
             .Where(a => (a.Tenant == tenant || a.Tenant == 0) && a.Email == email.ToLower())

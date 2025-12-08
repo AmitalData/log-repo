@@ -169,8 +169,8 @@ import { GLAccountInterestTransactionsComponent } from './Components/EditTabs/GL
 import { GlAccountInterestTransactionsListTemplate } from './Components/ListTemplates/GlAccountInterestTransactionsListTemplate';
 import { NewNLogComponent } from './Components/Maintenance/NewNLogComponent';
 import { InvoiceApiCommunicationLogDetailsTabComponent } from './Components/EditTabs/InvoiceApi/InvoiceApiCommunicationLogDetailsTabComponent';
+import { CustomerDebtNotificationComponent } from './Components/Maintenance/CustomerDebtNotificationComponent';
 
-//import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
 
 
@@ -229,9 +229,9 @@ export const Components =
         Receiving1000Component,
         AccountingFunctionalTestComponent,
         UploadExpensesComponent,
+        CustomerDebtNotificationComponent,
         //Edit Tabs
         GLAccountGeneralTabComponent,
-        //CashBookGeneralTabComponent,
         GLAccountOverviewComponent,
         GLAccountTransactionsTabComponent,
         GLAccountInterestTransactionsComponent,
@@ -414,9 +414,10 @@ export class ModuleDeclarations {
             case "Receiving1000Component": { myResult = Receiving1000Component; break; }
             case "AccountingFunctionalTestComponent": { myResult = AccountingFunctionalTestComponent; break; }
             case "UploadExpensesComponent": { myResult = UploadExpensesComponent; break; }
+            case "CustomerDebtNotificationComponent": { myResult = CustomerDebtNotificationComponent; break; }
+
             //Edit Tabs
             case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }
-            //case "CashBookGeneralTabComponent": { myResult = CashBookGeneralTabComponent; break; }
             case "GLAccountOverviewComponent": { myResult = GLAccountOverviewComponent; break; }
             case "GLAccountTransactionsTabComponent": { myResult = GLAccountTransactionsTabComponent; break; }
             case "GLAccountInterestTransactionsComponent": { myResult = GLAccountInterestTransactionsComponent; break; }

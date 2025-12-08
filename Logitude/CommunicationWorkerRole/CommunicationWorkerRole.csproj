@@ -697,6 +697,7 @@
     <Compile Include="Services\Logbox\ImporterEventTypesService.cs" />
     <Compile Include="Services\Logbox\ImporterPortService.cs" />
     <Compile Include="Services\QueryReportService.cs" />
+    <Compile Include="Services\CustomerDebNotificationsTaskService.cs" />
     <Compile Include="Services\SAT\SATBaseService.cs" />
     <Compile Include="Services\SAT\SATData.cs" />
     <Compile Include="Services\SAT\SATUpdateEntityHelper.cs" />
@@ -722,6 +723,7 @@
     <Compile Include="Tasks\InvoiceApiQueryTask.cs" />
     <Compile Include="Tasks\ReconcileInProgressCleanupTask.cs" />
     <Compile Include="Tasks\QueryReport.cs" />
+    <Compile Include="Tasks\CustomerDebNotificationsTask.cs" />
     <Compile Include="Tasks\UpdateCanceledSATEntitiesStatusesTask.cs" />
     <Compile Include="Tasks\ResetFullTextSearchIndexChangeTrackingTask.cs" />
     <Compile Include="UpdateContainerStatusWorkerRole.cs" />
