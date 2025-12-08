@@ -9271,5 +9271,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+     <Feature
+      Code="&quot;General.Features.CustomerDebtNotification&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.General.Features.CustomerDebtNotification&quot;"
+      FeatureDefaultText="&quot;Customer Debt Notification&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

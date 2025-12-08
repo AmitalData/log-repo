@@ -407,6 +407,7 @@
     <Compile Include="CloseTables\EnumGenerated\VatReportStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\InvoiceApiStatusEnum.cs" />
     <Compile Include="CloseTables\InvoiceApiStepEnum.cs" />
+    <Compile Include="CloseTables\CustomerDebtNotificationEnum.cs" />
     <Compile Include="CloseTables\GLAccountTotalDateTypeEnum.cs" />
     <Compile Include="CoreBL\AccountBalanceByDateCodeService.cs" />
     <Compile Include="CoreBL\AccountBalanceService.cs" />
@@ -842,6 +843,7 @@
     <Compile Include="EntityQueryServiceExt\GLAccountWithholdingTaxQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\JournalQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\PaymentChequeQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServices\GLAccountRecocileDataQueryService.cs" />
     <Compile Include="EntityQueryServices\InvoiceApiCommunicationLogQueryService.cs" />
     <Compile Include="EntityQueryServices\AccountingIntegrityCheckQueryService.cs" />
     <Compile Include="EntityQueryServices\AccountingCompanyTypeQueryService.cs" />
@@ -860,6 +862,7 @@
     <Compile Include="EntityQueryServices\Category4QueryService.cs" />
     <Compile Include="EntityQueryServices\Category5QueryService.cs" />
     <Compile Include="EntityQueryServices\ChartOfAccountsTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\CustomerDebtNotificationQueryService.cs" />
     <Compile Include="EntityQueryServices\ExternalReconciliationLineQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AccountingCompanyTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AccountingEntityJournalQueryService.Generated.cs" />

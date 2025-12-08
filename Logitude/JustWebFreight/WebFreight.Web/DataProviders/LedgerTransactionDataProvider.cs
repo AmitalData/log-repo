@@ -84,7 +84,7 @@ namespace WebFreight.Web.DataProviders
         public string OppositeAccountDisplayNumber { get; set; }
         public string OppositeAccountLocalName { get; set; }
         public string OppositeAccountEnglishName { get; set; }
-
+        public string PaymentNotes { get; set; }
         // foreign fields
         public string GLAccountRecoMethodCode { get; set; }
         public string TenantCurrencySign { get; set; }

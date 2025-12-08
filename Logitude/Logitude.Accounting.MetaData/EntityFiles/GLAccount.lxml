@@ -19101,7 +19101,12 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;APPayment.O.VendorGLAccount&quot;"
+      Code="&quot;GLAccounts.Q.DisplayOpenFiles&quot;"
+      DefaultText="&quot;Display Open Files&quot;"
+      LocalDefaultText="&quot;הצג תיקים פתוחים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode      Code="&quot;APPayment.O.VendorGLAccount&quot;"
       DefaultText="&quot;The vendor is not connected to GLAccount&quot;"
       LocalDefaultTextBack_up="&quot;הספק לא קושר לכרטיס הנהלת חשבונות&quot;"
       LocalDefaultText="&quot;BS64:IteU16HXpNenINec15Ag16fXldep16gg15zXm9eo15jXmdehINeU16DXlNec16og15fXqdeR15XXoNeV16oi&quot;"

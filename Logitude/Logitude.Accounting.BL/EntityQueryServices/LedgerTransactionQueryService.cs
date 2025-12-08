@@ -1590,6 +1590,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             return repository.ExistsLedgerTransactionByReferenceGLAccountId(reference1, gLAccountId, tenant);
         }
+
+
+        public LedgerTransactionList GetSingleAsLiteForReco(string transactionId)
+        {
+            return repository.GetSingleAsLiteForReco(transactionId);
+        }
     }
     public class JournalLineLedgerDTO
     {

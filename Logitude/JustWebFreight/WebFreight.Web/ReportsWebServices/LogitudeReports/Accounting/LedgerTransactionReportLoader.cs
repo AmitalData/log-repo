@@ -23,6 +23,7 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Customs.BL.CloseTables;
 using System.Globalization;
+using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -255,10 +256,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 transactionsAccounts = GetGLAccountsInsideTransactions(transactions);
 
             transactionsDataProvider.Transactions = new List<ReportLedgerTransaction>();
-
+            CustomerDebtNotificationRepository customerDebtNotificationRepository = new CustomerDebtNotificationRepository(tenant);
             foreach (LedgerTransactionList transaction in transactions)
             {
-                ReportLedgerTransaction reportTransaction = GetReportNewLedgerTransaction(transaction);
+				CustomerDebtNotification customerDebtNotification = customerDebtNotificationRepository.GetCustomerDebtNotificationByAccountId(tenant, transaction.AccountId);
+				ReportLedgerTransaction reportTransaction = GetReportNewLedgerTransaction(transaction, customerDebtNotification?.PaymentNotes);
                 FillReportTransactionGLAccountFields(transactionsAccounts, reportTransaction);
                 transactionsDataProvider.Transactions.Add(reportTransaction);
             }
@@ -291,7 +293,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         }
 
-        private ReportLedgerTransaction GetReportNewLedgerTransaction(LedgerTransactionList transaction)
+        private ReportLedgerTransaction GetReportNewLedgerTransaction(LedgerTransactionList transaction,string paymentNotes)
         {
             return new ReportLedgerTransaction
             {
@@ -346,8 +348,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 CumulativeOpenAmount = transaction.CumulativeOpenAmount,
 
                 IsExternalEntity = transaction.IsExternalEntity,
-
-            };
+				PaymentNotes = paymentNotes
+			};
         }
 
         private void FillPrintingInformation()

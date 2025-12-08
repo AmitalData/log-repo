@@ -1,35 +1,36 @@
-﻿using Logitude.Accounting.BL.CoreBL.Mapping;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL.Mapping;
+using Logitude.Accounting.BL.CoreBL.Reports.Aging;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Utils;
+using Newtonsoft.Json;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.SqlServer;
+using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Logitude.Server.Tools.Helpers;
-using System.Diagnostics;
-using Logitude.Accounting.BL.CloseTables;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
-using System.Data.Entity.SqlServer;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Simplog.Data.CommonDataModel;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Data.Helpers;
-using Logitude.Server.Tools;
-using Logitude.Accounting.BL.CoreBL.Reports.Aging;
-using Logitude.Server.Tools.Utils;
-using Logitude.Server.Tools.Helpers;
-using System.Reflection;
-using System.Data.Entity;
-using Newtonsoft.Json;
 
 namespace Logitude.Accounting.BL.CoreBL.Reports
 {
@@ -103,6 +104,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var repoLedgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
             _myGLAccountQueryService = new GLAccountQueryService(_AccountingContext);
             _myGLAccountRepository = new GLAccountRepository(_AccountingContext);
+            string creditLineNotes = "החזרת שיק ללקוח";
 
 
             if (!FilterAccountPopulation())
@@ -346,7 +348,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                        on acc.CardsDataId equals card.Id into cardJoinT
                       from card in cardJoinT.DefaultIfEmpty()
 
-                     
+                      join AllARPaymentCheque in _AccountingContext.AllARPaymentChequesViews on acc.Id equals AllARPaymentCheque.AccountId
+
+                     into AllARPaymentChequeJoin
+                      from AllARPaymentCheque in AllARPaymentChequeJoin.DefaultIfEmpty()
+
+                    
+
                       let glaPeriod = _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant && r.GLAccountId == acc.Id && r.PeriodStartDate <= currentDate && acc.ActiveForInterest)
                       .OrderByDescending(d => d.PeriodStartDate).FirstOrDefault()
                       let basePeriod = _AccountingContext.InterestBasesPeriods.Where(d => d.InterestBaseTypeId == glaPeriod.StandardInterestRateBaseId)
@@ -400,7 +408,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                           TotalOpenShipments = card != null ? card.TotalOpenShipments : (applCard != null ? (opf != null ? opf.TotalOpenFilesAmount : 0) : 0),
                           TotalFutureOpenCheques = moredata != null ? (decimal)moredata.TotFutureOpenChequesInLocalCur : 0,
-                          TotalOpenCheques = moredata != null ? (decimal)moredata.TotalOpenChequesInLocalCur : 0,
+                          TotalOpenCheques = AllARPaymentChequeJoin
+                         .Where(A => A.ValueDate <= DateTime.Now && A.Notes != creditLineNotes)
+                         .Sum(A => (decimal?)A.LocalAmountCredit) ?? 0,
                           IsMultiCurrency = acc.IsMultiCurrency,
                           AccountEnglishName = acc.EnglishName,
                           AccountLocalName = acc.LocalName,

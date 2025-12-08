@@ -45,7 +45,7 @@ namespace CommunicationWorkerRole.Services
 {
     public class ReportSchedulerTaskService
     {
-
+        public bool IsCUstomerDebitNotification = false;
         int trackerCounter = 0;
         string[,] trackerLogs = new string[,] //tracker(Step, DateTime)
         {
@@ -98,19 +98,23 @@ namespace CommunicationWorkerRole.Services
             }
         }
 
-        private void SendReportToFTP(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
+        public void SendReportToFTP(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
         {
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report data"));
             MemoryStream memoryStream = GetMemoryStreamAfterExportDocument(reportTask, reportFilter);
-            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-            this.trackerCounter += 1;
-            if (memoryStream != null && schedulerDetails.FTPDetails != null)
+            if (!IsCUstomerDebitNotification)
             {
-
-                this.trackerLogs[trackerCounter, 0] = "Uploading report to ftp";
                 this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
                 this.trackerCounter += 1;
-
+            }
+            if (memoryStream != null && schedulerDetails.FTPDetails != null)
+            {
+                if (!IsCUstomerDebitNotification)
+                {
+                    this.trackerLogs[trackerCounter, 0] = "Uploading report to ftp";
+                    this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+                    this.trackerCounter += 1;
+                }
                 string p_message = "";
                 string p_status = "";
                 string schedulerFormatExtension = reportTask.Format == "PDF" ? "pdf" : "xlsx";
@@ -155,7 +159,7 @@ namespace CommunicationWorkerRole.Services
             return memoryStream;
         }
 
-        private void SendPdfReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
+        public void SendPdfReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
         {
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report data"));
             schedulerDetails.ReportDetails.Recepients = GetReportPermittedContacts(reportTask, schedulerDetails);
@@ -231,15 +235,18 @@ namespace CommunicationWorkerRole.Services
             }
         }
 
-        private SchedulerDetails GetSchedulerDetails(TasksSchedulerPM reportTask)
+        public SchedulerDetails GetSchedulerDetails(TasksSchedulerPM reportTask)
         {
             SchedulerDetails schedulerDetails = LogitudeXmlSerializer.DeserializeObject<SchedulerDetails>(reportTask.SchedulerDetailsXML);
             schedulerDetails.Tenant = reportTask.Tenant;
             schedulerDetails = ModifyNullFilters(schedulerDetails);
 
-            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-            this.trackerCounter += 1;
-            return schedulerDetails;
+			if (!IsCUstomerDebitNotification)
+			{
+				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+				this.trackerCounter += 1;
+			}
+			return schedulerDetails;
         }
 
         private string GetFilterFieldValueByName(List<QueryFilterItem> reportFilterItems, string fieldName)
@@ -399,7 +406,7 @@ namespace CommunicationWorkerRole.Services
             return schedulerDetails;
         }
 
-        private ReportFliter GetReportFilters(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails)
+        public ReportFliter GetReportFilters(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails)
         {
             ReportQuery reportQuery = new ReportQuery(reportTask.Tenant);
             string reportCode = reportQuery.GetReportCodeById(reportTask.EntityId, reportTask.Tenant);
@@ -416,9 +423,11 @@ namespace CommunicationWorkerRole.Services
                 IsSchedulerReport = true,
                 SendIfEmpty = schedulerDetails.SendIfEmpty,
             };
-
-            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-            this.trackerCounter += 1;
+			if (!IsCUstomerDebitNotification) 
+            {
+				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+                this.trackerCounter += 1;
+            }
             return reportFilter;
         }
 
@@ -434,9 +443,11 @@ namespace CommunicationWorkerRole.Services
                 ReportHelper reportHelper = new ReportHelper();
                 stiReport = reportHelper.GetStimulReportByReportFilter(reportFilter);
             }
-
-            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-            this.trackerCounter += 1;
+            if (!IsCUstomerDebitNotification)
+            {
+                this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+                this.trackerCounter += 1;
+            }
             return stiReport;
         }
 
@@ -455,9 +466,12 @@ namespace CommunicationWorkerRole.Services
             {
                 stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
             }
-            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-            this.trackerCounter += 1;
-            if (memoryStream == null)
+			if (!IsCUstomerDebitNotification) 
+            { 
+				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+                this.trackerCounter += 1;
+			}
+			if (memoryStream == null)
             {
                 return documentId;
             }
@@ -492,9 +506,11 @@ namespace CommunicationWorkerRole.Services
             documentRepository.Add(document);
             documentRepository.SubmitChanges();
             StoredDocumentInBlob(document, reportScedulerDocumentArgs.Tenant, reportScedulerDocumentArgs.ByteData);
-            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-            this.trackerCounter += 1;
-
+			if (!IsCUstomerDebitNotification) 
+            { 
+				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+                this.trackerCounter += 1;
+            }
             return document.Id;
         }
 
@@ -724,8 +740,11 @@ namespace CommunicationWorkerRole.Services
             string reportTableId = GetReportTableId(args.reportTask.Tenant);
             string subject = !string.IsNullOrEmpty(emailDetails.Subject) ? emailDetails.Subject : args.reportTask.Name;
             htmlEditorHelper.SendHtmlDocument(emailDetails.Body, null, null, args.reportTask.Tenant, args.recepients.To, subject, args.recepients.Cc, args.recepients.Bcc, args.reportTask.CreatedBy, args.reportTask.EntityId, reportTableId, args.documentId + ",", "", "", "");
-            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-            this.trackerCounter += 1;
+			if (!IsCUstomerDebitNotification) 
+            { 
+				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+               this.trackerCounter += 1;
+            }
         }
         public EmailDetails GetEmailDetailsByMessageTemplateId(GetEmailDetailsByMessageTemplateIdArgs args)
         {

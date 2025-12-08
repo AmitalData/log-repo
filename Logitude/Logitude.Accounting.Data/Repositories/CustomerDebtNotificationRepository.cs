@@ -20,8 +20,17 @@ namespace Logitude.Accounting.Data.Repositories
             
 			throw new NotImplementedException();
         }
-
-   }
+		public CustomerDebtNotification GetCustomerDebtNotificationByTaskSchudler(int tenant, string tasksSchedulerId)
+		{
+			var customerDebtNotificationPM = context.CustomerDebtNotifications.Where(x => x.Tenant== tenant && x.TasksSchedulerId == tasksSchedulerId).FirstOrDefault();
+			return customerDebtNotificationPM;
+		}
+		public CustomerDebtNotification GetCustomerDebtNotificationByAccountId(int tenant, string accountId)
+		{
+			var customerDebtNotificationPM = context.CustomerDebtNotifications.Where(x => x.Tenant == tenant && x.AccountId == accountId).FirstOrDefault();
+			return customerDebtNotificationPM;
+		}
+	}
 
 }
    

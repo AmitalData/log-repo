@@ -1134,6 +1134,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\PartyRelationshipTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\TransactionNatureTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\GatepassRequestController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\DefaultAndConfigurationExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ObjectTableExtendedController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxDeductionReportDataController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\AdditionalCurrencyRateViewsController.Generated.cs" />
@@ -1175,6 +1176,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\SIIRequestExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\SearchIndexEditHistoryViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\SearchIndexEditHistoryController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\CustomerDebtNotificationExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_PreferenceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginConnectionViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RequestHandlingAuthorityViewsController.Generated.cs" />
@@ -1261,6 +1263,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\CB_RuleClassificationExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_RuleClassificationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_RuleClassificationController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\TasksSchedulerExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountRecalculateController.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
