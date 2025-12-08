@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Customer Debt Notifications&quot;"
-  Code="&quot;6305&quot;"
+  Code="&quot;7b2c&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -57,6 +57,7 @@
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
   TenantZeroData="false"
+  ShowFastSearch="false"
   Code1="&quot;a3eb&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -261,10 +262,12 @@
     DisplayLongName="false"
     FullFieldLable="&quot;InActive&quot;"
     DefaultText="&quot;InActive&quot;"
-    FullLocalDefaultText="&quot;פעיל&quot;"
+    FullLocalDefaultTextBack_up="&quot;פעיל&quot;"
+    FullLocalDefaultText="&quot;BS64:Itek16LXmdecIg==&quot;"
     ListFieldLable="&quot;InActiveListLable&quot;"
     ListLableDefaultText="&quot;InActive&quot;"
-    ListLocalDefaultText="&quot;פעיל&quot;"
+    ListLocalDefaultTextBack_up="&quot;פעיל&quot;"
+    ListLocalDefaultText="&quot;BS64:Itek16LXmdecIg==&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -337,10 +340,12 @@
     DisplayLongName="false"
     FullFieldLable="&quot;TypesDebts&quot;"
     DefaultText="&quot;TypesDebts&quot;"
-    FullLocalDefaultText="&quot;סוגי חובות&quot;"
+    FullLocalDefaultTextBack_up="&quot;סוגי חובות&quot;"
+    FullLocalDefaultText="&quot;BS64:Iteh15XXkteZINeX15XXkdeV16oi&quot;"
     ListFieldLable="&quot;TypesDebtsListLable&quot;"
     ListLableDefaultText="&quot;Types of debts&quot;"
-    ListLocalDefaultText="&quot;סוגי חובות&quot;"
+    ListLocalDefaultTextBack_up="&quot;סוגי חובות&quot;"
+    ListLocalDefaultText="&quot;BS64:Iteh15XXkteZINeX15XXkdeV16oi&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -413,10 +418,12 @@
     DisplayLongName="false"
     FullFieldLable="&quot;DebtLevel&quot;"
     DefaultText="&quot;Debt level&quot;"
-    FullLocalDefaultText="&quot;רמת חוב&quot;"
+    FullLocalDefaultTextBack_up="&quot;רמת חוב&quot;"
+    FullLocalDefaultText="&quot;BS64:Iteo157XqiDXl9eV15Ei&quot;"
     ListFieldLable="&quot;DebtLevelListLable&quot;"
     ListLableDefaultText="&quot;Debt level&quot;"
-    ListLocalDefaultText="&quot;רמת חוב&quot;"
+    ListLocalDefaultTextBack_up="&quot;רמת חוב&quot;"
+    ListLocalDefaultText="&quot;BS64:Iteo157XqiDXl9eV15Ei&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -491,10 +498,12 @@
     DisplayLongName="false"
     FullFieldLable="&quot;DebtLevelAmount&quot;"
     DefaultText="&quot;Debt level amount&quot;"
-    FullLocalDefaultText="&quot;סכום חריגה&quot;"
+    FullLocalDefaultTextBack_up="&quot;סכום חריגה&quot;"
+    FullLocalDefaultText="&quot;BS64:Iteh15vXldedINeX16jXmdeS15Qi&quot;"
     ListFieldLable="&quot;DebtLevelAmountListLable&quot;"
     ListLableDefaultText="&quot;Debt level amount&quot;"
-    ListLocalDefaultText="&quot;סכום חריגה&quot;"
+    ListLocalDefaultTextBack_up="&quot;סכום חריגה&quot;"
+    ListLocalDefaultText="&quot;BS64:Iteh15vXldedINeX16jXmdeS15Qi&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -646,10 +655,12 @@
     DisplayLongName="false"
     FullFieldLable="&quot;PaymentNotes&quot;"
     DefaultText="&quot;Payment notes&quot;"
-    FullLocalDefaultText="&quot;הערות לתשלום&quot;"
+    FullLocalDefaultTextBack_up="&quot;הערות לתשלום&quot;"
+    FullLocalDefaultText="&quot;BS64:IteU16LXqNeV16og15zXqtep15zXldedIg==&quot;"
     ListFieldLable="&quot;PaymentNotesListLable&quot;"
     ListLableDefaultText="&quot;Payment notes&quot;"
-    ListLocalDefaultText="&quot;הערות לתשלום&quot;"
+    ListLocalDefaultTextBack_up="&quot;הערות לתשלום&quot;"
+    ListLocalDefaultText="&quot;BS64:IteU16LXqNeV16og15zXqtep15zXldedIg==&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -750,7 +761,15 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false">
+    <ForeignEntitySettings>
+      <Setting
+        IsForeignKey="false"
+        ForeignEntity="&quot;&quot;"
+        DontBuildRelationOnDB="false"
+        NavigationPropertyName="&quot;&quot;" />
+    </ForeignEntitySettings>
+  </field>
   <Screen
     Name="&quot;CustomerDebtNotificationHeaderScreen&quot;"
     ObjectTableName="&quot;CustomerDebtNotification&quot;"
@@ -794,55 +813,64 @@
     <TextCode
       Code="&quot;CustomerDebtNotification.O.DebtNotificationToCustomers&quot;"
       DefaultText="&quot;Debt notification to customers&quot;"
-      LocalDefaultText="&quot;הודעת חוב ללקוחות&quot;"
+      LocalDefaultTextBack_up="&quot;הודעת חוב ללקוחות&quot;"
+      LocalDefaultText="&quot;BS64:IteU15XXk9ei16og15fXldeRINec15zXp9eV15fXldeqIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;CustomerDebtNotification.O.NotActive&quot;"
       DefaultText="&quot;Not Active&quot;"
-      LocalDefaultText="&quot;לא פעיל&quot;"
+      LocalDefaultTextBack_up="&quot;לא פעיל&quot;"
+      LocalDefaultText="&quot;BS64:Itec15Ag16TXoteZ15wi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;CustomerDebtNotification.O.ActiveAllCustomers&quot;"
       DefaultText="&quot;Active for all customers&quot;"
-      LocalDefaultText="&quot;פעיל לכל הלקוחות&quot;"
+      LocalDefaultTextBack_up="&quot;פעיל לכל הלקוחות&quot;"
+      LocalDefaultText="&quot;BS64:Itek16LXmdecINec15vXnCDXlNec16fXldeX15XXqiI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;CustomerDebtNotification.O.ActiveSelectedCustomers&quot;"
       DefaultText="&quot;Active for selected customers&quot;"
-      LocalDefaultText="&quot;פעיל ללקוחות נבחרים&quot;"
+      LocalDefaultTextBack_up="&quot;פעיל ללקוחות נבחרים&quot;"
+      LocalDefaultText="&quot;BS64:Itek16LXmdecINec15zXp9eV15fXldeqINeg15HXl9eo15nXnSI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;CustomerDebtNotification.O.Obligato&quot;"
       DefaultText="&quot;Obligato&quot;"
-      LocalDefaultText="&quot;אובליגו&quot;"
+      LocalDefaultTextBack_up="&quot;אובליגו&quot;"
+      LocalDefaultText="&quot;BS64:IteQ15XXkdec15nXkteVIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;CustomerDebtNotification.O.AccountingBalance&quot;"
       DefaultText="&quot;Accounting balance&quot;"
-      LocalDefaultText="&quot;יתרה חשבונאית&quot;"
+      LocalDefaultTextBack_up="&quot;יתרה חשבונאית&quot;"
+      LocalDefaultText="&quot;BS64:IteZ16rXqNeUINeX16nXkdeV16DXkNeZ16oi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;CustomerDebtNotification.O.BalanceRegarding&quot;"
       DefaultText="&quot;Balance regarding&quot;"
-      LocalDefaultText="&quot;יתרה לגביה&quot;"
+      LocalDefaultTextBack_up="&quot;יתרה לגביה&quot;"
+      LocalDefaultText="&quot;BS64:IteZ16rXqNeUINec15LXkdeZ15Qi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;CustomerDebtNotification.O.Percentage&quot;"
       DefaultText="&quot;Percentage&quot;"
-      LocalDefaultText="&quot;אחוז&quot;"
+      LocalDefaultTextBack_up="&quot;אחוז&quot;"
+      LocalDefaultText="&quot;BS64:IteQ15fXldeWIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;CustomerDebtNotification.O.TotalAmount&quot;"
       DefaultText="&quot;Total amount&quot;"
-      LocalDefaultText="&quot;סכום מוחלט&quot;"
+      LocalDefaultTextBack_up="&quot;סכום מוחלט&quot;"
+      LocalDefaultText="&quot;BS64:Iteh15vXldedINee15XXl9ec15gi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
