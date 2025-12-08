@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-	providedIn: 'root',
+    providedIn: 'root',
 })
-export class AuthService {
+export class HostScreenService {
     public redirectUrl: string;
-    // public DefaultPageCustomsBook: string = "customs-book";
     public DefaultPageCustomsBook: string = "";
-    constructor() {}
+    constructor() { }
 
     public isAuthenticated(): boolean {
         const token = sessionStorage.getItem('Token');
-        if(!token) return false;
+        if (!token) return false;
         return true;
     }
 
     public closeSession() {
         sessionStorage.removeItem('Token');
+        sessionStorage.removeItem('AmitalSSOAngular');
+        sessionStorage.removeItem('Tenant');
+        sessionStorage.removeItem('searchValue');
     }
 }

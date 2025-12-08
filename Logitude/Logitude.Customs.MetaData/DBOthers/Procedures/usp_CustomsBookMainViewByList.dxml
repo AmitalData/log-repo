@@ -1,0 +1,86 @@
+﻿<Procedure DBType="Main" Name="usp_CustomsBookMainViewByList" Schema="dbo" Module="Customs">
+  <SqlScript>
+	  <![CDATA[
+
+CREATE OR ALTER PROCEDURE [dbo].[usp_CustomsBookMainViewByList]
+(
+      @Items NVARCHAR(MAX)          -- list of "0101290000/5,0101210000/2"
+    , @CustomsBookType VARCHAR(2)   -- exmple: '1'
+    , @IsDiscountCodes BIT = 0      -- 0 = categories- 1,3 | 1 = category- 2
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    ;WITH InputItems AS (
+        SELECT TRIM(value) AS FullClassification
+        FROM STRING_SPLIT(@Items, ',')
+    ),
+
+    FilteredItems AS (
+        SELECT
+              item.CustomsItemID
+            , item.FullClassification
+            , item.CI_BaseFullClassification
+            , item.CI_Parent_CustomsItemIDNum
+            , item.StartDate
+            , item.EndDate
+            , item.CI_CustomsItemCategoryIDNum
+            , item.CI_CustomsBookTypeIDNum
+        FROM Customs.CB_CustomsItemComputedDatas item
+        WHERE 
+                item.CustomsItemEntityStatusIDNum = '2'
+            AND item.StartDate <= GETDATE()
+            AND item.EndDate >= GETDATE()
+    ),
+
+    Matched AS (
+        SELECT
+              inp.FullClassification AS InputFullClassification
+            , f.CustomsItemID
+            , f.StartDate
+            , f.EndDate
+
+            , ROW_NUMBER() OVER (
+                PARTITION BY inp.FullClassification
+                ORDER BY f.CustomsItemID  -- סרטון הכרעה לרשומה אחת
+            ) AS rn
+
+        FROM InputItems inp
+        LEFT JOIN FilteredItems f
+            ON f.FullClassification = inp.FullClassification
+           AND f.CI_CustomsBookTypeIDNum = @CustomsBookType
+           AND (
+                    (@IsDiscountCodes = 1 AND f.CI_CustomsItemCategoryIDNum = '2')
+                 OR (@IsDiscountCodes = 0 AND f.CI_CustomsItemCategoryIDNum IN ('1','3'))
+               )
+    )
+
+    SELECT
+          InputFullClassification
+        , CASE WHEN CustomsItemID IS NOT NULL THEN 1 ELSE 0 END AS ExistsInSystem
+        , CASE WHEN CustomsItemID IS NOT NULL 
+                AND StartDate <= GETDATE()
+                AND EndDate >= GETDATE()
+            THEN 1 ELSE 0 END AS IsValid
+        , StartDate
+        , EndDate
+        , CustomsItemID
+    FROM Matched
+    WHERE rn = 1
+    ORDER BY InputFullClassification;
+
+END
+GO
+
+   
+    ]]>
+  </SqlScript>
+
+  <OracleScript>
+    <![CDATA[
+ 	
+	
+    ]]>
+  </OracleScript>
+</Procedure>
