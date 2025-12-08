@@ -1,5 +1,5 @@
 import { FeatureLocator } from './../../../../Infrastructure/Utilities/FeatureLocator';
-import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef, Input } from '@angular/core';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -76,7 +76,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     private chartOfAccountPMService: ChartOfAccountPMService = new ChartOfAccountPMService();
     private fullAccountingSetting: FullAccountingSettingList = new FullAccountingSettingList();
     private ChartOfAccountSecurityLevel: any;
-    private IsDisableGlaccountId: boolean = false;
+    @Input() IsDisableGlaccountId: boolean = false;
 
     constructor(private CD: ChangeDetectorRef) {
         super();
