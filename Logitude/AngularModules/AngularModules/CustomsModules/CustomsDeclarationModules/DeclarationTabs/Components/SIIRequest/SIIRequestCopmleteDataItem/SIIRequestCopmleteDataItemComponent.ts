@@ -73,21 +73,32 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.invoiceItemReq = args.invoiceItemReq;
         this.IsNewOrEdit = args.IsNewOrEdit;
         this.isAllowChange = args.isAllowChange;
+        this.IsDisplayOnly = !this.isAllowChange;
         this.filterAgrs = args.filterAgrs;
         this.entityPM = args.entityPMSupplierInvoiceItemsReqListPM;
         this.oldRequestRequiredStatus = this.entityPM?.RequestRequiredStatus;
+        this.SetPropertiesEnabled();
     }
 
     SetPropertiesEnabled() {
-        let enabled: boolean = !this.IsDisplayOnly;
-        this.UIProperties.SetEnabled("ManufactureCountryCode", this.ObjectTableNameSiiRequest, enabled);
-        this.UIProperties.SetEnabled("ItemNo", this.ObjectTableNameSiiRequest, enabled);
-        this.UIProperties.SetEnabled("ItemName", this.ObjectTableNameSiiRequest, enabled);
-        this.UIProperties.SetEnabled("InvoiceQuantity", this.ObjectTableNameSiiRequest, !enabled);
-        this.UIProperties.SetEnabled("InvoiceQuantityType", this.ObjectTableNameSiiRequest, !enabled);
-        this.UIProperties.SetEnabled("StatisticQuantity", this.ObjectTableNameSiiRequest, !enabled);
-        this.UIProperties.SetEnabled("StatisticQuantityType", this.ObjectTableNameSiiRequest, !enabled);
-    }
+    const editable = this.isAllowChange; // false in display-only
+
+    // Editable fields (locked when display-only)
+    this.UIProperties.SetEnabled("ItemNo", this.ObjectTableName, editable);
+    this.UIProperties.SetEnabled("ProductFileNumber", this.ObjectTableName, editable); // even though textbox has ForceDisabled, this keeps it consistent
+    this.UIProperties.SetEnabled("ItemName", this.ObjectTableName, editable);
+    this.UIProperties.SetEnabled("ManufactureCountryCode", this.ObjectTableName, editable);
+    this.UIProperties.SetEnabled("ManufacturerName", this.ObjectTableName, editable);
+    this.UIProperties.SetEnabled("Remarks", this.ObjectTableName, editable);
+    this.UIProperties.SetEnabled("DutchRequested", this.ObjectTableName, editable);
+
+    // Always read-only (as in your HTML: ForceDisabled / just for info)
+    this.UIProperties.SetEnabled("InvoiceQuantityType", this.ObjectTableName, false);
+    this.UIProperties.SetEnabled("InvoiceQuantity", this.ObjectTableName, false);
+    this.UIProperties.SetEnabled("StatisticQuantity", this.ObjectTableName, false);
+    this.UIProperties.SetEnabled("StatisticQuantityType", this.ObjectTableName, false);
+}
+
     // #endregion initialization data
 
 
@@ -156,6 +167,10 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
     //#region acations methods:
     async SaveAndSearchSupplierInvoiceItemsReqList(): Promise<void> {
+        if (!this.isAllowChange) {
+            return;
+        }
+
         this.validationErrors = [];
         this.checkMandatoryFields();
         if (this.errorsList.length > 0) {
@@ -281,7 +296,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
     private saveItemCompletionData() {
 
-        
+
 
         this.siiRequestPMService.update(this.currentSiiRequest).subscribe({
             next: (myResult: ServiceResponse) => {
@@ -303,7 +318,12 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
     oldEntityPM: SupplierInvoiceItemsReqListPM = new SupplierInvoiceItemsReqListPM(this.currentSiiRequest);
     CancelSupplierInvoiceItemsReqList() {
-        if (this.entityPM.IsDirty && !this.IsDisplayOnly) {
+        if (!this.isAllowChange || this.IsDisplayOnly) {
+            this.CurrentSession.CloseCurrentWindow();
+            return;
+        }
+
+        if (this.entityPM.IsDirty) {
             const confirm = new ConfirmWindow();
             confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
             confirm.ShowNoButton = true;

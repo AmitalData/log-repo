@@ -17,7 +17,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             _tenant = tenant;
         }
 
-        public void UpdateStatus(SiiStatusMessage msg)
+        public string UpdateStatus(SiiStatusMessage msg)
         {
             if (msg == null)
                 throw new ArgumentNullException("msg");
@@ -45,6 +45,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             linePm.DistApprovalAttachmentPath = msg.distributionApprovalAttachmentPath;
             linePm.ChangeSetOp = ChangeSetOperation.Update;
             updater.Update(linePm, true);
+            return linePm.DeclarationId;
         }
     }
 }

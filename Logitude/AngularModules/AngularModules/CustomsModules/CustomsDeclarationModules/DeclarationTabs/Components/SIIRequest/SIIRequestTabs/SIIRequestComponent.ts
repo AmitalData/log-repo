@@ -176,7 +176,11 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         }
 
         this.buildSupplierInvoiceItemsCollection();
-        this.DemandStateFilterItemClicked(this.filterOptionsWithResponse);
+
+        const defaultFilter = hasRequest
+            ? this.filterOptionsAll
+            : this.filterOptionsWithResponse;
+        this.DemandStateFilterItemClicked(defaultFilter);
 
         if (!AppTool.IsNullOrEmpty(this.entityPM?.ContactId)) {
             this.getContactData(this.entityPM.ContactId);
@@ -810,12 +814,18 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             }
         });
     }
+
     setContactData() {
-        this.ContactEmail = this.contactData.Email || '';
-        this.ContactTel = this.contactData.BusinessPhone || '';
-        this.ContactCellPhone = this.contactData.Mobile || '';
-        this.ContactFax = this.contactData.Fax || '';
+        if (!this.contactData) {
+            return;
+        }
+
+        this.ContactEmail = this.contactData.Email ?? this.ContactEmail;
+        this.ContactTel = this.contactData.BusinessPhone ?? this.ContactTel;
+        this.ContactCellPhone = this.contactData.Mobile ?? this.ContactCellPhone;
+        this.ContactFax = this.contactData.Fax ?? this.ContactFax;
     }
+
 
     //#endregion contact data
 
@@ -826,7 +836,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public set Id(newValue: string) {
         if (this.entityPM.Id != newValue) {
             this.entityPM.Id = newValue;
-            this.entityPM.IsDirty = true;
         }
     }
 
@@ -857,7 +866,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public set WareHouseAddress(newValue: string) {
         if (this.entityPM.WareHouseAddress != newValue) {
             this.entityPM.WareHouseAddress = newValue;
-            this.entityPM.IsDirty = true;
         }
     }
 
@@ -867,7 +875,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public set WareHouseCity(newValue: string) {
         if (this.entityPM.WareHouseCity != newValue) {
             this.entityPM.WareHouseCity = newValue;
-            this.entityPM.IsDirty = true;
         }
     }
 
@@ -897,7 +904,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public set Remarks(newValue: string) {
         if (this.entityPM.Remarks != newValue) {
             this.entityPM.Remarks = newValue;
-            this.entityPM.IsDirty = true;
         }
     }
 
@@ -974,7 +980,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         return this.entityPM?.ContactFax;
     }
     public set ContactFax(newValue: string) {
-        if (this.entityPM.ContactFax != newValue) {
+        if (this.entityPM.ContactFax !== newValue) {
             this.entityPM.ContactFax = newValue;
         }
     }
@@ -987,7 +993,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             let oldValue = this.entityPM.ContactId;
             this.entityPM.ContactId = newValue;
             if (!AppTool.IsNullOrEmpty(newValue) && oldValue !== newValue) this.getContactData(newValue);
-            this.entityPM.IsDirty = true;
         }
     }
     //#endregion SiiRequest properties
