@@ -63,7 +63,7 @@ namespace Logitude.Server.Tools.QueueService
                         && FeatureToggleHelper.HasFeatureToggle("SWR", tenant))
                     {
                         DefaultAndConfigurationRepository defaultAndConfigurationRepository = new DefaultAndConfigurationRepository(tenant);
-                        waitingStatus = int.TryParse(defaultAndConfigurationRepository.GetDefaultAndConfigurations(0)
+                        waitingStatus = int.TryParse(defaultAndConfigurationRepository.GetDefaultAndConfigurations(tenant)
                             .Where(d => d.SetKey == "SecondWorkerRoleWaitingStatus")
                             .Select(a => a.Value1)
                             .FirstOrDefault(),
