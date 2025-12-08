@@ -218,49 +218,16 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 
         private void MapEstimatedPayablesInSalesCurrencyField()
         {
-            if (quoteEntityPM.QuoteCharges != null)
-            {		
-				var quoteChargesCost = quoteCharges.Where(d =>  d.CostTotalAmount.HasValue).ToList();
-				if (!quoteChargesCost.Any())
-					return;
+            if (quoteEntityPM.QuoteCharges != null && quoteEntityPM.ExchangeRate != null && quoteEntityPM.ExchangeRate != 0)
+            {
 
-				var distinctCurrencies = quoteChargesCost.Select(d => d.CostCurrencyId).Distinct().ToList();
-				var costCurrencyId = distinctCurrencies.Count == 1 ? distinctCurrencies[0] : quoteEntityPM.SaleCurrencyId;
-
-
-				var costTotalAmount = quoteChargesCost.Sum(d =>
-				{
-					return d.CostCurrencyId == costCurrencyId
-						  ? d.CostTotalAmount
-						  : ConvertCurrency(d.CostTotalAmount, d.CostCurrencyId, costCurrencyId, accountingCurrencyId);
-				});
-
-
-				quoteComputedField.EstimatedPayablesInSales = costTotalAmount;
+				var totalLocal = quoteCharges.Sum(d => d.CostTotalAmountLocal ?? 0) ;
+				var costTotalAmountLocalrounded = Math.Round(totalLocal, 2, MidpointRounding.AwayFromZero);
+                var calculateEstimatedPayablesInSale = (costTotalAmountLocalrounded / quoteEntityPM.ExchangeRate) ?? 0;
+				quoteComputedField.EstimatedPayablesInSales = Math.Round(calculateEstimatedPayablesInSale, 2, MidpointRounding.AwayFromZero);
 			}
 		}	
 
-		private double? ConvertCurrency(double? amount, string fromCurrencyId, string toCurrencyId, string accountingCurrencyId)
-		{
-			if (amount == null)
-				return 0;
-
-			var ratesTablesRepository = new RatesTableRepository(initializer.Tenant);
-			var ratesTableQuery = new RatesTableQuery(ratesTablesRepository);
-
-
-			RatesTablePM rateFrom = ratesTableQuery.GetLastRateByValueDate(initializer.Tenant, fromCurrencyId, accountingCurrencyId, quoteEntityPM.OpenDate);
-			RatesTablePM rateTo = ratesTableQuery.GetLastRateByValueDate(initializer.Tenant, toCurrencyId, accountingCurrencyId, quoteEntityPM.OpenDate);
-
-			double fromRate = rateFrom?.Rate ?? 1.0;
-			double toRate = rateTo?.Rate ?? 1.0;
-
-
-			if (toRate == 0)
-				throw new InvalidOperationException($"Invalid currency rate for {toCurrencyId}: rate cannot be zero.");
-
-			return (amount.Value * fromRate) / toRate;
-		}
 		private void MapEstimatedReceivablesInLocalCurrencyField()
         {
             if (quoteEntityPM.QuoteCharges != null)
