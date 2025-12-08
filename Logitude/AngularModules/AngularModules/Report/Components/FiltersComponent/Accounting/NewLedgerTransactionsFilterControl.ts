@@ -495,7 +495,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                     this.SelectedItemChanged(this.GetLookUpFieldValue(queryFilterItem.FieldValue));
                     break;
                 case "CategoryValue":
-                    //CategoryValue
+                    this.DataContext[this.SelectedCategory?.replace(' ', '')] = queryFilterItem.FieldValue;
                     break;
                 case "ChartOfAccountsTypeCode":
                    {               
@@ -658,7 +658,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     ];
     SelectedCategory: string;
     SelectedItemChanged(item) {
-        this.SelectedCategory = item;
+        this.SelectedCategory = item.replace(' ', '');
     }
 
     private SetGLAccountChanged(value: string) {
