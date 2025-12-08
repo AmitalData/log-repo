@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
     public MainColor: string = "rgb(25, 105, 180)"; // "#000000";;
     public SecondaryColor: string = "rgb(184, 189, 229)"; // "#00266";
     public BackGroundImg: string = "url('assets/images/map-bg.svg')";
-
+    public isLoadingHost: boolean = false;
 
     constructor(private router: Router,
         public routeReuseStrategy: RouteReuseStrategy,
@@ -228,6 +228,7 @@ export class LoginComponent implements OnInit {
             userData.Tenant = userData.CurrentTenant;
         }
         if (this.hostScreenService.redirectUrl) {
+            this.isLoadingHost = true;
             this.ShowbusyIndicator = false;
             if (userData) {
                 SessionInfo.LoggedUserTenant = userData.Tenant;
@@ -239,23 +240,32 @@ export class LoginComponent implements OnInit {
                             window.ObjectTables = myResult;
                             this.myInfrastructureDomainService
                                 .GetAllowedFeaturesForLoggedUser()
-                                .subscribe((myResponse: any) => {
-                                    if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
-                                        this.errorMessage = "You have no permission to access this feature";
-                                        return;
-                                    }
-                                    else {
-                                        this.FillSessionInfoData(userData);
-                                        this.RouteToMainPage();
+                                .subscribe({
+                                    next: (myResponse: any) => {
+                                        this.isLoadingHost = false;
+                                        if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
+                                            this.errorMessage = "You have no permission to access this feature";
+                                            return;
+                                        } 
+                                        else {
+                                            this.FillSessionInfoData(userData);
+                                            this.RouteToMainPage();
+                                        }
+                                    },
+                                    error: () => {
+                                        this.isLoadingHost = false;
+                                        this.errorMessage = "An error occurred while loading features.";
                                     }
                                 });
                         });
                 }
                 else {
+                    this.isLoadingHost = false;
                     this.FillSessionInfoData(userData);
                     this.RouteToMainPage();
                 }
             }
+            else this.isLoadingHost = false;        
         }
         else if (this.authService.redirectUrl) {
             this.router.navigate([this.authService.redirectUrl]);
@@ -264,6 +274,7 @@ export class LoginComponent implements OnInit {
         else if (sessionStorage.getItem("Token")) {
             this.router.navigate([this.authService.DefaultPageCustomsBook])
         }
+
     }
 
     public ForgotPasswordClicked() {

@@ -86,10 +86,14 @@ export class MainDisplayComponent implements OnInit {
 				this.InitData();
 			}
 		});
-
+		// listen to loading mode changes:
+		this.isLoadingMode.subscribe((isLoading) => {
+			this.isLoading = isLoading;
+		});
 		this.checkDefaultCB_CollapseSearchHierarchy();
 		this.ListenToItemsSearched();
 		this.getByIsDiscountCodes();
+		this.updateFullClassificationByClick();
 	}
 
 	InitData() {
@@ -97,10 +101,6 @@ export class MainDisplayComponent implements OnInit {
 		else this.checkIsFeaturePermessionCustomsBook(() => this.GetAllCustomsBookMainView());
 
 		this.getCustomsBookLastUpdateDate();
-		// listen to loading mode changes:
-		this.isLoadingMode.subscribe((isLoading) => {
-			this.isLoading = isLoading;
-		});
 		this.isFeaturePermessionCB.subscribe((isFeaturePermessionCB) => {
 			this.isFeaturePermessionCBMsg = isFeaturePermessionCB;
 		});
@@ -316,20 +316,18 @@ export class MainDisplayComponent implements OnInit {
 	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
 		this.selectedItemId = CustomsItemID;
 		if (this.currentItem.getValue()?.CustomsItemID == CustomsItemID) {
-			this.updateShowDetailsClick();
+			this.updateShowDetailsClick(item);
+
 			return;
 		}
 		else if (!this.showDetails) {
 			this.updateShowDetailsClick();
 		}
 		this.currentItem.next(item);
-		if (item?.FullClassification)
-			sessionStorage.setItem('FullClassification', item?.FullClassification);
-
 		return this.showDetails;
 	}
 
-	updateShowDetailsClick() {
+	updateShowDetailsClick(item?: CB_CustomsItemComputedDataList) {
 		this.showDetails = !this.showDetails;
 		this.showDetailsOpen.next(this.showDetails);
 		this.preferencesService.showSettingsClick(false);
@@ -339,7 +337,34 @@ export class MainDisplayComponent implements OnInit {
 		}
 		else {
 			this.filterPopupService.toggleFilterPopup(false);
+			if (item)
+				this.currentItem.next(item);
 		}
+	}
+
+	updateUrlWithClassification(fullClassification: string) {
+		sessionStorage.setItem('FullClassification', fullClassification);
+		const url = this.searchService.getDecodeUrl(window.location.href);
+		const currentUrl = new URL(url);
+		if (fullClassification) {
+			currentUrl.searchParams.set("FullClassification", fullClassification);
+			window.history.replaceState({}, "", currentUrl.toString());
+		}
+		else {
+			currentUrl.searchParams.delete("FullClassification");
+			window.history.replaceState({}, "", currentUrl.toString());
+		}
+	}
+
+	updateFullClassificationByClick() {
+		this.showDetailsOpen.subscribe((isOpen) => {
+			if (!isOpen)
+				this.updateUrlWithClassification(null);
+		});
+		this.currentItem.subscribe((item) => {
+			if (item && this.showDetails)
+				this.updateUrlWithClassification(item?.FullClassification);
+		});
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
@@ -463,7 +488,6 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	handleClearResultsClick() {
-		this.clearSearchValue();
 		this.handleClearResults();
 		this.searchService.SetSearchText("");
 	}
@@ -480,6 +504,7 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	handleClearResults() {
+		this.clearSearchValue();
 		this.searchMode = TableTopState.ViewAll;
 		this.selectedItemId = null;
 		this.showDetails = false;

@@ -57,9 +57,10 @@ export class MainPageComponent implements OnInit {
 	getSearchFromHostScreen() {
 		const searchValue: string = sessionStorage.getItem('searchValue');
 		if (!AppTool.IsNullOrEmpty(searchValue)) {
-			this.isLoadingMode.next(true);
-			this.searchService.SetSearchText(searchValue);
 			this.searchService.searchTextFromHost.next(searchValue);
+			this.isLoadingMode.next(true);
+			this.searchService.isNumeric(searchValue);
+			this.searchService.SetSearchText(searchValue);
 		}
 	}
 

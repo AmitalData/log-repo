@@ -44,6 +44,12 @@ export class SearchService {
     this._searchTextSubject.next(value);
   }
 
+  isNumeric(value: string): boolean {
+    const res = /^\d+$/.test(value);
+    this.SearchBy(res ? 'searchBy_form01' : 'pageSearch_form02');
+    return res;
+  }
+
   getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');
