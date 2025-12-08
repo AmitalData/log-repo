@@ -21,7 +21,8 @@ using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
@@ -42,6 +43,11 @@ using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Utils;
 using System.Linq;
+using System.ServiceModel.DomainServices.Server;
+using GLAccountQueryService = Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService;
+using JournalQueryService = Logitude.Accounting.BL.EntityQueryServices.JournalQueryService;
+using LedgerTransaction = Logitude.Accounting.Data.EntityPOCOs.LedgerTransaction;
+using Logitude.Accounting.Data.EntityListQueryServices;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -240,6 +246,28 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
 
+                /*if (FeatureToggleHelper.HasFeatureToggle("RFR", entityPM.Tenant))
+                {
+
+
+
+
+                    var glaccountQueryService = new GLAccountQueryService(entityPM.Tenant);
+                    var glAccount = glaccountQueryService.GetAccountControlAndRecoMethods(entityPM.AccountId, entityPM.Tenant);
+                    if (glAccount != null 
+                        && glAccount.ReconcileMethodCode == ReconcileMethodValues.ForeignCurrency)
+                    {
+                        if (Math.Round(entityPM.ReconciliationLines
+                            .Where(x => x.CurrencyRate != null)
+                            .Sum(x => x.ReconciliationAmount * x.CurrencyRate) ?? 0, 2) != 0)
+                        {
+                            var tenantCurrencyId = GetTenantCurrencyId(entityPM.Tenant);
+                            CreateRevaluationJournal(entityPM, glAccount.ControlAccountId, tenantCurrencyId);
+                        }
+                    }
+                }*/
+
+
                 if (entityPM.Number == "get")
                 {
                     entityPM.Number = CodeCounter.GetNumber("Reconciliation.Number", entityPM.Tenant).ToString();
@@ -388,9 +416,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             string createdByUserId = entityPM.CreatedByUserId;
 
             var gLAccountRecocileDataQueryService = new GLAccountRecocileDataQueryService(this.MainContext as IAccountingContext);
-            var pm = gLAccountRecocileDataQueryService.GetSingle(accountId, false, false);
             ChangeSetOperation changeSetOperation = ChangeSetOperation.Insert;
-            if (pm != null)
+            if (gLAccountRecocileDataQueryService.Exists(accountId, tenant))
             {
                 changeSetOperation = ChangeSetOperation.Update;
             }
@@ -452,9 +479,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         if (entityPM.ReconciliationLines.Count == 0)
                         {
-                            var reconciliationQueryService = new ReconciliationQueryService(this.MainContext as IAccountingContext);
-                            var pm = reconciliationQueryService.GetSingle(entityPM.Id, true, false);
-                            entityPM.ReconciliationLines.AddRange(pm.ReconciliationLines);
+                            var reconciliationLineQueryService = new ReconciliationLineQueryService(this.MainContext as IAccountingContext);
+                            var linePMs = reconciliationLineQueryService.GetLinePMsByReconciliationIdAndTenant(entityPM.Id, entityPM.Tenant);
+                            entityPM.ReconciliationLines.AddRange(linePMs);
                         }
                     }
                     UpdateLedgerTransaction(entityPM);
