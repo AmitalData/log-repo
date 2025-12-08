@@ -224,27 +224,16 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 
 		private void MapEstimatedPayablesInSalesCurrencyField()
 		{
-			if (quoteEntityPM.QuoteCharges != null)
-            {		
 
-				var quoteChargesCost = quoteCharges.Where(d =>  d.CostTotalAmount.HasValue).ToList();
-				if (!quoteChargesCost.Any())
-					return;
+            if (quoteEntityPM.QuoteCharges != null && quoteEntityPM.ExchangeRate != null && quoteEntityPM.ExchangeRate != 0)
+            {
 
-				var distinctCurrencies = quoteChargesCost.Select(d => d.CostCurrencyId).Distinct().ToList();
-				var costCurrencyId = distinctCurrencies.Count == 1 ? distinctCurrencies[0] : quoteEntityPM.SaleCurrencyId;
-
-
-				var costTotalAmount = quoteChargesCost.Sum(d =>
-				{
-					return d.CostCurrencyId == costCurrencyId
-						  ? d.CostTotalAmount
-						  : ConvertCurrency(d.CostTotalAmount, d.CostCurrencyId, costCurrencyId, accountingCurrencyId);
-				});
-
-
-				quoteComputedField.EstimatedPayablesInSales = costTotalAmount;
+				var totalLocal = quoteCharges.Sum(d => d.CostTotalAmountLocal ?? 0) ;
+				var costTotalAmountLocalrounded = Math.Round(totalLocal, 2, MidpointRounding.AwayFromZero);
+                var calculateEstimatedPayablesInSale = (costTotalAmountLocalrounded / quoteEntityPM.ExchangeRate) ?? 0;
+				quoteComputedField.EstimatedPayablesInSales = Math.Round(calculateEstimatedPayablesInSale, 2, MidpointRounding.AwayFromZero);
 			}
+
 		}	
 
 		private void MapEstimatedReceivablesInLocalCurrencyField()
