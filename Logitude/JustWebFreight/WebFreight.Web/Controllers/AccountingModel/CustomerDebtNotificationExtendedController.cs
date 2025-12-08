@@ -10,7 +10,7 @@ using System.Web.Http;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.EntityQueryServices;
-
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 { 
