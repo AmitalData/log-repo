@@ -144,7 +144,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TenantForConfirmationNumberApi, 
 	         InvoiceNotes, 
 	         InterestInvoiceNotes, 
-	         PrepaidExpensesGLAccountId,
+	         PrepaidExpensesGLAccountId, 
 	         HebrewTenant,
 	      }
 
