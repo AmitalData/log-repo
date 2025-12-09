@@ -34,7 +34,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void UpdateComposition(SIIRequestPM entityPM)
         {
             SupplierInvoiceItemsReqListUpdateService supplierInvoiceItemsReqListUpdateService = new SupplierInvoiceItemsReqListUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), entityPM.Tenant);
-            supplierInvoiceItemsReqListUpdateService.UpdateMulti(entityPM.SupplierInvoiceItemsReqLists, entityPM.DeletedSupplierInvoiceItemsReqLists, entityPM, false);
+            supplierInvoiceItemsReqListUpdateService.UpdateMulti(entityPM.SupplierInvoiceItemsReqLists, entityPM.DeletedSupplierInvoiceItemsReqLists, entityPM, true);
 
             base.UpdateComposition(entityPM);
         }
