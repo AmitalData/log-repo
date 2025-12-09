@@ -429,6 +429,7 @@
     <Compile Include="CloseTablesClasses\FillCloseTable.cs" />
     <Compile Include="CloseTablesClasses\ICloseTable.cs" />
     <Compile Include="Communications.cs" />
+    <Compile Include="Contracts\ICustomsConnectDocumentToDeclarationCourier.cs" />
     <Compile Include="Contracts\ICustomsUpdateClosedTables.cs" />
     <Compile Include="Contracts\ICustomsEnqueueSucceedRequestsheets.cs" />
     <Compile Include="Contracts\IPOAExpireReminder.cs" />
