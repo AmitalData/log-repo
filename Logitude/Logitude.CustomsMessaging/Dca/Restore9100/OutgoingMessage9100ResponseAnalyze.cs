@@ -57,7 +57,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
             correlationIdsCanClear = new ConcurrentBag<NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs>();
         }
 
-        internal void SaveInDB(List<NG_9101_MSG_OutgoingMessageResponseOutgoingMessage> OutgoingMessageList)
+        internal void SaveInDB(List<NG_9101_MSG_OutgoingMessageResponseOutgoingMessage> OutgoingMessageList, bool IsRestore = false)
         {
 
             var sw = Stopwatch.StartNew();
@@ -81,10 +81,11 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
                 Parallel.ForEach(OutgoingMessageInterfaceList,
                             new ParallelOptions { MaxDegreeOfParallelism = 4 },//cpu
                             currMessage =>
-
+                            {
+                                currMessage.dcaFile.IsRestored = IsRestore;
                                 TPL_SaveInDB(currMessage.response, currMessage.messageDCA, currMessage.dcaFile,
-                                    correlationIdsCanClear, sbFilenameQueue, exceptionBag, ctx)
-                            );
+                                    correlationIdsCanClear, sbFilenameQueue, exceptionBag, ctx);
+                            });
                 sw.Stop();
                 LogIt($"OutgoingMessage9100ResponseAnalyze-Parallel Save took {sw.Elapsed}");
             }
