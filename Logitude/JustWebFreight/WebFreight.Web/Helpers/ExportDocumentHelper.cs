@@ -117,9 +117,9 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        public string ExportDocument2Pdf(ExportDocumentArgs exportDocumentArgs, string documentTypeCopyId)
+        public string ExportDocument2Pdf(ExportDocumentArgs exportDocumentArgs, string documentTypeCopyId, string documentFileName = null)
         {
-            string result = ExportDocument2PdfNormalWay(exportDocumentArgs.DocumentTypeId, exportDocumentArgs.EntityId, exportDocumentArgs.ObjectTableId, exportDocumentArgs.ChildEntityId, exportDocumentArgs.ChildObjectTableId, exportDocumentArgs.CurrentDocumentOutId, exportDocumentArgs.Tenant, documentTypeCopyId, exportDocumentArgs.LoggedContactId);
+            string result = ExportDocument2PdfNormalWay(exportDocumentArgs.DocumentTypeId, exportDocumentArgs.EntityId, exportDocumentArgs.ObjectTableId, exportDocumentArgs.ChildEntityId, exportDocumentArgs.ChildObjectTableId, exportDocumentArgs.CurrentDocumentOutId, exportDocumentArgs.Tenant, documentTypeCopyId, exportDocumentArgs.LoggedContactId, documentFileName);
             return result;
         }
 
