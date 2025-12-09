@@ -1106,17 +1106,42 @@ namespace Logitude.BL.Helpers
             if (IsDigitalSign)
             {
                 var doc = documentTypePM.DocumentTypeCopies.FirstOrDefault();
+                string fileName = DetermineDocumentName(objectTableName, tenant, doc.Id);
                 exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, Id, objectTable.Id, null, null, documentsFiling.Id, tenant, doc.Id, resolveLoggingUserId, documentFileName);
             }
             else
             {
-                for (int i = 0; i < documentTypePM.DocumentTypeCopies.Count; i++)
+                bool multipleDocuments = documentTypePM.DocumentTypeCopies?.Count > 1;
+                documentTypePM.DocumentTypeCopies.ForEach(doc =>
                 {
-                    var doc = documentTypePM.DocumentTypeCopies[i];
-                    var fileName = $"{documentFileName}_{i + 1}";
+                    string fileName = DetermineDocumentName(objectTableName, tenant, doc.Id, multipleDocuments);
 
                     exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, Id, objectTable.Id, null, null, documentsFiling.Id, tenant, doc.Id, resolveLoggingUserId, fileName);
+                });
+            }
+        }
+
+        public static string DetermineDocumentName(string objectTableName, int tenant, string documentTypeCopyId, bool multipleDocuments = false)
+        {
+            try
+            {
+                string documentFileName = TranslateTextsClass.Translate(objectTableName, tenant, true);
+                string fileName = documentFileName;
+                if (multipleDocuments)
+                {
+                    DocumentTypeCopyRepository documentTypeCopyRep = new DocumentTypeCopyRepository(tenant);
+                    DocumentTypeCopy documentTypeCopy = documentTypeCopyRep.GetSingleDocumentTypeCopy(documentTypeCopyId);
+                    if (!string.IsNullOrEmpty(documentTypeCopy?.Name))
+                    {
+                        fileName = $"{documentFileName} ({documentTypeCopy.Name})";
+                    }
                 }
+                return fileName;
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"failed determine file name (documentTypeCopyId: {documentTypeCopyId}), error: {ex.Message}");
+                return objectTableName;
             }
         }
 
