@@ -87,7 +87,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     var outgoingMessage9100ResponseAnalyze = new OutgoingMessage9100ResponseAnalyze(_CustomsSettingPM, _InterfaceListDCA);
 
-                    outgoingMessage9100ResponseAnalyze.SaveInDB(customResponse.OutgoingMessage.ToList());
+                    outgoingMessage9100ResponseAnalyze.SaveInDB(customResponse.OutgoingMessage.ToList(), true);
 
                     LogMessagingUtil.Instance.AppendLine(outgoingMessage9100ResponseAnalyze.MyStringBuilder.ToString());
                     this.MyResponseData = new MessageWaitingResponseData()
