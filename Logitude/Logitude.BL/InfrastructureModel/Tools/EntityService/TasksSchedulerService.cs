@@ -205,6 +205,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }
+
 		public void Delete(int tenant,string taskSchedularId)
 		{
 			this.Poco = entityRepository.GetSingleTasksScheduler(taskSchedularId, tenant);
@@ -212,7 +213,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 			entityRepository.Remove(Poco);
 			entityRepository.SubmitChanges();
 		}
-
+		
         public void RunTaskNow(string taskSchedulerId, int tenant, DateTime FromDate, DateTime ToDate)
         {
             var poco = entityRepository.GetSingleTasksScheduler(taskSchedulerId, tenant);
@@ -239,7 +240,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         }
 
     }
-}
+	}
 [System.Runtime.Serialization.DataContract]
 public class SchedulerDateRange
 {

@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomerDebtNotificationUpdateClass
    {  		
-		public const string HashString = "fbfc7fd8b62267f9691808a871cded02";
+		public const string HashString = "3c099c7a12989065ba0ecca9d5abbb1c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -71,7 +71,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customer Debt Notifications",
-			      				    Code =  "7b2c",
+			      				    Code =  "0a21",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -532,10 +532,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TasksSchedulerId",
 					  						DefaultText =  "TasksSchedulerId",
-					  						FullLocalDefaultText =  "דוח כרטסת",
+					  						FullLocalDefaultTextBack_up =  "דוח כרטסת",
+					  						FullLocalDefaultText =  "BS64:IteT15XXlyDXm9eo15jXodeqIg==",
 					  						ListFieldLable =  "TasksSchedulerIdListLable",
 					  						ListLableDefaultText =  "TasksSchedulerId",
-					  						ListLocalDefaultText =  "דוח כרטסת",
+					  						ListLocalDefaultTextBack_up =  "דוח כרטסת",
+					  						ListLocalDefaultText =  "BS64:IteT15XXlyDXm9eo15jXodeqIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "TasksScheduler",
 					  						NavigationPropertyName =  "TasksScheduler",

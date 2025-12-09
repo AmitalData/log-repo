@@ -2113,6 +2113,8 @@ export class MaintenanceComponent {
                         logitudeWindow.WindowArgs = windowArgs;
                         logitudeWindow.Title = TextCodeTranslator.Translate("CustomerDebtNotification.O.DebtNotificationToCustomers");
                         logitudeWindow.Show('./Accounting/Components/Maintenance/CustomerDebtNotificationComponent');
+                        logitudeWindow.Title = TextCodeTranslator.Translate("CustomerDebtNotification.O.DebtNotificationToCustomers");
+                        logitudeWindow.Show('./Accounting/Components/Maintenance/CustomerDebtNotificationComponent');
 
                     });
                     break;

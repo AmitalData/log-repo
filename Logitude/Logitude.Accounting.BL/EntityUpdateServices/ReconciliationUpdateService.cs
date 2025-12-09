@@ -232,7 +232,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
-
                 if (entityPM.RevalOnForeignReco == true  && FeatureToggleHelper.HasFeatureToggle("RFR", entityPM.Tenant))
                 {
                     var glaccountQueryService = new GLAccountQueryService(entityPM.Tenant);
