@@ -95,5 +95,7 @@ export interface FastSearchResult {
     DDLWidth: string;
     minimumSearchQueryLength: number;
     left: number;
-
+    showSeparator: boolean;
+    showHeader : boolean;
+    tableName: string;
 }

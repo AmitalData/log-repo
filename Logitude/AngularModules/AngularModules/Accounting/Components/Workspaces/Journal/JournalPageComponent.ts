@@ -82,6 +82,7 @@ export class JournalPageComponent implements AfterViewInit {
         this.fastSearchSettings = this.fastSearchService.Settings;
         if (this.fastSearchSettings) {
             this.fastSearchSettings.left = this.isRTL ? -1 : 0;
+            this.fastSearchSettings.tableName = "JournalLine";
         }
 
     }
