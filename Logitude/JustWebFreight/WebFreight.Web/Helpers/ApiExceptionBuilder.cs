@@ -21,10 +21,7 @@ namespace WebFreight.Web.Helpers
                 var exception = ((System.Data.Entity.Validation.DbEntityValidationException)ex);
                 if (exception != null)
                 {
-                    if(!IsUserAuthenticated())
-                        return BuildApiException(ex.GetType().Name, "Validation error occurred. Please check the data and try again.", "Validation error occurred.");
                        
-
                     foreach (var eve in exception.EntityValidationErrors)
                     {
                         Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
@@ -40,14 +37,15 @@ namespace WebFreight.Web.Helpers
                         }
                     }
                 }
-                return BuildApiException(ex.GetType().Name, ErrorMessage, ShortErrorMessage, ex?.StackTrace);
-                
+
+                var message = IsUserAuthenticated() ? ErrorMessage : "Validation error occurred. Please check the data and try again.";
+                var stackTrace = IsUserAuthenticated() ? ex?.StackTrace : null;
+
+                return BuildApiException(ex.GetType().Name, message, ShortErrorMessage, stackTrace);
             }
             else
             {
-                if(!IsUserAuthenticated())
-                    return BuildApiException(ex.GetType().Name, "An unexpected error occurred. Please try again later.", "An unexpected error occurred.");
-                    
+               
                 string errorMessage = ex.Message + Environment.NewLine;
                 string shortErrorMessage = ex.Message + Environment.NewLine;
                 if (ex.InnerException != null)
@@ -55,8 +53,11 @@ namespace WebFreight.Web.Helpers
                     errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
                     shortErrorMessage = shortErrorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
                 }
+                var message = IsUserAuthenticated() ? errorMessage : "An unexpected error occurred. Please try again later.";
+                var stackTrace = IsUserAuthenticated() ? ex?.StackTrace : null;
 
-                return BuildApiException(ex.GetType().Name, errorMessage, shortErrorMessage, ex?.StackTrace);
+                return BuildApiException(ex.GetType().Name, message, shortErrorMessage, stackTrace);
+
             }
 
         }
@@ -66,11 +67,7 @@ namespace WebFreight.Web.Helpers
         {
             string ErrorMessage = "";
             string ShortErrorMessage = "";
-
-            if (!IsUserAuthenticated())
-                return BuildApiException("ModelStateError", "Validation error occurred. Please check the data and try again.", "Validation error");
-                
-
+           
             foreach (var modValue in modelState.Values)
             {
                 foreach (var error in modValue.Errors)
@@ -79,21 +76,19 @@ namespace WebFreight.Web.Helpers
                     ShortErrorMessage += error.ErrorMessage + Environment.NewLine;
                 }
             }
-
-            return BuildApiException("ModelStateError", ErrorMessage, ShortErrorMessage);
+            var message = IsUserAuthenticated() ? ErrorMessage : "Validation error occurred. Please check the data and try again.";
+            return BuildApiException("ModelStateError", message, ShortErrorMessage);
         }
 
         public static object BuildJsonPatchException(JsonPatchException exception, string entityId, object jsonPatch)
         {
 
-            if (!IsUserAuthenticated())
-                return BuildApiException(exception.GetType().Name, "There was an issue with the data provided. Please check and try again.", "Invalid data");
-               
             string errorMessage = "Error Message: " + exception.Message + Environment.NewLine + 
                                   "Entity Id: " + entityId + Environment.NewLine +
                                   "Json Patch: " + JsonConvert.SerializeObject(jsonPatch);
 
             string shortErrorMessage = GetShortErrorMessage(exception);
+            var message = IsUserAuthenticated() ? errorMessage : "There was an issue with the data provided. Please check and try again.";
             return BuildApiException(exception.GetType().Name, errorMessage, shortErrorMessage);
            
         }
@@ -140,7 +135,7 @@ namespace WebFreight.Web.Helpers
             return new APIException()
             {
                 ErrorType = errorType,
-                ErrorMessage = errorMessage + stackTrace,
+                ErrorMessage = errorMessage + (stackTrace ?? string.Empty),
                 ShortErrorMessage = shortErrorMessage
             };
         }
