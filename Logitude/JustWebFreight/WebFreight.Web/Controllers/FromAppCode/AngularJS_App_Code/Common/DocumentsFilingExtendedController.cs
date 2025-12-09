@@ -558,25 +558,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             return Request.CreateResponse(HttpStatusCode.OK, myResult);
         }
 
-        public HttpResponseMessage PostDocumentAndDocumentFiling(DocumentDataAndDocumentFiling data)
-        {
-            try
-            {
-                int tenant = data.documentsFilingPM.Tenant;
-                AuthenticationToken authenticationToken = AuthenticateRequest(tenant);
-
-                byte[] fileData = Convert.FromBase64String(data.fileContent);
-                fileData = HtmlEditorHelper.RotatePdf(fileData, data.rotationAngle);
-                new DocumentsFilingService(CommonDataContext.GetContext(tenant), tenant).Create(data.documentsFilingPM, fileData);
-
-                return Request.CreateResponse(HttpStatusCode.OK, data.documentsFilingPM);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
         private static AuthenticationToken AuthenticateRequest(int tenatn)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
