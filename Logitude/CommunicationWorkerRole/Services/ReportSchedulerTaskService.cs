@@ -739,7 +739,7 @@ namespace CommunicationWorkerRole.Services
             EmailDetails emailDetails = GetEmailDetailsByMessageTemplateId(new GetEmailDetailsByMessageTemplateIdArgs() { messageTemplateId = schedulerDetails.ReportDetails.MessageTemplateId, tenant = args.reportTask.Tenant, userId = args.reportTask.CreatedBy, stiReport = args.stiReport });
             string reportTableId = GetReportTableId(args.reportTask.Tenant);
             string subject = !string.IsNullOrEmpty(emailDetails.Subject) ? emailDetails.Subject : args.reportTask.Name;
-            htmlEditorHelper.SendHtmlDocument(emailDetails.Body, null, null, args.reportTask.Tenant, args.recepients.To, subject, args.recepients.Cc, args.recepients.Bcc, args.reportTask.CreatedBy, args.reportTask.EntityId, reportTableId, args.documentId + ",", "", "", "");
+            htmlEditorHelper.SendHtmlDocument(emailDetails.Body, null, null, args.reportTask.Tenant, args.recepients.To , subject, (string.IsNullOrEmpty(args.recepients.Cc) || string.IsNullOrWhiteSpace(args.recepients.Cc))  ? emailDetails.Cc : args.recepients.Cc, args.recepients.Bcc, args.reportTask.CreatedBy, args.reportTask.EntityId, reportTableId, args.documentId + ",", "",  emailDetails.From,  emailDetails.ReplyTo);
 			if (!IsCUstomerDebitNotification) 
             { 
 				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
@@ -768,9 +768,10 @@ namespace CommunicationWorkerRole.Services
 
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
             string subject = reportsTemplatePM != null ? reportsTemplatePM.Subject : null;
-            string from = null;
-            string replyTo = null;
-            string cc = null;
+            string from = reportsTemplatePM != null ? reportsTemplatePM.From : null; ;
+            string replyTo = reportsTemplatePM != null ? reportsTemplatePM.ReplyTo : null; ;
+            string cc = reportsTemplatePM != null ? reportsTemplatePM.CC : null;
+
             UTF8Encoding utf8Encoding = new UTF8Encoding();
 
             object dataProvider = GetDataProviderFromStiReport(args.stiReport);
@@ -780,6 +781,9 @@ namespace CommunicationWorkerRole.Services
             string htmlstring = htmlEditorHelper.ResolveSystemDataHtml(html, args.userId, ref subject, ref from, ref replyTo, ref cc, args.tenant);     
             emailDetails.Body = utf8Encoding.GetBytes(htmlstring);
             emailDetails.Subject = subject;
+            emailDetails.From = from;
+            emailDetails.ReplyTo = replyTo;
+            emailDetails.Cc = cc;
             return emailDetails;
         }
 
@@ -901,6 +905,12 @@ namespace CommunicationWorkerRole.Services
     {
         public byte[] Body;
         public string Subject;
+        public string From;
+        public string ReplyTo;
+        public string Cc;
+
+        
+
     }
 }
 
