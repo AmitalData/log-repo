@@ -41,7 +41,7 @@ export class InvoiceApiStatusListService {
 				.pipe(
 					map((response: HttpResponse<any>) => {
 
-						var list = response.body;                   
+						var list = response.body;                    
 						var entity: InvoiceApiStatusList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
@@ -56,7 +56,7 @@ export class InvoiceApiStatusListService {
 
 						return serviceResponse;
 					}),
-			
+					
 					catchError(ServiceHelper.HandleServiceError));
 		});
 	}
@@ -88,6 +88,7 @@ export class InvoiceApiStatusListService {
 
 						return serviceResponse;
 					}),
+
 					catchError(ServiceHelper.HandleServiceError));
 		});
 	}
@@ -96,8 +97,8 @@ export class InvoiceApiStatusListService {
 
 		var callTime = new Date();       
 		var urlparameters = '/getbyfilters?';
-		var mykeys = Object.keys(filters);
-		var addtionalFiltersValues = null;
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
 
         for (var i in mykeys) {
 			var propName = mykeys[i];
@@ -105,7 +106,7 @@ export class InvoiceApiStatusListService {
 			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters" || propName == "TreeFilters"  || propName == "ParentEntity");
 
             if (urlparameters != "?") {
-				urlparameters = urlparameters.concat('&');
+                urlparameters = urlparameters.concat('&');
             }
 
 			if (!ignoreFilter) {

@@ -940,7 +940,7 @@ export class GLAccountPM {
     private foreignCurrencyInterest: boolean;
     public get ForeignCurrencyInterest() { return this.foreignCurrencyInterest; }
     public set ForeignCurrencyInterest(newValue: boolean) { if (this.foreignCurrencyInterest != newValue) { this.foreignCurrencyInterest = newValue; this.MarkAsDirty("ForeignCurrencyInterest"); } }
-      
+
     private customerDebtNotification: CustomerDebtNotificationPM;
     public get CustomerDebtNotification() { return this.customerDebtNotification; }
     public set CustomerDebtNotification(newValue: CustomerDebtNotificationPM) { if (this.customerDebtNotification != newValue) { this.customerDebtNotification = newValue; this.MarkAsDirty("CustomerDebtNotification"); } }

@@ -77,8 +77,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsAmountDebitNegative, 
 	         TransactionAmount, 
 	         ExcelTransactionAmount, 
-	         RefDate, 
-	         CurrencyRate,
+	         RefDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

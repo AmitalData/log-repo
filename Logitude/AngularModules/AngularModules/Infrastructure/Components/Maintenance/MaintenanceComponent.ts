@@ -2100,6 +2100,7 @@ export class MaintenanceComponent {
                         logitudeWindow.Title = 'Chart Of Accounts Types Order';//TextCodeTranslator.Translate("Accounting.General.O.ChartOfAccountsTypesOrder");
                         logitudeWindow.Show('./Accounting/Components/Maintenance/ChartOfAccountsTypesOrderComponent');
                     });
+
                     break;
                 }
                 case "DNTC": {

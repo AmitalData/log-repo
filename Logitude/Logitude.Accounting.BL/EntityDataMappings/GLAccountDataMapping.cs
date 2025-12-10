@@ -608,9 +608,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 			  entityPM.CustomerDebtNotification = GetCustomerDebtNotificationByAccountId(entityPM);
             }
-             entityPM.TotalOpenChequesInLocalCur = GetTotalOpenChequesInLocalCur(entityPM);
+
+            entityPM.TotalOpenChequesInLocalCur = GetTotalOpenChequesInLocalCur(entityPM);
 
         }
+
         private CustomerDebtNotificationPM GetCustomerDebtNotificationByAccountId(GLAccountPM accountPM)
         {
 			IAccountingContext MyContext = AccountingContext.GetContext(accountPM.Tenant);
