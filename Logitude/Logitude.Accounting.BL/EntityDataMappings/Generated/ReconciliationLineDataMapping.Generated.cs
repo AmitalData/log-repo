@@ -197,11 +197,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ReconciledWithTransactionId = entityPOCO.ReconciledWithTransactionId;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyRate))
-            {
-					entityPM.CurrencyRate = entityPOCO.CurrencyRate;
-            }
-
 		}
 
 		public void PMToOldPM(ReconciliationLinePM entityPM, ReconciliationLinePM oldEntityPM)
