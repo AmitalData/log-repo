@@ -147,7 +147,7 @@ namespace CommunicationWorkerRole
                 return;
             }
 
-            queueService = new DbQueueService("DocumentsExecutionQueue", 0);
+            queueService = new DbQueueService("DocumentsExecutionQueue", SettingUtil.GetTenantDBFromConfig());
             var queueResponse = queueService.Receive(new TimeSpan(0, 0, 0, 0 ,250));
 
             if (queueResponse != null && queueResponse.MessageId != null)
@@ -171,7 +171,7 @@ namespace CommunicationWorkerRole
             try
             {
                 queueService = new DbQueueService();
-                queueService.InitializeQueue("DocumentsExecutionQueue", 0);
+                queueService.InitializeQueue("DocumentsExecutionQueue", SettingUtil.GetTenantDBFromConfig());
 
             }
             catch (Exception ex)

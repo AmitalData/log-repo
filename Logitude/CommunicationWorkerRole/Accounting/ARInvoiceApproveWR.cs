@@ -88,8 +88,7 @@ namespace CommunicationWorkerRole
                 {
                     return true;
                 }
-
-                _DbQueueService = new DbQueueService("ARInvoiceApproveWR", 0);
+                _DbQueueService = new DbQueueService("ARInvoiceApproveWR", SettingUtil.GetTenantDBFromConfig());
 
 
             }
@@ -166,7 +165,7 @@ namespace CommunicationWorkerRole
                 }
                 try
                 {
-                    _DbQueueService = new DbQueueService(selectedQueue, 0);
+                    _DbQueueService = new DbQueueService(selectedQueue, SettingUtil.GetTenantDBFromConfig());
                     if (DateTime.Now.Subtract(_freeTenantsDateTime) >= TimeSpan.FromMinutes(10))
                     {
                         _freeTenantsDateTime = DateTime.Now;
