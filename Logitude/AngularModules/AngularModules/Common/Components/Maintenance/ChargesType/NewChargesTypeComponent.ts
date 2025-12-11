@@ -27,12 +27,18 @@ export class NewChargesTypeComponent extends BaseComponent {
     public MeasurementsQueryFilters: ApiQueryFilters;
     public IsChargeTypesRestrictedFeatureToggleOn = false;
     public _chargesTypePMService: ChargesTypePMService = new ChargesTypePMService();
+    public AccountingActivated: boolean = SessionLocator.TenantPM.AccountingActivated;
 
     constructor() {
         super();
 
         this.EntityPM = this._chargesTypePMService.GetNewEntityPM();
-        ChargesTypePMInitService.InitValues(this.EntityPM, true);
+        if (this.AccountingActivated) {
+            ChargesTypePMInitService.InitValuesForAccounting(this.EntityPM, true);
+        }
+        else {
+            ChargesTypePMInitService.InitValues(this.EntityPM, true);
+        }
         this.EntityPM.AddedManually = true;
 
         if (SessionLocator.TenantPM.TenantVATManagement == false) {
@@ -311,6 +317,36 @@ export class NewChargesTypeComponent extends BaseComponent {
     public IsNextEnabled: boolean = true;
     public IsFinishEnabled: boolean = false;
 
+    get PayableDebitAccount() { return this.EntityPM.PayableDebitAccount; }
+    set PayableDebitAccount(value: string) {
+        if (this.EntityPM.PayableDebitAccount != value) {
+            this.EntityPM.PayableDebitAccount = value;
+        }
+    }
+
+    get PayableDebitGLAcountId() { return this.EntityPM.PayableDebitGLAcountId; }
+    set PayableDebitGLAcountId(value: string) {
+        if (this.EntityPM.PayableDebitGLAcountId != value) {
+            this.EntityPM.PayableDebitGLAcountId = value;
+            if (this.EntityPM.PayableDebitGLAcountId == null) this.EntityPM.PayDebitGLAcountLocalName = null;
+        }
+    }
+    
+    get ReceivableCreditAccount() { return this.EntityPM.ReceivableCreditAccount; }
+    set ReceivableCreditAccount(value: string) {
+        if (this.EntityPM.ReceivableCreditAccount != value) {
+            this.EntityPM.ReceivableCreditAccount = value;
+        }
+    }
+
+    get ReceivableCreditGLAccountId() { return this.EntityPM.ReceivableCreditGLAccountId; }
+    set ReceivableCreditGLAccountId(value: string) {
+        if (this.EntityPM.ReceivableCreditGLAccountId != value) {
+            this.EntityPM.ReceivableCreditGLAccountId = value;
+            if (this.EntityPM.ReceivableCreditGLAccountId == null) this.EntityPM.RecCreditGLAcountLocalName = null;
+        }
+    }
+    
     // Commands
     PreviousButtonClicked() {
         this.IsFinishEnabled = true;
