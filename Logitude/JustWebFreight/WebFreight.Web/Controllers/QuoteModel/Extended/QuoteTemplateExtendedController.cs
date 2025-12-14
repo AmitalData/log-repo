@@ -340,6 +340,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
         }
 		
         [HttpPost]
+		[Route("api/QuoteTemplateExtended/BuildQuoteTemplatePdfReportForAppService")]
 		public HttpResponseMessage BuildQuoteTemplatePdfReportForAppService(BuildQuoteRequest buildQuoteRequest)
 		{
 			try
