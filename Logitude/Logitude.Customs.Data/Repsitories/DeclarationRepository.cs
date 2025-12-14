@@ -826,6 +826,18 @@ namespace Logitude.Customs.Data.Repsitories
                   )
                   .FirstOrDefault();
         }
+        public (string CustomFileNo, string DeclarationNumber) GetCustomFileNoAndDecNoByDeclarationId(string declarationId, int tenant)
+        {
+            if (string.IsNullOrWhiteSpace(declarationId))
+                return ("", "");
+
+            return context.Declarations
+                .Where(x => x.Id == declarationId && x.Tenant == tenant)
+                .AsEnumerable() 
+                .Select(x => (x.CustomFileNo, x.DeclarationNumber))
+                .FirstOrDefault();
+        }
+
 
         public List<string> GetCustomsFileNumbersByDeclaraionIds(List<string> declarationIds, int tenant)
         {
