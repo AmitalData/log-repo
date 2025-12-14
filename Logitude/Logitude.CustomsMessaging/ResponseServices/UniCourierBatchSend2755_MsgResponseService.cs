@@ -60,14 +60,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                 var q =
-                    (from p in context.DeclarationPendings
+                    from p in context.DeclarationPendings
+                    join r in context.CourierPendingReasons
+                    on new { Code = p.CourierPendingReasonCode, p.Tenant }
+                    equals new { Code = r.Code, r.Tenant }
                     where p.Status == "A"
-                    group p by p.DeclarationID into g
+                    group r by p.DeclarationID into g
                     select new
                     {
                         DeclarationID = g.Key,
-                        ErrorPlace = g.Any(r => r.CourierPendingReason.ErrorPlace == "1"),
-                    });
+                        ErrorPlace = g.Any(x => x.ErrorPlace == "1"),
+                    };
 
 
                 var qDeclarationPaymentPendingHold = (
