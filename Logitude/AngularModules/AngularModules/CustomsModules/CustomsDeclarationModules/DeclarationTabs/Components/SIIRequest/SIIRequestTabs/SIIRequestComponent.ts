@@ -146,33 +146,40 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         let invoices = this.supplierInvoiceItemsForSIIRequest || [];
 
         if (hasRequest && children.length > 0 && invoices.length > 0) {
-            const linkedKeys = new Set(
-                children.map(l =>
-                    `${l.DeclarationId}|${l.InvoiceCounterKey}|${l.InvoiceItemLineNumber}|${l.Tenant}`
-                )
-            );
 
-            invoices = invoices.filter(i => {
-                const key = `${this.DecalarationData.Id}|${i.InvoiceCounterKey}|${i.InvoiceLineNumber}|${this.entityPM.Tenant}`;
-                return linkedKeys.has(key);
-            });
+            const sentChildren = children.filter(ch => ch.LineNumber && ch.LineNumber > 0);
 
-            const childByKey = new Map<string, any>();
-            children.forEach(ch => {
-                const key = `${ch.DeclarationId}|${ch.InvoiceCounterKey}|${ch.InvoiceItemLineNumber}|${ch.Tenant}`;
-                childByKey.set(key, ch);
-            });
+            if (sentChildren.length > 0) {
+                const linkedKeys = new Set(
+                    sentChildren.map(l =>
+                        `${l.DeclarationId}|${l.InvoiceCounterKey}|${l.InvoiceItemLineNumber}|${l.Tenant}`
+                    )
+                );
 
-            invoices.forEach(i => {
-                const key = `${this.DecalarationData.Id}|${i.InvoiceCounterKey}|${i.InvoiceLineNumber}|${this.entityPM.Tenant}`;
-                const child = childByKey.get(key);
-                if (!child) return;
+                invoices = invoices.filter(i => {
+                    const key = `${this.DecalarationData.Id}|${i.InvoiceCounterKey}|${i.InvoiceLineNumber}|${this.entityPM.Tenant}`;
+                    return linkedKeys.has(key);
+                });
 
-                i.StatusName = child.StatusName;
-                i.DistApprovalAttachmentPath = child.DistApprovalAttachmentPath;
-            });
+                const childByKey = new Map<string, any>();
+                sentChildren.forEach(ch => {
+                    const key = `${ch.DeclarationId}|${ch.InvoiceCounterKey}|${ch.InvoiceItemLineNumber}|${ch.Tenant}`;
+                    childByKey.set(key, ch);
+                });
 
-            this.supplierInvoiceItemsForSIIRequest = invoices;
+                invoices.forEach(i => {
+                    const key = `${this.DecalarationData.Id}|${i.InvoiceCounterKey}|${i.InvoiceLineNumber}|${this.entityPM.Tenant}`;
+                    const child = childByKey.get(key);
+                    if (!child) return;
+
+                    i.StatusName = child.StatusName;
+                    i.DistApprovalAttachmentPath = child.DistApprovalAttachmentPath;
+                });
+
+                this.supplierInvoiceItemsForSIIRequest = invoices;
+            } else {
+                this.supplierInvoiceItemsForSIIRequest = [];
+            }
         }
 
         this.buildSupplierInvoiceItemsCollection();
@@ -431,7 +438,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                         errDlg.Show(
                             (payload && (payload as any).ValidationMessages) ||
                             TextCodeTranslator.Translate('General.B.Error')
-                        );
+                        );     
                     },
                     (err: HttpErrorResponse) => {
                         const dlg = new ConfirmWindow();
@@ -441,6 +448,14 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                         dlg.IsMultipleMessages = true;
                         dlg.ShowErorImage = true;
                         dlg.Show(extractMessage(err));
+                        dlg.WindowClosed.subscribe(() => {
+                            const body: any = err?.error;
+                            if (body && body.IsFinal === true) {
+                                this.CurrentSession.CloseCurrentWindow();
+                            } else {
+                                this.RefreshEntity();
+                            }
+                        });
                     }
                 );
         };
