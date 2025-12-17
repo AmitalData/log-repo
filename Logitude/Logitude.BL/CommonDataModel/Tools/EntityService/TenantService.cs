@@ -306,17 +306,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             GlobalDBRepository globaldbRep = new GlobalDBRepository();
 
             List<GlobalDB> activeDbs = globaldbRep.GetActiveDataBases();
-            GlobalDB database = null;
-            if (activeDbs.Count == 1)
-            {
-                database = activeDbs.FirstOrDefault();
-            }
-            if (activeDbs.Count > 1)
-            {
-                Random rand = new Random();
-                int number = rand.Next(activeDbs.Count);
-                database = activeDbs[number];
-            }
+            GlobalDB database = activeDbs.FirstOrDefault();
 
             return database;
         }
