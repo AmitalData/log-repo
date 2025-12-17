@@ -28,6 +28,8 @@ export class NewChargesTypeComponent extends BaseComponent {
     public IsChargeTypesRestrictedFeatureToggleOn = false;
     public _chargesTypePMService: ChargesTypePMService = new ChargesTypePMService();
     public AccountingActivated: boolean = SessionLocator.TenantPM.AccountingActivated;
+    public ReceivableCreditGLAccountFilterItems: ApiQueryFilters;
+    public PayableDebitGLAcountFilterItems: ApiQueryFilters;
 
     constructor() {
         super();
@@ -60,6 +62,11 @@ export class NewChargesTypeComponent extends BaseComponent {
         this.SetUIProperties();
         this.SetUIProperties_DirectionFields();
         this.ReadChargeTypesRestrictedFeatureToggleFeature();
+
+        this.ReceivableCreditGLAccountFilterItems = new ApiQueryFilters();
+        this.PayableDebitGLAcountFilterItems = new ApiQueryFilters();
+        this.ReceivableCreditGLAccountFilterItems.addAdditionalFilter("ReceivableCreditFilter", "1", null, null, "Equals", true, false, false, "string", false, true);
+        this.PayableDebitGLAcountFilterItems.addAdditionalFilter("PayableDebitFilter", "2", null, null, "Equals", true, false, false, "string", false, true);
     }
 
     ReadChargeTypesRestrictedFeatureToggleFeature() {
