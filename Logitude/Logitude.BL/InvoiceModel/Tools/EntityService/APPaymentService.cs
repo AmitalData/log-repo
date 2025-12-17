@@ -1461,7 +1461,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ForeignAmount = 0,
                 ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
                 Reference1 = paymentPM.PaymentNo,
-                Notes = "Revaluation on Foreign Currency Payment",
+                Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
                 DueDate = paymentPM.ValueDate.Value,
 
             };
@@ -1488,7 +1488,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ForeignAmount = 0,
                 ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
                 Reference1 = paymentPM.PaymentNo,
-                Notes = "Revaluation on Foreign Currency Payment",
+                Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
                 DueDate = paymentPM.ValueDate.Value,
 
             };
