@@ -36,7 +36,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 To = new DateTime(2018, 11, 1),
                 PageSize = 100,
                 PageStartAtRecordIndex = 0,
-                DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate
+                DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate
             };
             var classUnderTest = new LedgerTransactionBalanceService(myIAccountingContext, fltr);
 
@@ -68,7 +68,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 To = new DateTime(2018, 11, 1),
                 PageSize = 100,
                 PageStartAtRecordIndex = 0,
-                DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate
+                DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate
             };
             var classUnderTest = new LedgerTransactionBalanceService(myIAccountingContext, fltr);
 
@@ -100,7 +100,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 To = new DateTime(2018, 11, 1),
                 PageSize = 100,
                 PageStartAtRecordIndex = 0,
-                DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate
+                DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate
             };
             var classUnderTest = new LedgerTransactionBalanceService(myIAccountingContext, fltr);
 
@@ -131,7 +131,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 To = new DateTime(2018, 11, 1),
                 PageSize = 100,
                 PageStartAtRecordIndex = 0,
-                DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate
+                DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate
             };
             var classUnderTest = new LedgerTransactionBalanceService(myIAccountingContext, fltr);
 
@@ -235,7 +235,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             {
                 new GLAccountTotalByMonth()
                 {
-                    DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate,
+                    DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate,
                     Tenant=_MyTenant,
                     Year =yyyy-1,
                     Month =12,
@@ -439,7 +439,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var myTotList = q
                 .Select(g => new GLAccountTotalByMonth()
                 {
-                    DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate,
+                    DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate,
                     Tenant = _MyTenant,
                     Year = g.Key.Year,
                     Month = g.Key.Month,
