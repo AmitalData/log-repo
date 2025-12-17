@@ -15,11 +15,15 @@ namespace Logitude.UnitTest.Accounting.UniTests
     /// Refactored version of JournalLineCreditMappingUnitTest using FakeItEasy.
     /// Migrated from MSTest Fakes to FakeItEasy for compatibility with Visual Studio Community.
     /// </summary>
-    // Disabled for now: depends on real GlobalContext/GLAccount repository; re-enable when fakes are in place.
     [TestClass]
-    [Ignore("Skipped: requires GlobalContext/DB fakes; re-enable after infra is ready")]
+    [Ignore("Skipped: still requires richer GL account fakes; leave excluded for now")]
     public class JournalLineCreditMappingUnitTest_MSTest : TestBase_MSTest
     {
+        [TestInitialize]
+        public void InitEnv()
+        {
+            EnvFakes.EnsureInitialized();
+        }
         [TestMethod]
         public void journalLineCreditMappingDoItValueRange_JournalPMAndJournalLinePMNotDSame_ExpectedExceptionKeyAreDifferent()
         {
