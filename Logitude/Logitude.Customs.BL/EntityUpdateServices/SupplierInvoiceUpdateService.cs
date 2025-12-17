@@ -77,10 +77,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             int? maxSequenceNumeric = supplierInvoiceQueryService.GetMaxSequenceNumeric(entityPM.DeclarationId, entityPM.Tenant);
             if (maxSequenceNumeric != null)
             {
-                if (!(declarationPM.IsAmendment == true && entityPM.InvoiceCounterKey != 0))
-                {
-                    entityPM.InvoiceCounterKey = maxSequenceNumeric.Value + 1;
-                }
+                entityPM.InvoiceCounterKey = maxSequenceNumeric.Value + 1;
                 if (declarationPM == null)
                 {
 
