@@ -226,7 +226,7 @@ namespace Logitude.Server.Tools.QueueService
                         delayPar.Value = delaySeconds;
                         customerId.Value = CId;
                         batchNumber.Value = BNo;
-                        watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForSending(tenant);
+                        watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForSending(tenant, this.QueueCode);
                         //NextRunDateTime.Value = NextRunDate;
                         hashCodePar.Value = bodyHashCode;
                         tenantPriPar.Value = tenantPriority;
@@ -348,7 +348,7 @@ namespace Logitude.Server.Tools.QueueService
                         batchNumber.Value = BNo;
                     //    NextRunDateTime.Value = NextRunDate;
                         hashCodePar.Value = bodyHashCode;
-                        watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForSending(tenant);
+                        watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForSending(tenant, this.QueueCode);
                         tenantpriorityPar.Value = tenantPriority;
                         interfaceTypeCodePar.Value =   queueSendModel?.InterfaceTypeCode!= null? queueSendModel?.InterfaceTypeCode: "";
                         
