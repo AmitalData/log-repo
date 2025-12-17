@@ -27,7 +27,7 @@
                             </div>
                         </td>
                         <td
-                            style="width: 75px"
+                            style="width: 100px"
                             [style.text-align]="isRTL ? 'right' : 'left'"
                         >
                             <LogLabel
@@ -49,7 +49,7 @@
                             {{NumberOfPayments}}
                         </td>
                         <td
-                            style="width: 90px"
+                            style="width: 120px"
                             [style.text-align]="isRTL ? 'right' : 'left'"
                         >
                             <LogLabel
@@ -98,7 +98,7 @@
                         >
                             {{originalAmount | NumbersPipe:'N2'}}
                         </td>
-                        <td  style="width: 75px">
+                        <td  style="width: 100px">
                             
                             <LogLabel
                                 [NoObjectField]="true"
@@ -118,7 +118,7 @@
                         >
                             {{isVoided ? 0 : (amountPaid | NumbersPipe:'N2')}}
                         </td>
-                        <td  style="width: 90px">
+                        <td  style="width: 120px">
                             <LogLabel
                                 [NoObjectField]="true"
                                 [ObjectFieldName]="'amountDue'"
