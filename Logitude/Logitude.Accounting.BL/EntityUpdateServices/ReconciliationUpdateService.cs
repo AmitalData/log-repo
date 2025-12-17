@@ -320,7 +320,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             ForeignAmount = 0,
                             CurrencyId = group.Key,
                             Reference1 = revalJrnlRef1,
-                            Notes = "Revaluation on Foreign Currency Reco.",
+                            Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                         });
 
@@ -340,7 +340,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             ForeignAmount = 0,
                             CurrencyId = group.Key,
                             Reference1 = revalJrnlRef1,
-                            Notes = "Revaluation on Foreign Currency Reco.",
+                            Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                         });
 
