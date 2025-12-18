@@ -168,7 +168,10 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
             this.fromDate = value;
 
             if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate)) {
-                this.dateFilter = new FilterItem("CreateDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
+                const toDateEndOfDay = new Date(this.ToDate);
+                toDateEndOfDay.setHours(23, 59, 59, 999);
+
+                this.dateFilter = new FilterItem("CreateDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), toDateEndOfDay, null, "Between", false, false, false, "Date", false);
                 this.ReloadData();
             }
         }
@@ -181,7 +184,10 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
             this.toDate = value;
 
             if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate)) {
-                this.dateFilter = new FilterItem("CreateDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
+                const toDateEndOfDay = new Date(this.ToDate);
+                toDateEndOfDay.setHours(23, 59, 59, 999);
+
+                this.dateFilter = new FilterItem("CreateDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), toDateEndOfDay, null, "Between", false, false, false, "Date", false);
                 this.ReloadData();
             }
         }
@@ -358,9 +364,9 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
             filters.AdditionalFilters.push(this.amountFieldFilter);
         }
 
-        filters.PageSize = 50;
-        filters.PageIndex = 0;
-        filters.GetCount = true;
+        filters.PageSize = take;
+        filters.PageIndex = skip;
+        filters.GetCount = getCount;
 
         filters.SortBy = "CreateDate";
         filters.SortDirection = "Descending";
