@@ -57,7 +57,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService();
 
 
-
+            LogMessagingUtil.Instance.AppendLine($"5117.Update – start to update");
             FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
 
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
@@ -118,7 +118,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 else
                 {
-
+                    LogMessagingUtil.Instance.AppendLine($"5117.Update – GetDeclaration is null");
                     if (customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99")
                     {
                         _MyDeclarationPM = myDeclarationUpdateService.GetSertByConvertedDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
@@ -736,7 +736,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
 
                         this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                        var swUpdateDec2 = Stopwatch.StartNew(); 
+                        var swUpdateDec2 = Stopwatch.StartNew();
                         myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
                         LogMessagingUtil.Instance.AppendLine($"5117.Update – myDeclarationUpdateService.Update (else branch) took {swUpdateDec2.ElapsedMilliseconds} ms");
 
@@ -841,6 +841,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
                 this.MyRequestSheetParam.RequestDescription = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber;
+                LogMessagingUtil.Instance.AppendLine($"5117.Update1 – answer for declaration " + this._MyDeclarationPM.DeclarationNumber);
 
                 requestParams.AppicationId = _MyDeclarationPM.Id;// myDeclarationQueryService.GetIdByDeclarationNumber(_MyDeclarationPM.Id, requestParams.Tenant);
                 //if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
@@ -967,6 +968,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                     this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
                     this.MyRequestSheetParam.RequestDescription = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber;
+                    LogMessagingUtil.Instance.AppendLine($"5117.Update2 – answer for declaration " + this._MyDeclarationPM.DeclarationNumber);
 
                     bool sendDeclarationPrintSync = false;// ConfigurationManager.AppSettings["20180307.5117SendDeclarationPrintSync"] =="1";
                     if (sendDeclarationPrintSync)
