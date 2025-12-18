@@ -812,6 +812,7 @@
     <Compile Include="ResponseServices\VE_MSG013_VendorAddCommunicationDeviceResponseService.cs" />
     <Compile Include="ResponseServices\VE_MSG052_VendorSearchResultsForCustomsAgentResponseService.cs" />
     <Compile Include="ResponseServices\VP_NG_2691_MSG101_VehicleInResponseService.cs" />
+    <Compile Include="Tasks\ConnectDocumentToDeclarationCourier.cs" />
     <Compile Include="Tasks\UpdateClosedTables.cs" />
     <Compile Include="Tasks\POAExpireReminder.cs" />
     <Compile Include="Tasks\EnqueueSucceedRequestsheets.cs" />
