@@ -384,7 +384,7 @@ namespace WebFreight.Web.Stimulsoft
 
     public class StiMyCacheHelper : StiCacheHelper
     {
-        public override StiReport GetReport(string guid, StiServerCacheMode mode, TimeSpan timeout, CacheItemPriority priority)
+        public override StiReport GetReport(string guid)
         {
             //string path = Path.Combine(HttpContext.Current.Server.MapPath(string.Empty), "CacheFiles", guid);
             //if (File.Exists(path))
@@ -418,7 +418,7 @@ namespace WebFreight.Web.Stimulsoft
             //return base.GetReport(guid, mode, timeout, priority);
         }
 
-        public override void SaveReport(StiReport report, string guid, StiServerCacheMode mode, TimeSpan timeout, CacheItemPriority priority)
+        public override void SaveReport(StiReport report, string guid)
         {
             string packedReport = guid.EndsWith("template") ? report.SavePackedReportToString() : report.SavePackedDocumentToString();
             //string path = Path.Combine(HttpContext.Current.Server.MapPath(string.Empty), "CacheFiles", guid);
