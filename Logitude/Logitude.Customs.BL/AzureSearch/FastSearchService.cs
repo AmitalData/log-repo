@@ -92,7 +92,7 @@ namespace Logitude.Customs.BL.AzureSearch
             DefaultAndConfiguration_Ext azureSearchAISettings = GetAzureSearchAISettings(tenant);
             bool prefixSearch = azureSearchAISettings == null || (bool)azureSearchAISettings.ObjVal1;
 
-            return await fastSearchAzureSearchRepo.SearchAsync(filters, searchText, settings.maxResults, selectedFields, prefixSearch);
+            return await fastSearchAzureSearchRepo.SearchAsync(filters, searchText, settings.maxResults, selectedFields, prefixSearch, settings.orderByField, settings.descending);
         }
 
         protected virtual void ManipulateAdditionalFilters(List<QueryFilterItem> additionalFilters, int tenant) { }
