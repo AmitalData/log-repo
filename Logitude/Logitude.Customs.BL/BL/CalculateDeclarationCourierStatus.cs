@@ -203,21 +203,14 @@ namespace Logitude.Customs.BL.BL
 
                 myDeclarationCourierStatusPM.DocumentStatusCode = "M";
             }
-            else if (customsDocumentsTicketPMList != null &&
-             customsDocumentsTicketPMList.Count > 0)
+            else 
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
-                    string.Format("No error, no missing, has tickets -> set V, dec id :{0}",
+                    string.Format("No error, no missing, -> set V, dec id :{0}",
                         myDeclarationCourierStatusPM.DeclarationId));
-
                 myDeclarationCourierStatusPM.DocumentStatusCode = "V";
             }
-            else
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
-                    string.Format("No error, no missing, but no tickets -> keep existing status, dec id :{0}",
-                        myDeclarationCourierStatusPM.DeclarationId));
-            }
+           
 
         }
         public void CalcMissingDocumentStatusCode(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
