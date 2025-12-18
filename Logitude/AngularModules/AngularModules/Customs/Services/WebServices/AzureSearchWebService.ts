@@ -98,4 +98,6 @@ export interface FastSearchResult {
     showSeparator: boolean;
     showHeader : boolean;
     tableName: string;
+    highlightSearchResults: boolean;
+
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebService';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
@@ -74,9 +74,8 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
                                                 | DateTimePipe : 'D'
                                         }}
                                     </span>
-                                    <span *ngSwitchDefault>
-                                        {{ option[label.name] }}
-                                    </span>
+                                    <span *ngSwitchDefault [innerHTML]="option[label.name] | highlightAISearch: searchText : highlightSearchResults"></span>
+
                                 </ng-container>
                             </td>
                         </ng-container>
@@ -109,7 +108,13 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
         </div>
     `,
     styles: [
-        `
+        `  .search-highlight {                
+            font-size: 14px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: red; 
+       
+            }
             .dropdown-header th {
                 font-size: 14px;
                 text-align: right;
@@ -185,6 +190,8 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
             }
         `,
     ],
+    encapsulation: ViewEncapsulation.None
+
 })
 export class SearchListDDLComponent implements OnInit {
     public static showAll: string = 'showAll';
@@ -208,6 +215,9 @@ export class SearchListDDLComponent implements OnInit {
     showSeparator: boolean = true;
     showHeader: boolean = false;
     tableName: string = '';
+    searchText : string = '';
+    highlightSearchResults: boolean = false;
+
     public set settings(settings: FastSearchSettings) {
         if (!settings) return;
         this.displayPattern = settings.ddlHtmlLine;
@@ -216,6 +226,7 @@ export class SearchListDDLComponent implements OnInit {
         this.showSeparator = settings.showSeparator ?? true;
         this.showHeader = settings.showHeader ?? false;
         this.tableName = settings.tableName ?? '';
+        this.highlightSearchResults = settings.highlightSearchResults ?? false;
         if (settings.DDLWidth) this.DDLWidth = settings.DDLWidth;
     }
     public set displayPattern(pattern: string) {
