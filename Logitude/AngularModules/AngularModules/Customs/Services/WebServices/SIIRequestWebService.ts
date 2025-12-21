@@ -86,6 +86,19 @@ export class SIIRequestWebService {
             );
         });
     }
+
+    getApprovalReportBlob(url: string) {
+        return defer(() => {
+            const encoded = encodeURIComponent(url);
+
+            return this._http.get(
+                this._apiUrl + "/GetApprovalReport?url=" + encoded,
+                { ...ServiceHelper.GetHttpHeaders(), responseType: 'blob' }
+            );
+        });
+    }
+
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: SIIRequestPM = null) {
 
 

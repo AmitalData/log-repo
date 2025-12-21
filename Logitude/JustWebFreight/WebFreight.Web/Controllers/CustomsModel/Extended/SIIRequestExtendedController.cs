@@ -131,5 +131,36 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, errorPayload);   // 400
             }
         }
+
+        [HttpGet]
+        [Route("api/SIIRequestExtended/GetApprovalReport")]
+        public async Task<HttpResponseMessage> GetApprovalReport([FromUri] string url)
+        {
+            var uri = new Uri(url);
+            if (!uri.Host.Equals("m2c.sii.org.il", StringComparison.OrdinalIgnoreCase))
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid host");
+
+            using (var http = new HttpClient())
+            using (var resp = await http.GetAsync(uri))
+            {
+                if (!resp.IsSuccessStatusCode)
+                    return Request.CreateResponse(resp.StatusCode, "Failed to fetch report: " + resp.ReasonPhrase);
+
+                var bytes = await resp.Content.ReadAsByteArrayAsync();
+
+                var result = new HttpResponseMessage(HttpStatusCode.OK);
+                result.Content = new ByteArrayContent(bytes);
+                result.Content.Headers.ContentType =
+                    resp.Content.Headers.ContentType ?? new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
+
+                result.Content.Headers.ContentDisposition =
+    new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
+    { FileName = "DeclarationApprovalReport.pdf" };
+
+                return result;
+            }
+        }
+
+
     }
 }
