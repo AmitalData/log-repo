@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Designer.aspx.cs" Inherits="WebFreight.Web.Stimulsoft.Designer" %>
 
-<%@ Register Assembly="Stimulsoft.Report.WebDesign, Version=2025.4.3.0" Namespace="Stimulsoft.Report.Web" TagPrefix="cc3" %>
+<%@ Register Assembly="Stimulsoft.Report.WebDesign, Version=2026.1.1" Namespace="Stimulsoft.Report.Web" TagPrefix="cc3" %>
 
 <%--<%@ Register Assembly="Stimulsoft.Report.MobileDesign, Version=2017.1.11.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a"
     Namespace="Stimulsoft.Report.MobileDesign" TagPrefix="cc2" %>--%>
