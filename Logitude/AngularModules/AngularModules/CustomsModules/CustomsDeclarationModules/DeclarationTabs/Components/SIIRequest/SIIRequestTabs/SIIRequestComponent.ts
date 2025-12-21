@@ -438,7 +438,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                         errDlg.Show(
                             (payload && (payload as any).ValidationMessages) ||
                             TextCodeTranslator.Translate('General.B.Error')
-                        );     
+                        );
                     },
                     (err: HttpErrorResponse) => {
                         const dlg = new ConfirmWindow();
@@ -811,13 +811,30 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         }
     }
 
-    openDistApprovalAttachment(item: SupplierInvoiceItemsForSIIRequestLine): void {
-        const url = item?.DistApprovalAttachmentPath;
-        if (url) {
-            window.open(url, '_blank');
-        }
-    }
+    openDistApprovalAttachment(item: any): void {
+        const remoteUrl = item?.DistApprovalAttachmentPath;
+        if (!remoteUrl) return;
 
+        this.siiRequestWebService.getApprovalReportBlob(remoteUrl).subscribe({
+            next: (blob: Blob) => {
+                if (!blob || blob.size === 0) return;
+
+                const objectUrl = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = objectUrl;
+                a.download = 'DeclarationApprovalReport.pdf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+
+                setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+            },
+            error: (err) => {
+                console.error('getApprovalReportBlob failed', err);
+            }
+        });
+    }
+  
     //#endregion LevelSelection Filter Methods   
 
     //#region contact data
