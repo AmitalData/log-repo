@@ -31,6 +31,10 @@ using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.ILOVS;
 using Logitude.Customs.BL.Infrastructure;
 using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.BL.Models;
+using Logitude.Customs.BL.TraceEvents;
+using UnifreightIIG.Common.MessageLib.Unifreight.Customs;
+using Logitude.Customs.Data.EntityMapping;
 
 
 namespace Logitude.Customs.BL.EntityUpdateServices
@@ -69,10 +73,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var prevCourierPendingReasonList = entityPM.CourierPendingReasonList;
                 entityPM.CourierPendingReasonList = null;
                 entityPM.NotApprovedPendingList = null;
-                foreach (var declarationPending in entityPM.DeclarationPendings)
+                foreach (DeclarationPendingPM declarationPending in entityPM.DeclarationPendings)
                 {
                     CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(entityPM.Tenant);
-                    var courierPendingReason = courierPendingReasonRepositoryRepository.GetByCode(declarationPending.CourierPendingReasonCode, entityPM.Tenant);
+                    CourierPendingReason courierPendingReason = courierPendingReasonRepositoryRepository.GetByCode(declarationPending.CourierPendingReasonCode, entityPM.Tenant);
                     if (courierPendingReason != null && !courierPendingReason.Inactive)
                     {
                         if (declarationPending.ChangeSetOp != ChangeSetOperation.Delete)
@@ -99,6 +103,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     entityPM.NotApprovedPendingList = string.Concat(entityPM.NotApprovedPendingList, ",", declarationPending.CourierPendingReasonCode);
                                 }
                             }
+                           
+                            if (declarationPending.Status == "S" && entityPM.CourierPendingReasonList != entityPOCO.CourierPendingReasonList)
+                            {
+                                this.RaiseEvent(declarationPending, courierPendingReason, "CPEN");
+                            }
+                        }
+                        else
+                        {
+                            this.RaiseEvent(declarationPending,courierPendingReason, "DPEN");
                         }
                     }
 
@@ -319,7 +332,48 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             base.OnUpdating(entityPM, entityPOCO);
         }
-      
+
+        private void RaiseEvent(DeclarationPendingPM dirtyDeclarationPendingPM, CourierPendingReason courierPendingReason, string code)
+        {
+            try
+            {
+                var context = CustomContext.GetContext(dirtyDeclarationPendingPM.Tenant);
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(dirtyDeclarationPendingPM.Tenant);
+
+                (string CustomFileNo, string DeclarationNumber) result = declarationQueryService.GetCustomFileNoAndDecNoByDeclarationId(dirtyDeclarationPendingPM.DeclarationID, dirtyDeclarationPendingPM.Tenant);
+                string loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPendingPM.Tenant) ?? string.Empty;
+                string remarks = $"loggingUserId: {loggingUserId}, UnifreightStatusCode: {courierPendingReason?.UnifreightStatusCode}, CourierPendingReasonCode: {dirtyDeclarationPendingPM?.CourierPendingReasonCode}, CourierPendingReasonName: {dirtyDeclarationPendingPM?.CourierPendingReasonName}";
+                var eventContextTagModel = dirtyDeclarationPendingPM.CurrentContextTag as EventContextTagModel;
+                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+                    Tenant = dirtyDeclarationPendingPM.Tenant,
+                    objectTableName = "Customs.Declaration",
+                    EventCode = code,
+                    notes = remarks,
+                    CommunicationLoggingEntityReference = result.DeclarationNumber ?? string.Empty,
+                    EntityId = dirtyDeclarationPendingPM.DeclarationID,
+                    UserId = loggingUserId,
+                    CommunicationSubject = "FU Status " + code + " from logitude (Agent Response)",
+                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                    {
+                        entname = "CFIFILEM",
+                        primary_number = result.CustomFileNo ?? string.Empty,
+                        status = "new",
+                        xml_status = "new",
+                        status_id = code,
+                        status_DateTime = DateTime.Now,
+                        comments = remarks,
+                    }
+                };
+                LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent  eventCode = " + code + " CustomFileNo= " + result.CustomFileNo ?? string.Empty + "   ");
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         protected override void UpdateComposition(DeclarationCourierStatusPM entityPM)
         {

@@ -23,7 +23,13 @@ export class SearchListDDLDirective implements  AfterViewInit {
     if (this.componentRef && val)
       this.componentRef.instance.settings = this._settings;
   }
-
+  @Input() set SearchText(val: string) {
+    if (this.componentRef && val !== undefined && val !== null && this._settings && this._settings.minimumSearchQueryLength <= val.length) 
+      this.componentRef.instance.searchText = val;  
+    else
+      if(this.componentRef)
+         this.componentRef.instance.searchText = "";
+  }
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
   componentRef!: ComponentRef<SearchListDDLComponent>;
 

@@ -657,7 +657,7 @@ $"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  A
                 ForeignAmount = 0,
                 ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
                 Reference1 = paymentPM.PaymentNo,
-                Notes = "Revaluation on Foreign Currency Receipt",
+                Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
                 DueDate = GetDueDate(),
                 
             };
@@ -684,7 +684,7 @@ $"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  A
                 ForeignAmount = 0,
                 ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
                 Reference1 = paymentPM.PaymentNo,
-                Notes = "Revaluation on Foreign Currency Receipt",
+                Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
                 DueDate = GetDueDate(),
                 
             };
