@@ -68,5 +68,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public double? InvoiceCurrencyExchangeRate { get; set; }
 
         public bool IsRegionalTax { get; set; }
+        public string ReceivableCreditGLAccountId { get; set; }
     }
 }

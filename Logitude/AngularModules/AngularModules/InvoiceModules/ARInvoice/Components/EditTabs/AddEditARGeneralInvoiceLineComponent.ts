@@ -23,12 +23,16 @@ export class AddEditARGeneralInvoiceLineComponent implements OnInit{
     private CurrentSession = SessionLocator.SelectedSession;
     ColumnsWidths: ColumnsWidths[] = [];
     IsAccountingActivated: boolean = false;
+    public ReceivableCreditGLAccountFilterItems: ApiQueryFilters;
 
     constructor() {
         if (SessionLocator.TenantPM.AccountingActivated) {
             this.FillChargesTypesCustomLOVColumnsWidths();
         }
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+
+        this.ReceivableCreditGLAccountFilterItems = new ApiQueryFilters();
+        this.ReceivableCreditGLAccountFilterItems.addAdditionalFilter("ReceivableCreditFilter", "1", null, null, "Equals", true, false, false, "string", false, true);
     }
     ngOnInit(): void {
         this.SetDefaultValues(); 
@@ -122,7 +126,13 @@ export class AddEditARGeneralInvoiceLineComponent implements OnInit{
             }
         }
 
-        if (this.DataContext.chargesTypeList != null && AppTool.IsNullOrEmpty(this.DataContext.chargesTypeList.ReceivableCreditGLAccountId)) {
+        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        if (AppTool.IsNullOrEmpty(this.EntityPM.ReceivableCreditGLAccountId)) {
+            var field = TextCodeTranslator.Translate("ARInvoiceLine.F.ReceivableCreditGLAccountId");
+            errors.push(msg.replace("%FieldName", field));
+        }
+
+        if (this.DataContext.chargesTypeList != null && AppTool.IsNullOrEmpty(this.DataContext.chargesTypeList.ReceivableCreditGLAccountId) && AppTool.IsNullOrEmpty(this.EntityPM.ReceivableCreditGLAccountId)) {
             errors.push(TextCodeTranslator.Translate("ARInvoice.M.NoGLAccount"));
         }
 
@@ -182,6 +192,7 @@ export class AddEditARGeneralInvoiceLineComponent implements OnInit{
         this.myCloner.AddField('ForiegnCurrencyAmount');
         this.myCloner.AddField('LocalCurrencyAmount');
         this.myCloner.AddField('InvoiceCurrencyAmount');
+        this.myCloner.AddField('ReceivableCreditGLAccountId');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.fatherComponent.EntityPM);
     }
