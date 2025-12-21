@@ -471,6 +471,8 @@ export class JournalPageComponent implements AfterViewInit {
     async searchMethod() {    
        
         try {
+            this.CurrentQueryFilters = new ApiQueryFilters();
+
             if (this.searchFields?.length < this.fastSearchService.Settings.minimumSearchQueryLength) return;
             this.CD.detectChanges();
             this.searchDropdownOptions = await this.fastSearchService.search(this.CurrentQueryFilters, this.searchFields)
@@ -484,7 +486,6 @@ export class JournalPageComponent implements AfterViewInit {
         } finally {
         } 
        
-        this.CurrentQueryFilters = new ApiQueryFilters();
 
         this.CD.detectChanges(); 
            
