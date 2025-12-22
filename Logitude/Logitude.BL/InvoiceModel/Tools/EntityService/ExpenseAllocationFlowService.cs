@@ -111,19 +111,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             if (ShouldCreateAnotherTask(settingPM.Id, settingPM.NumberOfPayments))
-                AddTask(settingPM);
+                AddTask(settingPM,theEntity.RunDate);
         }
 
 
 
-        public void AddTask(ExpenseAllocationSettingPM settingPM)
+        public void AddTask(ExpenseAllocationSettingPM settingPM ,DateTime lastRunDate)
         {
             ExpenseAllocationFlow expenseAllocationFlow = new ExpenseAllocationFlow();
             expenseAllocationFlow.Id = IdCounter.GetNumber("ExpenseAllocationFlow", tenant).ToString();
             expenseAllocationFlow.Tenant = tenant;
             expenseAllocationFlow.SettingId = settingPM.Id;
             expenseAllocationFlow.Status = "Done";
-            expenseAllocationFlow.RunDate = GetNextRunDate(settingPM.PaymentDateType, settingPM.MonthInterval, DateTime.Now);
+            expenseAllocationFlow.RunDate = GetNextRunDate(settingPM.PaymentDateType, settingPM.MonthInterval, lastRunDate);
             expenseAllocationFlow.JournalId = null;
 
             entityRepository.Add(expenseAllocationFlow);
