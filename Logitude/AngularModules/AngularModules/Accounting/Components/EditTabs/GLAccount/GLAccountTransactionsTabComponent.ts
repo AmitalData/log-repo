@@ -446,7 +446,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     set NotIncludedInAnyTaxReport(value: boolean) {
         if (this.notIncludedInAnyTaxReport != value) {
             this.notIncludedInAnyTaxReport = value;
-            this.SelectedTaxReport = null;
+            this.SelectedTaxReport = value ? null : this.TaxReportLists?.[0];
 
         }
         this.RefreshButtonClicked();
@@ -636,7 +636,14 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         filters.addAdditionalFilter("GLAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("IncludeRelatedCurrenciesAccount", this.splittedByCurrencyCheckBox == null ? false : this.splittedByCurrencyCheckBox, null, null, "Equals", false, false, false, "boolean");
         filters.addAdditionalFilter("IncludeChildAccounts", this.attachedGLAccountCheckBox == null ? false : this.attachedGLAccountCheckBox, null, null, "Equals", false, false, false, "boolean");
+        filters.addAdditionalFilter("UseTaxreportFilter", this.UseTaxreportFilter, null, null, "Equals", false, false, false, "boolean");
+        filters.addAdditionalFilter("NotIncludedInAnyTaxReport", this.notIncludedInAnyTaxReport == null ? false : this.notIncludedInAnyTaxReport, null, null, "Equals", false, false, false, "boolean");
 
+        if (this.SelectedTaxReport) {
+
+            filters.addAdditionalFilter("TaxReportId", this.SelectedTaxReport.Code, null, null, "Equals", true, false, false, "string");
+
+        }
         this.MenuHeaderchangeevent.emit({ Filters: filters, IgnoreFilter: false });
 
         this.ledgerTransactionListExtendedService.getBalanceByFilters(filters).subscribe((myResponse: ServiceResponse) => {
@@ -732,6 +739,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     }
     GetOpenBalanceAmount() {
         var result = 0;
+        if(this.filterSelectedValue === 'filter_Tax'){
+            this.LTBSummery.StartBalanceLocal = 0;
+            return 0;
+        } 
         if (this.EntityPM && this.LTBSummery) {
             if (this.EntityPM.IsMultiCurrency) {
                 if (this.LTBSummery.StartBalanceLocal)

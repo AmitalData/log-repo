@@ -1,28 +1,29 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityKeys;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.Enums;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Server.Tools;
+using Microsoft.Practices.ObjectBuilder2;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
  using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
  using System.Text;
 using System.Threading.Tasks;
-using Logitude.Accounting.BL.DataContract;
-using Logitude.Accounting.BL.CloseTables;
-using System.Data.Entity;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Simplog.Data.InvoiceModel.Repositories;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Microsoft.Practices.ObjectBuilder2;
  
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -518,9 +519,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return this.repository.GetLedgerTransactionSumFromTo(gLAccointId, fromDate, toDate, tenant, currencyId);
         }
 
-        public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
+        public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null, LedgerTransactionBalanceFilter _param =null)
         {
-            return this.repository.CalcGLAccountTotalByMonthByDateType(DateTypeCode,fromDate, accoutingDateUntillNotInclude, tenant, listOfAccId);
+            return this.repository.CalcGLAccountTotalByMonthByDateType(DateTypeCode,fromDate, accoutingDateUntillNotInclude, tenant, listOfAccId, _param);
         }
         
         public List<CurrencySumOpenAmount> CalcCurrencySumOpenAmountByMonthByDateType(string DateTypeCode,  DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
