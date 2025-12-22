@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Accounting">
-  <Sql Version="8">
+  <Sql Version="9">
     <![CDATA[
    INSERT INTO CopyFromTenant0 (Id, Tenant, TableName, AlwaysEnabled)
 SELECT *
@@ -14,7 +14,8 @@ FROM (
     ('9999-70', 0, 'Tasks Scheduler', 0),
     ('9999-80', 0, 'CountryCities', 0),
     ('9999-90', 0, 'Document Types and Templates', 1),
-    ('9999-91', 0, 'Report Templates', 1)
+    ('9999-91', 0, 'Report Templates', 1),
+    ('9999-92', 0, 'Accounting Settings', 1)
 ) AS S(Id, Tenant, TableName, AlwaysEnabled)
 WHERE NOT EXISTS (
     SELECT 1
@@ -24,7 +25,7 @@ WHERE NOT EXISTS (
 	OR CopyFromTenant0.Id = S.Id
 );
 
-update CopyFromTenant0 set alwaysEnabled = 1 where id in ('9999-90', '9999-91');
+update CopyFromTenant0 set alwaysEnabled = 1 where id in ('9999-90', '9999-91', '9999-92');
 
 
      ]]>
