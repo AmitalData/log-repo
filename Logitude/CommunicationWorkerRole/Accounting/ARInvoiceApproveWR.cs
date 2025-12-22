@@ -267,11 +267,11 @@ namespace CommunicationWorkerRole
                     {
                         try
                         {
+                            aRInvoicePM = aRInvoiceQuery.GetSinglePM(arinvoiceId, tenant); // refresh after update
                             aRInvoicePM.InterestReportId = interestReportId;
                             UpdateInterestReportsStatues(interestReportId, tenant, "2", aRInvoicePM.CreatedByUserId, aRInvoicePM);
 
-                            if (!string.IsNullOrEmpty(batchId))
-                            {
+
                                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                                 {
                                     InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
@@ -279,8 +279,9 @@ namespace CommunicationWorkerRole
                                     try
                                     {
 
-                                        invoiceService.BuildDocumentsForNewInvoice(aRInvoicePM, interestReportPM);
-                                        invoiceService.SignInvoice(aRInvoicePM, tenant);
+
+                                        invoiceService.PrintOrSendInvoice(aRInvoicePM.Id, aRInvoicePM.InvoiceNumber, tenant, aRInvoicePM.CreatedByUserId);
+
                                         NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End CreateInvoiceForInterestReport (*3*) aRInvoicePM.Id=" + aRInvoicePM.Id);
                                         scope.Complete();
                                     }
@@ -293,7 +294,7 @@ namespace CommunicationWorkerRole
                                     }
 
                                 }
-                            }
+
                         }
                         catch (Exception ex)
                         {

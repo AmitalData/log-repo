@@ -305,6 +305,11 @@ private selectedItems:ObservableCollection;
 
         }
   }
+
+
+  IsShowPrintedInvoiceEnabled: boolean = true;
+  IsShowSignedInvoiceEnabled: boolean = true;
+
   private showSignedinvoice: boolean = false;
   public get ShowSignedInvoice() { return this.showSignedinvoice; }
   public set ShowSignedInvoice(value: boolean) {
@@ -315,7 +320,8 @@ private selectedItems:ObservableCollection;
          this.ValidateDate(null);
 
     }
-    }
+    this.IsShowPrintedInvoiceEnabled = !this.showSignedinvoice
+  }
   private showPrintedInvoice: boolean = false;
   public get ShowPrintedInvoice() { return this.showPrintedInvoice; }
   public set ShowPrintedInvoice(value: boolean) {
@@ -326,17 +332,18 @@ private selectedItems:ObservableCollection;
         this.ValidateDate(null);
 
     }
-    }
-    private attachReportWithEachInvoice: boolean = false;
-    public get AttachReportWithEachInvoice() { return this.attachReportWithEachInvoice; }
-    public set AttachReportWithEachInvoice(value: boolean) {
-      if (this.attachReportWithEachInvoice != value) {
-          this.attachReportWithEachInvoice = value;
-       }
+    this.IsShowSignedInvoiceEnabled = !this.showPrintedInvoice;
+  }
+  private attachReportWithEachInvoice: boolean = false;
+  public get AttachReportWithEachInvoice() { return this.attachReportWithEachInvoice; }
+  public set AttachReportWithEachInvoice(value: boolean) {
+    if (this.attachReportWithEachInvoice != value) {
+        this.attachReportWithEachInvoice = value;
       }
+    }
 
-    public IsSelectedItemsTextVisibile: boolean = false;
-    public IsSelectAllEnabled: boolean = true;
+  public IsSelectedItemsTextVisibile: boolean = false;
+  public IsSelectAllEnabled: boolean = true;
   private allSelected: boolean = false; 
   public get AllSelected() { return this.allSelected; }
   public set AllSelected(value: boolean) {
@@ -380,10 +387,10 @@ private selectedItems:ObservableCollection;
     filters.GetCount = true;
    
     if (this.ShowPrintedInvoice) {
-      filters.addAdditionalFilter("IsPrinted", true, null, null, "Equal", false, false, false, "Boolean")
+      filters.addAdditionalFilter("IsSigned", "3", null, null, "NotEqual", false, false, false, "string");
     }
     if (this.ShowSignedInvoice) {
-      filters.addAdditionalFilter("IsSigned", "3", null, null, "Equal", false, false, false, "string")
+      filters.addAdditionalFilter("IsSigned", "3", null, null, "Equal", false, false, false, "string");
     }
     filters.addAdditionalFilter("InvoiceDate", this.fromDate, this.toDate, null, "Between", false, false, false, "DateTime"); 
     filters.addAdditionalFilter("ARInvoiceTypeCode", "IT", null ,null, "Equal", false, false, false, "string"); 
