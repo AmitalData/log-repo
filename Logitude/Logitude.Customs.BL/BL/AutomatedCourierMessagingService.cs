@@ -204,6 +204,13 @@ namespace Logitude.Customs.BL.BL
             }
             catch (System.Exception ex)
             {
+                CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(new GenericRequestParams()
+                {
+                    Tenant = declarationCourierStatusPM.Tenant,
+                    LoggingEntityId = declarationCourierStatusPM.DeclarationId,
+                    LoggingObjectTableId = declarationObjectTableId,
+                    InterfaceTypeCode = "1170",
+                });
                 LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId}) : {ex.Message}");
             }
         }
@@ -243,6 +250,13 @@ namespace Logitude.Customs.BL.BL
             }
             catch (System.Exception ex)
             {
+                CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(new GenericRequestParams()
+                {
+                    Tenant = declarationCourierStatusPM.Tenant,
+                    LoggingEntityId = declarationCourierStatusPM.DeclarationId,
+                    LoggingObjectTableId = declarationObjectTableId,
+                    InterfaceTypeCode = "2750",
+                });
                 LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId}) : {ex.Message}");
             }
         }
@@ -291,6 +305,13 @@ namespace Logitude.Customs.BL.BL
             }
             catch (System.Exception ex)
             {
+                CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(new GenericRequestParams()
+                {
+                    Tenant = declarationCourierStatusPM.Tenant,
+                    LoggingEntityId = declarationCourierStatusPM.DeclarationId,
+                    LoggingObjectTableId = declarationObjectTableId,
+                    InterfaceTypeCode = "2755",
+                });
                 LogMessagingUtil.Instance.AppendLine($"Exception SendPayment!!!CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId}) : {ex.Message}");
 
             }
