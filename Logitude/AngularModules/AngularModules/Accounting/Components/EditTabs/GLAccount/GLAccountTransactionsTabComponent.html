@@ -721,7 +721,7 @@
                                                             <LogToolTip float-start
                                                                 [direction]="isRTL?'bottomleft':'bottomright'"
                                                                 [title]="'Accounting.General.O.OpenBalanceByCurrency' | TextCodeTranslationPipe"
-                                                                [name]="'toto'" *ngIf="EntityPM.IsMultiCurrency">
+                                                                [name]="'toto'" *ngIf="EntityPM.IsMultiCurrency && filterSelectedValue !== 'filter_Tax'">
                                                                 <span style="font-size: bold;">
                                                                     <div>
                                                                         <ul style="list-style: none;">

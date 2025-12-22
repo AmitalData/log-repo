@@ -62,7 +62,8 @@ namespace Logitude.Accounting.BL.CoreBL
             bool inclusiveTheDateLTransaction /*= false*/, 
             bool verbose /*= false*/,
             bool ClacOpenReconciledAmount,
-            bool SumOpenTransactions
+            bool SumOpenTransactions,
+            LedgerTransactionBalanceFilter _param =null
             )
         {
             _TheDate = theDate;
@@ -121,7 +122,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     var myLedgerTransactionQueryService = new LedgerTransactionQueryService(_AccountingContext);
                     var thisMounthGLAccountTotalByMonthByAccountingDate = myLedgerTransactionQueryService
-                        .CalcGLAccountTotalByMonthByDateType(_DateTypeCode, firstDayOfMonth, DateUntillNotInclude, _Tenant, _ListOfAccountId);
+                        .CalcGLAccountTotalByMonthByDateType(_DateTypeCode, firstDayOfMonth, DateUntillNotInclude, _Tenant, _ListOfAccountId , _param);
                     var theMounthCurrencySum = thisMounthGLAccountTotalByMonthByAccountingDate.Select(byMounth => new CurrencySum()
                     {
                         AccountId = byMounth.AccountId,
