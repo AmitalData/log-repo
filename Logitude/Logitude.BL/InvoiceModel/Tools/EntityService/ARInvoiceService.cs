@@ -2209,8 +2209,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         if (line.GLAccountId == null)
                         {
-
-                            if (myChargesType.AccountingVATSplit)
+                            if (line.ReceivableCreditGLAccountId == myChargesType.ReceivableCreditGLAccountId && myChargesType.AccountingVATSplit)
                             {
                                 ChargeTypeAccounting myChargeTypeAccounting = (from d in iQueryable_ChargeTypeAccounting where d.ChargeTypeId == line.ChargesTypeId && d.VatTypeId == line.VatTypeId select d).FirstOrDefault();
                                 if (myChargeTypeAccounting != null)
@@ -2218,10 +2217,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     line.GLAccountId = myChargeTypeAccounting.ReceivableCreditGLAccountId;
                                 }
                             }
-
                             else
                             {
-                                line.GLAccountId = myChargesType.ReceivableCreditGLAccountId;
+                                line.GLAccountId = line.ReceivableCreditGLAccountId;
                             }
 
                             if (string.IsNullOrEmpty(line.GLAccountId))
