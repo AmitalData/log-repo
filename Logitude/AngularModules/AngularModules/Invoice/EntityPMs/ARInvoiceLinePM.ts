@@ -272,6 +272,14 @@ export class ARInvoiceLinePM {
     public get GLAccountDisplayNumber() { return this.gLAccountDisplayNumber; }
     public set GLAccountDisplayNumber(newValue: string) { if (this.gLAccountDisplayNumber != newValue) { this.gLAccountDisplayNumber = newValue; this.MarkAsDirty("GLAccountDisplayNumber"); } }
 
+    private receivableCreditGLAccountId: string;
+    public get ReceivableCreditGLAccountId() { return this.receivableCreditGLAccountId; }
+    public set ReceivableCreditGLAccountId(newValue: string) { if (this.receivableCreditGLAccountId != newValue) { this.receivableCreditGLAccountId = newValue; this.MarkAsDirty("ReceivableCreditGLAccountId"); } }
+
+    private receivableCreditGLAccountName: string;
+    public get ReceivableCreditGLAccountName() { return this.receivableCreditGLAccountName; }
+    public set ReceivableCreditGLAccountName(newValue: string) { if (this.receivableCreditGLAccountName != newValue) { this.receivableCreditGLAccountName = newValue; this.MarkAsDirty("ReceivableCreditGLAccountName"); } }
+
     public OldEntityPM: ARInvoiceLinePM;
 	    
 	private entityParentPM: any;
