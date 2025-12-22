@@ -572,6 +572,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             CustomsDocumentPointer.ChangeSetOp = ChangeSetOperation.Insert;
                             CustomsDocumentPointer.ParentEntityId = declarationId;
                             CustomsDocumentPointer.CustomsDocumentsTicketId = null;
+                            if(CustomsDocumentPointer.Child1EntityCode == "SupplierInvoice" && !string.IsNullOrEmpty(CustomsDocumentPointer.Child1EntityId))
+                            {
+								var invoiceNumber = declarationOrg.SupplierInvoices?.FirstOrDefault(x => x.SequenceNumeric.ToString() == CustomsDocumentPointer.Child1EntityId)?.InvoiceNumber;
+								if (invoiceNumber == null)
+									continue;
+								var supplierInvoice = declarationPM.SupplierInvoices?.FirstOrDefault(x => x.InvoiceNumber == invoiceNumber);
+                                if (supplierInvoice != null)
+                                {
+                                    CustomsDocumentPointer.Child1EntityId = supplierInvoice.SequenceNumeric.ToString();
+								}
+							}
                         }
                         customsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
                     }
