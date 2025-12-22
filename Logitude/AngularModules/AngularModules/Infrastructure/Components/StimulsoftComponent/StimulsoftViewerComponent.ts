@@ -732,7 +732,9 @@ export class StimulsoftViewerComponent implements OnInit {
 
         //  var fileName: string = this.StimulsoftArgData.ReportKey + "@" + (this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Name:"");
         var fileName: string = this.StimulsoftArgData.ReportKey + "@" + this.StimulsoftArgData.TemplateDescription;
-        this.reportService.GetPrepareSendReport(type, fileName, SessionLocator.Tenant).subscribe((res: any) => {
+        var displayName = this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Title : "Report";
+
+        this.reportService.GetPrepareSendReport(type, fileName, SessionLocator.Tenant, displayName).subscribe((res: any) => {
             this.CurrentSession.StopBusyIndicator();
 
             var pmResponse: ServiceResponse = res;
