@@ -1834,24 +1834,10 @@ namespace WebFreight.Web.InfrastructureModel
                         globalContext.ContactPasswords.Add(contactPassword);
                     }
 
-
-
                     GlobalContactRepository globalContactRep = new GlobalContactRepository(globalContext);
-
-                    bool globalContactExists = (from a in globalContactRep.GetGlobalContactByTenant(newContact.Tenant)
+                    bool globalContactExists = (from a in globalContactRep.GetGlobalContactByTenant(0)
                                                 where a.Email == newContact.Email
                                                 select a).Any();
-
-                    //bool globalContactIdExists = (from a in globalContactRep.GetGlobalContactByTenant(newContact.Tenant)
-                    //                            where a.Id==newContact.Id
-                    //                            select a).Any();
-                    //while (globalContactIdExists)
-                    //{
-                    //    newContact.Id = IdCounter.GetNumber("Contact", newContact.Tenant);
-                    //    globalContactIdExists = (from a in globalContactRep.GetGlobalContactByTenant(newContact.Tenant)
-                    //                             where a.Id == newContact.Id
-                    //                             select a).Any();
-                    //}
 
                     if (!globalContactExists)
                     {
@@ -1861,8 +1847,6 @@ namespace WebFreight.Web.InfrastructureModel
                         globalContactRep.SubmitChanges();
                         scope.Complete();
                     }
-                    //throw new Exception("hahahahahaha");
-
                 }
                 contactTenantsRepository.Add(newContactTenant);
             }

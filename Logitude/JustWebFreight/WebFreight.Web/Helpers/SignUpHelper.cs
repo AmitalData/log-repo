@@ -24,24 +24,15 @@ namespace WebFreight.Web.Helpers
                 setting = settingRepository.GetSingleSetting("1");
                 setScope.Complete();
             }
-            if(setting.WorkEnvironment != "customs")
+            try
             {
-                var storageaccount = StorageAcountDetails.StorageAccount;
-               var queueclient = storageaccount.CreateCloudQueueClient();
-
-                var queue = queueclient.GetQueueReference("signupqueue");
-                queue.CreateIfNotExists();
-
-                var message = new CloudQueueMessage(msg);
-                queue.AddMessage(message);
+                SignUpClass.StartSignUp(signupInfo);
             }
-
-            else {
-                string password = SignUpClass.StartSignUp(signupInfo);
-
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, $"Failed creating new tenant: {signupInfo?.Name}, error: {ex.Message}");
+                throw;
             }
-
-
         }
     }
 }
