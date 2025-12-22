@@ -226,7 +226,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                     break;
                             }
                         }
-
                     }
                 }
 

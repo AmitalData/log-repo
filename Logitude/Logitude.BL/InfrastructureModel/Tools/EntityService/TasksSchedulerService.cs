@@ -213,7 +213,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 			entityRepository.Remove(Poco);
 			entityRepository.SubmitChanges();
 		}
-		
+
         public void RunTaskNow(string taskSchedulerId, int tenant, DateTime FromDate, DateTime ToDate)
         {
             var poco = entityRepository.GetSingleTasksScheduler(taskSchedulerId, tenant);
