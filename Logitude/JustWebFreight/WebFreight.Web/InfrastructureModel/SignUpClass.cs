@@ -1290,7 +1290,7 @@ namespace WebFreight.Web.InfrastructureModel
                                 KeepOriginalSize = false,
                                 UploadMode = "ImageComponent",
                             };
-                            imageLibraryControllerHelper.UploadImage(filter);
+                            newField.LogoId = imageLibraryControllerHelper.UploadImage(filter);
                         }
                     }
                     catch (Exception ex)
