@@ -30,7 +30,8 @@ using System.Diagnostics;
 using Logitude.Customs.BL.Utils;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.BL.TraceEvents;
 using Unifreight.BL.EntityPMs.UGenerated;
@@ -40,6 +41,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.Security;
 using Unifreight.BL.EntityUpdateServices;
 using System.Data.Entity.Core;
+using System.Globalization;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -77,10 +79,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             int? maxSequenceNumeric = supplierInvoiceQueryService.GetMaxSequenceNumeric(entityPM.DeclarationId, entityPM.Tenant);
             if (maxSequenceNumeric != null)
             {
-                if (!(declarationPM.IsAmendment == true && entityPM.InvoiceCounterKey != 0))
-                {
-                    entityPM.InvoiceCounterKey = maxSequenceNumeric.Value + 1;
-                }
+                entityPM.InvoiceCounterKey = maxSequenceNumeric.Value + 1;
                 if (declarationPM == null)
                 {
 
@@ -680,13 +679,24 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             }
                             LogMessagingUtil.Instance.AppendLine($"InvoiceAmountInUSD{entityPM.InvoiceAmountInUSD} shopId{shopId} IntegratorCode{IntegratorCode}");
 
-                            if (entityPM.InvoiceAmountInUSD <= 75)
+                            decimal minValPay = 75m;
+                            var minValPayStr = defaultValueQueryService.GetDefault("ISRAEL", "CGO_MINVAL_PAY", "NON", "NON", entityPM.Tenant);
+
+                            if (!string.IsNullOrWhiteSpace(minValPayStr))
+                            {
+                                var normalized = minValPayStr.Trim().Replace(",", ".");
+                                if (decimal.TryParse(normalized, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsed) && parsed > 0)
+                                {
+                                    minValPay = parsed;
+                                }
+                            }
+                            if (entityPM.InvoiceAmountInUSD <= minValPay)
                             {
                                 if (!String.IsNullOrWhiteSpace(shopId)) defaultClassificationCode = defaultValueQueryService.GetDefault("ISRAEL", "CGO_LOWVAL_ITM", "NON", shopId, entityPM.Tenant);
                                 if (String.IsNullOrWhiteSpace(defaultClassificationCode) && !String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = defaultValueQueryService.GetDefault("ISRAEL", "CGO_LOWVAL_ITM", "NON", IntegratorCode, entityPM.Tenant);
                                 if (String.IsNullOrWhiteSpace(defaultClassificationCode)) defaultClassificationCode = defaultValueQueryService.GetDefault("ISRAEL", "CGO_LOWVAL_ITEM", "NON", "NON", entityPM.Tenant);
                             }
-                            else if (entityPM.InvoiceAmountInUSD > 75 && entityPM.InvoiceAmountInUSD <= 500)
+                            else if (entityPM.InvoiceAmountInUSD > minValPay && entityPM.InvoiceAmountInUSD <= 500)
                             {
                                 if (!String.IsNullOrWhiteSpace(shopId)) defaultClassificationCode = defaultValueQueryService.GetDefault("ISRAEL", "CGO_VAL2_ITM", "NON", shopId, entityPM.Tenant);
                                 if (String.IsNullOrWhiteSpace(defaultClassificationCode) && !String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = defaultValueQueryService.GetDefault("ISRAEL", "CGO_VAL2_ITM", "NON", IntegratorCode, entityPM.Tenant);

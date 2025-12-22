@@ -34,7 +34,19 @@ namespace WebFreight.Web.Controllers.WebServices
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-                var declarations = new DeclarationRepository(tenant).GetforPendingBulkFeed(courierMasterId, goodsDescription, weightFrom, weightTo, incotermCode, searchFilter, totalInvoice, fastIndividualProcess, skip, take, sortingCol, sortingDir);
+                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+                var s = defaultValueQueryService.GetDefault("ISRAEL", "CGO_MINVAL_PAY", "NON", "NON", tenant);
+
+                decimal minValPay = 75m; 
+                if (!string.IsNullOrWhiteSpace(s))
+                {
+                    var normalized = s.Trim().Replace(",", ".");
+                    decimal parsed;
+                    if (decimal.TryParse(normalized, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out parsed) && parsed > 0)
+                        minValPay = parsed;
+                }
+
+                var declarations = new DeclarationRepository(tenant).GetforPendingBulkFeed(courierMasterId, goodsDescription, weightFrom, weightTo, incotermCode, searchFilter, totalInvoice, fastIndividualProcess, minValPay, skip, take, sortingCol, sortingDir);
                 //ServiceResponse response = new ServiceResponse();
                 //response.Count = declarations.Count();
                 //response.Result = declarations;

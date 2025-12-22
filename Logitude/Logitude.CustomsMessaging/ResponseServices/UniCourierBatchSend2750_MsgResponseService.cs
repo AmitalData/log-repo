@@ -57,6 +57,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var repo = new DeclarationCourierStatusRepository(context);
             //List<DeclarationCourierStatusPM> listPoco = new List<DeclarationCourierStatusPM>();
             List<DeclarationCourierStatus> listPoco = new List<DeclarationCourierStatus>();
+            decimal minValPay = GetMinValPay(requestParams.Tenant);
 
             if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
@@ -83,7 +84,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 else
                 {
                     mess.AppendLine($"GetByMasterIDCourierDeclarationStatusCode");
-                    listPoco = GetByMasterIDCourierDeclarationStatusCode(customResponse, requestParams, repo);
+                    listPoco = GetByMasterIDCourierDeclarationStatusCode(customResponse, requestParams, repo, minValPay);
                 }
                 if (listPoco.Count == 0)
                 {
@@ -253,7 +254,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //});
         }
 
-        private static List<DeclarationCourierStatus> GetByMasterIDCourierDeclarationStatusCode(DCAInUCB2750WithResponseContentHeader customResponse, GenericRequestParams requestParams, DeclarationCourierStatusRepository repo)
+        private static List<DeclarationCourierStatus> GetByMasterIDCourierDeclarationStatusCode(DCAInUCB2750WithResponseContentHeader customResponse, GenericRequestParams requestParams, DeclarationCourierStatusRepository repo, decimal minValPay)
         {
             List<DeclarationCourierStatus> listPoco = new List<DeclarationCourierStatus>();
             if (customResponse.IsWorkSheetFromExcel)
@@ -266,7 +267,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     customResponse.SelectedTotalInvoiceValue,
                     customResponse.SelectedFastIndividualProcessValue,
                     customResponse.SelectedCustomStatusValue,
-                    customResponse.SelectedFinalReleaseValue);
+                    customResponse.SelectedFinalReleaseValue, minValPay);
                 }
                 else
                 {
@@ -276,7 +277,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     customResponse.SelectedTotalInvoiceValue,
                     customResponse.SelectedFastIndividualProcessValue,
                     customResponse.SelectedCustomStatusValue,
-                    customResponse.SelectedFinalReleaseValue);
+                    customResponse.SelectedFinalReleaseValue, minValPay);
                     if (customResponse.CourierDeclarationStatusCode == "RV")
                     {
                         var listPM2 = repo.GetFromExcelCourierDeclarationStatusCode(requestParams.Tenant, requestParams.LoggingUserId, "V", customResponse.SelectedBOLValue,
@@ -284,7 +285,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         customResponse.SelectedTotalInvoiceValue,
                         customResponse.SelectedFastIndividualProcessValue,
                         customResponse.SelectedCustomStatusValue,
-                        customResponse.SelectedFinalReleaseValue);
+                        customResponse.SelectedFinalReleaseValue, minValPay);
                         listPoco = listPoco.Concat(listPM2).ToList();
                     }
                 }
@@ -299,7 +300,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     customResponse.SelectedTotalInvoiceValue,
                     customResponse.SelectedFastIndividualProcessValue,
                     customResponse.SelectedCustomStatusValue,
-                    customResponse.SelectedFinalReleaseValue);
+                    customResponse.SelectedFinalReleaseValue, minValPay);
                 }
                 else
                 {
@@ -309,7 +310,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     customResponse.SelectedTotalInvoiceValue,
                     customResponse.SelectedFastIndividualProcessValue,
                     customResponse.SelectedCustomStatusValue,
-                    customResponse.SelectedFinalReleaseValue);
+                    customResponse.SelectedFinalReleaseValue, minValPay);
                     if (customResponse.CourierDeclarationStatusCode == "RV")
                     {
                         var listPM2 = repo.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
@@ -317,7 +318,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         customResponse.SelectedTotalInvoiceValue,
                         customResponse.SelectedFastIndividualProcessValue,
                         customResponse.SelectedCustomStatusValue,
-                        customResponse.SelectedFinalReleaseValue);
+                        customResponse.SelectedFinalReleaseValue, minValPay);
                         listPoco = listPoco.Concat(listPM2).ToList();
                     }
                 }
@@ -329,7 +330,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             return this.MyResponseData;
         }
+        private decimal GetMinValPay(int tenant)
+        {
+            const decimal fallback = 75m;
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+            var s = defaultValueQueryService.GetDefault("ISRAEL", "CGO_MINVAL_PAY", "NON", "NON", tenant);
 
+            if (string.IsNullOrWhiteSpace(s)) return fallback;
+
+            var normalized = s.Trim().Replace(",", ".");
+            if (decimal.TryParse(normalized, NumberStyles.Any, CultureInfo.InvariantCulture, out var val) && val > 0)
+                return val;
+
+            return fallback;
+        }
 
     }
 }

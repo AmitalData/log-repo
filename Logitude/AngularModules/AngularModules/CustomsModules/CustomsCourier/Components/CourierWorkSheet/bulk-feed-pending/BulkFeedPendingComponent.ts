@@ -20,6 +20,7 @@ import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { AppTool } from '../../../../../Infrastructure/Tools';
 import { DropdownMenuFilterComponent } from '../DropdownMenuFilterComponent';
+import { CustomsSettingExtendedListService } from 'Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
 @Component({
   selector: 'app-bulk-feed-pending',
@@ -44,6 +45,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
   declartionList: DeclarationsforBulkFeed[] = [];
   ItemsSource: ObservableCollection = new ObservableCollection([]);
   _CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
+  _CustomsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
   IsDisplayOnly: boolean = false;
   DisplayOnlyMessage: string = '';
   _CourierMasterService: CourierMasterService = new CourierMasterService();
@@ -57,6 +59,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
   columns: any[] = []
   query: any;
   private _entityListService: EntityListService = new EntityListService();
+  minValPay: number = 75;
+  MinValPayDisplay: string = '75';
 
   private _RowsItems: any;
   public get RowsItems(): any {
@@ -110,8 +114,30 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
   ngOnInit() {
     this.buildColumns();
-
+    this.GetMinValPayDefault();
     this.RefreshList()
+  }
+
+  GetMinValPayDefault() {
+    this._CustomsSettingExtendedListService.GetDefault(
+      "ISRAEL",
+      "CGO_MINVAL_PAY",
+      "NON",
+      "NON",
+      SessionLocator.Tenant
+    ).subscribe((response: ServiceResponse) => {
+
+      const obj = response.Result;
+      if (obj) {
+        const val = obj['DefaultValue'];
+
+        const parsed = Number(val);
+        if (!AppTool.IsNullOrEmpty(val) && !isNaN(parsed) && parsed > 0) {
+          this.minValPay = parsed;
+          this.MinValPayDisplay = '' + parsed;
+        }
+      }
+    });
   }
 
   GetPending() {
@@ -224,12 +250,13 @@ export class BulkFeedPendingComponent extends BaseComponent {
     }
 
     switch (this._SelectedTotalInvoiceValue) {
-      case "75": {
-        filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 75, null, null, "LessThanOrEqual", false, false, false, "number");
+      case "minValPay": {
+        filters.addAdditionalFilter("TotalInvoiceAmountInUSD", this.minValPay, null, null,
+          "LessThanOrEqual", false, false, false, "number");
         break;
       }
       case "500": {
-        filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 76, 500, null, "Between", false, false, false, "number", false);
+        filters.addAdditionalFilter("TotalInvoiceAmountInUSD", this.minValPay + 1, 500, null, "Between", false, false, false, "number", false);
         break;
       }
       case "1000": {
@@ -444,6 +471,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
   SetWindowArgs(args: any) {
     this.CourierMasterPM = args?.CourierMasterPM;
     this.IsWorkSheetFromExcel  = args?.IsWorkSheetFromExcel;
+    this.GetMinValPayDefault();
     this.GetPending();
   }
 
