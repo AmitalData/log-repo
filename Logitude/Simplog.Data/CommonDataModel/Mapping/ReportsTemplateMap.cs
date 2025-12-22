@@ -93,6 +93,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
             this.Property(t => t.InActive).HasColumnName("InActive");
+            this.Property(t => t.UseStimul).HasColumnName("UseStimul");
 
             this.Property(t => t.IsSystem).HasColumnName("IsSystem");
             this.Property(t => t.ReportId).HasColumnName("ReportId");

@@ -17,22 +17,34 @@ namespace WebFreight.Web.Helpers.ExcelReport
             excelReportFileService = new ExcelReportFileService(tenant);
         }
 
-        public ExcelReportResult GetDataProviderFields(string reportId, string reportTemplateId)
+        public ExcelReportResult GetDataProviderFields(string reportId, string reportTemplateId , int maxSubLevels = 1)
         {
             ExcelReportResult excelReportResult = new ExcelReportResult();
             Report report = new ReportRepository(tenant).GetSingleReport(reportId, tenant);
-            excelReportResult.DataProviderFields = new ExcelDataProviderFieldsBuilder().Build(report.Code);
-            excelReportResult.DataProviderFields = RemoveSubCollectionFromProvderFields(excelReportResult.DataProviderFields);
+            excelReportResult.DataProviderFields = new ExcelDataProviderFieldsBuilder().Build(report.Code, maxSubLevels);
+            if(maxSubLevels == 1)
+                excelReportResult.DataProviderFields = RemoveSubCollectionFromProvderFields(excelReportResult.DataProviderFields);
 
             List<DataProviderField> templateDataProvderFields = excelReportFileService.GetDataProviderFieldsFromXML(reportTemplateId, null, false);
             if (templateDataProvderFields == null) return excelReportResult;
-
-            templateDataProvderFields = RemoveSubCollectionFromProvderFields(templateDataProvderFields);
+            if(maxSubLevels == 1)
+                templateDataProvderFields = RemoveSubCollectionFromProvderFields(templateDataProvderFields);
             excelReportResult.SelectedDataProviderFields = templateDataProvderFields;
             ResolveTemplateDifference(excelReportResult.DataProviderFields, templateDataProvderFields);
 
             return excelReportResult;
         }
+
+        public List<DataProviderField> GetSelectedDataProviderFields(string reportId, string reportTemplateId)
+        {
+            var templateFields = excelReportFileService.GetDataProviderFieldsFromXML(reportTemplateId, null, false);
+           
+            if (templateFields == null)
+                return new List<DataProviderField>();
+            
+            return templateFields;
+        }
+
 
         private List<DataProviderField> RemoveSubCollectionFromProvderFields(List<DataProviderField> templateDataProvderFields)
         {

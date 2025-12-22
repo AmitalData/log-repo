@@ -38,6 +38,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.ObjectTableId = entityPM.ObjectTableId;
             entityPOCO.EntityId = entityPM.EntityId;
             entityPOCO.IsCopiedAtSignup = entityPM.IsCopiedAtSignup;
+            entityPOCO.UseStimul = entityPM.UseStimul;
             entityPOCO.OriginalTemplateId = entityPM.OriginalTemplateId;
 
 

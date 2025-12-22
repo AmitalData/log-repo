@@ -159,9 +159,19 @@
 
                 <td *ngIf="IsShowSendButton" style="width:7px"><div style="width:7px"></div></td>
 
-                <td *ngIf="IsEnableButtonExcel" style="width:30px">
+                <td  style="width:30px">
                     <button class="Button" style="height:22px;width:22px;"  (click)="ExportToExcel()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
                 </td>
+                <td  style="width:7px"><div style="width:7px"></div></td>
+
+                <td  style="width:190px"><ComboBox id="{{'ReportsTemplatesComboBox' | IdGeneratorAsyncPipe | async}}" style="width:190px;height:22px;display:inline" 
+                    (SelectedItemChanged)="ReportExcelTemplatesChange($event)" 
+                    [ItemsSource]="ExcelReportsTemplatesLists" 
+                    [SelectedItem]="SelectedExcelReportsTemplateList" 
+                    [Binding]="'Description'"></ComboBox>
+                </td>
+
+                <td  style="width:7px"><div style="width:7px"></div></td>
 
                 <td *ngIf="IsShowSendButton" style="width:80px;vertical-align:middle;">
                     <div style="width:80px;vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">

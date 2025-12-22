@@ -105,16 +105,13 @@
     <Constraints
       Nullable="true" />
   </Column>
- <Column
+  <Column
     Name="NotDisplayInMenu"
     OldNames="DisplayInMenu"
     Type="bit">
     <Constraints
       Nullable="true" />
   </Column>
-  <Index
-	Columns="CreateDate" />
- 
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -130,9 +127,8 @@
     ReferencedTable="Reports"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ReportTemplateId"
-    ReferencedTable="ReportsTemplates"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="CreateDate" />
+  <Index
+    Columns="ReportTemplateId" />
 </Table>

@@ -19,4 +19,6 @@ export class ReportList {
     DisablePreview: boolean;
     IsExcelReportAllowed: boolean;
     DefaultMessageTemplateId: string;
+    DefaultExcelNoStimId: string;
+    DefaultExcelTemplateId: string; 
 }

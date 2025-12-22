@@ -120,6 +120,10 @@ export class ReportPM {
     public set DefaultMessageTemplateId(newValue: string) { if (this.defaultMessageTemplateId != newValue) { this.defaultMessageTemplateId = newValue; this.MarkAsDirty("DefaultMessageTemplateId"); } }
        
 	 
+    private defaultExcelNoStimId: string;
+    public get DefaultExcelNoStimId() { return this.defaultExcelNoStimId; }
+    public set DefaultExcelNoStimId(newValue: string) { if (this.defaultExcelNoStimId != newValue) { this.defaultExcelNoStimId = newValue; this.MarkAsDirty("DefaultExcelNoStimId"); } }
+
     private featureUniqeCode: string;
     public get FeatureUniqeCode() { return this.featureUniqeCode; }
     public set FeatureUniqeCode(newValue: string) { if (this.featureUniqeCode != newValue) { this.featureUniqeCode = newValue; this.MarkAsDirty("FeatureUniqeCode"); } }
@@ -138,9 +142,10 @@ export class ReportPM {
     private defaultExcelTemplateId: string;
     public get DefaultExcelTemplateId() { return this.defaultExcelTemplateId; }
     public set DefaultExcelTemplateId(newValue: string) { if (this.defaultExcelTemplateId != newValue) { this.defaultExcelTemplateId = newValue; this.MarkAsDirty("DefaultExcelTemplateId"); } }
-       
+     
+    
 	 
-    private isExcelReportAllowed: boolean;
+    private isExcelReportAllowed: boolean; 
     public get IsExcelReportAllowed() { return this.isExcelReportAllowed; }
     public set IsExcelReportAllowed(newValue: boolean) { if (this.isExcelReportAllowed != newValue) { this.isExcelReportAllowed = newValue; this.MarkAsDirty("IsExcelReportAllowed"); } }
        
@@ -172,4 +177,4 @@ export class ReportPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

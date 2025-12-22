@@ -1494,26 +1494,27 @@ namespace WebFreight.Web.Helpers
 				LogitudeSettings.HandleLogMe(msg, false, "ExportToExcel", date);
 			}
 		}
-		public NPOI.SS.UserModel.IWorkbook ExportToExcel(object data,string name = null)
+		public NPOI.SS.UserModel.IWorkbook ExportToExcel(object data,string name = null , Dictionary<string, int> sortMap = null)
 		{
 			FillTranslation();
-			DataTable dataTable = FlattenToDataTable(data);
-			return ConvertDataTableToWorkbook(dataTable, name);
+			bool withPrefix = sortMap == null;
+            DataTable dataTable = FlattenToDataTable(data, withPrefix);
+			return ConvertDataTableToWorkbook(dataTable, name, sortMap);
 		}
 
 	
 
-	    public DataTable FlattenToDataTable(object data)
+	    public DataTable FlattenToDataTable(object data, bool withPrefix)
 		{			
 			JObject root = JObject.FromObject(data);			
 			DataTable table = new DataTable();
-			RecurseFlatten(root, table, new Dictionary<string, dynamic>());		
+			RecurseFlatten(root, table, new Dictionary<string, dynamic>(), withPrefix);		
 			return table;
 		}
 
 		private static void RecurseFlatten(JObject node,
 										   DataTable table,
-										   Dictionary<string, dynamic> currentRow,string prefixProp = null)
+										   Dictionary<string, dynamic> currentRow, bool withPrefix = false, string prefixProp = null)
 		{
 			var scalars = node.Properties()
 							  .Where(p => !(p.Value is JArray) && !(p.Value is JObject))
@@ -1522,9 +1523,10 @@ namespace WebFreight.Web.Helpers
 			foreach (var prop in scalars)
 			{
 				string name = prop.Name;
-				if(!string.IsNullOrEmpty(prefixProp))
-					name = prefixProp + prop.Name;
-				currentRow[name] = prop.Value.Type == JTokenType.Null
+                if (withPrefix && !string.IsNullOrEmpty(prefixProp))
+                    name = prefixProp + prop.Name;
+
+                currentRow[name] = prop.Value.Type == JTokenType.Null
 										? null
 										: prop.Value;
 			}
@@ -1544,19 +1546,31 @@ namespace WebFreight.Web.Helpers
 						foreach (var child in childArray.Children<JObject>())
 						{
 							var newRowData = new Dictionary<string, dynamic>(currentRow);
-							var prefix = arrayProp.Name + "_";
-							foreach (var cp in child.Properties().Where(p => !(p.Value is JArray) && !(p.Value is JObject)))
+							string prefix = null;
+                            if (withPrefix)
+                                 prefix = arrayProp.Name + "_";
+
+                            foreach (var cp in child.Properties().Where(p => !(p.Value is JArray) && !(p.Value is JObject)))
 							{
 
+								if (withPrefix)
+								{
+                                    newRowData[prefix + cp.Name] = cp.Value.Type == JTokenType.Null
+                                                               ? null
+                                                               : cp.Value;
+                                }
 
-								newRowData[prefix + cp.Name] = cp.Value.Type == JTokenType.Null
-															   ? null
-															   : cp.Value;
+								else
+								{
+
+                                    newRowData[cp.Name] = cp.Value.Type == JTokenType.Null
+                                                               ? null
+                                                               : cp.Value;
+                                }
+                                  
 
 							}
-							RecurseFlatten(child, table, newRowData, prefix);
-
-
+							RecurseFlatten(child, table, newRowData, withPrefix, prefix);
 
 						}
 						foreach (var child in childArray.Children())
@@ -1668,11 +1682,32 @@ namespace WebFreight.Web.Helpers
 				return typeof(string);
 			}
 		}
-		public static NPOI.SS.UserModel.IWorkbook ConvertDataTableToWorkbook(DataTable dataTable, string sheetName = "Sheet1")
+		public static NPOI.SS.UserModel.IWorkbook ConvertDataTableToWorkbook(DataTable dataTable, string sheetName = "Sheet1", Dictionary<string, int> sortMap = null)
 		{
 			NPOI.SS.UserModel.IWorkbook workbook = new XSSFWorkbook();
 
-			if (sheetName.Length > 31)
+            if (sortMap != null && sortMap.Any())
+            {
+                var orderedColumns = dataTable.Columns.Cast<DataColumn>()
+                    .OrderBy(c => sortMap.TryGetValue(c.ColumnName, out int sortValue) ? sortValue : int.MaxValue)
+                    .ToList();
+
+                DataTable sortedTable = new DataTable();
+
+                foreach (var col in orderedColumns)
+                    sortedTable.Columns.Add(col.ColumnName, col.DataType);
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    var newRow = sortedTable.NewRow();
+                    foreach (var col in orderedColumns)
+                        newRow[col.ColumnName] = row[col.ColumnName];
+                    sortedTable.Rows.Add(newRow);
+                }
+
+                dataTable = sortedTable;
+            }
+            if (sheetName.Length > 31)
 			{
 				sheetName = sheetName.Substring(0, 31);
 			}
@@ -1713,7 +1748,9 @@ namespace WebFreight.Web.Helpers
 			boolStyle.CloneStyleFrom(defaultStyle);
 
 			IRow headerRow = sheet.CreateRow(0);
-			for (int i = 0,j=0; i < dataTable.Columns.Count; i++)
+            
+
+            for (int i = 0,j=0; i < dataTable.Columns.Count; i++)
 			{
 				if(sheetName == "ExportDeclarationDataProvider" && !keyValueTranslate.ContainsKey(dataTable.Columns[i].ColumnName))
 				{
@@ -1845,7 +1882,6 @@ namespace WebFreight.Web.Helpers
 		#endregion
 	}
 }
-
 
 class ReflectionProperties
 {

@@ -83,6 +83,10 @@ export class ReportsTemplatePM {
     public get IsCopiedAtSignup() { return this.isCopiedAtSignup; }
     public set IsCopiedAtSignup(newValue: boolean) { if (this.isCopiedAtSignup != newValue) { this.isCopiedAtSignup = newValue; this.MarkAsDirty("IsCopiedAtSignup"); } }
 
+    private useStimul: boolean;
+    public get UseStimul() { return this.useStimul; }
+    public set UseStimul(newValue: boolean) { if (this.useStimul != newValue) { this.useStimul = newValue; this.MarkAsDirty("UseStimul"); } }
+
     private isDefault: boolean;
     public get IsDefault() { return this.isDefault; }
     public set IsDefault(newValue: boolean) { if (this.isDefault != newValue) { this.isDefault = newValue; this.MarkAsDirty("IsDefault"); } }

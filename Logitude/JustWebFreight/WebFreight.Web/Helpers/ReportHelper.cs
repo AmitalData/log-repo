@@ -55,6 +55,9 @@ using WebFreight.Web.ShipmentPackageModel;
 using WebFreight.Web.TaxesApprovalModel;
 using WebFreight.Web.WebServices;
 using System.Reflection;
+using WebFreight.Web.DataContracts;
+using Microsoft.VisualStudio.Services.Common;
+using static Microsoft.VisualStudio.PlatformUI.SearchFilterDataSource;
 
 
 namespace WebFreight.Web.Helpers
@@ -278,7 +281,7 @@ namespace WebFreight.Web.Helpers
 
 
 
-        public string AddReportTemplate(string reportId, string description, string userId, string documentId, int tenant, ReportsTemplateRepository reportsTemplateRepository, ReportsTemplatesVersionRepository reportsTemplatesVersionRepository, List<ReportsTemplate> reportsTemplates, bool isSystem, string templateType, string entityId = null, string objectTableId = null, string subject = null, string originalTemplateId = null)
+        public string AddReportTemplate(string reportId, string description, string userId, string documentId, int tenant, ReportsTemplateRepository reportsTemplateRepository, ReportsTemplatesVersionRepository reportsTemplatesVersionRepository, List<ReportsTemplate> reportsTemplates, bool isSystem, string templateType, string entityId = null, string objectTableId = null, string subject = null, string originalTemplateId = null, bool useStimul = false)
 		{
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Creating report template for report: {reportId}, template type: {templateType}, tenant: {tenant}, description: {description}");
 
@@ -301,7 +304,8 @@ namespace WebFreight.Web.Helpers
 				EntityId = entityId,
 				ObjectTableId = objectTableId,
                 OriginalTemplateId = originalTemplateId,
-                Subject = subject
+                Subject = subject,
+				UseStimul = useStimul
 			};
 			reportsTemplateRepository.Add(reportsTemplate);
 
@@ -827,10 +831,26 @@ namespace WebFreight.Web.Helpers
 				}
 
 			}
-			ExportToExcelHelper exportToExcelHelper = new ExportToExcelHelper();
-			IWorkbook workbook = exportToExcelHelper.ExportToExcel(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, reportStimulDataProviderDetails.CurrentBusinessObject.Name);
-			
-			MemoryStream memoryStream = new MemoryStream();
+            ExcelReportService reportsTemplateQuery = new ExcelReportService(reportFliter.tenant);
+            ExportToExcelHelper exportToExcelHelper = new ExportToExcelHelper();
+
+            IWorkbook workbook;
+
+            if (reportFliter.DefaultExcelNoStimId == "DefExcelTempId")
+			{
+                 workbook = exportToExcelHelper.ExportToExcel(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, reportStimulDataProviderDetails.CurrentBusinessObject.Name);
+            }
+            else
+			{
+                var selectedData = reportsTemplateQuery.GetSelectedDataProviderFields(reportFliter.ReportId, reportFliter.DefaultExcelNoStimId);
+                var sortMap = new Dictionary<string, int>();
+                var filteredData = FilterSelectedFieldsWithParent(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, selectedData, null, sortMap);
+
+                workbook = exportToExcelHelper.ExportToExcel(filteredData, reportStimulDataProviderDetails.CurrentBusinessObject.Name, sortMap);
+            }
+
+
+            MemoryStream memoryStream = new MemoryStream();
 			workbook.Write(memoryStream);
             MemoryStream tempStream = new MemoryStream(memoryStream.ToArray());
 
@@ -845,6 +865,54 @@ namespace WebFreight.Web.Helpers
             ReadFileFromStreamFileAndSaveOnStorgeByChunks(tempFilePath, reportFliter, ".xlsx");
 
 
+        }
+
+
+        private IDictionary<string, object> FilterSelectedFieldsWithParent(object source, List<DataProviderField> selectedFields, string parentName = null, Dictionary<string, int> sortMap = null)
+        {
+            var result = new Dictionary<string, object>();
+            if (source == null || selectedFields == null)
+                return result;
+
+            foreach (var field in selectedFields)
+            {
+                var prop = source.GetType().GetProperty(field.Name);
+                if (prop == null)
+                    continue;
+
+                var value = prop.GetValue(source);
+
+                string columnName = !string.IsNullOrEmpty(field.Translation)
+                    ? field.Translation
+                    : (string.IsNullOrEmpty(parentName)
+                        ? field.Name
+                        : parentName + "_" + field.Name);
+
+
+                if (field.Type == "List" && value is IEnumerable enumerable)
+                {
+                    var list = new List<object>();
+                    foreach (var item in enumerable)
+                    {
+                        if (field.Fields?.Any() == true)
+                        {
+                            list.Add(FilterSelectedFieldsWithParent(item, field.Fields, field.Name, sortMap));
+                        }
+                        else
+                        {
+                            list.Add(item);
+                        }
+                    }
+                    result[columnName] = list;
+                }
+                else
+                {
+                    sortMap?.TryAdd(columnName, field.Sort);
+                    result[columnName] = value;
+                }
+            }
+
+            return result;
         }
 
         public MemoryStream GetExcel(string reportKey,string fileName,int tenant)
@@ -2407,34 +2475,34 @@ namespace WebFreight.Web.Helpers
 				nonArrayProperties.ForEach(Columns => row[Columns.Name] = Columns.Value);
 		}
 
-	
 
-		private void ReadFileFromStreamFileAndSaveOnStorgeByChunks(string tempFilePath, ReportFliter reportFliter, string extension)
-		{
-			BlobFileInfo fileInfo = GetNewBlobFileInfo((reportFliter.ReportKey + "@" + reportFliter.ReportName + extension), extension, reportFliter.tenant);
-			IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-			List<string> blockIdsList = new List<string>();
+
+        private void ReadFileFromStreamFileAndSaveOnStorgeByChunks(string tempFilePath, ReportFliter reportFliter, string extension)
+        {
+            BlobFileInfo fileInfo = GetNewBlobFileInfo((reportFliter.ReportKey + "@" + reportFliter.ReportName + extension), extension, reportFliter.tenant);
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            List<string> blockIdsList = new List<string>();
 			int bufferNumber = 0; long sendSize = 0;
-			using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Open, FileAccess.Read))
-			{
-				int bytesRead;
-				fileInfo.FileSize = fileStream.Length;
-				var buffer = new byte[GetChunkSize(fileStream.Length, sendSize)];
-				while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
-				{
+            using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Open, FileAccess.Read))
+            {
+                int bytesRead;
+                fileInfo.FileSize = fileStream.Length;
+                var buffer = new byte[GetChunkSize(fileStream.Length, sendSize)];
+                while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+                {
 					sendSize += buffer.Length;
-					var blockId = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-					blockIdsList.Add(blockId);
-					storageservice.WriteBlock(buffer, sendSize, blockIdsList.ToArray(), bufferNumber, fileInfo);
+                    var blockId = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+                    blockIdsList.Add(blockId);
+                    storageservice.WriteBlock(buffer, sendSize, blockIdsList.ToArray(), bufferNumber, fileInfo);
 					bufferNumber += 1;
-					buffer = new byte[GetChunkSize(fileStream.Length, sendSize)];
-				}
+                    buffer = new byte[GetChunkSize(fileStream.Length, sendSize)];
+                }
 				fileStream.Close();
-			}
-			File.Delete(tempFilePath);
-		}
+            }
+            File.Delete(tempFilePath);
+        }
 
-		private long GetChunkSize(long fileSize, long sendSize)
+        private long GetChunkSize(long fileSize, long sendSize)
 		{
 			long chunkSize = 1000000;
 			if ((fileSize - sendSize) < chunkSize) chunkSize = fileSize - sendSize;
@@ -2679,7 +2747,8 @@ namespace WebFreight.Web.Helpers
 							FeatureUniqeCode = report.FeatureUniqeCode,
 							AvailableForScheduling = report.AvailableForScheduling,
 							DisablePreview = report.DisablePreview,
-							DefaultExcelTemplateId = report.DefaultExcelTemplateId
+							DefaultExcelTemplateId = report.DefaultExcelTemplateId,
+							DefaultExcelNoStimId = report.DefaultExcelNoStimId
 
 						};
 						reportRepository.Add(newReport);
@@ -2903,7 +2972,7 @@ namespace WebFreight.Web.Helpers
 			if (string.IsNullOrEmpty(documentId))
 				return false;
 
-            myReport.DefaultExcelTemplateId = AddReportTemplate(myReport.Id, systemExcelReportTemplate.Description, userId, documentId, tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, true, "E", null, null, null, systemExcelReportTemplate.Id);
+            myReport.DefaultExcelTemplateId = AddReportTemplate(myReport.Id, systemExcelReportTemplate.Description, userId, documentId, tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, true, "E", null, null, null, systemExcelReportTemplate.Id , systemExcelReportTemplate.UseStimul);
 			return true;
 
 		}
@@ -2924,7 +2993,13 @@ namespace WebFreight.Web.Helpers
 				Tenant = reportFliter.tenant,
 				StatusCode = "W",
 				ReportId = reportFliter.ReportId,
-				ReportTemplateId = string.IsNullOrWhiteSpace(reportFliter.DefaultTemplateId) ? null : reportFliter.DefaultTemplateId,
+                ReportTemplateId = reportFliter.ProcessType == "ExportToExcel"
+					? (!string.IsNullOrEmpty(reportFliter.DefaultExcelNoStimId)
+						? reportFliter.DefaultExcelNoStimId
+						: null)
+					: (!string.IsNullOrWhiteSpace(reportFliter.DefaultTemplateId)
+						? reportFliter.DefaultTemplateId
+						: null),
 				DisablePreview = reportFliter.DisablePreview,
                 NotDisplayInMenu = reportFliter.NotDisplayInMenu ,
 			};
