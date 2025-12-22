@@ -152,31 +152,32 @@ namespace CommunicationWorkerRole
 						if (!response.HasError)
 						{						
 							DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "D");
-
-							analyzeQueue.Status = "D";
-							analyzeQueueRepository.Update(analyzeQueue);
-							analyzeQueueRepository.SubmitChanges();
+							UpdateStatusAnalyzeQueue(analyzeQueue, "D", communicationLogId);
 						}
 						else
 						{
+							UpdateStatusAnalyzeQueue(analyzeQueue, "F", communicationLogId);
 							logs += " dont success SaveDocument";
 							DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
 						}
 					}
 					else
 					{
+						UpdateStatusAnalyzeQueue(analyzeQueue, "F", communicationLogId);
 						logs += " dont success CreateNewFiling";
 						DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
 					}
 				}
 				else
 				{
+					UpdateStatusAnalyzeQueue(analyzeQueue, "F", communicationLogId);
 					logs += "dont success document from  DownloadFile is not pdf type";
 					DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
 				}
 			}
 			catch (Exception e)
 			{
+				UpdateStatusAnalyzeQueue(analyzeQueue, "F", communicationLogId);              
 				if (!string.IsNullOrEmpty(communicationLogId))
 				{
 					logs += "exption" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
@@ -185,10 +186,28 @@ namespace CommunicationWorkerRole
 			}
 			finally
 			{
+
+				analyzeQueueRepository.Update(analyzeQueue);
+				analyzeQueueRepository.SubmitChanges();
 				stopwatch.Stop();
 			}
 			}
 		}
+		private void UpdateStatusAnalyzeQueue(AnalyzeQueue analyzeQueue, string status,string communicationLogId)
+		{
+			analyzeQueue.Retries++;
+			if (analyzeQueue.Retries >= 5 && status == "F")
+			{
+				analyzeQueue.Status = "W";
+			}
+			else
+			{
+				analyzeQueue.Status = status;
+			}
+			analyzeQueue.CommunicationLogId = communicationLogId;
+
+		}
+
 		private Response SaveDocument(string commId, byte[] filedataByte)
 		{
 
