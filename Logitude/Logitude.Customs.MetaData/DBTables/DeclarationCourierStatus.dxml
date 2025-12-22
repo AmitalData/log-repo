@@ -158,7 +158,7 @@
   </Column>
   <Column
     Name="LastMileStatusName"
-    Type="varchar"
+    Type="nvarchar"
     Size="30">
     <Constraints
       Nullable="true" />
