@@ -1579,7 +1579,7 @@ export class ARInvoiceLineItem extends BaseComponent {
 
     SetUIProperties_ReceivableCreditGLAccountId() {
         this.UIProperties.SetRequired("ReceivableCreditGLAccountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ReceivableCreditGLAccountId));
-        this.UIProperties.SetEnabled("ReceivableCreditGLAccountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.chargesTypeList?.ReceivableCreditGLAccountId));
+        this.UIProperties.SetEnabled("ReceivableCreditGLAccountId", this.ObjectTableName, this.IsEditingEnabled && AppTool.IsNullOrEmpty(this.chargesTypeList?.ReceivableCreditGLAccountId));
     }
 
     SetUIProperties_Rate() {
