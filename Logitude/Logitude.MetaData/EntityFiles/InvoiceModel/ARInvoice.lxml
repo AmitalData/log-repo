@@ -41,6 +41,8 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="10"
+  LocalDefaultTextBack_up="&quot;חשבונית לקוח&quot;"
+  LocalDefaultText="&quot;BS64:IteX16nXkdeV16DXmdeqINec16fXldeXIg==&quot;"
   DefaultText="&quot;A/R Invoice&quot;"
   Code="&quot;INVC&quot;"
   Name="&quot;Invoices&quot;"

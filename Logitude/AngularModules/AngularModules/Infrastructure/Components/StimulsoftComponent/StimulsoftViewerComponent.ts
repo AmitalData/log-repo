@@ -182,13 +182,18 @@ export class StimulsoftViewerComponent implements OnInit {
         }
 
         this.ExcelReportsTemplatesLists = this.StimulsoftArgData.ReportsTemplateLists.filter(d => d.TemplateType == "E" && !d.UseStimul);
+        const noTemplate = new ReportsTemplateList();
+        noTemplate.Id = "DefExcelTempId";
+        noTemplate.Description = "All Fields";
+
+        this.ExcelReportsTemplatesLists.push(noTemplate);
+
         this.MessageTemplatesLists = this.StimulsoftArgData.MessageTemplateLists;
         this.MessageTemplatesLists = this.StimulsoftArgData.MessageTemplateLists.filter(messageTemplate => messageTemplate.EntityId == this.StimulsoftArgData.EntityId || AppTool.IsNullOrEmpty(messageTemplate.EntityId));
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
         
-        if (this.ExcelReportsTemplatesLists) { 
-            this.SelectedExcelReportsTemplateList = this.ExcelReportsTemplatesLists.find(d => d.Id == this.EntityPM.DefaultExcelNoStimId) ?? null;
-        }
+        this.SelectedExcelReportsTemplateList = this.ExcelReportsTemplatesLists.find(d => d.Id == this.EntityPM.DefaultExcelNoStimId) ?? this.ExcelReportsTemplatesLists[0];
+        
         if (this.MessageTemplatesLists) {
             this.SelectedMessageTemplateList = this.MessageTemplatesLists.filter(d => d.Id == this.StimulsoftArgData.DefaultMessageTemplateId)[0];
         }
@@ -726,6 +731,10 @@ export class StimulsoftViewerComponent implements OnInit {
                 new MessageWindow().Show("Please select an Excel Template");
                 return;
             }
+            
+        }
+        if(this.SelectedExcelReportsTemplateList?.Id === "DefExcelTempId"){
+            this.StimulsoftArgData.DefaultExcelNoStimId = "DefExcelTempId";
         }
         if (this.StimulsoftArgData.ReportFilterConmponent['RunReport']) {
             this.StimulsoftArgData.ReportFilterConmponent.RunReport(true);
@@ -786,7 +795,9 @@ export class StimulsoftViewerComponent implements OnInit {
 
         //  var fileName: string = this.StimulsoftArgData.ReportKey + "@" + (this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Name:"");
         var fileName: string = this.StimulsoftArgData.ReportKey + "@" + this.StimulsoftArgData.TemplateDescription;
-        this.reportService.GetPrepareSendReport(type, fileName, SessionLocator.Tenant).subscribe((res: any) => {
+        var displayName = this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Title : "Report";
+
+        this.reportService.GetPrepareSendReport(type, fileName, SessionLocator.Tenant, displayName).subscribe((res: any) => {
             this.CurrentSession.StopBusyIndicator();
 
             var pmResponse: ServiceResponse = res;
@@ -1035,7 +1046,7 @@ ResetEditableField(field: EditableFieldPosition){
                 .then(cmpRef => {
                     const instance = cmpRef.instance;
                     instance.ComponentRef = cmpRef;
-                    instance.Run({ EntityId: reportId, ObjectTableName: "Report" });
+                    instance.Run({ EntityId: reportId, ObjectTableName: "Report", SelectedTabCode: "RPTP" });
 
                     const loadTemplates = (runReport: boolean, isRefreshDefaultTemplate: boolean = true) => {
                         const entity = instance.EntityPM;
@@ -1055,7 +1066,6 @@ ResetEditableField(field: EditableFieldPosition){
     }
 
     LoadReportTemplate(defultTemplateId: any, runReport, defaultExcelTemplateId: any = "", isRefreshDefaultTemplate: boolean = true, defaultExcelNoStimId : any = "") {
-
         const reportId = this.StimulsoftArgData.ReportsPreviewComponent.Report.Id;
         this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(reportId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -1063,6 +1073,12 @@ ResetEditableField(field: EditableFieldPosition){
                 const allTemplates = myResponse.Result;
                 this.ReportsTemplatesLists = allTemplates.filter(t => t.TemplateType === this.TemplateType && (this.TemplateType !== "E" || t.UseStimul));
                 this.ExcelReportsTemplatesLists = allTemplates.filter(t => t.TemplateType === "E" && !t.UseStimul);
+
+                const noTemplate = new ReportsTemplateList();
+                noTemplate.Id = "DefExcelTempId";
+                noTemplate.Description = "All Fields";
+
+                this.ExcelReportsTemplatesLists.push(noTemplate);
 
                 this.StimulsoftArgData.ReportsPreviewComponent.ReportsTemplateLists = this.ReportsTemplatesLists;
                 this.StimulsoftArgData.ReportsTemplateLists = this.ReportsTemplatesLists;
@@ -1075,7 +1091,7 @@ ResetEditableField(field: EditableFieldPosition){
                         this.StimulsoftArgData.DefaultExcelTemplateId = defaultExcelTemplateId;
                     if(AppTool.IsNullOrEmpty(this.StimulsoftArgData.DefaultTemplateId))
                         this.StimulsoftArgData.DefaultTemplateId = defultTemplateId;
-                    this.SelectedExcelReportsTemplateList = this.ExcelReportsTemplatesLists.find(a => a.Id === this.StimulsoftArgData.DefaultExcelNoStimId) ?? null;
+                    this.SelectedExcelReportsTemplateList = this.ExcelReportsTemplatesLists.find(a => a.Id === this.StimulsoftArgData.DefaultExcelNoStimId) ?? this.ExcelReportsTemplatesLists[0];
                     
                     const defaultTemplateId = this.TemplateType === "E" ? this.StimulsoftArgData.DefaultExcelTemplateId : this.StimulsoftArgData.DefaultTemplateId;
                     this.SelectedReportsTemplateList = this.ReportsTemplatesLists.find(a => a.Id === defaultTemplateId) ?? null;
@@ -1086,8 +1102,8 @@ ResetEditableField(field: EditableFieldPosition){
                 let item = this.SetDefaultTemplate(defultTemplateId, defaultExcelTemplateId, defaultExcelNoStimId);
                 this.SelectedReportsTemplateList = item ?? null;
                 
-                if (!AppTool.IsNullOrEmpty(defaultExcelNoStimId)) 
-                    this.SelectedExcelReportsTemplateList = this.ExcelReportsTemplatesLists.find(t => t.Id === defaultExcelNoStimId) ?? null;
+                 
+                this.SelectedExcelReportsTemplateList = this.ExcelReportsTemplatesLists.find(t => t.Id === defaultExcelNoStimId) ?? this.ExcelReportsTemplatesLists[0];
                 
                 this.ReportTemplatesChange(item, runReport);
                 
@@ -1492,17 +1508,6 @@ ResetEditableField(field: EditableFieldPosition){
     }
 
     async ExportToExcel() {
-        if(!this.ExcelReportsTemplatesLists.length)
-        {
-            const messageWindow = new MessageWindow();
-            messageWindow.Show("There is no Excel Template for this report");
-            return;
-        }
-        if(!this.SelectedExcelReportsTemplateList){
-            const messageWindow = new MessageWindow();
-            messageWindow.Show("Please select Excel Template");
-            return;
-        }
         
         this.StimulsoftArgData.ReportsPreviewComponent.IsUsedExportToExel = true;
        

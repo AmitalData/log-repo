@@ -286,7 +286,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         //       }
         //   }
 
-        public HttpResponseMessage GetPrepareSendReport(string type, string fileName, int tenant)
+        public HttpResponseMessage GetPrepareSendReport(string type, string fileName, int tenant, string displayName = null)
         {
             try
             {
@@ -390,6 +390,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     document = new Document()
                     {
                         FileName = fileName,
+                        CalculatedFileName = displayName,
                         CreateDate = DateTime.Now,
                         Extension = extension,
                         FileSize = ByteData.Length,

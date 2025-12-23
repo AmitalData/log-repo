@@ -57,6 +57,7 @@ using WebFreight.Web.WebServices;
 using System.Reflection;
 using WebFreight.Web.DataContracts;
 using Microsoft.VisualStudio.Services.Common;
+using static Microsoft.VisualStudio.PlatformUI.SearchFilterDataSource;
 
 
 namespace WebFreight.Web.Helpers
@@ -831,14 +832,25 @@ namespace WebFreight.Web.Helpers
 
 			}
             ExcelReportService reportsTemplateQuery = new ExcelReportService(reportFliter.tenant);
-            var  selectedData = reportsTemplateQuery.GetSelectedDataProviderFields(reportFliter.ReportId, reportFliter.DefaultExcelNoStimId);
-            var sortMap = new Dictionary<string, int>();
-            var filteredData = FilterSelectedFieldsaWithParent(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, selectedData, null , sortMap);
             ExportToExcelHelper exportToExcelHelper = new ExportToExcelHelper();
 
-			IWorkbook workbook = exportToExcelHelper.ExportToExcel(filteredData, reportStimulDataProviderDetails.CurrentBusinessObject.Name, sortMap);
-			
-			MemoryStream memoryStream = new MemoryStream();
+            IWorkbook workbook;
+
+            if (reportFliter.DefaultExcelNoStimId == "DefExcelTempId")
+			{
+                 workbook = exportToExcelHelper.ExportToExcel(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, reportStimulDataProviderDetails.CurrentBusinessObject.Name);
+            }
+            else
+			{
+                var selectedData = reportsTemplateQuery.GetSelectedDataProviderFields(reportFliter.ReportId, reportFliter.DefaultExcelNoStimId);
+                var sortMap = new Dictionary<string, int>();
+                var filteredData = FilterSelectedFieldsWithParent(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, selectedData, null, sortMap);
+
+                workbook = exportToExcelHelper.ExportToExcel(filteredData, reportStimulDataProviderDetails.CurrentBusinessObject.Name, sortMap);
+            }
+
+
+            MemoryStream memoryStream = new MemoryStream();
 			workbook.Write(memoryStream);
             MemoryStream tempStream = new MemoryStream(memoryStream.ToArray());
 
@@ -856,7 +868,7 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        private IDictionary<string, object> FilterSelectedFieldsaWithParent(object source, List<DataProviderField> selectedFields, string parentName = null, Dictionary<string, int> sortMap = null)
+        private IDictionary<string, object> FilterSelectedFieldsWithParent(object source, List<DataProviderField> selectedFields, string parentName = null, Dictionary<string, int> sortMap = null)
         {
             var result = new Dictionary<string, object>();
             if (source == null || selectedFields == null)
@@ -884,7 +896,7 @@ namespace WebFreight.Web.Helpers
                     {
                         if (field.Fields?.Any() == true)
                         {
-                            list.Add(FilterSelectedFieldsaWithParent(item, field.Fields, field.Name, sortMap));
+                            list.Add(FilterSelectedFieldsWithParent(item, field.Fields, field.Name, sortMap));
                         }
                         else
                         {

@@ -202,14 +202,16 @@ namespace Logitude.BL.Helpers
 
         }
 
-        public DocumentOutPM PutCreateDocumentOut(CreateDocumentOutArgs createDocumentOutArgs ,string userId =null )
+        public DocumentOutPM PutCreateDocumentOut(CreateDocumentOutArgs createDocumentOutArgs, string userId = null)
         {
             DocumentOutQuery documentOutQuery = new DocumentOutQuery(createDocumentOutArgs.Tenant);
             DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.Tenant);
             if (documentOutPM == null)
             {
-               
                 documentOutPM = CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant, userId, createDocumentOutArgs.DocumentTypeTemplateId);
+            }
+            if (documentOutPM != null)
+            { 
                 if (createDocumentOutArgs.SignHSM)
                 {
                     IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
@@ -1099,19 +1101,48 @@ namespace Logitude.BL.Helpers
             var objectTable = objectTableRepository.GetObjectTableByName(objectTableName, tenant, true);
 
 
+            string documentFileName = TranslateTextsClass.Translate(objectTableName, tenant, true);
+
             if (IsDigitalSign)
             {
                 var doc = documentTypePM.DocumentTypeCopies.FirstOrDefault();
-                exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, Id, objectTable.Id, null, null, documentsFiling.Id, tenant, doc.Id, resolveLoggingUserId);
+                string fileName = DetermineDocumentName(objectTableName, tenant, doc.Id);
+                exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, Id, objectTable.Id, null, null, documentsFiling.Id, tenant, doc.Id, resolveLoggingUserId, documentFileName);
             }
             else
             {
+                bool multipleDocuments = documentTypePM.DocumentTypeCopies?.Count > 1;
                 documentTypePM.DocumentTypeCopies.ForEach(doc =>
                 {
-                    exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, Id, objectTable.Id, null, null, documentsFiling.Id, tenant, doc.Id, resolveLoggingUserId);
+                    string fileName = DetermineDocumentName(objectTableName, tenant, doc.Id, multipleDocuments);
+
+                    exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, Id, objectTable.Id, null, null, documentsFiling.Id, tenant, doc.Id, resolveLoggingUserId, fileName);
                 });
             }
+        }
 
+        public static string DetermineDocumentName(string objectTableName, int tenant, string documentTypeCopyId, bool multipleDocuments = false)
+        {
+            try
+            {
+                string documentFileName = TranslateTextsClass.Translate(objectTableName, tenant, true);
+                string fileName = documentFileName;
+                if (multipleDocuments)
+                {
+                    DocumentTypeCopyRepository documentTypeCopyRep = new DocumentTypeCopyRepository(tenant);
+                    DocumentTypeCopy documentTypeCopy = documentTypeCopyRep.GetSingleDocumentTypeCopy(documentTypeCopyId);
+                    if (!string.IsNullOrEmpty(documentTypeCopy?.Name))
+                    {
+                        fileName = $"{documentFileName} ({documentTypeCopy.Name})";
+                    }
+                }
+                return fileName;
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"failed determine file name (documentTypeCopyId: {documentTypeCopyId}), error: {ex.Message}");
+                return objectTableName;
+            }
         }
 
         public void CreateDocumentInterestReport(int tenant, string arinvoiceId ,string loggedContactId)
@@ -1142,6 +1173,7 @@ namespace Logitude.BL.Helpers
             }
         }
     }
+
     public class CreateDocumentOutArgs
     {
         public string DocumentTypeId { get; set; }
@@ -1154,6 +1186,5 @@ namespace Logitude.BL.Helpers
 
         public bool SignHSM { get; set; }
     }
-
 
 }

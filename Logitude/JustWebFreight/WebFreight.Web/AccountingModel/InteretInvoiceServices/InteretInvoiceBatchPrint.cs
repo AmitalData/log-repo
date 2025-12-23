@@ -284,8 +284,8 @@ namespace Logitude.Accounting.BL.InterestService
                     if (aRInvoicePM == null || interestReport == null) throw new ArgumentNullException("There is no ARInvoice or InterestReport");
 
                     ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);
-                    invoiceService.BuildDocumentsForNewInvoiceLite(aRInvoicePM, interestReport);
-                    invoiceService.SignInvoice(aRInvoicePM, tenant);
+
+                    invoiceService.PrintOrSendInvoice(aRInvoicePM.Id, aRInvoicePM.InvoiceNumber, tenant, aRInvoicePM.CreatedByUserId);
                     NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"PrintInterestInvoice aRInvoicePM.Id={aRInvoicePM.Id}");
                     scope.Complete();
                 }

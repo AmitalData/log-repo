@@ -72,13 +72,13 @@ namespace WebFreight.Web.Helpers
 
         #region ExportDocument2Pdf
 
-        public string ExportDocument2Pdf(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId = null)
+        public string ExportDocument2Pdf(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId = null, string documentFileName = null)
         {
             string result = string.Empty;
 
             try
             {
-                result = ExportDocument2PdfNormalWay(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId);
+                result = ExportDocument2PdfNormalWay(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId, documentFileName);
             }
             catch (Exception ex)
             {
@@ -117,9 +117,9 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        public string ExportDocument2Pdf(ExportDocumentArgs exportDocumentArgs, string documentTypeCopyId)
+        public string ExportDocument2Pdf(ExportDocumentArgs exportDocumentArgs, string documentTypeCopyId, string documentFileName = null)
         {
-            string result = ExportDocument2PdfNormalWay(exportDocumentArgs.DocumentTypeId, exportDocumentArgs.EntityId, exportDocumentArgs.ObjectTableId, exportDocumentArgs.ChildEntityId, exportDocumentArgs.ChildObjectTableId, exportDocumentArgs.CurrentDocumentOutId, exportDocumentArgs.Tenant, documentTypeCopyId, exportDocumentArgs.LoggedContactId);
+            string result = ExportDocument2PdfNormalWay(exportDocumentArgs.DocumentTypeId, exportDocumentArgs.EntityId, exportDocumentArgs.ObjectTableId, exportDocumentArgs.ChildEntityId, exportDocumentArgs.ChildObjectTableId, exportDocumentArgs.CurrentDocumentOutId, exportDocumentArgs.Tenant, documentTypeCopyId, exportDocumentArgs.LoggedContactId, documentFileName);
             return result;
         }
 
@@ -171,7 +171,7 @@ namespace WebFreight.Web.Helpers
             return result;
         }
 
-        public string ExportDocument2PdfNormalWay(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId = null)
+        public string ExportDocument2PdfNormalWay(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId = null, string documentFileName = null)
         {
 
             var currentthreaduser = Thread.CurrentPrincipal;
@@ -230,7 +230,7 @@ namespace WebFreight.Web.Helpers
                         DocumentTypeCopy = documentTypeCopy,
                         DocumentType = documentType,
                     };
-                    string calculatedFileName = GetCalculatedDocumentFileName(documentFileNameParameter);
+                    string calculatedFileName = !string.IsNullOrEmpty(documentFileName) ? documentFileName: GetCalculatedDocumentFileName(documentFileNameParameter);
 
                     Document document = CreateOrUpdateDocument(documentOutId, tenant, documentTypeCopyId, docRepository, documentOutCopyRep, documentOut, documentTypeCopy, documentType, ref documentOutCopy, calculatedFileName);
                     SaveSTIDocumentInStorage(document, reportDdf, tenant);

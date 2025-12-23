@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportExecutionLogUpdateClass
    {  		
-		public const string HashString = "2303b90b66572e6df636c421869bf190";
+		public const string HashString = "2303b90b66572e6df636c421869bf985";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -710,9 +710,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DefaultText =  "Report Template Id",
 					  						ListFieldLable =  "ReportTemplateIdListLable",
 					  						ListLableDefaultText =  "Report Template Id",
-					  						IsForeignKey =  true,
-					  						ForeignEntity =  "ReportsTemplate",
-					  						NavigationPropertyName =  "ReportsTemplate",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
