@@ -174,9 +174,12 @@ export class StimulsoftViewerComponent implements OnInit {
                 this.ReportsTemplatesLists = templates.filter(t => t.TemplateType === "R");
             }
 
+            this.StimulsoftArgData.TemplateDescription = selected.Description;
+            console.log('matching template found for ProcessMenuTemplateId:', processMenuTemplateId);
             this.SelectedReportsTemplateList = selected ?? null;
         }
         else {
+            console.log('No matching template found for ProcessMenuTemplateId:');
             this.ReportsTemplatesLists = templates.filter(t => t.TemplateType === "R");
             this.SelectedReportsTemplateList = this.ReportsTemplatesLists.find(t => t.Id === this.StimulsoftArgData.DefaultTemplateId) ?? null;
         }
