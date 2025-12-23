@@ -1,16 +1,17 @@
 
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Data.EntityKeys;
-using Simplog.Server.Infrastructure;
-using System.Data.Entity;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -34,7 +35,8 @@ namespace Logitude.Customs.Data.Repsitories
                  string SelectedTotalInvoiceValue,
                  string SelectedFastIndividualProcessValue,
                  string SelectedCustomStatusValue,
-                 string SelectedFinalReleaseValue
+                 string SelectedFinalReleaseValue,
+                 decimal minValPay
                  )
         {
             var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
@@ -47,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
                      orderby rDec.CourierHAWB ascending
                      select status);
 
-            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q, minValPay);
 
             var pocos = q.ToList();
 
@@ -62,7 +64,7 @@ namespace Logitude.Customs.Data.Repsitories
                  string SelectedFastIndividualProcessValue,
                  string SelectedCustomStatusValue,
                  string SelectedFinalReleaseValue
-                 )
+                 , decimal minValPay)
         {
             var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);
@@ -74,7 +76,7 @@ namespace Logitude.Customs.Data.Repsitories
                      orderby rDec.CourierHAWB ascending
                      select status);
 
-            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q, minValPay);
 
             var pocos = q.ToList();
 
@@ -119,7 +121,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
         public List<DeclarationCourierStatus> GetByMasterIDCourierManifestStatusCode(int tenant, string CourierMasterId, string CourierManifestStatusCode
             , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, string SelectedFinalReleaseValue
-            )
+            , decimal minValPay)
         {
             var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);
@@ -129,7 +131,7 @@ namespace Logitude.Customs.Data.Repsitories
                      on dec.DeclarationId equals status.DeclarationId
                      orderby rDec.CourierHAWB ascending
                      select status);
-            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q, minValPay);
             var pocos = q.ToList();
             return pocos;
 
@@ -137,7 +139,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
         public List<DeclarationCourierStatus> GeCourierManifestStatusCodeFromExcel(int tenant,string userId, string CourierManifestStatusCode
             , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, string SelectedFinalReleaseValue
-            )
+            , decimal minValPay)
         {
             var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);
@@ -147,7 +149,7 @@ namespace Logitude.Customs.Data.Repsitories
                      on dec.DeclarationId equals status.DeclarationId
                      orderby rDec.CourierHAWB ascending
                      select status);
-            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q, minValPay);
             var pocos = q.ToList();
             return pocos;
 
@@ -250,7 +252,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
         public List<DeclarationCourierStatus> GetByMasterIDCourierDocumentStatus(int tenant, string CourierMasterId, string DocumentStatusCode
-    , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, string SelectedFinalReleaseValue)
+    , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, string SelectedFinalReleaseValue, decimal minValPay)
         {
             var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);
@@ -260,7 +262,7 @@ namespace Logitude.Customs.Data.Repsitories
                      on dec.DeclarationId equals status.DeclarationId
                      orderby rDec.CourierHAWB ascending
                      select status);
-            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q, minValPay);
             var pocos = q.ToList();
 
             return pocos;
@@ -268,7 +270,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
         public List<DeclarationCourierStatus> GetFromExcelCourierDocumentStatus(int tenant, string userId, string DocumentStatusCode
-   , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, string SelectedFinalReleaseValue)
+   , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, string SelectedFinalReleaseValue, decimal minValPay)
         {
             var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);
@@ -278,7 +280,7 @@ namespace Logitude.Customs.Data.Repsitories
                      on dec.DeclarationId equals status.DeclarationId
                      orderby rDec.CourierHAWB ascending
                      select status);
-            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, SelectedFinalReleaseValue, q,minValPay);
             var pocos = q.ToList();
 
             return pocos;
@@ -286,7 +288,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
 
-        public IQueryable<DeclarationCourierStatus> MoreFilter(string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, string SelectedFinalReleaseValue, IQueryable<DeclarationCourierStatus> q)
+        public IQueryable<DeclarationCourierStatus> MoreFilter(string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, string SelectedFinalReleaseValue, IQueryable<DeclarationCourierStatus> q, decimal minValPay)
         {
             switch (SelectedBOLValue)
             {
@@ -314,15 +316,15 @@ namespace Logitude.Customs.Data.Repsitories
 
             switch (SelectedTotalInvoiceValue)
             {
-                case "75":
+                case "minValPay":
                     {
-                        q = q.Where(r => r.TotalInvoiceAmountInUSD <= 75);
+                        q = q.Where(r => r.TotalInvoiceAmountInUSD <= minValPay);
 
                         break;
                     }
                 case "500":
                     {
-                        q = q.Where(r => r.TotalInvoiceAmountInUSD > 75 && r.TotalInvoiceAmountInUSD <= 500);
+                        q = q.Where(r => r.TotalInvoiceAmountInUSD > minValPay && r.TotalInvoiceAmountInUSD <= 500);
                         break;
                     }
                 case "1000":
@@ -375,7 +377,6 @@ namespace Logitude.Customs.Data.Repsitories
 
             return q;
         }
-
 
         public List<DeclarationCourierStatus> GetDeclarationsByIds(List<string> declarationIds, int tenant)
         {

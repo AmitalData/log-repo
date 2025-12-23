@@ -1,27 +1,28 @@
 ﻿
+using Logitude.Customs.Data.DataContracts;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.Data.EntityPOCOs;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Data.EntityKeys;
-using Simplog.Server.Infrastructure;
-using Logitude.Customs.Data.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity;
-using Simplog.Data.CommonDataModel;
-using System.Data.SqlClient;
-using System.Data;
-using Simplog.Data.Helpers;
-using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Server.Infrastructure.DataContracts;
-using Logitude.Customs.Data.DataContracts;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -1082,7 +1083,7 @@ namespace Logitude.Customs.Data.Repsitories
             }
         }
 
-        public List<DeclarationPendingBulkFeed> GetforPendingBulkFeed(string courierMasterId, string goodsDescription, string weightFrom, string weightTo, string incotermCode, string SearchFilter, string totalInvoice, string fastIndividualProcess, int? skip = null, int? take = null, string sortingCol = null, string sortingDir = null)
+        public List<DeclarationPendingBulkFeed> GetforPendingBulkFeed(string courierMasterId, string goodsDescription, string weightFrom, string weightTo, string incotermCode, string SearchFilter, string totalInvoice, string fastIndividualProcess, decimal minValPay, int? skip = null, int? take = null, string sortingCol = null, string sortingDir = null)
         {
             int weightFromInt = 0;
             int weightToInt = 0;
@@ -1145,15 +1146,15 @@ namespace Logitude.Customs.Data.Repsitories
 
             switch (totalInvoice)
             {
-                case "75":
+                case "minValPay":
                     {
-                        q1 = q1.Where(r => r.TotalInvoiceAmountInUSD <= 75);
+                        q1 = q1.Where(r => r.TotalInvoiceAmountInUSD <= minValPay);
 
                         break;
                     }
                 case "500":
                     {
-                        q1 = q1.Where(r => r.TotalInvoiceAmountInUSD > 75 && r.TotalInvoiceAmountInUSD <= 500);
+                        q1 = q1.Where(r => r.TotalInvoiceAmountInUSD > minValPay && r.TotalInvoiceAmountInUSD <= 500);
                         break;
                     }
                 case "1000":
