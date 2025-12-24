@@ -138,13 +138,20 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             string signByPersonalId, 
             string companypersonal, // P OR C 
             string customsAgentId,
-            byte[] signBytes)
+            byte[] signBytes, string hsmStationContext = null)
         {
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
             var environmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenant);
             var settingService = new CustomsSettingQueryService(tenant);
             var tenantSetting = settingService.GetSettingByTenantN(tenant);
 
+            string signProcess = environmentSettingPM.HSMSignProcess; 
+            if (!string.IsNullOrWhiteSpace(hsmStationContext))
+            {
+                signProcess = hsmStationContext;
+            }
+
+            LogMessagingUtil.Instance.AppendLine("HSM signprocess=" + signProcess + ", SheetId=" + customsRequestsSheetId);
 
             var res = this.SignFile(
                  environmentSettingPM.HSMSignServiceUrl,//  @"https://customs.amital.co.il/api/SignHSM",
@@ -153,7 +160,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                  {
                      companyid = tenantSetting.HSMCompanyId,// "101",
                      token = tenantSetting.HSMToken,//  "c6f85591-6e4e-4203-95ef-628b826577b8",
-                     signprocess = environmentSettingPM.HSMSignProcess,// "MehesExport",
+                     signprocess = signProcess,// "MehesExport",
                      id = signByPersonalId ,//"308623615",
                      companypersonal = companypersonal, // P OR C  
                      filename = $"{customsRequestsSheetId}.xml",
