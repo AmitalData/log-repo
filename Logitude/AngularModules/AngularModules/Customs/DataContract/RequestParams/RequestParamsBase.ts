@@ -69,7 +69,7 @@ export class CustomSendOptionsArgs {
     public TestCase: boolean = false;
 } 
 export enum HsmStationContext {
-    Import = 'Import',
+    Import = 'Customs',
     Export = 'MehesExport',
-    Courier = 'Courier'
+    Courier = 'Ecom'
 }
