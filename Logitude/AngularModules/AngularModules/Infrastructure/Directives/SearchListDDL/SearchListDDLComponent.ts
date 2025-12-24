@@ -112,7 +112,7 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
             font-size: 14px;
             overflow: hidden;
             text-overflow: ellipsis;
-            color: red; 
+            font-weight: bold;
        
             }
             .dropdown-header th {
