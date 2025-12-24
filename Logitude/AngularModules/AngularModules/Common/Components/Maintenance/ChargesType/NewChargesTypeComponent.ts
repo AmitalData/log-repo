@@ -27,12 +27,14 @@ export class NewChargesTypeComponent extends BaseComponent {
     public MeasurementsQueryFilters: ApiQueryFilters;
     public IsChargeTypesRestrictedFeatureToggleOn = false;
     public _chargesTypePMService: ChargesTypePMService = new ChargesTypePMService();
-    public AccountingActivated: boolean = SessionLocator.TenantPM.AccountingActivated;
+    public AccountingActivated: boolean;
     public ReceivableCreditGLAccountFilterItems: ApiQueryFilters;
     public PayableDebitGLAcountFilterItems: ApiQueryFilters;
 
     constructor() {
         super();
+
+        this.AccountingActivated = SessionLocator.TenantPM.AccountingActivated && !document.getElementById('GeneralMHCRM')
 
         this.EntityPM = this._chargesTypePMService.GetNewEntityPM();
         if (this.AccountingActivated) {
