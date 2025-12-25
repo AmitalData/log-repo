@@ -287,7 +287,7 @@ where not exists(select *
                     .SignCustomsRequest(
                     _Tenant, customsRequestsSheetId,
                     requestParamsBase.SignByPersonalId, companypersonal,
-                    setting.CustomsAgentId,bytesToSign);
+                    setting.CustomsAgentId,bytesToSign, requestParamsBase.HsmStationContext);
 
                 MessagingServiceFactoryHelper.InitContainer();
                 var mySendSheetSignModel = new SendSheetSignModel();
