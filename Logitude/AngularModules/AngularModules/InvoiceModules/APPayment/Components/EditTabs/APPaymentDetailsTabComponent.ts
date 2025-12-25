@@ -547,6 +547,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
 
     UpdateCurrencyRates() {
+        if (this.isRateManual) {
+            return;
+        }
         var loadingDate = this.RegisterDate;
         if (loadingDate == null) {
             loadingDate = DateTool.GetCurrentDateAsUtc();
@@ -631,8 +634,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         return result;
     }
+    private OldKnownExchangeRateDate: Date = null;
     GetCurrencyRateDate(currencyId: string): Date {
-
+        if (!this.OldKnownExchangeRateDate) {
+            this.OldKnownExchangeRateDate = this.ExchangeRateDate ?? this.EntityPM.PaymentCurrencyExchangeRateDate;
+        }
         var result = null;
 
         if (!AppTool.IsNullOrEmpty(currencyId)) {
@@ -647,8 +653,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                         const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === currencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
                         const customRate = exchangeRateId 
                         ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
-                        : null;
+                        : this.OldKnownExchangeRateDate;
                          result = customRate ?? lastRate.ValueDate;
+                         this.OldKnownExchangeRateDate = result;
                      } 
                 }
             }
@@ -1277,26 +1284,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
                             // Store the old exchange rate before updating
                             const oldRate = this.OldRate;
-
-                            this.PaymentCurrencyExchangeRate = await this.GetCurrencyRate(value);
-                            const newRate = this.PaymentCurrencyExchangeRate;
-
-                            if (value == SessionLocator.TenantPM.CurrencyId) { 
-                                this.AmountInPaymentCurrency = this.AmountInLocalCurrency;
-                                this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
-                            }  
-
-                            // If both rates are valid and not zero, update AmountInPaymentCurrency by the rate ratio
-                            else if (oldRate && newRate && oldRate !== newRate && newRate !== 0) {
-                                const rateRatio = oldRate / newRate;
-                                this.OldRate = newRate; // Update OldRate to the new rate
-                                this.AmountInPaymentCurrency = AppTool.Round(this.AmountInPaymentCurrency * rateRatio, 2);
-
-                                this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
-                            }
-                            this.updateOldRateFromCurrentExchangeRate(newRate); // Update OldRate to the new rate
-
-                            this.ExchangeRateDate = this.GetCurrencyRateDate(value);
+                            this.isRateManual = false;
 
                             if (AppTool.IsNullOrEmpty(value)) {
                                 this.PaymentCurrencyCode = null;
@@ -1304,7 +1292,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
                             else {
                                 var myService = new CurrencyListService();
-                                myService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                                myService.getSingleFromCache(value).subscribe(async (myResponse: ServiceResponse) => {
                                     if (!myResponse.HasError) {
                                         var list: CurrencyList = myResponse.Result;
                                         if (list) {
@@ -1314,6 +1302,28 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                                             }
                                             this.isLoad = true;
                                         }
+
+                                        this.PaymentCurrencyExchangeRate = await this.GetCurrencyRate(value);
+                                        const newRate = this.PaymentCurrencyExchangeRate;
+
+                                        if (value == SessionLocator.TenantPM.CurrencyId) { 
+                                            this.AmountInPaymentCurrency = this.AmountInLocalCurrency;
+                                            this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
+                                        }  
+
+                                        // If both rates are valid and not zero, update AmountInPaymentCurrency by the rate ratio
+                                        else if (oldRate && newRate && oldRate !== newRate && newRate !== 0) {
+                                            const rateRatio = oldRate / newRate;
+                                            this.OldRate = newRate; // Update OldRate to the new rate
+                                            this.AmountInPaymentCurrency = AppTool.Round(this.AmountInPaymentCurrency * rateRatio, 2);
+
+                                            this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
+                                        }
+                                        this.updateOldRateFromCurrentExchangeRate(newRate); // Update OldRate to the new rate
+
+                                        this.ExchangeRateDate = this.GetCurrencyRateDate(value);
+
+
                                     }
                                 });
                             }
@@ -1970,6 +1980,41 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.entityArgs.EditComponent.SaveChanges();
         }
     }
+
+    private isProgrammaticRateUpdate = false;
+    isRateManual = false;
+
+    onRateValueChanged(value: any) {
+        if (this.isProgrammaticRateUpdate) {
+            return; // 👈 ignore internal updates
+        }
+
+        this.isRateManual = true; // ✍️ user typed
+
+        // Store the old exchange rate before updating
+        const oldRate = this.OldRate;
+
+        const newRate = this.PaymentCurrencyExchangeRate;
+        if (value == SessionLocator.TenantPM.CurrencyId) { 
+            this.AmountInPaymentCurrency = this.AmountInLocalCurrency;
+            this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
+        }  
+
+        // If both rates are valid and not zero, update AmountInPaymentCurrency by the rate ratio
+        else if (oldRate && newRate && oldRate !== newRate && newRate !== 0) {
+            const rateRatio = oldRate / newRate;
+            this.OldRate = newRate; // Update OldRate to the new rate
+            this.AmountInPaymentCurrency = AppTool.Round(this.AmountInPaymentCurrency * rateRatio, 2);
+
+            this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
+        }
+        this.updateOldRateFromCurrentExchangeRate(newRate); // Update OldRate to the new rate 
+        this.ExchangeRateDate = this.GetCurrencyRateDate(value);                           
+    }
+
+
+
+
     UpdateCurrencyRateMethod() {
         this._entityResourceService.getEntityResourceByTableName("RatesTable", 0).subscribe((response: any) => {
             var logWindow = new LogitudeWindow();
@@ -1983,8 +2028,30 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                         // Store the old exchange rate before updating
                         const oldRate = this.OldRate;
 
+
+                        /*
+                            The LogTextBox always emits ValueChanged:
+
+                                * when the user types ✍️
+
+                                * when your code assigns a value 🤖
+
+                            But we only want:
+
+                                “Manual mode” when the user typed,
+                                not when your code sets the value.
+
+                            So we need a way to tell:
+                                “Was this change caused by the user, or by my own code?”
+                        */ 
+
+                        this.isProgrammaticRateUpdate = true;  // suppress ValueChanged side effects
                         this.PaymentCurrencyExchangeRate = comp.Rate;
                         this.ExchangeRateDate = comp.RateDate;
+                        this.isProgrammaticRateUpdate = false;
+
+                        // popup = intentional manual override
+                        this.isRateManual = true;
 
                         // After setting the new rate, update AmountInPaymentCurrency by the rate ratio
                         const newRate = this.PaymentCurrencyExchangeRate;
@@ -2001,6 +2068,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             logWindow.Show('./CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent');
         });
     }
+
+
     UpdatePaymentInvoicesErrors() {
 
         var haserrors = false;
