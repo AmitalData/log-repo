@@ -84,6 +84,10 @@ export class TaskReportSchedulerComponent implements OnInit {
         this.SelectedRow = item.rowData;
         this.SelectedRowChanged.emit(this.SelectedRow);
     }
+    onFirstRowSelected(item: any) {
+        this.SelectedRow = item.SelectedRow;
+        this.SelectedRowChanged.emit(this.SelectedRow);
+    }
 
     NewTaskClicked() {
         var newItem: TasksSchedulerPM = new TasksSchedulerPM();
