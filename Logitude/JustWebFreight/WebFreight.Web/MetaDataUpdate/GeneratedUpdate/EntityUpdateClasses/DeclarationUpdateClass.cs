@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "1840d856bb2ab89c32c2fadf67c2ca08";
+		public const string HashString = "d5249bcac6f572b3f0632cf7261dc37d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -24174,6 +24174,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsExportDeclarationsBatchActionsEUnexpected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportDeclarations.BatchActions.E.Unexpected", DefaultText = "Unexpected error occurred.",LocalDefaultText = @"BS64:IteQ16jXoteUINep15LXmdeQ15Qg15zXkCDXptek15XXmdeULiI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode DeclarationTextCode_CustomsExportDeclarationsBatchActionsESendFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportDeclarations.BatchActions.E.SendFailed", DefaultText = "Failed to send request to server.",LocalDefaultText = @"BS64:Itep15LXmdeQ15Qg15HXqdec15nXl9eqINeU15HXp9ep15Qg15zXqdeo16ouIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOexportFileHeader = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.exportFileHeader", DefaultText = "Export File",LocalDefaultText = @"BS64:Iteq15nXpyDXmdem15XXkCI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
