@@ -366,7 +366,16 @@
                                                             <td style="width: 30px;" class="Label">Rate:</td>
 
                                                             <td style="width: 70px;">
-                                                                <LogTextBox [DigitsAfterPoint]="'5'" [HideColumns]="true" [Text]="PaymentCurrencyExchangeRate" [ObjectFieldName]="'PaymentCurrencyExchangeRate'" [InputType]="'double'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                <LogTextBox
+                                                                    [DigitsAfterPoint]="'5'"
+                                                                    [HideColumns]="true"
+                                                                    [Text]="PaymentCurrencyExchangeRate"
+                                                                    [ObjectFieldName]="'PaymentCurrencyExchangeRate'"
+                                                                    [InputType]="'double'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    (ValueChanged)="onRateValueChanged($event)">
+                                                                </LogTextBox>
                                                             </td>
 
                                                             <td style="width: 36px;">
