@@ -1908,7 +1908,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.OpenAmount = this.AmountInPaymentCurrency - this.Summary_AmountPaid - this.Summary_ExternalAmount;
     }
     ComputeLocalAmount() {
-        if (this.AmountInLocalCurrency === null || this.AmountInLocalCurrency === undefined) this.AmountInLocalCurrency = this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;
+        if ((this.AmountInLocalCurrency === null || this.AmountInLocalCurrency === undefined) || !this.EntityPM.IsFromReconcilePage)
+             this.AmountInLocalCurrency = this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;
     }
 
     // Summary
