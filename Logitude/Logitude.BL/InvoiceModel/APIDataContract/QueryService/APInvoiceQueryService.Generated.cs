@@ -295,6 +295,10 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 						}
 						else // All the logics are there for the Local Vendors only 
 						{
+                        MyEntity.VATNumber = MyEntity.VATNumber.Length >= 9
+                                                    ? MyEntity.VATNumber.Substring(0, 9)
+                                                    : MyEntity.VATNumber;
+
 							if (FeatureToggleHelper.HasFeatureToggle("VPI", Tenant))
 							{
 								if (!String.IsNullOrWhiteSpace(MyEntity.VATNumber))
@@ -825,6 +829,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
         private static string ModifyVatNumber(string vatNumber)
         {
+            if (String.IsNullOrWhiteSpace(vatNumber)) vatNumber = "999999998";
             return (vatNumber != null && vatNumber.Length >= 9) ? vatNumber.Substring(0, 9) : vatNumber;
 
         }
