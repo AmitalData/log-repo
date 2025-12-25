@@ -475,7 +475,7 @@ export class JournalPageComponent implements AfterViewInit {
 
             if (this.searchFields?.length < this.fastSearchService.Settings.minimumSearchQueryLength) return;
             this.CD.detectChanges();
-            this.searchDropdownOptions = await this.fastSearchService.search(this.CurrentQueryFilters, this.searchFields)
+            this.searchDropdownOptions = await this.fastSearchService.search(this.CurrentQueryFilters, this.searchFields + "*");
             if (this.searchDropdownOptions) {
                 this.CD.detectChanges();
                 return;

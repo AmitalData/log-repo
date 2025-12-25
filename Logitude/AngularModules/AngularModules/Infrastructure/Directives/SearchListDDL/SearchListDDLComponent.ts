@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewEncapsulation,
+} from '@angular/core';
 import { FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebService';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
@@ -14,7 +21,7 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
                 <thead class="dropdown-header" *ngIf="showHeader">
                     <tr>
                         <ng-container *ngFor="let label of labels">
-                            <th  
+                            <th
                                 [style.width]="
                                     label.lengthTemp > 0
                                         ? label.lengthTemp + 'px'
@@ -74,8 +81,38 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
                                                 | DateTimePipe : 'D'
                                         }}
                                     </span>
-                                    <span *ngSwitchDefault [innerHTML]="option[label.name] | highlightAISearch: searchText : highlightSearchResults"></span>
+                                   
+                                    <span *ngSwitchDefault>
+                                        <ng-container
+                                            *ngIf="
+                                                isStrictNumber(
+                                                    option[label.name]
+                                                );
+                                                else notNumber
+                                            "
+                                        >
+                                        <span style="direction: ltr;unicode-bidi: bidi-override;"
+                                            [innerHTML]=" 
+                                            (option[label.name] | NumbersPipe:'N2')
+                                       | highlightAISearch
+                                       : searchText
+                                       : highlightSearchResults 
+                                       : true
+                                      "></span>
+                                        </ng-container>
 
+                                        <ng-template #notNumber>
+                                            <span
+                                                [innerHTML]="
+                                                    option[label.name]
+                                                        | highlightAISearch
+                                                            : searchText
+                                                            : highlightSearchResults
+                                                            
+                                                "
+                                            ></span>
+                                        </ng-template>
+                                    </span>
                                 </ng-container>
                             </td>
                         </ng-container>
@@ -108,12 +145,12 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
         </div>
     `,
     styles: [
-        `  .search-highlight {                
-            font-size: 14px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-weight: bold;
-       
+        `
+            .search-highlight {
+                font-size: 14px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-weight: bold;
             }
             .dropdown-header th {
                 font-size: 14px;
@@ -179,6 +216,7 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
                 font-size: 14px;
                 overflow: hidden;
                 text-overflow: ellipsis;
+              
             }
 
             .bth-show-all {
@@ -190,8 +228,7 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
             }
         `,
     ],
-    encapsulation: ViewEncapsulation.None
-
+    encapsulation: ViewEncapsulation.None,
 })
 export class SearchListDDLComponent implements OnInit {
     public static showAll: string = 'showAll';
@@ -215,7 +252,7 @@ export class SearchListDDLComponent implements OnInit {
     showSeparator: boolean = true;
     showHeader: boolean = false;
     tableName: string = '';
-    searchText : string = '';
+    searchText: string = '';
     highlightSearchResults: boolean = false;
 
     public set settings(settings: FastSearchSettings) {
@@ -243,7 +280,8 @@ export class SearchListDDLComponent implements OnInit {
                 title: val[2]
                     ? TextCodeTranslator.Translate(val[2].trim())
                     : TextCodeTranslator.Translate(
-                        this.tableName +'.F.'+
+                          this.tableName +
+                              '.F.' +
                               val[0].trim().charAt(0).toUpperCase() +
                               val[0].trim().slice(1)
                       ),
@@ -283,6 +321,9 @@ export class SearchListDDLComponent implements OnInit {
         if (this.showTopResults == null || this.showTopResults <= 0)
             return this.dropdownOptions;
         return this.dropdownOptions.slice(0, this.showTopResults);
+    }
+    isStrictNumber(value: any): boolean {
+        return typeof value === 'number' && isFinite(value);
     }
 }
 
