@@ -543,6 +543,11 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                     break;
                 case "GLAccountId":
                     this.GLAccountId = queryFilterItem.FieldValue;
+                    if (!AppTool.IsNullOrEmpty(this.GLAccountId)) {
+                         this.filterGlAccountSelectedValue = 'filter_glaccount';
+                         this.IsListGLAccounts = false;
+                         this.IsRangGLAccounts = false;
+                    }
                     break;
                 case "IsDisableGlaccountId":
                     this.IsDisableGlaccountId = queryFilterItem.FieldValue;
@@ -577,7 +582,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
 
         var isValid: boolean = true;
         isValid = this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
-        if ( !this.ChartOfAccountId && this.selectedChartOfAccountsTypes?.length === 0 && !this.SelectedCategoryValue && !this.Salesman && this.ListGLAccounts.length < 1 && (!this.FromGLAccountId || !this.ToGLAccountId) && !this.GLAccountId) {
+        if (!this.IsDisableGlaccountId && !this.ChartOfAccountId && this.selectedChartOfAccountsTypes?.length === 0 && !this.SelectedCategoryValue && !this.Salesman && this.ListGLAccounts.length < 1 && (!this.FromGLAccountId || !this.ToGLAccountId) && !this.GLAccountId) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFieldsForNew"));
             isValid = false;
         }
