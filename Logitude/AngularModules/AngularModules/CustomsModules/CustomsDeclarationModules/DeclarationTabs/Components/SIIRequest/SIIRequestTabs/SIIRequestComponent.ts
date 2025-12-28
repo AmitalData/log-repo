@@ -69,6 +69,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public isPartiallyCompleted: CompleteStatuses = CompleteStatuses.PartiallyCompleted;
     public isFullyCompleted: CompleteStatuses = CompleteStatuses.FullyCompleted;
     public isRequestNumberViewMode: boolean = false;
+    private _ignoreLocalNameEvents = true;
 
     constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef) {
         super();
@@ -116,6 +117,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     ErrorsList: string[] = [];
 
     SetWindowArgs(args: any) {
+        this._ignoreLocalNameEvents = true;
         this.entityPM = args.SIIRequest;
         this.oldEntityPM = args.SIIRequest;
         this.DecalarationData = args.Decalaration;
@@ -136,6 +138,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         }
 
         this.initFullData();
+        setTimeout(() => {
+            this._ignoreLocalNameEvents = false;
+            this.entityPM.IsDirty = false;
+        }, 0);;
     }
 
 
@@ -834,7 +840,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             }
         });
     }
-  
+
     //#endregion LevelSelection Filter Methods   
 
     //#region contact data
@@ -920,7 +926,14 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
 
     SetLocalName(entity, fieldName) {
-        this.entityPM[fieldName] = !AppTool.IsNullOrEmpty(entity) ? entity?.LocalName : null;
+        if (this._ignoreLocalNameEvents) return;
+
+        const newVal = !AppTool.IsNullOrEmpty(entity) ? (entity?.LocalName ?? null) : null;
+        const curVal = (this.entityPM[fieldName] ?? null);
+
+        if (curVal !== newVal) {
+            this.entityPM[fieldName] = newVal;
+        }
     }
 
     public get IsClosed(): boolean {
@@ -961,10 +974,12 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
 
     public get UnloadDate(): Date {
-        return this.entityPM?.UnloadDate ?? new Date();
+        return this.entityPM?.UnloadDate ?? null;
     }
     public set UnloadDate(newValue: Date) {
-        this.entityPM.UnloadDate = newValue;
+        if (this.entityPM.UnloadDate !== newValue) {
+            this.entityPM.UnloadDate = newValue;
+        }
     }
 
     public get ManifestNumber(): string {
