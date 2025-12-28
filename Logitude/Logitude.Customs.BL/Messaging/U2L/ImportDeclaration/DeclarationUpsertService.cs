@@ -675,7 +675,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
 					this._MyDeclarationPM.Consignments[0].StorageSiteCode = warehouseId;
 
-                    if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.UnloadportId) && string.IsNullOrEmpty(_MyDeclarationPM.Consignments[0].UnloadPortCode) && _AmitalCustomsFile.SystemConnection == "N")
+                    if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.UnloadportId) && string.IsNullOrEmpty(_MyDeclarationPM.Consignments[0].UnloadPortCode))
                     {
                         _MyDeclarationPM.Consignments[0].UnloadPortCode = TranslateUnloadPort(_AmitalCustomsFile.UnloadportId);
                     }
