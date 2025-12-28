@@ -48,6 +48,9 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
 
         public bool isNumericCountryCode { get; set; }
         public List<ReleaseRequestLineDto> releaseRequestLinesForm { get; set; }
+        [JsonIgnore]
+        [XmlIgnore]
+        public string DestinationPortLogitudeCode { get; set; }
     }
 
     public class ReleaseRequestLineDto
