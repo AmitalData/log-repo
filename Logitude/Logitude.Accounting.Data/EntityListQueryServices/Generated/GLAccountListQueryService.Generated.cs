@@ -159,7 +159,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public GLAccountList GetSingle(string id, int tenant)
         {
             IQueryable<GLAccount> GLAccountQuery = (from a in context.GLAccounts
-                                                    where a.Id == id
+                                                    where a.Id == id && a.Tenant == tenant
                                                     select a);
 
 
