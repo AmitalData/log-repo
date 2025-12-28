@@ -46,7 +46,6 @@ namespace CommunicationWorkerRole
 		AnalyzeQueue AnalyzeQueue;
 		
 		static string logs;
-		int tenant = 0;
 		bool _OnStartDone = false;
 
 		//DbQueueService queueservice;
@@ -100,6 +99,7 @@ namespace CommunicationWorkerRole
 			Response response = new Response();
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
+				int tenant = 0;
 			try
 			{
 				#region  get data from queue           
@@ -146,7 +146,7 @@ namespace CommunicationWorkerRole
 					{
 						#region Save document and metadata
 						logs += "before SaveDocument" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-						response = SaveDocument(outParams["COM_ID"], filedataByte);
+						response = SaveDocument(outParams["COM_ID"], filedataByte,tenant);
 						logs += "after SaveDocument HasError: " + response?.HasError + "ErrorMessage: " + response.ErrorMessage + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 						#endregion
 						if (!response.HasError)
@@ -181,7 +181,7 @@ namespace CommunicationWorkerRole
 				if (!string.IsNullOrEmpty(communicationLogId))
 				{
 					logs += "exption" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-					Communications.UpdateCommunicationLogStatus(communicationLogId, tenant, null, "F", logs, e.Message.ToString());
+					Communications.UpdateCommunicationLogStatus(communicationLogId, tenant, null, "F", logs, e);
 				}
 			}
 			finally
@@ -196,7 +196,7 @@ namespace CommunicationWorkerRole
 		private void UpdateStatusAnalyzeQueue(AnalyzeQueue analyzeQueue, string status,string communicationLogId)
 		{
 			analyzeQueue.Retries++;
-			if (analyzeQueue.Retries >= 5 && status == "F")
+			if (analyzeQueue.Retries <= 5 && status == "F")
 			{
 				analyzeQueue.Status = "W";
 			}
@@ -208,7 +208,7 @@ namespace CommunicationWorkerRole
 
 		}
 
-		private Response SaveDocument(string commId, byte[] filedataByte)
+		private Response SaveDocument(string commId, byte[] filedataByte,int tenant)
 		{
 
 			string fileName = AnalyzeQueue.FileName;
@@ -218,7 +218,7 @@ namespace CommunicationWorkerRole
 			string hawb = string.Empty;
 			DocumentType documentType = null;
 
-			GetcustomsDocumentTypeAndHawbFromFileName(fileName, out customsDocumentTypeCode, out hawb,out documentType);
+			GetcustomsDocumentTypeAndHawbFromFileName(fileName, tenant, out customsDocumentTypeCode, out hawb,out documentType);
 			string PartnerCode = AnalyzeQueue.From;
 			string code = CodeCounter.GetNumber("DocumentsFiling", tenant, false).ToString();//> CUS - 26043 </ Code >  //TODO 
 
@@ -327,7 +327,7 @@ namespace CommunicationWorkerRole
 			return res;
 		}
 
-		private void GetcustomsDocumentTypeAndHawbFromFileName(string fileName,out string customsDocumentType,out string hawb,out DocumentType documentType)
+		private void GetcustomsDocumentTypeAndHawbFromFileName(string fileName,int tenant,out string customsDocumentType,out string hawb,out DocumentType documentType)
 		{
 			customsDocumentType = string.Empty;
 			hawb = string.Empty;
@@ -380,7 +380,7 @@ namespace CommunicationWorkerRole
 			try
 
 			{
-				CheckLock(entityPM.Id);
+				CheckLock(entityPM.Id, entityPM.Tenant);
 				using (scope = new TransactionScope(TransactionScopeOption.Required,
 							new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
 				{
@@ -466,7 +466,7 @@ namespace CommunicationWorkerRole
 
 		}
 
-		public void CheckLock(string id)
+		public void CheckLock(string id,int tenant)
 		{
 			string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(id, tenant);
 			var repo = new GeneralLockRepository(tenant);
