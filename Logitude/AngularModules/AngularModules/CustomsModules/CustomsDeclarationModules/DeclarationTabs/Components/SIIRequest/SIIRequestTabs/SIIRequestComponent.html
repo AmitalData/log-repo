@@ -162,7 +162,7 @@
                             </td>
                         </tr>
                     </table>
-
+              
                     <!-- Section Two -->
                     <table style="width:1000px">
                         <tr class="FieldRow" style="width:100%">
@@ -498,7 +498,7 @@
         <td style="width: 100%; padding-top: 5px; display: flex; justify-content: space-between;">
             <div style="display: flex;">
                 <div style="width: 57px;vertical-align: bottom;">
-                    <button class="Button" (click)="ViewDocumentsComponent()">
+                    <button class="Button" (click)="ViewDocumentsComponent()" [disabled]="IsDisplayOnly">
                         {{'Customs.Declaration.TH.Documents' | TextCodeTranslationPipe}}
                     </button>
                 </div>

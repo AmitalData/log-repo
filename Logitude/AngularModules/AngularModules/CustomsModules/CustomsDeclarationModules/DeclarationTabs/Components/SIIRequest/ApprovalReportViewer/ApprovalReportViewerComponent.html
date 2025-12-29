@@ -1,0 +1,19 @@
+<div class="approvalViewerRoot">
+  <div class="approvalViewerBody">
+    <div *ngIf="isLoading" class="loading">
+      {{ 'General.O.Loading' | TextCodeTranslationPipe }}
+    </div>
+
+    <div *ngIf="!isLoading && errorText" class="errorBox">
+      {{ errorText }}
+    </div>
+
+    <iframe
+      *ngIf="!isLoading && !errorText && pdfSrc"
+      class="pdfFrame"
+      [src]="pdfSrc"
+      frameborder="0">
+    </iframe>
+  </div>
+
+</div>

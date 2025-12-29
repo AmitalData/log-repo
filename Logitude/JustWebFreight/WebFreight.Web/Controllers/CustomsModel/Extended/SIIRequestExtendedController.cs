@@ -144,22 +144,24 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             using (var resp = await http.GetAsync(uri))
             {
                 if (!resp.IsSuccessStatusCode)
-                    return Request.CreateResponse(resp.StatusCode, "Failed to fetch report: " + resp.ReasonPhrase);
+                    return Request.CreateResponse(resp.StatusCode, "Failed to fetch report");
 
                 var bytes = await resp.Content.ReadAsByteArrayAsync();
 
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new ByteArrayContent(bytes);
                 result.Content.Headers.ContentType =
-                    resp.Content.Headers.ContentType ?? new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
+                    resp.Content.Headers.ContentType ??
+                    new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
 
                 result.Content.Headers.ContentDisposition =
-    new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
-    { FileName = "DeclarationApprovalReport.pdf" };
+                    new System.Net.Http.Headers.ContentDispositionHeaderValue("inline")
+                    { FileName = "DeclarationApprovalReport.pdf" };
 
                 return result;
             }
         }
+
 
 
     }
