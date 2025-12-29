@@ -641,13 +641,14 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.UIProperties.SetEnabled("ListCounter", this.ObjectTableNameSiiRequest, enabled);
         this.UIProperties.SetEnabled("ContactName", this.ObjectTableNameSiiRequest, enabled);
         this.UIProperties.SetEnabled("VesselName", this.ObjectTableNameSiiRequest, enabled);
-        this.UIProperties.SetEnabled("ImporterId", this.ObjectTableNameSiiRequest, !enabled);
-        this.UIProperties.SetEnabled("ContactEmail", this.ObjectTableNameSiiRequest, !enabled);
-        this.UIProperties.SetEnabled("ContactTel", this.ObjectTableNameSiiRequest, !enabled);
-        this.UIProperties.SetEnabled("ContactCellPhone", this.ObjectTableNameSiiRequest, !enabled);
-        this.UIProperties.SetEnabled("ContactFax", this.ObjectTableNameSiiRequest, !enabled);
-        this.UIProperties.SetEnabled("UnloadDate", this.ObjectTableNameSiiRequest, !enabled);
-        this.UIProperties.SetEnabled("ManifestNumber", this.ObjectTableNameSiiRequest, !enabled);
+        this.UIProperties.SetEnabled("ContactId", this.ObjectTableNameSiiRequest, enabled);
+        this.UIProperties.SetEnabled("ImporterId", this.ObjectTableNameSiiRequest, false);
+        this.UIProperties.SetEnabled("ContactEmail", this.ObjectTableNameSiiRequest, false);
+        this.UIProperties.SetEnabled("ContactTel", this.ObjectTableNameSiiRequest, false);
+        this.UIProperties.SetEnabled("ContactCellPhone", this.ObjectTableNameSiiRequest, false);
+        this.UIProperties.SetEnabled("ContactFax", this.ObjectTableNameSiiRequest, false);
+        this.UIProperties.SetEnabled("UnloadDate", this.ObjectTableNameSiiRequest, false);
+        this.UIProperties.SetEnabled("ManifestNumber", this.ObjectTableNameSiiRequest, false);
     }
 
     //#region  SelectedRow/SelectedRows: 
@@ -821,26 +822,17 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         const remoteUrl = item?.DistApprovalAttachmentPath;
         if (!remoteUrl) return;
 
-        this.siiRequestWebService.getApprovalReportBlob(remoteUrl).subscribe({
-            next: (blob: Blob) => {
-                if (!blob || blob.size === 0) return;
-
-                const objectUrl = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = objectUrl;
-                a.download = 'DeclarationApprovalReport.pdf';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-
-                setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
-            },
-            error: (err) => {
-                console.error('getApprovalReportBlob failed', err);
-            }
-        });
+        const logWindow = new LogitudeWindow();
+        logWindow.Width = 1000;
+        logWindow.Height = 700;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = {
+            remoteUrl: remoteUrl,
+            title: 'Approval Report',
+            logWindow: logWindow
+        };
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/ApprovalReportViewer/ApprovalReportViewerComponent');
     }
-
     //#endregion LevelSelection Filter Methods   
 
     //#region contact data
