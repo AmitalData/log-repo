@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -56,6 +58,8 @@ using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Simplog.Data.InfrastructureModel;
+using WebFreight.Web.Helpers.APIHelpers;
+using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -1260,6 +1264,41 @@ namespace WebFreight.Web.InfrastructureModel
                  SearchFields = field.Code +","+field.EnglishName +"," + field.LocalName,
 
                 };
+
+                if (!string.IsNullOrEmpty(newField.LogoId))
+                {
+                    try
+                    {
+                        Uploader uploader = new Uploader();
+                        byte[] data = uploader.DownloadFile(newField.LogoId, "jpg", "images", field.Tenant);
+
+                        if (data != null)
+                        {
+                            ImageLibraryControllerHelper imageLibraryControllerHelper = new ImageLibraryControllerHelper();
+                            ImageParameter filter = new ImageParameter()
+                            {
+                                Key = newField.LogoId,
+                                Base64String = Convert.ToBase64String(data),
+                                BufferNumber = 0,
+                                Extension = "jpg",
+                                FileLocation = "",
+                                FileName = "images",
+                                Height = 150,
+                                Width = 150,
+                                Tenant = tenant,
+                                TokenTenant = tenant,
+                                KeepOriginalSize = false,
+                                UploadMode = "ImageComponent",
+                            };
+                            newField.LogoId = imageLibraryControllerHelper.UploadImage(filter);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed copying logo from tenant {field?.Tenant} to new tenant {tenant}, error: {ex.Message}");
+                    }
+                }
+
                 bankCodeRepository.Add(newField);
             }
 
