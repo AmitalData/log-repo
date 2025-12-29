@@ -12,7 +12,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { CLAIM_2340_ClaimRequestRequestParams } from '../../../../Customs/DataContract/RequestParams/CLAIM_2340_ClaimRequestRequestParams';
-import { SendRequestVIA } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { HsmStationContext, SendRequestVIA } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { ClientSearchResponseData } from '../../../../Customs/DataContract/ResponseData/ClientSearchResponseData';
 import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMService';
@@ -329,6 +329,7 @@ export class SendClaimComponent {
         currRequestParams.RequestName = "Claim Request";
         currRequestParams.ResponseName = "Claim Response";
         currRequestParams.ForcePersonalSign = this.ForcePersonalSign;
+        currRequestParams.HsmStationContext = HsmStationContext.Import;
 
         CustomMessageProgressComponent
             .ShowProgressBar(this.CurrentSession, currRequestParams.PBId,

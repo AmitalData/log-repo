@@ -25,6 +25,7 @@ import { DeclarationListService } from 'Customs/Services/StandardLists/Declarati
 import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
+import { HsmStationContext } from 'Customs/DataContract/RequestParams/RequestParamsBase';
 
 
 @Component({
@@ -630,6 +631,7 @@ export class NewContainerizationComponent extends BaseComponent {
         params.Tenant = SessionLocator.Tenant;
         params.RequestVIA = event.RequestVIA;
         params.ForcePersonalSign = event.ForcePersonalSign;
+        params.HsmStationContext = HsmStationContext.Export;
         params.LoggingEnabled = true;
         params.LoggingEntityId = response.Result.Id;
         params.LoggingUserId = SessionLocator.LoggedUserId;

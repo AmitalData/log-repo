@@ -36,7 +36,7 @@ import { DeclarationEventManager } from '../../Utilities/DeclarationEventManager
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { MenuButtonsComponent } from '../../../Infrastructure/Components/LogitudeComponents/MenuButtonsComponent/MenuButtonsComponent';
 import { GenericRequestParams } from '../../DataContract/RequestParams/GenericRequestParams';
-import { SendRequestVIA, TestCase } from '../../DataContract/RequestParams/RequestParamsBase';
+import { HsmStationContext, SendRequestVIA, TestCase } from '../../DataContract/RequestParams/RequestParamsBase';
 import { CustomsSettingExtendedListService } from '../../Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationStatusRequestParams } from '../../DataContract/RequestParams/DeclarationStatusRequestParams';
 import { ContainerizationMessagesService } from '../../Services/WebServices/ContainerizationMessagesService';
@@ -248,6 +248,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
         currRequestParams.LoggingEntityId = this.EntityPM.Id;
         currRequestParams.DeclarationList = this.EntityPM.ConnectedDeclarations;
         currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
+        currRequestParams.HsmStationContext = HsmStationContext.Export;
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.RequestOrigin = "DeclarationStatusRequestViewModel";
         var _DeclarationMessagesService = new DeclarationMessagesService();
@@ -284,6 +285,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
         params.Tenant = SessionLocator.Tenant;
         params.AppicationId = "12345";
         params.RequestVIA = SendRequestVIA.WebServiceInteractive;
+        params.HsmStationContext = HsmStationContext.Export;
         params.ForcePersonalSign = false;
         params.LoggingEnabled = true;
         params.LoggingEntityId = this.EntityPM.Id;
@@ -318,7 +320,8 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
         var params: GenericRequestParams = new GenericRequestParams();
         params.Tenant = SessionLocator.Tenant;
         params.AppicationId = "12345";
-        params.RequestVIA = event.RequestVIA;
+        params.RequestVIA = event.RequestVIA;   
+        params.HsmStationContext = HsmStationContext.Export;
         params.ForcePersonalSign = event.ForcePersonalSign;
         params.LoggingEnabled = true;
         params.LoggingEntityId = response.Result.Id;
