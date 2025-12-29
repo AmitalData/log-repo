@@ -277,6 +277,13 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
+    get HebrewTenant() { return this.EntityPM.HebrewTenant; }
+    set HebrewTenant(value: boolean) {
+        if (this.EntityPM.HebrewTenant != value) {
+            this.EntityPM.HebrewTenant = value;
+        }
+    }
+
     get VATreportEveryTwoMonths() { return this.EntityPM.VATreportEveryTwoMonths; }
     set VATreportEveryTwoMonths(value: boolean) {
         if (this.EntityPM.VATreportEveryTwoMonths != value) {
@@ -833,6 +840,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
                 if (SessionLocator.TenantPM.IsHybrid) {
                     this.AddOtherChargeType();
                 }
+                SessionLocator.TenantPM.HebrewTenant = this.HebrewTenant;
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;

@@ -142,7 +142,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         OppositeAccountNumber, 
 	         TenantForConfirmationNumberApi, 
 	         InvoiceNotes, 
-	         InterestInvoiceNotes,
+	         InterestInvoiceNotes, 
+	         HebrewTenant,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

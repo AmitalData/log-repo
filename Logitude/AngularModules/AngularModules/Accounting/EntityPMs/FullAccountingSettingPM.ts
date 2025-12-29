@@ -341,6 +341,11 @@ export class FullAccountingSettingPM {
     public set InterestInvoiceNotes(newValue: string) { if (this.interestInvoiceNotes != newValue) { this.interestInvoiceNotes = newValue; this.MarkAsDirty("InterestInvoiceNotes"); } }
        
 	 
+    private hebrewTenant: boolean;
+    public get HebrewTenant() { return this.hebrewTenant; }
+    public set HebrewTenant(newValue: boolean) { if (this.hebrewTenant != newValue) { this.hebrewTenant = newValue; this.MarkAsDirty("HebrewTenant"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		
