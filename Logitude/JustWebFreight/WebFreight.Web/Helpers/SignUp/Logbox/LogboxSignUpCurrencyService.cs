@@ -65,7 +65,11 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             string countryId = countryRepository.GetCountryIdByCode(signUpInfoClass.CountryCode, tenant);
             const string AgentPartnerTypeCode = "AG";
             string contactPMId = GetContactPMId(signUpInfoClass);
-
+            var counterAdditionalParameters = new Dictionary<string, string>
+            {
+                ["[B]"] = "AG",
+                ["[BranchName]"] = "AG"
+            };
             AgentPM agentPM = new AgentPM
             {
                 Id = IdCounter.GetNumber("Card", tenant).ToString(),
@@ -78,7 +82,7 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
                 CountryName = signUpInfoClass.CountryName,
                 CityName = signUpInfoClass.City,
                 PrimaryContactPhone = signUpInfoClass.Phone,
-                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "AG") ? TableCounter.GetNumber(tenant, "CADC", "AG", null, null, true) : CodeCounter.GetNumber("Agent", tenant).ToString(),
+                Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "AG") ? TableCounter.GetNumber(tenant, "CADC", "AG", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("Agent", tenant).ToString(),
                 PartnerTypeId = AgentPartnerTypeCode,
             };
 

@@ -714,6 +714,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     Tenant = 0,
                     StartNumber = -1,
                     Parameter1 = "AC",
+                    UsePerBranch = true,
                 };
 
                 CounterRepository.Add(cardCounter);
@@ -725,6 +726,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     Tenant = 0,
                     StartNumber = -1,
                     Parameter1 = "AG",
+                    UsePerBranch = true,
                 };
                 CounterDefinitionRepository.Add(Agent_CounterDef);
                 CounterDefinition AirLine_CounterDef = new CounterDefinition()
@@ -734,6 +736,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     Tenant = 0,
                     StartNumber = -1,
                     Parameter1 = "AL",
+                    UsePerBranch = true,
                 };
                 CounterDefinitionRepository.Add(AirLine_CounterDef);
                 CounterDefinition CustomAgent_CounterDef = new CounterDefinition()
@@ -743,6 +746,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     Tenant = 0,
                     StartNumber = -1,
                     Parameter1 = "CG",
+                    UsePerBranch = true,
                 };
                 CounterDefinitionRepository.Add(CustomAgent_CounterDef);
                 CounterDefinition Coloader_CounterDef = new CounterDefinition()
@@ -751,7 +755,8 @@ namespace WebFreight.Web.MetaDataUpdate
                     CounterId = cardCounter.Id,
                     Tenant = 0,
                     StartNumber = -1,
-                    Parameter1 = "CO",
+                    Parameter1 = "CO",  
+                    UsePerBranch = true,
                 };
                 CounterDefinitionRepository.Add(Coloader_CounterDef);
 
@@ -762,6 +767,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     Tenant = 0,
                     StartNumber = -1,
                     Parameter1 = "CS",
+                    UsePerBranch = true,
                 };
                 CounterDefinitionRepository.Add(Customer_CounterDef);
 
@@ -771,7 +777,8 @@ namespace WebFreight.Web.MetaDataUpdate
                     CounterId = cardCounter.Id,
                     Tenant = 0,
                     StartNumber = -1,
-                    Parameter1 = "OT",
+                    Parameter1 = "OT",  
+                    UsePerBranch = true,
                 };
                 CounterDefinitionRepository.Add(Others_CounterDef);
 
@@ -782,6 +789,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     Tenant = 0,
                     StartNumber = -1,
                     Parameter1 = "PO",
+                    UsePerBranch = true,
                 };
                 CounterDefinitionRepository.Add(PotentialCustomer_CounterDef);
 
@@ -791,7 +799,8 @@ namespace WebFreight.Web.MetaDataUpdate
                     CounterId = cardCounter.Id,
                     Tenant = 0,
                     StartNumber = -1,
-                    Parameter1 = "SG",
+                    Parameter1 = "SG",  
+                    UsePerBranch = true,
                 };
                 CounterDefinitionRepository.Add(ShippingAgent_CounterDef);
                 CounterDefinition ShippingLine_CounterDef = new CounterDefinition()
@@ -801,6 +810,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     Tenant = 0,
                     StartNumber = -1,
                     Parameter1 = "SL",
+                    UsePerBranch = true,
                 };
                 CounterDefinitionRepository.Add(ShippingLine_CounterDef);
                 CounterDefinition Trucker_CounterDef = new CounterDefinition()
@@ -810,6 +820,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     Tenant = 0,
                     StartNumber = -1,
                     Parameter1 = "TR",
+                    UsePerBranch = true,
                 };
                 CounterDefinitionRepository.Add(Trucker_CounterDef);
                 CounterDefinition Vendor_CounterDef = new CounterDefinition()
@@ -819,6 +830,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     Tenant = 0,
                     StartNumber = -1,
                     Parameter1 = "VD",
+                    UsePerBranch = true,
                 };
                 CounterDefinitionRepository.Add(Vendor_CounterDef);
                 CounterDefinition Warehouse_CounterDef = new CounterDefinition()
@@ -828,6 +840,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     Tenant = 0,
                     StartNumber = -1,
                     Parameter1 = "WH",
+                    UsePerBranch = true,
                 };
                 CounterDefinitionRepository.Add(Warehouse_CounterDef);
 
