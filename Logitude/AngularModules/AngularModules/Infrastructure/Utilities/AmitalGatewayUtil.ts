@@ -732,7 +732,7 @@ export class AmitalGatewayUtil {
                     
                     if (unifreightMessage.UnifreightEntity == "BFIFILE" /*|| myEditComponent.EntityPM?.Direction == "E"*/)
                     {
-                        BackButtonLabel = "תיק יצום"
+                        BackButtonLabel = TextCodeTranslator.Translate("Customs.Declaration.O.exportFileHeader");
                     }
                     if(!AmitalGatewayUtil.Instance.AmitalBrowserInUse){
                         

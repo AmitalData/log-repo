@@ -23063,8 +23063,7 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false"
-    ObjectFieldDBOnly="true" />
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;OpenCourierMaster&quot;"
     TextCode="&quot;Courier Master Open&quot;"
@@ -25466,7 +25465,7 @@
     IsSpellChecked="false"
     HasGeneralFeature="false"
     IsLocked="false" />
-	<Tab
+  <Tab
     TabName="&quot;SIIRequest&quot;"
     TabLocalNameBack_up="&quot;מכון תקנים&quot;"
     TabLocalName="&quot;BS64:Itee15vXldefINeq16fXoNeZ150i&quot;"
@@ -28764,12 +28763,12 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-  Code="&quot;Customs.Declaration.O.TooLongExporterCode&quot;"
-  DefaultText="&quot;Exporter code is too long&quot;"
-  LocalDefaultTextBack_up="&quot;מספר יצואן ארוך מדי&quot;"
-  LocalDefaultText="&quot;BS64:157Xodek16gg15nXpteV15DXnyDXkNeo15XXmiDXnteZ15PXmQ==&quot;"
-  TextCodeTypeCode="&quot;O&quot;"
-  IsSpellChecked="false" />
+      Code="&quot;Customs.Declaration.O.TooLongExporterCode&quot;"
+      DefaultText="&quot;Exporter code is too long&quot;"
+      LocalDefaultTextBack_up="&quot;מספר יצואן ארוך מידי&quot;"
+      LocalDefaultText="&quot;BS64:Itee16HXpNeoINeZ16bXldeQ158g15DXqNeV15og157XmdeT15ki&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
     <TextCode
       Code="&quot;Customs.Declaration.O.ImporterDetails&quot;"
       DefaultText="&quot;Importer Details&quot;"
@@ -30304,12 +30303,12 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-	 Code="&quot;Customs.ExportDeclarations.BatchActions.T.Title&quot;"
-	 DefaultText="&quot;Export Declarations – Bulk Actions&quot;"
-	 LocalDefaultTextBack_up="&quot;פעולות גורפות למיישם בהצהרות יצוא&quot;"
-	 LocalDefaultText="&quot;BS64:16TXoteV15zXldeqINeS15XXqNek15XXqiDXnNee15nXmdep150g15HXlNem15TXqNeV16og15nXpteV15A=&quot;"
-	 TextCodeTypeCode="&quot;O&quot;"
-	 IsSpellChecked="false" />
+      Code="&quot;Customs.ExportDeclarations.BatchActions.T.Title&quot;"
+      DefaultText="&quot;Export Declarations – Bulk Actions&quot;"
+      LocalDefaultTextBack_up="&quot;פעולות גורפות למיישם בהצהרות יצוא&quot;"
+      LocalDefaultText="&quot;BS64:Itek16LXldec15XXqiDXkteV16jXpNeV16og15zXnteZ15nXqdedINeR15TXpteU16jXldeqINeZ16bXldeQIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
     <TextCode
       Code="&quot;Customs.ExportDeclarations.BatchActions.O.ActionLabel&quot;"
       DefaultText="&quot;Choose Action&quot;"
@@ -30413,6 +30412,13 @@
       DefaultText="&quot;Failed to send request to server.&quot;"
       LocalDefaultTextBack_up="&quot;שגיאה בשליחת הבקשה לשרת.&quot;"
       LocalDefaultText="&quot;BS64:Itep15LXmdeQ15Qg15HXqdec15nXl9eqINeU15HXp9ep15Qg15zXqdeo16ouIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.exportFileHeader&quot;"
+      DefaultText="&quot;Export File&quot;"
+      LocalDefaultTextBack_up="&quot;תיק יצוא&quot;"
+      LocalDefaultText="&quot;BS64:Iteq15nXpyDXmdem15XXkCI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
