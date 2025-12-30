@@ -22,7 +22,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
     {
             public CustomsPartnerFtpPM GetBy(int tenant,string InterfaceName, string PartnerCode, string TypeCode)
         {
-            var q = this.repository.GetAll(tenant).Where(r => r.InterfaceName == InterfaceName && r.PartnerCode == PartnerCode && r.TypeCode == TypeCode);
+            var q = this.repository.GetAll(tenant).Where(r => r.InterfaceName.ToUpper() == InterfaceName.ToUpper() && r.PartnerCode.ToUpper() == PartnerCode.ToUpper() && r.TypeCode == TypeCode);
             var poco = q.FirstOrDefault();
             if (poco== null)
             {
