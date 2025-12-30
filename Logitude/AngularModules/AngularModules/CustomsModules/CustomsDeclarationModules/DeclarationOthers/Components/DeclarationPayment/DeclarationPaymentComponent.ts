@@ -63,6 +63,7 @@ import { DeclarationExtendedListService } from '../../../../../Customs/Services/
 import { Observable } from 'rxjs';
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
+import { CacheCourierPendingReasonService } from 'Customs/Services/Others/CacheCourierPendingReasonService';
 @Component({
 
     templateUrl: './DeclarationPaymentComponent.html',
@@ -1855,7 +1856,16 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
     SendButtonClickedStart(event) {
-        if (this._CourierWorksheet != null && this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
+
+        CacheCourierPendingReasonService.Instance.GetCache();
+
+        if (this._CourierWorksheet != null
+            && (
+                this._CourierWorksheet.CourierPendingReasonErrorPlace == "1"
+                || CacheCourierPendingReasonService.Instance.HasPaymentHold(this._CourierWorksheet.CourierPendingReasonList)
+            )
+        /*=="בתשלום"*/) {
+
             var myMessageWindow = new MessageWindow
             myMessageWindow.Show(/*"לם ניתן לבצע הגשת תשלום כםשר יש השהייה מסוג עצירת תשלום. "*/
                 TextCodeTranslator.Translate("Customs.CourierMaster.M.PaymentPendingHold"));
@@ -1986,18 +1996,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
                     }
 
-
-
-
                 });
             }
         });
-
-
-
-
-
-
 
     }
 
