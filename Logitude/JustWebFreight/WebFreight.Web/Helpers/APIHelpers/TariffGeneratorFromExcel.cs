@@ -103,16 +103,21 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 IsHybrid = true,
                 IsCreatedWithPartner = true,
             };
-
+            var counterAdditionalParameters = new Dictionary<string, string>
+            {
+                ["[B]"] = "CS",
+                ["[BranchName]"] = "CS"
+            };
             for (int i = 1; i <= 1000; i++)
             {
+               ;
                 CustomerPM customer = new CustomerPM()
                 {
                     EnglishName = "customer " + i,
                     VatNumber = "customervat " + i,
                     Tenant = tenant,
                     IsHybrid = true,
-                    Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CS") ? TableCounter.GetNumber(tenant, "CADC", "CS", null, null, true) :  CodeCounter.GetNumber("Customer", tenant).ToString(),
+                    Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "CS") ? TableCounter.GetNumber(tenant, "CADC", "CS", null, counterAdditionalParameters, true) :  CodeCounter.GetNumber("Customer", tenant).ToString(),
                     PartnerTypeId = "CS",
                     CustomerStatusCode = "ACT",
                     IsCustomer = true,
