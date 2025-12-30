@@ -88,7 +88,7 @@ namespace Logitude.BL.Helpers
                     string serializedObject = JsonConvert.SerializeObject(buildQuoteRequest);
                     StringContent content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
                     content.Headers.Add("Token", HttpContext.Current.Request.Headers["Token"]); 
-                    var result1 = client.PostAsync(URI, content);
+                    var result1 = client.PutAsync(URI, content);
 
                     result1.Wait();
                     if (result1.Result.StatusCode == System.Net.HttpStatusCode.OK)
