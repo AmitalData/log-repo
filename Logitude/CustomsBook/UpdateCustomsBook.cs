@@ -91,8 +91,8 @@ namespace CustomsBook
                     //Delete temp tables
                     CustomsBookRepository.TruncateTables();
                     
-                    // Get rules from WS 8319
-                    GetRulesFromWS8319();
+                   // Get rules from WS 8319
+                   GetRulesFromWS8319();
                     
                     List<string> fileNames = FindFileNames();
                     
@@ -202,6 +202,7 @@ namespace CustomsBook
         static void GetRulesFromWS8319()
         {
 
+            string exceptionMsgList = "";
             List<int> customsItemIds = CustomsBookRepository.GetCustomsItemIdWithRules();
             
             StartStatic();
@@ -227,10 +228,15 @@ namespace CustomsBook
                 }
                 catch(Exception ex)
                 {
-                    SendEmailAlert(ex);
+                    logger.Debug("The DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService for customsItemId- " + requestParamsData.customsItemId + " is not a valid.\nerror data:\n" + ex);
+                    exceptionMsgList += "\n Error on DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService customsItemId- \n" + ex?.Message;
                 }
             }
             tempTables.Add("TEMP_CB_RuleClassifications");
+            if(exceptionMsgList != "")
+            {
+                SendEmailAlert(null, exceptionMsgList);
+            }
         }
 
         static void MapXmlTempTable(string fileName)
@@ -494,7 +500,7 @@ namespace CustomsBook
         }
 
 
-        public static void SendEmailAlert(Exception ex)
+        public static void SendEmailAlert(Exception ex, string exceptionMsgList = null)
         {
             try
             {
@@ -526,6 +532,14 @@ namespace CustomsBook
 
                         message.Subject = subject;
                         message.Body = $"ConnectionString: {sqlConnectionString}\n\n An error occurred:\n\n{ex}";
+                        if (ex != null)
+                        {
+                            message.Body += ex;
+                        }
+                        else if (exceptionMsgList != null && exceptionMsgList != "")
+                        {
+                            message.Body += exceptionMsgList;
+                        }
 
                         client.Send(message);
                     }
