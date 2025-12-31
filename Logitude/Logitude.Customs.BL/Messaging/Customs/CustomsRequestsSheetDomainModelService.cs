@@ -491,7 +491,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
         }
       
         public string GetAvailableSignServer(out string personId, out SignQueueByType SignatureBy, out string noAvailableSignServerErrorText,
-            string OverrideSignStepName = null)
+            string OverrideSignStepName = null, string hsmStationContext = null)
         {
             string availableSignServer = null;
             noAvailableSignServerErrorText = personId = "";
@@ -510,11 +510,11 @@ namespace Logitude.Customs.BL.Messaging.Customs
             
             if (string.IsNullOrWhiteSpace(availableSignServer) &&
                  (isExport ||
-                signQueueHSMService.IsHSMSign_IsOn(_RequestParams.Tenant)) )
+                signQueueHSMService.IsHSMSign_IsOn(_RequestParams.Tenant, hsmStationContext)) )
  
             {
                 (availableSignServer, signMethodByQueueEnum) = dbSignQueueService
-                    .GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId, IsCloud);
+                    .GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId, IsCloud, hsmStationContext:hsmStationContext);
                 if (availableSignServer != null)
                 {
                     if (signMethodByQueueEnum == SignMethodByQueueEnum.HybridDbSignQueue)
@@ -596,7 +596,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
 
             var availableSignServer = GetAvailableSignServer(out personId, out signatureBy, out noAvailableSignServerErrorText,
-                MessageController.SignStepName);
+                MessageController.SignStepName, _RequestParams.HsmStationContext);
 
             switch (signatureBy)
             {

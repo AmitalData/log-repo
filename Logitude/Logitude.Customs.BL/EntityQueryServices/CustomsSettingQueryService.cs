@@ -159,7 +159,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pm;
         }
 
-        public bool IsHSMSign_IsOn(int tenant)
+        public bool IsHSMSign_IsOn(int tenant,string hsmStationContext=null)
         {
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
             var environmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenant);
@@ -184,7 +184,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (fromEnvSetting && fromTenantSetting)
             {
                 var signQueueHSMService = new SignQueueHSMService();
-                hasValidHsm = (bool)(signQueueHSMService.GetHSMAllCertificates(tenant, false)?.Any(i => i.IsOk == true));
+                hasValidHsm = (bool)(signQueueHSMService.GetHSMAllCertificates(tenant, false, hsmStationContext)?.Any(i => i.IsOk == true));
 
             }
 
