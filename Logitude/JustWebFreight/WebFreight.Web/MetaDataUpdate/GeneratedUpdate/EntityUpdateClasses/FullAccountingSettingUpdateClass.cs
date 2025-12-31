@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class FullAccountingSettingUpdateClass
    {  		
-		public const string HashString = "568fb8283138f8da8c01ce6f681bb3b8";
+		public const string HashString = "f32cd7de8d0ed42e4519d5f0240343cc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -74,7 +74,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultTextBack_up =  "הגדרות הנהלת חשבונות",
 			      				    LocalDefaultText =  "BS64:IteU15LXk9eo15XXqiDXlNeg15TXnNeqINeX16nXkdeV16DXldeqIg==",
 			      				    DefaultText =  "Full Accounting Settings",
-			      				    Code =  "1533",
+			      				    Code =  "55a8",
 			      				    Name =  "FullAccountingSetting Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Accounting",
@@ -3965,12 +3965,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AllowEditingExchangeRate",
 					  						DefaultText =  "Allow Editing Exchange Rate in Receipts",
-					  						FullLocalDefaultTextBack_up =  "לםפשר עריכת שער בקבלה כן/לם",
-					  						FullLocalDefaultText =  "BS64:Itec15DXpNep16gg16LXqNeZ15vXqiDXqdei16gg15HXp9eR15zXlCDXm9efL9ec15Ai",
+					  						FullLocalDefaultTextBack_up =  "לםפשר עריכת שער בקבלה בן/לם",
+					  						FullLocalDefaultText =  "BS64:Itec15DXpNep16gg16LXqNeZ15vXqiDXqdei16gg15HXp9eR15zXlCDXkdefL9ec15Ai",
 					  						ListFieldLable =  "AllowEditingExchangeRateListLable",
 					  						ListLableDefaultText =  "Allow Editing Exchange Rate in Receipts",
-					  						ListLocalDefaultTextBack_up =  "לםפשר עריכת שער בקבלה כן/לם",
-					  						ListLocalDefaultText =  "BS64:Itec15DXpNep16gg16LXqNeZ15vXqiDXqdei16gg15HXp9eR15zXlCDXm9efL9ec15Ai",
+					  						ListLocalDefaultTextBack_up =  "לםפשר עריכת שער בקבלה בן/לם",
+					  						ListLocalDefaultText =  "BS64:Itec15DXpNep16gg16LXqNeZ15vXqiDXqdei16gg15HXp9eR15zXlCDXkdefL9ec15Ai",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
