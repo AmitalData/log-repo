@@ -43,7 +43,6 @@ namespace CommunicationWorkerRole
 {
 	public class DocumentSFTPAnalyzeWR : CustomsWorkerEntryPoint
 	{
-		AnalyzeQueue AnalyzeQueue;
 		
 		static string logs;
 		bool _OnStartDone = false;
@@ -103,11 +102,10 @@ namespace CommunicationWorkerRole
 			try
 			{
 				#region  get data from queue           
-				AnalyzeQueue = analyzeQueue;
-				tenant = AnalyzeQueue.Tenant;
+				tenant = analyzeQueue.Tenant;
 				#endregion
 
-				communicationLogId = DocumentApiExecutionService.AddCommunicationLog(AnalyzeQueue, tenant);
+				communicationLogId = DocumentApiExecutionService.AddCommunicationLog(analyzeQueue, tenant);
 
 				byte[] filedataByte = analyzeQueue.MessageBody;
 
@@ -146,7 +144,7 @@ namespace CommunicationWorkerRole
 					{
 						#region Save document and metadata
 						logs += "before SaveDocument" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-						response = SaveDocument(outParams["COM_ID"], filedataByte,tenant);
+						response = SaveDocument(outParams["COM_ID"], filedataByte,tenant, analyzeQueue);
 						logs += "after SaveDocument HasError: " + response?.HasError + "ErrorMessage: " + response.ErrorMessage + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 						#endregion
 						if (!response.HasError)
@@ -208,18 +206,18 @@ namespace CommunicationWorkerRole
 
 		}
 
-		private Response SaveDocument(string commId, byte[] filedataByte,int tenant)
+		private Response SaveDocument(string commId, byte[] filedataByte,int tenant, AnalyzeQueue analyzeQueue)
 		{
 
-			string fileName = AnalyzeQueue.FileName;
-			double fileSize = AnalyzeQueue.FileSize;
+			string fileName = analyzeQueue.FileName;
+			double fileSize = analyzeQueue.FileSize;
 			string fileExtension = Path.GetExtension(fileName).Substring(1);
 			string customsDocumentTypeCode = string.Empty;
 			string hawb = string.Empty;
 			DocumentType documentType = null;
 
 			GetcustomsDocumentTypeAndHawbFromFileName(fileName, tenant, out customsDocumentTypeCode, out hawb,out documentType);
-			string PartnerCode = AnalyzeQueue.From;
+			string PartnerCode = analyzeQueue.From;
 			string code = CodeCounter.GetNumber("DocumentsFiling", tenant, false).ToString();//> CUS - 26043 </ Code >  //TODO 
 
 
