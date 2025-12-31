@@ -15,7 +15,9 @@ using Logitude.BL.CommonDataModel.EntityLists;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -214,7 +216,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
             if (data.NoticeToClient.CheckType != null)
             {
-                entityPM.CheckTypeName = physicalCheckQueryService.GetCheckTypByCode(Convert.ToString(data.NoticeToClient.CheckType));
+                CheckTypeLookupQueryService checkTypeLookupQueryService = new CheckTypeLookupQueryService(entityPM.Tenant);
+                CheckTypeLookupPM checkTypeLookup = checkTypeLookupQueryService.GetSingle(Convert.ToString(data.NoticeToClient.CheckType), false, true);
+                entityPM.CheckTypeName = checkTypeLookup.LocalName;
             }
             if (data.NoticeToClient.QueueType != null)
             {
@@ -231,10 +235,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
             if (data.NoticeToClient.declarationID != null)
             {
-                Card card = physicalCheckQueryService.GetCustomerNameByDeclartionNo(Convert.ToString(data.NoticeToClient.declarationID), entityPM.Tenant);
+                var result = physicalCheckQueryService.GetCustomerNameByDeclartionNo(
+                    Convert.ToString(data.NoticeToClient.declarationID),
+                    entityPM.Tenant
+                );
+
+                CardPM card = (CardPM)result.Item1;
+                string customFileNo = (string)result.Item2;
                 entityPM.CustomerName = card.LocalName;
                 entityPM.DeclarationId = data.NoticeToClient.declarationID;
-                entityPM.CustomFileNo = physicalCheckQueryService.GetCustomFileNoByCheckId(entityPM.DeclarationId, entityPM.Tenant);
+                entityPM.CustomFileNo = customFileNo;
 
             }
             if (data.NoticeToClient.statusMessage != null)
