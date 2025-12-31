@@ -1,3 +1,11 @@
+<style type="text/css">
+
+iframe {
+    width: 100%;
+    min-height: 80vh;
+    border: 0;
+}
+</style>
 
 <table *ngIf="IsResourcesReady">
     <tr style="height:21px;" *ngIf="IsMenuVisible">
@@ -6,6 +14,8 @@
                 <li id="{{'Report' | IdGeneratorAsyncPipe | async}}" *ngIf="IsReportItemVisible"  [class.SelectedPageMenu]="SelectedItem == 'Report'" (click)="SelectedItem = 'Report'">Reports</li>
 
                 <li id="{{'BI' | IdGeneratorAsyncPipe | async}}" *ngIf="IsBIItemVisible" [class.SelectedPageMenu]="SelectedItem == 'BI'" (click)="SelectedItem = 'BI'">BI</li>               
+
+                <li id="{{'PowerBI' | IdGeneratorAsyncPipe | async}}" *ngIf="IsBIItemVisible" [class.SelectedPageMenu]="SelectedItem == 'PowerBI'" (click)="SelectedItem = 'PowerBI'">Power BI</li>               
             </ul>
         </td>
     </tr>
@@ -26,6 +36,24 @@
                 <div LocationDirective Code="BI"></div>
             </div>
 
+            <div *ngIf="SelectedItem === 'PowerBI'" style="height: inherit;">
+
+                <div *ngIf="!SelectedPowerBIReport">
+                    <div *ngFor="let report of PowerBiReports">
+                        <HyperlinkQuery (click)="SelectPowerBiReport(report)">{{report.Name}}</HyperlinkQuery>
+                    </div>
+                </div>
+
+                <div *ngIf="SelectedPowerBIReport" >
+                    <div style="width: 60px; display: flex;">
+                        <td style="width: 60px">
+                            <BackButton (click)="SelectedPowerBIReport = null"></BackButton>
+                        </td>
+                    </div>
+
+                    <iframe [title]="SelectedPowerBIReport.Name" [src]="PowerBiReportUrl" frameborder="0" allowFullScreen="true"></iframe>
+                </div>
+            </div>
         </td>
     </tr>
 </table>

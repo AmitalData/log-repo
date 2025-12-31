@@ -164,6 +164,17 @@ export class ReportService {
         }).toPromise() as Promise<any>;
     }
 
+    GetPowerBIReports() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.get(this._apiUrl + '/GetPowerBIReports',ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }),catchError(ServiceHelper.HandleServiceError));
+    }
+
 }
 
 export class CustomersDataProvider {

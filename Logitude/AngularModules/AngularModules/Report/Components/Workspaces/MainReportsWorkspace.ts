@@ -3,6 +3,9 @@ import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDirective';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ReportService } from 'Common/Services/ExtendedLists/ReportService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     
@@ -17,7 +20,7 @@ export class MainReportsWorkspace implements OnInit {
     public IsReportItemVisible: boolean = false;
     public IsResourcesReady: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    constructor(private _entityResourceService: EntityResourceService) {
+    constructor(private _entityResourceService: EntityResourceService, private sanitizer: DomSanitizer) {
 
     }
     ngOnInit() {
@@ -94,6 +97,27 @@ export class MainReportsWorkspace implements OnInit {
         }
     }
 
+    public PowerBiReports;
+    public PowerBiReportUrl = null;
+    public ActiveDirectoryTenantId;
+    public SelectedPowerBIReport = null;
+    private _reportService: ReportService = new ReportService();
+
+    GetPowerBiReports() {
+        this._reportService.GetPowerBIReports().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError && myResponse.Result) {
+                this.ActiveDirectoryTenantId = myResponse.Result.ActiveDirectoryTenantId;
+                this.PowerBiReports = myResponse.Result.Reports;
+            }
+        });
+    }
+
+    SelectPowerBiReport(report) {
+        this.SelectedPowerBIReport = report;
+        this.PowerBiReportUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+            `https://app.powerbi.com/reportEmbed?reportId=${this.SelectedPowerBIReport.Id}&autoAuth=true&ctid=${this.ActiveDirectoryTenantId}`
+        );
+    }
 
     private Page_BI: any = null;
     private Page_Report: any = null;
@@ -103,7 +127,7 @@ export class MainReportsWorkspace implements OnInit {
             if (this.SelectedItem != null) {
 
                 let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedItem)[0];
-                if (myLocation != null) {
+                if (myLocation != null || this.SelectedItem == "PowerBI") {
 
                     switch (this.SelectedItem) {
 
@@ -130,6 +154,10 @@ export class MainReportsWorkspace implements OnInit {
                             }
                             break;
                         }
+
+                        case "PowerBI":
+                            this.GetPowerBiReports();
+                            break;
                     }
                 }
             }
