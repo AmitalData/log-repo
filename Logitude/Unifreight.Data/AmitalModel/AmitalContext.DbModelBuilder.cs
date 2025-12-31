@@ -38,7 +38,8 @@ namespace Unifreight.Data.AmitalModel
         public static AmitalContext Create(int tenantSeed, DbConnection connection)
         {
             string ConnSchemaUserId="";
-            var settings = LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenantSeed);
+            var injector = LogitudeSettings.GetLogitudeCustomsSettingsMInject;
+            var settings = injector != null ? injector(tenantSeed) : null;
             var dbConnectionInfo = settings == null || settings.IsConnectedToUniFreight ? connection.ConnectionString : settings.UnfConnectionString;
             if (settings != null && settings.IsConnectedToUniFreight)
             {
