@@ -2,7 +2,7 @@
 
 iframe {
     width: 100%;
-    min-height: 100vh;
+    min-height: 80vh;
     border: 0;
 }
 </style>
@@ -36,10 +36,23 @@ iframe {
                 <div LocationDirective Code="BI"></div>
             </div>
 
-            <div *ngIf="SelectedItem === 'PowerBI'">
-                <iframe title="GLAccount Report" 
-                    src="https://app.powerbi.com/reportEmbed?reportId=ca4642ef-db44-4db2-8bed-019a4b178791&autoAuth=true&ctid=418aea5a-d5f4-457a-b629-b678fdd11ec6" 
-                    frameborder="0" allowFullScreen="true"></iframe>
+            <div *ngIf="SelectedItem === 'PowerBI'" style="height: inherit;">
+
+                <div *ngIf="!SelectedPowerBIReport">
+                    <div *ngFor="let report of PowerBiReports">
+                        <HyperlinkQuery (click)="SelectPowerBiReport(report)">{{report.Name}}</HyperlinkQuery>
+                    </div>
+                </div>
+
+                <div *ngIf="SelectedPowerBIReport" >
+                    <div style="width: 60px; display: flex;">
+                        <td style="width: 60px">
+                            <BackButton (click)="SelectedPowerBIReport = null"></BackButton>
+                        </td>
+                    </div>
+
+                    <iframe [title]="SelectedPowerBIReport.Name" [src]="PowerBiReportUrl" frameborder="0" allowFullScreen="true"></iframe>
+                </div>
             </div>
         </td>
     </tr>

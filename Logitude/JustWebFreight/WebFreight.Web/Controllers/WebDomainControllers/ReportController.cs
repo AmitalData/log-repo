@@ -829,6 +829,29 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        public HttpResponseMessage GetPowerBIReports()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                PowerBIReportHelper reportHelper = new PowerBIReportHelper(authToken.Tenant);
+                var results = reportHelper.GetReports();
+
+                var response = new
+                {
+                    ActiveDirectoryTenantId = reportHelper.ActiveDirectoryTenantId,
+                    Reports = results
+                };
+
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 
 	public class ReportBuildResult
