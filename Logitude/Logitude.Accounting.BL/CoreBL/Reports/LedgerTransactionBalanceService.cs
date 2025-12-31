@@ -707,7 +707,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 _Param.DateTypeCode, To,
                 _Param.CheckHaveAccountingQueued,
                 includeAccoutingDateLTransaction, false,
-                false, false);
+                false, false, _Param);
             var endAccountBalance = endAccountBalanceService.AccountBalance;
             return endAccountBalance;
         }
@@ -727,7 +727,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 _Param.DateTypeCode /*GLAccountTotalDateTypeValues.Accountingdate*/, _Param.From,
                 _Param.CheckHaveAccountingQueued,
                 includeAccoutingDateLTransaction, false,
-                _Param.ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts, false);
+                _Param.ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts, false, _Param);
             var startAccountBalance = startAccountBalanceService.AccountBalance;
             return startAccountBalance;
         }
