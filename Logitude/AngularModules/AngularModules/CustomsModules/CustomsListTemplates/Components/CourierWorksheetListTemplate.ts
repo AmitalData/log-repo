@@ -104,8 +104,8 @@ export class CourierWorksheetListTemplate {
     private currentSession = SessionLocator.SelectedSession;
     IsNotConnectedDeclarationChecked: boolean;
     IsConnectedDeclarationChecked: boolean;
-    Isdisabled:boolean=false;
-    CertificateDelay:string="הפקת תעודת עיכוב";
+    Isdisabled: boolean = false;
+    CertificateDelay: string = "הפקת תעודת עיכוב";
     FirePreventSelect() {
         SessionLocator.SelectedSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
     }
@@ -431,13 +431,13 @@ export class CourierWorksheetListTemplate {
 
     get IsDisplayOnly() { return this._CourierWorksheetSharedDataService.IsDisplayOnly }
     get WebAPICourierGWMessageECTHRDataMaman() { return this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman }
-    //get CourierPendingReasonListToolTip() { return this.CourierPendingReasonListToolTip ; }
+
     get CourierPendingReasonListToolTip() {
         if (AppTool.IsNullOrEmpty(this._CourierWorksheet.CourierPendingReasonList)) {
             return "";
         }
         if (this._CourierWorksheet.CourierPendingReasonList.indexOf(',') < 0) {
-            return this._CourierWorksheet.CourierPendingReasonName;
+            return this.GetSinglePendingReasonNameFromCache(this._CourierWorksheet.CourierPendingReasonList);
         }
 
         let myToolTip = "";
@@ -462,23 +462,16 @@ export class CourierWorksheetListTemplate {
 
         return myToolTip;
 
-        ///return this.getCourierPendingReasonName(this._CourierWorksheet.CourierPendingReasonList);
     }
     get CourierPendingReasonListText() {
         if (AppTool.IsNullOrEmpty(this._CourierWorksheet.CourierPendingReasonList)) {
             return "";
         }
         if (this._CourierWorksheet.CourierPendingReasonList.indexOf(',') < 0) {
-            return this._CourierWorksheet.CourierPendingReasonName;
+            return this.GetSinglePendingReasonNameFromCache(this._CourierWorksheet.CourierPendingReasonList);
         }
         return "הצג רשימה";
 
-    }
-
-    set CourierPendingReasonListToolTip(value: string) {
-        if (this.CourierPendingReasonListToolTip != value) {
-            this.CourierPendingReasonListToolTip = value;
-        }
     }
 
     getCourierPendingReasonName(courierPendingReason: string, isToolTip: boolean) {
@@ -580,62 +573,57 @@ export class CourierWorksheetListTemplate {
     SendPay(event) {
         this.ButtonClick(event);
 
-        if (this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
-            var myMessageWindow = new MessageWindow
-            myMessageWindow.Show(
-                //"לא ניתן לבצע הגשת תשלום כאשר יש השהייה מסוג עצירת תשלום. "
-                TextCodeTranslator.Translate("Customs.CourierMaster.M.PaymentPendingHold")
-            );
-            return;
-        }
+        CacheCourierPendingReasonService.Instance.EnsureCacheLoaded().subscribe(() => {
+            if (CacheCourierPendingReasonService.Instance.HasPaymentHold(this._CourierWorksheet.CourierPendingReasonList)) {
 
-        let BackButtonLabel = "תיק עמילות"
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                //this.SelectionChanged(myDeclarationEditTab);
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({
-                    EntityId: this._CourierWorksheet['DeclarationId'],//"1-103991"
-                    ObjectTableName: 'Customs.Declaration',//'Customs.Declaration'
-                    BackButtonLabel: BackButtonLabel
-                });
+                var myMessageWindow = new MessageWindow
+                myMessageWindow.Show(
+                    //"לא ניתן לבצע הגשת תשלום כאשר יש השהייה מסוג עצירת תשלום. "
+                    TextCodeTranslator.Translate("Customs.CourierMaster.M.PaymentPendingHold")
+                );
+                return;
+            }
 
-
-                let myEditComponent: EditComponent = cmpRef.instance;
-
-
-
-                //let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
-                //myDeclarationPMService.get(this._CourierWorksheet['DeclarationId'])
-                //  .subscribe(rsptPMget => {
-                let sub = myEditComponent.OnFirstTimeAfterSingleDataLoaded.subscribe(
-                    (token1) => {
-                        sub.unsubscribe();
-                        let entitypm = myEditComponent.EntityPM; //rsptPMget.Result;
-                        let objectTable = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
-
-                        var args: any = {
-                            EntityPM: entitypm,
-                        };
-
-                        var logWindow = new LogitudeWindow();
-                        logWindow.Width = 1000;
-                        logWindow.Height = 700;
-                        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
-                        logWindow.WindowArgs = args;
-                        logWindow.ShowCloseButton = true;
-
-                        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
-                        logWindow.WindowClosed.subscribe(($event: any) => {
-                            //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
-                            myEditComponent.BackButtonClicked();
-                            this.RefreshData()
-                        });
-                        //TODO | !TODO   ???? >>>>this.ActivateUnifreightInstruction();
+            let BackButtonLabel = "תיק עמילות"
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    //this.SelectionChanged(myDeclarationEditTab);
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({
+                        EntityId: this._CourierWorksheet['DeclarationId'],//"1-103991"
+                        ObjectTableName: 'Customs.Declaration',//'Customs.Declaration'
+                        BackButtonLabel: BackButtonLabel
                     });
 
-            }
-            );
+
+                    let myEditComponent: EditComponent = cmpRef.instance;
+                    let sub = myEditComponent.OnFirstTimeAfterSingleDataLoaded.subscribe(
+                        (token1) => {
+                            sub.unsubscribe();
+                            let entitypm = myEditComponent.EntityPM; //rsptPMget.Result;
+                            let objectTable = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
+
+                            var args: any = {
+                                EntityPM: entitypm,
+                            };
+
+                            var logWindow = new LogitudeWindow();
+                            logWindow.Width = 1000;
+                            logWindow.Height = 700;
+                            logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
+                            logWindow.WindowArgs = args;
+                            logWindow.ShowCloseButton = true;
+
+                            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
+                            logWindow.WindowClosed.subscribe(($event: any) => {
+                                myEditComponent.BackButtonClicked();
+                                this.RefreshData()
+                            });
+                        });
+
+                }
+                );
+        });
     }
 
     _IsDropdownMenuFilterReady: boolean = false;
@@ -674,16 +662,16 @@ export class CourierWorksheetListTemplate {
                                         this.DelayCertificateDetails = declarationMamanSpecialActionPMItem;
                                         if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
                                             this.IsReceivingDelayCertificate = true;
-                                           
-                                            this.Isdisabled=false;
+
+                                            this.Isdisabled = false;
                                         }
                                         else if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "2") {
-                                            this.CertificateDelay="שידור תעודת עיכוב";
-                                            this.Isdisabled=false;
+                                            this.CertificateDelay = "שידור תעודת עיכוב";
+                                            this.Isdisabled = false;
                                         }
                                         else if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == null) {
-                                            this.Isdisabled=true;
-                                            this.CertificateDelay="הפקת תעודת עיכוב";
+                                            this.Isdisabled = true;
+                                            this.CertificateDelay = "הפקת תעודת עיכוב";
                                         }
                                         break;
                                     }
@@ -708,7 +696,7 @@ export class CourierWorksheetListTemplate {
                                         }
                                         break;
                                     }
-                                }                               
+                                }
                             });
 
                         }
@@ -728,7 +716,7 @@ export class CourierWorksheetListTemplate {
         this.CD.detectChanges();
     }
 
-  
+
     CourierPendingReasonCommand(event, declarationId, mode) {
         this.ButtonClick(event);
 
@@ -929,7 +917,7 @@ export class CourierWorksheetListTemplate {
             if (confirm.Yes) {
                 this._IsDropdownMenuFilterReady = false;
                 SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-                if (actionCode == "U") {                   
+                if (actionCode == "U") {
                     if (declarationMamanSpecialActionPM == null) {
                         declarationMamanSpecialActionPM = new DeclarationMamanSpecialActionPM();
                         declarationMamanSpecialActionPM.Tenant = SessionLocator.Tenant;
@@ -946,7 +934,7 @@ export class CourierWorksheetListTemplate {
                         });
                     }
                     else {
-                        this.Isdisabled=true;
+                        this.Isdisabled = true;
                         declarationMamanSpecialActionPM.MamanSpecialActionStatusCode = null;
                         declarationMamanSpecialActionPM.MamanSpecialActionsErrorXml = null;
                         this._DeclarationMamanSpecialActionPMService.update(declarationMamanSpecialActionPM).subscribe((res: any) => {
@@ -1023,4 +1011,20 @@ export class CourierWorksheetListTemplate {
         }
 
     }
+    private GetSinglePendingReasonNameFromCache(code: string): string {
+        if (AppTool.IsNullOrEmpty(code)) return "";
+
+        var mycache: Array<CourierPendingReasonList> = CacheCourierPendingReasonService.Instance.GetCache();
+        if (!mycache || mycache.length === 0) return code;
+
+        let rec = mycache.filter(r => r && r.Code == code)[0];
+        if (rec) {
+            if (!AppTool.IsNullOrEmpty(rec.LocalName)) return rec.LocalName;
+            if (!AppTool.IsNullOrEmpty(rec.EnglishName)) return rec.EnglishName;
+            return rec.Code;
+        }
+        return code;
+    }
+
+
 }
