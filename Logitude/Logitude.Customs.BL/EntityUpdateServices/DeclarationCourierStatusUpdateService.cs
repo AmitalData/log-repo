@@ -337,36 +337,32 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             try
             {
-                var context = CustomContext.GetContext(dirtyDeclarationPendingPM.Tenant);
+                string loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPendingPM.Tenant);
                 DeclarationQueryService declarationQueryService = new DeclarationQueryService(dirtyDeclarationPendingPM.Tenant);
+                string CustomFileNoResult = declarationQueryService.GetCustomFileNoByDeclarationId(dirtyDeclarationPendingPM.DeclarationID, dirtyDeclarationPendingPM.Tenant);
 
-                (string CustomFileNo, string DeclarationNumber) result = declarationQueryService.GetCustomFileNoAndDecNoByDeclarationId(dirtyDeclarationPendingPM.DeclarationID, dirtyDeclarationPendingPM.Tenant);
-                string loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPendingPM.Tenant) ?? string.Empty;
-                string remarks = $"loggingUserId: {loggingUserId}, UnifreightStatusCode: {courierPendingReason?.UnifreightStatusCode}, CourierPendingReasonCode: {dirtyDeclarationPendingPM?.CourierPendingReasonCode}, CourierPendingReasonName: {dirtyDeclarationPendingPM?.CourierPendingReasonName}";
-                var eventContextTagModel = dirtyDeclarationPendingPM.CurrentContextTag as EventContextTagModel;
-                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                if (CustomFileNoResult == null)
                 {
-                    Tenant = dirtyDeclarationPendingPM.Tenant,
-                    objectTableName = "Customs.Declaration",
-                    EventCode = code,
-                    notes = remarks,
-                    CommunicationLoggingEntityReference = result.DeclarationNumber ?? string.Empty,
-                    EntityId = dirtyDeclarationPendingPM.DeclarationID,
-                    UserId = loggingUserId,
-                    CommunicationSubject = "FU Status " + code + " from logitude (Agent Response)",
-                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                    {
-                        entname = "CFIFILEM",
-                        primary_number = result.CustomFileNo ?? string.Empty,
-                        status = "new",
-                        xml_status = "new",
-                        status_id = code,
-                        status_DateTime = DateTime.Now,
-                        comments = remarks,
-                    }
+                    LogMessagingUtil.Instance.AppendLine($"RaiseEvent: CustomFileNoResult not found. DeclarationID={dirtyDeclarationPendingPM.DeclarationID}");
+                    return;
+                }
+
+                UnifreightEventParam myUnifreightEventParam = new UnifreightEventParam()
+                {
+                    Code = code,
+                    Mode = UnifreightEventMode.@new, 
+                    EventDateTime = DateTime.Now,
+                    Entname = "CFIFILEM",
+                    PrimaryNum = CustomFileNoResult,
+                    EventRemarks =
+                        $"loggingUserId: {loggingUserId}, " +
+                        $"UnifreightStatusCode: {courierPendingReason?.UnifreightStatusCode}, " +
+                        $"CourierPendingReasonCode: {dirtyDeclarationPendingPM?.CourierPendingReasonCode}, " +
+                        $"CourierPendingReasonName: {dirtyDeclarationPendingPM?.CourierPendingReasonName}",
                 };
-                LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent  eventCode = " + code + " CustomFileNo= " + result.CustomFileNo ?? string.Empty + "   ");
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
+                LogMessagingUtil.Instance.AppendLine("UpsertEventLE2U = " + code + " CustomFileNo= " + CustomFileNoResult);
+                UnifreightEventTaskService unifreightEventTaskService = new UnifreightEventTaskService();
+                unifreightEventTaskService.UpsertEventLE2U(dirtyDeclarationPendingPM.Tenant, loggingUserId, myUnifreightEventParam);
             }
             catch (Exception ex)
             {
