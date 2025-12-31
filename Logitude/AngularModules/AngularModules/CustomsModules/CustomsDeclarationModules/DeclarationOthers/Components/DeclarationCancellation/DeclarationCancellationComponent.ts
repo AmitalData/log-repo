@@ -3,7 +3,7 @@ import { BaseComponent } from '../../../../../Infrastructure/Components/Logitude
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
-import { CustomSendOptionsArgs, RequestParamsBase, SendRequestVIA, TestCase } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs, HsmStationContext, RequestParamsBase, SendRequestVIA, TestCase } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { AppTool, DateTool } from '../../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -155,7 +155,16 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         currRequestParams.RequestName = "Declaration Cancellation Request";
         currRequestParams.ResponseName = "Declaration Cancellation Response";
         currRequestParams.RequestVIA = this.RequestVIA;
-
+        
+        if (this.EntityPM?.IsCourierDeclaration === true ) {
+            currRequestParams.HsmStationContext = HsmStationContext.Courier;
+        }
+        else if (this.EntityPM?.Direction === "E") {
+            currRequestParams.HsmStationContext = HsmStationContext.Export;
+        }
+        else {
+            currRequestParams.HsmStationContext = HsmStationContext.Import;
+        }
 
 
         this._DeclarationWebService.GetIsDeclarationCancellationAttachmentNumberIsMoreThenAllow(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
