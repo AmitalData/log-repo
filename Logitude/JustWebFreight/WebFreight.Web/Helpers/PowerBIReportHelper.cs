@@ -107,17 +107,23 @@ namespace WebFreight.Web.Helpers
                     Config = defaultAndConfigurationQuery.GetIQueryableDefaultAndConfigurationsPMBySetKey(SetKey).Where(p => p.Tenant == Tenant).ToList();
                 }
 
-                return Config.Where(a => string.Equals(a.AdditionalKey, additionalKey, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                DefaultAndConfigurationPM defaultConfig = Config.Where(a => string.Equals(a.AdditionalKey, additionalKey, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                if (defaultConfig == null)
+                {
+                    throw new Exception($"default not found for SetKey: {SetKey}, additionalKey: {additionalKey}");
+                }
+                return defaultConfig;
             }
             catch (Exception ex)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to get config for SetKey: {SetKey}, additionalKey: {additionalKey}, : {ex.Message}");
                 // todo: remove
                 return new DefaultAndConfigurationPM()
                 {
                     Value1 = "82f78eb1-51f0-4e08-ac9c-36d05044baf6", // ActiveDirectoryTenantId
                     Value2 = "f1a21680-ddd1-4a69-8428-87fae5b5e386"  // WorkspaceId
                 };
-                throw new Exception($"Failed to get PowerBI configuration for SetKey: {SetKey}, additionalKey: {additionalKey}", ex);
+                throw;
             }
         }
     }
