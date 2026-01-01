@@ -1630,6 +1630,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 int year = myComparativeDate.Value.Year;
                                 int month = myComparativeDate.Value.Month;
                                 month += myPaymentTerm.NumberOfMonths;
+                                if (month > 12)
+                                {
+                                    month -= 12;
+                                    year += 1;
+                                }
                                 int daysInMonth = DateTime.DaysInMonth(year, month);
 
                                 myComparativeDate = new DateTime(year, month, daysInMonth, 0, 0, 0);
