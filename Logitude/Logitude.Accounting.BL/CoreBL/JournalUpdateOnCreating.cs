@@ -302,8 +302,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 Line = journalLinePM.Line,
                 LedgerTransactionId = transaction.Id,
                 CurrencyId = transaction.OpenAmountCurrencyId,
-                ReconciliationAmount = transaction.OpenAmount,
-                IsPartial =  false
+                ReconciliationAmount = reconciliationAmount,
+                IsPartial = Math.Abs(reconciliationAmount) != Math.Abs(transaction.OpenAmount)
             });
         }
 
