@@ -44,7 +44,6 @@ namespace CommunicationWorkerRole
 	public class DocumentSFTPAnalyzeWR : CustomsWorkerEntryPoint
 	{
 		
-		static string logs;
 		bool _OnStartDone = false;
 
 		//DbQueueService queueservice;
@@ -92,9 +91,12 @@ namespace CommunicationWorkerRole
 			AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueueBySubject("DocumentSFTP");
 			if (analyzeQueue != null)
 			{
-			
-			string communicationLogId = string.Empty;
-			logs = string.Empty;
+				analyzeQueue.Status = "I";
+				analyzeQueueRepository.Update(analyzeQueue);
+				analyzeQueueRepository.SubmitChanges();
+
+				string communicationLogId = string.Empty;
+			string logs = string.Empty;
 			Response response = new Response();
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
@@ -200,6 +202,10 @@ namespace CommunicationWorkerRole
 			}
 			else
 			{
+				if(status == "D")
+				{
+					analyzeQueue.DoneDate = DateTime.Now;
+				}
 				analyzeQueue.Status = status;
 			}
 			analyzeQueue.CommunicationLogId = communicationLogId;
