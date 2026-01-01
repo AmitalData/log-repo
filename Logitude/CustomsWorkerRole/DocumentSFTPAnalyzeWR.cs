@@ -73,8 +73,15 @@ namespace CommunicationWorkerRole
 		{
 			try
 			{
+				if (_OnStartDone) return;
+				_OnStartDone = true;
 				OnStart();
-				ExecuteQueue();
+				while (true)
+				{
+					ExecuteQueue();
+					Thread.Sleep(new TimeSpan(0, 0, 1));
+				}
+				
 
 			}
 			catch (Exception exception)
@@ -95,7 +102,7 @@ namespace CommunicationWorkerRole
 				analyzeQueueRepository.Update(analyzeQueue);
 				analyzeQueueRepository.SubmitChanges();
 
-				string communicationLogId = string.Empty;
+				string communicationLogId = analyzeQueue.CommunicationLogId;
 			string logs = string.Empty;
 			Response response = new Response();
 			Stopwatch stopwatch = new Stopwatch();
@@ -107,7 +114,7 @@ namespace CommunicationWorkerRole
 				tenant = analyzeQueue.Tenant;
 				#endregion
 
-				communicationLogId = DocumentApiExecutionService.AddCommunicationLog(analyzeQueue, tenant);
+				communicationLogId = communicationLogId ?? DocumentApiExecutionService.AddCommunicationLog(analyzeQueue, tenant);
 
 				byte[] filedataByte = analyzeQueue.MessageBody;
 
