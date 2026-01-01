@@ -48,9 +48,6 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
         this.EntityPM.DepositDate = new Date();
         this.EntityPM.DepositNumber = 0;
         this.SetUIProperties();
-        this.GetClosedMonth();
-
-
     }
 
     SetUIProperties() {
@@ -79,8 +76,8 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
         if (this.EntityPM.AccountingDate != value) {
             this.EntityPM.AccountingDate = value;
             this.EntityPM.DepositDate = value;
-          //  this.SetUIProperties();
             this.AccountingDateLostFocus();
+            this.GetClosedMonth();
         }
     }
 
@@ -323,7 +320,7 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
     private accountingPeriod: any;
     private GetClosedMonth() {
         var periodTypeCode = "1" // 1-Regular
-        this.myAccountingPeriodListService.getByYear(new Date().getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
+        this.myAccountingPeriodListService.getByYear(this.AccountingDate.getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.accountingPeriod = myResponse.Result;
