@@ -1356,8 +1356,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             AddDebitJournalLineForVendorGLAccount(paymentPM, journal);
             CreateAutomaticReconcileForJournal(paymentPM, journal);
             AutoInternalReconcileAPPaymentLines(paymentPM, journal);
+
             if (paymentPM.TaxDeductionLocalAmount != 0 || paymentPM.VendorAddressId == tenantPOCO.AddressId)
                 AddCreditJournalLineForTaxGLAccount(paymentPM, paymentPM.Tenant, tenantPOCO, journal);
+            if (FeatureToggleHelper.HasFeatureToggle("RFR", entityPM.Tenant))
+                ProcessInvoiceDifference(paymentPM, journal);
             AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.APPaymentApprove);
             SubmitJournal(journal);
         }
@@ -1399,7 +1402,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
-        private void ProcessInvoiceDifference(APPaymentPM paymentPM, JournalPM journal, ref int counter)
+        private void ProcessInvoiceDifference(APPaymentPM paymentPM, JournalPM journal)
         {
             if (paymentPM.PaymentInvoices.Any())
             {
@@ -1419,7 +1422,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             if (account == null && account.ReconcileMethodCode == ReconcileMethodCodes.ForeignCurrency)
                             {
                                 decimal diff = (decimal)localDiff;
-                                CreateDiffLines(paymentPM, journal, diff, account.Id, account.ControlAccountId, ref counter);
+                                CreateDiffLines(paymentPM, journal, diff, account.Id, account.ControlAccountId);
                             }
 
 
@@ -1430,7 +1433,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
-        private void CreateDiffLines(APPaymentPM paymentPM, JournalPM journal, decimal diff, string paymentAccountId, string controlAccountId, ref int counter)
+        private void CreateDiffLines(APPaymentPM paymentPM, JournalPM journal, decimal diff, string paymentAccountId, string controlAccountId)
         {
             IFullAccountingSettingQueryServiceExt fullAccountingSettingQuery = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
             var settings = fullAccountingSettingQuery.GetFullAccountingSettingByTenant(paymentPM.Tenant);
@@ -1445,7 +1448,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 Tenant = paymentPM.Tenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
-                Line = ++counter,
+                Line = 1,
                 JournalId = journal.Id,
                 ActionCode = "2",//- Debit
                 ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
@@ -1472,7 +1475,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 Tenant = tenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
-                Line = ++counter,
+                Line = 1,
                 JournalId = journal.Id,
                 ActionCode = "1",//- Credit
                 ActionTypeCodeEnum = JournalActionTypeEnum.Credit,

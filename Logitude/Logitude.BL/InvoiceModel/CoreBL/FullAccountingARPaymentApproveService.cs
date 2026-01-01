@@ -586,7 +586,8 @@ $"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  A
             CreateCreditLines(ref counter);
             CreateDebitLines(ref counter);
             CheckAbiltiyOfCreatingAutomaticReconcileForJournal();
-            ProcessInvoiceDifference(ref counter);
+            if (FeatureToggleHelper.HasFeatureToggle("RFR", paymentPM.Tenant))
+                ProcessInvoiceDifference(ref counter);
 
             AutoExternalReconcileBankTransferPageLines();
 
