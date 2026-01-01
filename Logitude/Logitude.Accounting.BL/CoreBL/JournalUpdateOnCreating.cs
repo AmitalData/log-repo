@@ -58,7 +58,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 // new IdCounterWrapper().GetNumber(
                 //GetNumberJournal(), 
                 IdCounterWrapperGetNumber(entityPM.Tenant);
-            MatchPaymentCommandTransactions(entityPM, entityPM.Tenant);
+            if(!string.IsNullOrWhiteSpace(entityPM.InvoicesXml))
+               MatchPaymentCommandTransactions(entityPM, entityPM.Tenant);
 
             //entityPM.JournalNumber =
             //    //(new CodeCounterWrapper()).GetNumber(GetCodeNumberJournal(), 
@@ -191,11 +192,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             try
             {
-                if (string.IsNullOrWhiteSpace(journalPM.InvoicesXml))
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"No InvoicesXml found for Journal {journalPM.Id}, tenant={tenant}");
-                    return;
-                }
+                
                 var accountingContext = AccountingContext.GetContext(tenant);
                 JournalQueryService journalQueryService = new JournalQueryService(accountingContext);
                 JournalUpdateService journalUpdateService = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
