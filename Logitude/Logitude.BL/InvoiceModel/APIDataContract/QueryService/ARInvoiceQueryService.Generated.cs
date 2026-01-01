@@ -25,8 +25,9 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.InvoiceModel;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.Repositories;
+using Syncfusion.XlsIO.FormatParser.FormatTokens;
 
- namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
+namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 { 
    public partial class ARInvoiceQueryService
    {
@@ -776,6 +777,11 @@ using Simplog.Data.CommonDataModel.Repositories;
 							int year = myComparativeDate.Value.Year;
 							int month = myComparativeDate.Value.Month;
 							month += myPaymentTerm.NumberOfMonths;
+							if (month > 12)
+							{
+								month -= 12;
+								year += 1;
+							}
 							int daysInMonth = DateTime.DaysInMonth(year, month);
 
 							myComparativeDate = new DateTime(year, month, daysInMonth, 0, 0, 0);
