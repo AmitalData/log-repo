@@ -386,7 +386,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
                     break;
                 case "ReportDateTypeCode" :
                     this.ReportDateTypeCode = queryFilterItem.FieldValue;
-                    this.filterDateSelectedValue = this.ReportDateTypeCode == '1' ? 'filter_accounting' : 'filter_reference';
+                    this.filterDateSelectedValue = this.ReportDateTypeCode == '1' ? 'filter_accounting' : 'filter_due';
                     break;   
  
 
@@ -626,7 +626,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
             case 'filter_accounting':
                 this.ReportDateTypeCode = '1';
                 break;
-            case 'filter_reference':
+            case 'filter_due':
                 this.ReportDateTypeCode = '2';
                 break;
             default:
