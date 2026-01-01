@@ -140,6 +140,7 @@ export class CounterCardComponent extends BaseComponent {
 
             this.APIHelper.CounterDefinitions.forEach((item) => {
                 item.CounterSize = value;
+               
             });
         }
     }
@@ -153,6 +154,7 @@ export class CounterCardComponent extends BaseComponent {
 
             this.APIHelper.CounterDefinitions.forEach((item) => {
                 item.StartNumber = value;
+                
             });
         }
     }
@@ -199,6 +201,9 @@ export class CounterCardComponent extends BaseComponent {
             this.ValidationErrorsList = errors;
 
             if (errors.length == 0) {
+                this.APIHelper.CounterDefinitions.forEach((item) => {                    
+                    item.UsePerBranch = true;
+                });
                 this.CurrentSession.StartBusyIndicatorSaving();
 
                 var myService = new CountersDomainService();
