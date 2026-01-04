@@ -43,13 +43,13 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
         }
 
 		
-		public Card GetCardById(string Id,int Tenant,  string ComputingPartnerName = "")
+		public Card GetCardById(string Id,int Tenant,  string ComputingPartnerName = "",bool IncludeAddress = true)
         { 
 		    try
             {
 				 
 				
-				var temp = query.GetSinglePM(Id, Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant, IncludeAddress);				
 				 if (temp == null)
                     throw new ApplicationException("Card with Id " + Id + " doesn't exist");
 

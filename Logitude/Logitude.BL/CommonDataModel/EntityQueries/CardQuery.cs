@@ -156,34 +156,39 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return res;
         }
 
-        public CardPM GetSinglePM(string id, int tenant)
+        public CardPM GetSinglePM(string id, int tenant, bool includeAddress = true)
         {
             if (!string.IsNullOrEmpty(id))
             {
                 string entityName = "CardPM" + id + tenant;
                 CardPM entity;
+                string myMainAddressId = null;
+                string myBillingAddressId = null;
+                string myPickupDeliveryAddressId = null;
 
                 AddressQuery addressQuery = new AddressQuery(tenant);
-                AddressPM myMainAddresss = addressQuery.GetAddressPMByTypeAndCard(id, "M", tenant);
-                string myMainAddressId = null;
-                if (myMainAddresss != null)
+
+                if (includeAddress)
                 {
-                    myMainAddressId = myMainAddresss.Id;
+                    AddressPM myMainAddresss = addressQuery.GetAddressPMByTypeAndCard(id, "M", tenant);
+                    if (myMainAddresss != null)
+                    {
+                        myMainAddressId = myMainAddresss.Id;
+                    }
+
+                    AddressPM myBillingAddress = addressQuery.GetAddressPMByTypeAndCard(id, "B", tenant);
+                    if (myBillingAddress != null)
+                    {
+                        myBillingAddressId = myBillingAddress.Id;
+                    }
+
+                    AddressPM myPickupDeliveryAddress = addressQuery.GetAddressPMByTypeAndCard(id, "P", tenant);
+                    if (myPickupDeliveryAddress != null)
+                    {
+                        myPickupDeliveryAddressId = myPickupDeliveryAddress.Id;
+                    }
                 }
 
-                AddressPM myBillingAddress = addressQuery.GetAddressPMByTypeAndCard(id, "B", tenant);
-                string myBillingAddressId = null;
-                if (myBillingAddress != null)
-                {
-                    myBillingAddressId = myBillingAddress.Id;
-                }
-
-                AddressPM myPickupDeliveryAddress = addressQuery.GetAddressPMByTypeAndCard(id, "P", tenant);
-                string myPickupDeliveryAddressId = null;
-                if (myPickupDeliveryAddress != null)
-                {
-                    myPickupDeliveryAddressId = myPickupDeliveryAddress.Id;
-                }
 
                 if (HttpContext.Current != null)
                 {
