@@ -1,0 +1,232 @@
+﻿
+<style type="text/css">
+    .CounterItemBackground {
+        background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+  
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <table *ngIf="IsResourcesReady">
+
+                    <!-- Header -->
+                    <tr style="height: 1px;">
+                        <td style="border: 1px solid #D1D1D1; padding: 5px;">
+                            <table>
+                                <tr>
+                                  
+                                    <td style="width: 1px;">
+                                        <table>
+                                            <tr style="height: 20px;">
+                                                <td>
+                                                    <RadioButton [IsEnabled]="!IsCounterUsed" [Name]="'CounterTransportRadio'" [IsChecked]="SameForAllPartnersType == true" (Checked)="SameForAllPartnersType = true" [Text]="'Same for all Partners Type'"></RadioButton>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height: 20px;">
+                                                <td>
+                                                    <RadioButton [IsEnabled]="!IsCounterUsed" [Name]="'CounterTransportRadio'" [IsChecked]="SameForAllPartnersType == false" (Checked)="SameForAllPartnersType = false" [Text]="'Different for all Partners Type'"></RadioButton>
+                                                </td>
+                                            </tr>
+                                            
+                                        </table>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="SameForAllPartnersType">
+                        <td>
+                            <div class="MediaFill">
+                                <table *ngIf="IsResourcesReady">                   
+                
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 100px;">
+                                            <LogLabel [ObjectFieldName]="'CounterSize'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                
+                                        <td style="width: 150px;">
+                                            <LogTextBox [ObjectFieldName]="'CounterSize'" [Text]="CounterSize" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        </td>
+                
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'StartNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'StartNumber'" [Text]="StartNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        </td>
+                
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                
+                                   
+                
+                                    <tr style="height: 10px;">
+                                        <td colspan="3">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                
+                                   
+                
+                                    <tr>
+                                        <td colspan="3">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!SameForAllPartnersType">
+                        <td>
+                            <div class="MediaFill" style="border: 1px solid #D1D1D1; padding: 5px; height: 65vh;">
+
+                                <table >
+                                    <tr>
+                                        <td>
+                                            <div class="MediaFill">
+                                                <table>
+                                                   
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <div class="items-grid" style="display: grid; grid-template-columns: repeat(auto-fill, 285px);gap: 10px;">
+                                                                    <div class="item"  style="width: 285px; margin-bottom: 120px;position: relative;"  *ngFor="let item of ItemsSource">
+                                                                      <div class="MediaFill">
+                                                                        <div style="position: absolute; left: 0; top: 0; right: 10px; bottom: 0;">
+                                                                          <table>
+                                                                            <tr style="height: 30px; border: 1px solid #D1D1D1; border-bottom: 0;"
+                                                                                class="CounterItemBackground">
+                                                                              <td class="Value" style="padding-left: 10px;">{{getPartnerName(item.Parameter1)}}</td>
+                                                                            </tr>
+                                                                  
+                                                                            <tr style="height: 80px;">
+                                                                              <td>
+                                                                                <table>
+                                                                                  <tr style="border: 1px solid #D1D1D1;">
+                                                                                    <td>
+                                                                                      <div class="MediaFill">
+                                                                                        <div class="MarginAbsolute5" style="top: 0; bottom: 0;">
+                                                                                          <table>
+                                                                  
+                                                                                            <!-- CounterSize -->
+                                                                                            <tr>
+                                                                                              <td style="width: 100px;">
+                                                                                                <LogLabel [ObjectFieldName]="'CounterSize'" [ObjectTableName]="ObjectTableName" [DataContext]="item"></LogLabel>
+                                                                                              </td>
+                                                                                              <td>
+                                                                                                <LogTextBox [ObjectFieldName]="'CounterSize'" [Text]="item.CounterSize"
+                                                                                                             [ObjectTableName]="ObjectTableName"
+                                                                                                             [DataContext]="item"
+                                                                                                             [HideColumns]="true"></LogTextBox>
+                                                                                              </td>
+                                                                                            </tr>
+                                                                  
+                                                                                            <!-- StartNumber -->
+                                                                                            <tr>
+                                                                                              <td>
+                                                                                                <LogLabel [ObjectFieldName]="'StartNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="item"></LogLabel>
+                                                                                              </td>
+                                                                                              <td>
+                                                                                                <LogTextBox [ObjectFieldName]="'StartNumber'" [Text]="item.StartNumber"
+                                                                                                             [ObjectTableName]="ObjectTableName"
+                                                                                                             [DataContext]="item"
+                                                                                                             [HideColumns]="true"></LogTextBox>
+                                                                                              </td>
+                                                                                            </tr>
+                                                                  
+                                                                                          </table>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </td>
+                                                                                  </tr>
+                                                                  
+                                                                                  <tr style="height: 10px;">
+                                                                                    <td></td>
+                                                                                  </tr>
+                                                                  
+                                                                                </table>
+                                                                              </td>
+                                                                            </tr>
+                                                                  
+                                                                          </table>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                  
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr >
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
