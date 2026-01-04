@@ -6,11 +6,12 @@ import { MainPageComponent } from '../features/main-page/main-page.component';
 import { NgFor, NgForOf } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { SessionInfo } from './Infrastructure/Utilities/SessionInfo';
+import { CookieconsentComponent } from "../shared/components/cookieconsent/cookieconsent.component";
 
 @Component({
 	selector: 'app-root',
 	standalone: true,
-	imports: [NgFor, NgForOf, RouterOutlet, AppHeaderComponent, AppFooterComponent, MainPageComponent, CommonModule],
+	imports: [NgFor, NgForOf, RouterOutlet, AppHeaderComponent, AppFooterComponent, MainPageComponent, CommonModule, CookieconsentComponent],
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.css',
 })

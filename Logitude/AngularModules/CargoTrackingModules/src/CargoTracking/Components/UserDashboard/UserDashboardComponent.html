@@ -84,23 +84,6 @@
     <router-outlet *ngIf="IsBrandingDataLoaded"></router-outlet>
 </div>
 
-<div  class="mobile-cookies" *ngIf="displayCookies" id="cookie-notice" style="position: fixed; bottom: 20px; left: 20px;" [@fade]>
-    <div>
-      
-        <h2 style="color: white !important;text-align: left;">
-            <img style="height: 20px" src="./assets/images/icons/cookie.png" alt="">    Privacy Notice</h2>
-    </div>
-
-    <div style="padding-left: 30px;text-align: left;">
-        <span>This website uses cookies to improve your <br> web experience. By using the site, you <br> agree to the
-            use of cookies.</span>
-        <br>
-        <div style="height: 40px">
-            <button (click)="dismissCookieNotice()" id="dismiss-btn">DISMISS</button>
-        </div>
-    </div>
-
-</div>
 
 
 <!-- <div *ngIf="show"  [ngClass]="['snackbar-warp']">
