@@ -35,6 +35,7 @@ import { CustomsDocumentsTicketPMService } from 'Customs/Services/StandardPMs/Cu
 import { CustomDocumentTypeMetaDataList } from 'Customs/EntityLists/CustomDocumentTypeMetaDataList';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { SIIRequestPM } from 'Customs/EntityPMs/SIIRequestPM';
+import { CustomsDocumentPointerPM } from 'Customs/EntityPMs/CustomsDocumentPointerPM';
 
 @Component({
 
@@ -676,7 +677,7 @@ export class CustomsDocumentsComponent
         }
 
     }
-    originalCustomsDocumentPointers = [];
+    originalCustomsDocumentPointers:CustomsDocumentPointerPM[] = [];
 
     ApplyEditCustomsDocumentTicket(isThereRequests: boolean, customsDocumentsTicket: CustomsDocumentsTicketPM, customsDocument: CustomsDocumentPM) {
         if (this.CurrentSession.CurrentEditComponent) {
@@ -687,7 +688,7 @@ export class CustomsDocumentsComponent
         var windowArgs: any = {};
         if (customsDocumentsTicket) {
             windowArgs.CustomsDocumentsTicket = customsDocumentsTicket;
-
+            this.originalCustomsDocumentPointers = this.originalCustomsDocumentPointers?.filter(p => p.CustomsDocumentsTicketId == customsDocumentsTicket.Id);
             this.originalCustomsDocumentPointers = this.originalCustomsDocumentPointers?.length === 0 ? customsDocumentsTicket?.CustomsDocumentPointers : this.originalCustomsDocumentPointers;
             if (!this.isSaved) {
                 windowArgs.CustomsDocumentsTicket.CustomsDocumentPointers = this.originalCustomsDocumentPointers;

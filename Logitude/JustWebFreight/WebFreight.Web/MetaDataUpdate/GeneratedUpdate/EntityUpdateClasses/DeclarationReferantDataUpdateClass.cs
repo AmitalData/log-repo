@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "50980e7d9eb570f3ae3b3acb9b9dff3a";
+		public const string HashString = "ac00c1eac34d5e2e04ef7992a072caa9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -6664,7 +6664,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  2,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -6680,7 +6680,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.DeclarationReferantData",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -6693,10 +6692,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Origin Country",
 					  						FullLocalDefaultTextBack_up =  "ארץ מוצא",
 					  						FullLocalDefaultText =  "BS64:IteQ16jXpSDXnteV16bXkCI=",
-					  						ListFieldLable =  "OriginCountryCodeListLable",
-					  						ListLableDefaultText =  "OriginCountryCode",
-					  						ListLocalDefaultTextBack_up =  "ארץ מוצא",
-					  						ListLocalDefaultText =  "BS64:IteQ16jXpSDXnteV16bXkCI=",
 					  						IsForeignKey =  false,
 					  						ForeignEntity =  "CustomsCountry",
 					  						NavigationPropertyName =  "OriginCountry",
