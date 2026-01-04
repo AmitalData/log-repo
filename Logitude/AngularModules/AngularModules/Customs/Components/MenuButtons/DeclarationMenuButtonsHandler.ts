@@ -1171,6 +1171,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     private RestoreDeclaration(interfaceTypeCode, message, canResetDeclaration, responseName: string) {
         SessionLocator.SelectedSession.StartBusyIndicator("checking");
 
+        if (!this.EntityPM.DeclarationNumber || this.EntityPM.DeclarationNumber.trim() === "") {
+            this.CheackIsAnyRequest(interfaceTypeCode, message, canResetDeclaration);
+            return;
+        }
+        
         var _DeclarationMessagesService = new DeclarationMessagesService();
         var currRequestParams = new DeclarationRestoreRequestParams();
         currRequestParams.LoggingEnabled = true;
@@ -1976,13 +1981,13 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         if (this.EntityPM.Direction == "E") {
             logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.PaymentsExport");
             logWindow.Height = 400;
-             this.CurrentSession.CurrentEditComponent.ReloadEntityPM()
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM()
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentExportComponent');
         }
         else {
             logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
             logWindow.Height = 700;
-             this.CurrentSession.CurrentEditComponent.ReloadEntityPM()
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM()
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
         }
         logWindow.WindowClosed.subscribe(($event: any) => {
