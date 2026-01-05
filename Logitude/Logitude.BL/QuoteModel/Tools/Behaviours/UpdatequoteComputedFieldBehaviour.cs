@@ -236,6 +236,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 
 		}	
 
+	
 		private void MapEstimatedReceivablesInLocalCurrencyField()
 		{
 			if (quoteEntityPM.QuoteCharges != null)
