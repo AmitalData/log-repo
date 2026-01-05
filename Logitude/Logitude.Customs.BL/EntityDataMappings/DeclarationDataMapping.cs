@@ -417,6 +417,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     entityPM.EntitleImporterCountryName = customsCountry.LocalName;
             }
 
+            if (entityPOCO.StorageStatusCode != null)
+            {
+                StorageStatusQueryService storageStatusQueryService = new StorageStatusQueryService(entityPOCO.Tenant);
+                StorageStatusPM storageStatusPM = storageStatusQueryService.GetSingle(entityPOCO.StorageStatusCode, false, true);
+                if (storageStatusPM != null)
+                    entityPM.StorageStatusName = storageStatusPM.LocalName;
+            }
             if (this.SuppressNewConcurrencyGUID)
             {
                 LogMessagingUtil.Instance.AppendLine("SuppressNewConcurrencyGUID");
