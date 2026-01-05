@@ -30,6 +30,8 @@ using System.Web.Caching;
 using System.Web;
 using System.Net.Mail;
 using System.Collections.Specialized;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace CustomsBook
 {
@@ -251,8 +253,15 @@ namespace CustomsBook
                 try
                 {
                     // Load the XML document
-                    xmlDoc = XDocument.Load(xmlFilePath);
-
+                    try
+                    {
+                        xmlDoc = XDocument.Load(xmlFilePath);
+                    }
+                    catch(Exception ex) 
+                    { 
+                        string cleanXml = CleanXmlForParsing(xmlFilePath);
+                        xmlDoc = XDocument.Parse(cleanXml);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -381,6 +390,50 @@ namespace CustomsBook
                     return null; // Use the same name if no mapping is defined
             }
         }
+
+        static string CleanXmlForParsing(string xmlFilePath)
+        {
+            string xml = "";
+            using (var sr = new StreamReader(xmlFilePath, true))
+            {
+                xml = sr.ReadToEnd();
+        }
+            if (string.IsNullOrEmpty(xml))
+                return xml;
+
+            var sb = new StringBuilder(xml.Length);
+
+            for (int i = 0; i < xml.Length; i++)
+            {
+                char c = xml[i];
+
+                if (char.IsSurrogate(c))
+                {
+                    if (i + 1 < xml.Length && char.IsSurrogatePair(c, xml[i + 1]))
+                    {
+                        sb.Append(c);
+                        sb.Append(xml[i + 1]);
+                        i++;
+                    }
+                    continue;
+                }
+
+                if (c == 0x9 || c == 0xA || c == 0xD || c >= 0x20)
+                {
+                    sb.Append(c);
+                }
+            }
+
+            return Regex.Replace(
+                sb.ToString(),
+                @"&#x([0-1]?[0-9A-Fa-f]);",
+                m =>
+                {
+                    int val = Convert.ToInt32(m.Groups[1].Value, 16);
+                    return (val == 0x9 || val == 0xA || val == 0xD) ? m.Value : "";
+                });
+        }
+
 
         public static void EnsureHttpRuntime()
         {
