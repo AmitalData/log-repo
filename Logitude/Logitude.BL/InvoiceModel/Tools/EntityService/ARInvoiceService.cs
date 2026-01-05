@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mocks;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -62,6 +64,7 @@ using AccountingEntityValues = Logitude.BL.InvoiceModel.CloseTables.AccountingEn
 using Logitude.Server.Tools.QueueService;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.Exceptions;
+
 
 
 
@@ -5230,8 +5233,19 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                     ChildReference = reference,
                     
                 };
+
                 DocumentHelper documentHelper = new DocumentHelper();
                 DocumentOutPM documentOutPM = documentHelper.PutCreateDocumentOut(documentOutArgs, userId);
+                DocumentTypePM documentTypePM = documentTypeQuery.GetSinglePM(documentTypeId, tenant);
+                IExportDocumentHelper exportDocumentHelper = ContainerAccessor.Container.Resolve(typeof(IExportDocumentHelper), "ExportDocumentHelper", new ParameterOverride("", 1)) as IExportDocumentHelper;
+
+                documentTypePM.DocumentTypeCopies.ForEach(doc =>
+                {
+                     exportDocumentHelper.ExportDocument2Pdf(documentTypeId, id, objectTable?.Id, null, null, documentOutPM.Id, tenant, doc.Id, userId);
+                });
+
+
+
             }
             catch (Exception ex)
             {
