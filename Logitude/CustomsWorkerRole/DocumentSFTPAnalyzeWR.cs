@@ -98,108 +98,120 @@ namespace CommunicationWorkerRole
 			AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueueBySubject("DocumentSFTP");
 			if (analyzeQueue != null)
 			{
-				analyzeQueue.Status = "I";
-				analyzeQueueRepository.Update(analyzeQueue);
-				analyzeQueueRepository.SubmitChanges();
-
-				string communicationLogId = analyzeQueue.CommunicationLogId;
-			string logs = string.Empty;
-			Response response = new Response();
-			Stopwatch stopwatch = new Stopwatch();
-			stopwatch.Start();
-				int tenant = 0;
-			try
-			{
-				#region  get data from queue           
-				tenant = analyzeQueue.Tenant;
-				#endregion
-
-				communicationLogId = communicationLogId ?? DocumentApiExecutionService.AddCommunicationLog(analyzeQueue, tenant);
-
-				byte[] filedataByte = analyzeQueue.MessageBody;
-
-				if (DocumentAzureQueueWR.CheckIsDocumentPDF(filedataByte))
+                var tenantDB  = SettingUtil.GetTenantDBFromConfig(0);
+				if(tenantDB != 0 && tenantDB != analyzeQueue.Tenant)
+				{
+					return;
+				}
+				string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(analyzeQueue.Id, analyzeQueue.Tenant);
+				using (var disposableToken =
+					 ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(analyzeQueue.Tenant, true, key, "DocumentSFTP", true)
+					)
 				{
 
-					#region Filing the document in the filing system by CreateNewFiling
-					Dictionary<string, string> outParams = new Dictionary<string, string>();
-					outParams.Add("COM_ID", string.Empty);
+					analyzeQueue.Status = "I";
+					analyzeQueueRepository.Update(analyzeQueue);
+					analyzeQueueRepository.SubmitChanges();
 
-					bool fatal_error = false;
-					string message = string.Empty;
-
-					Dictionary<string, string> inParams = new Dictionary<string, string>();
-					inParams.Add("REMARKS", "document from api");
-					inParams.Add("base64data", "true");
-
-					string filedata = Convert.ToBase64String(filedataByte);
-					if (CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight)
+					string communicationLogId = analyzeQueue.CommunicationLogId;
+					string logs = string.Empty;
+					Response response = new Response();
+					Stopwatch stopwatch = new Stopwatch();
+					stopwatch.Start();
+					int tenant = 0;
+					try
 					{
-						logs += "before CreateNewFiling " + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-						UnifreightFillingService.CreateNewFiling(inParams, filedata, tenant, out outParams, out fatal_error, out message, isFromCloud: true);
-						logs += "after CreateNewFiling  fatal_error: " + fatal_error.ToString() + " message: " + message + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-					}
-					else
-					{
-						var guid = Guid.NewGuid();
-						var base64string = Convert.ToBase64String(guid.ToByteArray()).ToLower();
-						base64string = base64string.Substring(0, 22);
-						base64string = base64string.Replace("/", "_");
-						base64string = base64string.Replace("+", "-");
-						outParams["COM_ID"] = base64string;
-					}
-					#endregion
-					if (!fatal_error)
-					{
-						#region Save document and metadata
-						logs += "before SaveDocument" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-						response = SaveDocument(outParams["COM_ID"], filedataByte,tenant, analyzeQueue);
-						logs += "after SaveDocument HasError: " + response?.HasError + "ErrorMessage: " + response.ErrorMessage + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+						#region  get data from queue           
+						tenant = analyzeQueue.Tenant;
 						#endregion
-						if (!response.HasError)
-						{						
-							DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "D");
-							UpdateStatusAnalyzeQueue(analyzeQueue, "D", communicationLogId);
+
+						communicationLogId = communicationLogId ?? DocumentApiExecutionService.AddCommunicationLog(analyzeQueue, tenant);
+
+						byte[] filedataByte = analyzeQueue.MessageBody;
+
+						if (DocumentAzureQueueWR.CheckIsDocumentPDF(filedataByte))
+						{
+
+							#region Filing the document in the filing system by CreateNewFiling
+							Dictionary<string, string> outParams = new Dictionary<string, string>();
+							outParams.Add("COM_ID", string.Empty);
+
+							bool fatal_error = false;
+							string message = string.Empty;
+
+							Dictionary<string, string> inParams = new Dictionary<string, string>();
+							inParams.Add("REMARKS", "document from api");
+							inParams.Add("base64data", "true");
+
+							string filedata = Convert.ToBase64String(filedataByte);
+							if (CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight)
+							{
+								logs += "before CreateNewFiling " + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+								UnifreightFillingService.CreateNewFiling(inParams, filedata, tenant, out outParams, out fatal_error, out message, isFromCloud: true);
+								logs += "after CreateNewFiling  fatal_error: " + fatal_error.ToString() + " message: " + message + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+							}
+							else
+							{
+								var guid = Guid.NewGuid();
+								var base64string = Convert.ToBase64String(guid.ToByteArray()).ToLower();
+								base64string = base64string.Substring(0, 22);
+								base64string = base64string.Replace("/", "_");
+								base64string = base64string.Replace("+", "-");
+								outParams["COM_ID"] = base64string;
+							}
+							#endregion
+							if (!fatal_error)
+							{
+								#region Save document and metadata
+								logs += "before SaveDocument" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+								response = SaveDocument(outParams["COM_ID"], filedataByte, tenant, analyzeQueue);
+								logs += "after SaveDocument HasError: " + response?.HasError + "ErrorMessage: " + response.ErrorMessage + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+								#endregion
+								if (!response.HasError)
+								{
+									DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "D");
+									UpdateStatusAnalyzeQueue(analyzeQueue, "D", communicationLogId);
+								}
+								else
+								{
+									UpdateStatusAnalyzeQueue(analyzeQueue, "F", communicationLogId);
+									logs += " dont success SaveDocument";
+									DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
+								}
+							}
+							else
+							{
+								UpdateStatusAnalyzeQueue(analyzeQueue, "F", communicationLogId);
+								logs += " dont success CreateNewFiling";
+								DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
+							}
 						}
 						else
 						{
 							UpdateStatusAnalyzeQueue(analyzeQueue, "F", communicationLogId);
-							logs += " dont success SaveDocument";
+							logs += "dont success document from  DownloadFile is not pdf type";
 							DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
 						}
 					}
-					else
+					catch (Exception e)
 					{
 						UpdateStatusAnalyzeQueue(analyzeQueue, "F", communicationLogId);
-						logs += " dont success CreateNewFiling";
-						DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
+						if (!string.IsNullOrEmpty(communicationLogId))
+						{
+							logs += "exption" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+							Communications.UpdateCommunicationLogStatus(communicationLogId, tenant, null, "F", logs, e);
+						}
+					}
+					finally
+					{
+
+						analyzeQueueRepository.Update(analyzeQueue);
+						analyzeQueueRepository.SubmitChanges();
+						stopwatch.Stop();
 					}
 				}
-				else
-				{
-					UpdateStatusAnalyzeQueue(analyzeQueue, "F", communicationLogId);
-					logs += "dont success document from  DownloadFile is not pdf type";
-					DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
 				}
 			}
-			catch (Exception e)
-			{
-				UpdateStatusAnalyzeQueue(analyzeQueue, "F", communicationLogId);              
-				if (!string.IsNullOrEmpty(communicationLogId))
-				{
-					logs += "exption" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-					Communications.UpdateCommunicationLogStatus(communicationLogId, tenant, null, "F", logs, e);
-				}
-			}
-			finally
-			{
-
-				analyzeQueueRepository.Update(analyzeQueue);
-				analyzeQueueRepository.SubmitChanges();
-				stopwatch.Stop();
-			}
-			}
-		}
 		private void UpdateStatusAnalyzeQueue(AnalyzeQueue analyzeQueue, string status,string communicationLogId)
 		{
 			analyzeQueue.Retries++;
