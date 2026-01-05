@@ -82,8 +82,8 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     public DataContext: any = this;
     public DeclarationPM: DeclarationPM;
     public paymentPM: DeclarationPaymentPM;
-    public SupplierInvoiceListPM: SupplierInvoicePM [];
-    public SupplierInvoicePM: SupplierInvoicePM;   
+    public SupplierInvoiceListPM: SupplierInvoicePM[];
+    public SupplierInvoicePM: SupplierInvoicePM;
     public ObjectTableName: string = "Customs.DeclarationPayment"; //Customs.Declaration";
     ValidationErrorsList: any[] = [];
 
@@ -115,8 +115,8 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     ClientBankListLogUntilDateyyyyMMdd = "20180820.ClientBankListLogUntilDateyyyyMMdd";
     _CourierWorksheet: DeclarationCourierStatusList;
     _TestCase: TestCase;
-    sumInvoiceAmount:number;
-    _SupplierInvoicePMService:SupplierInvoicePMService = new SupplierInvoicePMService();
+    sumInvoiceAmount: number;
+    _SupplierInvoicePMService: SupplierInvoicePMService = new SupplierInvoicePMService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public declarationExtendedListService: DeclarationExtendedListService) {
         super();
@@ -471,7 +471,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
     }
 
-    
+
 
     FillSignData() {
 
@@ -940,25 +940,15 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             }
 
             else if (declarationDisplayOnly2) {
-
-                // if(displayOnlyCheckResult.DisplayOnlyMessage=="םילוץ םושר")
-                // {
-                //     this.IsDisplayOnly = false;
-                //     this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
-
-                //     this.IsDisplayOnly = false;
-                //     this.OkButtonEnabled = true;
-                //     this.SendButtonEnabled = true;
-                // }
-
-                // else{
                 this.IsDisplayOnly = true;
-                this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+
+                const prefix = "לתצוגה בלבד - ";
+                const msg = (displayOnlyCheckResult.DisplayOnlyMessage || "").trim();
+                this.ErrorMessage = msg.startsWith(prefix) ? msg : (prefix + msg);
 
                 this.IsDisplayOnly = true;
                 this.OkButtonEnabled = false;
                 this.SendButtonEnabled = false;
-                // }
 
             }
             else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
@@ -1055,7 +1045,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             return true;
         }
     }
-    
+
     StopMyBusyIndicator() {
 
         this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
@@ -1064,55 +1054,54 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
 
     OkButtonClicked() {
-        if(this.DeclarationPM.IsSubmitDeclaration !=true)
-        {
+        if (this.DeclarationPM.IsSubmitDeclaration != true) {
 
             this.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();
         }
-            /*this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
-                let obj = response.Result;
-               if (obj) {
-                   let timeCompany = obj['DefaultValue'];
-                    timeCompany = "12:00 - 13:00";
-                    this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
-                        let obj = response.Result;
-                        if (obj) {
-                            let timeCustomer = obj['DefaultValue'];
-                            //   timeCustomer = "20:00 - 22:00";
-                            if (AppTool.IsNullOrEmpty(timeCompany) && AppTool.IsNullOrEmpty(timeCustomer)) {
-                                isBlockTime = false;
-                            }
-                            else {
-                                        if (!AppTool.IsNullOrEmpty(timeCompany)) {
+        /*this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+            let obj = response.Result;
+           if (obj) {
+               let timeCompany = obj['DefaultValue'];
+                timeCompany = "12:00 - 13:00";
+                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                    let obj = response.Result;
+                    if (obj) {
+                        let timeCustomer = obj['DefaultValue'];
+                        //   timeCustomer = "20:00 - 22:00";
+                        if (AppTool.IsNullOrEmpty(timeCompany) && AppTool.IsNullOrEmpty(timeCustomer)) {
+                            isBlockTime = false;
+                        }
+                        else {
+                                    if (!AppTool.IsNullOrEmpty(timeCompany)) {
 
-                                            if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
-                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
-                                                isBlockTime = true;
-                                            }
+                                        if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
+                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                            isBlockTime = true;
                                         }
-                                        if (!AppTool.IsNullOrEmpty(timeCustomer)) {
+                                    }
+                                    if (!AppTool.IsNullOrEmpty(timeCustomer)) {
 
-                                            if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
-                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
-                                                isBlockTime = true;
-                                            }
+                                        if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
+                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                            isBlockTime = true;
                                         }
-                            }
-
-                            if (!isBlockTime) {
-                                this.ValidationErrorsList = [];
-                                this.ActivateUnifreightInstructionOK();
-                            }
-
+                                    }
                         }
 
-                    });
-                }
-            });*/
-            
-            this.ValidationErrorsList = [];
-            this.ActivateUnifreightInstructionOK();
-        
+                        if (!isBlockTime) {
+                            this.ValidationErrorsList = [];
+                            this.ActivateUnifreightInstructionOK();
+                        }
+
+                    }
+
+                });
+            }
+        });*/
+
+        this.ValidationErrorsList = [];
+        this.ActivateUnifreightInstructionOK();
+
 
     }
 
@@ -1226,11 +1215,10 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     // Before send
 
     SendButtonClicked(event) {
-        if(this.DeclarationPM.IsSubmitDeclaration !=true)
-        {
+        if (this.DeclarationPM.IsSubmitDeclaration != true) {
             this.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();
         }
-        
+
         if (event.TestCase) {
 
             let windowArgs = { "SincroScreen": "SincroSendDeclarationPayment" };
@@ -1273,13 +1261,13 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             return;
         }
 
-        event = await RequestConflictService.runInBackground(event, this.DeclarationPM.Tenant , this.DeclarationPM.CustomFileNo, interfaceTypeCodes.declarationStatus, interfaceTypeCodes.exportStorage);
+        event = await RequestConflictService.runInBackground(event, this.DeclarationPM.Tenant, this.DeclarationPM.CustomFileNo, interfaceTypeCodes.declarationStatus, interfaceTypeCodes.exportStorage);
         this.customSendOptions = event;
         this.Option = event.Option;
 
         if (this.ValidationErrorsList.length > 0) return;
 
-        
+
 
         var isBlockTime = false;
 
@@ -1665,8 +1653,8 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         if (this.DeclarationPM.DeclarationTypeCode == "2") {
             this.declarationMessagesService.PostSendExportPaymentOnly(params)
                 .subscribe(res1 => {
-                    if(!res1?.Result?.HasException){
-                      this.InspectionRequest();
+                    if (!res1?.Result?.HasException) {
+                        this.InspectionRequest();
                     }
                 });
         } else if (this.DeclarationPM.DeclarationTypeCode == "3")
@@ -1681,20 +1669,20 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
     }
     InspectionRequest() {
-       
-      
+
+
         var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
 
         var IsAutoInsuranceExportSubmitFeature = FeatureLocator.Features.filter(f => (f.Code == "IsAutoInsuranceExportSubmit") && f.ObjectTableId == table.Id)[0];
-        
+
         if (AppTool.IsNullOrEmpty(IsAutoInsuranceExportSubmitFeature)) return;
 
         if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) return;
         var msg = new MessageWindow();
         msg.RTL = true;
-        if(this.DeclarationPM.SupplierInvoices.find(x=>x.InvoiceCurrencyTypeCode!=this.DeclarationPM.SupplierInvoices[0].InvoiceCurrencyTypeCode||x.IncotermCode!=this.DeclarationPM.SupplierInvoices[0].IncotermCode)) {
-           msg.Show(TextCodeTranslator.Translate("Customs.Declaration.O.NotCarriedInsurance"));
-           return;
+        if (this.DeclarationPM.SupplierInvoices.find(x => x.InvoiceCurrencyTypeCode != this.DeclarationPM.SupplierInvoices[0].InvoiceCurrencyTypeCode || x.IncotermCode != this.DeclarationPM.SupplierInvoices[0].IncotermCode)) {
+            msg.Show(TextCodeTranslator.Translate("Customs.Declaration.O.NotCarriedInsurance"));
+            return;
         }
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
@@ -1707,7 +1695,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                 (mess: UnifreightMessageM) => {
                     var IsMatchUnifreightCallbackCommand = (
                         mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
-                        mess.LogitudeEntityNumber ==  this.SupplierInvoicePM.DeclarationId &&
+                        mess.LogitudeEntityNumber == this.SupplierInvoicePM.DeclarationId &&
                         mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-ApprovalToInsurance");
                     if (IsMatchUnifreightCallbackCommand) {
                         sub.unsubscribe();
@@ -1742,103 +1730,102 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     }
     ActivateInsurance(ApprovalToInsure) {
 
-        if (ApprovalToInsure == "Yes") 
-        {
+        if (ApprovalToInsure == "Yes") {
             SessionLocator.SelectedSession.StartBusyIndicatorSaving();
             var msg = new MessageWindow();
             msg.RTL = true;
-         
-    
+
+
             let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
-            .subscribe(
-                (mess: UnifreightMessageM) => {
+                .subscribe(
+                    (mess: UnifreightMessageM) => {
 
-                    var IsMatchUnifreightCallbackCommand = (
-                        mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
-                        mess.LogitudeEntityNumber == this.SupplierInvoicePM.DeclarationId &&
-                        mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-ActivateInsurance");
-                    if (IsMatchUnifreightCallbackCommand) {
-                        sub.unsubscribe();
+                        var IsMatchUnifreightCallbackCommand = (
+                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            mess.LogitudeEntityNumber == this.SupplierInvoicePM.DeclarationId &&
+                            mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-ActivateInsurance");
+                        if (IsMatchUnifreightCallbackCommand) {
+                            sub.unsubscribe();
 
-                        let InsuranceAmount = ""; InsuranceAmount = UnifreightMessageM.GetStringValue(mess, "InsuranceAmount");
-                        let InsuranceCurrency = ""; InsuranceCurrency = UnifreightMessageM.GetStringValue(mess, "InsuranceCurrency");
-                        let InvoiceNumber = ""; InvoiceNumber = UnifreightMessageM.GetStringValue(mess, "InvoiceNumber");
+                            let InsuranceAmount = ""; InsuranceAmount = UnifreightMessageM.GetStringValue(mess, "InsuranceAmount");
+                            let InsuranceCurrency = ""; InsuranceCurrency = UnifreightMessageM.GetStringValue(mess, "InsuranceCurrency");
+                            let InvoiceNumber = ""; InvoiceNumber = UnifreightMessageM.GetStringValue(mess, "InvoiceNumber");
 
-                       
-                        if (!AppTool.IsNullOrEmpty(InsuranceAmount) && !AppTool.IsNullOrEmpty(InsuranceCurrency)) {
-                            var Insurance67 = this.SupplierInvoicePM.SupplierInvoiceModifications.find(x => x.TypeCode == "67");
-                            if(Insurance67){
-                              Insurance67.CurrencyTypeCode = InsuranceCurrency;
-                              Insurance67.Amount = Number(InsuranceAmount);
-                              Insurance67.ChangeSetOp = "Update";
-                            }
-                            else{
-                                var modificationCounter = 0;
-                                if (this.SupplierInvoicePM.SupplierInvoiceModifications.length > 0) {
-                                    modificationCounter = this.getMax(this.SupplierInvoicePM.SupplierInvoiceModifications, "SequenceNumeric");
+
+                            if (!AppTool.IsNullOrEmpty(InsuranceAmount) && !AppTool.IsNullOrEmpty(InsuranceCurrency)) {
+                                var Insurance67 = this.SupplierInvoicePM.SupplierInvoiceModifications.find(x => x.TypeCode == "67");
+                                if (Insurance67) {
+                                    Insurance67.CurrencyTypeCode = InsuranceCurrency;
+                                    Insurance67.Amount = Number(InsuranceAmount);
+                                    Insurance67.ChangeSetOp = "Update";
                                 }
-                                var item = new SupplierInvoiceModificationPM(this.SupplierInvoiceListPM[0] );
-                                item.TypeName = "ביטוח";
-                                item.TypeCode = "67";
-                                item.DeclarationId = this.SupplierInvoicePM.DeclarationId;
-                                item.InvoiceCounterKey = this.SupplierInvoicePM.InvoiceCounterKey;
-                                item.Tenant = SessionLocator.Tenant;
-                                item.ModificationCounterKey = modificationCounter;
-                                item.IsDirty = false;
-                                item.CurrencyTypeCode = InsuranceCurrency;
-                                item.Amount = Number(InsuranceAmount);
-                                item.ChangeSetOp = "Insert";
-                                this.SupplierInvoicePM.AddSupplierInvoiceModification(item);
+                                else {
+                                    var modificationCounter = 0;
+                                    if (this.SupplierInvoicePM.SupplierInvoiceModifications.length > 0) {
+                                        modificationCounter = this.getMax(this.SupplierInvoicePM.SupplierInvoiceModifications, "SequenceNumeric");
+                                    }
+                                    var item = new SupplierInvoiceModificationPM(this.SupplierInvoiceListPM[0]);
+                                    item.TypeName = "ביטוח";
+                                    item.TypeCode = "67";
+                                    item.DeclarationId = this.SupplierInvoicePM.DeclarationId;
+                                    item.InvoiceCounterKey = this.SupplierInvoicePM.InvoiceCounterKey;
+                                    item.Tenant = SessionLocator.Tenant;
+                                    item.ModificationCounterKey = modificationCounter;
+                                    item.IsDirty = false;
+                                    item.CurrencyTypeCode = InsuranceCurrency;
+                                    item.Amount = Number(InsuranceAmount);
+                                    item.ChangeSetOp = "Insert";
+                                    this.SupplierInvoicePM.AddSupplierInvoiceModification(item);
+                                }
+                                this._SupplierInvoicePMService.update(this.SupplierInvoicePM).subscribe((response: ServiceResponse) => {
+                                    SessionLocator.SelectedSession.StopBusyIndicator();
+
+                                });
+
+
+
                             }
-                             this._SupplierInvoicePMService.update(this.SupplierInvoicePM).subscribe((response: ServiceResponse) => {
+                            else if (!AppTool.IsNullOrEmpty(InvoiceNumber)) {
                                 SessionLocator.SelectedSession.StopBusyIndicator();
 
-                             });    
+                                var InsuranceOpenNum = TextCodeTranslator.Translate("Customs.Declaration.O.InsuranceOpenNum");
+                                var CompletedUnifreight = TextCodeTranslator.Translate("Customs.Declaration.O.CompletedUnifreight");
+                                msg.Show(InsuranceOpenNum + `' ` + InvoiceNumber + `, ` + CompletedUnifreight);
+                            }
+                            else {
+                                SessionLocator.SelectedSession.StopBusyIndicator();
 
+                                var OpenInsuranceFailed = TextCodeTranslator.Translate("Customs.Declaration.O.OpenInsuranceFailed");
+                                msg.Show(OpenInsuranceFailed);
 
-                           
-                        }
-                        else if (!AppTool.IsNullOrEmpty(InvoiceNumber)) {
-                            SessionLocator.SelectedSession.StopBusyIndicator();
-
-                            var InsuranceOpenNum = TextCodeTranslator.Translate("Customs.Declaration.O.InsuranceOpenNum");
-                            var CompletedUnifreight = TextCodeTranslator.Translate("Customs.Declaration.O.CompletedUnifreight");
-                            msg.Show(InsuranceOpenNum + `' ` + InvoiceNumber + `, ` + CompletedUnifreight);
-                        }
-                        else {
-                            SessionLocator.SelectedSession.StopBusyIndicator();
-
-                            var OpenInsuranceFailed = TextCodeTranslator.Translate("Customs.Declaration.O.OpenInsuranceFailed");
-                            msg.Show(OpenInsuranceFailed);
-
+                            }
                         }
                     }
-                }
-            );
+                );
 
 
-        var unifreightMessageM =
-            AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(this.DeclarationPM.CustomFileNo, this.SupplierInvoicePM.DeclarationId, "SupplierInvoiceGeneralTabComponent.ts-ActivateInsurance", "BFIFILE");
-        unifreightMessageM.Requset.push(["AmountToInsure", this.sumInvoiceAmount.toString()]);
-        unifreightMessageM.Requset.push(["Currency", this.SupplierInvoicePM.InvoiceCurrencyTypeCode]);
-        unifreightMessageM.Requset.push(["Incoterms", this.SupplierInvoicePM.IncotermCode]);
-        unifreightMessageM.Requset.push(["CustomerUNF", ""]);
-        unifreightMessageM.Requset.push(["DefineToInsure", "Yes"]);
-        unifreightMessageM.Requset.push(["ApprovalToInsure", "Yes"]);
-        unifreightMessageM.Requset.push(["InsuranceAmount", ""]);
-        unifreightMessageM.Requset.push(["InsuranceCurrency", ""]);
+            var unifreightMessageM =
+                AmitalGatewayUtil.Instance.
+                    DeclarationMessaging.GetMessage(this.DeclarationPM.CustomFileNo, this.SupplierInvoicePM.DeclarationId, "SupplierInvoiceGeneralTabComponent.ts-ActivateInsurance", "BFIFILE");
+            unifreightMessageM.Requset.push(["AmountToInsure", this.sumInvoiceAmount.toString()]);
+            unifreightMessageM.Requset.push(["Currency", this.SupplierInvoicePM.InvoiceCurrencyTypeCode]);
+            unifreightMessageM.Requset.push(["Incoterms", this.SupplierInvoicePM.IncotermCode]);
+            unifreightMessageM.Requset.push(["CustomerUNF", ""]);
+            unifreightMessageM.Requset.push(["DefineToInsure", "Yes"]);
+            unifreightMessageM.Requset.push(["ApprovalToInsure", "Yes"]);
+            unifreightMessageM.Requset.push(["InsuranceAmount", ""]);
+            unifreightMessageM.Requset.push(["InsuranceCurrency", ""]);
 
-        var OpeningInsuranceCase = TextCodeTranslator.Translate("Customs.Declaration.O.OpeningInsuranceCase");
-        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-            "AmitalGatewayUtil.CustomExportActivateInsurance",
-            "BFIHMAIN.LogitudeTask",
-            "CustomExportActivateInsurance",
-            unifreightMessageM,
-            OpeningInsuranceCase);
+            var OpeningInsuranceCase = TextCodeTranslator.Translate("Customs.Declaration.O.OpeningInsuranceCase");
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "AmitalGatewayUtil.CustomExportActivateInsurance",
+                "BFIHMAIN.LogitudeTask",
+                "CustomExportActivateInsurance",
+                unifreightMessageM,
+                OpeningInsuranceCase);
 
-          }
-        
+        }
+
     }
     getMax(list: any[], propertyName: string) {
         var max = -99999;
@@ -1848,7 +1835,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                 max = maxObj[propertyName];
         return max;
     }
-  
+
     InstructionActualSendToTransfer() {
         let myUnifreightInstructionController = new UnifreightInstructionController(this.DeclarationPM, "COLLECT_TRANSFER");
         myUnifreightInstructionController
@@ -2183,11 +2170,11 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
     initDates() {
         //Task 36380: Update Payment Date & Time when Entering Payment screen
-            var paymentDate: Date = DateTool.GetDateFromDate(this.PaymentDate);
-            if(AppTool.IsNullOrEmpty(paymentDate))
-                this.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();
-            else
-                this.PaymentDate = paymentDate
+        var paymentDate: Date = DateTool.GetDateFromDate(this.PaymentDate);
+        if (AppTool.IsNullOrEmpty(paymentDate))
+            this.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();
+        else
+            this.PaymentDate = paymentDate
     }
 
 

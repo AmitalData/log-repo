@@ -2791,6 +2791,178 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+        [HttpGet]
+        public HttpResponseMessage GetAmendmentMessage(string declarationId)
+        {
+            try
+            {
+                var token = HttpContext.Current.Request.Headers["Token"];
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                var tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                var declarationQuery = new DeclarationQueryService(tenant);
+                var current = declarationQuery.GetSingle(declarationId,false,false);
+
+                var res = new AmendmentMessageResponse();
+
+                if (current == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, res);
+                }
+
+                string tIsAmendment = null;
+                string tExistsAmendments = null;
+                string tExistsClosingAmendments = null;
+                string tClosingProcessStatus = null;
+
+                Func<string> TIsAmendment = () =>
+                {
+                    if (tIsAmendment == null)
+                        tIsAmendment = TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", tenant, true);
+                    return tIsAmendment;
+                };
+
+                Func<string> TExistsAmendments = () =>
+                {
+                    if (tExistsAmendments == null)
+                        tExistsAmendments = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", tenant, true);
+                    return tExistsAmendments;
+                };
+
+                Func<string> TExistsClosingAmendments = () =>
+                {
+                    if (tExistsClosingAmendments == null)
+                        tExistsClosingAmendments = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsClosingAmendments", tenant, true);
+                    return tExistsClosingAmendments;
+                };
+
+                Func<string> TClosingProcessStatus = () =>
+                {
+                    if (tClosingProcessStatus == null)
+                        tClosingProcessStatus = TranslateTextsClass.Translate("Customs.General.O.ClosingProcessStatus", tenant, true);
+                    return tClosingProcessStatus;
+                };
+
+                if (current.IsAmendment == true && current.AmendmentStatus != "2" && current.AmendmentStatus != null)
+                {
+                    if (current.AmedmentType == "2")
+                    {
+                        res.AmendmentMessage = "לתצוגה בלבד - " + TIsAmendment() + " מסוג סגירה " + current.AmendmentStatusName;
+                    }
+                    else
+                    {
+                        res.AmendmentMessage = "לתצוגה בלבד - " + TIsAmendment() + " " + current.AmendmentStatusName;
+                    }
+                    res.IsAmendmentDisplayOnly = true;
+                }
+                else if (current.IsAmendment == true && current.AmendmentStatus == "2")
+                {
+                    if (current.AmedmentType == "2")
+                    {
+                        res.AmendmentMessage = TIsAmendment() + " מסוג סגירה " + current.AmendmentStatusName;
+                    }
+                    else
+                    {
+                        res.AmendmentMessage = TIsAmendment() + " " + current.AmendmentStatusName;
+                    }
+                }
+                else if (current.IsAmendment != true)
+                {
+                    var declarations = declarationQuery.GetAllDeclarationPOCOs(tenant, current.CustomFileNo, current.Direction)
+                                       ?? new List<DeclarationList>();
+
+                    DeclarationList declaration = null;
+
+                    foreach (var x in declarations)
+                    {
+                        if (x == null) continue;
+                        if (x.Id == current.Id) continue;
+
+                        if (x.AmendmentStatus == "1" || x.AmendmentStatus == "3" || x.AmendmentStatus == "6")
+                        {
+                            declaration = x;
+                            break;
+                        }
+                    }
+
+                    if (declaration != null)
+                    {
+                        if (declaration.AmedmentType == "2")
+                        {
+                            res.AmendmentMessage = TExistsClosingAmendments() + " " + declaration.AmendmentStatusName;
+                        }
+                        else
+                        {
+                            res.AmendmentMessage = TExistsAmendments() + " " + declaration.AmendmentStatusName;
+                        }
+                        res.IsAmendmentDisplayOnly = true;
+                    }
+                    else
+                    {
+                        foreach (var x in declarations)
+                        {
+                            if (x == null) continue;
+                            if (x.Id == current.Id) continue;
+
+                            if (x.AmendmentStatus == "2" || x.AmendmentStatus == "4")
+                            {
+                                declaration = x;
+                                break;
+                            }
+                        }
+
+                        if (declaration != null)
+                        {
+                            bool isShowTheMessage = true;
+
+                            if (current.DeclarationNumber != null &&
+                                declaration.AmendmentStatus == "4" &&
+                                ((current.Direction != "E" && current.PaymentDate == null) ||
+                                 (current.Direction == "E" && current.IsSubmitDeclaration == false)))
+                            {
+                                isShowTheMessage = false;
+                            }
+
+                            if (isShowTheMessage)
+                            {
+                                if (declaration.AmedmentType == "2")
+                                {
+                                    res.AmendmentMessage = TExistsClosingAmendments() + " " + declaration.AmendmentStatusName;
+                                }
+                                else
+                                {
+                                    res.AmendmentMessage = TExistsAmendments() + " " + declaration.AmendmentStatusName;
+                                }
+                                res.IsAmendmentDisplayOnly = true;
+                            }
+                        }
+                    }
+                }
+
+                if (current.ExportCloseAmendmentStatus == "6" ||
+                    current.ExportCloseAmendmentStatus == "7" ||
+                    current.ExportCloseAmendmentStatus == "8" ||
+                    current.ExportCloseAmendmentStatus == "10" ||
+                    current.ExportCloseAmendmentStatus == "11")
+                {
+                    if (!string.IsNullOrEmpty(res.AmendmentMessage))
+                        res.AmendmentMessage += ", ";
+
+                    res.AmendmentMessage += TClosingProcessStatus() + " " + current.ExportCloseAmendStatusName;
+                    res.IsAmendmentDisplayOnly = true;
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, res);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
     }
 
     internal class CustomsPartnersItemCRList
@@ -2831,5 +3003,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         public IEnumerable<string> SelectedIds { get; set; }
         public bool IsAllSelected { get; set; }
         public object QueryOperations { get; set; }
+    }
+    public class AmendmentMessageResponse
+    {
+        public string AmendmentMessage { get; set; }
+        public bool IsAmendmentDisplayOnly { get; set; }
     }
 }
