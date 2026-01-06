@@ -42,6 +42,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Transactions;
 using WebFreight.Web.WebServices;
+using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 
 
 namespace Logitude.Accounting.BL.InterestService
@@ -200,15 +201,19 @@ namespace Logitude.Accounting.BL.InterestService
 
                 };
 
-                DocumentHelper documentHelper = new DocumentHelper();
-                DocumentOutPM documentOutPM = documentHelper.PutCreateDocumentOut(documentOutArgs, interestReport.CreatedByUserId);
-                DocumentTypePM documentTypePM = documentTypeQuery.GetSinglePM(documentTypeId, tenant);
-                IExportDocumentHelper exportDocumentHelper = ContainerAccessor.Container.Resolve(typeof(IExportDocumentHelper), "ExportDocumentHelper", new ParameterOverride("", 1)) as IExportDocumentHelper;
+                DocumentHelper documentHelper = new DocumentHelper();                
+                var result = documentHelper.PutCreateDocumentOut(documentOutArgs, interestReport.CreatedByUserId);
+                DocumentOutPM documentOutPM = result.document;
+                if (!result.isSign) {
+                    DocumentTypePM documentTypePM = documentTypeQuery.GetSinglePM(documentTypeId, tenant);
+                    IExportDocumentHelper exportDocumentHelper = ContainerAccessor.Container.Resolve(typeof(IExportDocumentHelper), "ExportDocumentHelper", new ParameterOverride("", 1)) as IExportDocumentHelper;
 
-                documentTypePM.DocumentTypeCopies.ForEach(doc =>
-                {
-                    exportDocumentHelper.ExportDocument2Pdf(documentTypeId, entityId, objectTable?.Id, null, null, documentOutPM.Id, tenant, doc.Id, interestReport.CreatedByUserId);
-                });
+                    documentTypePM.DocumentTypeCopies.ForEach(doc =>
+                    {
+                        exportDocumentHelper.ExportDocument2Pdf(documentTypeId, entityId, objectTable?.Id, null, null, documentOutPM.Id, tenant, doc.Id, interestReport.CreatedByUserId);
+                    });
+                }
+                
                 return true;
 
 

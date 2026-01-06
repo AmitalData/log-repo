@@ -5235,14 +5235,19 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                 };
 
                 DocumentHelper documentHelper = new DocumentHelper();
-                DocumentOutPM documentOutPM = documentHelper.PutCreateDocumentOut(documentOutArgs, userId);
-                DocumentTypePM documentTypePM = documentTypeQuery.GetSinglePM(documentTypeId, tenant);
-                IExportDocumentHelper exportDocumentHelper = ContainerAccessor.Container.Resolve(typeof(IExportDocumentHelper), "ExportDocumentHelper", new ParameterOverride("", 1)) as IExportDocumentHelper;
-
-                documentTypePM.DocumentTypeCopies.ForEach(doc =>
+                 
+                var result = documentHelper.PutCreateDocumentOut(documentOutArgs, userId);
+                DocumentOutPM documentOutPM = result.document;
+                if (!result.isSign)
                 {
-                     exportDocumentHelper.ExportDocument2Pdf(documentTypeId, id, objectTable?.Id, null, null, documentOutPM.Id, tenant, doc.Id, userId);
-                });
+                    DocumentTypePM documentTypePM = documentTypeQuery.GetSinglePM(documentTypeId, tenant);
+                    IExportDocumentHelper exportDocumentHelper = ContainerAccessor.Container.Resolve(typeof(IExportDocumentHelper), "ExportDocumentHelper", new ParameterOverride("", 1)) as IExportDocumentHelper;
+
+                    documentTypePM.DocumentTypeCopies.ForEach(doc =>
+                    {
+                        exportDocumentHelper.ExportDocument2Pdf(documentTypeId, id, objectTable?.Id, null, null, documentOutPM.Id, tenant, doc.Id, userId);
+                    });
+                }
 
 
 
