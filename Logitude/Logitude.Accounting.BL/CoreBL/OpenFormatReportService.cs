@@ -130,9 +130,9 @@ namespace Logitude.Accounting.BL.CoreBL
             List<CurrencyPM> currencies = currencyQuery.GetCurrenciesByTenantPM(tenant).ToList(); ;
 
             ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(tenant);
-            List<GLAccountCurrencyPM> gLAccountCurrencies = new List<GLAccountCurrencyPM>();
+            List<GLAccountCurrency> gLAccountCurrencies = new List<GLAccountCurrency>();
             GLAccountCurrencyQueryService gLAccountCurrencyQueryService = new GLAccountCurrencyQueryService(tenant);
-            gLAccountCurrencies = gLAccountCurrencyQueryService.GetTenantCurrenciesAccount(tenant);
+            gLAccountCurrencies = gLAccountCurrencyQueryService.GetCurrenciesAccountsByTenant(tenant);
 
             ComputingPartnerTranslationHelper computingPartnerTranslationHelper = new ComputingPartnerTranslationHelper(tenant);
             List<ComputingPartnerTranslationPM> computingPartnerTranslations = new List<ComputingPartnerTranslationPM>();

@@ -337,6 +337,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="DBScripts\Post\202106200820_ Fill0GLAccountMoreData.sxml" />
+    <None Include="DBScripts\20250807_Create_IX_LedgerTransactions_Covering.sxml" />
     <Compile Include="ElasticDemoModel\ElasticDemoGen.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
