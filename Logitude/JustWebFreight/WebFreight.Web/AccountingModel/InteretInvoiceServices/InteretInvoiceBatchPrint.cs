@@ -204,7 +204,7 @@ namespace Logitude.Accounting.BL.InterestService
                 DocumentHelper documentHelper = new DocumentHelper();                
                 var result = documentHelper.PutCreateDocumentOut(documentOutArgs, interestReport.CreatedByUserId);
                 DocumentOutPM documentOutPM = result.document;
-                if (!result.success) {
+                if (!result.isSign) {
                     DocumentTypePM documentTypePM = documentTypeQuery.GetSinglePM(documentTypeId, tenant);
                     IExportDocumentHelper exportDocumentHelper = ContainerAccessor.Container.Resolve(typeof(IExportDocumentHelper), "ExportDocumentHelper", new ParameterOverride("", 1)) as IExportDocumentHelper;
 

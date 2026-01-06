@@ -5238,7 +5238,7 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                  
                 var result = documentHelper.PutCreateDocumentOut(documentOutArgs, userId);
                 DocumentOutPM documentOutPM = result.document;
-                if (!result.success)
+                if (!result.isSign)
                 {
                     DocumentTypePM documentTypePM = documentTypeQuery.GetSinglePM(documentTypeId, tenant);
                     IExportDocumentHelper exportDocumentHelper = ContainerAccessor.Container.Resolve(typeof(IExportDocumentHelper), "ExportDocumentHelper", new ParameterOverride("", 1)) as IExportDocumentHelper;
