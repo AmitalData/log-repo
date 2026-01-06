@@ -296,7 +296,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 Authentication(createDocumentOutArgs.Tenant);
                 DocumentHelper documentHelper = new DocumentHelper();
-                DocumentOutPM documentOutPM =  documentHelper.PutCreateDocumentOut(createDocumentOutArgs);
+                DocumentOutPM documentOutPM =  documentHelper.PutCreateDocumentOut(createDocumentOutArgs).document;
 
                 return Request.CreateResponse(HttpStatusCode.OK, documentOutPM);
             }
