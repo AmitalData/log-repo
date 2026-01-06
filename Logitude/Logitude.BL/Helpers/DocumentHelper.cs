@@ -95,7 +95,7 @@ namespace Logitude.BL.Helpers
 
                 if (string.IsNullOrEmpty(userId))
                 {
-                    string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+                    string loggedUserEmail = AuthenticationUtil.ResolveUserIdentityName(tenant);
                     UserRepository userRepository = new UserRepository(tenant);
                     User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, tenant, true);
 
