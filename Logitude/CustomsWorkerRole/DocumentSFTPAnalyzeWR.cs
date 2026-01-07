@@ -103,7 +103,8 @@ namespace CommunicationWorkerRole
 				{
 					return;
 				}
-				string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(analyzeQueue.Id, analyzeQueue.Tenant);
+
+			    string key = ProcessLockTableUtil.Instance.GetKeySFTP(analyzeQueue.Id, analyzeQueue.Tenant);
 				using (var disposableToken =
 					 ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(analyzeQueue.Tenant, true, key, "DocumentSFTP", true)
 					)

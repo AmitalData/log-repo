@@ -20,7 +20,7 @@ namespace Logitude.Server.Tools.Utils
 
         public IDisposable LockItAndGetReleaseToken(int tenant, string key2Upsert, string requestLog)
         {
-            if (Transaction.Current == null)
+            if (Transaction.Current == null && requestLog != "DocumentSFTP")
             {
                 throw new Exception("MultiProcessLockTableUtil:4 use must be under Transaction");
             }
