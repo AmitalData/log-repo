@@ -27,23 +27,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         private IQueryable<DeclarationCourierStatusList> GetIqueryableList(IQueryable<DeclarationCourierStatus> iQueryable)
         {
-            //            .Where( r=> r.MamanSpecialActionStatusCode== "2" )
-            //            group action by action.DeclarationId into gaction
-            //            select new
-            //            {
-            //                id = gaction.Key,
-            //                text =
-            //                gaction.Select(r => r.MamanSpecialActionsErrorXml).Aggregate((b4, after) => b4 + " " + after),
-            //                //string.Join(" ", gaction.Select(r => r.MamanSpecialActionsErrorXml)),
-
-            //                //(string)gaction.Aggregate((b4, after) => b4.MamanLabelText1 + " "+ after.DeclarationId),
-            //            });
-            //bool test = false    ;
-            //if (test)
-            //{
-            //    var resQ = qMmmnActionError.ToList();
-            //}        
-            //TestSql(iQueryable);
             var FromExcelQueryJoin = (from courierhawb in context.CourierHawbFromExcels
                                       where courierhawb.CreatedByUser.Id == this.isFilter && courierhawb.NotFound != true
                                       select courierhawb);
@@ -51,34 +34,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             {
                 FromExcelQueryJoin = context.CourierHawbFromExcels.Where(r => r.DeclarationId == "-1");
             }
-      
-			var qDeclarationPaymentPendingHold =
-            (from p in context.DeclarationPendings
-             join cpr in context.CourierPendingReasons
-             on new { Code = p.CourierPendingReasonCode, Tenant = p.Tenant } equals new { Code = cpr.Code, Tenant = cpr.Tenant } into joined
-             from cpr in joined.DefaultIfEmpty()
-             where p.Status == "A"
-             group new { p, cpr } by p.DeclarationID into g
-             select new MyJoin
-             {
-            	 DeclarationId = g.Key,
-            	 ErrorPlace = g.Any(r => r.cpr != null && r.cpr.ErrorPlace == "1"),
-            
-            
-            	 //CourierPendingReason1stName = g.DefaultIfEmpty(
-            	 //new DeclarationPending()
-            	 //{
-            	 //    CourierPendingReason = new CourierPendingReason { }
-            	 //})
-            	 //.FirstOrDefault().CourierPendingReason.LocalName
-            
-            	 CourierPendingReason1stName = g.Any() && g.FirstOrDefault().cpr != null ? g.FirstOrDefault().cpr.LocalName : null,
-            	 //CourierPendingReasonNameList = g.Any() ? string.Join(",", g.Select(x=>x.CourierPendingReason.LocalName).ToList()) : null
-            	 //CourierPendingReasonNameList = g.Any() ?  g.Select(x=>x.CourierPendingReason.LocalName).Aggregate((a,b) => a + "," + b) : null
-            
-            
-             }
-            );
 
 			IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable.Include("Trucker")
 
@@ -87,31 +42,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                               join c in context.CourierDeclarations
                                                               on a.DeclarationId equals c.DeclarationId
 
-
-
-                                                              join errorPlace in qDeclarationPaymentPendingHold
-                                                              on a.DeclarationId equals errorPlace.DeclarationId
-                                                              into errorPlaceOuterJoin
-                                                              from errorPlaceOuterJoinNullable in errorPlaceOuterJoin.DefaultIfEmpty()
-
                                                               join cm in context.CourierMasters on c.CourierMasterId equals cm.Id
 
                                                               join recFromExcelQueryJoin in FromExcelQueryJoin
                                                               on a.DeclarationId equals recFromExcelQueryJoin.DeclarationId into qFromExcelJoin
                                                               from myJoinFromExcel in qFromExcelJoin.DefaultIfEmpty()
-
-
-                                                                  //join pendingListNames in qDeclarationPendingListNames
-                                                                  //on a.DeclarationId equals pendingListNames.DeclarationId
-                                                                  //into pendingListNamesOuterJoin
-                                                                  //from pendingListNamesOuterJoinNullable in pendingListNamesOuterJoin.DefaultIfEmpty()
-                                                                  //from pendingListNamesOuterJoinNullable in pendingListNamesOuterJoin.ToList().ToString()
-
-
-                                                                  //join declarationPendings in context.DeclarationPendings
-                                                                  //on a.DeclarationId equals declarationPendings.DeclarationID
-                                                                  //into declarationPendingsJoin
-                                                                  //from declarationPendingsListNames in declarationPendingsJoin.Where(r => r.Status == "A").ToList()
 
                                                               select new DeclarationCourierStatusList()
                                                               {
@@ -122,7 +57,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   IsSVGTab = a.IsCourierMissingClassification == true,
                                                                   IsMNFRTab = (a.CourierManifestStatusCode == "R"),
                                                                   IsDECRTab = (a.CourierDeclarationStatusCode == "R"),
-                                                                  //IsHOLDTab = (a.CourierPendingReasonCode != null),
                                                                   IsHOLDTab = (a.CourierPendingReasonList != null),
                                                                   IsMNFTab = (a.CourierManifestStatusCode == "M" || a.CourierManifestStatusCode == "X"),
                                                                   IsPAYTab = a.CourierPaymentStatusCode == "R",
@@ -154,27 +88,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   CourierSearchFields = d.CourierSearchFields,
                                                                   TotalInvoiceAmountInUSD = a.TotalInvoiceAmountInUSD,
                                                                   DeclarationNumber = d.DeclarationNumber,
-                                                                  //CourierPendingReasonCode = a.CourierPendingReasonCode,
-                                                                  //CourierPendingReasonName = a.CourierPendingReason != null ? a.CourierPendingReason.LocalName : null,
-
-
-                                                                  CourierPendingReasonErrorPlace = errorPlaceOuterJoinNullable != null ?
-                                                                  (
-                                                                  errorPlaceOuterJoinNullable.ErrorPlace == true ? "1" : null)
-                                                                  : null,
-
-                                                                  CourierPendingReasonName = errorPlaceOuterJoinNullable != null ?
-                                                                  errorPlaceOuterJoinNullable.CourierPendingReason1stName
-                                                                  : null,
-
-                                                                  //CourierPendingReasonNameList = errorPlaceOuterJoinNullable != null ? errorPlaceOuterJoinNullable.CourierPendingReasonNameList : null,
-                                                                  //CourierPendingReasonName = string.Join(",", pendingListNamesOuterJoin.Select(p => p.ToString())),
-
-
-                                                                  //PendingRemarks = a.PendingRemarks,
-                                                                  //PendingRemarks = declarationPendingsListNames.CourierPendingReason.LocalName,
-
-
                                                                   CourierSuspentionReasonName = d.CourierSuspentionReasonCode != null ? d.AgentTalkBackType.LocalName : null,
                                                                   AcceptanceStatusCode = d.AcceptanceStatusCode,
                                                                   CourierSuspentionCode = d.CourierSuspentionCode,
