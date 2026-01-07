@@ -234,7 +234,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 				quoteComputedField.EstimatedPayablesInSales = Math.Round(calculateEstimatedPayablesInSale, 2, MidpointRounding.AwayFromZero);
 			}
 
-		}	
+ 		}	
 
 	
 		private void MapEstimatedReceivablesInLocalCurrencyField()
