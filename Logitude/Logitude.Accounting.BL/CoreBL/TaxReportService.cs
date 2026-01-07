@@ -297,7 +297,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                                          && aPInvoiceVatNumber == aPInvoiceVatNumberNormalized) // matter of precedence   
                     VatNumber = aPInvoiceVatNumber;
 
-                VatNumber = VatNumber == null ? "000000000" : VatNumber;
+                VatNumber = VatNumber == null ? !String.IsNullOrWhiteSpace(aPInvoiceVatNumberNormalized) ? aPInvoiceVatNumberNormalized : "000000000" : VatNumber;
                 SetVatAmounts(transaction);
 
 
