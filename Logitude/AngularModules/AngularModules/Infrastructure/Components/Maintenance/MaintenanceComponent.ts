@@ -2079,7 +2079,7 @@ export class MaintenanceComponent {
                         .subscribe((response: any) => {
                             var logitudeWindow = new LogitudeWindow();
                             logitudeWindow.Width = 900;
-                            logitudeWindow.Height = 600;
+                            logitudeWindow.Height = 700;
                             logitudeWindow.Title = TextCodeTranslator.Translate(
                                 'Accounting.O.FullAccountingSettings'
                             ); // "Full Accounting Settings";

@@ -322,6 +322,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="MasavBankId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MasavCode"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultVATTypeId"
     ReferencedTable="VatTypes"
@@ -415,6 +429,11 @@
   <Relation
     ForeignKeyColumn="TaxInstitutionGLAccountId"
     ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MasavBankId"
+    ReferencedTable="BankAccounts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>
