@@ -164,7 +164,20 @@ export class GLAccountExtendedListService {
 
 
     }
+    GetTotalOpenChequesInLocalCurById(glaccountId: string) {
+        var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
+        var url = api + '/GetTotalOpenChequesInLocalCurById?glaccountId=' + glaccountId;
 
+        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
+            map((response:any) => {
+                var res = response;
+                if (res && res != null) {
+                    return res;
+                }
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
     GetGLAccountsSummary() {
 
 

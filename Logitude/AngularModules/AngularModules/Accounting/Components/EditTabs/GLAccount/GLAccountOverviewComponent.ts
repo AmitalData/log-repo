@@ -247,27 +247,12 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
             });
 
-
-
-
-
-        // Get connect card
-        // this._CardListService.getSingle(this.EntityPM.CardId).subscribe((myResult:any) => {
-        //     console.log("_CardListService.getSingle", myResult);
-        //     var result: ServiceResponse = myResult;
-        //     if (!result.HasError)
-        //     {
-        //         this.accountCardlist = result.Result;
-        //         this.LoadCreditDetailsData();
-
-        //     }
-        //     else {
-        //         console.log("[!] cannot get glaccount card");
-
-        //     }
-        // });
-
-
+           
+        this._GLAccountExtendedListService.GetTotalOpenChequesInLocalCurById(this.EntityPM.Id).subscribe((myResult) => {
+            if (myResult) 
+                this.EntityPM.TotalOpenChequesInLocalCur = myResult;
+            
+        });
         // Get tenant currency
         this.TenantCurrency = SessionLocator.TenantPM.CurrencyCode;
 
