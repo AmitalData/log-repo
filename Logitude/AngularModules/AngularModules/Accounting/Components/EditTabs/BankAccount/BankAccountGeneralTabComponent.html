@@ -255,29 +255,6 @@
                                                     <div></div>
                                                 </td>
                                             </tr>
-<!-- TransferGLAcccountId -->
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'TransferGLAcccountId'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'TransferGLAcccountId'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                        [LookUpTableName]="'GLAccount'" [DependencyFilter2Value]="'1'"
-                                                        [QueryFilterItems]="GLAccountsFilterItems"
-                                                        (SelectedItemChanged)="DeferredGLAccount = $event"
-                                                        [HideColumns]="false" [StartSearchFromChar]="3"
-                                                        [StartSearchFromNumber]="5">
-                                                    </LogLov>
-                                                </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                            <!-- MasGLAcccountId -->
                                             <tr class="FormFieldRow">
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'MasavGLAcccountId'"
@@ -298,6 +275,7 @@
                                                     <div></div>
                                                 </td>
                                             </tr>
+
                                             <tr>
                                                 <td>
                                                     <div></div>
