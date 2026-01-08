@@ -78,8 +78,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TransactionAmount, 
 	         ExcelTransactionAmount, 
 	         RefDate, 
-	         CurrencyRate,
-	      }
+             CurrencyRate,
+        }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
