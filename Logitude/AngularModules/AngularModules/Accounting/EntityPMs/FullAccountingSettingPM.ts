@@ -351,6 +351,16 @@ export class FullAccountingSettingPM {
     public set HebrewTenant(newValue: boolean) { if (this.hebrewTenant != newValue) { this.hebrewTenant = newValue; this.MarkAsDirty("HebrewTenant"); } }
        
 	 
+    private masavBankId: string;
+    public get MasavBankId() { return this.masavBankId; }
+    public set MasavBankId(newValue: string) { if (this.masavBankId != newValue) { this.masavBankId = newValue; this.MarkAsDirty("MasavBankId"); } }
+       
+	 
+    private masavCode: string;
+    public get MasavCode() { return this.masavCode; }
+    public set MasavCode(newValue: string) { if (this.masavCode != newValue) { this.masavCode = newValue; this.MarkAsDirty("MasavCode"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

@@ -75,6 +75,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InvoiceNotes, 
 	         InterestInvoiceNotes, 
 	         PrepaidExpensesGLAccountId,
+	         MasavBankId, 
+	         MasavCode,
 	      }
 
 
@@ -145,7 +147,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InvoiceNotes, 
 	         InterestInvoiceNotes, 
 	         PrepaidExpensesGLAccountId, 
-	         HebrewTenant,
+	         HebrewTenant, 
+	         MasavBankId, 
+	         MasavCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -379,9 +383,19 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.InterestInvoiceNotes = entityPM.InterestInvoiceNotes;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasavBankId))
+            {
+				entityPOCO.MasavBankId = entityPM.MasavBankId;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrepaidExpensesGLAccountId))
             {
 				entityPOCO.PrepaidExpensesGLAccountId = entityPM.PrepaidExpensesGLAccountId;
+			}
+			}
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasavCode))
+            {
+				entityPOCO.MasavCode = entityPM.MasavCode;
 			}
 			}
 
@@ -618,10 +632,20 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.InterestInvoiceNotes = entityPOCO.InterestInvoiceNotes;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MasavBankId))
+            {
+					entityPM.MasavBankId = entityPOCO.MasavBankId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MasavCode))
+            {
+					entityPM.MasavCode = entityPOCO.MasavCode;
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PrepaidExpensesGLAccountId))
             {
 					entityPM.PrepaidExpensesGLAccountId = entityPOCO.PrepaidExpensesGLAccountId;
             }
+
+		
 
 		}
 
@@ -854,6 +878,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.InterestInvoiceNotes = entityPM.InterestInvoiceNotes;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasavBankId))
+            {
+                oldEntityPM.MasavBankId = entityPM.MasavBankId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasavCode))
+            {
+                oldEntityPM.MasavCode = entityPM.MasavCode;
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrepaidExpensesGLAccountId))
             {
                 oldEntityPM.PrepaidExpensesGLAccountId = entityPM.PrepaidExpensesGLAccountId;
@@ -875,6 +907,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.InterestInvoiceNotes)) //T4 find type == nText 
             {
                 entityPM.InterestInvoiceNotes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.InterestInvoiceNotes));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.MasavCode)) //T4 find type == nText 
+            {
+                entityPM.MasavCode = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.MasavCode));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

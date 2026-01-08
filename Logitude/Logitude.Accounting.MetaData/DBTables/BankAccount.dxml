@@ -208,6 +208,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="MasavGLAcccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -241,6 +248,11 @@
   <Relation
     ForeignKeyColumn="CurrencyId"
     ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MasavGLAcccountId"
+    ReferencedTable="GLAccounts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

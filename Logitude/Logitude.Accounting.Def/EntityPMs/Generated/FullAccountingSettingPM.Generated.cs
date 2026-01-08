@@ -1522,6 +1522,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string masavBankId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MasavBankId  
+	   {
+	    
+	     get
+		{
+		   return masavBankId;
+		 }
+		 set
+		 {
+		   if(masavBankId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MasavBankId",OldValue=masavBankId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   masavBankId=value;
+		   }
+			
+		 }
+	   }
+	  private string masavCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MasavCode  
+	   {
+	    
+	     get
+		{
+		   return masavCode;
+		 }
+		 set
+		 {
+		   if(masavCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MasavCode",OldValue=masavCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   masavCode=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

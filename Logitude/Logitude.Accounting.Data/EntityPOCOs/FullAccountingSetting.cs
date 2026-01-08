@@ -180,6 +180,13 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string PrepaidExpensesGLAccountId { get; set; }
 	      
         public virtual GLAccount PrepaidExpensesGLAccount { get; set; }
+        [ForeignKey("MasavBank")]
+        [Column("MasavBankId")]
+	    public string MasavBankId { get; set; }
+	      
+        public virtual BankAccount MasavBank { get; set; }
+        [Column("MasavCode")]
+	    public string MasavCode { get; set; }
     }
 }
 	 

@@ -356,7 +356,18 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.EntityPM.TaxWithholdingGLAccountId = value;
         }
     }
-
+    get MasavBankId() { return this.EntityPM.MasavBankId; }
+    set MasavBankId(value: string) {
+        if (this.EntityPM.MasavBankId != value) {
+            this.EntityPM.MasavBankId = value;
+        }
+    }
+    get MasavCode() { return this.EntityPM.MasavCode; }
+    set MasavCode(value: string) {
+        if (this.EntityPM.MasavCode != value) {
+            this.EntityPM.MasavCode = value;
+        }
+    }
     get ConsolidationVAT() { return this.EntityPM.ConsolidationVAT; }
     set ConsolidationVAT(value: string) {
         if (this.EntityPM.ConsolidationVAT != value) {

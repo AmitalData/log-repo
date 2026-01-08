@@ -57,7 +57,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TotalOpenExternalTransactions, 
 	         TotalOpenPagesLines, 
 	         ChequeCounterSeriesID, 
-	         FactoringBank,
+	         FactoringBank, 
+	         MasavGLAcccountId,
 	      }
 
 
@@ -108,7 +109,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TotalOpenExternalTransactions, 
 	         TotalOpenPagesLines, 
 	         ChequeCounterSeriesID, 
-	         FactoringBank,
+	         FactoringBank, 
+	         MasavGLAcccountId, 
+	         MasavGLAcccountLocalName, 
+	         MasavGLAcccountEnglishName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -260,6 +264,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FactoringBank))
             {
 				entityPOCO.FactoringBank = entityPM.FactoringBank;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasavGLAcccountId))
+            {
+				entityPOCO.MasavGLAcccountId = entityPM.MasavGLAcccountId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -418,6 +427,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.FactoringBank = entityPOCO.FactoringBank;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MasavGLAcccountId))
+            {
+					entityPM.MasavGLAcccountId = entityPOCO.MasavGLAcccountId;
+            }
+
 		}
 
 		public void PMToOldPM(BankAccountPM entityPM, BankAccountPM oldEntityPM)
@@ -567,6 +581,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FactoringBank))
             {
                 oldEntityPM.FactoringBank = entityPM.FactoringBank;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasavGLAcccountId))
+            {
+                oldEntityPM.MasavGLAcccountId = entityPM.MasavGLAcccountId;
             }
 			
 		}
