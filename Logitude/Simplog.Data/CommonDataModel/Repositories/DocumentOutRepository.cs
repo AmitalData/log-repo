@@ -63,9 +63,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             if (string.IsNullOrEmpty(entityId) && string.IsNullOrEmpty(childEntityId))
                 return null;
-            IQueryable<DocumentOut> query = context.DocumentOuts.Where(a =>
-              a.DocumentsFiling.ChildEntityId == childEntityId &&
-              a.Tenant == tenant);
+            IQueryable<DocumentOut> query = context.DocumentOuts.Where(a => a.Tenant == tenant);
 
             if (entityId == null)
             {
@@ -85,9 +83,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 query = query.Where(a => a.DocumentsFiling.ChildEntityId == childEntityId);
             }
 
-            DocumentOut documentOut =
-                query.OrderByDescending(a => a.Id)
-                    .FirstOrDefault();
+            DocumentOut documentOut = query.FirstOrDefault();
 
             return documentOut;
         }
