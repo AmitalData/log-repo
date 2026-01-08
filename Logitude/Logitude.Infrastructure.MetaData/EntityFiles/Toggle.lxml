@@ -1077,7 +1077,12 @@
       Name="&quot;Second Worker Role&quot;"
       SearchFields="&quot;SWR,Second Worker Role&quot;"
       Description="&quot;Second Worker Role&quot;" />
- </Records>
+    <Record
+      Code="&quot;OCA&quot;"
+      Name="&quot;Original Name For Child Account&quot;"
+      SearchFields="&quot;OCA,Original Name For Child Account&quot;"
+      Description="&quot;Original Name For Child Account&quot;" />
+  </Records>
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

@@ -1095,6 +1095,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SWR,Second Worker Role",
                 Description = "Second Worker Role",
             });
+            all.Add(new ToggleDetails()
+            {
+                Code = "OCA",
+                Name = "Original Name For Child Account",
+                SearchFields = "OCA,Original Name For Child Account",
+                Description = "Original Name For Child Account",
+            });
             return all;
        }
 
