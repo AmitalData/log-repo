@@ -1097,6 +1097,75 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string masavGLAcccountId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MasavGLAcccountId  
+	   {
+	    
+	     get
+		{
+		   return masavGLAcccountId;
+		 }
+		 set
+		 {
+		   if(masavGLAcccountId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MasavGLAcccountId",OldValue=masavGLAcccountId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   masavGLAcccountId=value;
+		   }
+			
+		 }
+	   }
+	  private string masavGLAcccountLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MasavGLAcccountLocalName  
+	   {
+	    
+	     get
+		{
+		   return masavGLAcccountLocalName;
+		 }
+		 set
+		 {
+		   if(masavGLAcccountLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MasavGLAcccountLocalName",OldValue=masavGLAcccountLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   masavGLAcccountLocalName=value;
+		   }
+			
+		 }
+	   }
+	  private string masavGLAcccountEnglishName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MasavGLAcccountEnglishName  
+	   {
+	    
+	     get
+		{
+		   return masavGLAcccountEnglishName;
+		 }
+		 set
+		 {
+		   if(masavGLAcccountEnglishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MasavGLAcccountEnglishName",OldValue=masavGLAcccountEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   masavGLAcccountEnglishName=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

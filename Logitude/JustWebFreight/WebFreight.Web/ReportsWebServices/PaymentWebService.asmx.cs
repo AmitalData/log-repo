@@ -682,7 +682,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
             else if (code == "BT")
             {
-                translation = "העברה בנקאית";
+                translation = "yxy";
             }
             else if (code == "CC")
             {

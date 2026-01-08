@@ -139,7 +139,12 @@ export class BankAccountGeneralTabComponent extends BaseComponent {
             this.EntityPM.TransferGLAcccountId = value;
         }
     }
-
+    get MasavGLAcccountId() { return this.EntityPM.MasavGLAcccountId; }
+    set MasavGLAcccountId(value: string) {
+        if (this.EntityPM.MasavGLAcccountId != value) {
+            this.EntityPM.MasavGLAcccountId = value;
+        }
+    }
     get BankId() { return this.EntityPM.BankId; }
     set BankId(value: string) {
         if (this.EntityPM.BankId != value) {
