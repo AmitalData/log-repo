@@ -31,6 +31,10 @@ using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.ILOVS;
 using Logitude.Customs.BL.Infrastructure;
 using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.BL.Models;
+using Logitude.Customs.BL.TraceEvents;
+using UnifreightIIG.Common.MessageLib.Unifreight.Customs;
+using Logitude.Customs.Data.EntityMapping;
 
 
 namespace Logitude.Customs.BL.EntityUpdateServices
@@ -69,10 +73,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var prevCourierPendingReasonList = entityPM.CourierPendingReasonList;
                 entityPM.CourierPendingReasonList = null;
                 entityPM.NotApprovedPendingList = null;
-                foreach (var declarationPending in entityPM.DeclarationPendings)
+                foreach (DeclarationPendingPM declarationPending in entityPM.DeclarationPendings)
                 {
                     CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(entityPM.Tenant);
-                    var courierPendingReason = courierPendingReasonRepositoryRepository.GetByCode(declarationPending.CourierPendingReasonCode, entityPM.Tenant);
+                    CourierPendingReason courierPendingReason = courierPendingReasonRepositoryRepository.GetByCode(declarationPending.CourierPendingReasonCode, entityPM.Tenant);
                     if (courierPendingReason != null && !courierPendingReason.Inactive)
                     {
                         if (declarationPending.ChangeSetOp != ChangeSetOperation.Delete)
@@ -99,6 +103,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     entityPM.NotApprovedPendingList = string.Concat(entityPM.NotApprovedPendingList, ",", declarationPending.CourierPendingReasonCode);
                                 }
                             }
+                           
+                            if (declarationPending.Status == "S" && entityPM.CourierPendingReasonList != entityPOCO.CourierPendingReasonList)
+                            {
+                                this.RaiseEvent(declarationPending, courierPendingReason, "CPEN");
+                            }
+                        }
+                        else
+                        {
+                            this.RaiseEvent(declarationPending,courierPendingReason, "DPEN");
                         }
                     }
 
@@ -319,7 +332,44 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             base.OnUpdating(entityPM, entityPOCO);
         }
-      
+
+        private void RaiseEvent(DeclarationPendingPM dirtyDeclarationPendingPM, CourierPendingReason courierPendingReason, string code)
+        {
+            try
+            {
+                string loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPendingPM.Tenant);
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(dirtyDeclarationPendingPM.Tenant);
+                string CustomFileNoResult = declarationQueryService.GetCustomFileNoByDeclarationId(dirtyDeclarationPendingPM.DeclarationID, dirtyDeclarationPendingPM.Tenant);
+
+                if (CustomFileNoResult == null)
+                {
+                    LogMessagingUtil.Instance.AppendLine($"RaiseEvent: CustomFileNoResult not found. DeclarationID={dirtyDeclarationPendingPM.DeclarationID}");
+                    return;
+                }
+
+                UnifreightEventParam myUnifreightEventParam = new UnifreightEventParam()
+                {
+                    Code = code,
+                    Mode = UnifreightEventMode.@new, 
+                    EventDateTime = DateTime.Now,
+                    Entname = "CFIFILEM",
+                    PrimaryNum = CustomFileNoResult,
+                    EventRemarks =
+                        $"loggingUserId: {loggingUserId}, " +
+                        $"UnifreightStatusCode: {courierPendingReason?.UnifreightStatusCode}, " +
+                        $"CourierPendingReasonCode: {dirtyDeclarationPendingPM?.CourierPendingReasonCode}, " +
+                        $"CourierPendingReasonName: {dirtyDeclarationPendingPM?.CourierPendingReasonName}",
+                };
+                LogMessagingUtil.Instance.AppendLine("UpsertEventLE2U = " + code + " CustomFileNo= " + CustomFileNoResult);
+                UnifreightEventTaskService unifreightEventTaskService = new UnifreightEventTaskService();
+                unifreightEventTaskService.UpsertEventLE2U(dirtyDeclarationPendingPM.Tenant, loggingUserId, myUnifreightEventParam);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         protected override void UpdateComposition(DeclarationCourierStatusPM entityPM)
         {
