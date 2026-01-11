@@ -181,6 +181,11 @@ export class InterfaceManagementPM {
     public set IsUnifreight(newValue: boolean) { if (this.isUnifreight != newValue) { this.isUnifreight = newValue; this.MarkAsDirty("IsUnifreight"); } }
        
 	 
+    private queueDefinitionGroup: string;
+    public get QueueDefinitionGroup() { return this.queueDefinitionGroup; }
+    public set QueueDefinitionGroup(newValue: string) { if (this.queueDefinitionGroup != newValue) { this.queueDefinitionGroup = newValue; this.MarkAsDirty("QueueDefinitionGroup"); } }
+       
+	 
 
     public OldEntityPM: InterfaceManagementPM;
 		
