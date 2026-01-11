@@ -79,6 +79,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.EmailForSendingSingArinvoice = entityPM.EmailForSendingSingArinvoice;
             entityPOCO.SendingInterestReport = entityPM.SendingInterestReport;
             entityPOCO.ExternalSystem = entityPM.ExternalSystem;
+            entityPOCO.BankCodeId = entityPM.BankCodeId;
+            entityPOCO.BankBranch  = entityPM.BankBranch;
             BuildSearchFields(entityPM, entityPOCO);
         }
 

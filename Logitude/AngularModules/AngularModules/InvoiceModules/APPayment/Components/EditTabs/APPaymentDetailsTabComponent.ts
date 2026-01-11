@@ -1589,7 +1589,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
 
-        if (this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS") {
+        if (this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS" || this.PaymentMethodCode == "MS") {
             this.ValueDate = DateTool.GetCurrentDateAsUtc();
         }
 
@@ -1668,7 +1668,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     get VisibleIfCash() {
         var result = false;
-        if (AppTool.IsNullOrEmpty(this.PaymentMethodCode) || this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS") {
+        if (AppTool.IsNullOrEmpty(this.PaymentMethodCode) || this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS" || this.PaymentMethodCode == "MS") {
             result = true;
         }
         return result;
@@ -1676,7 +1676,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     get CollapsedIfCash() {
         var result = false;
         if (!AppTool.IsNullOrEmpty(this.PaymentMethodCode)) {
-            if (this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS") {
+            if (this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS" || this.PaymentMethodCode == "MS") {
                 result = false;
             }
 

@@ -216,5 +216,7 @@ namespace Logitude.FullAccounting.Test.Models
         public string GLAccountNumber { get; set; }
         
         public string BillToId { get; set; }
+        public string BankBranch { get; set; }
+        public string BankCodeId { get; set; }
     }
 }

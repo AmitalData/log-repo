@@ -242,9 +242,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetEnabled("IsSecurityLevelActivated", this.ObjectTableName, (this.enableAllFields && this.activateSecurityLevel));
         this.UIProperties.SetEnabled("OppositeAccountNumber", this.ObjectTableName, this.enableAllFields);
         this.BankAccountFilterItems = new ApiQueryFilters();
-        this.BankAccountFilterItems.addAdditionalFilter("MasavGLAcccountId", "null", null, null, "NotEqual", false, false, false, "string");
-
-
+        this.BankAccountFilterItems.addAdditionalFilter("MasavGLAcccountId", "", null, null, "IsNotNull", false, false, false, "string");
     }
 
     //#region Full Accounting Setting Properties

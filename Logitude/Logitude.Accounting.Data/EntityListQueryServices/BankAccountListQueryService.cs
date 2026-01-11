@@ -93,7 +93,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                      CurrencyId = a.CurrencyId,
                                                      TotalOpenExternalTransactions = MyJoinpenTransInBankViews.TotalLedgerTransactionsCount.ToString(),
                                                      TotalOpenPagesLines = MyJoinpenTransInBankViews.TotalReconcileExternalPageLinesCount.ToString(),
-
+                                                     MasavGLAcccountId = a.MasavGLAcccountId
                                                  });
             return query;
         }

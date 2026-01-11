@@ -151,7 +151,6 @@
   <Column
     Name="CargoTrackingInvitationStatusCode"
     ShortName="CargoTracInvitationStatCode"
-
     Type="int">
     <Constraints
       Nullable="true" />
@@ -542,6 +541,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="BankBranch"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BankCodeId"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="InvoiceCurrencyId"
     ReferencedTable="Currencies"
@@ -638,22 +651,8 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-   ForeignKeyColumn="SingleInvoiceTemplateId"
+    ForeignKeyColumn="SingleInvoiceTemplateId,CustomsInvoiceTemplateId,ConsolidationInvoiceTemplateId,ManifestInvoiceTemplateId"
     ReferencedTable="DocumentTypeTemplates"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CustomsInvoiceTemplateId"
-    ReferencedTable="DocumentTypeTemplates"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ConsolidationInvoiceTemplateId"
-    ReferencedTable="DocumentTypeTemplates"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ManifestInvoiceTemplateId"    ReferencedTable="DocumentTypeTemplates"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
