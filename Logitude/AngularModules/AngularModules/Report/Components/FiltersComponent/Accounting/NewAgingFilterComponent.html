@@ -509,38 +509,7 @@
 
                             </td>
                             <td></td>                           
-                            <!-- 4 -->
-                            <td style="">
-                                <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccount.O.SortBy'"
-                                    [ObjectFieldName]="'Balance'" [NoObjectField]="true" [DataContext]="DataContext">
-                                </LogLabel>
-                            </td>
 
-                            <!-- 5 -->
-                            <td style="">
-                                <ComboBox [ItemsSource]="SortTypes" (SelectedItemChanged)="SortTypeChanged($event)"
-                                    [SelectedItem]="SelectedSortTypeItem" style="display: block;width: 120px;"
-                                    [Binding]="showLocal ? 'LocalName' : 'EnglishName'"></ComboBox>
-                            </td>
-
-                            <!-- 6 -->
-                            <td style="">
-                                <div style="display: inline-block;padding: 0px 7px;">
-                                    <RadioButton float-start [Name]="'Ascending'"
-                                        [IsChecked]="SelectedSortDirectionCode == 'Ascending'"
-                                        (Checked)="SelectedSortDirectionCode = 'Ascending'" [Text]="'Ascending'">
-                                    </RadioButton>
-                                </div>
-                                <div style="display: inline-block;padding: 0px 7px;">
-                                    <RadioButton float-start [Name]="'Descending'"
-                                        [IsChecked]="SelectedSortDirectionCode == 'Descending'"
-                                        (Checked)="SelectedSortDirectionCode = 'Descending'" [Text]="'Descending'">
-                                    </RadioButton>
-                                </div>
-
-                            </td>
-                        </tr>
-                        <tr style="height: 15px;">
 
 
                         </tr>
