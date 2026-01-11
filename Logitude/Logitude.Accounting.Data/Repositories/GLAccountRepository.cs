@@ -840,7 +840,7 @@ namespace Logitude.Accounting.Data.Repositories
 
         public List<GLAccount> GetByRevaluationEnabled_OtherParams(bool? revaluationEnabled, string chartOfAccountsTypeCode, string chartOfAccountsId, string accountTypeCode, string gLAccountId, string accountingCurrencyId, int tenant)
         {
-            if (revaluationEnabled.HasValue && revaluationEnabled.Value)
+            if (revaluationEnabled == true && String.IsNullOrEmpty(chartOfAccountsId))
             {
                 List<GLAccount> rv1;
                 IQueryable<GLAccount> rec1 =
@@ -870,6 +870,7 @@ namespace Logitude.Accounting.Data.Repositories
                                     && (record.Id == gLAccountId || String.IsNullOrEmpty(gLAccountId)
                                     && (record.CurrencyId != accountingCurrencyId || (record.IsMultiCurrency.HasValue && record.IsMultiCurrency.Value) || String.IsNullOrEmpty(accountingCurrencyId))
                                     && (!record.IsControlAccount.HasValue || record.IsControlAccount == false)
+                                    && (revaluationEnabled != true || record.RevaluationEnabled == true) 
                )
                  select record;
                 if (rec2 != null)
