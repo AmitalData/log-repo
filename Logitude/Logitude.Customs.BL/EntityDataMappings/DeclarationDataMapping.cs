@@ -326,23 +326,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
             
             if (entityPOCO.IsCourierDeclaration)
             {
-               entityPM.CourierData = (new CourierMasterRepository(entityPOCO.Tenant)).GetPrefixMAWBByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
-            }
-            DeclarationPaymentQueryService declarationPaymentQueryService = new DeclarationPaymentQueryService(entityPOCO.Tenant);
-
-            bool automaticPaymentMustBeAccurate = true;
-            if (automaticPaymentMustBeAccurate)
-            {
+                    entityPM.CourierData = (new CourierMasterRepository(entityPOCO.Tenant)).GetPrefixMAWBByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
                 
-                entityPM.AutomaticPayment = declarationPaymentQueryService.GetAutomaticPayment(entityPOCO.Id,entityPOCO.Direction);
             }
             else
             {
-                DeclarationPaymentPM declarationPaymentPM = declarationPaymentQueryService.GetSingle(entityPOCO.Id, false, true);
-                if (declarationPaymentPM != null) entityPM.AutomaticPayment = declarationPaymentPM.AutomaticPayment;
+                DeclarationPaymentQueryService declarationPaymentQueryService = new DeclarationPaymentQueryService(entityPOCO.Tenant);
+                entityPM.AutomaticPayment = declarationPaymentQueryService.GetAutomaticPayment(entityPOCO.Id, entityPOCO.Direction);
             }
-
-            
 
             if (!String.IsNullOrWhiteSpace( entityPOCO.WeightValue))
             {
@@ -402,13 +393,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     entityPM.AcceptanceStatusName = acceptanceStatus.LocalName;
                 }
             }
-
-            if (entityPM.CourierPendingReasonList != null)
-            {
-
-                entityPM.CourierPendingReasonList = getCourierPendingReasonName(entityPM);
-            }
-
             
             if (entityPM.FastIndividualProcessCode != null)
             {
@@ -494,12 +478,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 result = string.IsNullOrEmpty(result) ? entityPM.ImporterName : result + "," + entityPM.ImporterName;
             }
 
-            if((entityPM.Consignments == null || entityPM.Consignments.Count == 0) && !string.IsNullOrWhiteSpace(entityPM.Id))
+            if (!entityPM.IsCourierDeclaration)
             {
-                ConsignmentQueryService consignmentService = new ConsignmentQueryService(entityPM.Tenant);
-                entityPM.Consignments = consignmentService.GetMulti(new DeclarationKeys { Id = entityPM.Id}, true);
-            }
-            foreach (ConsignmentPM item in entityPM.Consignments)
+                if ((entityPM.Consignments == null || entityPM.Consignments.Count == 0) && !string.IsNullOrWhiteSpace(entityPM.Id))
+                {
+                    ConsignmentQueryService consignmentService = new ConsignmentQueryService(entityPM.Tenant);
+                    entityPM.Consignments = consignmentService.GetMulti(new DeclarationKeys { Id = entityPM.Id }, true);
+                }
+                foreach (ConsignmentPM item in entityPM.Consignments)
                 {
                     if (!string.IsNullOrEmpty(item.ManifestNumber))
                     {
@@ -516,6 +502,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                         result = string.IsNullOrEmpty(result) ? item.ThirdCargoID : result + "," + item.ThirdCargoID;
                     }
                 }
+            }
            
             Card customerCard = CardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant, true);
             if (customerCard != null)
@@ -580,25 +567,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             entityPM.CourierSearchFields = result.ToLower();
             poco.CourierSearchFields = entityPM.CourierSearchFields;
-        }
-
-        private string getCourierPendingReasonName(DeclarationPM entityPM)
-        {
-            var courierPendingReasonList = entityPM.CourierPendingReasonList;
-            if (!string.IsNullOrWhiteSpace(courierPendingReasonList))
-            {
-                if (courierPendingReasonList.Contains(","))
-                {
-                    courierPendingReasonList = "�����";
-                }
-                else
-                {
-                    CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
-                    CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(courierPendingReasonList, entityPM.Tenant);
-                    courierPendingReasonList = courierPendingReasonPM.LocalName;
-                }
-            }
-            return courierPendingReasonList;
         }
     }
 

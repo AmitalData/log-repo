@@ -81,28 +81,28 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(entityPOCO.Tenant);
                 CustomsCountryPM country = countryQueryService.GetSingle(entityPOCO.OriginCountryCode, false, true);
                 if(country != null)
-                   entityPM.OriginCountryName = country.LocalName;
+                   entityPM.OriginCountryName = country?.LocalName;
             }
 
             if (entityPOCO.TradeAgreementCode != null)
             {
                 TradeAgreementQueryService tradeAgreementQueryService = new TradeAgreementQueryService(entityPOCO.Tenant);
                 TradeAgreementPM tradeAgreement = tradeAgreementQueryService.GetSingle(entityPOCO.TradeAgreementCode, false, true);
-                entityPM.TradeAgreementName = tradeAgreement.LocalName;
+                entityPM.TradeAgreementName = tradeAgreement?.LocalName;
             }
 
             if (entityPOCO.InvoiceQuantityType != null)
             {
                 MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(entityPOCO.Tenant);
                 MeasurmentUnitPM measurmentUnit = measurmentUnitQueryService.GetSingle(entityPOCO.InvoiceQuantityType, false, true);
-                entityPM.InvoiceQuantityTypeName = measurmentUnit.LocalName;
+                entityPM.InvoiceQuantityTypeName = measurmentUnit?.LocalName;
             }
 
             if (entityPOCO.StatisticQuantityType != null)
             {
                 MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(entityPOCO.Tenant);
                 MeasurmentUnitPM measurmentUnit = measurmentUnitQueryService.GetSingle(entityPOCO.StatisticQuantityType, false, true);
-                entityPM.StatisticQuantityTypeName = measurmentUnit.LocalName;
+                entityPM.StatisticQuantityTypeName = measurmentUnit?.LocalName;
             }
 
             if (entityPOCO.AdditionalQuantityType != null)
@@ -118,13 +118,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             if (!string.IsNullOrWhiteSpace(entityPOCO.DutyRegimeProtocolCode))
                 entityPM.DutyRegimeProtocolLocalName = new TradeAgreementProtocolQueryService(entityPM.Tenant).GetSingle(entityPOCO.DutyRegimeProtocolCode, false, true)?.LocalName;
-
-            //if (entityPOCO.TaxExemptCode != null)
-            //{
-            //    ValidCustomsItemQueryService validCustomsItemQueryService = new ValidCustomsItemQueryService(entityPOCO.Tenant);
-            //    ValidCustomsItemPM validCustomsItem = validCustomsItemQueryService.GetSingle(entityPOCO.TaxExemptCode, false, true);
-            //    entityPM.TaxExemptName = validCustomsItem.LocalName;
-            //}
         }
 
         public string CalcHash(SupplierInvoiceItemPM supplierInvoiceItemPM)
