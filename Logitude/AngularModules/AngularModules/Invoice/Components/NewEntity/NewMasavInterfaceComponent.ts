@@ -20,6 +20,7 @@ import { AccountingPaymentMethodListService } from '../../Services/StandardLists
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { APPaymentInvoicePM } from '../../EntityPMs/APPaymentInvoicePM';
 import { MasavInterfacePM } from 'Invoices/EntityPMs/MasavInterfacePM';
+import { MasavInterfacePMService } from 'Invoice/Services/StandardPMs/MasavInterfacePMService';
 
 @Component({
     templateUrl: './NewMasavInterfaceComponent.html',
@@ -29,7 +30,7 @@ export class NewMasavInterfaceComponent extends BaseComponent  {
     ObjectTableName: string = "MasavInterface";
     DataContext: any = this;
     entityPM: MasavInterfacePM = new MasavInterfacePM();
-    //OpenFormatReportPMService: OpenFormatReportPMService = new OpenFormatReportPMService();
+    masavInterfacePMService: MasavInterfacePMService = new MasavInterfacePMService();
     private CurrentSession = SessionLocator.SelectedSession;
     testingMode:any;
     constructor() {
@@ -77,36 +78,36 @@ export class NewMasavInterfaceComponent extends BaseComponent  {
 
         this.ValidationErrorsList = errors;
 
-        // if (this.ValidationErrorsList.length == 0) {
-        //     this.CurrentSession.StartBusyIndicator("");
-        //     this.OpenFormatReportPMService.insert(this.entityPM).subscribe((myResult:any) => {
+        if (this.ValidationErrorsList.length == 0) {
+            this.CurrentSession.StartBusyIndicator("");
+            this.masavInterfacePMService.insert(this.entityPM).subscribe((myResult:any) => {
 
-        //         var mm: ServiceResponse = myResult;
-        //         if (!mm.HasError) {
-        //             var entity = mm.Result;
+                var mm: ServiceResponse = myResult;
+                if (!mm.HasError) {
+                    var entity = mm.Result;
 
-        //             this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
 
-        //             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-        //                 this.CurrentSession.SessionLocation.viewContainerRef)
-        //                 .then(cmpRef => {
-        //                     cmpRef.instance.ComponentRef = cmpRef;
-        //                     cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName });
-        //                     cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-        //                         this.CancelButtonClicked();
-        //                     });
-        //                 });
-        //             this.CurrentSession.StopBusyIndicator();
-        //         }
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
+                        this.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName });
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                this.CancelButtonClicked();
+                            });
+                        });
+                    this.CurrentSession.StopBusyIndicator();
+                }
 
-        //         else {
-        //             this.ValidationErrorsList = mm.ErrorsArray;
-        //             this.CurrentSession.StopBusyIndicator();
-        //         }
-        //     });
+                else {
+                    this.ValidationErrorsList = mm.ErrorsArray;
+                    this.CurrentSession.StopBusyIndicator();
+                }
+             });
 
 
-        // }
+         }
 
 
 
