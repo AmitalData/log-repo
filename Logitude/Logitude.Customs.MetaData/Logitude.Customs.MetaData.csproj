@@ -292,7 +292,6 @@
     <None Include="DBScripts\Pre\20250709_AddDateTime2.sxml" />
     <None Include="DBScripts\Pre\20240610_UpdateTransportMode.sxml" />
     <None Include="DBScripts\Post\20240610_UpdateTransportmodeLocalName.sxml" />
-    <None Include="DBScripts\Pre\2025062420_AlterManifetError.sxml" />
     <None Include="DBScripts\Pre\202503091425_AddSFTPCustoms.sxml" />
     <None Include="DBScripts\Pre\202409011314_IsMandatoryDelete.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
