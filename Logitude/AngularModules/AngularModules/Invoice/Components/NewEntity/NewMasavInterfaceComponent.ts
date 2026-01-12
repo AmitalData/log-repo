@@ -1,24 +1,8 @@
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component} from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { APPaymentPM } from '../../EntityPMs/APPaymentPM';
-import { APInvoicePM } from '../../EntityPMs/APInvoicePM';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { DateTool, AppTool } from '../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { CurrencyRatesService, LastRate } from '../../../Common/Services/CurrencyRatesService';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
-import { CardListService } from '../../../Common/Services/StandardLists/CardListService';
-import { CardList } from '../../../Common/EntityLists/CardList';
-import { PartnersDomainService } from '../../../Common/Services/PartnersDomainService';
-import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
-import { AccountingPaymentMethodList } from '../../EntityLists/AccountingPaymentMethodList';
-import { AccountingPaymentMethodListService } from '../../Services/StandardLists/AccountingPaymentMethodListService';
-import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { APPaymentInvoicePM } from '../../EntityPMs/APPaymentInvoicePM';
 import { MasavInterfacePM } from 'Invoices/EntityPMs/MasavInterfacePM';
 import { MasavInterfacePMService } from 'Invoice/Services/StandardPMs/MasavInterfacePMService';
 
@@ -63,7 +47,14 @@ export class NewMasavInterfaceComponent extends BaseComponent  {
            
         }
     }
-    
+    get PaymentDate() { return this.entityPM.PaymentDate; }
+    set PaymentDate(value: Date) {
+        if (this.entityPM.PaymentDate != value) {
+            this.entityPM.PaymentDate = value;
+            
+           
+        }
+    }
 
     ValidationErrorsList: string[] = [];
     OkButtonClicked() {

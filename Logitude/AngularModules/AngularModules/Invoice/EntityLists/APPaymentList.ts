@@ -81,5 +81,5 @@ export class APPaymentList {
 		ExternalPaymentNotes: string;
 		VendorCode: string;
 		ConnectedInvoicesNumbers: string;
-			
+		MasavInterfaceId : string;			
 }

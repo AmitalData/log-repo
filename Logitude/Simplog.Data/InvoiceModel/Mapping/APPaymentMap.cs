@@ -119,6 +119,9 @@ namespace Simplog.Data.InvoiceModel.Mapping
 
             this.Property(t => t.BankAccountId)
                 .HasMaxLength(15).IsUnicode(true);
+            this.Property(t => t.MasavInterfaceId)
+              .HasMaxLength(15)
+              .IsUnicode(false);
 
             this.Property(t => t.Field1).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field2).HasMaxLength(250).IsUnicode(true);
@@ -223,6 +226,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ExternalPaymentDate).HasColumnName("ExternalPaymentDate");
             this.Property(t => t.ExternalPaymentNotes).HasColumnName("ExternalPaymentNotes");
             this.Property(t => t.ConnectedInvoicesNumbers).HasColumnName("ConnectedInvoicesNumbers");
+            this.Property(t => t.MasavInterfaceId).HasColumnName("MasavInterfaceId");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

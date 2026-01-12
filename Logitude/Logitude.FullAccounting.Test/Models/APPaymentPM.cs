@@ -136,6 +136,7 @@ namespace Logitude.FullAccounting.Test.Models
 
         
         public string ExternalPaymentNotes { get; set; }
+        public string MasavInterfaceId { get; set; }
 
     }
 }
