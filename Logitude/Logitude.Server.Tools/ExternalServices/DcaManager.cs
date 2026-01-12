@@ -728,7 +728,7 @@ b4UnZip:fileContentsBASE64.Length" + fileContentsBASE64.Length, false, "DCA", Da
         public static string GetDCAOutFileName//<T1>(T1 request, 
          (
             //string p_work_dir, 
-            string p_ServiceName, string p_ExternalId, bool p_taskyam, DCAParams p_EnviorentParams)
+            string p_ServiceName, string p_ExternalId, bool p_taskyam, DCAParams p_EnviorentParams,bool isSendSFTP)
         {
             if (String.IsNullOrWhiteSpace(p_EnviorentParams.Sufix))
             {
@@ -736,7 +736,7 @@ b4UnZip:fileContentsBASE64.Length" + fileContentsBASE64.Length, false, "DCA", Da
             }
             string v_customer_list = "";
             v_customer_list = "IL" + p_EnviorentParams.consumerId;
-            if (p_taskyam) v_customer_list += ".IL" + p_EnviorentParams.mehesCustomerId;
+            if (p_taskyam|| isSendSFTP) v_customer_list += ".IL" + p_EnviorentParams.mehesCustomerId;
             if (!String.IsNullOrWhiteSpace(p_EnviorentParams.consumerId2)) v_customer_list += ".IL" + p_EnviorentParams.consumerId2;
             if (!String.IsNullOrWhiteSpace(p_EnviorentParams.consumerId3)) v_customer_list += ".IL" + p_EnviorentParams.consumerId3;
             if (!String.IsNullOrWhiteSpace(p_EnviorentParams.consumerId4)) v_customer_list += ".IL" + p_EnviorentParams.consumerId4;
