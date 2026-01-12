@@ -448,6 +448,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="MasavInterfaceId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="PrintedByUserId"
     ReferencedTable="Users"

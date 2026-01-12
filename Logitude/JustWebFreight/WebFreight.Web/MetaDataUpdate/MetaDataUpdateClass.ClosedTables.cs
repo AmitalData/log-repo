@@ -1329,6 +1329,8 @@ namespace WebFreight.Web.MetaDataUpdate
             UpdateINTTRAStatuses(shipmentContext);
             UpdateINTTRADocumentTypes(shipmentContext);
             UpdateConfirmationNumberStatusClosedTable(invoiceContext);
+            UpdateMasavInterfaceStatusClosedTable(invoiceContext);
+
 
         }
 
@@ -2620,6 +2622,35 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddSATInvoiceStatus(new SATInvoiceStatusDetails() { Code = "OP", Name = "Opened in SAT" }, entityRepository);
             AddClosedTables.AddSATInvoiceStatus(new SATInvoiceStatusDetails() { Code = "PP", Name = "Partially Paid in SAT" }, entityRepository);
             AddClosedTables.AddSATInvoiceStatus(new SATInvoiceStatusDetails() { Code = "PD", Name = "Paid in SAT" }, entityRepository);
+
+            entityRepository.SubmitChanges();
+        }
+        private void UpdateMasavInterfaceStatusClosedTable(InvoiceContext invoiceContext)
+        {
+            MasavInterfaceStatusRepository entityRepository = new MasavInterfaceStatusRepository(invoiceContext);
+            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus() {
+                Name = "Draft",               
+                Code = "DR",
+                LocalName = "טיוטה",
+            }, entityRepository);
+            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
+            {
+                Name = "Transmitted",
+                Code = "TR",
+                LocalName = "שודר",
+            }, entityRepository);
+            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
+            {
+                Name = "Cancelled",
+                Code = "CN",
+                LocalName = "בוטל",
+            }, entityRepository);
+            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
+            {
+                Name = "Failed",
+                Code = "FD",
+                LocalName = "נכשל",
+            }, entityRepository);
 
             entityRepository.SubmitChanges();
         }

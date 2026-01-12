@@ -39,7 +39,18 @@
 
         <td></td>
     </tr>
+    <tr style="height:32px">
+        <td style="width:80px">
+            <LogLabel [ObjectFieldName]="'PaymentDate'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td style="width:180px">
+            <LogDatePicker [ObjectFieldName]="'PaymentDate'" [ObjectTableName]="ObjectTableName"
+                           [DataContext]="DataContext" [HideColumns]="false"></LogDatePicker>
+        </td>
 
+        <td></td>
+    </tr>
    
     <tr></tr>
     <tr style="height: 32px;">

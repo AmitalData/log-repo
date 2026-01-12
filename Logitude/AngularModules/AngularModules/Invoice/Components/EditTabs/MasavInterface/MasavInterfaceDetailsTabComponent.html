@@ -1,1 +1,18 @@
-﻿
+﻿<tr>
+    <!-- Grid -->
+    <td style="">
+
+        <div class="GeneratedGridContainer">
+            <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'APPayment'"
+                [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                [columns]="columns" [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent"
+                [IsCustomTemplate]="true" [CustomColumnsReady]="MasavInterfaceColumnsReady">
+            </logitude-grid>
+        </div>
+
+        <!-- edit -->
+        <div *ngIf="0" class="CellContent">
+        </div>
+
+    </td>
+</tr>

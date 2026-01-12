@@ -47,6 +47,7 @@ import { ARInvoiceLinesVATAmountsAdjustmentsComponent } from './Components/SAT/A
 import { NewConfirmationNumberDefaultComponent } from './Components/NewEntity/NewConfirmationNumberDefaultComponent';
 import { NewMasavInterfaceComponent } from './Components/NewEntity/NewMasavInterfaceComponent';
 import { MasavInterfaceDetailsTabComponent } from './Components/EditTabs/MasavInterface/MasavInterfaceDetailsTabComponent';
+import { MasavInterfaceListTemplate } from './Components/Templates/MasavInterfaceListTemplate';
 
 
 export const Components =
@@ -89,7 +90,8 @@ export const Components =
         ARInvoiceCancellationReasionComponent,
         ARInvoiceLinesVATAmountsAdjustmentsComponent,
         NewMasavInterfaceComponent,
-        MasavInterfaceDetailsTabComponent
+        MasavInterfaceDetailsTabComponent,
+        MasavInterfaceListTemplate
     ];
 
 export class ModuleDeclarations {
@@ -138,6 +140,7 @@ export class ModuleDeclarations {
             case "ARInvoiceLinesVATAmountsAdjustmentsComponent": { myResult = ARInvoiceLinesVATAmountsAdjustmentsComponent; break; }     
             case "NewMasavInterfaceComponent": { myResult = NewMasavInterfaceComponent; break; }             
             case "MasavInterfaceDetailsTabComponent": { myResult = MasavInterfaceDetailsTabComponent; break; }
+            case "MasavInterfaceListTemplate" : { myResult = MasavInterfaceListTemplate; break; }
         }
 
         return myResult;

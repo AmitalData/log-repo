@@ -82,5 +82,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string ExternalPaymentNotes { get; set; }
         public string VendorCode { get; set; }
         public string ConnectedInvoicesNumbers { get; set; }
+        public string MasavInterfaceId { get; set; }
     }
 }
