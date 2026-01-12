@@ -768,7 +768,9 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                 //}
 
                 else if (isDisplayOnly) {
-                    displayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+                    const prefix = "לתצוגה בלבד - ";
+                    const msg = (displayOnlyCheckResult.DisplayOnlyMessage || "").trim();
+                    displayOnlyMessage = msg.startsWith(prefix) ? msg : (prefix + msg);
                     var rresponse: ServiceResponse = new ServiceResponse();
                     rresponse.Result = { IsDisplayOnly: isDisplayOnly, DisplayOnlyMessage: displayOnlyMessage };
                     return rresponse;

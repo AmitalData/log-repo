@@ -941,25 +941,15 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             }
 
             else if (declarationDisplayOnly2) {
-
-                // if(displayOnlyCheckResult.DisplayOnlyMessage=="םילוץ םושר")
-                // {
-                //     this.IsDisplayOnly = false;
-                //     this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
-
-                //     this.IsDisplayOnly = false;
-                //     this.OkButtonEnabled = true;
-                //     this.SendButtonEnabled = true;
-                // }
-
-                // else{
                 this.IsDisplayOnly = true;
-                this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+
+                const prefix = "לתצוגה בלבד - ";
+                const msg = (displayOnlyCheckResult.DisplayOnlyMessage || "").trim();
+                this.ErrorMessage = msg.startsWith(prefix) ? msg : (prefix + msg);
 
                 this.IsDisplayOnly = true;
                 this.OkButtonEnabled = false;
                 this.SendButtonEnabled = false;
-                // }
 
             }
             else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {

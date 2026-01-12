@@ -1229,9 +1229,10 @@ export class DeclarationSupplierInvoiceTabComponent
                                 this.EntityPM.IsAmendmentDisplayOnly;
                     }
                 } else if (this.IsDisplayOnly) {
-                    this.DisplayOnlyMessage =
-                        'לתצוגה בלבד - ' +
-                        displayOnlyCheckResult.DisplayOnlyMessage;
+                    const prefix = 'לתצוגה בלבד - ';
+                    const msg = (displayOnlyCheckResult.DisplayOnlyMessage || '').trim();
+
+                    this.DisplayOnlyMessage = msg.startsWith(prefix) ? msg : (prefix + msg);
                 } else if (this.EntityPM.StorageStatusCode) {
                     this.ShowStorageStatusMessage = true;
                     this.DisplayOnlyMessage =
