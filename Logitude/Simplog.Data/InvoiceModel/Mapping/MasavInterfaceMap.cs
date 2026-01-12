@@ -32,7 +32,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
                 .HasMaxLength(1000)
                 .IsUnicode(true);
             this.Property(t => t.StatusCode)
-                .HasMaxLength(15)
+                .HasMaxLength(3)
                 .IsUnicode(false);
 
 

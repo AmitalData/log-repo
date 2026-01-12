@@ -72,7 +72,7 @@
   <Column
     Name="StatusCode"
     Type="varchar"
-    Size="15">
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
