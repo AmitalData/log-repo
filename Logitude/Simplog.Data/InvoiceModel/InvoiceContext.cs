@@ -326,6 +326,8 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new ControlForInvoiceLinesDataViewMap());
             modelBuilder.Configurations.Add(new ConfirmationNumberStatusMap());
             modelBuilder.Configurations.Add(new ConfirmationNumberDefaultMap());
+            modelBuilder.Configurations.Add(new MasavInterfaceMap());
+            modelBuilder.Configurations.Add(new MasavInterfaceStatusMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -481,7 +483,8 @@ namespace Simplog.Data.InvoiceModel
         public IDbSet<BankAccountView> BankAccountView { get; set; }
         public IDbSet<ConfirmationNumberStatus> ConfirmationNumberStatuses { get; set; }
         public IDbSet<ConfirmationNumberDefault> ConfirmationNumberDefaults { get; set; }
-
+        public IDbSet<MasavInterface> MasavInterfaces { get; }
+        public IDbSet<MasavInterfaceStatus> MasavInterfaceStatuses { get; }
         public void DetectChanges()
         {
             ChangeTracker.DetectChanges();

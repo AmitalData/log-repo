@@ -992,6 +992,16 @@
     <Compile Include="InfrastructureModel\EntityQueries\QueueMessageQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\QuoteChargesGroupQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ReferenceCustomObjectQuery.cs" />
+    <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\MasavInterfaceStatusDetails.Generated.cs" />
+    <Compile Include="InvoiceModel\CloseTables\EnumGenerated\MasavInterfaceStatusStruct.Generated.cs" />
+    <Compile Include="InvoiceModel\EntityLists\MasavInterfaceList.cs" />
+    <Compile Include="InvoiceModel\EntityLists\MasavInterfaceStatusList.cs" />
+    <Compile Include="InvoiceModel\EntityPMs\MasavInterfacePM.cs" />
+    <Compile Include="InvoiceModel\EntityPMs\MasavInterfaceStatusPM.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\MasavInterfaceStatusQuery.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\MasavInterfaceQuery.cs" />
+    <Compile Include="InvoiceModel\Tools\DataMapping\MasavInterfaceMapping.cs" />
+    <Compile Include="InvoiceModel\Tools\EntityService\MasavInterfaceService.cs" />
     <Compile Include="InvoiceModel\Tools\Exceptions\InvoiceAlreadyApprovedException.cs" />
     <Compile Include="Security\ContactInfo.cs" />
     <Compile Include="ShipmentsModel\EntityLists\FreightForwarderReferenceList.cs" />

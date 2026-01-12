@@ -67,6 +67,8 @@ namespace Simplog.Data.InvoiceModel
         IDbSet<ConfirmationNumberStatus> ConfirmationNumberStatuses { get; }
 
         IDbSet<ConfirmationNumberDefault> ConfirmationNumberDefaults { get; }
+        IDbSet<MasavInterface> MasavInterfaces { get; }
+        IDbSet<MasavInterfaceStatus> MasavInterfaceStatuses { get; }
 
         void SetAsModified(object entity);
         void DetectChanges();

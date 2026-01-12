@@ -205,6 +205,9 @@
     <None Include="DBScripts\InvoiceModel\202203021250_FillAPInvoicePaymentsNumbers.sxml" />
     <None Include="DBScripts\CommonModel\202208071040_FillCustomerGroupOnCardLevel.sxml" />
     <None Include="DBScripts\GlobalModel\AddStarWorkflowInstanceRetryWorkerBatchService.sxml" />
+    <None Include="DBTables\InvoiceModel\MasavInterface.dxml" />
+    <None Include="DBTables\InvoiceModel\MasavInterfaceStatus.dxml" />
+    <None Include="EntityFiles\InvoiceModel\MasavInterfaceStatus.lxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -384,6 +387,7 @@
     <None Include="EntityFiles\InvoiceModel\ARInvoicesSignedStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\ConfirmationNumberDefault.lxml" />
     <None Include="EntityFiles\InvoiceModel\ConfirmationNumberStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\MasavInterface.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesAmountWithVATDetails.lxml" />
     <None Include="EntityFiles\QuoteModel\ValidByType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainerDiscrepancy.lxml" />

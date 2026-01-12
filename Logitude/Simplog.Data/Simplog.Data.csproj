@@ -892,6 +892,8 @@
     <Compile Include="InvoiceModel\EntityPOCOs\BankAccountLite.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ControlForInvoiceLinesDataView.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\DigitalInvoicesCounterDataView.cs" />
+    <Compile Include="InvoiceModel\EntityPOCOs\MasavInterface.cs" />
+    <Compile Include="InvoiceModel\EntityPOCOs\MasavInterfaceStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATPaymentMethod.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATInvoiceStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\QBOGlobalTaxCalculation.cs" />
@@ -910,6 +912,8 @@
     <Compile Include="InvoiceModel\Mapping\BankAccountLiteMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ControlForInvoiceLinesDataViewMap.cs" />
     <Compile Include="InvoiceModel\Mapping\DigitalInvoicesCounterDataViewMap.cs" />
+    <Compile Include="InvoiceModel\Mapping\MasavInterfaceMap.cs" />
+    <Compile Include="InvoiceModel\Mapping\MasavInterfaceStatusMap.cs" />
     <Compile Include="InvoiceModel\Mapping\SATPaymentMethodMap.cs" />
     <Compile Include="InvoiceModel\Mapping\SATInvoiceStatusMap.cs" />
     <Compile Include="InvoiceModel\Mapping\QBOGlobalTaxCalculationMap.cs" />
@@ -926,6 +930,8 @@
     <Compile Include="InvoiceModel\Repositories\BankAccountLiteRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ConfirmationNumberDefaultRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ConfirmationNumberStatusRepository.cs" />
+    <Compile Include="InvoiceModel\Repositories\MasavInterfaceStatusRepository.cs" />
+    <Compile Include="InvoiceModel\Repositories\MasavInterfaceRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATPaymentMethodRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATInvoiceStatusRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\QBOGlobalTaxCalculationRepository.cs" />
