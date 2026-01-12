@@ -153,6 +153,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="QueueDefinitionGroup"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultSendOptionsCode"
     ReferencedTable="InterfaceSendOptions"

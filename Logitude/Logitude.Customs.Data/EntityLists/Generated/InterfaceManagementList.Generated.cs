@@ -85,6 +85,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool? IsCustomsFile  { get; set; }
        [DataMember]
        public bool? IsUnifreight  { get; set; }
+       [DataMember]
+       public string QueueDefinitionGroup  { get; set; }
    }
 
 }
