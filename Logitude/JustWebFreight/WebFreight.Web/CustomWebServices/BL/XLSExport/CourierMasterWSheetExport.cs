@@ -51,7 +51,6 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     r.CourierSuspentionName,
                     r.SpecialActionStatus,
                     r.DeclarationStatusTypeName,
-                    r.CourierPendingReasonName,
                     r.LastMileStatusCode,
                     r.IsClosedForFollowUp,
                     r.CourierPendingReasonList,
