@@ -1174,6 +1174,9 @@
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ExpenseAllocationSettingViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ExpenseAllocationFlowController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ExpenseAllocationSettingController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\MasavInterfaceStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\MasavInterfaceViewsController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\MasavInterfaceController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentExtendedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\FreightForwarderReferenceViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ReferenceTypeViewsController.Generated.cs" />
@@ -4627,6 +4630,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\GeneralLockUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ExpenseAllocationFlowUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ExpenseAllocationSettingUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\MasavInterfaceStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\MasavInterfaceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\FreightForwarderReferenceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ReferenceTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RefundCustomerActivityTypeUpdateClass.cs" />

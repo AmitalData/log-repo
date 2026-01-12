@@ -477,6 +477,40 @@
                                                                 (Checked)="HebrewTenant = $event"></CheckBox>
                                                         </td>
                                                     </tr>
+                                                      <!-- MasavBankId -->
+                                                      <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'MasavBankId'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'MasavBankId'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'BankAccount'"
+                                                                (SelectedItemChanged)="MasavBank = $event"
+                                                                [DependencyFilter1Value]="'false'"
+                                                                [QueryFilterItems]="BankAccountFilterItems"
+                                                                [StartSearchFromChar]="3" [StartSearchFromNumber]="5">
+                                                            </LogLov>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'MasavCode'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'MasavCode'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [InputType]="'text'" [DataContext]="DataContext">
+                                                            </LogTextBox>
+                                                        </td>
+                                                    </tr>
 
                                                 </table>
                                             </td>
@@ -759,6 +793,12 @@
                                                             </CheckBox>
                                                         </td>
                                                     </tr>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
                                                 </table>
                                             </td>
                                         </tr>

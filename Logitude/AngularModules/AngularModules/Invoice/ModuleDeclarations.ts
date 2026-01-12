@@ -45,6 +45,8 @@ import { SendPaymentWindowComponent } from './Components/SAT/SendPaymentWindowCo
 import { ARInvoiceCancellationReasionComponent } from './Components/MenuButtons/ARInvoice/ARInvoiceCancellationReasionComponent';
 import { ARInvoiceLinesVATAmountsAdjustmentsComponent } from './Components/SAT/ARInvoiceLinesVATAmountsAdjustmentsComponent';
 import { NewConfirmationNumberDefaultComponent } from './Components/NewEntity/NewConfirmationNumberDefaultComponent';
+import { NewMasavInterfaceComponent } from './Components/NewEntity/NewMasavInterfaceComponent';
+import { MasavInterfaceDetailsTabComponent } from './Components/EditTabs/MasavInterface/MasavInterfaceDetailsTabComponent';
 
 
 export const Components =
@@ -86,6 +88,8 @@ export const Components =
         AccountingTab_APPaymentMethod,
         ARInvoiceCancellationReasionComponent,
         ARInvoiceLinesVATAmountsAdjustmentsComponent,
+        NewMasavInterfaceComponent,
+        MasavInterfaceDetailsTabComponent
     ];
 
 export class ModuleDeclarations {
@@ -132,6 +136,8 @@ export class ModuleDeclarations {
             case "ExternalTransmissionSettingsComponent": { myResult = ExternalTransmissionSettingsComponent; break; }
             case "ARInvoiceCancellationReasionComponent": { myResult = ARInvoiceCancellationReasionComponent; break; }
             case "ARInvoiceLinesVATAmountsAdjustmentsComponent": { myResult = ARInvoiceLinesVATAmountsAdjustmentsComponent; break; }     
+            case "NewMasavInterfaceComponent": { myResult = NewMasavInterfaceComponent; break; }             
+            case "MasavInterfaceDetailsTabComponent": { myResult = MasavInterfaceDetailsTabComponent; break; }
         }
 
         return myResult;

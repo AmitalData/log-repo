@@ -1719,6 +1719,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private string GetCreditAccoutId(APPaymentPM theEntityPm)
         {
             string creditAccoutId = null;
+            if(theEntityPm.PaymentMethodCode == "MS")
+            {
+                 FullAccountingSettingPM fullAccountingSettingPM = GetFullAccountingSetting(theEntityPm);
+                 if(fullAccountingSettingPM != null && fullAccountingSettingPM.MasavBankId != null)
+                 {
+                    IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;
+                    BankAccountPM bankAccount = bankAccountQuery.GetByFirstOrDefault(fullAccountingSettingPM.MasavBankId, theEntityPm.Tenant);
+                    if (bankAccount != null && !string.IsNullOrEmpty(bankAccount.MasavGLAcccountId))
+                        return bankAccount.MasavGLAcccountId;
+                    else
+                        throw new ApplicationException("No Masav bank account connected to the GL account");
+
+                 }
+                 else {throw new ApplicationException("No Masav bank account configured in the accounting settings"); }
+            }
             if (theEntityPm.PaymentMethodCode == "CA")
             {
                 ICashBookQueryServiceExt cashBookQuery = ContainerAccessor.Container.Resolve(typeof(ICashBookQueryServiceExt), "CashBookQueryServiceExt", new ParameterOverride("", 1)) as ICashBookQueryServiceExt;

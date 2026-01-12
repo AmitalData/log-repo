@@ -126,12 +126,19 @@ export class MiscPageComponent implements AfterViewInit {
                         this.YearTransferMethod(true);
                         break;
                     }
-           case "ACYT":{
+             case "ACYT":{
 
                     this.YearTransferMethod(false);
                        break;
 
                        }
+              case "MIQC":{
+                    displayTitle = TextCodeTranslator.Translate("TaxReport");
+                    tableName = "TaxReport";                  
+                    break;
+                }
+    
+                           
                 default: { break; }
             }
 

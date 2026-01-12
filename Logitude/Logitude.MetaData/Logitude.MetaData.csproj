@@ -207,6 +207,9 @@
     <None Include="DBScripts\GlobalModel\AddStarWorkflowInstanceRetryWorkerBatchService.sxml" />
     <None Include="DBTables\InvoiceModel\ExpenseAllocationFlow.dxml" />
     <None Include="EntityFiles\InvoiceModel\ExpenseAllocationFlow.lxml" />
+    <None Include="DBTables\InvoiceModel\MasavInterface.dxml" />
+    <None Include="DBTables\InvoiceModel\MasavInterfaceStatus.dxml" />
+    <None Include="EntityFiles\InvoiceModel\MasavInterfaceStatus.lxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -388,6 +391,7 @@
     <None Include="EntityFiles\InvoiceModel\ARInvoicesSignedStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\ConfirmationNumberDefault.lxml" />
     <None Include="EntityFiles\InvoiceModel\ConfirmationNumberStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\MasavInterface.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesAmountWithVATDetails.lxml" />
     <None Include="EntityFiles\QuoteModel\ValidByType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainerDiscrepancy.lxml" />
