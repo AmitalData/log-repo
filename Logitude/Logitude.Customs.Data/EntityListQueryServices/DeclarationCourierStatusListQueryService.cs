@@ -132,6 +132,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   FinalRelease = !d.HatraDate.HasValue,
                                                                   CasualSupplierName = d.CasualSupplierName,
                                                                   Delivered = a.Delivered,
+                                                                  CourierPendingReasonName = a.CourierPendingReasonList
+
                                                               });
 
 
