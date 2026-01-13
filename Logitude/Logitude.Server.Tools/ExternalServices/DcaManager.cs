@@ -736,7 +736,7 @@ b4UnZip:fileContentsBASE64.Length" + fileContentsBASE64.Length, false, "DCA", Da
             }
             string v_customer_list = "";
             v_customer_list = "IL" + p_EnviorentParams.consumerId;
-            if (p_taskyam &&  !isSendSFTP) v_customer_list += ".IL" + p_EnviorentParams.mehesCustomerId;
+            if (p_taskyam|| isSendSFTP) v_customer_list += ".IL" + p_EnviorentParams.mehesCustomerId;
             if (!String.IsNullOrWhiteSpace(p_EnviorentParams.consumerId2)) v_customer_list += ".IL" + p_EnviorentParams.consumerId2;
             if (!String.IsNullOrWhiteSpace(p_EnviorentParams.consumerId3)) v_customer_list += ".IL" + p_EnviorentParams.consumerId3;
             if (!String.IsNullOrWhiteSpace(p_EnviorentParams.consumerId4)) v_customer_list += ".IL" + p_EnviorentParams.consumerId4;
