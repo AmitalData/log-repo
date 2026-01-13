@@ -841,18 +841,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
 					Sufix = sufix
 				}; //941079089
 
+				var dCAOutFileName = DcaManager.GetDCAOutFileName(
+						  serviceName,//_CustomsRequestsSheetService.CurrentMessageDefinition.DcaPrefixName,
+						_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Id, isVualtTaskyam,
+						myParams
+						);
+
 				int tenant = _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant;
 				FeatureQuery featureQuery = new FeatureQuery(new FeatureRepository(CommonDataContext.GetContext(tenant)));
 				var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
 				bool isSendSFTPEnabled = features.Features.Any(x => string.Equals(x.Code, FeatureCode_IsSendSFTP, StringComparison.OrdinalIgnoreCase));
 
-				var dCAOutFileName = DcaManager.GetDCAOutFileName(
-						  serviceName,//_CustomsRequestsSheetService.CurrentMessageDefinition.DcaPrefixName,
-						_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Id, isVualtTaskyam,
-						myParams, isSendSFTPEnabled
-						);
-
-				
 				string serverJobID = string.Empty;
 				if (isSendSFTPEnabled)
 				{
