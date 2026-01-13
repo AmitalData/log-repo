@@ -21,7 +21,7 @@ namespace Logitude.Accounting.BL.CoreBL
     public interface IJournalApproveParser
     {
         void OnApproveUpdatingFillArrangeJournalPMResetControlAccount();
-        bool ParseIt();
+        bool ParseIt(string selectedQueue = null);
     }
     public class JournalApproveParser : IJournalApproveParser
     {
@@ -157,13 +157,13 @@ namespace Logitude.Accounting.BL.CoreBL
             return pm;
         }
         public bool StreamingJournalAlreadChecked = false;
-        public virtual bool ParseIt()
+        public virtual bool ParseIt(string selectedQueue = null)
         {
             try
             {
                 string logtext = "";
 
-                if (_JournalPM.StatusCode == "6" )
+                if (_JournalPM.StatusCode == "6")
                 {
                     logtext = "JournalApproveParser.ParseIt(), Point 1, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
                         + ", Status=" + _JournalPM.StatusCode
@@ -201,33 +201,35 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 CheckLedgerTransactions();
 
-                logtext = "JournalApproveParser.ParseIt(), Point 5, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
-                    + ", Status=" + _JournalPM.StatusCode
-                    + ", QueueId=" + _JournalPM.QueueId;
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
-
-                CreateGLAccountTotalByMonthFromLedger();
-                CheckGLAccountTotalByMonth();
-
-                if (_JournalPM.StatusCode == "6" )
+                if (selectedQueue != JournalApproveService.K_AccountingConversionJournalApproveWR)
                 {
-                    CreateControlGLAccountTotalByMonthFromLedger();
-                    CheckControlGLAccountTotalByMonths();
+                    logtext = "JournalApproveParser.ParseIt(), Point 5, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                        + ", Status=" + _JournalPM.StatusCode
+                        + ", QueueId=" + _JournalPM.QueueId;
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
+                    CreateGLAccountTotalByMonthFromLedger();
+                    CheckGLAccountTotalByMonth();
+
+                    if (_JournalPM.StatusCode == "6")
+                    {
+                        CreateControlGLAccountTotalByMonthFromLedger();
+                        CheckControlGLAccountTotalByMonths();
+                    }
+
+                    logtext = "JournalApproveParser.ParseIt(), Point 8, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                        + ", Status=" + _JournalPM.StatusCode
+                        + ", QueueId=" + _JournalPM.QueueId;
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
+                    CheckTotalByMonthDateType();
+
+
+                    logtext = "JournalApproveParser.ParseIt(), Point 9, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                        + ", Status=" + _JournalPM.StatusCode
+                        + ", QueueId=" + _JournalPM.QueueId;
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
                 }
-
-                logtext = "JournalApproveParser.ParseIt(), Point 8, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
-                    + ", Status=" + _JournalPM.StatusCode
-                    + ", QueueId=" + _JournalPM.QueueId;
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
-
-                CheckTotalByMonthDateType();
-
-
-                logtext = "JournalApproveParser.ParseIt(), Point 9, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
-                    + ", Status=" + _JournalPM.StatusCode
-                    + ", QueueId=" + _JournalPM.QueueId;
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
-
             }
             catch (Exception)
             {
