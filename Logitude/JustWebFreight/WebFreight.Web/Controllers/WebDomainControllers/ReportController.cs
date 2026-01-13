@@ -841,7 +841,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 var response = new
                 {
-                    ActiveDirectoryTenantId = reportHelper.ActiveDirectoryTenantId,
+                    reportHelper.ActiveDirectoryTenantId,
                     Reports = results
                 };
 
