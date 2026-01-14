@@ -174,6 +174,9 @@ export class GLAccountExtendedListService {
                 if (res && res != null) {
                     return res;
                 }
+                else {
+                    return 0;
+                }
             }),
             catchError(ServiceHelper.HandleServiceError));
 
