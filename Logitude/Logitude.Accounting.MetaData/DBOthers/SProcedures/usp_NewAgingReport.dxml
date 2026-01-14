@@ -27,6 +27,8 @@ create or ALTER PROCEDURE [dbo].[usp_NewAgingReport]
 @ReportTypeCode VARCHAR(50) = '1'
 AS
 BEGIN
+SET NOCOUNT ON;
+SET FMTONLY OFF;
 IF @InputDate IS NULL
 BEGIN
 SET @InputDate = GETDATE();
