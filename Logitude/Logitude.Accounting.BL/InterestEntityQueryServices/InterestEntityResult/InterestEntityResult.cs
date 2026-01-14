@@ -22,6 +22,7 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices
     {
         public int OriginalLineNumber;
         public string Reference1;
+        public string Reference2;
         public string Notes;
     }
 }

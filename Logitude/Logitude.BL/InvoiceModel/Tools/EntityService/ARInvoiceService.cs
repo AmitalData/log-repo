@@ -3562,7 +3562,6 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                     CurrencyId = invoiceLine.ForiegnCurrencyId,
                     JournalId = entityPM.JournalId,
                     AccountingDate = entityPM.InvoiceDate
-
                 };
                 return interestTransaction;
             }

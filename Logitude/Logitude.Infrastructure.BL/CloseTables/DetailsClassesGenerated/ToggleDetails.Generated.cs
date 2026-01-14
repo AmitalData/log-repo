@@ -958,6 +958,14 @@ namespace Logitude.Infrastructure.BL
             });
 
             all.Add(new ToggleDetails()
+            {
+                Code = "IRN",
+                Name = "Interest Report Notes New Logic",
+                SearchFields = "IRN, Interest Report Notes New Logic",
+                Description = "Interest Report Notes: Entity of ARInvoice, Cheques of ARPayment",
+            });
+
+            all.Add(new ToggleDetails()
             {    
                 Code = "JAM", 
                 Name = "Journal Approval MultiThreading", 
