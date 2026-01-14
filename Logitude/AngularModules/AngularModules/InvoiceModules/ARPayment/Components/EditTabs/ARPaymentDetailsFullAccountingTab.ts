@@ -47,6 +47,8 @@ import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { BankAccountListService } from 'Accounting/Services/StandardLists/BankAccountListService';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { ReconcileEventManager } from 'Accounting/Utilities/ReconcileEventManager';
+import { ARInvoiceExtendedService } from 'Invoice/Services/ExtendedPMs/ARInvoiceExtendedService';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 declare var window: any;
 
 @Component({
@@ -2904,6 +2906,9 @@ export class TransactionLineModel extends BaseComponent
             return this._isChecked;
         }
     }
+
+    private arInvoiceAvailable = new Map<string, boolean>();
+
     public set IsChecked(v: boolean)
     {
 
@@ -2911,10 +2916,20 @@ export class TransactionLineModel extends BaseComponent
 
         if (v) {
 
+            const arInvoiceId = this.ledgerTransaction.SourceId;
+            if (this.arInvoiceAvailable.has(arInvoiceId)) {
+                this.CheckCanBeReconciled(arInvoiceId);
+            }
+            else {
 
-            this.SetAmountToReconcile();
+                var _ARInvoiceExtendedService = new ARInvoiceExtendedService();
+                _ARInvoiceExtendedService.getCanBeReconciled(arInvoiceId).subscribe((result: boolean) =>
+                {
+                    this.arInvoiceAvailable.set(arInvoiceId, result);
+                    this.CheckCanBeReconciled(arInvoiceId);
+                });
+            }
 
-            this.parent.PushTransaction(this.ledgerTransaction);
         } else {
             this.AmountToReconcile = 0;
 
@@ -2927,8 +2942,21 @@ export class TransactionLineModel extends BaseComponent
 
     }
 
+    CheckCanBeReconciled(arInvoiceId: string)
+    {
+        if (this.arInvoiceAvailable.get(arInvoiceId)) {
+            this.SetAmountToReconcile();
 
+            this.parent.PushTransaction(this.ledgerTransaction);
+        }
+        else {
+            this.IsChecked = false;
 
+            var messageWindow: MessageWindow = new MessageWindow();
+            // messageWindow.Show(TextCodeTranslator.Translate("Accounting.O.CanNotReconcile"));
+            messageWindow.Show("can not reconcile bal bnla");
+        }
+    }
 
     private SetAmountToReconcile()
     {
