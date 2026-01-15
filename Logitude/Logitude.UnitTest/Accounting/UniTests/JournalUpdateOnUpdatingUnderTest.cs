@@ -983,7 +983,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                         step_JournalApproveParser++;
 
                     });
-                A.CallTo(() => fakeIJournalApproveParser.ParseIt())
+                A.CallTo(() => fakeIJournalApproveParser.ParseIt(null))
                     .Invokes(() =>
                     {
                         if (step_JournalApproveParser != 2)
@@ -1073,7 +1073,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                         step_JournalApproveParser++;
 
                     });
-                A.CallTo(() => fakeIJournalApproveParser.ParseIt())
+                A.CallTo(() => fakeIJournalApproveParser.ParseIt(null))
                     .Invokes(() =>
                     {
                         if (step_JournalApproveParser != 2)
