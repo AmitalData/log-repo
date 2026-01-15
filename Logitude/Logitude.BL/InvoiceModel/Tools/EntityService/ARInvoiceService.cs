@@ -3475,7 +3475,8 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForVatLine  ARInvoiceId (
                     CurrencyId = entityPM.InvoiceCurrencyId,
                     ChangeSetOp = ChangeSetOperation.Insert,
                     JournalId = entityPM.JournalId,
-                    AccountingDate = entityPM.InvoiceDate
+                    AccountingDate = entityPM.InvoiceDate,
+                    Notes = entityPM.MainEntityReference,
                 };
                 return InterestTransactionVatLine;
             }
@@ -3561,7 +3562,8 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                     ChangeSetOp = ChangeSetOperation.Insert,
                     CurrencyId = invoiceLine.ForiegnCurrencyId,
                     JournalId = entityPM.JournalId,
-                    AccountingDate = entityPM.InvoiceDate
+                    AccountingDate = entityPM.InvoiceDate,
+                    Notes = entityPM.MainEntityReference,
                 };
                 return interestTransaction;
             }

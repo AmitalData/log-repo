@@ -3,6 +3,7 @@ using Logitude.Accounting.BL.InterestService;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityMapping;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Def.EntityPMs;
@@ -47,7 +48,7 @@ using WebFreight.Web.Helpers;
             decimal? lastTotal = ProcessInterestTransactions(interestReportDP, interestReportPeriods, tenant);
 
             SetInterestReportMetadata(interestReportDP, interestReportPeriods, lastTotal, tenant);
-            interestReportDP.InterestTotals = GetInterestTotals(interestReportDP, tenant);
+            interestReportDP.InterestTotals = GetInterestTotals(interestReportDP, _InterestReportPM, tenant);
             return interestReportDP;
         }
 
@@ -300,9 +301,51 @@ using WebFreight.Web.Helpers;
         }
 
 
-        private List<InterestReportTotalProvider> GetInterestTotals(InterestDataProvider interestReportDP, int tenant)
+        private InterestReportTotalProvider GetInterestTotals(InterestDataProvider interestReportDP, InterestReportPM interestReportPM , int tenant)
         {
-            throw new NotImplementedException();
+            InterestReportTotalProvider rv = new InterestReportTotalProvider();
+
+            /* a */
+            rv.CalculatedStdInterestAmount =
+                    (interestReportPM.InterestReportLinesByDates == null ||
+                     !interestReportPM.InterestReportLinesByDates.Any())
+                        ? (decimal?)null  // for a null collection, but --IMPORTANTLY-- for an empty collection (because CalculatedStandInterestAmount is decimal [not a decimal?])
+                        : interestReportPM.InterestReportLinesByDates.Sum(l => l.CalculatedStandInterestAmount);
+
+            /* b */
+            rv.CalculatedExcInterestAmount =
+                    (interestReportPM.InterestReportLinesByDates == null ||
+                     !interestReportPM.InterestReportLinesByDates.Any())
+                        ? (decimal?)null  
+                        : interestReportPM.InterestReportLinesByDates.Sum(l => l.CalculatedExcepInterestAmount);
+
+            /* c = a + b */
+            var sum = (rv.CalculatedStdInterestAmount ?? 0m) +
+                      (rv.CalculatedExcInterestAmount ?? 0m);
+
+            rv.TotalReportInterestAmount = sum == 0m ? (decimal?)null : sum;
+
+            /* d */
+            rv.CreditAllocationFee = interestReportDP.CalCreditAllotmentCommission;
+
+            /* e */
+            rv.PostponedChequeFee = interestReportDP.CalculatedPostponedChequesCommision;
+
+            /* f = c + d + e */
+            var sum_f = (rv.TotalReportInterestAmount ?? 0m) +
+                        (rv.CreditAllocationFee ?? 0m) +
+                        (rv.PostponedChequeFee ?? 0m);
+
+            rv.TotalForInvoice = sum_f == 0m ? (decimal?)null : sum_f;
+
+            /* e */
+            rv.TotalFutureTransactions =
+                    (interestReportDP.FutureInterestTransactions == null ||
+                     !interestReportDP.FutureInterestTransactions.Any())
+                        ? (decimal?)null  
+                        : interestReportDP.FutureInterestTransactions.Sum(l => l.LocalAmount);
+
+            return rv;
         }
 
 
