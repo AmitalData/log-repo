@@ -1860,6 +1860,9 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<SATInterfaceSetting> SATInterfaceSettings { get; set; }
         public IDbSet<SATTransferStatus> SATTransferStatus { get; set; }
         public IDbSet<SATInvoiceStatus> SATInvoiceStatus { get; set; }
+        public IDbSet<MasavInterfaceStatus> MasavInterfaceStatuses { get; set; }
+        public IDbSet<MasavInterface> MasavInterfaces { get; set; }
+
 
 
         #endregion

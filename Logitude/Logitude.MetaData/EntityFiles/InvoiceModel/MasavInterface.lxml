@@ -15,7 +15,7 @@
   AvailableInDocumentTypes="false"
   IsLock="false"
   HasHelper="false"
-  HasShortTitle="true"
+  HasShortTitle="false"
   HasFiltersMenu="false"
   HasCustomValidator="false"
   IsEditable="false"
@@ -1243,6 +1243,34 @@
         ScreenName="MasavInterfaceHeaderScreen" />
     </ScreenFields>
   </Screen>
+  <Tab
+    TabName="&quot;Details&quot;"
+    TabLocalNameBack_up="&quot;פרטים&quot;"
+    TabLocalName="&quot;BS64:Itek16jXmNeZ150i&quot;"
+    ObjectTableName="&quot;MasavInterface&quot;"
+    Code="&quot;MIDT&quot;"
+    ControlPath="&quot;./Invoice/Components/EditTabs/MasavInterface/MasavInterfaceDetailsTabComponent&quot;"
+    TextCode="&quot;MasavInterface.TH.Details&quot;"
+    IsPackagable="false"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./Invoice/Components/EditTabs/MasavInterface/MasavInterfaceDetailsTabComponent&quot;"
+    HtmlComponentName="&quot;MasavInterfaceDetailsTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false"
+    IsLocked="false" />
+  <Tab
+    TabName="&quot;Events&quot;"
+    TabLocalNameBack_up="&quot;אירועים&quot;"
+    TabLocalName="&quot;BS64:IteQ15nXqNeV16LXmdedIg==&quot;"
+    ObjectTableName="&quot;MasavInterface&quot;"
+    Code="&quot;MIVE&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
+    TextCode="&quot;MasavInterface.TH.Events&quot;"
+    IsPackagable="false"
+    IndexOrder="1"
+    IsSpellChecked="false"
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

@@ -25,7 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class MasavInterfaceUpdateClass
    {  		
-		public const string HashString = "5260ad7ab98d64d5d46e1e93388334c7";
+		public const string HashString = "f20965c456a80ec47db9fda98f1a2958";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -45,7 +45,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    AvailableInDocumentTypes =  false,
 			      				    IsLock =  false,
 			      				    HasHelper =  false,
-			      				    HasShortTitle =  true,
+			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  true,
@@ -1111,7 +1111,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext,int contextTenant)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable MasavInterfaceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MasavInterface" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode MasavInterfaceDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MasavInterface.TH.Details", DefaultText = "Details",LocalDefaultText = "BS64:Itek16jXmNeZ150i", ObjectTableId = MasavInterfaceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   Feature MasavInterfaceDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MasavInterface.Tab.Details", ObjectTableId = MasavInterfaceObjectTable.Id, Tenant = 0, NameTextCodeCode = "MasavInterfaceFeatures.MIDT", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,MasavInterfaceObjectTable,contextTenant);
+ 
+                 
+			   TextCode MasavInterfaceEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MasavInterface.TH.Events", DefaultText = "Events",LocalDefaultText = "BS64:IteQ15nXqNeV16LXmdedIg==", ObjectTableId = MasavInterfaceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   Feature MasavInterfaceEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MasavInterface.Tab.Events", ObjectTableId = MasavInterfaceObjectTable.Id, Tenant = 0, NameTextCodeCode = "MasavInterfaceFeatures.MIVE", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,MasavInterfaceObjectTable,contextTenant);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MIDT",HtmlComponentName = "MasavInterfaceDetailsTabComponent",HtmlComponentUrl = "./Invoice/Components/EditTabs/MasavInterface/MasavInterfaceDetailsTabComponent", FeatureId = MasavInterfaceDetailsFeature_TH0.Id,FeatureUniqeCode = MasavInterfaceDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "./Invoice/Components/EditTabs/MasavInterface/MasavInterfaceDetailsTabComponent", ObjectTableId = MasavInterfaceObjectTable.Id, TabNameTextCodeId = MasavInterfaceDetailsTextCode_TH0.Id, TabNameTextCodeCode = MasavInterfaceDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MIVE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MasavInterfaceEventsFeature_TH1.Id,FeatureUniqeCode = MasavInterfaceEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MasavInterfaceObjectTable.Id, TabNameTextCodeId = MasavInterfaceEventsTextCode_TH1.Id, TabNameTextCodeCode = MasavInterfaceEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext,int contextTenant)
