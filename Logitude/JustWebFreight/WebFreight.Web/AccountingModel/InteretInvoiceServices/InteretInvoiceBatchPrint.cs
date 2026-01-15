@@ -41,6 +41,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Transactions;
+using System.Web;
 using WebFreight.Web.WebServices;
 using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 
@@ -593,16 +594,16 @@ namespace Logitude.Accounting.BL.InterestService
                         NetCommonHelper.Logger.DevLog.Instance.WriteError("No valid document copy found for printing.");
                         return false;
                     }
-
-                        Uploader up = new Uploader();
-
-                    //foreach (DocumentOutCopy copy in copies)
-                    //{
+                    UserRepository userRep = new UserRepository((int)tenant);
+                    DocumentOutCopyRepository documentoutCopyRep = new DocumentOutCopyRepository(commonContext);
+                    User printedBy = userRep.GetSingleUserByCodeOrEmail(null, email, (int)tenant, false);
+                    copy.LastPrintDate = TenantServerConfigration.GetCurrentDateTime((int)tenant);
+                    copy.LastPrintedByUserId = printedBy?.Id;
+                    documentoutCopyRep.Update(copy);
+                    documentoutCopyRep.SubmitChanges();
+                    Uploader up = new Uploader();                    
                         includeInPrint = true;
-                        //if (doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId))
-                        //{
-                        //    includeInPrint = false;
-                        //}
+                        
 
                         if (includeInPrint)
                         {
