@@ -1351,6 +1351,19 @@ namespace Logitude.Accounting.Data.Repositories
             }
         }
 
+        public decimal GetTotalOpenChequesInLocalCurById(String glaccountId, int tenant)
+        {                           
+           var now = DateTime.UtcNow;
+           
+           return context.AllARPaymentChequesViews
+               .Where(a => a.AccountId == glaccountId
+                        && a.Tenant == tenant
+                        && a.Notes != "החזרת שיק ללקוח"
+                        && a.ValueDate <= now)
+               .Sum(a => (decimal?)a.LocalAmountCredit) ?? 0m;        
+            
+        }
+
         public List<GLAccount> GetByDisplayNumberEnding(String displayNumberEnding, int tenant)
         {
             if (String.IsNullOrEmpty(displayNumberEnding))
