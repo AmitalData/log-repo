@@ -282,7 +282,14 @@ namespace Logitude.Accounting.BL.CoreBL
                             list.ForEach(accPM =>
                                 {
 
-                                    updateService.Update(accPM, true);
+                                    try
+                                    {
+                                        updateService.Update(accPM, true);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        throw new ApplicationException($"Failed to update GLAccount with DisplayNumber: {accPM.DisplayNumber}, Tenant={tenant}", ex);
+                                    }
 
                                 });
                             scope.Complete();
