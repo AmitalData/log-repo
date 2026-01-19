@@ -88,7 +88,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 GlobalTenantRepository globalTenantRepository = new GlobalTenantRepository();
                 TenantManagementRepository tenantManagementRep = new TenantManagementRepository();
 
-                GlobalDB database = GetActiveDatabaseNumber();
+                GlobalDB database = GetActiveDatabaseNumber("0");
                 int version = globalTenantRepository.GetCurrentVersion();
                 GlobalTenant globalTenant = new GlobalTenant()
                 {
@@ -301,14 +301,21 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        public static GlobalDB GetActiveDatabaseNumber()
+        public static GlobalDB GetActiveDatabaseNumber(string tenant)
         {
             GlobalDBRepository globaldbRep = new GlobalDBRepository();
 
             List<GlobalDB> activeDbs = globaldbRep.GetActiveDataBases();
-            GlobalDB database = activeDbs.FirstOrDefault();
 
-            return database;
+            var dbById = activeDbs.FirstOrDefault(db => db.Id == tenant);
+            if (dbById != null)
+                return dbById;
+
+            if (activeDbs.Count == 1)
+                return activeDbs[0];
+
+
+            return null;
         }
 
         private void CreateDWHSettings()
