@@ -228,7 +228,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     continue;// remark do nothing ...
                 }
-                var rowtype = rawLine.Split(',')[0];///.Substring(0, 1);
+                var rowtype = rawLine.Split(',')[0]?.Trim();///.Substring(0, 1);
 
                 if (!reading_Lines)
                 {
