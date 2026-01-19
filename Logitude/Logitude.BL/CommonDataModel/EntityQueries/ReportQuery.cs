@@ -301,6 +301,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return result;
         }
 
+        public Report GetReportOnlyByCode(string code, int tenant)
+        {
+            return (from a in repository.context.Reports
+                    where a.Tenant == tenant && a.Code == code && !a.InActive
+                    select a).FirstOrDefault();
+        }
+
         public List<ReportList> GetReportListsByGroupIdAndTenant(string groupId, int tenant)
         {
  

@@ -153,7 +153,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         windowArgs.BIReportEntity = this.BIReportEntity;
         windowArgs.TasksSchedulerId = DataContext.EntityPM.Id;
         windowArgs.IsQueryReport =  DataContext.EntityPM.ProcedureCode == 'QueryReport' ? true : false;
-        windowArgs.IsPowerBIReport =  DataContext.EntityPM.Description?.toLowerCase() == 'powerbi';
+        windowArgs.IsPowerBIReport =  this.ReportList?.Code?.toUpperCase()?.startsWith('PBI');
         windowArgs.IsCustomerDebNotification =  DataContext.EntityPM.ProcedureCode == 'CustomerDebNotificationsTask' ? true : false;
         windowArgs.GLAccountId = this.GLAccountId;
         

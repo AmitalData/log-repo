@@ -19,6 +19,10 @@ using System.ServiceModel.Syndication;
 using System.Text;
 using System.IO;
 using System.Web;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.CommonDataModel;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 
 namespace WebFreight.Web.Helpers
@@ -26,7 +30,7 @@ namespace WebFreight.Web.Helpers
     public class PowerBIReportHelper
     {
         private int Tenant { get; set; }
-        public string AccessToken { get; set; }
+        private string AccessToken { get; set; }
         public string ActiveDirectoryTenantId { get; set; }
         private readonly string SetKey = "PowerBIParams";
         List<DefaultAndConfigurationPM> Config;
@@ -46,10 +50,56 @@ namespace WebFreight.Web.Helpers
             {
                 throw new Exception("PowerBI WorkspaceId is not configured.");
             }
-            return GetPowerBIWorkspaceReports(Guid.Parse(workspaceId), true);
+            try
+            {
+                var reports = GetPowerBIWorkspaceReports(Guid.Parse(workspaceId), true, true);
+                return reports;
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, $"Failed to get report list for workspaceId: {workspaceId}, error: {ex.Message}");
+                throw new Exception($"Failed to get report list for workspaceId: {workspaceId}", ex);
+            }
         }
 
-        private List<ReportResult> GetPowerBIWorkspaceReports(System.Guid workspaceId, bool generateEmbedToken = false)
+        public MemoryStream GetReportFile(string reportCode)
+        {
+            string workspaceId = GetConfig("WorkspaceId").Value1;
+            if (string.IsNullOrEmpty(workspaceId))
+            {
+                throw new Exception("PowerBI WorkspaceId is not configured.");
+            }
+
+            try
+            {
+                ReportQuery reportQuery = new ReportQuery(Tenant);
+                string reportId = reportQuery.GetReportOnlyByCode(reportCode, Tenant)?.Description;
+                if (string.IsNullOrEmpty(reportId))
+                {
+                    throw new Exception($"not found report id (Description field) for report report code: {reportCode}");
+                }
+
+                string exportId = StartExport(Guid.Parse(workspaceId), reportId);
+
+                string downloadUrl = WaitForExport(Guid.Parse(workspaceId), reportId, exportId);
+
+                return DownloadPdf(downloadUrl);
+            }
+            catch (Exception ex)
+            {
+                /*
+                string pdfPath = @"C:\temp\report.pdf";
+                byte[] pdfBytes = File.ReadAllBytes(pdfPath);
+                MemoryStream ms = new MemoryStream(pdfBytes);
+                return ms;
+                */
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, $"Failed to get report file for workspaceId: {workspaceId}, report code: {reportCode}, error: {ex.Message}");
+                throw new Exception($"Failed to get report file for workspaceId: {workspaceId}, report code: {reportCode}", ex);
+            }
+        }
+
+        private List<ReportResult> GetPowerBIWorkspaceReports(System.Guid workspaceId, bool generateEmbedToken = false, bool createReport = true)
         {
             List<ReportResult> reportResults = new List<ReportResult>();
             var tokenCredentials = new TokenCredentials(AccessToken, "Bearer");
@@ -57,24 +107,58 @@ namespace WebFreight.Web.Helpers
             using (var client = new PowerBIClient(new Uri("https://api.powerbi.com/"), tokenCredentials))
             {
                 var reports = client.Reports.GetReportsInGroup(workspaceId);
-                foreach (var report in reports.Value)
+                foreach (var currentReport in reports.Value)
                 {
                     reportResults.Add(new ReportResult()
                     {
-                        Id = report.Id.ToString(),
-                        Name = report.Name,
-                        EmbedUrl = report.EmbedUrl,
-                        EmbedToken = generateEmbedToken? GenerateEmbedToken(workspaceId, report.Id.ToString()): null
+                        Id = currentReport.Id.ToString(),
+                        Name = currentReport.Name,
+                        EmbedUrl = currentReport.EmbedUrl,
+                        EmbedToken = generateEmbedToken? GenerateEmbedToken(workspaceId, currentReport.Id.ToString()): null
                     });
 
-                    //string exportId = StartExport(workspaceId, report.Id.ToString());
-                    //string downloadUrl = WaitForExport(workspaceId, report.Id.ToString(), exportId);
-                    //DownloadPdf(downloadUrl, @"C:\temp\report.pdf");
+                    if (createReport)
+                    {
+                        ReportQuery reportQuery = new ReportQuery(Tenant);
+                        var report = reportQuery.GetReportByName(currentReport.Name, Tenant);
+                        if (report == null)
+                        {
+                            var objectContext = CommonDataContext.GetContext(Tenant);
+                            ReportService reportService = new ReportService(objectContext, Tenant);
+
+                            report = new ReportPM()
+                            {
+                                Name = currentReport.Name,
+                                Code = GeneratePowerBiReportCode(),
+                                Description = currentReport.Id.ToString(),
+                                Tenant = Tenant,
+                                AvailableForScheduling = true
+                            };
+                            reportService.Create(report);
+                        }
+                    }
                 }
             }
             return reportResults;
         }
 
+        private string GeneratePowerBiReportCode()
+        {
+            ReportQuery reportQuery = new ReportQuery(Tenant);
+            const int maxAttempts = 10;
+
+            for (int index = 1; index <= maxAttempts; index++)
+            {
+                string code = $"PBI{index}";
+
+                if (reportQuery.GetReportOnlyByCode(code, Tenant) == null)
+                {
+                    return code;
+                }
+            }
+
+            throw new InvalidOperationException("Unable to generate a Power BI report code. Maximum limit reached.");
+        }
 
         private string StartExport(Guid workspaceId, string reportId)
         {
@@ -119,21 +203,22 @@ namespace WebFreight.Web.Helpers
                         return result.resourceLocation;
 
                     if (status == "Failed")
-                        throw new Exception("Export failed");
+                        throw new Exception($"Export failed for workspaceId: {workspaceId}, reportId: {reportId}, exportId: {exportId}");
 
                     System.Threading.Thread.Sleep(2000);
                 }
             }
         }
 
-        private void DownloadPdf(string resourceUrl, string filePath)
+        private MemoryStream DownloadPdf(string resourceUrl)
         {
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
 
                 var bytes = client.GetByteArrayAsync(resourceUrl).Result;
-                File.WriteAllBytes(filePath, bytes);
+
+                return new MemoryStream(bytes);
             }
         }
 
@@ -186,7 +271,7 @@ namespace WebFreight.Web.Helpers
             }
             catch (Exception ex)
             {
-                if (HttpContext.Current.Request.Url.Host == "localhost")
+                if (HttpContext.Current != null && HttpContext.Current.Request.Url.Host == "localhost")
                 {
                     switch (additionalKey)
                     {
@@ -205,7 +290,7 @@ namespace WebFreight.Web.Helpers
             }
         }
 
-        public string GenerateEmbedToken(Guid workspaceId, string reportId)
+        private string GenerateEmbedToken(Guid workspaceId, string reportId)
         {
             string url = $"https://api.powerbi.com/v1.0/myorg/groups/{workspaceId}/reports/{reportId}/GenerateToken";
 

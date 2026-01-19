@@ -50,7 +50,7 @@ iframe, .powerBiReport {
                     <div *ngFor="let report of PowerBiReports">
                         <table>
                             <tr>
-                                <td style="width: 100px;">
+                                <td style="width: 130px;">
                                     <HyperlinkQuery (click)="SelectPowerBiReport(report)">{{report.Name}}</HyperlinkQuery>
                                 </td>
                                 <td *ngIf="report.Report && report.Report.AvailableForScheduling">
