@@ -88,7 +88,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
             }
-            AddAcitivityLog(entityPM, "N");
+            if (!string.IsNullOrEmpty(entityPM.Id)) AddAcitivityLog(entityPM, "N");
                        
             ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
             entityPM.CreatedByUserId = loggedUser?.Id;
