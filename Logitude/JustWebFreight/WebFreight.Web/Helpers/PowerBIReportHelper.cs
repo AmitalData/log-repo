@@ -120,7 +120,7 @@ namespace WebFreight.Web.Helpers
                     if (createReport)
                     {
                         ReportQuery reportQuery = new ReportQuery(Tenant);
-                        var report = reportQuery.GetReportByName(currentReport.Name, Tenant);
+                        var report = reportQuery.GetReportPMsByTenant(Tenant).Where(a => a.Description == currentReport.Id.ToString()).FirstOrDefault();
                         if (report == null)
                         {
                             var objectContext = CommonDataContext.GetContext(Tenant);
