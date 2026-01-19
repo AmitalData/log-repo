@@ -171,16 +171,34 @@ namespace CommunicationWorkerRole.Services
 
         private void TryToSendReportAfterMeetACertainConditions(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
         {
-            StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
-            if (stiReport == null)
+            bool isValid = true;
+            bool powerBi = reportFilter.ReportCode?.ToUpper()?.StartsWith("PBI") == true;
+            var reportRecepients = schedulerDetails.ReportDetails.Recepients;
+            StiReport stiReport = null;
+
+            if (!powerBi)
             {
-                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Report Is Empty"));
+                stiReport = GetStimulReportByReportFilter(reportFilter);
+                if (stiReport == null)
+                {
+                    this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Report Is Empty"));
+                    return;
+                }
             }
-            else
+
+            this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
+            string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant, schedulerDetails, reportFilter, reportTask);
+
+            if (stiReport != null)
             {
-                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
-                string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant, schedulerDetails, reportFilter, reportTask);
-                SendPdfReportIfIsValid(reportTask, schedulerDetails, documentId, stiReport);
+                (isValid, reportRecepients) = ValidateStiReport(reportTask, schedulerDetails, stiReport);
+            }
+
+            if (isValid)
+            {
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
+                SendHtmlDocument(new SendHtmlDocumentArgs() { documentId = documentId, recepients = reportRecepients, reportTask = reportTask, stiReport = stiReport });
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
             }
         }
 
@@ -195,7 +213,7 @@ namespace CommunicationWorkerRole.Services
             return recepients;
         }
 
-        private void SendPdfReportIfIsValid(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, string documentId, StiReport stiReport)
+        private (bool, ReportSchedulerRecepients) ValidateStiReport(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, StiReport stiReport)
         {
             AdditionalValidate additionalValidate = new AdditionalValidate();
             ReportSchedulerRecepients reportRecepients = schedulerDetails.ReportDetails.Recepients;
@@ -212,15 +230,13 @@ namespace CommunicationWorkerRole.Services
 
             if (result.IsValid && gLAccountBalanceInLocalValidateResult.IsValid && gLAccountLocalBalanceInDueValidateResult.IsValid)
             {
-                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
-                SendHtmlDocument(new SendHtmlDocumentArgs() { documentId = documentId, recepients = reportRecepients, reportTask = reportTask, stiReport = stiReport });
-                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
+                return (true, reportRecepients);
             }
             else
             {
                 LogErrorMessage(result, gLAccountBalanceInLocalValidateResult);
+                return (false, null);
             }
-
         }
 
         private void LogErrorMessage(ValidateResult result, ValidateResult gLAccountBalanceInLocalValidateResult) {
@@ -461,6 +477,11 @@ namespace CommunicationWorkerRole.Services
             {
                 reportTask.Format = "Excel";
                 memoryStream = GetMemoryStreamAfterExportDocument(reportTask, reportFilter);
+            }
+            else if (reportFilter.ReportCode.ToUpper().StartsWith("PBI"))
+            {
+                PowerBIReportHelper powerBIReportHelper = new PowerBIReportHelper(reportTask.Tenant);
+                memoryStream = powerBIReportHelper.GetReportFile(reportFilter.ReportCode);
             }
             else
             {
