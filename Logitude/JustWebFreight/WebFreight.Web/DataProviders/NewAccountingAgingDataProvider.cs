@@ -19,6 +19,18 @@ namespace WebFreight.Web.DataProviders
         public bool IsFromGLAccountAgingData { get; set; }
 
         public List<NewAgingPeriod> AgingPeriods { get; set; }
+        public string Past1 { get; set; }     
+        public string Past2 { get; set; }     
+        public string Past3 { get; set; }    
+        public string Past4 { get; set; }     
+        public string Past5 { get; set; }    
+        public string Past6 { get; set; }    
+        public string Past { get; set; }       
+        public string Future1 { get; set; }   
+        public string Future2 { get; set; }   
+        public string Future3 { get; set; }  
+        public string Future { get; set; }
+
     }
 
     public class NewAgingPeriod

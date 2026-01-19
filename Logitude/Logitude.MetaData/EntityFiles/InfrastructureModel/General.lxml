@@ -66,7 +66,7 @@
   IsLookUp="false"
   IsTabsHidden="false"
   SearchFields="&quot;General,Generals,,Id,&quot;">
-  <Screen
+<Screen
     Name="&quot;GeneralHeaderScreen&quot;"
     ObjectTableName="&quot;General&quot;"
     IsReadOnly="true"
@@ -6784,6 +6784,20 @@
       LocalDefaultText="&quot;BS64:Itep15zXlyDXnNeo16fXoiI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.TransactionsBefore&quot;"
+      DefaultText="&quot;Transactions Before&quot;"
+      LocalDefaultTextBack_up="&quot; תנועות לפני&quot;"
+      LocalDefaultText="&quot;BS64:IiDXqteg15XXoteV16og15zXpNeg15ki&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.TransactionsAfter&quot;"
+      DefaultText="&quot;Transactions After&quot;"
+      LocalDefaultTextBack_up="&quot;תנועות אחרי&quot;"
+      LocalDefaultText="&quot;BS64:Iteq16DXldei15XXqiDXkNeX16jXmSI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -9271,7 +9285,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-     <Feature
+    <Feature
       Code="&quot;General.Features.CustomerDebtNotification&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.General.Features.CustomerDebtNotification&quot;"
