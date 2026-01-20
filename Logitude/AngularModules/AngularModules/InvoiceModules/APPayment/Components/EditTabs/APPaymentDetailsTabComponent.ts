@@ -53,6 +53,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private APInvoiceListService: APInvoiceListService = new APInvoiceListService();
     public EnableNegativeOffsetAPPayments: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
+    SavedPaymentCurrencyId: string;
+    SavedLocalAmount: number = null;
+    SavedPaymentCurrencyAmount: number = null;
+    SavedExchangeRate: number = null;
+    IsRestoring: boolean = false;  
+    SkipUpdatingLocalAmount: boolean = false;  
     get IsNegativeAmountEnabled() { return this.EnableNegativeOffsetAPPayments == true && this.PaymentMethodCode == "FS" ? true : false; }
     public isRTL: boolean = false;
     public IsFullAccounting: boolean = false;
@@ -90,6 +96,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.InitializeBillToLov()
         this.EntityPM = entityArgs.EntityPM;
         this.ReconcileInternalTrans = this.EntityPM.ReconcileInternalTrans;
+        this.SavedPaymentCurrencyId = this.EntityPM.IsFromReconcilePage ? this.EntityPM.PaymentCurrencyId : null;
+
+        this.SavedPaymentCurrencyAmount = this.EntityPM.IsFromReconcilePage ? this.EntityPM.AmountInPaymentCurrency : null;
+
+
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetAPPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments;
         this.GetFullAccountingSettings();
@@ -1283,7 +1294,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
 
                             // Store the old exchange rate before updating
-                            const oldRate = this.OldRate;
+                            let oldRate = this.OldRate;
                             this.isRateManual = false;
 
                             if (AppTool.IsNullOrEmpty(value)) {
@@ -1303,25 +1314,58 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                                             this.isLoad = true;
                                         }
 
-                                        this.PaymentCurrencyExchangeRate = await this.GetCurrencyRate(value);
-                                        const newRate = this.PaymentCurrencyExchangeRate;
 
-                                        if (value == SessionLocator.TenantPM.CurrencyId) { 
-                                            this.AmountInPaymentCurrency = this.AmountInLocalCurrency;
-                                            this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
-                                        }  
+                                            if (this.EntityPM.IsFromReconcilePage) {
+                                                this.IsRestoring = true;
 
-                                        // If both rates are valid and not zero, update AmountInPaymentCurrency by the rate ratio
-                                        else if (oldRate && newRate && oldRate !== newRate && newRate !== 0) {
-                                            const rateRatio = oldRate / newRate;
-                                            this.OldRate = newRate; // Update OldRate to the new rate
-                                            this.AmountInPaymentCurrency = AppTool.Round(this.AmountInPaymentCurrency * rateRatio, 2);
+                                                if (this.SavedLocalAmount != null) {
+                                                    this.AmountInLocalCurrency = this.SavedLocalAmount;
+                                                    this.EntityPM.AmountInLocalCurrency = this.SavedLocalAmount;
+                                                }
 
-                                            this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
-                                        }
-                                        this.updateOldRateFromCurrentExchangeRate(newRate); // Update OldRate to the new rate
+                                                if (this.SavedPaymentCurrencyAmount != null) {
+                                                    this.AmountInPaymentCurrency = this.SavedPaymentCurrencyAmount;
+                                                    this.EntityPM.AmountInPaymentCurrency = this.SavedPaymentCurrencyAmount;
+                                                }
 
-                                        this.ExchangeRateDate = this.GetCurrencyRateDate(value);
+                                                if (this.SavedExchangeRate != null) {
+                                                    this.PaymentCurrencyExchangeRate = this.SavedExchangeRate;
+                                                    this.EntityPM.PaymentCurrencyExchangeRate = this.SavedExchangeRate;
+                                                }
+                                                this.OldRate = this.SavedExchangeRate; 
+                                                oldRate = this.SavedExchangeRate;       
+                                                this.IsRestoring = false;
+                                            }
+
+                                            this.SkipUpdatingLocalAmount = true;
+                                            this.PaymentCurrencyExchangeRate = await this.GetCurrencyRate(value);
+                                            this.SkipUpdatingLocalAmount = false;
+                                            const newRate = this.PaymentCurrencyExchangeRate;
+
+                                            if (value == SessionLocator.TenantPM.CurrencyId) { 
+                                                this.AmountInPaymentCurrency = this.AmountInLocalCurrency;
+                                                this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
+                                            }  
+
+                                            // If new rate is valid and not zero, and the currency came from reco screen, update AmountInLocalCurrency by the new rate
+                                            else if (newRate && newRate !== 0
+                                                    && this.EntityPM.IsFromReconcilePage && this.SavedPaymentCurrencyId === this.PaymentCurrencyId) {
+                                                this.OldRate = newRate; // Update OldRate to the new rate
+                                                this.AmountInLocalCurrency = AppTool.Round(this.AmountInPaymentCurrency * newRate, 2);
+                                                this.EntityPM.AmountInLocalCurrency = this.AmountInLocalCurrency;
+                                            }
+
+                                            // If both rates are valid and not zero, update AmountInPaymentCurrency by the rate ratio
+                                            else if (oldRate && newRate && oldRate !== newRate && newRate !== 0) {
+                                                const rateRatio = oldRate / newRate;
+                                                this.OldRate = newRate; // Update OldRate to the new rate
+                                                this.AmountInPaymentCurrency = AppTool.Round(this.AmountInPaymentCurrency * rateRatio, 2);
+
+                                                this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
+                                            }
+                                            this.updateOldRateFromCurrentExchangeRate(newRate); // Update OldRate to the new rate
+
+                                            this.ExchangeRateDate = this.GetCurrencyRateDate(value);
 
 
                                     }
@@ -1372,12 +1416,32 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (!this.EntityPM.IsCreatedFromInvoiceSide && value !== null && value !== undefined) {
             if (this.EntityPM != null) {
                 if (this.EntityPM.PaymentCurrencyExchangeRate != value) {
+                    let veryFirstTime = (this.EntityPM.PaymentCurrencyExchangeRate == null || this.EntityPM.PaymentCurrencyExchangeRate === 0) && this.SavedExchangeRate == null;
                     // Store the previous rate if it's valid
                     this.updateOldRateFromCurrentExchangeRate(this.EntityPM.PaymentCurrencyExchangeRate);
                     this.EntityPM.PaymentCurrencyExchangeRate = AppTool.Round(value, 5);
                     this.GetRateIsEnabled();
                     this.ComputeLocalAmount();
-
+                    if (veryFirstTime && this.EntityPM.IsFromReconcilePage) {
+                        if (this.EntityPM.IsFromReconcilePage) {
+                            if (this.EntityPM.PaymentCurrencyExchangeRate != null && this.EntityPM.PaymentCurrencyExchangeRate !== 0) {
+                                this.SavedExchangeRate = this.EntityPM.PaymentCurrencyExchangeRate;
+                                this.SavedLocalAmount = this.SavedExchangeRate * this.SavedPaymentCurrencyAmount;
+                            } 
+                            else if (
+                                this.AmountInLocalCurrency != null &&
+                                this.AmountInPaymentCurrency != null &&
+                                this.AmountInPaymentCurrency !== 0) {
+                                this.SavedExchangeRate =
+                                    this.AmountInLocalCurrency / this.AmountInPaymentCurrency;
+                                this.SavedLocalAmount = this.EntityPM.AmountInLocalCurrency;
+                            } 
+                            else {
+                                this.SavedExchangeRate = null;
+                            }
+                        }
+                        
+                    }
                     this.ItemsSource.Collection.forEach(item => {
                         item.InitExchangeRate();
                     });
@@ -1908,7 +1972,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.OpenAmount = this.AmountInPaymentCurrency - this.Summary_AmountPaid - this.Summary_ExternalAmount;
     }
     ComputeLocalAmount() {
-        if ((this.AmountInLocalCurrency === null || this.AmountInLocalCurrency === undefined) || !this.EntityPM.IsFromReconcilePage)
+        if ((this.AmountInLocalCurrency === null || this.AmountInLocalCurrency === undefined)   // In this case, we must calculate this value
+            || !this.EntityPM.IsFromReconcilePage                                               // as it worked before 
+            || this.EntityPM.IsFromReconcilePage &&
+             !this.IsRestoring && 
+             !this.SkipUpdatingLocalAmount &&
+             (!this.SavedPaymentCurrencyId || this.SavedPaymentCurrencyId !== this.PaymentCurrencyId))  // when changing currency from reconcile page
              this.AmountInLocalCurrency = this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;
     }
 
@@ -2001,6 +2070,15 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
         }  
 
+
+        // If new rate is valid and not zero, and the currency came from reco screen, update AmountInLocalCurrency by the new rate
+        else if (newRate && newRate !== 0
+                 && this.EntityPM.IsFromReconcilePage && this.SavedPaymentCurrencyId === this.PaymentCurrencyId) {
+            this.OldRate = newRate; // Update OldRate to the new rate
+            this.AmountInLocalCurrency = AppTool.Round(this.AmountInPaymentCurrency * newRate, 2);
+            this.EntityPM.AmountInLocalCurrency = this.AmountInLocalCurrency;
+        }
+
         // If both rates are valid and not zero, update AmountInPaymentCurrency by the rate ratio
         else if (oldRate && newRate && oldRate !== newRate && newRate !== 0) {
             const rateRatio = oldRate / newRate;
@@ -2056,7 +2134,16 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
                         // After setting the new rate, update AmountInPaymentCurrency by the rate ratio
                         const newRate = this.PaymentCurrencyExchangeRate;
-                        if (oldRate && newRate && oldRate !== newRate && newRate !== 0) {
+
+                        // If new rate is valid and not zero, and the currency came from reco screen, update AmountInLocalCurrency by the new rate
+                        if (newRate && newRate !== 0
+                            && (this.EntityPM.IsFromReconcilePage && this.SavedPaymentCurrencyId === this.PaymentCurrencyId)
+                        ) {
+                            this.OldRate = newRate; // Update OldRate to the new rate
+                            this.AmountInLocalCurrency = AppTool.Round(this.AmountInPaymentCurrency * newRate, 2);
+                            this.EntityPM.AmountInLocalCurrency = this.AmountInLocalCurrency;
+                        }
+                        else if (oldRate && newRate && oldRate !== newRate && newRate !== 0) {
                             const rateRatio = oldRate / newRate;
                             this.AmountInPaymentCurrency = AppTool.Round(this.AmountInPaymentCurrency * rateRatio, 2);
                             this.EntityPM.AmountInPaymentCurrency = this.AmountInPaymentCurrency;
