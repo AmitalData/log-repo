@@ -76,7 +76,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (entityPM.ChartOfAccountsTypeCode == "3" || entityPM.ChartOfAccountsTypeCode == "4")
                     {
-                        if (fullAccountingSetting.NumberingByChartOfAccount && (entityPM.IsMultiCurrency == true || !FeatureToggleHelper.HasFeatureToggle("OCA", entityPM.Tenant)))
+                        if (fullAccountingSetting.NumberingByChartOfAccount 
+                            && !(FeatureToggleHelper.HasFeatureToggle("OCA", entityPM.Tenant) && entityPM.IsMultiCurrency != true && !string.IsNullOrEmpty(entityPM.CurrencyCode) && entityPM.DisplayNumber?.Split('\\')?.Length > 1))
                         {
                             SetDisplayNumber(entityPM);
                         }
