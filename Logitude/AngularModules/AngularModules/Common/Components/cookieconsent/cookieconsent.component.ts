@@ -1,15 +1,14 @@
-import { Component , ViewEncapsulation } from '@angular/core';
+import { Component,  OnInit, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import * as CookieConsent from 'vanilla-cookieconsent';
 
 @Component({
   selector: 'cookieconsent',
   template: '',
-  //styleUrls: []
-    styleUrls: ['./cookieconsent.component.scss'],
-  encapsulation: ViewEncapsulation.None 
+  styleUrls: ['./cookieconsent.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 
-export class CookieconsentComponent {
+export class CookieconsentComponent implements OnInit, AfterViewInit{
 
   cookieTexts: any;
 
@@ -22,14 +21,14 @@ export class CookieconsentComponent {
   ngAfterViewInit(): void {
     CookieConsent.run({
 
-      autoShow: false, 
+      autoShow: false,
       disablePageInteraction: false,
       mode: 'opt-in',
       revision: 1,
 
       categories: {
         necessary: {
-          enabled: true, 
+          enabled: true,
           readOnly: true,
         },
         preferences: {
