@@ -1,9 +1,15 @@
 import {Component,EventEmitter, Output}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
-import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
+import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
+import { MasavInterfacePM } from 'Invoices/EntityPMs/MasavInterfacePM';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
+import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
+import { APPaymentListService } from 'Invoice/Services/StandardLists/APPaymentListService';
+import { APPaymentList } from 'Invoice/EntityLists/APPaymentList';
+import { APPaymentExtendedService } from 'Invoice/Services/ExtendedPMs/APPaymentExtendedService';
 
 @Component({
     
@@ -11,204 +17,151 @@ import { EntityListService } from 'Infrastructure/Services/EntityListService';
 })
 
 export class MasavInterfaceDetailsTabComponent extends BaseComponent {
-
+    public entityPM: MasavInterfacePM = null;
     public columns: any[] = null;
-    public MasavInterfaceColumnsReady: EventEmitter<any> = new EventEmitter();
+    public accountingPaymentMethodId :string = null;
+    public masavInterfaceColumnsReady: EventEmitter<any> = new EventEmitter();
     private entityListService: EntityListService = new EntityListService();
     @Output() onQueryChangeEvent = new EventEmitter();
-    @Output() MenuHeaderchangeevent = new EventEmitter();
+    @Output() menuHeaderchangeevent = new EventEmitter();
+    private currentSession = SessionLocator.SelectedSession;
+    public changeCheckBoxesState: EventEmitter<any> = new EventEmitter();
+    public selectedLines: ObservableCollection = new ObservableCollection([]);
+    apPaymentListService : APPaymentListService = new APPaymentListService();
+    apPaymentExtendedService :APPaymentExtendedService = new APPaymentExtendedService();
+    public markIsChecked: EventEmitter<any> = new EventEmitter();
+    public readonly: boolean = false;
+    constructor(private entityArgs: EntityArgs) {
+        super();
+        this.entityPM = entityArgs.EntityPM;
+        this.buildColumns(); 
+        this.listen();   
+        if(this.entityPM.StatusCode === MasavInterfaceStatus.Transmitted)
+            this.selectedAll = true;
+        
+       this.readonly = this.entityPM?.StatusCode ===  MasavInterfaceStatus.Transmitted;
+    }
+   
+    private listen() {
+        this.currentSession.SessionEvent.subscribe(s => {
+            if (s == "BackFromCard") {
+                this.currentSession.StartBusyIndicatorLoading()
+                this.refreshButtonClicked();
+                this.currentSession.StopBusyIndicator()
 
-    BuildColumns() {
+            }
+            if (s == "CancelMasavInterface") {
+                this.currentSession.StartBusyIndicatorSaving()
+                this.apPaymentExtendedService.updateMulti(this.selectedLines.Collection.map(c=>c.rowData.Id), null).subscribe((res)=>{
+                       this.selectedAll = false  
+                       this.currentSession.StopBusyIndicator()
+                })
+            }
+            if (s == "TransmitterMasavInterface") {
+                this.currentSession.StartBusyIndicatorSaving()
+                this.apPaymentExtendedService.updateMulti(this.selectedLines.Collection.map(c=>c.rowData.Id), this.entityPM.Id).subscribe((res)=>{
+                    
+                    this.refreshButtonClicked();
+                    this.currentSession.StopBusyIndicator()
+
+                })
+            }
+        });
+       this.currentSession.PseventRowSelectEvent.subscribe((res) => {
+            this.onRowSelected(res);
+        });
+
+    }
+    buildColumns() {
         this.columns = [];
-
         this.columns.push({
-            FieldName: 'TransmitStatusCode',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Accounting.O.Included"),
-            Styles: { width: '70px' },
+            FieldName: "Checked",
+            DataTypeCode: 'Boolean',
+            Display: '',
+            IsCustomTemplate: true,
+            Styles: { width: '50px' },
+            
             HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
+            HtmlListComponentUrl: './Invoice/Components/Templates/MasavInterfaceListTemplate',            
+        });
+        this.columns.push({
+            FieldName: 'PaymentNo',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("APPayment.F.PaymentNo"),
+            Styles: { width: '120px'},
+            HtmlListComponentName: 'MasavInterfaceListTemplate',
+            HtmlListComponentUrl: './Invoice/Components/Templates/MasavInterfaceListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true
 
         });
 
         this.columns.push({
-            FieldName: 'Line',
+            FieldName: 'VendorName',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("TaxReportLine.F.Line"),
-            Styles: { width: '50px'},
+            Display: TextCodeTranslator.Translate("APPayment.F.VendorName"),
+            Styles: { width: '180px'},
             HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
+            HtmlListComponentUrl: './Invoice/Components/Templates/MasavInterfaceListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
 
 
         this.columns.push({
-            FieldName: 'LineTypeCode',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("TaxReportLine.F.LineTypeCode"),
-            Styles: { width: '50px'},
-            HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true
-        });
-
-
-        this.columns.push({
-            FieldName: 'VatNumber',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("TaxReportLine.F.VatNumber"),
-            Styles: { width: '100px' },
-            HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true
-        });
-
-        this.columns.push({
-            FieldName: 'Reference',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("TaxReportLine.F.Reference"),
-            Styles: { width: '100px' },
-            HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true
-
-        });
-
-        this.columns.push({
-            FieldName: 'ReferecneGroup',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("TaxReportLine.F.ReferecneGroup"),
-            Styles: { width: '100px' },
-            HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true
-        });
-
-        this.columns.push({
-            FieldName: 'ReferenceDate',
+            FieldName: 'RegisterDate',
             DataTypeCode: 'DateTime',
-            Display: TextCodeTranslator.Translate("TaxReportLine.F.ReferenceDate"),
-            Styles: { width: '100px' },
+            Display: TextCodeTranslator.Translate("APPayment.F.RegisterDate"),
+            Styles: { width: '120px'},
             HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
+            HtmlListComponentUrl: './Invoice/Components/Templates/MasavInterfaceListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
 
+      
+        this.columns.push({
+            FieldName: 'AmountInLocalCurrency',
+            DataTypeCode: 'Number',
+            Display: TextCodeTranslator.Translate("APPayment.F.AmountInLocalCurrency"),
+            Styles: { width: '180px' },
+            HtmlListComponentName: 'MasavInterfaceListTemplate',
+            HtmlListComponentUrl: './Invoice/Components/Templates/MasavInterfaceListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true
+           
+        });
 
+        this.columns.push({
+            FieldName: 'ApprovedDateTime',
+            DataTypeCode: 'DateTime',
+            Display: TextCodeTranslator.Translate("APPayment.F.ApprovedDateTime"),
+            Styles: { width: '120px' },
+            HtmlListComponentName: 'MasavInterfaceListTemplate',
+            HtmlListComponentUrl: './Invoice/Components/Templates/MasavInterfaceListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true
+
+        });
+        this.columns.push({
+            FieldName: "Errors",
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("General.O.ErrorsFound"),
+            IsCustomTemplate: true,
+            Styles: { width: '600px' },           
+            HtmlListComponentName: 'MasavInterfaceListTemplate',
+            HtmlListComponentUrl: './Invoice/Components/Templates/MasavInterfaceListTemplate',            
+        });
 
         
-        this.columns.push({
-            FieldName: 'SubTotalInLocalCurrency',
-            DataTypeCode: 'Number',
-            Display: TextCodeTranslator.Translate("ARInvoice.F.SubTotalInLocalCurrency"),
-            Styles: { width: '160px' },
-            HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true
-        });
-        
-    
-        this.columns.push({
-            FieldName: 'TotalInvoiceAmount',
-            DataTypeCode: 'Number',
-            Display: TextCodeTranslator.Translate("TaxReportLine.F.TotalInvoiceAmount"),
-            Styles: { width: '160px' },
-            HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true
-        });
-        this.columns.push({
-            FieldName: 'VatAmount',
-            DataTypeCode: 'Number',
-            Display: TextCodeTranslator.Translate("TaxReportLine.F.VatAmount"),
-            Styles: { width: '100px' },
-            HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true
-        });
-
-        this.columns.push({
-            FieldName: SessionLocator.LoggedUserPM.DontShowLocal ? 'StatusEnglishName' : 'StatusLocalName',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("TaxReportLine.F.StatusEnglishName"),
-            Styles: { width: '300px' },
-            HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true
-        });
-
-        this.columns.push({
-            FieldName: 'JournalNumber',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("TaxReportLine.F.JournalNumber"),
-            Styles: { width: '85px' },
-            HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true
-        });
-        this.columns.push({
-            FieldName: 'ConfirmationNumber',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("TaxReportLine.F.ConfirmationNumber"),
-            Styles: { width: '85px' },
-            HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true
-        });
-        this.columns.push({
-            FieldName: 'Buttons;' + this.EntityPM.StatusCode,
-            DataTypeCode: 'String',
-            Display: '',
-            Styles: { width: '30px' },
-            HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
-            ServerSideSortable: true,
-            IsCustomTemplate: true,
-        });
-
-        this.columns.push({
-            FieldName: 'IsManuallyChanged',
-            DataTypeCode: 'boolean',
-            Display: '',
-            Styles: { width: '30px' },
-            HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true
-
-        });
-        this.columns.push({
-            FieldName: 'IsExternalLine',
-            DataTypeCode: 'String',
-
-            Styles: { width: '40px' },
-            HtmlListComponentName: 'MasavInterfaceListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/MasavInterfaceListTemplate',
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-        });
-        this.MasavInterfaceColumnsReady.emit(this.columns);
+        this.masavInterfaceColumnsReady.emit(this.columns);
 
     }
     DataSource = {
         pageSize: 30,
         rowCount: null,
-        sortingCol: "Line",
-        sortingDir: "Ascending",
+        sortingCol: "ApprovedDateTime",
+        sortingDir: "Descending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.GetRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
             return tempo;
@@ -218,23 +171,109 @@ export class MasavInterfaceDetailsTabComponent extends BaseComponent {
     GetRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
       
-        var filters = new ApiQueryFilters;
-        //filters.addAdditionalFilter('TaxReportId', this.EntityPM.Id, null, null, 'Equals', false, false, false, 'string');        
+         filters = this.getFilters();    
 
         filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetCount = true;
+        filters.GetAll = false;
 
         if (sortingDir !== "") {
             filters.SortBy = sortingCol;
             filters.SortDirection = sortingDir;
         }
         else {
-            filters.SortBy = "Line";
-            filters.SortDirection = "Ascending";
+            filters.SortBy = "ApprovedDateTime";
+            filters.SortDirection = "Descending";
         }
 
-        return this.entityListService.getExtendedByFilters("APPayment", filters);
+        return this.entityListService.getByFilters("APPayment", filters);
 
     }
+    public selectLines(result: any) {        
+        this.selectedLines.Clear();
+        let Lines = result.map((res: APPaymentList) => ({ rowData: res, IsChecked: true, RowIndex: -1, ById: true }));         
+        this.selectedLines.InsertCollection(Lines);
+        this.changeCheckBoxesState.emit(Lines);
+    }
+    onRowSelected(rowData: any) {
+        const row = rowData;
+        const rowId = row.Id;
+        const index = this.selectedLines.Collection.findIndex(c => c.rowData?.Id == row.Id);
+        if (index < 0) {
+            row.MasavInterfaceId = this.entityPM.Id;
+            this.pushLine(row) 
+        } 
+        else {
+            row.MasavInterfaceId = null;
+            this.selectedLines.Remove(this.selectedLines.Collection.find(c => c.rowData?.Id == rowId));
+        }
+    }
+    pushLine(rowData: any) {
+        
+        this.selectedLines.Insert({rowData: rowData, IsChecked: true, RowIndex: null, ById: true});
+      
+    }
+    onDataLoaded() {
+        if (this.selectedLines?.Collection && this.selectedLines.Collection.length > 0) {
+            this.selectedLines.Collection.forEach(row => {
+                
+                if (row?.rowData?.IsChecked) {
+                    this.pushLine(row?.rowData);
+                }
+            });
+        }
+        this.markIsChecked.emit({ SelectedLines: this.selectedLines });
+        
+        
+    }
+    refreshButtonClicked() {
+        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });       
+    }
+
+    public all: boolean;
+    public get selectedAll(): boolean {
+        return this.all;
+    }
+    public set selectedAll(value: boolean) {
+        this.all = value;
+        if (value) {                     
+            this.getAllAPPayment();          
+
+        } else {     
+            this.selectedLines.Clear();  
+            this.refreshButtonClicked();
+    
+        }
+    }
+    getAllAPPayment(){  
+        this.currentSession.StartBusyIndicatorLoading();     
+        var filters = this.getFilters();       
+        filters.GetCount = false;
+        filters.GetAll = true;      
+        filters.SortBy = "ApprovedDateTime";
+        filters.SortDirection = "Descending";         
+        return this.apPaymentListService.getByFilters(filters).subscribe((res)=>{
+            this.selectLines(res.Result);
+            this.currentSession.StopBusyIndicator();     
+        });
+    }
+    getFilters(){
+        var filters = new ApiQueryFilters;
+        if(this.entityPM.StatusCode === MasavInterfaceStatus.Transmitted )
+            filters.addAdditionalFilter('MasavInterfaceId', this.entityPM.Id, null, null, 'Equals', false, false, false, 'string');    
+        else {
+            filters.addAdditionalFilter('MasavInterfaceId', '', null, null, 'IsNull', false, false, false, 'string');
+            filters.addAdditionalFilter('StatusCode', 'AD', null, null, 'Equals', false, false, false, 'string');
+            filters.addAdditionalFilter("ApprovedDateTime", this.entityPM.FromDate, this.entityPM.ToDate, null, "Between", false, false, false, "number");
+            filters.addAdditionalFilter("PaymentMethodCode", "MS", null, null, 'Equals', false, true, false, 'string');
+        }    
+        return filters;
+    }
 }
+export enum MasavInterfaceStatus {
+    Transmitted = 'TR',
+    Failed ='FD',
+    Draft = 'DR',
+    Cancelled ='CN'
+  }

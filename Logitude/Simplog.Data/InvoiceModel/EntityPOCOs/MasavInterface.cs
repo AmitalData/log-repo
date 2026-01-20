@@ -15,12 +15,11 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
        public int Tenant { get; set; }
        public string CreatedByUserId { get; set; }
        public string UpdatedByUserId { get; set; }
-       public string Name { get; set; }
-       public DateTime? CreateDate { get; set; }
+       public DateTime CreateDate { get; set; }
        public DateTime? UpdateDate { get; set; }
-       public DateTime? FromDate { get; set; }
-       public DateTime? ToDate { get; set; }
-       public DateTime? PaymentDate { get; set; }
+       public DateTime FromDate { get; set; }
+       public DateTime ToDate { get; set; }
+       public DateTime PaymentDate { get; set; }
        public string SearchFields { get; set; }
         [ForeignKey("StatusCode")]
         public virtual MasavInterfaceStatus Status { get; set; }

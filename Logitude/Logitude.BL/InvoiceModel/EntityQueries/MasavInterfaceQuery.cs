@@ -8,6 +8,7 @@ using Simplog.Data.InvoiceModel.Repositories;
 
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using System.Data.Entity;
 
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
@@ -37,7 +38,20 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             IQueryable<MasavInterfaceList> result = from entity in iQueryable
                                                      select new MasavInterfaceList()
                                                      {
-                                                         
+                                                         Id = entity.Id,
+                                                         Tenant = entity.Tenant,
+                                                         CreateDate = entity.CreateDate,
+                                                         CreatedByUserId = entity.CreatedByUserId,
+                                                         UpdateDate = entity.UpdateDate,
+                                                         UpdatedByUserId = entity.UpdatedByUserId,
+                                                         SearchFields = entity.SearchFields,
+                                                         FromDate = entity.FromDate,
+                                                         ToDate = entity.ToDate,
+                                                         PaymentDate = entity.PaymentDate,
+                                                         Amount = 0,
+                                                         TotalPayments = 0,
+                                                         StatusCode = entity.StatusCode,
+                                                        StatusName = entity.Status != null ? entity.Status.LocalName : null,
                                                      };
 
             return result;

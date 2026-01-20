@@ -33,12 +33,12 @@ export class MasavInterfaceStatusPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/masavInterfaceStatuses';      
     }
 
-	get(tenant: number) {       
+	get(code: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'tenant=' + tenant, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
@@ -52,7 +52,7 @@ export class MasavInterfaceStatusPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "MasavInterfaceStatus", "GetSinglePM", 'tenant=' + tenant);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "MasavInterfaceStatus", "GetSinglePM", 'code=' + code);
 				 
 						return serviceResponse;
 

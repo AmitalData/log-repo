@@ -25,7 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class MasavInterfaceUpdateClass
    {  		
-		public const string HashString = "f20965c456a80ec47db9fda98f1a2958";
+		public const string HashString = "35a562238562743e227f70f82cbec4c7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -62,7 +62,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "CreateDate",
 			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  false,
+			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
@@ -1299,6 +1299,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode MasavInterfaceTextCode_MasavInterfaceOMasavInterface = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MasavInterface.O.MasavInterface", DefaultText = "Masav Interface",LocalDefaultText = @"BS64:Itee157XqdenINec157XoSLXkSI=", ObjectTableId = MasavInterfaceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode MasavInterfaceTextCode_MasavInterfaceOMasav = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MasavInterface.O.Masav", DefaultText = "Masav",LocalDefaultText = @"BS64:Itee16Ei15Ei", ObjectTableId = MasavInterfaceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode MasavInterfaceTextCode_MasavInterfaceOSelectAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MasavInterface.O.SelectAll", DefaultText = "Select All",LocalDefaultText = @"BS64:IteR15fXqCDXlNeb15wi", ObjectTableId = MasavInterfaceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

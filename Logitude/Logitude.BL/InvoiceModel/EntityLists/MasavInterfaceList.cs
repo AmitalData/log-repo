@@ -13,7 +13,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public int Tenant { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreatedByUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         public string UpdatedByUserId { get; set; }
         public string SearchFields { get; set; }
         public DateTime FromDate { get; set; }

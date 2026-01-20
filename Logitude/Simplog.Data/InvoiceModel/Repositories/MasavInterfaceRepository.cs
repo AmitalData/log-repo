@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
@@ -28,7 +29,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
        public MasavInterface GetSingleMasavInterface(string id,int tenant)
         {
-            return (from a in context.MasavInterfaces
+            return (from a in context.MasavInterfaces.Include("Status")
                           where a.Id == id && a.Tenant== tenant
                           select a).FirstOrDefault();
         }

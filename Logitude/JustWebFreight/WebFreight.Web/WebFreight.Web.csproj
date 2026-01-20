@@ -1167,6 +1167,7 @@
     <Compile Include="Controllers\CustomsModel\WebServices\DeclarationPaymentWebServiceController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\GeneralLockController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\GeneralLockViewsController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\APPaymentExtendedController.cs" />
     <Compile Include="Controllers\InvoiceModel\ConfirmationNumberDefaultExtendedController.cs" />
     <Compile Include="Controllers\InvoiceModel\Extended\ExpenseAllocationFlowExtendedController.cs" />
     <Compile Include="Controllers\InvoiceModel\Extended\ExpenseAllocationSettingExtendedController.cs" />

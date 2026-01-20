@@ -331,6 +331,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 IBANNumber = a.Card.IBANNumber,
                 Swift = a.Card.Swift,
                 AccountNumber = a.Card.AccountNumber,
+                BankBranch = a.Card.BankBranch,
+                BankCodeId = a.Card.BankCodeId,
                 SharedLogisticsInvitationStatusName = a.Card.SharedLogisticsInvitationStatus != null ? a.Card.SharedLogisticsInvitationStatus.Name : null,
                 CargoTrackingInvitationStatusName = a.Card.CargoTrackingInvitationStatus != null ? a.Card.CargoTrackingInvitationStatus.Name : null,
                 IsActiveForMobile = a.Card.IsActiveForMobile,
@@ -388,8 +390,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 IRSNumber = a.Card.IRSNumber,
                 IRSPlace = a.Card.IRSPlace,
                 IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
-                BankCodeId = a.Card.BankCodeId,
-                BankBranch = a.Card.BankBranch,
+                
                 Card = new CardPM()
                 {
                     Id = a.Id,

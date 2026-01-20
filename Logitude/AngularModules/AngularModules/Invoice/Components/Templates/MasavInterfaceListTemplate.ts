@@ -9,6 +9,9 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { TaxReportPMService } from 'Accounting/Services/StandardPMs/TaxReportPMService';
 import { TaxReportLinePMService } from 'Accounting/Services/StandardPMs/TaxReportLinePMService';
 import { TaxReportLineList } from 'Accounting/EntityLists/TaxReportLineList';
+import { AccountingEntityHelper } from 'Accounting/Utilities/AccountingEntityHelper';
+import { APPaymentList } from 'Invoice/EntityLists/APPaymentList';
+import { MasavInterfaceStatus } from '../EditTabs/MasavInterface/MasavInterfaceDetailsTabComponent';
 
 @Component({
 
@@ -25,111 +28,69 @@ export class MasavInterfaceListTemplate {
     public isRTL: boolean = false;
     public showLocal: boolean = false;
 
-    private _TaxReportPMService: TaxReportPMService = new TaxReportPMService();
-    private _TaxReportLinePMService: TaxReportLinePMService = new TaxReportLinePMService();
     private CurrentSession = SessionLocator.SelectedSession;
-
-    private currentEntityPM: any;
-
     taxReportStatusCode: string;
-
+    public readonly : boolean = false;
     constructor(private CD: ChangeDetectorRef) {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+        this.readonly = this.CurrentSession.CurrentEditComponent.EntityPM?.StatusCode ===  MasavInterfaceStatus.Transmitted;
     }
 
     setVariables(rowData: any, fieldName: string, MyAdditionalData: any) {
         this.rowData = rowData;
-        this.AdditionalData = MyAdditionalData;
-        //var DatePipe = new DateTimePipe();
-        //this.UpdateMessage = TextCodeTranslator.Translate("TaxReportLine.O.LastUpdatedBy") + " {" + this.rowData.UpdatedBUserName + " } " + TextCodeTranslator.Translate("TaxReportLine.O.On") + " {" + DatePipe.transform(this.rowData.LastUpdateDateTime, "DT") + " }";
-
-        if (fieldName.includes(';')) {
-            var temp = fieldName.split(';');
-            if (temp.length == 2) {
-                this.fieldName = temp[0];
-                this.taxReportStatusCode = temp[1];
-            }
-        } else {
-            this.fieldName = fieldName;
-        }
-
+        this.fieldName = fieldName;
         var isDestroyed: boolean = this.CD['destroyed'];
         if (!isDestroyed) {
-            this.CD.detectChanges();
+            this.CD.detectChanges();   
         }
 
 
 
     }
-
-    Abs(number: number) {
-        return number < 0 ? number * -1 : number;
+    private isChecked: boolean;
+    get IsChecked() { return this.isChecked; }
+    set IsChecked(newValue: boolean) {        
+        this.CurrentSession.PseventRowSelectEvent.emit(this.rowData);
     }
+    getMissingBankDetails(rowData: APPaymentList): string {
+        let errorMessage = '';
+        if (AppTool.IsNullOrEmpty(rowData.VendorBankAccount)) {
+            errorMessage = TextCodeTranslator.Translate("APPayment.F.VendorBankAccount") + " " + TextCodeTranslator.Translate("APPayment.O.Missing");
+        }
+        if(AppTool.IsNullOrEmpty(rowData.VendorBankBranch)) {
+            if (!AppTool.IsNullOrEmpty(errorMessage)) {
+                errorMessage += ' ,';
+            }
+            errorMessage += TextCodeTranslator.Translate("APPayment.F.VendorBankBranch") + " " + TextCodeTranslator.Translate("APPayment.O.Missing");
+        }
+        if(AppTool.IsNullOrEmpty(rowData.VendorBankCode)) {
+            if (!AppTool.IsNullOrEmpty(errorMessage)) {
+                errorMessage += ' ,';
+            }
+            errorMessage +=TextCodeTranslator.Translate("APPayment.F.VendorBankCode") + " " + TextCodeTranslator.Translate("APPayment.O.Missing");;
+        }
+        return errorMessage;
+    }
+    
 
-    OpenJournal(id) {
+    OpenVendor(id,vendorPartnerTypeId) {      
+        var billingTab = AccountingEntityHelper.GetBillingTabByPartnerType(vendorPartnerTypeId);
+        var partnerTypeName = AccountingEntityHelper.GetPartnerTypeObjectTableName(vendorPartnerTypeId);
+        AccountingEntityHelper.OpenCard(id,partnerTypeName,billingTab)
+        
+    }
+    OpenAPPayment(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'APPayment' });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                     });
                 });
         }
     }
-    GetUpdateMessage(){
-        var DatePipe = new DateTimePipe();
-       return   TextCodeTranslator.Translate("TaxReportLine.O.LastUpdatedBy") + " {" + this.rowData.UpdatedBUserName + " } " + TextCodeTranslator.Translate("TaxReportLine.O.On") + " {" + DatePipe.transform(this.rowData.LastUpdateDateTime, "DT") + " }";
-    }
-    EditLine() {
-        var lineEntity: TaxReportLineList = this.rowData;
-        if (lineEntity) {
-            this.CurrentSession.StartBusyIndicatorLoading();
-
-            var windowTitle = TextCodeTranslator.Translate("Accounting.O.EditLine") + " " + lineEntity.Line;
-
-            this._TaxReportPMService.get(lineEntity.TaxReportId).subscribe((myResult:any) => {
-
-                var mm: ServiceResponse = myResult;
-                if (!mm.HasError) {
-                    var report = mm.Result;
-                    this._TaxReportLinePMService.get(report.Id, lineEntity.Line).subscribe((myResult:any) => {
-
-                        var mm: ServiceResponse = myResult;
-                        if (!mm.HasError) {
-                            this.CurrentSession.StopBusyIndicator();
-
-                            var linePM = mm.Result;
-
-                            var windowArgs: any = {};
-                            windowArgs.TaxReportPM = report;
-                            windowArgs.TaxReportLinePM = linePM;
-
-                            var logWindow = new LogitudeWindow();
-                            logWindow.Width = 450;
-                            logWindow.Height = 450;
-                            logWindow.Title = windowTitle;
-                            logWindow.WindowArgs = windowArgs;
-                            logWindow.WindowClosed.subscribe((event: any) => {
-                                if (event == "ok")
-                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                            });
-                            logWindow.Show('./Accounting/Components/EditTabs/TaxReport/EditTaxReportLine/EditTaxReportLineComponent');
-
-
-                        }
-                        else {
-                            this.CurrentSession.StopBusyIndicator();
-                        }
-                    });
-                }
-                else {
-                    this.CurrentSession.StopBusyIndicator();
-                }
-            });
-
-
-        }
-    }
+    
+   
 }

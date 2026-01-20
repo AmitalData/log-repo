@@ -211,5 +211,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? InvoiceRate { get; set; }
         public string InvoiceCurrencyId { get; set; }
         public string MasavInterfaceId{ get;set; }
+        public string VendorBankBranch { get; set; }
+        public string VendorBankAccount { get; set; }
+        public string VendorBankCode{ get;set; }
+
     }
 }
