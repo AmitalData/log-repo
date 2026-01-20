@@ -1163,7 +1163,6 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\GeneralLockViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\APPaymentExtendedController.cs" />
     <Compile Include="Controllers\InvoiceModel\ConfirmationNumberDefaultExtendedController.cs" />
-    <Compile Include="Controllers\InvoiceModel\Extended\AccountingPaymentMethodExtendedController.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\MasavInterfaceStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\MasavInterfaceViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\MasavInterfaceController.Generated.cs" />

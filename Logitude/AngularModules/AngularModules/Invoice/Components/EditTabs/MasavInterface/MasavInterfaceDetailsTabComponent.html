@@ -22,7 +22,10 @@
                     
                          <td>
                             <CheckBox  [class.readonly]="readonly"  title="Select All" style="position: absolute; top: 7px;" [IsChecked]="selectedAll" (Checked)="selectedAll = $event"></CheckBox>
-                           
+                            <span style="padding-right: 2%;
+                            position: absolute;
+                            top: 7px;">{{'MasavInterface.O.SelectAll' | TextCodeTranslationPipe}}</span>
+
                             <IconButton [class.readonly]="readonly" [Name]="'Refresh'"  (click)="refreshButtonClicked()"></IconButton>
                             
                          </td> 
