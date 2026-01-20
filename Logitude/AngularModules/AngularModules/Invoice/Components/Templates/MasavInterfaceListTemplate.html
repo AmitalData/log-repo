@@ -57,79 +57,38 @@
             border-width: 0 3px 3px 0;
             transform: rotate(45deg);
         }
+        .readonly {
+             pointer-events: none;
+             user-select: text; 
+             opacity: 0.7;
+        }
 
 </style>
 <div>
-    <!-- Line -->
-    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'Line'">{{ rowData[fieldName]}}</div>
-    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'LineTypeCode'">{{ rowData[fieldName] }}</div>
-    
-    <!-- ReferenceDate -->
-    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'ReferenceDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
-    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'VatNumber'">{{ rowData[fieldName] }}</div>
-    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'Reference'">{{ rowData[fieldName] }}</div>
-    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'ReferecneGroup'">{{ rowData[fieldName] }}</div>
-
-    <!-- TransmitStatusCode -->
-    <div class="TextTrimming" style="text-align: center;" *ngIf="fieldName == 'TransmitStatusCode'">
-        <div [ngSwitch]="rowData.TransmitStatusCode" class="TextTrimming" style="text-align: center;">
-            <div *ngSwitchCase="'1'" class="aboodV" [style.right.px]="isRTL ? '30' : '15'"></div>
-            <div *ngSwitchCase="'4'" class="aboodV" [style.right.px]="isRTL ? '30' : '15'"></div>
-            <div *ngSwitchCase="'2'" class="aboodX orange"></div>
-            <div *ngSwitchCase="'3'" class="aboodX red"></div>
-        </div>
-    </div>
-
-    <!-- TotalInvoiceAmount  -->
-    <div class="TextTrimming" *ngIf="fieldName == 'TotalInvoiceAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["TotalInvoiceAmount"]<0'>
-        {{ rowData["TotalInvoiceAmount"] | NumbersPipe:'N2' }}
-    </div>
-
-     <!-- SubTotalInLocalCurrency  -->
-     <div class="TextTrimming" *ngIf="fieldName == 'SubTotalInLocalCurrency'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["SubTotalInLocalCurrency"]<0'>
-        {{ rowData["SubTotalInLocalCurrency"] | NumbersPipe:'N2' }}
-
-    </div>
-
-    <!-- VatAmount -->
-    <div class="TextTrimming" *ngIf="fieldName == 'VatAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["VatAmount"]<0'>
-        {{ rowData["VatAmount"] | NumbersPipe:'N2' }}
-    </div>
-
-    <!-- StatusName -->
-    <!-- <div class="TextTrimming" *ngIf="fieldName == 'StatusLocalName'" style="color:#00a24d;padding: 0px 2px;" [style.text-align]="isRTL ? 'right' : 'left'" [class.red]='rowData.StatusCode != "6"'>
-        {{ rowData["StatusLocalName"] }}
-    </div> -->
-
-    <div class="TextTrimming" *ngIf="fieldName == 'StatusEnglishName' || fieldName == 'StatusLocalName'" style="color:#00a24d;padding: 0px 2px;" [style.text-align]="isRTL ? 'right' : 'left'" [class.red]='rowData.StatusCode != "6"'>
-        {{ showLocal ? rowData["StatusLocalName"] : rowData["StatusEnglishName"] }}
-    </div>
-
-    <!-- JournalNumber -->
-    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'JournalNumber'">
-        <a href="javascript:;" (click)="OpenJournal(rowData['JournalId'])">
-            {{ rowData['JournalNumber'] }}
+    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'PaymentNo'">
+        <a href="javascript:;" (click)="OpenAPPayment(rowData['Id'])">
+            {{rowData['PaymentNo'] }}
         </a>
     </div>
-    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'ConfirmationNumber'">
-            {{ rowData['ConfirmationNumber'] }}
+    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'Checked'" [class.readonly]="readonly">
+        <CheckBox [IsChecked]="rowData.IsChecked" (Checked)="IsChecked = $event"></CheckBox>
     </div>
-    <!-- IsExternal -->
-    <div *ngIf="fieldName == 'IsExternalLine'">
-        <div style="text-align: center;" *ngIf="rowData['IsExternalLine']" title="{{'TaxReportLine.O.ExternalTooltip' | TextCodeTranslationPipe}}">
-            <img src="./Images/External.png" />
-        </div>
-    </div>
-    <!-- IsExternal -->
-    <div *ngIf="fieldName == 'IsManuallyChanged'">
-        <div style="text-align: center;"  *ngIf="rowData['IsManuallyChanged']"   title="{{GetUpdateMessage()}}">
-            <img src="./Images/favicon.png" />
-        </div>      
-    </div>
+    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'RegisterDate'" (click)="OpenAPPayment(rowData['Id'])">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+    
+    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'ApprovedDateTime'"(click)="OpenAPPayment(rowData['Id'])">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
 
-    <!-- Buttons -->
-    <div *ngIf="fieldName == 'Buttons'" class="TextTrimming" style="padding: 3px 3px;">
-        <IconButton [IsEnabled]=" (taxReportStatusCode == 'E' || taxReportStatusCode == 'D')" [IsSmall]="true" [Name]="'Edit'" (click)="EditLine()"></IconButton>
+    <div class="TextTrimming" *ngIf="fieldName == 'AmountInLocalCurrency'"  (click)="OpenAPPayment(rowData['Id'])" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["AmountInLocalCurrency"]<0'>
+        {{ rowData["AmountInLocalCurrency"] | NumbersPipe:'N2' }}
     </div>
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'VendorName'">
+        <a href="javascript:;" (click)="OpenVendor(rowData['VendorId'],rowData['VendorPartnerTypeId'])">
+            {{(isRTL && rowData['VendorLocalName'] !== null) ? rowData['VendorLocalName'] : rowData['VendorName'] }}
+        </a>
+    </div>
+    
+    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'Errors'">{{ getMissingBankDetails(rowData) }}</div>
+
+
+   
 
 </div>

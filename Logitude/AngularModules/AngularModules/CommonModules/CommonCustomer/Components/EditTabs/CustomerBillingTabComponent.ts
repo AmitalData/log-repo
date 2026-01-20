@@ -145,14 +145,22 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
 
             this.UIProperties.SetEnabled("CreditLimitAmount", this.ObjectTableName, this.HasEditCreditAmountFeature);
             this.EntityPM?.UIProperties.SetEnabled("CreditLimitAmount", this.ObjectTableName, this.HasEditCreditAmountFeature);
-            this.SetInsuredCreditLimitEnablitity();
+            this.SetEnablitity();
 
         }
     }
 
-    private SetInsuredCreditLimitEnablitity() {
+    private SetEnablitity() {
         this.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, true);
         this.EntityPM?.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, true);
+        this.EntityPM?.UIProperties.SetEnabled("BankName", this.ObjectTableName, true);
+        this.EntityPM?.UIProperties.SetEnabled("BankAddress", this.ObjectTableName, true);
+        this.EntityPM?.UIProperties.SetEnabled("BankCodeId", this.ObjectTableName, true);
+        this.EntityPM?.UIProperties.SetEnabled("BankBranch", this.ObjectTableName, true);
+        this.EntityPM?.UIProperties.SetEnabled("AccountNumber", this.ObjectTableName, true);
+        this.EntityPM?.UIProperties.SetEnabled("Swift", this.ObjectTableName, true);
+        this.EntityPM?.UIProperties.SetEnabled("IBANNumber", this.ObjectTableName, true);     
+        
     }
 
     public CreditLimitAmountLabel: string;

@@ -34,7 +34,7 @@
   SortingByObjectField="&quot;CreateDate&quot;"
   SortingByDirection="&quot;Descending&quot;"
   InActive="false"
-  IsSaveButtonVisible="false"
+  IsSaveButtonVisible="true"
   IsComposition="false"
   EnableSecurity="true"
   AllowCustomFields="false"

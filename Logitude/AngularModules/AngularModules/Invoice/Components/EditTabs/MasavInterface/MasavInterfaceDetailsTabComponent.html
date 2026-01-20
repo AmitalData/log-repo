@@ -1,18 +1,63 @@
-﻿<tr>
-    <!-- Grid -->
-    <td style="">
+﻿<style>
+    .readonly {
+             pointer-events: none;
+             user-select: text; 
+             opacity: 0.7;
+        }
+</style>
 
-        <div class="GeneratedGridContainer">
-            <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'APPayment'"
-                [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                [columns]="columns" [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent"
-                [IsCustomTemplate]="true" [CustomColumnsReady]="MasavInterfaceColumnsReady">
-            </logitude-grid>
-        </div>
+ 
 
-        <!-- edit -->
-        <div *ngIf="0" class="CellContent">
-        </div>
 
-    </td>
-</tr>
+<table>
+    <tr>
+        <td>
+            <div  class="TableHolder">
+                <table>
+
+                   <tr style="height: 30px;">
+
+                    </tr>
+                    <tr style="height: 20px;">                       
+                    
+                         <td>
+                            <CheckBox  [class.readonly]="readonly"  title="Select All" style="position: absolute; top: 7px;" [IsChecked]="selectedAll" (Checked)="selectedAll = $event"></CheckBox>
+                           
+                            <IconButton [class.readonly]="readonly" [Name]="'Refresh'"  (click)="refreshButtonClicked()"></IconButton>
+                            
+                         </td> 
+                      
+                    </tr> 
+                   <tr style="height: 15px;">
+
+                    </tr> 
+                    <tr>
+                       
+                        <td style="">
+
+                            <div class="GeneratedGridContainer">
+                                <logitude-grid GridWidth="80%" GridHeight="100%" [ObjectTable]="'APPayment'"
+                                    [dataSource]="DataSource" [MenuHeaderchangeevent]="menuHeaderchangeevent"
+                                    [columns]="columns" [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent"
+                                    [IsCustomTemplate]="true" [CustomColumnsReady]="masavInterfaceColumnsReady"  
+                                    [PassAdditionalDataToTemplates]="true"
+                                    [MarkIsChecked]="markIsChecked"
+                                    (DataLoaded)="onDataLoaded()"
+                                    [ChangeCheckBoxesState]="changeCheckBoxesState" (CheckBoxChecked)="onRowSelected($event)">
+                                </logitude-grid>
+                            </div>
+                          
+                          
+          
+                        </td>
+                        
+                    </tr>
+
+                    
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+</table>

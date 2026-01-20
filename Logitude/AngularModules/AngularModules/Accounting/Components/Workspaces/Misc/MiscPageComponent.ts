@@ -30,6 +30,7 @@ export class MiscPageComponent implements AfterViewInit {
         this._entityResourceService.getEntityResourceByTableName("OpenFormatReport").subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("TaxReport").subscribe((response: any) => {
                 this._entityResourceService.getEntityResourceByTableName("TaxDeductionReport").subscribe((response: any) => {
+                    this._entityResourceService.getEntityResourceByTableName("MasavInterface").subscribe((response: any) => {
 
                     var yearTransFeature = FeatureLocator.HasFeaturePermession("GLAccount", "YEARTRANSFERMENU");
                     console.log("YEARTRANSFERMENU Feature:" + yearTransFeature);
@@ -49,6 +50,7 @@ export class MiscPageComponent implements AfterViewInit {
 
          this.isScreenLoaded = true;
          this.CurrentSession.StopBusyIndicator();
+        })
                 });
             });
         });
@@ -132,9 +134,9 @@ export class MiscPageComponent implements AfterViewInit {
                        break;
 
                        }
-              case "MIQC":{
-                    displayTitle = TextCodeTranslator.Translate("TaxReport");
-                    tableName = "TaxReport";                  
+              case "AllMasavInterfaces":{
+                    displayTitle = TextCodeTranslator.Translate("MasavInterface");
+                    tableName = "MasavInterface";                  
                     break;
                 }
     
@@ -221,7 +223,7 @@ export class MiscPageComponent implements AfterViewInit {
         //windowArgs.IsNewEntity = true;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 400;
+        logWindow.Width = 1000;
         logWindow.Height = 200;
         logWindow.Title = windowTitle;
         //logWindow.WindowArgs = windowArgs;

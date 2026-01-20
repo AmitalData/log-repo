@@ -30,7 +30,7 @@ export class NewMasavInterfaceComponent extends BaseComponent  {
         if (this.entityPM.FromDate != value) {
             this.entityPM.FromDate = value;
             if (this.ToDate < value) {
-                this.entityPM.UIProperties.SetValidity("FromoDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.O.MustBeLarger"));
+                this.entityPM.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.O.MustBeLarger"));
             }
         }
     }
@@ -61,12 +61,26 @@ export class NewMasavInterfaceComponent extends BaseComponent  {
         this.entityPM.CreateDate = new Date();
         this.entityPM.CreatedByUserId = SessionLocator.LoggedUserId;
         this.entityPM.UpdateDate = new Date();
-        
+        this.entityPM.StatusCode = "DR"
+        var requierd: string = null;
+        requierd = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
         var errors: string[] = [];
         if (this.ToDate < this.FromDate) {
             errors.push(TextCodeTranslator.Translate("Accounting.O.MustBeLarger"));
         }
-
+        if (this.FromDate == undefined) {
+            var s: string = requierd.replace("%FieldName", TextCodeTranslator.Translate("MasavInterface.F.FromDate"));
+            errors.push(s);
+        }
+        if (this.ToDate == undefined) {
+            var s: string = requierd.replace("%FieldName", TextCodeTranslator.Translate("MasavInterface.F.ToDate"));
+            errors.push(s);
+        }
+        if (this.PaymentDate == undefined) {
+            var s: string = requierd.replace("%FieldName", TextCodeTranslator.Translate("MasavInterface.F.PaymentDate"));
+            errors.push(s);
+        }
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {

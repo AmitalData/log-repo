@@ -171,7 +171,7 @@ export class MasavInterfaceListService {
 
 		if (MasavInterfaceListService.CachedData.length > 0) {
 			return defer(() => {
-				var filteredData = MasavInterfaceListService.CachedData.filter(a => a.Code === id)[0];
+				var filteredData = MasavInterfaceListService.CachedData.filter(a => a.Id === id)[0];
 				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return of(serviceResponse);

@@ -103,6 +103,24 @@ export class AccountingEntityHelper {
         }
         return objectTableName;
     }
+    static GetBillingTabByPartnerType(partnerTypeId: string){
+        var billingTab;
+        switch (partnerTypeId) {
+            case 'AG': { billingTab = 'AGBL'; break; }
+            case 'AL': { billingTab = 'ALBL'; break; }
+            case 'CG': { billingTab = 'CUBL'; break; }
+            case 'CS': { billingTab = 'CLBL'; break; }
+            case 'PO': { billingTab = 'CLBL'; break; }
+            case 'PT': { billingTab = 'PCBL'; break; }
+            case 'SG': { billingTab = 'SABL'; break; }
+            case 'SL': { billingTab = 'SLBL'; break; }
+            case 'TR': { billingTab = 'TRBL'; break; }
+            case 'VD': { billingTab = 'VDBL'; break; }
+            case 'WH': { billingTab = 'WHBL'; break; }
+            case 'AC': { billingTab = 'ACBL'; break; }
+        }
+        return billingTab;
+    }
 
     static OpenCard(connectedCardId: string, partnerTypeName: string, selectedTabCode: string)
     {
@@ -114,6 +132,7 @@ export class AccountingEntityHelper {
                     cmpRef.instance.Run({ EntityId: connectedCardId, ObjectTableName: partnerTypeName == "Others" || partnerTypeName == "Coloader" ? "Vendor" : partnerTypeName, SelectedTabCode: selectedTabCode });
                     cmpRef.instance.BackCompleted.subscribe(bk =>
                     {
+                        SessionLocator.SelectedSession?.FireEvent("BackFromCard");
                     });
                 });
         }

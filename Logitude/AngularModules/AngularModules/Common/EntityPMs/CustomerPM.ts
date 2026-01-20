@@ -844,6 +844,15 @@ export class CustomerPM extends ObjectCustomFieldPM {
     public get LogBoxActivated() { return this.logBoxActivated; }
     public set LogBoxActivated(newValue: boolean) { if (this.logBoxActivated != newValue) { this.logBoxActivated = newValue; this.MarkAsDirty("LogBoxActivated"); } }
        
+    private bankBranch: string;
+    public get BankBranch() { return this.bankBranch; }
+    public set BankBranch(newValue: string) { if (this.bankBranch != newValue) { this.bankBranch = newValue; this.MarkAsDirty("BankBranch"); } }
+       
+    private bankCodeId: boolean;
+    public get BankCodeId() { return this.bankCodeId; }
+    public set BankCodeId(newValue: boolean) { if (this.bankCodeId != newValue) { this.bankCodeId = newValue; this.MarkAsDirty("BankCodeId"); } }
+       
+	 
 	 
      
 	private customerProducts: CustomerProductPM[];
