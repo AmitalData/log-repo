@@ -21,12 +21,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Web;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
+using Simplog.Global.Data.GlobalModel;
+using Logitude.Customs.Data;
 
 namespace Logitude.Server.Tools.QueueService
 {
     public partial class DbQueueService
     {
-
 
         protected int? SendReturnIdCustoms(Dictionary<string, string> messageValues,
          int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null//,int tenantPriority = 89
@@ -436,6 +440,21 @@ namespace Logitude.Server.Tools.QueueService
 
             LogitudeSettings.HandleLogMe(msg, false, "WorkUntilQEmpty_Db_new", stopLogAt);
         }
+
+        public void updateQueueCode()
+        {
+            ICustomContext context = CustomContext.GetContext(this.Tenant);
+            IGlobalContext context1 = GlobalContext.GetContext(this.Tenant);
+            InterfaceManagementRepository interfaceManagementRepository = new InterfaceManagementRepository(this.Tenant);
+            string queueDefinitionGroup = interfaceManagementRepository.GetSingle(QueueSendModel?.InterfaceTypeCode)?.QueueDefinitionGroup;
+            BatchServicesDefinitionRepository batchServicesRepository = new BatchServicesDefinitionRepository(context1);
+            string queueCodeByQueueBase = batchServicesRepository.GetSingleBatchServicesDefinitionByQueueBase(QueueCode, queueDefinitionGroup);
+            if (!string.IsNullOrEmpty(queueCodeByQueueBase))
+            {
+                QueueCode = queueCodeByQueueBase;
+            }
+        }
+
         public List<QueueResponse> ReceiveCustoms_new(int nextRunDelayInSec = 60, int? selectCount = null)
         {
             if (!LogitudeSettings.IsCostomsDeploy)
@@ -444,7 +463,9 @@ namespace Logitude.Server.Tools.QueueService
             }
             //
             List<QueueResponse> responseList = new List<QueueResponse>();
-
+            
+            updateQueueCode();
+            
             //using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
             //using (TransactionScope scope = TransactionFactory.GetTransaction())
             //{

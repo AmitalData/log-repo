@@ -139,8 +139,8 @@ namespace CustomsWorkerRole
                 //RoleEnvironment.Changing += RoleEnvironmentChanging;
             }
             else
-            {
-				_CustomDbQueueService = new CustomDbQueueService(myClass, SettingUtil.GetTenantDBFromConfig());
+            {   
+				_CustomDbQueueService = new CustomDbQueueService(myClass, SettingUtil.GetTenantDBFromConfig(),queueDefinitionCode: this.BatchServiceCode);
                 
             }
 

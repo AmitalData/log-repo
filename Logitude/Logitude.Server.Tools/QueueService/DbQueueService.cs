@@ -23,6 +23,7 @@ namespace Logitude.Server.Tools.QueueService
 {
     public partial class DbQueueService : IQueueService
     {
+        QueueSendModel QueueSendModel { get; set; }
         protected int Tenant { get; set; }
         protected string QueueCode { get; set; }
         protected string CurrentMessageId { get; set; }
@@ -33,13 +34,13 @@ namespace Logitude.Server.Tools.QueueService
 
         }
 
-        public DbQueueService(string queueCode, int tenant)
+        public DbQueueService(string queueCode, int tenant, string queueDefinitionCode = null)
         {
-            this.InitializeQueue(queueCode, tenant);
+            this.InitializeQueue(queueCode, tenant, queueDefinitionCode);
         }
 
 
-        public void InitializeQueue(string queueCode, int tenant)
+        public void InitializeQueue(string queueCode, int tenant, string queueDefinitionCode = null)
         {
             if (!String.IsNullOrWhiteSpace(LogitudeSettings.DebugKey))
             {
@@ -50,10 +51,15 @@ namespace Logitude.Server.Tools.QueueService
 
             }
             this.Tenant = tenant;
+            if (!string.IsNullOrEmpty(queueDefinitionCode))
+            {
+                this.QueueCode = queueDefinitionCode;
+            }
             this.QueueCode = queueCode;
             QueueMessageRepository messagesRepository = new QueueMessageRepository(Tenant);
             QueueMessageMoreDetailsRepository messagesMoreDetailsRepository = new QueueMessageMoreDetailsRepository(Tenant);
             QueueDefinitionRepository queueDefRep = new QueueDefinitionRepository(tenant);
+               
             QueueDefinition queueDefinition = GetQueueDefFromCache(queueCode, queueDefRep);
             queueDefinition = queueDefinition ?? queueDefRep.GetSingleQueueDefinition(queueCode);//ensure
             if (queueDefinition == null)
@@ -86,6 +92,7 @@ namespace Logitude.Server.Tools.QueueService
             int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null//,int tenantPriority = 89
             ,QueueSendModel queueSendModel= null)
         {
+            QueueSendModel = queueSendModel;
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 return SendReturnIdCustoms(messageValues,
@@ -1037,12 +1044,13 @@ namespace Logitude.Server.Tools.QueueService
             return response;
         }
 
-        public List<QueueResponse> Receive_new(int nextRunDelayInSec = 60, TimeSpan? serverWaitTime = null, int? selectCount = null)
+        public List<QueueResponse> Receive_new(int nextRunDelayInSec = 60, TimeSpan? serverWaitTime = null, int? selectCount = null, QueueSendModel queueSendModel = null)
         {
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 return ReceiveCustoms_new(nextRunDelayInSec, selectCount);
             }
+            // test
             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
             long messageId = -1;
 

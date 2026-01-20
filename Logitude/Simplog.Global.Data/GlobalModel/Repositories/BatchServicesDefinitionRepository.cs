@@ -29,6 +29,11 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             BatchServicesDefinition item = context.BatchServicesDefinitions.Where(d => d.Code == Code).FirstOrDefault();
             return item;
         }
+        public string GetSingleBatchServicesDefinitionByQueueBase(string QueueBase, string queueDefinitionGroup)
+        {
+            string item = context.BatchServicesDefinitions.FirstOrDefault(d => d.QueueBase != null && d.QueueBase == QueueBase && d.Code.EndsWith(queueDefinitionGroup))?.Code;
+            return item;
+        }
 
         public IQueryable<BatchServicesDefinition> GetAllBatchServicesDefinitions()
         {
