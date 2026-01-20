@@ -1974,10 +1974,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     ComputeLocalAmount() {
         if ((this.AmountInLocalCurrency === null || this.AmountInLocalCurrency === undefined)   // In this case, we must calculate this value
             || !this.EntityPM.IsFromReconcilePage                                               // as it worked before 
-            || this.EntityPM.IsFromReconcilePage &&
-             !this.IsRestoring && 
-             !this.SkipUpdatingLocalAmount &&
-             (!this.SavedPaymentCurrencyId || this.SavedPaymentCurrencyId !== this.PaymentCurrencyId))  // when changing currency from reconcile page
+            || (
+                this.EntityPM.IsFromReconcilePage && // when coming from reconcile page
+                !this.IsRestoring && // not restoring saved values
+                !this.SkipUpdatingLocalAmount && // not skipping update
+                (!this.SavedPaymentCurrencyId || this.SavedPaymentCurrencyId !== this.PaymentCurrencyId)))  // when changing currency from reconcile page
              this.AmountInLocalCurrency = this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;
     }
 
