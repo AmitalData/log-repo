@@ -62,6 +62,8 @@ namespace CommunicationWorkerRole.Services
                     {
                         if(schedulerDetails?.FTPDetails?.Subject == "DocumentSFTP")
                         {
+							AddStatusMessage("fileName" + fileName, "0");
+
 							AddToAzureQueue(fileName, fileData, schedulerDetails);
 						}
 						else

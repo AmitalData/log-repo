@@ -468,8 +468,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public List<TasksSchedulerPM> GetAllInprogressTasksSchedulerPMs()
         {
             return (from a in repository.context.TasksSchedulers
-                    where a.Status == "In progress" && a.InActive == false 
-                    select new TasksSchedulerPM()
+                    where a.Status == "In progress" && a.InActive == false && a.Type != "SFTP"
+					select new TasksSchedulerPM()
                     {
                         Id = a.Id,
                         Tenant = a.Tenant,
