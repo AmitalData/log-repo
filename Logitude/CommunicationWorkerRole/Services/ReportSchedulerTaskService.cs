@@ -93,6 +93,7 @@ namespace CommunicationWorkerRole.Services
                 string errorMessage = new StringBuilder().Append(logsMessage).AppendLine().ToString();
                 errorMessage += new StringBuilder().Append("Exception Message: ").AppendLine().Append(ex.Message).AppendLine().ToString();
                 errorMessage += new StringBuilder().Append("Stack Trace:").AppendLine().Append(ex.StackTrace).AppendLine().ToString();
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to run task in ReportSchedulerTaskService for task scheduler id: {reportTask.Id}, errorMessage: {errorMessage}");
 
                 throw new Exception(errorMessage);
             }
