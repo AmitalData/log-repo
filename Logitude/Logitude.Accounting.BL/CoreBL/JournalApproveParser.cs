@@ -201,7 +201,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 CheckLedgerTransactions();
 
-                if (selectedQueue != JournalApproveService.K_AccountingConversionJournalApproveWR)
+                if (selectedQueue != JournalApproveService.K_AccountingConversionJournalApproveWR || !FeatureToggleHelper.HasFeatureToggle("SSH", _JournalPM.Tenant))
                 {
                     logtext = "JournalApproveParser.ParseIt(), Point 5, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
                         + ", Status=" + _JournalPM.StatusCode

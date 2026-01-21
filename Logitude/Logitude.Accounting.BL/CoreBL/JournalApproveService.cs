@@ -491,7 +491,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     //{
                     this.Exec_usp_AccountingStreaming(myLedgerTransactionsWithCounters, allGLAccountTotalByMonths.ToList(), gLAccountAgingDataPMs);
                     // update BalanceInLocalCurrency
-                    if (_SelectedQueue != K_AccountingConversionJournalApproveWR)
+                    if (_SelectedQueue != K_AccountingConversionJournalApproveWR || !FeatureToggleHelper.HasFeatureToggle("SSH", _Tenant))
                     {
                         var allGLAccountTotalByMonthsForAccountingOnly = allGLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate);
                         var glAccountsToUpdate = (from tot in allGLAccountTotalByMonthsForAccountingOnly

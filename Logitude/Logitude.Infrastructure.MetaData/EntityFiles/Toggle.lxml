@@ -44,7 +44,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;60eb&quot;"
+  Code="&quot;9a33&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -1043,10 +1043,10 @@
       Description="&quot;חשבוניות ישראל לא להפעיל V2&quot;"
       SearchFields="&quot;AV2 ,Israel Invoices Do Not Activate V2&quot;" />
     <Record
-     Code="&quot;BMO&quot;"
-     Name="&quot;Open Format Report Optimization&quot;"
-     SearchFields="&quot;BMO,Open Format Report Optimization&quot;"
-     Description="&quot;דוח במבנה אחיד - אופטימיזציה&quot;" />
+      Code="&quot;BMO&quot;"
+      Name="&quot;Open Format Report Optimization&quot;"
+      SearchFields="&quot;BMO,Open Format Report Optimization&quot;"
+      Description="&quot;דוח במבנה אחיד - אופטימיזציה&quot;" />
     <Record
       Code="&quot;STQ&quot;"
       Name="&quot;Add Task Scheduler To Queue By Date&quot;"
@@ -1082,6 +1082,11 @@
       Name="&quot;Original Name For Child Account&quot;"
       SearchFields="&quot;OCA,Original Name For Child Account&quot;"
       Description="&quot;Original Name For Child Account&quot;" />
+    <Record
+      Code="&quot;SSH&quot;"
+      Name="&quot;Skip Steps on Hasavot&quot;"
+      SearchFields="&quot;HAS,Skip Steps on Hasavot&quot;"
+      Description="&quot;לדלג על השלבים עבור הסבות&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
