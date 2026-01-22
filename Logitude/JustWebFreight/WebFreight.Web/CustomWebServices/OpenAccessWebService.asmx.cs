@@ -125,10 +125,6 @@ namespace WebFreight.Web.CustomWebServices
             return true;
         }
 
-        public static bool IsCloud(int tenant)
-        {
-            return (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight);
-        }
         [WebMethod]
         public bool SendSignedDeclaration(string customFileNo, int tenant, string user, string personId, out string errMessage)
         {
