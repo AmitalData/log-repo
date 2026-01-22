@@ -159,10 +159,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var sIModificationByCustomerCommissionService = new SIModificationByCustomerCommissionService();
             var curDeclarationPm = _DeclarationPM ?? _DeclarationPMAncestor;
             sIModificationByCustomerCommissionService.EnsureReductionByVendorCommission(curDeclarationPm/*_DeclarationPM*/, entityPM,false);
-            if (/*_DeclarationPM*/curDeclarationPm != null && /*_DeclarationPM*/curDeclarationPm.IsCourierDeclaration)
+            if (/*_DeclarationPM*/curDeclarationPm != null && curDeclarationPm.IsCourierDeclaration)
             {
                 decimal InvoiceAmountInUSD_round2 = (System.Math.Truncate((decimal)entityPM.InvoiceAmountInUSD.GetValueOrDefault() * 100) / 100);
-                bool pHaveChange = //entityPM.InvoiceAmountInUSD 
+                bool pHaveChange = 
                     InvoiceAmountInUSD_round2
                     != entityPOCO.InvoiceAmountInUSD;
                 if (pHaveChange)
@@ -171,11 +171,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     object AncestorEntityUpdateService = null;
                     this.GetAncestorEntityUpdateService(out AncestorEntityUpdateService);
                     var AncestorDeclarationUpdateService = AncestorEntityUpdateService as DeclarationUpdateService;
-                    if (AncestorDeclarationUpdateService != null)
-                    {
-
-                        //myDBDeclarationPM = AncestorDeclarationUpdateService.GetDBEntity(entityPM.DeclarationId, entityPM.Tenant);
-                    }
+                    
                     if (myDBDeclarationPM == null)
                     {
                         DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
@@ -321,18 +317,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.ChangeInSupplierInvoice = "1";
                 }
             }
-            //CONFLICT HELL !!!
-            //if (_DeclarationPM != null)
-            //{
-
-            //    //calculate frieghts total
-            //    //this.CalculateFrieghtTotals(entityPM, declarationPM);
-            //    InsuranceFreightUtil util = new Utils.InsuranceFreightUtil();
-            //    util.CalculateFreightForInvoice(entityPM, _DeclarationPM.TaxationDateTime);
-            //    entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(_DeclarationPM.TaxationDateTime, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
-            //}
-
-
 
             object entityPOCO; object entityPM1; object entityParentPM;
             this.GetAncestor(out entityPOCO, out entityPM1, out entityParentPM);
@@ -340,15 +324,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (_DeclarationPMAncestor != null)
             {
                 this._FromDec = true;
-
             }
 
             DateTime? myTaxationDateTime = _DeclarationPM != null ? _DeclarationPM.TaxationDateTime : _DeclarationPMAncestor?.TaxationDateTime;
             //calculate frieghts total
-            //this.CalculateFrieghtTotals(entityPM, declarationPM);
             InsuranceFreightUtil util = new Utils.InsuranceFreightUtil();
-            util.CalculateFreightForInvoice(entityPM, myTaxationDateTime/* _DeclarationPM.TaxationDateTime*/);
-            entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(myTaxationDateTime/*_DeclarationPM.TaxationDateTime*/, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
+            util.CalculateFreightForInvoice(entityPM, myTaxationDateTime);
+            entityPM.InvoiceAmountInUSD = InsuranceFreightUtil.CalcInvoiceAmountInUSD(myTaxationDateTime, entityPM.InvoiceCurrencyTypeCode, entityPM.InvoiceAmount.GetValueOrDefault(), entityPM.Tenant);
 
 
 

@@ -125,6 +125,24 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return clientPM;
         }
+        public Dictionary<string, string> GetClientIdsByCodes(IEnumerable<string> codes, int tenant)
+        {
+            var list = codes?
+                .Where(c => !string.IsNullOrWhiteSpace(c))
+                .Select(c => c.Trim())
+                .Distinct()
+                .ToList();
+
+            if (list == null || list.Count == 0)
+                return new Dictionary<string, string>();
+
+            var clients = repository.GetClientsByCodes(list, tenant);
+
+            return clients
+                .Where(c => !string.IsNullOrEmpty(c.Code))
+                .GroupBy(c => c.Code)
+                .ToDictionary(g => g.Key, g => g.First().Id);
+        }
 
         public List<ClientPM> GetAllLocalClients(int tenant)
         {

@@ -420,9 +420,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public DeclarationCourierStatusPM UpdateTrucker(DeclarationCourierStatusPM currentDeclarationCourierStatusPM, DeclarationPM declarationPM)
         {
-            var context = CustomContext.GetContext(declarationPM.Tenant);
             if (currentDeclarationCourierStatusPM == null)
             {
+                var context = CustomContext.GetContext(declarationPM.Tenant);
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                 currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, false);
             }
@@ -433,7 +433,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 if (truckerId != currentDeclarationCourierStatusPM.TruckerId || DistributionArea != currentDeclarationCourierStatusPM.DistributionArea)
                 {
-                    //currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     currentDeclarationCourierStatusPM.TruckerId = truckerId;
                     currentDeclarationCourierStatusPM.MAWB = MAWB;
                     currentDeclarationCourierStatusPM.DistributionArea = DistributionArea;

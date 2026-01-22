@@ -123,33 +123,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void AfterUpdating(SupplierInvoiceItemPM entityPM, SupplierInvoicePM entityParentPM)
         {
 
-            //if ((entityPM.ChangeSetOp == ChangeSetOperation.Insert || entityPM.ChangeSetOp == ChangeSetOperation.Delete)&&entityParentPM.ChangeSetOp!=ChangeSetOperation.Delete)
-            //{
-            //    SubmitChanges();
-            //    ICustomContext context = MainContext as CustomContext;
-            //    SupplierInvoiceItemRepository invoiceItemRepository = new SupplierInvoiceItemRepository(context);
-            //    List<SupplierInvoiceItem> supplierInvoices = invoiceItemRepository.GetMulti(new SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.CounterKey });
-
-
-            //    bool dirty = false;
-            //    int index = 0;
-            //    foreach (SupplierInvoiceItem item in supplierInvoices)
-            //    {
-            //        index += 1;
-            //        if (item.SequenceNumeric == index) continue; //itzik 
-            //        dirty = true; //itzik 
-            //        item.SequenceNumeric = index;
-            //        invoiceItemRepository.Update(item);
-            //        if (item.DeclarationId == entityPM.DeclarationId && item.CounterKey == entityPM.CounterKey && item.LineNumber==entityPM.LineNumber)
-            //        {
-            //            entityPM.SequenceNumeric = item.SequenceNumeric;
-            //        }
-            //    }
-            //    if (dirty)
-            //    {
-            //        invoiceItemRepository.SubmitChanges();
-            //    }
-            //}
         }
 
         protected override void OnUpdating(SupplierInvoiceItemPM entityPM, SupplierInvoiceItem entityPOCO)
@@ -202,12 +175,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 string quantityType = customsItemQueryService.GetQuantityTypeByClassificationWithMultiCustomItems(entityPM.ClassificationCode, entityPM.Tenant, true);
                                 if (!string.IsNullOrEmpty(quantityType))
                                 {
-                                    //entityPM.StatisticQuantityType = quantityType;
-                                    //entityPM.StatisticQuantity = entityPM?.InvoiceQuantity;
-                                    //entityPM.ItemAdditionalStatus = true;
-                                    //if (string.IsNullOrEmpty(entityPM.InvoiceQuantityType))
-                                        entityPM.InvoiceQuantityType = quantityType;
-
+                                   entityPM.InvoiceQuantityType = quantityType;
                                 }
                             }
                         }
@@ -226,11 +194,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
 
                     }
-                   
                 }
-
-
-
             }
 
             base.OnUpdating(entityPM, entityPOCO);
@@ -420,8 +384,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
             }
-            //var mySIAccumulationUtil = new SIAccumulationUtil();
-            //string itemHash = 
+             
             if (entityPM.ItemHash != null && (entityPM.CurrentContextTag == null || entityPM.CurrentContextTag.ToString() != "ACCUMULATION"))
             {
                 object entityPOCO; object entityPM1; object entityParentPM;
@@ -438,10 +401,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     string ItemHash = supplierInvoiceItemDataMapping.CalcHash(entityPM);// circular refrence problem.
                     if (ItemHash != entityPM.ItemHash) entityPM.ItemHash = null;
                 }
-            }
-            if (entityPM.Tenant < 1)
-            {
-                throw new BusinessErrorException("Tenant '" + entityPM.Tenant + "' Can't be less than 1 (OnUpdating)");
             }
         }
 
