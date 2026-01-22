@@ -14,6 +14,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime PrintDate { get; set; }
         public string TenantCurrencyCode { get; set; }
         public string TenantCurrencySign { get; set; }
+        public bool? WithClosedTransactions { get; set; }
 
         public List<NewGLAccountList> NewGLAccountList { get; set; }
        

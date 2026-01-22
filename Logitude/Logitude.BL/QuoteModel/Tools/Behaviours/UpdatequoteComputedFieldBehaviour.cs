@@ -231,7 +231,9 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
                 var calculateEstimatedPayablesInSale = (costTotalAmountLocalrounded / quoteEntityPM.ExchangeRate) ?? 0;
 				quoteComputedField.EstimatedPayablesInSales = Math.Round(calculateEstimatedPayablesInSale, 2, MidpointRounding.AwayFromZero);
 			}
+
  		}	
+
 
 	
 		private void MapEstimatedReceivablesInLocalCurrencyField()

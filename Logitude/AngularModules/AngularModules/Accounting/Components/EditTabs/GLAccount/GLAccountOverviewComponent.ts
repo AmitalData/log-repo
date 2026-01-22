@@ -57,6 +57,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     public CreditLimitAmount: number = 0;
     public InsuredCreditLimit: number = 0;
     public gLAccountFollowUpDataPM: GLAccountFollowUpDataPM;
+    public TotalOpenChequesInLocalCur = 0;
 
     //Services
     _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
@@ -248,25 +249,14 @@ export class GLAccountOverviewComponent extends BaseComponent {
             });
 
 
-
-
-
-        // Get connect card
-        // this._CardListService.getSingle(this.EntityPM.CardId).subscribe((myResult:any) => {
-        //     console.log("_CardListService.getSingle", myResult);
-        //     var result: ServiceResponse = myResult;
-        //     if (!result.HasError)
-        //     {
-        //         this.accountCardlist = result.Result;
-        //         this.LoadCreditDetailsData();
-
-        //     }
-        //     else {
-        //         console.log("[!] cannot get glaccount card");
-
-        //     }
-        // });
-
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTP")[0]) {
+            this._GLAccountExtendedListService.GetTotalOpenChequesInLocalCurById(this.EntityPM.Id).subscribe((myResult) => {           
+                this.TotalOpenChequesInLocalCur = myResult;
+            });
+        }
+        else {
+            this.TotalOpenChequesInLocalCur = this.EntityPM.TotalOpenChequesInLocalCur;
+        }
 
         // Get tenant currency
         this.TenantCurrency = SessionLocator.TenantPM.CurrencyCode;
@@ -794,12 +784,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
         return this.OpenShipments +
             ((this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)) +
             (this.GLAccountMoreData.BalanceInLocalCurrency ?this. GLAccountMoreData.BalanceInLocalCurrency : 0) +
-             (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTP")[0]? this.EntityPM.TotalOpenChequesInLocalCur : 0);
-            
+            ((SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTP")[0] && this.TotalOpenChequesInLocalCur )? this.TotalOpenChequesInLocalCur : 0);
     }
-    //
-
-
 
     /**
      * Handler for "Display Open Files" link click.

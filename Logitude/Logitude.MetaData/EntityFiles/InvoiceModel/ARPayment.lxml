@@ -11980,6 +11980,13 @@
       LocalDefaultText="&quot;BS64:IteU16HXm9eV150g15zXlNeq15DXnteUINen15jXnyDXnteU16HXm9eV150g15TXpNeq15XXlyDXkdeX16nXkdeV16DXmdeqIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARPayment.O.CanNotReconcile&quot;"
+      DefaultText="&quot;The invoice is in multiple currencies and therefore cannot be reconciled from the receipt. Please reconcile transactions.&quot;"
+      LocalDefaultTextBack_up="&quot;החשבונית היא רב מטבעית ולכן לא ניתן לבצע התאמה מהקבלה. נא לבצע התאמת תנועות.&quot;"
+      LocalDefaultText="&quot;BS64:IteU15fXqdeR15XXoNeZ16og15TXmdeQINeo15Eg157XmNeR16LXmdeqINeV15zXm9efINec15Ag16DXmdeq158g15zXkdem16Ig15TXqteQ157XlCDXnteU16fXkdec15QuINeg15Ag15zXkdem16Ig15TXqteQ157XqiDXqteg15XXoteV16ouIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

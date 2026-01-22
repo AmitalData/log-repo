@@ -20,7 +20,10 @@ namespace Logitude.Customs.BL.AzureSearch
 
         private static readonly Dictionary<string, Func<FastSearchService>> _indexRegistry = new Dictionary<string, Func<FastSearchService>>()
         {
-            { "declarations", () => new DeclarationAzureSearchService() }
+            { "declarations", () => new DeclarationAzureSearchService() },
+             {"journallines" ,()=> new JournalAzureSearchService()}
+
+
         };
 
         public static DefaultAndConfiguration_Ext GetAzureSearchAISettings(int tenant) => DefaultService.Instance.Get(tenant, AzureSearchAISettingsSetKey, "Customs");
@@ -89,7 +92,7 @@ namespace Logitude.Customs.BL.AzureSearch
             DefaultAndConfiguration_Ext azureSearchAISettings = GetAzureSearchAISettings(tenant);
             bool prefixSearch = azureSearchAISettings == null || (bool)azureSearchAISettings.ObjVal1;
 
-            return await fastSearchAzureSearchRepo.SearchAsync(filters, searchText, settings.maxResults, selectedFields, prefixSearch);
+            return await fastSearchAzureSearchRepo.SearchAsync(filters, searchText, settings.maxResults, selectedFields, prefixSearch, settings.orderByField, settings.descending);
         }
 
         protected virtual void ManipulateAdditionalFilters(List<QueryFilterItem> additionalFilters, int tenant) { }

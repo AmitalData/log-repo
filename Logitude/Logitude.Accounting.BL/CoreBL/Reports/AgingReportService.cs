@@ -328,7 +328,18 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var tenant = tenantQuery.GetSinglePM(_Param.Tenant);
 
             DateTime currentDate = TenantServerConfigration.GetCurrentDateTime(_Param.Tenant);
-
+            var openChequesByAccount =
+    _AccountingContext.AllARPaymentChequesViews
+        .Where(a =>
+            a.ValueDate <= currentDate &&
+            a.Notes != creditLineNotes &&
+            a.Tenant == _Param.Tenant)
+        .GroupBy(a => a.AccountId)
+        .Select(g => new
+        {
+            AccountId = g.Key,
+            TotalOpenCheques = g.Sum(x => (decimal?)x.LocalAmountCredit) ?? 0
+        });
             var qlistExtendeds =
                      (from acc in q_accountsList
                       join moredata in _AccountingContext.GLAccountMoreDatas.Where(r => r.Tenant == _Param.Tenant)
@@ -348,12 +359,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                        on acc.CardsDataId equals card.Id into cardJoinT
                       from card in cardJoinT.DefaultIfEmpty()
 
-                      join AllARPaymentCheque in _AccountingContext.AllARPaymentChequesViews on acc.Id equals AllARPaymentCheque.AccountId
+                      join oc in openChequesByAccount
+     on acc.Id equals oc.AccountId into ocJoin
+                      from oc in ocJoin.DefaultIfEmpty()
 
-                     into AllARPaymentChequeJoin
-                      from AllARPaymentCheque in AllARPaymentChequeJoin.DefaultIfEmpty()
 
-                    
+
 
                       let glaPeriod = _AccountingContext.GLAccountInterestPeriods.Where(r => r.Tenant == _Param.Tenant && r.GLAccountId == acc.Id && r.PeriodStartDate <= currentDate && acc.ActiveForInterest)
                       .OrderByDescending(d => d.PeriodStartDate).FirstOrDefault()
@@ -408,9 +419,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                           TotalOpenShipments = card != null ? card.TotalOpenShipments : (applCard != null ? (opf != null ? opf.TotalOpenFilesAmount : 0) : 0),
                           TotalFutureOpenCheques = moredata != null ? (decimal)moredata.TotFutureOpenChequesInLocalCur : 0,
-                          TotalOpenCheques = AllARPaymentChequeJoin
-                         .Where(A => A.ValueDate <= DateTime.Now && A.Notes != creditLineNotes)
-                         .Sum(A => (decimal?)A.LocalAmountCredit) ?? 0,
+                          TotalOpenCheques = oc != null ? oc.TotalOpenCheques : 0,
                           IsMultiCurrency = acc.IsMultiCurrency,
                           AccountEnglishName = acc.EnglishName,
                           AccountLocalName = acc.LocalName,

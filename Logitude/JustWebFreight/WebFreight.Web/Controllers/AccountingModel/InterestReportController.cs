@@ -130,6 +130,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 int tenant = AuthinticateTenant();
                 string email = HttpContext.Current.User.Identity.Name;
                 InteretInvoiceBatchPrint interetInvoiceBatchPrint = new InteretInvoiceBatchPrint();
+                interetInvoiceBatchPrint.PrintDocuments(interestReportArgs, tenant, email);
                 PdfDocument pdfDoc = interetInvoiceBatchPrint.CheckValidCopiesForInvoicesAndPrint(interestReportArgs, tenant, email);
                 MemoryStream memoryStream = new MemoryStream();
                 pdfDoc.Save(memoryStream);

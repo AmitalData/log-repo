@@ -835,6 +835,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="HebrewTenant"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="AddressId"
     ReferencedTable="Addresses"

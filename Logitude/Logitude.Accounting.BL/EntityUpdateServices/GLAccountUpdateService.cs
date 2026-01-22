@@ -76,7 +76,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (entityPM.ChartOfAccountsTypeCode == "3" || entityPM.ChartOfAccountsTypeCode == "4")
                     {
-                        if (fullAccountingSetting.NumberingByChartOfAccount)
+                        var isChildMatazAccount = entityPM.IsMultiCurrency != true && !string.IsNullOrEmpty(entityPM.CurrencyCode) && entityPM.DisplayNumber?.Split('\\')?.Length > 1;
+                        if (fullAccountingSetting.NumberingByChartOfAccount 
+                            && !(FeatureToggleHelper.HasFeatureToggle("OCA", entityPM.Tenant) && isChildMatazAccount))
                         {
                             SetDisplayNumber(entityPM);
                         }
@@ -88,7 +90,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
             }
-            AddAcitivityLog(entityPM, "N");
+            if (!string.IsNullOrEmpty(entityPM.Id)) AddAcitivityLog(entityPM, "N");
                        
             ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
             entityPM.CreatedByUserId = loggedUser?.Id;
