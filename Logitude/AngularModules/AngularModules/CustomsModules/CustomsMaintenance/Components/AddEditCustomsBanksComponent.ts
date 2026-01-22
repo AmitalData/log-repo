@@ -12,7 +12,7 @@ import { CustomBanksCardPM } from '../../../Customs/EntityPMs/CustomBanksCardPM'
 import { CustomBankPMService } from '../../../Customs/Services/StandardPMs/CustomBankPMService';
 import { CustomBankList } from '../../../Customs/EntityLists/CustomBankList';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { AmitalAPIRequestsComponent } from 'InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPIRequestsComponent';
+// import { AmitalAPIRequestsComponent } from 'InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPIRequestsComponent';
 import { CustomBankCardExtendedPMService } from '../../../Customs/Services/ExtendedPMs/CustomBankCardExtendedPMService';
 import { CardListService } from 'Common/Services/StandardLists/CardListService';
 import { CardPMService } from 'Common/Services/StandardPMs/CardPMService';
@@ -22,14 +22,14 @@ import { CardPM } from 'Common/EntityPMs/CardPM';
 
 @Component({
     templateUrl: './AddEditCustomsBanksComponent.html',
-    providers: [AmitalAPIRequestsComponent],
+    //providers: [AmitalAPIRequestsComponent],
 })
 
 
 export class AddEditCustomsBanksComponent extends BaseComponent {
     public ObjectTableName: string = "Customs.CustomBank";
     public CustomBankListService = new CustomBankPMService();
-    public AmitalAPIRequestsComponent: AmitalAPIRequestsComponent = new AmitalAPIRequestsComponent();
+    //public AmitalAPIRequestsComponent: AmitalAPIRequestsComponent = new AmitalAPIRequestsComponent();
     private _requiredFields: string[] = ["BankCode", "BranchCode", "AccountNumber", "LocalName", "PayerTypeCode"];
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();

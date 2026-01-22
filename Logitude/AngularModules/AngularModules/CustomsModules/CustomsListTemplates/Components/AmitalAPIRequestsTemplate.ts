@@ -1,11 +1,18 @@
-import { Component } from "@angular/core";
+import { ChangeDetectorRef, Component } from "@angular/core";
 import { AmitalAPISchemaWebService } from "Common/Services/AmitalAPISchemaWebService";
+import { AmitalApiRequestsSelectionService } from "Customs/Services/DataChange/AmitalApiRequestsSelectionService";
 import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 
 @Component({
     template: `
+    <div class="TextTrimming" *ngIf="fieldName == 'Checkbox'">
+        <input type="checkbox" 
+               [checked]="selectionService.isSelected(rowData.Id)" 
+               (change)="onCheckboxChange(rowData.Id)" />
+    </div>
+
     <div class="TextTrimming" *ngIf="fieldName == 'HasError'">        
         <img [src]="'./Images/Icons/' + (rowData[fieldName] ? 'RedX.png' : 'GreenV.png')" />
     </div>
@@ -30,15 +37,26 @@ import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator"
             vertical-align: central;
             padding-bottom: 5px;
         }
+
+        .TextTrimming input[type="checkbox"] {
+            cursor: pointer;
+        }
     `],
 }) export class AmitalAPIRequestsTemplate {
     private amitalAPISchemaWebService: AmitalAPISchemaWebService = new AmitalAPISchemaWebService();
     public rowData: any = null;
     public fieldName: string = '';
 
+    constructor(public selectionService: AmitalApiRequestsSelectionService, private cd: ChangeDetectorRef) {}
+
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData;
         this.fieldName = fieldName;
+    }
+
+    onCheckboxChange(id: string) {
+        this.selectionService.toggleSelection(id);
+        this.cd.detectChanges();
     }
 
     async download(id: string, fileName: string ) {
