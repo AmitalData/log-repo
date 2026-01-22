@@ -62,7 +62,7 @@ namespace CommunicationWorkerRole.Services
                     {
                         if(schedulerDetails?.FTPDetails?.Subject == "DocumentSFTP")
                         {
-							AddStatusMessage("fileName" + fileName, "0");
+							AddStatusMessage("fileName DocumentSFTP: " + fileName, "0");
 
 							AddToAzureQueue(fileName, fileData, schedulerDetails);
 						}
@@ -244,12 +244,16 @@ namespace CommunicationWorkerRole.Services
 				fileName = fileName.Split('/')[fileName.Split('/').Length - 1].ToLower();
 				GetcustomsDocumentTypeAndHawbFromFileName(fileName, schedulerDetails.Tenant, out customsDocumentTypeCode, out hawb, out documentType);
 
+				AddStatusMessage($"customsDocumentTypeCode: {customsDocumentTypeCode } hawb {hawb}", "0");
+
 				string documentJson = CreateExampleDocument(hawb, customsDocumentTypeCode, schedulerDetails?.FTPDetails?.From);
 
 				string responseText;
 				bool success = false;
 				SendResponseToken sendResponseToken = null;
 				(responseText, success) = await SendDocument(partner_token,  api_token,  caller_objectid, accessToken,fileName, fileData, schedulerDetails, documentJson);
+				AddStatusMessage("success: " + success , "0");
+
 				if (success)
 				{
 					sendResponseToken = JsonConvert.DeserializeObject<SendResponseToken>(responseText);
@@ -301,7 +305,7 @@ namespace CommunicationWorkerRole.Services
 			Console.WriteLine(await response.Content.ReadAsStringAsync());
 			return await response.Content.ReadAsStringAsync();
 		}
-		public static async Task<(string, bool)> SendDocument(string partner_token, string api_token, string caller_objectid, string authorizationToken,string fileName,byte[] fileData, SchedulerDetails schedulerDetails,string documentJson)
+		public  async Task<(string, bool)> SendDocument(string partner_token, string api_token, string caller_objectid, string authorizationToken,string fileName,byte[] fileData, SchedulerDetails schedulerDetails,string documentJson)
 		{
 			var client = new HttpClient();
 			var endpoint = $"{baseUri1}/UploadDocument";
@@ -349,7 +353,8 @@ namespace CommunicationWorkerRole.Services
 				}
 				catch (Exception ex)
 				{
-					Console.WriteLine($"An error occurred: {ex.Message}");
+				    AddStatusMessage($"SendDocument: An error occurred: {ex.Message}", "-1");
+				    Console.WriteLine($"An error occurred: {ex.Message}");
 					return (ex.ToString(), false);
 				}
 			
@@ -423,6 +428,7 @@ namespace CommunicationWorkerRole.Services
 			}
 			catch (Exception ex)
 			{
+				AddStatusMessage("GetcustomsDocumentTypeAndHawbFromFileName: " + ex.Message.ToString(), "-1");
 
 			}
 		}
