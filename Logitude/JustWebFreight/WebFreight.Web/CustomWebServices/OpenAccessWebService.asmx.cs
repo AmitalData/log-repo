@@ -188,7 +188,7 @@ namespace WebFreight.Web.CustomWebServices
             var dbSignQueueService = new SignQueueHybridDbService();
             SignMethodByQueueEnum signMethodByQueueEnum = SignMethodByQueueEnum.None;
             string availableSignServer = null;
-            var IsCloud = CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight;
+            var IsCloud = !CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight;
             if (signQueueHSMService.IsHSMSign_IsOn(tenant) || IsCloud)
             {
                 (availableSignServer, signMethodByQueueEnum) = dbSignQueueService
