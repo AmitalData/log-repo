@@ -441,19 +441,6 @@ namespace Logitude.Server.Tools.QueueService
             LogitudeSettings.HandleLogMe(msg, false, "WorkUntilQEmpty_Db_new", stopLogAt);
         }
 
-        public void updateQueueCode()
-        {
-            ICustomContext context = CustomContext.GetContext(this.Tenant);
-            IGlobalContext context1 = GlobalContext.GetContext(this.Tenant);
-            InterfaceManagementRepository interfaceManagementRepository = new InterfaceManagementRepository(this.Tenant);
-            string queueDefinitionGroup = interfaceManagementRepository.GetSingle(QueueSendModel?.InterfaceTypeCode)?.QueueDefinitionGroup;
-            BatchServicesDefinitionRepository batchServicesRepository = new BatchServicesDefinitionRepository(context1);
-            string queueCodeByQueueBase = batchServicesRepository.GetSingleBatchServicesDefinitionByQueueBase(QueueCode, queueDefinitionGroup);
-            if (!string.IsNullOrEmpty(queueCodeByQueueBase))
-            {
-                QueueCode = queueCodeByQueueBase;
-            }
-        }
 
         public List<QueueResponse> ReceiveCustoms_new(int nextRunDelayInSec = 60, int? selectCount = null)
         {
@@ -464,7 +451,6 @@ namespace Logitude.Server.Tools.QueueService
             //
             List<QueueResponse> responseList = new List<QueueResponse>();
             
-            updateQueueCode();
             
             //using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
             //using (TransactionScope scope = TransactionFactory.GetTransaction())

@@ -148,7 +148,16 @@ BEGIN
     WHERE qt.NextRunDateTime <= SYSDATE
      --ROWNUM<2  AND  --do not use rownum due  http://stackoverflow.com/questions/6117254/force-oracle-to-return-top-n-rows-with-skip-locked/6649586#6649586
     AND qt.Status             = v_WatingStatus
-    AND QueueDefinitionCode = v_QueueDefinitionCode
+   AND (
+    QueueDefinitionCode IN (
+        SELECT code
+        FROM AMINET5113_GLOBAL.BatchServicesDefinitions
+        WHERE queuebase = v_QueueDefinitionCode
+    )
+    OR QueueDefinitionCode = v_QueueDefinitionCode
+)
+
+    
 	AND qt.UseRabbitMQ =0
     ORDER BY qt.tenantpriority ASC ,qt.NextRunDateTime ASC
     FOR UPDATE SKIP LOCKED;

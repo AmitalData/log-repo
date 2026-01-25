@@ -2096,7 +2096,7 @@ Exception:" + ee.Message
 						{
 							SBQMessageService.CreateBasic<CustomsCommandEnum>(
 								 CustomsCommandEnum.CustomsCommandAnalyzeResponseWR,
-								_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Id, queueSendModel);
+								_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Id, queueSendModel, _CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.QueueDefinitionGroup);
 						}
 						else
 						{

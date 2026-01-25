@@ -63,7 +63,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                             CustomsCommandEnum.CustomsCommandGetCustomRequestWR,
                             tenant,
                             InterfaceTypeCode,
-                            MyCustomsRequestsSheetPMId);
+                            MyCustomsRequestsSheetPMId,null , customsRequestsSheetService?.InterfaceTenantDefinitionManagement?.InterfaceManagement?.QueueDefinitionGroup);
                     };
                 }
                 else
@@ -72,7 +72,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                         CustomsCommandEnum.CustomsCommandGetCustomRequestWR,
                         tenant,
                         InterfaceTypeCode,
-                        MyCustomsRequestsSheetPMId, execTime);
+                        MyCustomsRequestsSheetPMId, execTime, customsRequestsSheetService?.InterfaceTenantDefinitionManagement?.InterfaceManagement?.QueueDefinitionGroup);
                 }
                 customsRequestsSheetId = customsRequestsSheetService.MyCustomsRequestsSheetPM.Id;
             }
@@ -202,10 +202,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
                 if (!string.IsNullOrWhiteSpace(queueDefinitionGroup))
                 {
-                    string queueDefinitionGroupData = overrideSBQueueName + "_" + "Group1";
-
                     overrideSBQueueName = overrideSBQueueName + "_" + queueDefinitionGroup;
-                    overrideSBQueueName = queueDefinitionGroupData;
                 }
 
                 var queueSendService = new Logitude.Server.Tools.QueueService.QueueSendService(/*SBQueueName.ToString()*/overrideSBQueueName, correlationId, queueSendModel);

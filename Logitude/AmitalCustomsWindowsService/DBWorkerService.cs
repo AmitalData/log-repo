@@ -194,13 +194,13 @@ namespace AmitalCustomsWindowsService
                 List<BatchServicesDefinitionPM> BatchServicesDefinitions = GetBatchServicesDefinitions();
 
                 List<BatchServicesDefinitionPM> batchServicesDefinitionsGroups = BatchServicesDefinitions?.Where(b =>
-                          !string.IsNullOrEmpty(b.QueueBase) && !string.IsNullOrEmpty(b.Code) 
-                          && b.Code.IndexOf(b.QueueBase, StringComparison.OrdinalIgnoreCase) >= 0 
+                          !string.IsNullOrEmpty(b.QueueBase) && !string.IsNullOrEmpty(b.Code)
+                          && b.Code.IndexOf(b.QueueBase, StringComparison.OrdinalIgnoreCase) >= 0
                           && b.Code.Length > b.QueueBase.Length)?.ToList();
 
 
 
-                 LoadWorkerFromDB(BatchServicesDefinitions, batchServicesDefinitionsGroups);
+                 LoadWorkerFromDB(BatchServicesDefinitions, null);
 
 
                 for (int iWorker = 0; iWorker < _Workers.Count; iWorker++)
@@ -325,16 +325,19 @@ namespace AmitalCustomsWindowsService
                     }
                 }
             }
-            foreach (var batchServicesDefinitionPM in BatchServicesDefinitionsGroups)
+            if(BatchServicesDefinitionsGroups != null)
             {
-                var worker = listOfWorkerEntryPoint.FirstOrDefault(r => r.NameOf() == batchServicesDefinitionPM.QueueBase);
-                if (worker != null)
+                foreach (var batchServicesDefinitionPM in BatchServicesDefinitionsGroups)
                 {
-                    for (int i = 0; i < batchServicesDefinitionPM.NumberOfThreads; i++)
+                    var worker = listOfWorkerEntryPoint.FirstOrDefault(r => r.NameOf() == batchServicesDefinitionPM.QueueBase);
+                    if (worker != null)
                     {
-                        var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { worker.GetType() });
-                        AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, batchServicesDefinitionPM.Code, (object)workerQueueType });
+                        for (int i = 0; i < batchServicesDefinitionPM.NumberOfThreads; i++)
+                        {
+                            var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { worker.GetType() });
+                            AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, batchServicesDefinitionPM.Code, (object)workerQueueType });
                     
+                        }
                     }
                 }
             }
