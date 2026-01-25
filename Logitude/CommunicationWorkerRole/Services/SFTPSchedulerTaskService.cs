@@ -248,12 +248,12 @@ namespace CommunicationWorkerRole.Services
 			var createdate = TenantServerConfigration.GetCurrentDateTime(0);
 			using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 			{
-				fileName = fileName.Split('/')[fileName.Split('/').Length - 1].ToLower();
+				fileName = fileName.Split('/')[fileName.Split('/').Length - 1];
 				GetcustomsDocumentTypeAndHawbFromFileName(fileName, schedulerDetails.Tenant, out customsDocumentTypeCode, out hawb, out documentType);
 
 				AddStatusMessage($"customsDocumentTypeCode: {customsDocumentTypeCode } hawb {hawb}", "0");
 
-				string documentJson = CreateExampleDocument(hawb, customsDocumentTypeCode, schedulerDetails?.FTPDetails?.From);
+				string documentJson = CreateExampleDocument(fileName,hawb, customsDocumentTypeCode, schedulerDetails?.FTPDetails?.From);
 
 				string responseText;
 				bool success = false;
@@ -366,7 +366,7 @@ namespace CommunicationWorkerRole.Services
 				}
 			
 		}		
-		static string CreateExampleDocument(string parcelTrackingNumber, string documentType,string partnerCode)
+		static string CreateExampleDocument(string fileName,string parcelTrackingNumber, string documentType,string partnerCode)
 		{
 
 			var exampleDocument = new
@@ -387,7 +387,7 @@ namespace CommunicationWorkerRole.Services
 						parcelID = "ZZZZ",
 						parcelDate = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.0Z"),
 						docReference = Guid.NewGuid().ToString(),
-						fileName = $"{documentType}_{parcelTrackingNumber}.PDF"
+						fileName = fileName
 					}
 				}
 			}
