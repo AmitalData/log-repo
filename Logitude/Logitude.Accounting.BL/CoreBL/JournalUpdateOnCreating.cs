@@ -276,13 +276,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 return;
 
-            }
-
-            if (Math.Abs(reconciliationAmount) > Math.Abs(transaction.OpenAmount))
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"Reconciliation skipped: transaction {transaction.Id} openAmount={transaction.OpenAmount} < reconciliationAmount={reconciliationAmount}");
-                return;
-            }
+            }           
 
             if (baseJournal.JournalReconciles == null)
                 journalPM.JournalReconciles = new List<JournalReconcilePM>();
