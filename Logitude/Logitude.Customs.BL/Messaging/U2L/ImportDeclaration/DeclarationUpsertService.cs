@@ -1986,20 +1986,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				this._DeclarationReferantDataPM.PackageQuantity = packageQuantity;
 			}
 
-            if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.Vessel))
-            {
-                VesselRepository vesselRepository = new VesselRepository(ResolvedTenant());
-                Vessel vessel = vesselRepository.GetSingleVesselByCode(_AmitalCustomsFile.Vessel, ResolvedTenant());
-                if (vessel != null)
-                {
-                    this._DeclarationReferantDataPM.Vessel = vessel.Id;
-                }
-                else
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"Not found vessel for code: {_AmitalCustomsFile.Vessel}");
-                }
-            }
-
             this._DeclarationReferantDataPM.Commodity = _AmitalCustomsFile.Commodity;
 			this._DeclarationReferantDataPM.Hawb = _AmitalCustomsFile.ReferentHAWB;
 			this._DeclarationReferantDataPM.Mawb = _AmitalCustomsFile.ReferentMAWB;
@@ -2061,7 +2047,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				else
 				{
 					NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"Not found vessel for code: {vesselId}");
-				}
+                    AppendLogLine($"Not found vessel for code: {vesselId}");
+                }
 			}
 			return null;
 		}
