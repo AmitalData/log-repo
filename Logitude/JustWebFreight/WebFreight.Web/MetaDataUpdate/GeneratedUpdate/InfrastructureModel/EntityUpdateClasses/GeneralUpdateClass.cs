@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "d0c44399a0189958d16e07202906f988";
+		public const string HashString = "d7c43399a0189958d16e07202906f988";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -2863,13 +2863,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralBSendToBackground = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.B.SendToBackground", DefaultText = "Send to Background",LocalDefaultText = @"BS64:Itep15zXlyDXnNeo16fXoiI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-   
-	    
+           TextCode GeneralTextCode_AccountingGeneralOTransactionsBefore = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.TransactionsBefore", DefaultText = "Transactions Before", LocalDefaultText = @"BS64:IiDXqteg15XXoteV16og15zXpNeg15ki", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+           TextCode GeneralTextCode_AccountingGeneralOTransactionsAfter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.TransactionsAfter", DefaultText = "Transactions After", LocalDefaultText = @"BS64:Iteq16DXldei15XXqiDXkNeX16jXmSI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+
 }
 
-    
 
-   }
+
+    }
     
 }
 	 
