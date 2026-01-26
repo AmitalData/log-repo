@@ -1093,6 +1093,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "OCA,Original Name For Child Account",
                 Description = "Original Name For Child Account",
             });
+            all.Add(new ToggleDetails()
+            {
+                Code = "SSH",
+                Name = "Skip Steps on Hasavot",
+                SearchFields = "SSH,Skip Steps on Hasavot",
+                Description = "לדלג על השלבים עבור הסבות",
+            });
             return all;
        }
 
