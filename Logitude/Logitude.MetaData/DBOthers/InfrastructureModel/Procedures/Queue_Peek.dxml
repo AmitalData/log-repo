@@ -150,14 +150,12 @@ BEGIN
      --ROWNUM<2  AND  --do not use rownum due  http://stackoverflow.com/questions/6117254/force-oracle-to-return-top-n-rows-with-skip-locked/6649586#6649586
     AND qt.Status             = v_WatingStatus
  
- AND (
-        QueueDefinitionCode IN (
+
+    AND qt.QueueDefinitionCode IN (
         SELECT TRIM(REGEXP_SUBSTR(v_QueueCodes, '[^,]+', 1, LEVEL)) 
         FROM DUAL 
         CONNECT BY LEVEL <= REGEXP_COUNT(v_QueueCodes, ',') + 1
-        )
-        OR QueueDefinitionCode = v_QueueDefinitionCode
-)
+    )
 
     
 	AND qt.UseRabbitMQ =0

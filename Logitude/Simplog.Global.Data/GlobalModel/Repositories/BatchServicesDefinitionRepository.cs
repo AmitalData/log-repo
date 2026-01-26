@@ -49,7 +49,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
                 entityKeyString, () =>
                 {
                     return context.BatchServicesDefinitions
-                        .Where(d => d.QueueBase == code)
+                        .Where(d => d.Code == code || d.QueueBase == code)
                         .Select(d => d.Code)
                         .ToList();
                 },
