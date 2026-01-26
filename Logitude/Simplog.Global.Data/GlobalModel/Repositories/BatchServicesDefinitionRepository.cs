@@ -1,5 +1,6 @@
 ﻿using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,24 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         {
             return from a in context.BatchServicesDefinitions
                    select a;
+        }
+        public List<string> GetAllBatchServicesDefinitionsByQueueBase(string code, bool fromCache = true)
+        {
+            string entityKeyString = "GetAllBatchServicesDefinitionsByQueueBase_" + code;
+
+            var items = CacheManager.GetOrInsertNewObject<List<string>>(
+                entityKeyString, () =>
+                {
+                    return context.BatchServicesDefinitions
+                        .Where(d => d.QueueBase == code)
+                        .Select(d => d.Code)
+                        .ToList();
+                },
+                fromCache
+
+            );
+
+            return items;
         }
 
         public IQueryable<BatchServicesDefinition> GetBatchServicesDefinitions()

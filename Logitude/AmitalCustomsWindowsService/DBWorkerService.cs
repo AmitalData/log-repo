@@ -21,6 +21,7 @@ using System.Diagnostics;
 using CommunicationWorkerRole;
 using System.IO;
 using Logitude.CustomsMessaging.Dca;
+using System.Reflection;
 
 namespace AmitalCustomsWindowsService
 {
@@ -185,6 +186,7 @@ namespace AmitalCustomsWindowsService
             return _Workers[iWorker].MyType + ":" + iWorker.ToString();
         }
 
+        
         private void LoadWorkerFromDB()
         {
             if (!_AllWorkerLoaded)
@@ -200,7 +202,7 @@ namespace AmitalCustomsWindowsService
 
 
 
-                 LoadWorkerFromDB(BatchServicesDefinitions, null);
+                 LoadWorkerFromDB(BatchServicesDefinitions, batchServicesDefinitionsGroups);
 
 
                 for (int iWorker = 0; iWorker < _Workers.Count; iWorker++)
@@ -295,7 +297,21 @@ namespace AmitalCustomsWindowsService
                 foreach (var g in BatchServicesDefinitionsGroups.Where(x => !string.IsNullOrEmpty(x.ClassName)))
                 {
                     var type = AppDomain.CurrentDomain.GetAssemblies()
-                        .SelectMany(a => a.GetTypes())
+                        .SelectMany(a =>
+                        {
+                            try
+                            {
+                                return a.GetTypes();
+                            }
+                            catch (ReflectionTypeLoadException ex)
+                            {
+                                return ex.Types.Where(t => t != null);
+                            }
+                            catch
+                            {
+                                return Enumerable.Empty<Type>();
+                            }
+                        })
                         .FirstOrDefault(t =>
                             t.Name == g.ClassName &&
                             typeof(Logitude.Server.Tools.WorkerEntryPoint).IsAssignableFrom(t));
@@ -303,11 +319,17 @@ namespace AmitalCustomsWindowsService
                     if (type == null)
                         continue;
 
-                    var instance = (Logitude.Server.Tools.WorkerEntryPoint)
-                        Activator.CreateInstance(type);
+                    try
+                    {
+                        var instance = (Logitude.Server.Tools.WorkerEntryPoint)
+                            Activator.CreateInstance(type);
 
-                    
-                    listOfWorkerEntryPoint.Add(instance);
+                        listOfWorkerEntryPoint.Add(instance);
+                    }
+                    catch
+                    {
+                        continue;
+                    }
                 }
             }
 
