@@ -457,6 +457,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
                 SearchFields = line.SearchFields,
                 ReconciledWithTransactionId = line.ReconciledWithTransactionId,
                 IsRecoCancelled = line.IsRecoCancelled,
+                CurrencyRate = line.CurrencyRate,
             };
             return newLine;
         }

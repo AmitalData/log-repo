@@ -38,7 +38,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         GroupNumber, 
 	         IsAdjustTransaction, 
 	         SearchFields, 
-	         ReconciledWithTransactionId,
+	         ReconciledWithTransactionId, 
+	         CurrencyRate,
 	      }
 
 
@@ -131,6 +132,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.ReconciledWithTransactionId = entityPM.ReconciledWithTransactionId;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyRate))
+            {
+				entityPOCO.CurrencyRate = entityPM.CurrencyRate;
+			}
+			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -192,6 +198,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ReconciledWithTransactionId = entityPOCO.ReconciledWithTransactionId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyRate))
+            {
+					entityPM.CurrencyRate = entityPOCO.CurrencyRate;
+            }
+
 		}
 
 		public void PMToOldPM(ReconciliationLinePM entityPM, ReconciliationLinePM oldEntityPM)
@@ -241,6 +252,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconciledWithTransactionId))
             {
                 oldEntityPM.ReconciledWithTransactionId = entityPM.ReconciledWithTransactionId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyRate))
+            {
+                oldEntityPM.CurrencyRate = entityPM.CurrencyRate;
             }
 			
 		}

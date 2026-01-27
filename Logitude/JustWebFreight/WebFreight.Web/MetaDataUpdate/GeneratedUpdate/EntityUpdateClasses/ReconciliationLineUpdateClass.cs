@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReconciliationLineUpdateClass
    {  		
-		public const string HashString = "09d663c55952a442a34f5ba75cb1349e";
+		public const string HashString = "8c160ca9eb6ad7628e24cf20e297dd84";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -69,9 +69,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "שורת התאמה",
+			      				    LocalDefaultText =  "שורת התםמה",
 			      				    DefaultText =  "Reconciliation Line",
-			      				    Code =  "ccfe",
+			      				    Code =  "0348",
 			      				    Name =  "ReconciliationLine Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -134,10 +134,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReconciliationId",
 					  						DefaultText =  "Reconciliation Id",
-					  						FullLocalDefaultText =  "מזהה התאמה",
+					  						FullLocalDefaultText =  "מזהה התםמה",
 					  						ListFieldLable =  "ReconciliationIdListLable",
 					  						ListLableDefaultText =  "Reconciliation Id",
-					  						ListLocalDefaultText =  "מזהה התאמה",
+					  						ListLocalDefaultText =  "מזהה התםמה",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Reconciliation",
 					  						NavigationPropertyName =  "Reconciliation",
@@ -596,10 +596,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReconciliationAmount",
 					  						DefaultText =  "Reconciliation Amount",
-					  						FullLocalDefaultText =  "סכום מותאם",
+					  						FullLocalDefaultText =  "סכום מותםם",
 					  						ListFieldLable =  "ReconciliationAmountListLable",
 					  						ListLableDefaultText =  "Reconciliation Amount",
-					  						ListLocalDefaultText =  "סכום מותאם",
+					  						ListLocalDefaultText =  "סכום מותםם",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -789,10 +789,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsAdjustTransaction",
 					  						DefaultText =  "Adjusted transaction",
-					  						FullLocalDefaultText =  "תנועה מתאמת",
+					  						FullLocalDefaultText =  "תנועה מתםמת",
 					  						ListFieldLable =  "IsAdjustTransactionListLable",
 					  						ListLableDefaultText =  "Adjusted transaction",
-					  						ListLocalDefaultText =  "תנועה מתאמת",
+					  						ListLocalDefaultText =  "תנועה מתםמת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -974,10 +974,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DueDate",
 					  						DefaultText =  "Due Date",
-					  						FullLocalDefaultText =  "תאריך פרעון",
+					  						FullLocalDefaultText =  "תםריך פרעון",
 					  						ListFieldLable =  "DueDateListLable",
 					  						ListLableDefaultText =  "Due Date",
-					  						ListLocalDefaultText =  "תאריך פרעון",
+					  						ListLocalDefaultText =  "תםריך פרעון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1843,10 +1843,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingDate",
 					  						DefaultText =  "Accounting Date",
-					  						FullLocalDefaultText =  "תאריך חשבונאי",
+					  						FullLocalDefaultText =  "תםריך חשבונםי",
 					  						ListFieldLable =  "AccountingDateListLable",
 					  						ListLableDefaultText =  "Accounting Date",
-					  						ListLocalDefaultText =  "תאריך חשבונאי",
+					  						ListLocalDefaultText =  "תםריך חשבונםי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2165,6 +2165,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CurrencyRate",
+					  						ObjectTableName =  "ReconciliationLine",
+					  						FieldsDataType =  "Decimal",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CurrencyRate",
+					  						ListPropertyPath =  "CurrencyRate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  16,
+					  						DigitsAfterPoint =  5,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CurrencyRate",
+					  						DefaultText =  "Currency Rate",
+					  						FullLocalDefaultText =  "Currency Rate",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
@@ -2251,7 +2314,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable ReconciliationLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ReconciliationLine" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode ReconciliationLineTextCode_ReconciliationLineOReconciliationCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReconciliationLine.O.ReconciliationCurrency", DefaultText = "Reconciliation Currency",LocalDefaultText = @"מטבע התאמה", ObjectTableId = ReconciliationLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode ReconciliationLineTextCode_ReconciliationLineOReconciliationCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReconciliationLine.O.ReconciliationCurrency", DefaultText = "Reconciliation Currency",LocalDefaultText = @"מטבע התםמה", ObjectTableId = ReconciliationLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

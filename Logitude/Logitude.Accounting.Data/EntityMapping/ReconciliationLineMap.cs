@@ -51,6 +51,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.ReconciledWithTransactionId).HasColumnName("ReconciledWithTransactionId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.CurrencyRate).HasColumnName("CurrencyRate").HasPrecision(16, 5);
         }
     }
 }

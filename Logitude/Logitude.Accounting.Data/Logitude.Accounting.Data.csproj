@@ -462,6 +462,7 @@
     <Compile Include="Enums\InterestReportStatusCodes.cs" />
     <Compile Include="Enums\OpenFormatDocumentTypes.cs" />
     <Compile Include="Enums\JournalActionTypes.cs" />
+    <Compile Include="Enums\ReconcileMethodCodes.cs" />
     <Compile Include="Enums\RevaluationStatusEnum.cs" />
     <Compile Include="Repositories\AccountingEntityJournalRepository.cs" />
     <Compile Include="Repositories\ARPaymentsJournalRepository.cs" />
