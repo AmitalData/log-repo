@@ -15,6 +15,7 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { SIIRequestListService } from 'Customs/Services/StandardLists/SIIRequestListService';
+import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from 'Customs/Utilities/DeclarationDisplayOnlyChecks';
 
 @Component({
   selector: 'SIIRequestTabComponent',
@@ -158,7 +159,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
         this.selectedSIIRequest = myResponse.Result;
         args.SIIRequest = myResponse.Result;
         args.errorMassage = [];
-        this.siiRequestWebService.getSupplierInvoiceItemsForSIIRequest(declarationId,this.selectedSIIRequest?.Id).subscribe(myResult => {
+        this.siiRequestWebService.getSupplierInvoiceItemsForSIIRequest(declarationId, this.selectedSIIRequest?.Id).subscribe(myResult => {
           let myResponse: ServiceResponse = myResult;
           if (!myResponse?.HasError && myResponse?.Result) {
             this.supplierInvoiceItemsForSIIRequest = myResponse.Result;
@@ -221,20 +222,56 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
   }
 
   DisplayOnlyCheck() {
-    this.IsDisplayOnly = this.CurrentSession?.CurrentEditComponent?.EditComponentController?.InDisplayMode;
+
+    this.IsDisplayOnly = !!this.CurrentSession?.CurrentEditComponent?.EditComponentController?.InDisplayMode;
+
     if (this.EntityPM?.AmendmentMessage) {
       this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+
       if (this.EntityPM.IsAmendmentDisplayOnly) {
         this.IsDisplayOnly = true;
       }
-    } else if (this.IsDisplayOnly) {
-      this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly");
-      ;
     }
-    if(this.EntityPM.HatraDate || this.EntityPM.PaymentDate){
+    else if (this.IsDisplayOnly) {
+      this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly");
+    }
+
+    if (this.EntityPM.HatraDate || this.EntityPM.PaymentDate) {
       this.IsDisplayOnly = true;
     }
+
+    const declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
+    declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
+
+      const displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
+
+      this.IsDisplayOnly = !!displayOnlyCheckResult.IsDisplayOnly;
+
+      if (this.EntityPM.HatraDate || this.EntityPM.PaymentDate) {
+        this.IsDisplayOnly = true;
+      }
+
+      if (this.EntityPM?.AmendmentMessage) {
+        this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+
+        if (this.EntityPM.IsAmendmentDisplayOnly) {
+          this.IsDisplayOnly = true;
+        }
+      }
+      else if (this.IsDisplayOnly) {
+        const prefix = (TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly") || "").trim();
+        const msg = (displayOnlyCheckResult.DisplayOnlyMessage || "").trim();
+
+        this.DisplayOnlyMessage = msg
+          ? (msg.startsWith(prefix) ? msg : (prefix + msg))
+          : prefix;
+      }
+      else {
+        this.DisplayOnlyMessage = null;
+      }
+    });
   }
+
 
   get IsAllowChange(): boolean {
     return !this.IsDisplayOnly;

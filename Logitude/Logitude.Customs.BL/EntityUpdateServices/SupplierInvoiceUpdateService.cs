@@ -413,6 +413,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void UpdateDeclarationPlatformFeeAndPrimaryInvoice(SupplierInvoicePM entityPM)
         {
+            bool isCourierEnv = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant).CompanyType == "B";
+            if (isCourierEnv)
+            {
+                return;
+            }
             ICustomContext _context = MainContext as CustomContext;
             SupplierInvoiceModificationQueryService supplierInvoiceModQueryService = new SupplierInvoiceModificationQueryService(_context);
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(_context);

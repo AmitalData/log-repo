@@ -2828,6 +2828,29 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+        [HttpGet]
+        public HttpResponseMessage GetAmendmentMessage(string declarationId)
+        {
+            try
+            {
+                var token = HttpContext.Current.Request.Headers["Token"];
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                var tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                var declarationQuery = new DeclarationQueryService(tenant);
+                var res = declarationQuery.GetAmendmentMessageResponse(declarationId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, res);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
     }
 
     internal class CustomsPartnersItemCRList
@@ -2869,4 +2892,5 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         public bool IsAllSelected { get; set; }
         public object QueryOperations { get; set; }
     }
+ 
 }

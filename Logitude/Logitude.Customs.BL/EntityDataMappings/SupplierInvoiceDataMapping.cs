@@ -1,6 +1,5 @@
 
 using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.BL.StimulReport;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs;
@@ -10,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,35 +51,35 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(entityPOCO.Tenant);
                 CustomsCountryPM country = countryQueryService.GetSingle(entityPOCO.BuyerCountryCode, false, true);
-                entityPM.BuyerCountryName = country.LocalName;
+                entityPM.BuyerCountryName = country?.LocalName;
             }
 
             if (!string.IsNullOrWhiteSpace(entityPOCO.PartyRelationshipCode))
             {
                 PartyRelationshipTypeQueryService partyRelationshipQueryService = new PartyRelationshipTypeQueryService(entityPOCO.Tenant);
                 PartyRelationshipTypePM partyRelationship = partyRelationshipQueryService.GetSingle(entityPOCO.PartyRelationshipCode, false, true);
-                entityPM.PartyRelationshipName = partyRelationship.LocalName;
+                entityPM.PartyRelationshipName = partyRelationship?.LocalName;
             }
 
             if (!string.IsNullOrWhiteSpace(entityPOCO.BuyerRoleCode))
             {
                 CustomerRoleTypeQueryService buyerRoleCodeQueryService = new CustomerRoleTypeQueryService(entityPOCO.Tenant);
                 CustomerRoleTypePM buyerRoleCode = buyerRoleCodeQueryService.GetSingle(entityPOCO.BuyerRoleCode, false, true);
-                entityPM.BuyerRoleName = buyerRoleCode.LocalName;
+                entityPM.BuyerRoleName = buyerRoleCode?.LocalName;
             }
 
             if (!string.IsNullOrWhiteSpace(entityPOCO.IssueCountryCode))
             {
                 CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(entityPOCO.Tenant);
                 CustomsCountryPM country = countryQueryService.GetSingle(entityPOCO.IssueCountryCode, false, true);
-                entityPM.IssueCountryName = country.LocalName;
+                entityPM.IssueCountryName = country?.LocalName;
             }
 
             if (!string.IsNullOrWhiteSpace(entityPOCO.PreferenceDocumentTypeCode))
             {
                 TradeAgreementQueryService tradeAgreementQueryService = new TradeAgreementQueryService(entityPOCO.Tenant);
                 TradeAgreementPM preferenceDocumentType = tradeAgreementQueryService.GetSingle(entityPOCO.PreferenceDocumentTypeCode, false, true);
-                entityPM.PreferenceDocumentTypeName = preferenceDocumentType.LocalName;
+                entityPM.PreferenceDocumentTypeName = preferenceDocumentType?.LocalName;
             }
 
             if (!string.IsNullOrWhiteSpace(entityPOCO.VendorId))
@@ -90,12 +90,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 if (vendor != null) entityPM.VendorNumber = vendor.VendorNumber;
             }
 
-            var customsSettings = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-            if (customsSettings != null && customsSettings.CompanyType != "B")
+
+            
+            bool isCourierEnv = CustomsSettingQueryService.GetSettingByTenant(entityPOCO.Tenant).CompanyType == "B";
+
+            if (!isCourierEnv)
             {
                 DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPOCO.Tenant);
                 DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPOCO.DeclarationId, false, true);
                 entityPM.IsValueForCustomsOnly = declarationQueryService.GetIsValueForCustomsOnlyFromDeclaration(entityPOCO.DeclarationId, entityPOCO.Tenant);//
+                                                                                                                                                              // entityPM.IsValueForCustomsOnly =  declarationPM != null ? declarationPM.IsValueForCustomsOnly:false;
+
                 if (declarationPM != null && declarationPM.Direction == "E")
                 {
                     SupplierInvoiceModificationQueryService supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(entityPOCO.Tenant);
@@ -112,21 +117,20 @@ namespace Logitude.Customs.BL.EntityDataMappings
                         }
                     }
                 }
-
             }
 
             if (!string.IsNullOrWhiteSpace(entityPOCO.InvoiceCurrencyTypeCode))
             {
                 CurrencyTypeQueryService currencyTypeQueryService = new CurrencyTypeQueryService(entityPOCO.Tenant);
                 CurrencyTypePM currencyTypePM = currencyTypeQueryService.GetSingle(entityPOCO.InvoiceCurrencyTypeCode, false, true);
-                entityPM.InvoiceCurrencyTypeName = currencyTypePM.LocalName;
+                entityPM.InvoiceCurrencyTypeName = currencyTypePM?.LocalName;
             }
 
             if (!string.IsNullOrWhiteSpace(entityPOCO.InsruanceCurrencyTypeCode))
             {
                 CurrencyTypeQueryService currencyTypeQueryService = new CurrencyTypeQueryService(entityPOCO.Tenant);
                 CurrencyTypePM currencyTypePM = currencyTypeQueryService.GetSingle(entityPOCO.InsruanceCurrencyTypeCode, false, true);
-                entityPM.InsruanceCurrencyTypeCodeName = currencyTypePM.LocalName;
+                entityPM.InsruanceCurrencyTypeCodeName = currencyTypePM?.LocalName;
             }
         }
     }

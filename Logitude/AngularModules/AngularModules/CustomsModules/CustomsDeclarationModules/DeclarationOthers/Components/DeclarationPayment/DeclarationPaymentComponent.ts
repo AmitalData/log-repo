@@ -1298,8 +1298,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
             else if (declarationDisplayOnly2) {
                 this.IsDisplayOnly = true;
-                this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
 
+                const prefix = "לתצוגה בלבד - ";
+                const msg = (displayOnlyCheckResult.DisplayOnlyMessage || "").trim();
+                this.ErrorMessage = msg.startsWith(prefix) ? msg : (prefix + msg);
+                
                 this.IsDisplayOnly = true;
                 this.OkButtonEnabled = false;
                 this.SendButtonEnabled = false;
