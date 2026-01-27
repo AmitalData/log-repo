@@ -689,6 +689,7 @@
     <Compile Include="Services\SAT\SATUpdateEntityHelper.cs" />
     <Compile Include="Services\Scheduler\ConnectionStringConfiguration.cs" />
     <Compile Include="Services\SignUp\QueueMessageCloudToLogboxSender.cs" />
+    <Compile Include="Tasks\CustomsConnectDocumentToDeclarationCourier.cs" />
     <Compile Include="Tasks\CustomsUpdateClosedTables.cs" />
     <Compile Include="Tasks\DeleteOldBIReportsExecutionLogsTask.cs" />
     <Compile Include="Tasks\DeleteOldReportExecutionLogsTask.cs" />

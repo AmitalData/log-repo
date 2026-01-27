@@ -25,7 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARPaymentUpdateClass
    {  		
-		public const string HashString = "56fbb307cf92b065d1ba7e9f97cd1a8e";
+		public const string HashString = "76fbb307cf92b065d13a7e9f97cd1a8e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -9002,6 +9002,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARPaymentTextCode_ARPaymentOReturnChequeConfirmMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.ReturnChequeConfirmMessage", DefaultText = "This action will return the cheque back to the customer, are you sure you want to do this action?",LocalDefaultText = @"BS64:IteU15fXlteo16og15TXnteX15DXlCDXnNec16fXldeXINek16LXldec15Qg15bXlCDXnteX15bXmdeo15Qg15DXqiDXlNeU157Xl9eQ15Qg15zXnNen15XXlywg15DXqteUINeR15jXldeXINep15DXqteUINeo15XXpteUINec16LXqdeV16og16TXoteV15zXlCDXlteVPyI=", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode ARPaymentTextCode_ARPaymentOInvoiceAmount2reconcileMSGLower = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.InvoiceAmount2reconcileMSGLower", DefaultText = "The amount to reconcile in the invoice is lower than the invoice open amount",LocalDefaultText = @"BS64:IteU16HXm9eV150g15zXlNeq15DXnteUINen15jXnyDXnteU16HXm9eV150g15TXpNeq15XXlyDXkdeX16nXkdeV16DXmdeqIg==", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentOCanNotReconcile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.CanNotReconcile", DefaultText = "The invoice is in multiple currencies and therefore cannot be reconciled from the receipt. Please reconcile transactions.",LocalDefaultText = @"BS64:IteU15fXqdeR15XXoNeZ16og15TXmdeQINeo15Eg157XmNeR16LXmdeqINeV15zXm9efINec15Ag16DXmdeq158g15zXkdem16Ig15TXqteQ157XlCDXnteU16fXkdec15QuINeg15Ag15zXkdem16Ig15TXqteQ157XqiDXqteg15XXoteV16ouIg==", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

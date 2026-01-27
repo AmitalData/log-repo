@@ -869,6 +869,7 @@
                                                                 [HideColumns]="true" [Text]="item.AmountToReconcile"
                                                                 [ForceDisable]="IsDisplayOnly "
                                                                 (LostFocus)="item.OnAmountToReconcileLostFocus(logcelltemplate,AmountToReconcileTextBox)"
+                                                                (click)="item.UpdateArInvoiceAvailable()"
                                                                 (dblclick)="item.AutomaticallyFillAmountToReconciledblclick(logcelltemplate,AmountToReconcileTextBox)">
                                                     </LogTextBox>
                                                 </div>

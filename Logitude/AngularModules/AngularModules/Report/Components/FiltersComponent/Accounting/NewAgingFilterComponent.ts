@@ -380,8 +380,15 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
                 case "IsGroupMultiAccounts":
                     this.IsGroupMultiAccounts = queryFilterItem.FieldValue;
                     break;
-                
-
+                case "ReportTypeCode" :
+                    this.ReportTypeCode = queryFilterItem.FieldValue;
+                    this.monthOrDayFilterSelected = this.ReportTypeCode == '1' ? 'filter_day' : 'filter_month';
+                    break;
+                case "ReportDateTypeCode" :
+                    this.ReportDateTypeCode = queryFilterItem.FieldValue;
+                    this.filterDateSelectedValue = this.ReportDateTypeCode == '1' ? 'filter_accounting' : 'filter_due';
+                    break;   
+ 
 
             }
 
@@ -432,7 +439,8 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         queryFilterItem.FieldValue = this.AgingForDate ? this.AgingForDate : null;
         queryFilterItem.Operator = "Equals";
         myFilterItems.push(queryFilterItem);
-
+        myFilterItems.push(new QueryFilterItem("ReportTypeCode", this.safeValue(this.ReportTypeCode)));
+        myFilterItems.push(new QueryFilterItem("ReportDateTypeCode", this.safeValue(this.ReportDateTypeCode)));
         myFilterItems.push(new QueryFilterItem("GLAccountType", this.safeValue(this.AccountTypeCode)));
         myFilterItems.push(new QueryFilterItem("CustomerId", this.safeValue(this.Customer)));
         myFilterItems.push(new QueryFilterItem("CollectorId", this.safeValue(this.Collector)));
@@ -480,7 +488,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         }
         return true;
     }
-
+   
     private CheckGLAccountChartOfAccountSecurityLevel() {
         if (this.Customer) {
             return this.CheckSecurityLevel(this.securityLevel);
@@ -551,6 +559,28 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
             this.FilterCustomerOrVendorChanged();
         }
     }
+    public monthOrDayFilterSelected: string = 'filter_day';
+    public ReportTypeCode: string = '1';
+    FilterByMonthOrDayClicked(itemValue: string) {
+        if (this.monthOrDayFilterSelected != itemValue) {
+            this.monthOrDayFilterSelected = itemValue;
+            this.FilterMonthOrDayChanged()
+        }
+    }
+    FilterMonthOrDayChanged() {
+        this.AgingForDate = null;
+        switch (this.monthOrDayFilterSelected) {
+            case 'filter_day':
+                this.ReportTypeCode = '1';
+                break;
+            case 'filter_month':
+                this.ReportTypeCode = '2';
+                break;
+            default:
+                break;
+        }
+
+    }
     FilterCustomerOrVendorChanged() {
 
         this.Customer = null;
@@ -583,7 +613,26 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
             this.currencyFilterSelectedValue = itemValue;
         }
     }
-
+    public ReportDateTypeCode : string = '1';
+    public filterDateSelectedValue: string = 'filter_accounting';
+    FilterDateClicked(itemValue: string) {
+        if (this.filterDateSelectedValue != itemValue) {
+            this.filterDateSelectedValue = itemValue;
+             this.FilterDateChanged();
+        }
+    }
+    FilterDateChanged() {     
+        switch (this.filterDateSelectedValue) {
+            case 'filter_accounting':
+                this.ReportDateTypeCode = '1';
+                break;
+            case 'filter_due':
+                this.ReportDateTypeCode = '2';
+                break;
+            default:
+                break;
+        }        
+    }
 
     public DateFilterSelectedValue: string = 'filter_Due';
     DateFilterItemClicked(itemValue: string) {
@@ -618,7 +667,9 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         this.SetUIProperties();
 
     }
-
+    AgingForDateChanged(date: any) {
+        this.AgingForDate = new Date(date?.date);
+    }
     IsCategoryDisabled: boolean = false;
     CategoriesList: string[] = [
         'Category 1',

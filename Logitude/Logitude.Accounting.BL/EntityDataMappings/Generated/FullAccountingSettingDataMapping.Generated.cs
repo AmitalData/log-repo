@@ -145,6 +145,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InvoiceNotes, 
 	         InterestInvoiceNotes, 
 	         PrepaidExpensesGLAccountId,
+	         HebrewTenant,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -609,8 +609,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			  entityPM.CustomerDebtNotification = GetCustomerDebtNotificationByAccountId(entityPM);
             }
 
-            entityPM.TotalOpenChequesInLocalCur = GetTotalOpenChequesInLocalCur(entityPM);
-
         }
 
         private CustomerDebtNotificationPM GetCustomerDebtNotificationByAccountId(GLAccountPM accountPM)
@@ -673,16 +671,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             return accountFollowUpDataQueryService.GetSinglePMByAccountId(account.Id, account.Tenant);
         }
 
-        private decimal GetTotalOpenChequesInLocalCur(GLAccountPM account)
-        {
-            IAccountingContext context = AccountingContext.GetContext(entityPM.Tenant);
-            return context.AllARPaymentChequesViews
-                .Where(a => a.AccountId == account.Id
-                         && a.Tenant == account.Tenant
-                         && a.Notes != "החזרת שיק ללקוח"
-                         && a.ValueDate <= DateTime.UtcNow)
-                .Sum(a => (decimal?)a.LocalAmountCredit) ?? 0m;
-        }
+       
         private  void SetPaymentTermToMulti(List<CardList> CardLists, string FirstPaymentTermId)
         {
             if (CardLists.Count > 1)

@@ -785,7 +785,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return qYeartransferLedgerTransaction;
         }
 
-        public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
+        public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null,LedgerTransactionBalanceFilter _param = null)
         {
             LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
 
@@ -815,8 +815,16 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             //     select rec);
 
             //}
-            ledgerTransactionsByAccountingDate = FilterByFromAndToDate(DateTypeCode, fromDateOnlyDate, DateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
-
+            if (_param == null || !_param.UseTaxreportFilter)
+            {
+                ledgerTransactionsByAccountingDate = FilterByFromAndToDate(DateTypeCode, fromDateOnlyDate, DateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
+            }
+            else if (_param.Date2TypeCode != null && _param.FromDate2 != null && _param.ToDate2 != null)
+            {
+                ledgerTransactionsByAccountingDate = FilterByFromAndToDate(_param.Date2TypeCode, _param.FromDate2.Value, _param.ToDate2.Value, ledgerTransactionsByAccountingDate);
+                ledgerTransactionsByAccountingDate = FilterByTax(_param, ledgerTransactionsByAccountingDate);
+            }
+                
 
             var lTransByAccountingDateFilterByListOfAccId = ledgerTransactionsByAccountingDate;
             if (listOfAccId != null)

@@ -1499,6 +1499,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool hebrewTenant ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool HebrewTenant  
+	   {
+	    
+	     get
+		{
+		   return hebrewTenant;
+		 }
+		 set
+		 {
+		   if(hebrewTenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HebrewTenant",OldValue=hebrewTenant,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   hebrewTenant=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

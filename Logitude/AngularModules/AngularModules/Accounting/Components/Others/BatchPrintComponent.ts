@@ -515,44 +515,14 @@ GetNumberOfDocumentNotPrinted(isReportsAttached: boolean) {
   this.ValidationErrorsList = [];
   if (this.SelectedItemsCount == 0) {
     this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
-  } else { 
-    //  this.OpenWindow();
+  } 
+  else { 
     var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();  
-    this.interestReportExtendedListService.GetNumberOfDocumentNotPrinted(interestReportArgs).subscribe((response: ServiceResponse) => {
-    this.CurrentSession.StopBusyIndicator();
-    var mm: ServiceResponse = response;
-    if (!mm.HasError) {
-    var pDFDocumentInvoices:PDFDocumentInvoices = mm.Result;
-    if((!AppTool.IsNullOrEmpty(pDFDocumentInvoices.ARInvoiceNumbersNotPrinted) && pDFDocumentInvoices.ARInvoiceNumbersNotPrinted.length>0 ) ||  (!AppTool.IsNullOrEmpty(pDFDocumentInvoices.InterestReportNumbersNotPrinted) && pDFDocumentInvoices.InterestReportNumbersNotPrinted.length >0 )){
-      // if(this.newWindow){
-      //   this.newWindow.blur();
-      //   this.newWindow.close();
-      // }
-      this.ShowBtatchPrintWarningComponent(pDFDocumentInvoices,interestReportArgs);
-    }
-    else{
-      this.CurrentSession.StartBusyIndicatorLoading();
       setTimeout(() =>  this.CreateInvoiceButtonClicked(interestReportArgs),200);
     }
     
-    }
-    else {
-      // if(this.newWindow){
-      //   this.newWindow.blur();
-      //   this.newWindow.close();
-      // }
-      if(mm.ErrorsArray){
-        var msg = new MessageWindow();
-        msg.RTL = this.isRTL;
-        msg.Width = 400;
-        msg.Show(mm.ErrorsArray[0]);
-    }
-    }
-
-  });
-    }
     this.DropdownClose();
-    }
+}
 
 SendSignedInvoices() {
       this.ValidationErrorsList = [];

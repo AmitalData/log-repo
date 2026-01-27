@@ -464,6 +464,20 @@
                                                         </td>
                                                     </tr>
 
+                                                    <!-- HebrewTenant -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'HebrewTenant'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <CheckBox [IsChecked]="HebrewTenant"
+                                                                (Checked)="HebrewTenant = $event"></CheckBox>
+                                                        </td>
+                                                    </tr>
+
                                                 </table>
                                             </td>
 

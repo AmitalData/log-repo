@@ -161,6 +161,29 @@
                                     </td>
                                 </tr>
 
+                                <!-- ReceivableCreditGLAccountId -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'ReceivableCreditGLAccountId'"
+                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'ReceivableCreditGLAccountId'"
+                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                            [SelectedValue]="DataContext.ReceivableCreditGLAccountId"
+                                            [LookUpTableName]="'GLAccount'" 
+                                            [DependencyFilter1Value]="false"
+                                            [DependencyFilter2Value]="'1'"
+                                            [QueryFilterItems]="ReceivableCreditGLAccountFilterItems">
+                                        </LogLov>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
                                 <!-- InvoiceCurrencyAmount -->
                                 <tr class="FormFieldRow">
                                     <td>

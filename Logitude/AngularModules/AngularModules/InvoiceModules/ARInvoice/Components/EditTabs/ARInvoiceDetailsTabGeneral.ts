@@ -216,7 +216,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public myVatTypeListService: VatTypeListService;
     public myChargesTypeListService: ChargesTypeListService;
     private myCommonDomainService: CommonDomainService;
-    private myGLAccountPMService: GLAccountPMService;
+    public myGLAccountPMService: GLAccountPMService;
     InitializeServices() {
         this.myCardListService = new CardListService();
         this.myCurrencyListService = new CurrencyListService();
@@ -1574,7 +1574,14 @@ export class ARInvoiceLineItem extends BaseComponent {
 
 
         this.SetUIProperties_Rate();
+        this.SetUIProperties_ReceivableCreditGLAccountId();
     }
+
+    SetUIProperties_ReceivableCreditGLAccountId() {
+        this.UIProperties.SetRequired("ReceivableCreditGLAccountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ReceivableCreditGLAccountId));
+        this.UIProperties.SetEnabled("ReceivableCreditGLAccountId", this.ObjectTableName, this.IsEditingEnabled && AppTool.IsNullOrEmpty(this.chargesTypeList?.ReceivableCreditGLAccountId));
+    }
+
     SetUIProperties_Rate() {
         var isFieldEnabled = false;
 
@@ -1705,6 +1712,27 @@ export class ARInvoiceLineItem extends BaseComponent {
         }
     }
 
+    get ReceivableCreditGLAccountId() { return this.EntityPM.ReceivableCreditGLAccountId; }
+    set ReceivableCreditGLAccountId(value: string) {
+        if (this.EntityPM.ReceivableCreditGLAccountId != value) {
+            this.EntityPM.ReceivableCreditGLAccountId = value;
+            if(!AppTool.IsNullOrEmpty(value) && AppTool.IsNullOrEmpty(this.chargesTypeList?.ReceivableCreditGLAccountId))    {}
+            this.fatherComponent.myGLAccountPMService.get(this.ReceivableCreditGLAccountId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                     this.ReceivableCreditGLAccountName = this.fatherComponent.isRTL ? myResponse?.Result?.LocalName : myResponse?.Result?.EnglishName;
+                 
+                }
+            });
+            this.SetUIProperties_ReceivableCreditGLAccountId();
+        }
+     }
+     get ReceivableCreditGLAccountName() { return this.EntityPM.ReceivableCreditGLAccountName }
+     set ReceivableCreditGLAccountName(value: string) {
+      if (this.EntityPM.ReceivableCreditGLAccountName != value) {
+            this.EntityPM.ReceivableCreditGLAccountName = value;
+        }
+    }
+
     get LocalCurrencyCode() { return this.EntityPM.InvoiceLocalCurrencyCode; }
     set LocalCurrencyCode(newValue: string) {
         if (this.EntityPM.InvoiceLocalCurrencyCode != newValue) {
@@ -1757,9 +1785,9 @@ export class ARInvoiceLineItem extends BaseComponent {
                 this.LocalDescription = null;
                 this.VatTypeId = null;
                 this.LineActionCode = null;
-
+                this.chargesTypeList = null;
+                this.ReceivableCreditGLAccountId = null;
             }
-
             else {
                 this.fatherComponent.myChargesTypeListService.getSingleFromCache(newValue).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
@@ -1769,6 +1797,15 @@ export class ARInvoiceLineItem extends BaseComponent {
                             this.LocalDescription = this.chargesTypeList.LocalName;
                             this.VatTypeId = this.chargesTypeList.VatTypeId;
                             this.LineActionCode = this.chargesTypeList.IsExpense ? '2' : '1';
+                            this.ReceivableCreditGLAccountId = this.chargesTypeList.ReceivableCreditGLAccountId;
+
+                            if (!AppTool.IsNullOrEmpty(this.chargesTypeList.ReceivableCreditGLAccountId)) {
+                                this.fatherComponent.myGLAccountPMService.get(this.chargesTypeList.ReceivableCreditGLAccountId).subscribe((myResponse: ServiceResponse) => {
+                                    if (!myResponse.HasError) {
+                                        this.ReceivableCreditGLAccountName = myResponse?.Result?.LocalName;
+                                    }
+                                });
+                            }
                         }
                     }
                 });

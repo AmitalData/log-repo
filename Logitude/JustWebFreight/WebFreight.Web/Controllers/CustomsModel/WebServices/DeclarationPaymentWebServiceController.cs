@@ -94,7 +94,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 						break;
 					case "DF_NG_8251_Web02_DeclarationStatus_ResponseService":
 						DF_NG_8251_Web02_DeclarationStatus_ResponseService dF_NG_8251_Web02_DeclarationStatus_ResponseService = new DF_NG_8251_Web02_DeclarationStatus_ResponseService();
-						dF_NG_8251_Web02_DeclarationStatus_ResponseService.SendPaymentIsCheckFileCredit(isCheckFileCredit, declarationPM, declarationPaymentPM, dbContext, checkFileCrediteReq.LoggingUserId, checkFileCrediteReq.LoggingObjectTableId, checkFileCrediteReq.LoggingEntityReference,true);
+						DeclarationStatusRequestParams requestParams = new DeclarationStatusRequestParams() { LoggingUserId = checkFileCrediteReq?.LoggingUserId, LoggingEntityReference = checkFileCrediteReq?.LoggingEntityReference };
+
+                        dF_NG_8251_Web02_DeclarationStatus_ResponseService.SendPaymentIsCheckFileCredit(isCheckFileCredit, declarationPM, declarationPaymentPM, dbContext, checkFileCrediteReq.LoggingUserId, checkFileCrediteReq.LoggingObjectTableId, checkFileCrediteReq.LoggingEntityReference,true, requestParams);
 						break;
 					case "MN_NG_8241_CargoResponseService":
 						MN_NG_8241_CargoResponseService mN_NG_8241_CargoResponseService = new MN_NG_8241_CargoResponseService();

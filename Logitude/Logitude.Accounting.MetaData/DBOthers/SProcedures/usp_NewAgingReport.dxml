@@ -22,9 +22,13 @@ create or ALTER PROCEDURE [dbo].[usp_NewAgingReport]
 @ChartOfAccountsId VARCHAR(50) = NULL,
 @CurrencyFilterSelectedValue VARCHAR(50) = null,
 @CurrencyId VARCHAR(50)=NULL,
-@GroupMultiAccounts  bit =0
+@GroupMultiAccounts  bit =0,
+@ReportDateTypeCode VARCHAR(50) = '1',
+@ReportTypeCode VARCHAR(50) = '1'
 AS
 BEGIN
+SET NOCOUNT ON;
+SET FMTONLY OFF;
 IF @InputDate IS NULL
 BEGIN
 SET @InputDate = GETDATE();
@@ -94,28 +98,191 @@ MAX(PT.EnglishName) AS PaymnetTermEnglishName,
 max(gl.MinimumInterestInvoiceBilling) MinimumInterestInvoiceBilling,
 max(gl.CreditAllotmentPercentage) as CreditAllotmentPercentage,
 MAX(CAST(GL.IsMultiCurrency AS INT)) AS IsMultiCurrency,
-SUM(CASE
-WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 1 AND 30 THEN T.AdjustedOpenAmount ELSE 0 END) AS Minus30Days,
-SUM(CASE
-WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 31 AND 60 THEN T.AdjustedOpenAmount ELSE 0 END) AS Minus60Days,
-SUM(CASE
-WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 61 AND 90 THEN T.AdjustedOpenAmount ELSE 0 END) AS Minus90Days,
-SUM(CASE
-WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 91 AND 120 THEN T.AdjustedOpenAmount ELSE 0 END) AS Minus120Days,
-SUM(CASE
-WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 121 AND 150 THEN T.AdjustedOpenAmount ELSE 0 END) AS Minus150Days,
-SUM(CASE
-WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 151 AND 180 THEN T.AdjustedOpenAmount ELSE 0 END)AS Minus180Days,
-SUM(CASE
-WHEN DATEDIFF(day, T.DueDate, @InputDate) > 180 THEN T.AdjustedOpenAmount ELSE 0 END) AS Past,
-SUM(CASE
-WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -30 AND 0 THEN T.AdjustedOpenAmount ELSE 0 END) AS Plus30Days,
-SUM(CASE
-WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -60 AND -31 THEN T.AdjustedOpenAmount ELSE 0 END) AS Plus60Days,
-SUM(CASE
-WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -90 AND -61 THEN T.AdjustedOpenAmount ELSE 0 END) AS Plus90Days,
-SUM(CASE
-WHEN DATEDIFF(day, T.DueDate, @InputDate) < -90 THEN T.AdjustedOpenAmount ELSE 0 END) AS Future,
+SUM(
+    CASE
+        WHEN @ReportTypeCode = '1' 
+             AND DATEDIFF(day,
+                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
+                 @InputDate
+             ) BETWEEN 1 AND 30
+            THEN T.AdjustedOpenAmount
+        WHEN @ReportTypeCode = '2'
+             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(@InputDate)
+             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(@InputDate)
+            THEN T.AdjustedOpenAmount
+        ELSE 0
+    END
+) AS Minus30Days,
+
+SUM(
+    CASE
+        WHEN @ReportTypeCode = '1' 
+             AND DATEDIFF(day,
+                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
+                 @InputDate
+             ) BETWEEN 31 AND 60
+            THEN T.AdjustedOpenAmount
+        WHEN @ReportTypeCode = '2'
+             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, -1, @InputDate))
+             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, -1, @InputDate))
+            THEN T.AdjustedOpenAmount
+        ELSE 0
+    END
+) AS Minus60Days,
+
+SUM(
+    CASE
+        WHEN @ReportTypeCode = '1' 
+             AND DATEDIFF(day,
+                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
+                 @InputDate
+             ) BETWEEN 61 AND 90
+            THEN T.AdjustedOpenAmount
+        WHEN @ReportTypeCode = '2'
+             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, -2, @InputDate))
+             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, -2, @InputDate))
+            THEN T.AdjustedOpenAmount
+        ELSE 0
+    END
+) AS Minus90Days,
+
+SUM(
+    CASE
+        WHEN @ReportTypeCode = '1' 
+             AND DATEDIFF(day,
+                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
+                 @InputDate
+             ) BETWEEN 91 AND 120
+            THEN T.AdjustedOpenAmount
+        WHEN @ReportTypeCode = '2'
+            AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, -3, @InputDate))
+            AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, -3, @InputDate))
+            THEN T.AdjustedOpenAmount
+
+        ELSE 0
+    END
+) AS Minus120Days,
+
+SUM(
+    CASE
+        WHEN @ReportTypeCode = '1' 
+             AND DATEDIFF(day,
+                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
+                 @InputDate
+             ) BETWEEN 121 AND 150
+            THEN T.AdjustedOpenAmount
+        WHEN @ReportTypeCode = '2'
+             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, -4, @InputDate))
+             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, -4, @InputDate))
+            THEN T.AdjustedOpenAmount
+
+        ELSE 0
+    END
+) AS Minus150Days,
+
+SUM(
+    CASE
+        WHEN @ReportTypeCode = '1' 
+             AND DATEDIFF(day,
+                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
+                 @InputDate
+             ) BETWEEN 151 AND 180
+            THEN T.AdjustedOpenAmount
+        WHEN @ReportTypeCode = '2'
+             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, -5, @InputDate))
+             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, -5, @InputDate))
+            THEN T.AdjustedOpenAmount
+
+        ELSE 0
+    END
+) AS Minus180Days,
+SUM(
+    CASE
+        WHEN @ReportTypeCode = '1' 
+             AND DATEDIFF(day,
+                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
+                 @InputDate
+             ) > 180
+            THEN T.AdjustedOpenAmount
+
+        WHEN @ReportTypeCode = '2'
+             AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, -5, @InputDate)
+            THEN T.AdjustedOpenAmount
+
+        ELSE 0
+    END
+) AS Past,
+SUM(
+    CASE
+        WHEN @ReportTypeCode = '1'
+             AND DATEDIFF(day,
+                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
+                 @InputDate
+             ) BETWEEN -30 AND 0
+            THEN T.AdjustedOpenAmount
+
+        WHEN @ReportTypeCode = '2'
+             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, 1, @InputDate))
+             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, 1, @InputDate))
+            THEN T.AdjustedOpenAmount
+
+
+        ELSE 0
+    END
+) AS Plus30Days,
+SUM(
+    CASE
+        WHEN @ReportTypeCode = '1'
+             AND DATEDIFF(day,
+                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
+                 @InputDate
+             ) BETWEEN -60 AND -31
+            THEN T.AdjustedOpenAmount
+
+        WHEN @ReportTypeCode = '2'
+             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, 2, @InputDate))
+             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, 2, @InputDate))
+            THEN T.AdjustedOpenAmount
+
+
+        ELSE 0
+    END
+) AS Plus60Days,
+SUM(
+    CASE
+        WHEN @ReportTypeCode = '1'
+             AND DATEDIFF(day,
+                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
+                 @InputDate
+             ) BETWEEN -60 AND -31
+            THEN T.AdjustedOpenAmount
+
+        WHEN @ReportTypeCode = '2'
+             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, 3, @InputDate))
+             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, 3, @InputDate))
+            THEN T.AdjustedOpenAmount
+
+
+        ELSE 0
+    END
+) AS Plus90Days,
+
+SUM(
+    CASE
+        WHEN @ReportTypeCode = '1'
+             AND DATEDIFF(day,
+                 CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
+                 @InputDate
+             ) < -90
+            THEN T.AdjustedOpenAmount
+
+        WHEN @ReportTypeCode = '2'
+             AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END > EOMONTH(DATEADD(MONTH, 4, @InputDate))
+            THEN T.AdjustedOpenAmount
+
+        ELSE 0
+    END
+) AS Future,
 (SELECT SUM(trans.LocalAmountCredit)
 FROM LedgerTransactions trans
 JOIN Journals jrn ON trans.JournalId = jrn.Id
@@ -123,7 +290,11 @@ WHERE
 jrn.ExternalSystem IS NOT NULL
 AND trans.AccountId = T.AccountId
 AND trans.Tenant = @Tenant
-AND trans.DueDate > @InputDate
+AND
+(
+    (@ReportDateTypeCode = 1 AND trans.AccountingDate > @InputDate)
+ OR (@ReportDateTypeCode = 2 AND trans.DueDate> @InputDate)
+)
 AND trans.LocalAmountCredit != 0
 ) AS ExternalTransactionsTotal,
 (SELECT max(MainGLAccountId)
@@ -149,12 +320,12 @@ CASE WHEN MAX(CAST(gl.ActiveForInterest AS INT)) = 1 THEN max(InterestData.Stand
 CASE WHEN MAX(CAST(gl.ActiveForInterest AS INT)) = 1 THEN max(InterestData.StandardAddInterestPercentData) ELSE NULL END AS StandardAddInterestPercent
 FROM GLACCOUNTS GL
 OUTER APPLY (
-        SELECT TOP 1 ibt.LocalName AS StandardInterestRateBaseLocalName, glaip.StandardAddInterestPercent as StandardAddInterestPercentData
-        FROM GLAccountInterestPeriods glaip
-        LEFT JOIN InterestBasesTypes ibt ON ibt.Id = glaip.StandardInterestRateBaseId
-        WHERE glaip.GLAccountId = GL.Id AND glaip.PeriodStartDate < GETDATE()
-        ORDER BY glaip.PeriodStartDate DESC
-    ) AS InterestData
+SELECT TOP 1 ibt.LocalName AS StandardInterestRateBaseLocalName, glaip.StandardAddInterestPercent as StandardAddInterestPercentData
+FROM GLAccountInterestPeriods glaip
+LEFT JOIN InterestBasesTypes ibt ON ibt.Id = glaip.StandardInterestRateBaseId
+WHERE glaip.GLAccountId = GL.Id AND glaip.PeriodStartDate < GETDATE()
+ORDER BY glaip.PeriodStartDate DESC
+) AS InterestData
 LEFT JOIN
 (
 SELECT
@@ -164,26 +335,26 @@ lt.OpenAmount,
 lt.OpenAmountCurrencyId,
 lt.ExchangeRate,
 CASE
-            WHEN (@CurrencyFilterSelectedValue = 'filter_LocalCurr' 
+WHEN (@CurrencyFilterSelectedValue = 'filter_LocalCurr'
 OR (
 EXISTS (
 SELECT 1
 FROM GLAccountCurrencies g
 WHERE g.Tenant=@tenant and g.MainGLAccountId = lt.AccountId OR g.GLAccountId = lt.AccountId
 ) AND @GroupMultiAccounts = 1
-                 ))
+))
 AND lt.OpenAmountCurrencyId != ten.CurrencyId
 THEN lt.OpenAmount * lt.ExchangeRate
 ELSE lt.OpenAmount
 END AS AdjustedOpenAmount,
 lt.DueDate,
+lt.AccountingDate,
 lt.CreateDate,
 lt.ForeignAmountCredit,
 lt.ForeignAmountDebit,
 lt.Tenant,
-		lt.CurrencyId,
-		ten.CurrencyId as TenantCurrencyId
-
+lt.CurrencyId,
+ten.CurrencyId as TenantCurrencyId
 FROM LedgerTransactions lt
 INNER JOIN
 TENANTS TEN ON lt.tenant = TEN.Id
@@ -204,12 +375,12 @@ LEFT JOIN
 C ON GL.CardsDataId = C.Id
 LEFT JOIN
 (SELECT Id, Code FROM Currencies WHERE InActive = 0 AND Tenant=@Tenant)
-CURRENCY 
- ON 
-    CASE 
-        WHEN GL.ReconcileMethodCode = 0 THEN T.TenantCurrencyId
-        ELSE T.OpenAmountCurrencyId
-    END = CURRENCY.Id
+CURRENCY
+ON
+CASE
+WHEN GL.ReconcileMethodCode = 0 THEN T.TenantCurrencyId
+ELSE T.OpenAmountCurrencyId
+END = CURRENCY.Id
 left JOIN
 PaymentTerms PT ON PT.Id = C.PaymentTermId
 WHERE
@@ -257,7 +428,6 @@ MAX(t.TotFutureOpenChequesInLocalCur) AS TotFutureOpenChequesInLocalCur,
 MAX(t.TotPastOpenChequesInLocalCur) AS TotPastOpenChequesInLocalCur,
 MAX(t.DisplayNumber) AS DisplayNumber,
 MAX(t.VatNumber) AS VatNumber,
-
 MAX(CASE
 WHEN T.MainGlaccountId = T.Id THEN T.LocalName
 WHEN T.MainGlaccountId IS NULL  or @GroupMultiAccounts =0 THEN T.LocalName
@@ -299,24 +469,23 @@ LEFT JOIN
 (SELECT Id, EnglishName, LocalName,Tenant FROM Contacts WHERE InActive=0)
 CONTACT_Collector ON   CONTACT_Collector.Tenant=@Tenant AND  T.CollectorId = CONTACT_Collector.Id
 OUTER APPLY (
-    SELECT TOP 1
-        c.Id,
-        c.BusinessPhone,
-        c.Mobile,
-        c.Email,
-		c.LocalName,
-		c.EnglishName,
-        CASE 
-            WHEN c.BusinessPhone IS NOT NULL AND c.BusinessPhone <> '' THEN c.BusinessPhone
-            WHEN c.Mobile IS NOT NULL AND c.Mobile <> '' THEN c.Mobile
-            ELSE NULL
-        END AS PreferredPhone
-    FROM Contacts c
-    WHERE c.InActive = 0 
-      AND c.ContactForAccounting = 1
-      AND c.Id = t.ContactId 
+SELECT TOP 1
+c.Id,
+c.BusinessPhone,
+c.Mobile,
+c.Email,
+c.LocalName,
+c.EnglishName,
+CASE
+WHEN c.BusinessPhone IS NOT NULL AND c.BusinessPhone <> '' THEN c.BusinessPhone
+WHEN c.Mobile IS NOT NULL AND c.Mobile <> '' THEN c.Mobile
+ELSE NULL
+END AS PreferredPhone
+FROM Contacts c
+WHERE c.InActive = 0
+AND c.ContactForAccounting = 1
+AND c.Id = t.ContactId
 ) AS CONTACT_GLAccount
-
 left join GLAccountCurrencies GLC
 ON GLC.MainGLAccountId = T.ID AND GLC.GLAccountId =T.ID
 GROUP BY

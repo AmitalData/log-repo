@@ -1043,6 +1043,11 @@
       Description="&quot;חשבוניות ישראל לא להפעיל V2&quot;"
       SearchFields="&quot;AV2 ,Israel Invoices Do Not Activate V2&quot;" />
     <Record
+     Code="&quot;BMO&quot;"
+     Name="&quot;Open Format Report Optimization&quot;"
+     SearchFields="&quot;BMO,Open Format Report Optimization&quot;"
+     Description="&quot;דוח במבנה אחיד - אופטימיזציה&quot;" />
+    <Record
       Code="&quot;STQ&quot;"
       Name="&quot;Add Task Scheduler To Queue By Date&quot;"
       SearchFields="&quot;STQ ,Add Task Scheduler To Queue&quot;"
@@ -1072,6 +1077,11 @@
       Name="&quot;Second Worker Role&quot;"
       SearchFields="&quot;SWR,Second Worker Role&quot;"
       Description="&quot;Second Worker Role&quot;" />
+    <Record
+      Code="&quot;OCA&quot;"
+      Name="&quot;Original Name For Child Account&quot;"
+      SearchFields="&quot;OCA,Original Name For Child Account&quot;"
+      Description="&quot;Original Name For Child Account&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

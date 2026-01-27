@@ -1046,7 +1046,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "AV2,Israel Invoices Do Not Activate V2",
                 Description = "חשבוניות ישראל לא להפעיל V2 ",
             });
-			all.Add(new ToggleDetails()
+            all.Add(new ToggleDetails()
+            {
+                Code = "BMO",
+                Name = "Open Format Report Optimization",
+                SearchFields = "BMO,Open Format Report Optimization",
+                Description = "דוח במבנה אחיד - אופטימיזציה",
+            }); 
+            all.Add(new ToggleDetails()
 			{
 				Code = "STQ",
 				Name = "Add Task Scheduler To Queue By Date",
@@ -1087,6 +1094,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "Second Worker Role",
                 SearchFields = "SWR,Second Worker Role",
                 Description = "Second Worker Role",
+            });
+            all.Add(new ToggleDetails()
+            {
+                Code = "OCA",
+                Name = "Original Name For Child Account",
+                SearchFields = "OCA,Original Name For Child Account",
+                Description = "Original Name For Child Account",
             });
             return all;
        }

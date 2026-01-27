@@ -510,7 +510,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             
             if (string.IsNullOrWhiteSpace(availableSignServer) &&
                  (isExport ||
-                signQueueHSMService.IsHSMSign_IsOn(_RequestParams.Tenant)) )
+                signQueueHSMService.IsHSMSign_IsOn(_RequestParams.Tenant) || IsCloud))
  
             {
                 (availableSignServer, signMethodByQueueEnum) = dbSignQueueService
