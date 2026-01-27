@@ -23,7 +23,7 @@ import { DeclarationEventManager } from '../../../../../Customs/Utilities/Declar
 
 import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import { ConstraintApprovalRequestParams } from '../../../../../Customs/DataContract/RequestParams/ConstraintApprovalRequestParams';
-import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
+import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 
 // Send Request
 import { INF_MSG_GenericResponseData } from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
@@ -38,7 +38,7 @@ import { CertificateConnectedItem } from '../../../../../Customs/DataContract/Ce
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 import { ConfirmationTypePM } from '../../../../../Customs/EntityPMs/ConfirmationTypePM';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
-import {Validator} from '../../../../../Infrastructure/Validators/Validator';
+import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 
 @Component({
 
@@ -265,7 +265,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                         if (res.length > 0) {
                             if (!AppTool.IsNullOrEmpty(res)) {
 
-                                this.IsCheckBoxVisible = true;                               
+                                this.IsCheckBoxVisible = true;
                                 for (var i = 0; i < res.length; i++) {
 
 
@@ -290,7 +290,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                                         this.isDisableBtn92 = false;
                                     }
 
-                                  
+
                                 }
 
                                 if (reqConfirmationCodes != null) {
@@ -361,7 +361,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Certificate/CreateEditTicketComponent');
     }
 
-    SaveBeforeUpdate(){
+    SaveBeforeUpdate() {
         if (this.IsDisplayOnly) return;
 
         var errors = [];
@@ -390,7 +390,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                 this.UpdateAllCertificateWithoutResponse();
             }
 
-           
+
         }
     }
     UpdateAllCertificateWithoutResponse() {
@@ -415,7 +415,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     }
 
     LoadConnectedItems(message: string) {
-        
+
         this.preventSelect = false;
         if (message == "ok" || message == null) {
 
@@ -564,7 +564,10 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             }
 
             else if (this.IsDisplayOnly) {
-                this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + displayOnlyCheckResult.DisplayOnlyMessage;
+                const prefix = (TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") || "").trim();
+                const msg = (displayOnlyCheckResult.DisplayOnlyMessage || "").trim();
+
+                this.DisplayOnlyMessage = msg.startsWith(prefix) ? msg : (prefix + msg);
             }
             else if (this.DeclarationPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
@@ -696,7 +699,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                 this.selecteCertificate.IsAllSelected = true;
             }
         }
-        else {            
+        else {
             this.SelectedItemsCount = 0;
             this.IsVisible = false;
             if (this.selecteCertificate != null) {
@@ -724,7 +727,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     }
 
     onCheckBoxChecked($event) {
-        
+
         if ($event.IsChecked) {
             if (!this.connectedItems.Collection.includes($event.rowData))
                 this.connectedItems.Insert($event.rowData);
@@ -904,7 +907,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     dataCount: number;
 
     CreateMethod() {
-        
+
         var windowArgs: any = {};
         windowArgs.Ticket = this.selecteCertificate;
         windowArgs.IsAllSelected = this.IsSelected;
@@ -1066,7 +1069,7 @@ export class CertificateTicketListItem extends BaseComponent {
 
     FilterSelectedValue: string;
     CertificateItemClicked(item: CertificateTicketListItem) {
-        
+
         this.parent.SelectedItem = this;
         this.parent.IsVisible = false;
         this.parent.selecteCertificate = this.ticket;
