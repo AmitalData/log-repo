@@ -105,8 +105,9 @@ SUM(
              ) BETWEEN 1 AND 30
             THEN T.AdjustedOpenAmount
         WHEN @ReportTypeCode = '2'
-             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(@InputDate)
-             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(@InputDate)
+		    and t.LocalAmountDebit ! =0
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= @InputDate
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, 1, @InputDate)
             THEN T.AdjustedOpenAmount
         ELSE 0
     END
@@ -121,8 +122,9 @@ SUM(
              ) BETWEEN 31 AND 60
             THEN T.AdjustedOpenAmount
         WHEN @ReportTypeCode = '2'
-             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, -1, @InputDate))
-             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, -1, @InputDate))
+		    and t.LocalAmountDebit ! =0
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, -1, @InputDate)
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < @InputDate
             THEN T.AdjustedOpenAmount
         ELSE 0
     END
@@ -137,8 +139,9 @@ SUM(
              ) BETWEEN 61 AND 90
             THEN T.AdjustedOpenAmount
         WHEN @ReportTypeCode = '2'
-             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, -2, @InputDate))
-             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, -2, @InputDate))
+		    and t.LocalAmountDebit ! =0
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, -2, @InputDate)
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, -1, @InputDate)
             THEN T.AdjustedOpenAmount
         ELSE 0
     END
@@ -153,8 +156,9 @@ SUM(
              ) BETWEEN 91 AND 120
             THEN T.AdjustedOpenAmount
         WHEN @ReportTypeCode = '2'
-            AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, -3, @InputDate))
-            AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, -3, @InputDate))
+		    and t.LocalAmountDebit ! =0
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, -3, @InputDate)
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, -2, @InputDate)
             THEN T.AdjustedOpenAmount
 
         ELSE 0
@@ -170,8 +174,9 @@ SUM(
              ) BETWEEN 121 AND 150
             THEN T.AdjustedOpenAmount
         WHEN @ReportTypeCode = '2'
-             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, -4, @InputDate))
-             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, -4, @InputDate))
+		    and t.LocalAmountDebit ! =0
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, -4, @InputDate)
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, -3, @InputDate)
             THEN T.AdjustedOpenAmount
 
         ELSE 0
@@ -187,8 +192,9 @@ SUM(
              ) BETWEEN 151 AND 180
             THEN T.AdjustedOpenAmount
         WHEN @ReportTypeCode = '2'
-             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, -5, @InputDate))
-             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, -5, @InputDate))
+	      	and t.LocalAmountDebit ! =0
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, -5, @InputDate)
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, -4, @InputDate)
             THEN T.AdjustedOpenAmount
 
         ELSE 0
@@ -204,7 +210,8 @@ SUM(
             THEN T.AdjustedOpenAmount
 
         WHEN @ReportTypeCode = '2'
-             AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, -5, @InputDate)
+	     	and t.LocalAmountDebit ! =0
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, -5, @InputDate)
             THEN T.AdjustedOpenAmount
 
         ELSE 0
@@ -220,8 +227,9 @@ SUM(
             THEN T.AdjustedOpenAmount
 
         WHEN @ReportTypeCode = '2'
-             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, 1, @InputDate))
-             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, 1, @InputDate))
+		    and t.LocalAmountDebit ! =0
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, 1, @InputDate)
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, 2, @InputDate)
             THEN T.AdjustedOpenAmount
 
 
@@ -238,8 +246,9 @@ SUM(
             THEN T.AdjustedOpenAmount
 
         WHEN @ReportTypeCode = '2'
-             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, 2, @InputDate))
-             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, 2, @InputDate))
+	    	and t.LocalAmountDebit ! =0
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, 2, @InputDate)
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, 3, @InputDate)
             THEN T.AdjustedOpenAmount
 
 
@@ -252,12 +261,13 @@ SUM(
              AND DATEDIFF(day,
                  CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END,
                  @InputDate
-             ) BETWEEN -60 AND -31
+             ) BETWEEN -90 AND -61
             THEN T.AdjustedOpenAmount
 
         WHEN @ReportTypeCode = '2'
-             AND MONTH(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = MONTH(DATEADD(MONTH, 3, @InputDate))
-             AND YEAR(CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END) = YEAR(DATEADD(MONTH, 3, @InputDate))
+		    and t.LocalAmountDebit ! =0
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, 3, @InputDate)
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END < DATEADD(MONTH, 4, @InputDate)
             THEN T.AdjustedOpenAmount
 
 
@@ -275,7 +285,8 @@ SUM(
             THEN T.AdjustedOpenAmount
 
         WHEN @ReportTypeCode = '2'
-             AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END > EOMONTH(DATEADD(MONTH, 4, @InputDate))
+		    and t.LocalAmountDebit ! =0
+            AND CASE WHEN @ReportDateTypeCode = 1 THEN T.AccountingDate ELSE T.DueDate END >= DATEADD(MONTH, 4, @InputDate)
             THEN T.AdjustedOpenAmount
 
         ELSE 0
@@ -311,7 +322,7 @@ END
 ) AS BalanceInLocalCurrency,
 SUM(t.OpenAmount) AS BalanceInForeignCurrency,
 SUM(CASE
-WHEN T.AdjustedOpenAmount < 0 THEN (t.AdjustedOpenAmount)
+WHEN T.LocalAmountCredit != 0 THEN (t.AdjustedOpenAmount)
 ELSE 0
 END) AS TotalToCollect,
 CASE WHEN MAX(CAST(gl.ActiveForInterest AS INT)) = 1 THEN max(InterestData.StandardInterestRateBaseLocalName) ELSE NULL END AS StandardInterestRateBaseLocalName,
@@ -352,7 +363,9 @@ lt.ForeignAmountCredit,
 lt.ForeignAmountDebit,
 lt.Tenant,
 lt.CurrencyId,
-ten.CurrencyId as TenantCurrencyId
+ten.CurrencyId as TenantCurrencyId,
+lt.LocalAmountDebit ,
+lt.LocalAmountCredit
 FROM LedgerTransactions lt
 INNER JOIN
 TENANTS TEN ON lt.tenant = TEN.Id

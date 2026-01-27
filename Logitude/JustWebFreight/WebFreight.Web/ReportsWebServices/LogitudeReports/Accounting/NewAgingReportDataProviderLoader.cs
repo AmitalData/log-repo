@@ -73,22 +73,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             bool monthlyAging = reportTypeCode == "2";
             if (monthlyAging) {
-                dataProvider.Past1 = $"{transactionsText}{Environment.NewLine}{AgingForDate.Month}/{AgingForDate.Year}";
+                dataProvider.Past1 = $"{transactionsText}{Environment.NewLine} {AgingForDate.Month}/{AgingForDate.Year}";
 
-                dataProvider.Past2 = $"{transactionsText}{Environment.NewLine}{AgingForDate.AddMonths(-1).Month}/{AgingForDate.AddMonths(-1).Year}";
-                dataProvider.Past3 = $"{transactionsText}{Environment.NewLine}{AgingForDate.AddMonths(-2).Month}/{AgingForDate.AddMonths(-2).Year}";
+                dataProvider.Past2 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(-1).Month}/{AgingForDate.AddMonths(-1).Year}";
+                dataProvider.Past3 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(-2).Month}/{AgingForDate.AddMonths(-2).Year}";
                 dataProvider.Past4 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(-3).Month}/{AgingForDate.AddMonths(-3).Year}";
-                dataProvider.Past5 = $"{transactionsText}{Environment.NewLine}{AgingForDate.AddMonths(-4).Month}/{AgingForDate.AddMonths(-4).Year}";
+                dataProvider.Past5 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(-4).Month}/{AgingForDate.AddMonths(-4).Year}";
                 dataProvider.Past6 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(-5).Month}/{AgingForDate.AddMonths(-5).Year}";
                 var pastStartDate = AgingForDate.AddMonths(-5);
                 dataProvider.Past = $"{transactionsBeforeText}{Environment.NewLine} 1/{pastStartDate.Month}/{pastStartDate.Year}";
 
 
                 // Future
-                dataProvider.Future1 = $"{transactionsText}{Environment.NewLine} {AgingForDate.Month}/{AgingForDate.Year}";
-                dataProvider.Future2 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(1).Month}/{AgingForDate.AddMonths(1).Year}";
-                dataProvider.Future3 = $"{transactionsText}{Environment.NewLine}{AgingForDate.AddMonths(2).Month}/{AgingForDate.AddMonths(2).Year}";
-                var lastFutureMonth = AgingForDate.AddMonths(2);
+                dataProvider.Future1 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(1).Month}/{AgingForDate.AddMonths(1).Year}";
+                dataProvider.Future2 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(2).Month}/{AgingForDate.AddMonths(2).Year}";
+                dataProvider.Future3 = $"{transactionsText}{Environment.NewLine} {AgingForDate.AddMonths(3).Month}/{AgingForDate.AddMonths(3).Year}";
+                var lastFutureMonth = AgingForDate.AddMonths(3);
                 var lastDayOfFutureMonth = new DateTime(lastFutureMonth.Year, lastFutureMonth.Month, DateTime.DaysInMonth(lastFutureMonth.Year, lastFutureMonth.Month));
                 dataProvider.Future = $"{transactionsAfterText}{Environment.NewLine}{lastDayOfFutureMonth:dd/MM/yyyy}";
             }
