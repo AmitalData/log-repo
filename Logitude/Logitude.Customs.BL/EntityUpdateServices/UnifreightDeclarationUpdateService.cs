@@ -819,15 +819,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     requestData = requestData.Replace("</transmission>", string.Concat("<CARGOQUERYMODE>AUTOSEND</CARGOQUERYMODE>", "</transmission>"));
                 }
-                /*
-                if (_DBOccDeclarationPM.IsValueForCustomsOnly != _DirtyDeclarationPM.IsValueForCustomsOnly)
-                {
-                    string xml_status = "new";
-                    if (_DirtyDeclarationPM.IsValueForCustomsOnly != true) xml_status = "del";
-                    var addStatusData = GetMyFUStatusXML("DFC", "DFC", "", xml_status, DateTime.Now, false); ;
-                    requestData.Replace("</transmission>", string.Concat(addStatusData, "</transmission>"));
-                }
-                */
+                
                 SetCFIDATA();
                 if (_CFIDATA != null)
                 {
@@ -960,15 +952,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
                 }
-                /*
-                if (_DBOccDeclarationPM.IsValueForCustomsOnly != _DirtyDeclarationPM.IsValueForCustomsOnly)
-                {
-                    string xml_status = "new";
-                    if (_DirtyDeclarationPM.IsValueForCustomsOnly != true) xml_status = "del";
-                    var addStatusData = GetMyFUStatusXML("DFC", "DFC", "", xml_status, DateTime.Now, false); ;
-                    requestData = string.Concat(requestData, addStatusData);
-                }
-                */
+              
                 if (!_IsCCUFILEM_4U2L_Changed && string.IsNullOrWhiteSpace(requestData))
                 {
                     return;

@@ -1,24 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
-using Logitude.Server.Tools.Counters;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
-using Logitude.Customs.Data.EntityKeys;
-using System.Configuration;
-using System.Globalization;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Customs.BL.Validators;
 using Logitude.Customs.BL.EntityQueryServices;
-using Unifreight.BL.EntityQueryServices;
-using Unifreight.BL.EntityPMs.UGenerated;
-using Unifreight.Data.AmitalModel;
 using Logitude.Customs.BL.BL;
 using System.Diagnostics;
 using Logitude.Server.Tools.Contracts;
@@ -26,43 +16,35 @@ using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.BL.Messaging.ILSWS;
 using Logitude.Customs.BL.Messaging.Maman;
-using System.Data.Entity.Validation;
-using Logitude.Customs.BL.Messaging.Maman;
+
 using Logitude.Customs.BL.Messaging.ILOVS;
 using Logitude.Customs.BL.Infrastructure;
-using Logitude.Customs.Data.EntityLists;
-using Logitude.Customs.BL.Models;
+
 using Logitude.Customs.BL.TraceEvents;
-using UnifreightIIG.Common.MessageLib.Unifreight.Customs;
-using Logitude.Customs.Data.EntityMapping;
 
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
-    public partial class DeclarationCourierStatusUpdateService //: EntityUpdateService<DeclarationCourierStatus, DeclarationCourierStatusPM, DeclarationPM>
+    public partial class DeclarationCourierStatusUpdateService 
     {
-        //public bool IsAfterUpdatingUpdate { get; set; }
         public string TruckerId;
         public string DistributionArea;
         public string LastMileServiceType;
         public string MAWB;
         public string ImporterCode;
         public bool UpdateTaxationDateTime;
+        private readonly Dictionary<string, string> _customFileNoCache = new Dictionary<string, string>();
+
 
         protected override void OnCreating(DeclarationCourierStatusPM entityPM, EntityPM entityParentPM)
         {
 
-            //if (entityParentPM != null)
-            //{
-            //    entityPM.DeclarationId = entityParentPM.Id;
-            //    entityPM.Tenant = entityParentPM.Tenant;
-            //}
         }
 
         protected override void OnUpdating(DeclarationCourierStatusPM entityPM, DeclarationCourierStatus entityPOCO)
         {
             var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-            if (setting != null & setting.IsConnectedToUniFreight)
+            if (setting != null && setting.IsConnectedToUniFreight)
             {
                 var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(entityPM.Tenant);
                 declarationCourierStatusRepository.Lock_forUpdateNOWAIT(entityPM.DeclarationId);
@@ -73,9 +55,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var prevCourierPendingReasonList = entityPM.CourierPendingReasonList;
                 entityPM.CourierPendingReasonList = null;
                 entityPM.NotApprovedPendingList = null;
+                CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(entityPM.Tenant);
                 foreach (DeclarationPendingPM declarationPending in entityPM.DeclarationPendings)
                 {
-                    CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(entityPM.Tenant);
                     CourierPendingReason courierPendingReason = courierPendingReasonRepositoryRepository.GetByCode(declarationPending.CourierPendingReasonCode, entityPM.Tenant);
                     if (courierPendingReason != null && !courierPendingReason.Inactive)
                     {
@@ -131,13 +113,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             if (entityPM.IsClosedForFollowUp != entityPOCO.IsClosedForFollowUp)
             {
-
-
-
                 CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(entityPM.Tenant);
                 var courierMasterPM = courierMasterQueryService.GetByDeclarationId(entityPM.DeclarationId, entityPM.Tenant);
                 var repository = new CardRepository(entityPM.Tenant);
-                if (setting != null & !setting.StandAlone)
+                if (setting != null && !setting.StandAlone)
                 {
                     if (courierMasterPM != null)
                     {
@@ -177,15 +156,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                         CasualImporterContact = dec.CasualImporterContact,
                                         DeclarationId = dec.Id,
                                         Tenant = dec.Tenant,
-                                        //CasualSupplierName = dec.CasualSupplierName,
-                                        //CasualSupplierAddress = dec.CasualSupplierAddress,
                                     };
                                     casual.ChangeSetOp = ChangeSetOperation.Insert;
                                     DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                                     declarationCasualDetailsUpdateService.Update(casual, true);
-
-                                    //dec.CasualSupplierName = null;
-                                    // dec.CasualSupplierAddress = null;
                                     dec.ImporterCode = null;
                                     dec.TransferImporterCode = null;
                                     dec.EntitleImporterCode = null;
@@ -207,8 +181,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     dec.CasualImporterTel = null;
                                     dec.CasualImporterContact = null;
                                     dec.ChangeSetOp = ChangeSetOperation.Update;
-                                    //DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                                    //declarationUpdateService.Update(dec, true);
                                     DeclarationUpdateService.DeclarationRepositoryUpdatePOCO(dec, true);
                                 }
                                 else
@@ -219,8 +191,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     var casual = declarationCasualDetailsQueryService.GetSingle(entityPM.DeclarationId, false, false);
                                     if (casual != null)
                                     {
-                                        //dec.CasualSupplierName = casual.CasualSupplierName;
-                                        //dec.CasualSupplierAddress = casual.CasualSupplierAddress;
                                         dec.ImporterCode = casual.ImporterCode;
                                         dec.TransferImporterCode = casual.TransferImporterCode;
                                         dec.EntitleImporterCode = casual.EntitleImporterCode;
@@ -242,9 +212,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                         dec.CasualImporterTel = casual.CasualImporterTel;
                                         dec.CasualImporterContact = casual.CasualImporterContact;
                                         dec.ChangeSetOp = ChangeSetOperation.Update;
-                                        //DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                                        //declarationUpdateService.Update(dec, true);
-
                                         casual.ChangeSetOp = ChangeSetOperation.Delete;
                                         DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                                         declarationCasualDetailsUpdateService.Update(casual, true);
@@ -338,8 +305,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             try
             {
                 string loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPendingPM.Tenant);
-                DeclarationQueryService declarationQueryService = new DeclarationQueryService(dirtyDeclarationPendingPM.Tenant);
-                string CustomFileNoResult = declarationQueryService.GetCustomFileNoByDeclarationId(dirtyDeclarationPendingPM.DeclarationID, dirtyDeclarationPendingPM.Tenant);
+                string CustomFileNoResult = GetCustomFileNoCachedLocal(dirtyDeclarationPendingPM.DeclarationID, dirtyDeclarationPendingPM.Tenant);
 
                 if (CustomFileNoResult == null)
                 {
@@ -366,7 +332,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw ;
             }
         }
 
@@ -412,12 +378,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             HandleAutomatedMessaging(entityPM);
         }
 
-
-        public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
-        {
-            //(Repository as Logitude.Customs.Data.Repsitories.DeclarationCourierStatusRepository).FastDeleteMulti(entityKeyFields);
-        }
-
         public DeclarationCourierStatusPM UpdateTrucker(DeclarationCourierStatusPM currentDeclarationCourierStatusPM, DeclarationPM declarationPM)
         {
             if (currentDeclarationCourierStatusPM == null)
@@ -452,7 +412,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.LastMileServiceType != LastMileServiceType)
             {
                 currentDeclarationCourierStatusPM.LastMileServiceType = LastMileServiceType;
-                //if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                 LogMessagingUtil.Instance.AppendLine("try to update Last Mile Service Type " + currentDeclarationCourierStatusPM.LastMileServiceType + " to declarationCourierStatus for DeclarationPM.Id: " + declarationPM.Id);
             }
             if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
@@ -474,22 +433,35 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private void SendToMassof(DeclarationCourierStatusPM entityPM, DeclarationCourierStatus entityPOCO, string StorageSiteCode)
         {
             CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+
+            bool isSwissport = (StorageSiteCode == "ILSWS");
+            bool isMaman = (StorageSiteCode == "ILMMN");
+            bool isOverseas = (StorageSiteCode == "ILOVL");
+            if (!isSwissport && !isMaman && !isOverseas) return;
+
             List<string> listReasonCode;
+
             if ((entityPM.CourierPendingReasonList == null && entityPOCO.CourierPendingReasonList != null) || (entityPM.CourierPendingReasonList != null && entityPOCO.CourierPendingReasonList == null))
             {
                 listReasonCode = entityPM.DeclarationPendings.Select(c => c.CourierPendingReasonCode).ToList();
             }
             else
             {
-                listReasonCode = entityPM.DeclarationPendings.Where(c => ((entityPM.CourierPendingReasonList+",").Contains(c.CourierPendingReasonCode+",") && !((entityPOCO.CourierPendingReasonList+",").Contains(c.CourierPendingReasonCode+",")))
-                || ((entityPOCO.CourierPendingReasonList+",").Contains(c.CourierPendingReasonCode+",") && !((entityPM.CourierPendingReasonList + ",").Contains(c.CourierPendingReasonCode + ",")))).Select(d => d.CourierPendingReasonCode).ToList();
+                string nowList = (entityPM.CourierPendingReasonList ?? "") + ",";
+                string prevList = (entityPOCO.CourierPendingReasonList ?? "") + ",";
+
+                listReasonCode = entityPM.DeclarationPendings
+                    .Where(c =>
+                        (nowList.Contains(c.CourierPendingReasonCode + ",") && !prevList.Contains(c.CourierPendingReasonCode + ","))
+                     || (prevList.Contains(c.CourierPendingReasonCode + ",") && !nowList.Contains(c.CourierPendingReasonCode + ",")))
+                    .Select(d => d.CourierPendingReasonCode)
+                    .ToList();
             }
             foreach (var item in listReasonCode)
             {
                 CourierPendingReasonPM courierPendingReason = courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(item, entityPM.Tenant);
 
-                if (StorageSiteCode == "ILSWS" && courierPendingReason?.SwissportSuspendedCode != null)
+                if (isSwissport && courierPendingReason?.SwissportSuspendedCode != null)
                 {
                     var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
                     string drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM, true);
@@ -501,7 +473,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     break;
                 }
                 //string.IsNullOrEmpty(entityPM.MAWB) = not from u2l
-                if (StorageSiteCode == "ILMMN" && string.IsNullOrEmpty(entityPM.MAWB) && courierPendingReason?.MamanSuspendedCode != null)
+                else  if (isMaman && string.IsNullOrEmpty(entityPM.MAWB) && courierPendingReason?.MamanSuspendedCode != null)
                 {
                     var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
                     string drityMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM,true);
@@ -511,7 +483,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     break;
                 }
-                if (StorageSiteCode == "ILOVL" && courierPendingReason?.OverseasSuspendedCode != null)
+                else  if (isOverseas && courierPendingReason?.OverseasSuspendedCode != null)
                 {
                     var courierMessageDataOverseasRequestService = new CourierOVSECTHMessageRequestService();
                     string drityMessage = courierMessageDataOverseasRequestService.GetMessageUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM, true);
@@ -626,6 +598,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] ERROR DeclId={pm.DeclarationId} - {ex.Message} - {ex.StackTrace}");
             }
         }
+
+        private string GetCustomFileNoCachedLocal(string declarationId, int tenant)
+        {
+            string key = tenant + ":" + declarationId;
+            if (_customFileNoCache.TryGetValue(key, out var cached))
+                return cached;
+
+            var fileNo = new DeclarationQueryService(tenant).GetCustomFileNoByDeclarationId(declarationId, tenant);
+            _customFileNoCache[key] = fileNo; 
+            return fileNo;
+        }
+
 
 
     }
