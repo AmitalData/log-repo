@@ -99,7 +99,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (entityPM.Direction == "E")
             {
                 var amendmentStatusRepository = new AmendmentRequestStatusQueryService(entityPOCO.Tenant);
-                var amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus, false, true); 
+                var amendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.AmendmentStatus, false, true);
                 if (amendmentStatus != null)
                 {
                     entityPM.AmendmentStatusName = amendmentStatus.LocalName;
@@ -120,8 +120,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
             }
 
-          
-           if (entityPOCO.IsAmendment == true)
+
+            if (entityPOCO.IsAmendment == true)
             {
                 if (!string.IsNullOrWhiteSpace(entityPOCO.AmendmentRejectionReason))
                 {
@@ -151,7 +151,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.TransportModeName = transportMode.Name;
 
             }
-            
+
 
 
             if (!string.IsNullOrEmpty(entityPOCO.DepartmentId))
@@ -323,19 +323,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
                 entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
             }
-            
+
             if (entityPOCO.IsCourierDeclaration)
             {
-               entityPM.CourierData = (new CourierMasterRepository(entityPOCO.Tenant)).GetPrefixMAWBByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
+                entityPM.CourierData = (new CourierMasterRepository(entityPOCO.Tenant)).GetPrefixMAWBByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
             }
-            DeclarationPaymentQueryService declarationPaymentQueryService = new DeclarationPaymentQueryService(entityPOCO.Tenant);
-
-            bool automaticPaymentMustBeAccurate = true;
-            if (automaticPaymentMustBeAccurate)
+            else
             {
-                
-                entityPM.AutomaticPayment = declarationPaymentQueryService.GetAutomaticPayment(entityPOCO.Id,entityPOCO.Direction);
-
+                DeclarationPaymentQueryService declarationPaymentQueryService = new DeclarationPaymentQueryService(entityPOCO.Tenant);
+                entityPM.AutomaticPayment = declarationPaymentQueryService.GetAutomaticPayment(entityPOCO.Id, entityPOCO.Direction);
+            }
 
             if (!String.IsNullOrWhiteSpace( entityPOCO.WeightValue))
             {
@@ -385,7 +382,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
 
             UpdateCourierDeclarationFields(entityPM, entityPOCO);
-            
+
             if (entityPOCO.AcceptanceStatusCode != null)
             {
                 AcceptanceStatusQueryService acceptanceStatusQueryService = new AcceptanceStatusQueryService(entityPOCO.Tenant);
@@ -395,7 +392,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     entityPM.AcceptanceStatusName = acceptanceStatus.LocalName;
                 }
             }
-            
+
             if (entityPM.FastIndividualProcessCode != null)
             {
                 if (entityPM.FastIndividualProcessCode == "F")
@@ -428,9 +425,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(entityPOCO.Tenant);
                 CourierMasterPM courierMasterPM = courierMasterQueryService.GetByDeclarationIdCache(entityPOCO.Id, entityPOCO.Tenant);
                 if (courierMasterPM == null) {
-					 courierMasterPM = courierMasterQueryService.GetCourierMasterByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
-				}
-				if (courierMasterPM != null)
+                    courierMasterPM = courierMasterQueryService.GetCourierMasterByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
+                }
+                if (courierMasterPM != null)
                 {
                     entityPM.CourierMasterId = courierMasterPM.Id;
                     entityPM.MAWBCourierMaster = courierMasterPM.MAWB;
@@ -506,7 +503,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
             }
 
-           
+
             Card customerCard = CardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant, true);
             if (customerCard != null)
             {
@@ -574,4 +571,3 @@ namespace Logitude.Customs.BL.EntityDataMappings
     }
 
 }
-   
