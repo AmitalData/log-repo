@@ -1,4 +1,4 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.InfrastructureModel.EntityPMs;
@@ -60,6 +60,7 @@ namespace WebFreight.Web.App_Code
                 {
                     ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
                     shipmentId = result.ShipmentId= shipmentRepository.GetShipmentIdByShipmentNumber(filters.ShipmentNumber, tenant);
+                    filters.ShipmentId = shipmentId;  // Fix: Copy to filters so FinishProcessingPODImage receives it
                     if (string.IsNullOrEmpty(shipmentId))
                     {
                         result.IsScceed = false;
@@ -91,10 +92,12 @@ namespace WebFreight.Web.App_Code
                 {
                     DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
                     documentTypeId = result.DocumentTypeId = documentTypeRepository.GetDocumentTypeIdByCode(filters.DocumentType, tenant);
+                    filters.DocumentTypeId = documentTypeId;  // Fix: Copy to filters so FinishProcessingPODImage receives it
                     if(string.IsNullOrEmpty(documentTypeId) && filters.DocumentType!="POD" && filters.IsReadDocumentFromBarCode)
                     {
                         filters.DocumentType = "POD";
                         documentTypeId = result.DocumentTypeId = documentTypeRepository.GetDocumentTypeIdByCode(filters.DocumentType, tenant);
+                        filters.DocumentTypeId = documentTypeId;  // Fix: Copy to filters so FinishProcessingPODImage receives it
                     }
 
                     if (string.IsNullOrEmpty(documentTypeId))
