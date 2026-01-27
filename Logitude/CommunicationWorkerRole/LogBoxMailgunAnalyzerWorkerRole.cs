@@ -32,6 +32,10 @@ namespace CommunicationWorkerRole
 
                         if (analyzeQueue != null)
                         {
+                            analyzeQueue.Status = "P";
+                            analyzeQueue.ErrorMessage = null;
+                            analyzeQueueRepository.Update(analyzeQueue);
+                            analyzeQueueRepository.SubmitChanges();
                             LogBoxMailgunAnalyzer analyzer = new LogBoxMailgunAnalyzer(analyzeQueue, analyzeQueueRepository);
 
                             analyzer.Run();
