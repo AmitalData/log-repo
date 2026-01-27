@@ -4,14 +4,14 @@ export class AdvancedDatePickerResolverComponent {
 
     public SetValidityBetweenTwoDateOptions(firstOption: any, secondOption: any) {
         if (firstOption != null && secondOption != null) {
-            var firstDateValue = this.ResolveDateValue(firstOption);
-            var secondDateValue = this.ResolveDateValue(secondOption);
+            var firstDateValue = this.ResolveDateValue(firstOption, true);
+            var secondDateValue = this.ResolveDateValue(secondOption, false);
             if (firstDateValue > secondDateValue) return false;
             else return true;
         }
         return false;
     }
-    public ResolveDateValue(dateOption: any) {
+    public ResolveDateValue(dateOption: any, fromDate: boolean) {
         var date = new Date(); 
         var dateValue = new Date();
         var quarterNumber = this.GetQuarterNumber(date);
@@ -60,7 +60,34 @@ export class AdvancedDatePickerResolverComponent {
                     dateValue = new Date(date.getFullYear(), 0, 0);
                     break;
                 default:
-                    dateValue = new Date(dateOption);
+                    try {
+                        if (typeof dateOption === "string" && dateOption?.startsWith("PER_")) {
+                            const parts = dateOption.split("_");
+                            const value = parseInt(parts[1], 10);
+                            const unit = parts[2].toLowerCase(); // days / months / years
+                            const sign = fromDate ? -1 : 1;
+
+                            switch (unit) {
+                                case "days":
+                                    dateValue.setDate(date.getDate() + sign * value);
+                                    break;
+                                case "months":
+                                    dateValue.setMonth(date.getMonth() + sign * value);
+                                    break;
+                                case "years":
+                                    dateValue.setFullYear(date.getFullYear() + sign * value);
+                                    break;
+                                default:
+                                    throw new Error("Unsupported period unit: " + unit);
+                            }
+                        }
+                        else {
+                            dateValue = new Date(dateOption);
+                        }
+                    } catch(error) {
+                        console.error("Unexpected error", error);
+                        throw new Error("Unexpected error when validating");
+                    }
                     break;
             }
         }
