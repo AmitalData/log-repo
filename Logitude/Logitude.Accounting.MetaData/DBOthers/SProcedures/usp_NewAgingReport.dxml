@@ -322,7 +322,7 @@ END
 ) AS BalanceInLocalCurrency,
 SUM(t.OpenAmount) AS BalanceInForeignCurrency,
 SUM(CASE
-WHEN T.AdjustedOpenAmount < 0 THEN (t.AdjustedOpenAmount)
+WHEN T.LocalAmountCredit != 0 THEN (t.AdjustedOpenAmount)
 ELSE 0
 END) AS TotalToCollect,
 CASE WHEN MAX(CAST(gl.ActiveForInterest AS INT)) = 1 THEN max(InterestData.StandardInterestRateBaseLocalName) ELSE NULL END AS StandardInterestRateBaseLocalName,
@@ -364,7 +364,8 @@ lt.ForeignAmountDebit,
 lt.Tenant,
 lt.CurrencyId,
 ten.CurrencyId as TenantCurrencyId,
-lt.LocalAmountDebit 
+lt.LocalAmountDebit ,
+lt.LocalAmountCredit
 FROM LedgerTransactions lt
 INNER JOIN
 TENANTS TEN ON lt.tenant = TEN.Id
