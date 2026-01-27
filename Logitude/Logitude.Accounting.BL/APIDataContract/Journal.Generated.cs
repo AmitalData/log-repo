@@ -15,47 +15,58 @@ using System.Xml.Serialization;
 
 namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
-   
+
     public partial class Journal
     {
 
-	    
-    public string Id { get; set; }
-    
-    public int Tenant { get; set; }
-    
-    public DateTime CreateDate { get; set; }
-    
-    public DateTime AccountingDate { get; set; }
-    
-    public string ExternalNo { get; set; }
-    
-    public DateTime? UpdateDate { get; set; }
-    
-    public DateTime? ApproveDate { get; set; }
-    
-    public string AccountingEntityReference { get; set; }
-    
-    public User UpdatedByUser { get; set; }
-    
-    public string ExternalSystem { get; set; }
-    
-    public string OriginalJournalNumber { get; set; }
-    
-    public User ApprovedByUser { get; set; }
-    
-    public User CreatedByUser { get; set; }
-    
-    public string JournalType { get; set; }
-    
-    public string JournalStatusType { get; set; }
-    
-    public AccountingEntity AccountingEntity { get; set; }
-    
-    public string AccountingEntityId { get; set; }
-    
-    public List<JournalLine> JournalLines { get; set; }
-    
-    public string JournalNumber { get; set; }
+
+        public string Id { get; set; }
+
+        public int Tenant { get; set; }
+
+        public DateTime CreateDate { get; set; }
+
+        public DateTime AccountingDate { get; set; }
+
+        public string ExternalNo { get; set; }
+
+        public DateTime? UpdateDate { get; set; }
+
+        public DateTime? ApproveDate { get; set; }
+
+        public string AccountingEntityReference { get; set; }
+
+        public User UpdatedByUser { get; set; }
+
+        public string ExternalSystem { get; set; }
+
+        public string OriginalJournalNumber { get; set; }
+
+        public User ApprovedByUser { get; set; }
+
+        public User CreatedByUser { get; set; }
+
+        public string JournalType { get; set; }
+
+        public string JournalStatusType { get; set; }
+
+        public AccountingEntity AccountingEntity { get; set; }
+
+        public string AccountingEntityId { get; set; }
+
+        public List<JournalLine> JournalLines { get; set; }
+
+        public string JournalNumber { get; set; }
+
+        public List<Invoice> Invoices { get; set; }
+        public Currency Currency { get; set; }
+
     }
-} 
+
+    public class Invoice
+    {
+        public string Key { get; set; }
+        public decimal LocalAmount { get; set; }
+        public decimal ForeignAmount { get; set; }
+    }
+}
