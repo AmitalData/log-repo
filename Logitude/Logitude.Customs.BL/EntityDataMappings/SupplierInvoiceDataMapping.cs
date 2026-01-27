@@ -1,16 +1,17 @@
 
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.StimulReport;
+using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Server.Tools;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using Logitude.Server.Tools;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Def.EntityPMs;
-using Logitude.Customs.Data;
-using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -89,28 +90,29 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 if (vendor != null) entityPM.VendorNumber = vendor.VendorNumber;
             }
 
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPOCO.Tenant);
-            DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPOCO.DeclarationId, false, true);
-            if (!declarationPM.IsCourierDeclaration)
+            var customsSettings = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
+            if (customsSettings != null && customsSettings.CompanyType != "B")
             {
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPOCO.Tenant);
+                DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPOCO.DeclarationId, false, true);
                 entityPM.IsValueForCustomsOnly = declarationQueryService.GetIsValueForCustomsOnlyFromDeclaration(entityPOCO.DeclarationId, entityPOCO.Tenant);//
-            }
-
-            if (declarationPM != null && declarationPM.Direction == "E")
-            {
-                SupplierInvoiceModificationQueryService supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(entityPOCO.Tenant);
-                List<SupplierInvoiceModificationPM> listSupplierInvoiceModificationPMs = supplierInvoiceModificationQueryService.GetSupplierInvoiceModificationsForInvoice(entityPOCO.DeclarationId, entityPOCO.InvoiceCounterKey);
-                foreach (SupplierInvoiceModificationPM item in listSupplierInvoiceModificationPMs)
+                if (declarationPM != null && declarationPM.Direction == "E")
                 {
-                    if (item.TypeCode == "67")
+                    SupplierInvoiceModificationQueryService supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(entityPOCO.Tenant);
+                    List<SupplierInvoiceModificationPM> listSupplierInvoiceModificationPMs = supplierInvoiceModificationQueryService.GetSupplierInvoiceModificationsForInvoice(entityPOCO.DeclarationId, entityPOCO.InvoiceCounterKey);
+                    foreach (SupplierInvoiceModificationPM item in listSupplierInvoiceModificationPMs)
                     {
-                        entityPM.ExportInsuranceAmount = String.Format("{0:0.00}", item.Amount) + " " + item.CurrencyTypeCode;
-                    }
-                    if (item.TypeCode == "104")
-                    {
-                        entityPM.ExportFreightAmount = String.Format("{0:0.00}", item.Amount) + " " + item.CurrencyTypeCode;
+                        if (item.TypeCode == "67")
+                        {
+                            entityPM.ExportInsuranceAmount = String.Format("{0:0.00}", item.Amount) + " " + item.CurrencyTypeCode;
+                        }
+                        if (item.TypeCode == "104")
+                        {
+                            entityPM.ExportFreightAmount = String.Format("{0:0.00}", item.Amount) + " " + item.CurrencyTypeCode;
+                        }
                     }
                 }
+
             }
 
             if (!string.IsNullOrWhiteSpace(entityPOCO.InvoiceCurrencyTypeCode))
