@@ -1438,7 +1438,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             catch (System.Exception ex)
             {
                 LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing ex" + ex.Message.ToString(), false, "sendClosing", stopLogAt);
-
+                NetCommonHelper.Logger.DevLog.Instance.WriteError("ICustomsAutoDecClosing ex" + ex.Message.ToString());
             }
             LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing FINISH SEND", false, "sendClosing", stopLogAt);
 
