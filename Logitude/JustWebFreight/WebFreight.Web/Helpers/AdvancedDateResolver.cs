@@ -89,6 +89,7 @@ namespace WebFreight.Web.Helpers
                         var value = int.Parse(parts[1]);
                         var unit = parts[2].ToLower();
                         var sign = fromDate == true ? -1 : 1;
+                        dateValue = DateTime.Now;
 
                         switch (unit)
                         {

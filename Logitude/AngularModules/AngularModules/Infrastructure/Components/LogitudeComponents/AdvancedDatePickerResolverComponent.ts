@@ -6,7 +6,7 @@ export class AdvancedDatePickerResolverComponent {
         if (firstOption != null && secondOption != null) {
             var firstDateValue = this.ResolveDateValue(firstOption, true);
             var secondDateValue = this.ResolveDateValue(secondOption, false);
-            if (firstDateValue > secondDateValue) return false;
+            if (firstDateValue === null || secondDateValue === null || firstDateValue > secondDateValue) return false;
             else return true;
         }
         return false;
@@ -67,6 +67,11 @@ export class AdvancedDatePickerResolverComponent {
                             const unit = parts[2].toLowerCase(); // days / months / years
                             const sign = fromDate ? -1 : 1;
 
+                            if (value === 0) {
+                                console.error("missing day/month/year number");
+                                return null;
+                            }
+
                             switch (unit) {
                                 case "days":
                                     dateValue.setDate(date.getDate() + sign * value);
@@ -86,7 +91,7 @@ export class AdvancedDatePickerResolverComponent {
                         }
                     } catch(error) {
                         console.error("Unexpected error", error);
-                        throw new Error("Unexpected error when validating");
+                        return null;
                     }
                     break;
             }
