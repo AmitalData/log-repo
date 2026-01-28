@@ -2653,7 +2653,18 @@ namespace WebFreight.Web.MetaDataUpdate
                 Code = "FD",
                 LocalName = "נכשל",
             }, entityRepository);
-
+            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
+            {
+                Name = "In Progress",
+                Code = "IP",
+                LocalName = "בתהליך",
+            }, entityRepository);
+            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
+            {
+                Name = "Cancellation In Progress",
+                Code = "CP",
+                LocalName = "הביטול בתהליך",
+            }, entityRepository);
             entityRepository.SubmitChanges();
         }
         public void LoadMeasurements()
