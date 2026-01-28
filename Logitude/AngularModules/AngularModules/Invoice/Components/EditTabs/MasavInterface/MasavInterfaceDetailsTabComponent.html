@@ -20,15 +20,32 @@
                     </tr>
                     <tr style="height: 20px;">                       
                     
-                         <td>
-                            <CheckBox  [class.readonly]="readonly"  title="Select All" style="position: absolute; top: 7px;" [IsChecked]="selectedAll" (Checked)="selectedAll = $event"></CheckBox>
-                            <span style="padding-right: 2%;
-                            position: absolute;
-                            top: 7px;">{{'MasavInterface.O.SelectAll' | TextCodeTranslationPipe}}</span>
-
-                            <IconButton [class.readonly]="readonly" [Name]="'Refresh'"  (click)="refreshButtonClicked()"></IconButton>
-                            
-                         </td> 
+                        <td>
+                            <div style="display: flex; align-items: center; width: 100%;">
+                                
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <CheckBox
+                                        [class.readonly]="readonly"
+                                        title="Select All"
+                                        [IsChecked]="selectedAll"
+                                        (Checked)="selectedAll = $event">
+                                    </CheckBox>
+                        
+                                    <span>
+                                        {{'MasavInterface.O.SelectAll' | TextCodeTranslationPipe}}
+                                    </span>
+                                </div>
+                        
+                                <div style="flex: 1;"></div>
+                        
+                                <IconButton
+                                    [class.readonly]="readonly"
+                                    [Name]="'Refresh'"
+                                    (click)="refreshButtonClicked()">
+                                </IconButton>
+                        
+                            </div>
+                        </td>
                       
                     </tr> 
                    <tr style="height: 15px;">

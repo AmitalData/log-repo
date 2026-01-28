@@ -10,6 +10,9 @@ import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollect
 import { APPaymentListService } from 'Invoice/Services/StandardLists/APPaymentListService';
 import { APPaymentList } from 'Invoice/EntityLists/APPaymentList';
 import { APPaymentExtendedService } from 'Invoice/Services/ExtendedPMs/APPaymentExtendedService';
+import { Subject, Subscription } from 'rxjs';
+import { AppTool } from 'Infrastructure/Tools';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     
@@ -27,19 +30,23 @@ export class MasavInterfaceDetailsTabComponent extends BaseComponent {
     private currentSession = SessionLocator.SelectedSession;
     public changeCheckBoxesState: EventEmitter<any> = new EventEmitter();
     public selectedLines: ObservableCollection = new ObservableCollection([]);
+    public unSelectedLines: ObservableCollection = new ObservableCollection([]);
+
     apPaymentListService : APPaymentListService = new APPaymentListService();
     apPaymentExtendedService :APPaymentExtendedService = new APPaymentExtendedService();
     public markIsChecked: EventEmitter<any> = new EventEmitter();
     public readonly: boolean = false;
+    private destroy$ = new Subject<void>();
+
     constructor(private entityArgs: EntityArgs) {
         super();
         this.entityPM = entityArgs.EntityPM;
         this.buildColumns(); 
         this.listen();   
-        if(this.entityPM.StatusCode === MasavInterfaceStatus.Transmitted)
-            this.selectedAll = true;
-        
-       this.readonly = this.entityPM?.StatusCode ===  MasavInterfaceStatus.Transmitted;
+        if(this.entityPM.StatusCode === MasavInterfaceStatus.Transmitted || this.entityPM.StatusCode === MasavInterfaceStatus.CancellationInProgress || this.entityPM.StatusCode === MasavInterfaceStatus.InProgress)
+            this.all = true;
+        this.readonly = this.entityPM?.StatusCode ===  MasavInterfaceStatus.Transmitted || this.entityPM?.StatusCode ===  MasavInterfaceStatus.CancellationInProgress || this.entityPM?.StatusCode ===  MasavInterfaceStatus.InProgress;
+
     }
    
     private listen() {
@@ -49,29 +56,31 @@ export class MasavInterfaceDetailsTabComponent extends BaseComponent {
                 this.refreshButtonClicked();
                 this.currentSession.StopBusyIndicator()
 
-            }
-            if (s == "CancelMasavInterface") {
-                this.currentSession.StartBusyIndicatorSaving()
-                this.apPaymentExtendedService.updateMulti(this.selectedLines.Collection.map(c=>c.rowData.Id), null).subscribe((res)=>{
-                       this.selectedAll = false  
-                       this.currentSession.StopBusyIndicator()
-                })
-            }
-            if (s == "TransmitterMasavInterface") {
-                this.currentSession.StartBusyIndicatorSaving()
-                this.apPaymentExtendedService.updateMulti(this.selectedLines.Collection.map(c=>c.rowData.Id), this.entityPM.Id).subscribe((res)=>{
-                    
-                    this.refreshButtonClicked();
-                    this.currentSession.StopBusyIndicator()
-
-                })
+            }                     
+        });
+       
+        this.currentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            if (isSaveSuccess) {               
+                  const combinedLines = [...this.selectedLines.Collection, ...this.unSelectedLines.Collection];
+                  this.apPaymentExtendedService.updateMulti(combinedLines.map(c => c.rowData)).subscribe((res) => {
+                      this.refreshButtonClicked();
+                      this.currentSession.StopBusyIndicator();
+                  });
             }
         });
-       this.currentSession.PseventRowSelectEvent.subscribe((res) => {
-            this.onRowSelected(res);
+        this.currentSession.PseventRowSelectEvent
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(res => {
+          this.onRowSelected(res);
         });
-
+    
+  
     }
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+      
     buildColumns() {
         this.columns = [];
         this.columns.push({
@@ -190,22 +199,25 @@ export class MasavInterfaceDetailsTabComponent extends BaseComponent {
         return this.entityListService.getByFilters("APPayment", filters);
 
     }
-    public selectLines(result: any) {        
+    public selectLines(result: any) {
+        this.unSelectedLines.Clear()
         this.selectedLines.Clear();
-        let Lines = result.map((res: APPaymentList) => ({ rowData: res, IsChecked: true, RowIndex: -1, ById: true }));         
+        let Lines = result.map((res: APPaymentList) => ({ rowData: { ...res, MasavInterfaceId: this.entityPM.Id }, IsChecked: true, RowIndex: -1, ById: true }));         
         this.selectedLines.InsertCollection(Lines);
         this.changeCheckBoxesState.emit(Lines);
     }
     onRowSelected(rowData: any) {
+        this.entityPM.IsDirty = true;
         const row = rowData;
         const rowId = row.Id;
         const index = this.selectedLines.Collection.findIndex(c => c.rowData?.Id == row.Id);
-        if (index < 0) {
+        if (index < 0 && rowData.MasavInterfaceId === null) {
             row.MasavInterfaceId = this.entityPM.Id;
             this.pushLine(row) 
         } 
         else {
             row.MasavInterfaceId = null;
+            this.unSelectedLines.Insert({rowData: row, IsChecked: false, RowIndex: null, ById: true});
             this.selectedLines.Remove(this.selectedLines.Collection.find(c => c.rowData?.Id == rowId));
         }
     }
@@ -228,6 +240,8 @@ export class MasavInterfaceDetailsTabComponent extends BaseComponent {
         
     }
     refreshButtonClicked() {
+        this.readonly = this.entityPM?.StatusCode ===  MasavInterfaceStatus.Transmitted || this.entityPM?.StatusCode ===  MasavInterfaceStatus.CancellationInProgress || this.entityPM?.StatusCode ===  MasavInterfaceStatus.InProgress;
+        this.unSelectedLines.Clear()
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });       
     }
 
@@ -236,11 +250,14 @@ export class MasavInterfaceDetailsTabComponent extends BaseComponent {
         return this.all;
     }
     public set selectedAll(value: boolean) {
+        this.entityPM.IsDirty = true;
         this.all = value;
         if (value) {                     
             this.getAllAPPayment();          
 
-        } else {     
+        } else { 
+            this.selectedLines.Collection.map((res: APPaymentList) => ({ rowData: { ...res, MasavInterfaceId: null }, IsChecked: true, RowIndex: -1, ById: true }));           
+            this.unSelectedLines.InsertCollection(this.selectedLines.Collection);
             this.selectedLines.Clear();  
             this.refreshButtonClicked();
     
@@ -260,10 +277,11 @@ export class MasavInterfaceDetailsTabComponent extends BaseComponent {
     }
     getFilters(){
         var filters = new ApiQueryFilters;
-        if(this.entityPM.StatusCode === MasavInterfaceStatus.Transmitted )
+        if(this.entityPM.StatusCode === MasavInterfaceStatus.Transmitted || this.entityPM.StatusCode === MasavInterfaceStatus.CancellationInProgress || this.entityPM.StatusCode === MasavInterfaceStatus.InProgress)
             filters.addAdditionalFilter('MasavInterfaceId', this.entityPM.Id, null, null, 'Equals', false, false, false, 'string');    
         else {
-            filters.addAdditionalFilter('MasavInterfaceId', '', null, null, 'IsNull', false, false, false, 'string');
+            filters.addAdditionalFilter('MasavInterface', this.entityPM.Id, null, null, "Equals", true, false, false, 'string');            
+
             filters.addAdditionalFilter('StatusCode', 'AD', null, null, 'Equals', false, false, false, 'string');
             filters.addAdditionalFilter("ApprovedDateTime", this.entityPM.FromDate, this.entityPM.ToDate, null, "Between", false, false, false, "number");
             filters.addAdditionalFilter("PaymentMethodCode", "MS", null, null, 'Equals', false, true, false, 'string');
@@ -275,5 +293,8 @@ export enum MasavInterfaceStatus {
     Transmitted = 'TR',
     Failed ='FD',
     Draft = 'DR',
-    Cancelled ='CN'
+    Cancelled ='CN',
+    InProgress = 'IP',
+    CancellationInProgress = 'CP'
+
   }

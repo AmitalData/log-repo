@@ -864,6 +864,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "AD", Name = "Approved" }, apPaymentStatusRepository);
             AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "VD", Name = "Void" }, apPaymentStatusRepository);
             AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "CL", Name = "Closed" }, apPaymentStatusRepository);
+            AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "PD", Name = "Paid" }, apPaymentStatusRepository);
+
             apPaymentStatusRepository.SubmitChanges();
 
             //-------- SAT Interfaces ----------//

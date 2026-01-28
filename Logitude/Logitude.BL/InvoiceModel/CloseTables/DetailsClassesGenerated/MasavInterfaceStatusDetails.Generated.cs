@@ -58,6 +58,22 @@ namespace Logitude.BL.InvoiceModel
                 Code = "FD", 
                 LocalName = "נכשל", 
 			});
+			 
+            all.Add(new MasavInterfaceStatusDetails()
+            {    
+                Code = "IP", 
+                Name = "In Progress", 
+                SearchFields = "In Progress,IP", 
+                LocalName = "בתהליך", 
+			});
+			 
+            all.Add(new MasavInterfaceStatusDetails()
+            {    
+                Code = "CP", 
+                Name = "Cancellation In Progress", 
+                SearchFields = "Cancellation In Progress,CP", 
+                LocalName = "הביטול בתהליך", 
+			});
 			
             return all;
        }

@@ -25,7 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class MasavInterfaceUpdateClass
    {  		
-		public const string HashString = "35a562238562743e227f70f82cbec4c7";
+		public const string HashString = "87312bcf25e6c963bf76ccf09aef2c7d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -42,7 +42,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
-			      				    AvailableInDocumentTypes =  false,
+			      				    AvailableInDocumentTypes =  true,
 			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
@@ -1169,6 +1169,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
                 Code =  "UPEV",
                 EnglishName =  "Updated",
                 LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = MasavInterfaceObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes,contextTenant);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "FAID",
+                EnglishName =  "Failed",
+                LocalNameBack_up =  "נכשל",
+                LocalName =  "BS64:Iteg15vXqdecIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,

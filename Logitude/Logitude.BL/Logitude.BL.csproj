@@ -170,6 +170,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\Bin\Logitude.Customs.BL.dll</HintPath>
     </Reference>
+    <Reference Include="Logitude.Infrastructure.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\Logitude.Infrastructure.BL.dll</HintPath>
+    </Reference>
     <Reference Include="Logitude.XSD">
       <HintPath>..\JustWebFreight\WebFreight.Web\bin\Logitude.XSD.dll</HintPath>
     </Reference>
@@ -994,6 +998,8 @@
     <Compile Include="InfrastructureModel\EntityQueries\ReferenceCustomObjectQuery.cs" />
     <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\MasavInterfaceStatusDetails.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\EnumGenerated\MasavInterfaceStatusStruct.Generated.cs" />
+    <Compile Include="InvoiceModel\CoreBL\Batch\MasavBatchCancelTask.cs" />
+    <Compile Include="InvoiceModel\CoreBL\Batch\MasavBatchTransmissionTask.cs" />
     <Compile Include="InvoiceModel\EntityLists\MasavInterfaceList.cs" />
     <Compile Include="InvoiceModel\EntityLists\MasavInterfaceStatusList.cs" />
     <Compile Include="InvoiceModel\EntityPMs\MasavInterfacePM.cs" />

@@ -176,8 +176,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="VendorBankBranch"
-    OldNames="BankBranch"
+    Name="BankBranch"
+    OldNames="VendorBankBranch"
     Type="varchar"
     Size="10">
     <Constraints

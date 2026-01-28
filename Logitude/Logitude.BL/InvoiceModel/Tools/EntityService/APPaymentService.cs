@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -15,7 +16,8 @@ using Logitude.BL.InvoiceModel.Tools.TraceEvents;
 using Logitude.BL.InvoiceModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
@@ -38,6 +40,7 @@ using Logitude.BL.InvoiceModel.Tools.Behaviours;
 using Logitude.Accounting.Def.BLExt;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.BL.InvoiceModel.Enums;
+using Logitude.BL.InvoiceModel.EntityLists;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -1674,12 +1677,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             return paymentRepository.GetAPPaymentsByMasavInterfaceId(masavInterfaceId, tenant);
         }
 
-        public void UpdateMulti(string[] ids,string masavInterfaceId,int tenant)
+        public void UpdateMulti(List<APPaymentList> apPaymentsList, int tenant)
         {
-            foreach (var id in ids)
+            foreach (var apPayment in apPaymentsList)
             {
-                var aPPayment = paymentRepository.GetSingleAPPayment(id);
-                aPPayment.MasavInterfaceId = masavInterfaceId;
+                var aPPayment = paymentRepository.GetSingleAPPayment(apPayment.Id);
+                aPPayment.MasavInterfaceId = apPayment.MasavInterfaceId;
                 paymentRepository.Update(aPPayment);
                 paymentRepository.SubmitChanges();
             }

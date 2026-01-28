@@ -19,6 +19,8 @@ namespace Logitude.BL.InvoiceModel.CloseTables
        public const string Transmitted = "TR";  
        public const string Cancelled = "CN";  
        public const string Failed = "FD";  
+       public const string InProgress = "IP";  
+       public const string CancellationInProgress = "CP";  
     }
 }
 
