@@ -110,16 +110,7 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                     AppendLogLine(MyGenericResponseObj.Message);
                     return;
                 }
-                /*
-                int index = _LogitudeMasterCourier.AirlineId.IndexOf('-');
-                if (index < 1)
-                {
-                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
-                    MyGenericResponseObj.Message = "airlineId does not contains code and prefix";
-                    AppendLogLine(MyGenericResponseObj.Message);
-                    return;
-                }
-                */
+                
                 var airlineId = TranslateAirline(_LogitudeMasterCourier.AirlineId);
                 if (String.IsNullOrWhiteSpace(airlineId))
                 {
@@ -136,15 +127,7 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                     AppendLogLine(MyGenericResponseObj.Message);
                     return;
                 }
-                /*
-                if (String.IsNullOrWhiteSpace(_LogitudeMasterCourier.HAWB))
-                {
-                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
-                    MyGenericResponseObj.Message = "HAWB is missing";
-                    AppendLogLine(MyGenericResponseObj.Message);
-                    return;
-                }
-                */
+                
                 MyGenericResponseObj.Stage = "GetSingle";
                 this._CourierMasterPM = myQueryService.GetSingleByAirlineAWBs(airlineId, _LogitudeMasterCourier.HAWB, _LogitudeMasterCourier.MAWB, ResolvedTenant());
                 /// Exist
@@ -177,14 +160,7 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                         _CourierMasterPM.GrossMassMeasure = grossMassMeasure;
                     }
                 }
-                /*
-                else if(!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.GrossMassMeasure))
-                {
-                    if (decimal.TryParse(_LogitudeMasterCourier.GrossMassMeasure, out grossMassMeasure))
-                    {
-                        _CourierMasterPM.GrossMassMeasure = grossMassMeasure;
-                    }
-                }*/
+                
                 int packageQuantity = 0;
                 if (_CourierMasterPM.PackageQuantity == null)
                 {
@@ -193,14 +169,7 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                         _CourierMasterPM.PackageQuantity = packageQuantity;
                     }
                 }
-                /*
-                else if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.PackageQuantityTy))
-                {
-                    if (int.TryParse(_LogitudeMasterCourier.PackageQuantityTy, out packageQuantity))
-                    {
-                        _CourierMasterPM.PackageQuantity = packageQuantity;
-                    }
-                }*/
+                
                 DateTime temp;
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.EstimatedArrivalDate) && _CourierMasterPM.EstimatedArrivalDate.HasValue == false)
                 {
@@ -247,25 +216,7 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                 _CourierMasterPM.CurrentContextTag = UpsertActionConst;
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.StorageSiteCode) && string.IsNullOrWhiteSpace(_CourierMasterPM.StorageSiteCode)) _CourierMasterPM.StorageSiteCode = TranslateStorageSite(_LogitudeMasterCourier.StorageSiteCode);
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.NoOfCourierHawb) && string.IsNullOrWhiteSpace(_CourierMasterPM.NoOfCourierHawb)) _CourierMasterPM.NoOfCourierHawb = _LogitudeMasterCourier.NoOfCourierHawb;
-                /*
-                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.TruckerId) && string.IsNullOrWhiteSpace(_CourierMasterPM.TruckerId))
-                {
-                    CardRepository cardRep = new CardRepository(_CourierMasterPM.Tenant);
-                    Card card = cardRep.GetSingleCard(_LogitudeMasterCourier.TruckerId, _CourierMasterPM.Tenant);
-                    if (card != null)
-                    {
-                        _CourierMasterPM.TruckerId = _LogitudeMasterCourier.TruckerId;
-                    }
-                    else
-                    {
-                        card = cardRep.GetSingleCardByCode(_LogitudeMasterCourier.TruckerId, _CourierMasterPM.Tenant, true);
-                        if (card != null)
-                        {
-                            _CourierMasterPM.TruckerId = card.Id;
-                        }
-                    }
-                }
-                */
+                
                 int packageQuantityInMAWB = 0;
                 _CourierMasterPM.PackageQuantityInMAWB = packageQuantityInMAWB;
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.PackageQuantityInMAWB))
@@ -276,6 +227,10 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                     }
                 }
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.UnifreightLeadingFile) && string.IsNullOrWhiteSpace(_CourierMasterPM.UnifreightLeadingFile)) _CourierMasterPM.UnifreightLeadingFile = _LogitudeMasterCourier.UnifreightLeadingFile;
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.UnifreightLeadingFile))
+                    AppendLogLine("mawb=" + _LogitudeMasterCourier.MAWB +
+                        " UnifreightLeadingFile in='" + _LogitudeMasterCourier.UnifreightLeadingFile + "'" +
+                        " pm='" + (_CourierMasterPM.UnifreightLeadingFile ?? "null") + "'");
 
                 myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
                 AppendLogLine("CourierMasterUpdate:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
@@ -287,16 +242,6 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                 if (_LOGIMASTERCOUR.WAYBILLS != null && _LOGIMASTERCOUR.WAYBILLS.Count() > 0)
                 {
                     MyGenericResponseObj.Stage = "Start Connect Declarations To Master By WayBill ";
-
-                    /*
-                     * foreach (var wayBill in this._LOGIMASTERCOUR.WAYBILLS)
-                    {
-                        if (wayBill != null && !String.IsNullOrWhiteSpace(wayBill.wb))
-                        {
-                            ConnectDeclarationToMasterByWayBill(wayBill.wb, _LogitudeMasterCourier.MAWB);
-                        }
-                    }
-                     */
                     var repo = new DeclarationRepository(_context);
                     List<string> allDeclarationIds = null;
                     List<string> allDeclarationIdsToInsert = null;
