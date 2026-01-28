@@ -50,7 +50,7 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
     public IsRelativeperiodDropDownOpen: boolean;
     public periodNumber = 1;
     updateSelectedPeriodUnit(selectedPeriodUnit?) {
-        this.OnDropDownSelected(this.DateOptions.filter(d => d.Code == "PER")[0]);
+        this.OnDropDownSelected(this.DateOptions.filter(d => d.Code == "PER")[0], null, false);
     }
 
     @Output() OnInputBlurEvent: EventEmitter<any> = new EventEmitter();
@@ -82,7 +82,13 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
                 }
                 else {
                     this.selectedDateValue = newValue;
-                    if (!newValue?.startsWith("PER_")) {
+                    if (newValue?.startsWith("PER_")) {
+                        const parts = newValue.split("_");
+                        this.periodNumber = parseInt(parts[1], 10);
+                        this.selectedPeriodUnit = parts[2];
+                        this.IsRelativeperiodDropDownOpen = true;
+                    }
+                    else {
                         this.DateValueChanged(new Date(newValue));
                     }
                 }
