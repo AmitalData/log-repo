@@ -530,8 +530,8 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                     break;
                 }
                 case "FromGLAccountDisplayNumber":{
-                    this.FromGLAccountId = queryFilterItem.FieldValue2 ? queryFilterItem.FieldValue2 : null;
-                    if (!AppTool.IsNullOrEmpty(this.FromGLAccountId)) {
+                    this.FromGLAccountId = this.GetLookUpFieldValue(queryFilterItem.FieldValue2);
+                    if (!AppTool.IsNullOrEmpty(this.ToGLAccountId)) {
                         this.filterGlAccountSelectedValue = "filter_glaccounts_range";
                         this.IsRangGLAccounts = true;
                     }
@@ -539,10 +539,14 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                 }
                     
                 case "ToGLAccountDisplayNumber":
-                    this.ToGLAccountId = queryFilterItem.FieldValue2 ? queryFilterItem.FieldValue2 : null;
+                    this.ToGLAccountId = this.GetLookUpFieldValue(queryFilterItem.FieldValue2);
+                    if (!AppTool.IsNullOrEmpty(this.FromGLAccountId)) {
+                        this.filterGlAccountSelectedValue = "filter_glaccounts_range";
+                        this.IsRangGLAccounts = true;
+                    }
                     break;
                 case "GLAccountId":
-                    this.GLAccountId = queryFilterItem.FieldValue;
+                    this.GLAccountId = this.GetLookUpFieldValue(queryFilterItem.FieldValue);
                     if (!AppTool.IsNullOrEmpty(this.GLAccountId)) {
                          this.filterGlAccountSelectedValue = 'filter_glaccount';
                          this.IsListGLAccounts = false;
