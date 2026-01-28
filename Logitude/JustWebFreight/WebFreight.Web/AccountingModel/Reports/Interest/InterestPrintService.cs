@@ -325,10 +325,10 @@ using WebFreight.Web.Helpers;
             rv.TotalReportInterestAmount = sum == 0m ? (decimal?)null : sum;
 
             /* d */
-            rv.CreditAllocationFee = Math.Round((decimal)interestReportDP.CalCreditAllotmentCommission, 2, MidpointRounding.AwayFromZero);
+            rv.CreditAllocationFee = interestReportDP.CalCreditAllotmentCommission != null? Math.Round((decimal)interestReportDP.CalCreditAllotmentCommission, 2, MidpointRounding.AwayFromZero): 0;
 
             /* e */
-            rv.PostponedChequeFee = Math.Round((decimal)interestReportDP.CalculatedPostponedChequesCommision, 2, MidpointRounding.AwayFromZero);
+            rv.PostponedChequeFee = interestReportDP.CalculatedPostponedChequesCommision != null? Math.Round((decimal)interestReportDP.CalculatedPostponedChequesCommision, 2, MidpointRounding.AwayFromZero): 0;
 
             /* f = c + d + e */
             var sum_f = (rv.TotalReportInterestAmount ?? 0m) +
