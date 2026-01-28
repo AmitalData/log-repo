@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { defer, Observable } from 'rxjs';
 import { ARInvoiceList } from 'Invoice/EntityLists/ARInvoiceList';
+import { APPaymentList } from 'Invoice/EntityLists/APPaymentList';
 
 @Injectable()
 export class APPaymentExtendedService {
@@ -15,13 +16,8 @@ export class APPaymentExtendedService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/APPaymentExtended';
     }
 
-    updateMulti(ids: string[],masavInterfaceId: string): Observable<ServiceResponse> {
-        return this._http.put(this._apiUrl + "/UpdateMulti", 
-        {
-            ids: ids,
-            masavInterfaceId: masavInterfaceId,            
-        }
-        , ServiceHelper.GetHttpHeaders()).pipe(
+    updateMulti(apPaymentsList: APPaymentList[]): Observable<ServiceResponse> {
+        return this._http.put(this._apiUrl + "/UpdateMulti",apPaymentsList, ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();

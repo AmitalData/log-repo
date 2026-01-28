@@ -8,30 +8,29 @@ import { MasavInterfacePM } from 'Invoices/EntityPMs/MasavInterfacePM';
 import { DateTool } from 'Infrastructure/Tools';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { DocumentTypePMExtendedService } from 'Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
+import { DocumentsFilingExtendedPMService } from 'Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { DocumentTypePM } from 'Common/EntityPMs/DocumentTypePM';
+import { DownloadManager } from 'Infrastructure/Utilities/DownloadManager';
+declare var window: any;
 
 export class MasavInterfaceMenuButtonsHandler {
-    public EntityPM: MasavInterfacePM;
+    public entityPM: MasavInterfacePM;
     public entityArgs: EntityArgs
-    ReconcileInternalTrans:LedgerTransactionPM[];
-    private CurrentSession = SessionLocator.SelectedSession;
     fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
+    documentTypePMExtendedService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
+    documentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
 
     constructor(){
     }
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
-        this.EntityPM = entityArgs.EntityPM;
+        this.entityPM = entityArgs.EntityPM;
     }
-
-    
-
-    
-
-    
-
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
-        if (this.EntityPM != null) {
+        if (this.entityPM != null) {
             if (this.entityArgs.EditComponent != null) {
                
                 for (var i = 0; i < menuButtons.length; i++) {
@@ -39,7 +38,7 @@ export class MasavInterfaceMenuButtonsHandler {
                     switch (button.EventCode) {
 
                         case "TRAN": {
-                            if (this.EntityPM.StatusCode === MasavInterfaceStatus.Draft || this.EntityPM.StatusCode === MasavInterfaceStatus.Failed) {
+                            if (this.entityPM.StatusCode === MasavInterfaceStatus.Draft || this.entityPM.StatusCode === MasavInterfaceStatus.Failed || this.entityPM.StatusCode === MasavInterfaceStatus.Cancelled) {
                                 button.IsDisabled = false;
                             }
                             else {
@@ -49,7 +48,7 @@ export class MasavInterfaceMenuButtonsHandler {
                         }
 
                         case "MIDL": {
-                            if (this.EntityPM.StatusCode === MasavInterfaceStatus.Transmitted) {
+                            if (this.entityPM.StatusCode === MasavInterfaceStatus.Transmitted) {
                                 button.IsDisabled = false;
                             }
 
@@ -61,7 +60,7 @@ export class MasavInterfaceMenuButtonsHandler {
 
                         case "MICN": {
                             
-                            if (this.EntityPM.StatusCode == MasavInterfaceStatus.Transmitted) {
+                            if (this.entityPM.StatusCode == MasavInterfaceStatus.Transmitted) {
                                 button.IsDisabled = false;
                             }
                             else {
@@ -85,7 +84,7 @@ export class MasavInterfaceMenuButtonsHandler {
             }
 
             case "MIDL": {               
-                
+                this.download("Masav")
                 break;
             }
 
@@ -97,21 +96,18 @@ export class MasavInterfaceMenuButtonsHandler {
             
         }
     }
-
-
     transmitter(){
-        this.EntityPM.StatusCode = MasavInterfaceStatus.Transmitted;
+        this.entityPM.StatusCode = MasavInterfaceStatus.InProgress;
         this.save();     
         SessionLocator.SelectedSession?.FireEvent("TransmitterMasavInterface");        
     }  
-    
     cancel() {    
        
        var confirmWindow = new ConfirmWindow();
        confirmWindow.Show(TextCodeTranslator.Translate("MasavInterface.O.CancelTransmission"));
        confirmWindow.WindowClosed.subscribe((event: any) => {
            if (confirmWindow.Yes) {
-              this.EntityPM.StatusCode = MasavInterfaceStatus.Draft;
+              this.entityPM.StatusCode = MasavInterfaceStatus.CancellationInProgress;
               this.save(); 
               SessionLocator.SelectedSession?.FireEvent("CancelMasavInterface");   
            }
@@ -120,14 +116,35 @@ export class MasavInterfaceMenuButtonsHandler {
     }
     
     save(){
-        this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
-        this.EntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+        this.entityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+        this.entityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         this.entityArgs.EditComponent.SaveChanges();        
         this.entityArgs.EditComponent.ReloadEntityPM();
           
     }
     
-
+    download(code: string) {
+        this.documentTypePMExtendedService.GetDocumentTypeByCode(code, this.entityPM.Tenant).subscribe((myResult:any) => {
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError)  {
+                const documentType = mm.Result;
+                this.getDocument(documentType); 
+            } 
+        });
+    }
+    getDocument(documentType : DocumentTypePM) {
+        var objectTable = window.ObjectTables.filter(d => d.Name === "MasavInterface")[0];        
+        this.documentsFilingExtendedPMService.GetDocumentsFilingByDocumentType(documentType.Id, objectTable.Id, this.entityPM.Id, this.entityPM.Tenant).subscribe((myResult:any) => {
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                var documentFiling = mm.Result;
+                var securityId = documentFiling.SecurityId;                
+                DownloadManager.DownloadPage(null, securityId);              
+               
+            }
+        });
+    
+    }
    
 
   

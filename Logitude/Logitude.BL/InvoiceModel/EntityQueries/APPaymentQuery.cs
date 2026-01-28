@@ -528,6 +528,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    VendorBankBranch = a.VendorCard == null ? "" : a.VendorCard.BankBranch,
                                                    VendorBankAccount = a.VendorCard == null ? "" : a.VendorCard.AccountNumber,
                                                    VendorBankCode = a.VendorCard == null ? "" : a.VendorCard.BankCodeId,
+                                                   MasavInterfaceId = a.MasavInterfaceId
                                                };
             return result;
         }

@@ -116,6 +116,7 @@ export class ModuleProviders {
             case "MasavInterfacePMService": { myResult = new MasavInterfacePMService(); break; }           
             case "MasavInterfaceMenuButtonsHandler": { myResult = new MasavInterfaceMenuButtonsHandler(); break; }           
             case "APPaymentExtendedService": { myResult = new APPaymentExtendedService(); break; }
+
         }
 
         return myResult;

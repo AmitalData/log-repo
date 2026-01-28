@@ -28,6 +28,7 @@ export class NewMasavInterfaceComponent extends BaseComponent  {
     get FromDate() { return this.entityPM.FromDate; }
     set FromDate(value: Date) {
         if (this.entityPM.FromDate != value) {
+            value.setHours(0, 0, 0, 0);
             this.entityPM.FromDate = value;
             if (this.ToDate < value) {
                 this.entityPM.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.O.MustBeLarger"));
@@ -35,24 +36,21 @@ export class NewMasavInterfaceComponent extends BaseComponent  {
         }
     }
 
-
-
     get ToDate() { return this.entityPM.ToDate; }
     set ToDate(value: Date) {
         if (this.entityPM.ToDate != value) {
+            value.setHours(23, 59, 59, 999);
             this.entityPM.ToDate = value;
             if (this.FromDate > value) {
-                this.entityPM.UIProperties.SetValidity("ToDate", this.ObjectTableName,false, TextCodeTranslator.Translate("Accounting.O.MustBeLarger"));
+                this.entityPM.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.O.MustBeLarger"));
             }
-           
         }
     }
+
     get PaymentDate() { return this.entityPM.PaymentDate; }
     set PaymentDate(value: Date) {
         if (this.entityPM.PaymentDate != value) {
             this.entityPM.PaymentDate = value;
-            
-           
         }
     }
 
