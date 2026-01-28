@@ -53,7 +53,7 @@ export class MasavInterfaceListTemplate {
 
 
     }
-    private isChecked : boolean;
+    public isChecked : boolean;
     onCheckedChanged(value: boolean) {
         this.isChecked = value;
         this.CurrentSession.PseventRowSelectEvent.emit(this.rowData);
