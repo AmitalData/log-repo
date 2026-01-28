@@ -13,6 +13,7 @@ using Logitude.BL.InvoiceModel.CoreBL.Batch;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.DataMapping;
+using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -134,6 +135,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             try
             {
+                SecurityUtility.IsWorkerRoleCall = true;
 
                 APPaymentService paymentService = new APPaymentService(ObjectContext, tenant);
                 List<APPayment> payments = paymentService.GetAPPaymentsByMasavInterfaceId(Poco.Id, tenant);
@@ -290,6 +292,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             try
             {
+                SecurityUtility.IsWorkerRoleCall = true;
+
                 APPaymentService paymentService = new APPaymentService(this.ObjectContext, this.tenant);
                 List<APPayment> payments = paymentService.GetAPPaymentsByMasavInterfaceId(this.Poco.Id, this.tenant);
                 IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
