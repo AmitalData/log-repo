@@ -1,4 +1,4 @@
-import { Component ,ChangeDetectorRef } from '@angular/core';
+import { Component ,ChangeDetectorRef, ViewChild } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ReportFliter } from '../../Filters/ReportFliter';
@@ -14,6 +14,7 @@ import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { AppTool } from 'Infrastructure/Tools';
 import { ChartOfAccountsTypeListService } from 'Accounting/Services/StandardLists/ChartOfAccountsTypeListService';
 import { ChartOfAccountListService } from 'Accounting/Services/StandardLists/ChartOfAccountListService';
+import { ComboBoxWithInCheckBox } from 'Controls/ComboBoxWithInCheckBox';
 
 @Component({
 
@@ -34,13 +35,15 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
     public TaxReportLists: CodeNameClass[] = [];
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isReady: boolean = false;
-    public ChartOfAccountsComboBoxValue: string ="All";
+    public ChartOfAccountsComboBoxValue: string = "All";
+    public chartOfAccountsTypeComboboxValue: string = "All";
     private filterAll = "All";
     private filterNotAll = "NotAll";
     selectedChartOfAccountsTypes: any[] = [];
     chartOfAccountsTypes: any[] = [];
     selectedChartOfAccounts: any[] = [];
     chartOfAccounts: any[] = [];
+    @ViewChild("comboBoxWithCheckBoxChartOfAccountsComboBoxValue") comboBoxWithCheckBox: ComboBoxWithInCheckBox;
 
     chartOfAccountsTypeListService: ChartOfAccountsTypeListService = new ChartOfAccountsTypeListService();
     chartOfAccountListService: ChartOfAccountListService = new ChartOfAccountListService();
@@ -71,6 +74,7 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
         this.ReportsPreview = myReportsPreview;
         this.DetailedForJobs=false
         this.getChartOfAccounts();
+        this.getChartOfAccountsTypes();
 
     }
 
@@ -80,7 +84,19 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
         
     }
 
+    public get ChartOfAccountsTypeComboboxValue(): string {
+        return this.chartOfAccountsTypeComboboxValue;
+    }
+    public set ChartOfAccountsTypeComboboxValue(v: string) {
+        this.chartOfAccountsTypeComboboxValue = v;
 
+        if (this.chartOfAccountsTypeComboboxValue === "All") {
+            this.idFilter = null;
+            this.getChartOfAccounts();
+        }
+        this.resetCheckBoxTitle();
+
+    }
     private detailedForJobs: boolean;
     get DetailedForJobs() { return this.detailedForJobs; }
     set DetailedForJobs(value: boolean)
@@ -106,36 +122,80 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
 
         }
     }
-    SetChartOfAccountsFilterProperties(){
-              this.selectedChartOfAccounts = this.chartOfAccounts.filter(item=>item.Checked == true);
-    }
     
-    AdditionalServiceSelectedValue:string
+    
+    AdditionalServiceSelectedValueChartOfAccountType:string
+    AdditionalServiceSelectedValueChartOfAccount:string
 
-    private getChartOfAccounts()
+    private isRevenueExpenseFilter: boolean = false;
+    private idFilter: string = null;
+
+    private getChartOfAccounts() {
+
+        this.isRevenueExpenseFilter = true;
+        let apiQueryFilters = new ApiQueryFilters(true);
+        
+        this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item => item.Checked === true);
+        if ( this.selectedChartOfAccountsTypes.length === 2) {
+            apiQueryFilters.addAdditionalFilter("isRevenueExpenseFilter", "1", "2", null, "Equals", true, false, false, "string");
+        }
+        if (!AppTool.IsNullOrEmpty(this.idFilter)) {
+            apiQueryFilters.addAdditionalFilter("isRevenueExpenseFilter", this.idFilter, null, null, "Equals", true, false, false, "boolean");
+        }
+       
+        this.chartOfAccountListService.getByFilters(apiQueryFilters)
+        .subscribe((arg: any) =>
+        {
+            this.chartOfAccounts = arg.Result;                
+            this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,
+                Name: `(${ item.Code }) ${ item.LocalName || item.EnglishName }`,
+                Checked: this.ChartOfAccountsComboBoxValue === this.filterNotAll && this.AdditionalServiceSelectedValueChartOfAccount?.split(',').some(selectedItem =>  selectedItem === item.Code||selectedItem === item.Id)
+
+            }}).sort((a, b) => a.Code - b.Code); });
+    }
+    private getChartOfAccountsTypes()
     {
         let apiQueryFilters = new ApiQueryFilters(true);
+        apiQueryFilters.addAdditionalFilter("isRevenueExpenseFilter", false, null, null, "Equals", true, false, false, "boolean");
 
-        this.chartOfAccountListService.getByFilters(apiQueryFilters)
+        this.chartOfAccountsTypeListService.getByFilters(apiQueryFilters)
             .subscribe((arg: any) =>
             {
-                this.chartOfAccounts = arg.Result;                
-                this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,
+                this.chartOfAccountsTypes = arg.Result;                
+                this.chartOfAccountsTypes = this.chartOfAccountsTypes.map(item=> {return {...item,
                     Name: `(${ item.Code }) ${ item.LocalName || item.EnglishName }`,
-                    Checked: this.ChartOfAccountsComboBoxValue === this.filterNotAll && this.AdditionalServiceSelectedValue?.split(',').some(selectedItem =>  selectedItem === item.Code||selectedItem === item.Id)
+                    Checked: this.ChartOfAccountsTypeComboboxValue === this.filterNotAll && this.AdditionalServiceSelectedValueChartOfAccountType?.split(',').some(selectedItem =>  selectedItem === item.Code||selectedItem === item.Id)
 
                 }}).sort((a, b) => a.Code - b.Code); });
 
+    }
+    
+    
+   
+    OnChartOfAccountsTypeItemClicked(items) {
+        this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item => item.Checked === true);
+        this.idFilter = this.selectedChartOfAccountsTypes.length === 1 ? this.selectedChartOfAccountsTypes[0].Code : null;
+        this.getChartOfAccounts();
+        
+        this.resetCheckBoxTitle();
+
+    }
+    resetCheckBoxTitle() {
+        if(this.selectedChartOfAccounts.length > 0){
+            this.comboBoxWithCheckBox.TotalPickedItems = " ";
+        }
     }
     OnChartOfAccountsItemClicked(items){
 
         this.selectedChartOfAccounts = this.chartOfAccounts.filter(item=>item.Checked == true);
 
     }
-    SelectedItemChanged(item) {
+    SelectedChartOfAccountsChanged(item) {
         this.ChartOfAccountsComboBoxValue = item;
     }
-
+    SelectedChartOfAccountsTypeChanged(item) {
+        this.ChartOfAccountsTypeComboboxValue = item;
+    }
     public RunReportTitle: string = 'Run Report';
     SetRunReportTitle() {
         
@@ -169,11 +229,18 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
                     this.NumberOfYear = queryFilterItem.FieldValue;
                     break;
                 case "ChartOfAccountsIdList":
-                    {  this.ChartOfAccountsComboBoxValue =  queryFilterItem.FieldValue === this.filterAll ? this.filterAll : this.filterNotAll; 
-                       this.AdditionalServiceSelectedValue = queryFilterItem.FieldValue;
+                    {  this.ChartOfAccountsComboBoxValue =  AppTool.IsNullOrEmpty(queryFilterItem.FieldValue) ? this.filterAll : this.filterNotAll; 
+                       this.AdditionalServiceSelectedValueChartOfAccount = queryFilterItem.FieldValue;
                        
                        break;
     
+                    }
+                case "ChartOfAccountsTypeList":
+                    {  this.ChartOfAccountsTypeComboboxValue =  AppTool.IsNullOrEmpty(queryFilterItem.FieldValue) ? this.filterAll : this.filterNotAll; 
+                       this.AdditionalServiceSelectedValueChartOfAccountType = queryFilterItem.FieldValue;
+                       
+                       break;
+        
                     }
                                  
             }
@@ -208,6 +275,10 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
         this.queryFilterItems.push(new QueryFilterItem("DetailedForJobs", this.DetailedForJobs, "boolean"));
         if(this.selectedChartOfAccounts)
             this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsIdList", this.selectedChartOfAccounts.map(item=>item.Id).join(','), "String"));
+        
+        if(this.selectedChartOfAccountsTypes)
+            this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeList", this.selectedChartOfAccountsTypes.map(item=>item.Code).join(','), "String"));
+       
         this.queryFilterItems.push(new QueryFilterItem("NumberOfYear", this.NumberOfYear, "number"));
         return this.queryFilterItems;
              
