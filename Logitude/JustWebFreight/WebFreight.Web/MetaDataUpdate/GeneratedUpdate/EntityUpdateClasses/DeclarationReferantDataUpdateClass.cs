@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "50980e7d9eb570f3ae3b3acb9b9dff3a";
+		public const string HashString = "69e397a206343c236fa46fbe1754ab2f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -1315,7 +1315,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "TransportModeId",
 					  						ObjectTableName =  "Customs.DeclarationReferantData",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.CustomsTransportMode",
+					  						LookUpTableName =  "TransportMode",
 					  						MinLength =  0,
 					  						MaxLength =  17,
 					  						IsRequired =  false,

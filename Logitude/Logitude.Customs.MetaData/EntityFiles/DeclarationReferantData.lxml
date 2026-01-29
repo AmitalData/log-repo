@@ -1497,7 +1497,7 @@
     IsDeleted="false"
     ObjectTableName="&quot;Customs.DeclarationReferantData&quot;"
     FieldsDataType="&quot;LookUp&quot;"
-    LookUpTableName="&quot;Customs.CustomsTransportMode&quot;"
+    LookUpTableName="&quot;TransportMode&quot;"
     MinLength="0"
     MaxLength="17"
     IsRequired="false"
