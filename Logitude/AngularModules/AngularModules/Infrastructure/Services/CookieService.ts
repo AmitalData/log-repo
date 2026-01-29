@@ -8,7 +8,7 @@ import { AppTool } from '../Tools';
 @Injectable({
   providedIn: 'root'
 })
-export class CookieService {
+export class AppDataService {
     
     logitudeURL: string = null;
     baseUrlApi: string = null;
