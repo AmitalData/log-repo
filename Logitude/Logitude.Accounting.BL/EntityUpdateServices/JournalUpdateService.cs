@@ -892,9 +892,101 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
 
 
-      
+        public void JournalAsMichpal(JournalPM journalPM)
+        {
+            var errors = new List<string>();
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(journalPM.Tenant);
+            foreach (var journalLine in journalPM.JournalLines)
+            {
+                if (!string.IsNullOrWhiteSpace(journalLine.DebitAccountNumber))
+                {
+                    var debitAccount = gLAccountQueryService.GetByDisplayNumber(journalLine.DebitAccountNumber, journalPM.Tenant).FirstOrDefault();
+                    if (debitAccount != null)
+                    {
+                        journalLine.DebitAccountId = debitAccount.Id;
+                    }
+                    else
+                    {                        
+                        errors.Add($"Line {journalLine.Line}: Debit account number not found: {journalLine.DebitAccountNumber}");
+
+                    }
+                }
+                if (!string.IsNullOrWhiteSpace(journalLine.CreditAccountNumber))
+                {
+                    var creditAccount = gLAccountQueryService.GetByDisplayNumber(journalLine.CreditAccountNumber, journalPM.Tenant).FirstOrDefault();
+                    if (creditAccount != null)
+                    {
+                        journalLine.CreditAccountId = creditAccount.Id;
+                    }
+                    else
+                    {
+                        errors.Add($"Line {journalLine.Line}: Credit account number not found: {journalLine.CreditAccountNumber}");
+                    }
+                }
+                journalLine.Notes = DecodeNotesFromClient(journalLine.Notes);
+
+            }
+            if (errors.Any())
+            {
+                throw new ApplicationException(string.Join(Environment.NewLine, errors));
+            }
 
 
+
+        }
+
+        private static readonly Encoding DosHebrewEncoding =
+          Encoding.GetEncoding(862);
+
+        public  string DecodeNotesFromClient(string base64Notes)
+        {
+            if (string.IsNullOrWhiteSpace(base64Notes))
+                return string.Empty;
+
+            byte[] bytes;
+
+            try
+            {
+                bytes = Convert.FromBase64String(base64Notes);
+            }
+            catch
+            {                
+                return string.Empty;
+            }
+
+            string decoded = DosHebrewEncoding.GetString(bytes);
+
+            decoded = new string(decoded
+                .Where(c => !char.IsControl(c) || c == '\n' || c == '\r')
+                .ToArray());
+
+            decoded = ReverseHebrew(decoded);
+
+            return decoded.Trim();
+        }
+
+        private  string ReverseHebrew(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return input;
+
+            var words = input.Split(' ');
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (ContainsHebrew(words[i]))
+                {
+                    words[i] = new string(words[i].Reverse().ToArray());
+                }
+            }
+
+            return string.Join(" ", words);
+        }
+
+        private  bool ContainsHebrew(string s)
+        {
+            return s.Any(c => c >= 0x0590 && c <= 0x05FF);
+        }
 
     }
 
@@ -938,7 +1030,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     throw new ApplicationException("(Journal.Tenant!= requestTenant)");
                 }
-                if (String.IsNullOrWhiteSpace(_JornalPmSource.QueueId) &&  _JornalPmSource.StatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.Draft && _JornalPmSource.StatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.WaitingforApprove)
+                if (String.IsNullOrWhiteSpace(_JornalPmSource.QueueId) && _JornalPmSource.StatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.Draft && _JornalPmSource.StatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.WaitingforApprove)
                 {
                     throw new ApplicationException(
                         //"I must/Need??? Ledger to Reconcile - but journal did not Stream yet ..."
@@ -989,10 +1081,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //repo.GetByJournalId(_JornalPmSource.Id, _JornalPmSource.Tenant);
             return true;
         }
-
         
-
-
     }
 
     public interface IJournalUpdateService
