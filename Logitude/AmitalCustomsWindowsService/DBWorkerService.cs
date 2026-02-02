@@ -194,16 +194,8 @@ namespace AmitalCustomsWindowsService
                 _Workers = new List<IWorkerBaseWorkOnce>();
                 _Threads = new List<Thread>(_Workers.Count);
                 List<BatchServicesDefinitionPM> BatchServicesDefinitions = GetBatchServicesDefinitions();
-
-                List<BatchServicesDefinitionPM> batchServicesDefinitionsGroups = BatchServicesDefinitions?.Where(b =>
-                          !string.IsNullOrEmpty(b.QueueBase) && !string.IsNullOrEmpty(b.Code)
-                          && b.Code.IndexOf(b.QueueBase, StringComparison.OrdinalIgnoreCase) >= 0
-                          && b.Code.Length > b.QueueBase.Length)?.ToList();
-
-
-
-                 LoadWorkerFromDB(BatchServicesDefinitions, batchServicesDefinitionsGroups);
-
+             
+                LoadWorkerFromDB(BatchServicesDefinitions);
 
                 for (int iWorker = 0; iWorker < _Workers.Count; iWorker++)
                 {
@@ -233,7 +225,7 @@ namespace AmitalCustomsWindowsService
 
 
         }
-        private void LoadWorkerFromDB(List<BatchServicesDefinitionPM> BatchServicesDefinitions, List<BatchServicesDefinitionPM> BatchServicesDefinitionsGroups)
+        private void LoadWorkerFromDB(List<BatchServicesDefinitionPM> BatchServicesDefinitions)
         {
 
             var suppresDoOnlyCheck = false;
@@ -292,48 +284,6 @@ namespace AmitalCustomsWindowsService
             }
 
 
-            if (BatchServicesDefinitionsGroups?.Any() == true)
-            {
-                foreach (var g in BatchServicesDefinitionsGroups.Where(x => !string.IsNullOrEmpty(x.ClassName)))
-                {
-                    var type = AppDomain.CurrentDomain.GetAssemblies()
-                        .SelectMany(a =>
-                        {
-                            try
-                            {
-                                return a.GetTypes();
-                            }
-                            catch (ReflectionTypeLoadException ex)
-                            {
-                                return ex.Types.Where(t => t != null);
-                            }
-                            catch
-                            {
-                                return Enumerable.Empty<Type>();
-                            }
-                        })
-                        .FirstOrDefault(t =>
-                            t.Name == g.ClassName &&
-                            typeof(Logitude.Server.Tools.WorkerEntryPoint).IsAssignableFrom(t));
-
-                    if (type == null)
-                        continue;
-
-                    try
-                    {
-                        var instance = (Logitude.Server.Tools.WorkerEntryPoint)
-                            Activator.CreateInstance(type);
-
-                        listOfWorkerEntryPoint.Add(instance);
-                    }
-                    catch
-                    {
-                        continue;
-                    }
-                }
-            }
-
-
             foreach (var batchServicesDefinitionPM in BatchServicesDefinitions)
             {
                 var worker = listOfWorkerEntryPoint.FirstOrDefault(r => r.NameOf() == batchServicesDefinitionPM.Code);
@@ -347,22 +297,7 @@ namespace AmitalCustomsWindowsService
                     }
                 }
             }
-            if(BatchServicesDefinitionsGroups != null)
-            {
-                foreach (var batchServicesDefinitionPM in BatchServicesDefinitionsGroups)
-                {
-                    var worker = listOfWorkerEntryPoint.FirstOrDefault(r => r.NameOf() == batchServicesDefinitionPM.QueueBase);
-                    if (worker != null)
-                    {
-                        for (int i = 0; i < batchServicesDefinitionPM.NumberOfThreads; i++)
-                        {
-                            var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { worker.GetType() });
-                            AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, batchServicesDefinitionPM.Code, (object)workerQueueType });
-                    
-                        }
-                    }
-                }
-            }
+        
             ////FROM CONFIG !!! 
             SingletonFTPCommunicationLogQueue(listOfWorkerEntryPoint);
         }
