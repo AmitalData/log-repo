@@ -18,7 +18,7 @@ export class CustomsRequestMenuService {
     private _CustomsRequestMenuItems: CustomsMenuItem[];
     public get CustomsRequestMenuItems() { return this._CustomsRequestMenuItems }
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(isReports: any = false) {
+    constructor(isReports: any = false,private EntityResourceService: EntityResourceService) {
         ///alert("CustomsRequestMenuService");
         if (isReports) {
             this.buildReportsList();
@@ -29,8 +29,7 @@ export class CustomsRequestMenuService {
     private buildReportsList() {
         this._CustomsRequestMenuItems = [];
         if (FeatureLocator.HasFeaturePermession("Customs.CustomsVendor", "SettingVehicle")) {
-            var entityResourceService = new EntityResourceService();
-            entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response: any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response: any) => {
                 this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.NewClient"), "NewClient", './CustomsModules/CustomsClient/Components/NewClient/NewClientComponent', 850, 500, "Customs.Client")); //3610
             });
         }
