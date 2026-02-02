@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "c95f95197bb69081f67c56b4c3ccd2d9";
+		public const string HashString = "991b4b6921fb6159ca467f7a95561c2c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -68,7 +68,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "26c2",
+			      				    Code =  "261c",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2163,6 +2163,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOFileNotAllow = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.FileNotAllow", DefaultText = "File extension not allowed",LocalDefaultText = @"BS64:Iten15XXkdelINei150g16HXmdeV157XqiDXnNeQINee15XXqNep15Qi", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOReturnToQueue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ReturnToQueue", DefaultText = "ReturnToQueue",LocalDefaultText = @"BS64:IteU15fXlteoINec16rXldeoIg==", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   
+			TextCode CustomsGeneralTextCode_CustomsGeneralOExportDeclarationRestoreQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ExportDeclarationRestoreQuery", DefaultText = "Export Declaration Restore Query",LocalDefaultText = @"BS64:Itep15DXmdec16rXkCDXnNep15fXlteV16gg16DXqteV16DXmSDXlNem15TXqNeqINeZ16bXldeQIg==", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
