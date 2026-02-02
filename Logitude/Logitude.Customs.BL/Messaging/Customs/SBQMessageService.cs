@@ -63,7 +63,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                             CustomsCommandEnum.CustomsCommandGetCustomRequestWR,
                             tenant,
                             InterfaceTypeCode,
-                            MyCustomsRequestsSheetPMId);
+                            MyCustomsRequestsSheetPMId,null , customsRequestsSheetService?.InterfaceTenantDefinitionManagement?.InterfaceManagement?.QueueDefinitionGroup);
                     };
                 }
                 else
@@ -72,7 +72,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                         CustomsCommandEnum.CustomsCommandGetCustomRequestWR,
                         tenant,
                         InterfaceTypeCode,
-                        MyCustomsRequestsSheetPMId, execTime);
+                        MyCustomsRequestsSheetPMId, execTime, customsRequestsSheetService?.InterfaceTenantDefinitionManagement?.InterfaceManagement?.QueueDefinitionGroup);
                 }
                 customsRequestsSheetId = customsRequestsSheetService.MyCustomsRequestsSheetPM.Id;
             }
@@ -98,7 +98,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
 
 
-        public static void CreateBasic<TEnum>(TEnum SBQueueName, int tenant, string interfaceTypeCode, string correlationId,DateTime? execTime =null)
+        public static void CreateBasic<TEnum>(TEnum SBQueueName, int tenant, string interfaceTypeCode, string correlationId, DateTime? execTime = null, string queueDefinitionGroup = null)
             where TEnum : struct, IConvertible
         {
 
@@ -121,12 +121,12 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 Delay = Delay
 
             };
-            CreateBasic<TEnum>(SBQueueName, correlationId, queueSendModel);
+            CreateBasic<TEnum>(SBQueueName, correlationId, queueSendModel, queueDefinitionGroup);
 
         }
 
 
-        public static void CreateBasic<TEnum>(TEnum SBQueueName, string correlationId, QueueSendModel queueSendModel)
+        public static void CreateBasic<TEnum>(TEnum SBQueueName, string correlationId, QueueSendModel queueSendModel, string queueDefinitionGroup = null)
             where TEnum : struct, IConvertible
         {
             if (!typeof(TEnum).IsEnum)
@@ -200,6 +200,10 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 //(LogitudeSettings.QueueServiceMode != "db") ? TransactionFactory.GetNewSerializableTransaction() :TransactionFactory.GetTransaction())
                 TransactionFactory.GetTransaction())
             {
+                if (!string.IsNullOrWhiteSpace(queueDefinitionGroup))
+                {
+                    overrideSBQueueName = overrideSBQueueName + "_" + queueDefinitionGroup;
+                }
 
                 var queueSendService = new Logitude.Server.Tools.QueueService.QueueSendService(/*SBQueueName.ToString()*/overrideSBQueueName, correlationId, queueSendModel);
                 //queueSendService.InterfaceTypeCode = interfaceTypeCode;//this.GetType().FullName;
@@ -207,6 +211,8 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 //queueSendService.Tenant = tenant;
 
                 ///queueSendService.ProcessState = (int)CustomsRequestStepEnum.StartRequestParams;
+                
+                //_CustomsRequestsSheetService.InterfaceTenantDefinitionManagement?.InterfaceManagement?.QueueDefinitionGroup;
                 queueSendService.Send();
                 scope.Complete();
             }

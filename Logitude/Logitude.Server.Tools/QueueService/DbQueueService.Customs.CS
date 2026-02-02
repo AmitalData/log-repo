@@ -21,12 +21,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Web;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
+using Simplog.Global.Data.GlobalModel;
+using Logitude.Customs.Data;
 
 namespace Logitude.Server.Tools.QueueService
 {
     public partial class DbQueueService
     {
-
 
         protected int? SendReturnIdCustoms(Dictionary<string, string> messageValues,
          int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null//,int tenantPriority = 89
@@ -315,6 +319,14 @@ namespace Logitude.Server.Tools.QueueService
             QueueResponse response = new QueueResponse();
             if (string.IsNullOrEmpty(this.CurrentMessageId))
             {
+                IGlobalContext context1 = GlobalContext.GetContext(this.Tenant);
+                BatchServicesDefinitionRepository batchServicesRepository = new BatchServicesDefinitionRepository(context1);
+                List<string> queueCodes = batchServicesRepository.GetAllBatchServicesDefinitionsByQueueBase(QueueCode, true);
+                string queueCodesList = string.Join(",", queueCodes);
+                if (string.IsNullOrEmpty(queueCodesList))
+                {
+                    queueCodesList = QueueCode;
+                }
 
 
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
@@ -345,6 +357,14 @@ namespace Logitude.Server.Tools.QueueService
                         var messageCreatedServerTimePar = cmd.CreateParameter(); messageCreatedServerTimePar.ParameterName = "v_MessageCreatedServerTime"; messageCreatedServerTimePar.DbType = DbType.DateTime;
                         var watingStatusPar = cmd.CreateParameter(); watingStatusPar.ParameterName = "v_WatingStatus"; watingStatusPar.DbType = DbType.Double;
 
+                    
+                        var queueCodesPar = cmd.CreateParameter();
+                        queueCodesPar.ParameterName = "v_QueueCodes";
+                        queueCodesPar.DbType = DbType.String;
+                        queueCodesPar.Size = 4000;
+                        queueCodesPar.Direction = ParameterDirection.Input;
+                        queueCodesPar.Value = queueCodesList;
+
 
 
                         queueCodePar.Direction = ParameterDirection.Input;
@@ -367,6 +387,7 @@ namespace Logitude.Server.Tools.QueueService
                         cmd.Parameters.Add(queueCodePar);
                         cmd.Parameters.Add(nextRunDelayInSecPar);
                         cmd.Parameters.Add(watingStatusPar);
+                        cmd.Parameters.Add(queueCodesPar);
 
 
 
@@ -436,6 +457,8 @@ namespace Logitude.Server.Tools.QueueService
 
             LogitudeSettings.HandleLogMe(msg, false, "WorkUntilQEmpty_Db_new", stopLogAt);
         }
+
+        
         public List<QueueResponse> ReceiveCustoms_new(int nextRunDelayInSec = 60, int? selectCount = null)
         {
             if (!LogitudeSettings.IsCostomsDeploy)
@@ -444,7 +467,8 @@ namespace Logitude.Server.Tools.QueueService
             }
             //
             List<QueueResponse> responseList = new List<QueueResponse>();
-
+            
+            
             //using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
             //using (TransactionScope scope = TransactionFactory.GetTransaction())
             //{

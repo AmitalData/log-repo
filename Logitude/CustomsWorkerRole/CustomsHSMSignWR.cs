@@ -103,7 +103,7 @@ where not exists(select *
 
                 {
                     base.WorkerQueueType = WorkerQueueType.DB;
-					_CustomDbQueueService = new CustomDbQueueService(myClass, tenantConfig);
+					_CustomDbQueueService = new CustomDbQueueService(myClass, tenantConfig, queueDefinitionCode: this.BatchServiceCode);
                 }
 
 
