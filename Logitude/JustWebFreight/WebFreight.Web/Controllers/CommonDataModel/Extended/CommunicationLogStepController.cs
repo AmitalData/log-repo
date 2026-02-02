@@ -4,30 +4,32 @@
 //Regards,
 //Islam.
 
+using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.MessagingServices;
+using Newtonsoft.Json;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using WebFreight.Web.Helpers;
-using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using WebFreight.Web.Security;
-using System.Linq;
-using System.Xml;
-using Newtonsoft.Json;
-using Logitude.CustomsMessaging.Common.ResponseData;
-using Logitude.AmitalMessaging.Utils;
-using Logitude.CustomsMessaging.MessagingServices;
-using Logitude.Customs.BL.Messaging.Customs;
-using System.IO;
 using System.Net.Http.Headers;
+using System.Web;
+using System.Web.Http;
+using System.Xml;
 using WebFreight.Web.CustomWebServices.BL.XLSExport;
-using Logitude.Customs.BL.EntityQueryServices;
+using WebFreight.Web.Helpers;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 {
@@ -169,11 +171,15 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             IMessagingServiceInterfaceType messagingService = null;
             if (!String.IsNullOrWhiteSpace(mainInterfaceCode))
             {
+                var swSvc = Stopwatch.StartNew();
                 messagingService = MessagingServiceFactoryHelper.GetMessagingService(mainInterfaceCode);
+                swSvc.Stop();
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"[CommLog] GetMessagingService({mainInterfaceCode}) took {swSvc.ElapsedMilliseconds} ms. logId={communicationLogId}");
             }
-            
+            var swQuery = Stopwatch.StartNew();
             List<CommunicationLogStepList> stepLIstOut = communicationLogStepQuery.GetCommunicationLogStepsDocumentData(communicationLogId, tenant, stepFilter,false,false);
-
+            swQuery.Stop();
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"[CommLog] Query.GetCommunicationLogStepsDocumentData took {swQuery.ElapsedMilliseconds} ms. steps={(stepLIstOut?.Count ?? 0)} filter=[{string.Join(",", stepFilter ?? new int[0])}] logId={communicationLogId}");
             foreach (var item in stepLIstOut)
             {
                 if (!String.IsNullOrWhiteSpace(item.DocumentData) && messagingService != null)
@@ -185,37 +191,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     }
                     else
                     {
+                        var swConv = Stopwatch.StartNew();
                         item.DocumentData = messagingService.ConvertStepDataToJSON(item.StepNumber, item.DocumentData);
+                        swConv.Stop();
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"[CommLog] ConvertStepDataToJSON step={item.StepNumber} took {swConv.ElapsedMilliseconds} ms. logId={communicationLogId}");
                     }
-                    //var test = true;
-                    //if (test)
-                    //{
-                    //    switch (item.StepNumber)
-                    //    {
-                    //        case 0:
-                    //            {
-                    //                var req =XmlGenericUtil<MorningMessageRequestParams>.DeSerializeObject(item.DocumentData);
-                    //                item.DocumentData = JsonConvert.SerializeObject(req);
-                    //                break;
-                    //            }
-                    //        case 30:
-                    //            {
-                    //                var res = XmlGenericUtil<MorningMessageResponseData>.DeSerializeObject(item.DocumentData);
-                    //                item.DocumentData = JsonConvert.SerializeObject(res);
-                    //                break;
-                    //            }
-                    //        default:
-                    //            break;
-                    //    }
-
-
-                    //}
-                    //else
-                    //{
-                    //    XmlDocument doc = new XmlDocument();
-                    //    doc.LoadXml(item.DocumentData);
-                    //    item.DocumentData = JsonConvert.SerializeXmlNode(doc.DocumentElement); //doc.DocumentElement
-                    //}
                 }
             }
 
