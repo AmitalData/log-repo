@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from "@angular/core";
 import { LogitudeWindow } from "../../../../Controls/Windows/LogitudeWindow";
 import { GenericRequestParams } from "../../../../Customs/DataContract/RequestParams/GenericRequestParams";
-import { CustomSendOptionsArgs, SendRequestVIA, TestCase } from "../../../../Customs/DataContract/RequestParams/RequestParamsBase";
+import { CustomSendOptionsArgs, HsmStationContext, SendRequestVIA, TestCase } from "../../../../Customs/DataContract/RequestParams/RequestParamsBase";
 import { ContainerizationResponseData } from "../../../../Customs/DataContract/ResponseData/ContainerizationResponseData";
 import { ContainerizationPM } from "../../../../Customs/EntityPMs/ContainerizationPM";
 import { ContainerizationPMService } from "../../../../Customs/Services/StandardPMs/ContainerizationPMService";
@@ -213,6 +213,7 @@ export class SendContainerizationService implements OnDestroy {
             params.Tenant = SessionLocator.Tenant;
             params.RequestVIA = event.RequestVIA;
             params.ForcePersonalSign = event.ForcePersonalSign;
+            params.HsmStationContext = HsmStationContext.Export;
             params.LoggingEnabled = true;
             params.LoggingEntityId = this.EntityPM.Id;
             params.LoggingUserId = SessionLocator.LoggedUserId;

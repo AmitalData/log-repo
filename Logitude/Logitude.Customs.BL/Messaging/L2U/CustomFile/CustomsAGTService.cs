@@ -81,7 +81,7 @@ namespace Logitude.Customs.BL.Messaging.L2U.CustomFile
                     ParameterName = "p_xml_in",
                     InterfaceTypeCode = "CFIFILEM"
                 };
-                hybridSvc.Send(param, withTransmission: false, alreadySerialized:true);
+                hybridSvc.Send(param, withTransmission: false, alreadySerialized:true,SystemId:"I");
 
                 return new GenericResponse();
             }

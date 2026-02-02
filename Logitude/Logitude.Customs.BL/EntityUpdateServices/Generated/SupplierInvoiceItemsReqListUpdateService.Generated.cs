@@ -32,7 +32,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class SupplierInvoiceItemsReqListUpdateService:EntityUpdateService<POCO.SupplierInvoiceItemsReqList,SupplierInvoiceItemsReqListPM,EntityPM>
+   public partial class SupplierInvoiceItemsReqListUpdateService:EntityUpdateService<POCO.SupplierInvoiceItemsReqList,SupplierInvoiceItemsReqListPM,SIIRequestPM>
    {
    
         SupplierInvoiceItemsReqListRepository entityRepository;
@@ -60,7 +60,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(SupplierInvoiceItemsReqListPM entityPM)
         {
-            SupplierInvoiceItemsReqListKeys entityKeys = new SupplierInvoiceItemsReqListKeys() { DeclarationId = entityPM.DeclarationId, LineNumber = entityPM.LineNumber, SIIRequestID = entityPM.SIIRequestID, InvoiceCounterKey = entityPM.InvoiceCounterKey, InvoiceItemLineNumber = entityPM.InvoiceItemLineNumber };
+            SupplierInvoiceItemsReqListKeys entityKeys = new SupplierInvoiceItemsReqListKeys() { DeclarationId = entityPM.DeclarationId, SIIRequestID = entityPM.SIIRequestID, InvoiceCounterKey = entityPM.InvoiceCounterKey, InvoiceItemLineNumber = entityPM.InvoiceItemLineNumber };
             return entityKeys;
         }
 

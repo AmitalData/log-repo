@@ -81,5 +81,8 @@ export class APPaymentList {
 		ExternalPaymentNotes: string;
 		VendorCode: string;
 		ConnectedInvoicesNumbers: string;
-			
+		MasavInterfaceId : string;			
+		VendorBankBranch : string;	
+        VendorBankAccount: string;	
+        VendorBankCode: string;	
 }

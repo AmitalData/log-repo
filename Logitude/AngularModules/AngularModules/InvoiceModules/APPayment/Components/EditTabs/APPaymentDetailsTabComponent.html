@@ -59,7 +59,38 @@
         font-family: sans-serif;
         width: fit-content;
     }
+    .FiltersMenu li {
+        width: 70px;
+        padding: 0 7px;
+        border-width: 1px;
+        margin-right: -1px;
+    }
 
+    .FiltersMenu li:hover {
+        opacity: 0.9;
+    }
+
+
+    .aboodRTLFilterMenu li:first-child,
+    .aboodRTLFilterMenu li:last-child {
+        border-radius: 0;
+    }
+
+    .aboodRTLFilterMenu li:first-child {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    .aboodRTLFilterMenu li:last-child {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
+
+    .FiltersMenu li {
+        width: 75px;
+        height: 22px;
+        padding: 0 10px;
+    }
     @keyframes animationFrames {
         0% {
             transform: translate(-50px,0px);
@@ -721,11 +752,52 @@
                                         <td style="width: 1px; padding-left: 5px;">
                                             ({{ItemsSource.Length}})
                                         </td>
-
                                         <td>
                                             <div></div>
                                         </td>
-
+                                        <td style="width:20px; color :black ;font-size: 11px;">
+                                           {{ 'Accounting.General.O.FilterBy' |  TextCodeTranslationPipe }}                                            
+                                        </td>
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+                                        <td style="width: 160px;" class="Label">                                           
+                                            <ul float-start class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL">
+                                                <li float-start id="filter_Due" (click)="DateFilterItemClicked('filter_Due')"
+                                                    [class.SelectedFilter]="DateFilterSelectedValue === 'filter_Due'">
+                                                    {{ 'GLAccounts.O.Collecting' | TextCodeTranslationPipe }}
+                                                </li>
+                                                <li float-start id="filter_Accounting"
+                                                    (click)="DateFilterItemClicked('filter_Accounting')"
+                                                    [class.SelectedFilter]="DateFilterSelectedValue === 'filter_Accounting'">
+                                                    {{ 'GLAccounts.O.Accounting' | TextCodeTranslationPipe }}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td style="width:20px; color :black ;font-size: 11px;">
+                                            {{ 'Accounting.General.O.Datefrom' |  TextCodeTranslationPipe }}:                                           
+                                         </td>
+                                         <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+                                        <td style="width: 135px;">
+                                            <LogDatePicker [ObjectTableName]="'GLAccount'" [ObjectFieldName]="'FromDate'"
+                                                [SelectedDateValue]="FromDate" [DataContext]="DataContext" [HideColumns]="true"                                                ></LogDatePicker>
+                                        </td>
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+                                        <td style="width:20px; color :black ;font-size: 11px;">
+                                            {{ 'Accounting.General.O.To' |  TextCodeTranslationPipe }}:                                        
+                                         </td>
+                                         
+                                        <td style="width: 135px;">
+                                            <LogDatePicker [ObjectTableName]="'GLAccount'" [ObjectFieldName]="'ToDate'"
+                                                [SelectedDateValue]="ToDate" [DataContext]="DataContext" [HideColumns]="true"                                                ></LogDatePicker>
+                                        </td>
+                                        <td style="width: 135px;">
+                                            <div></div>
+                                        </td>
                                         <td style="width:200px;">
                                             <SearchTextBox [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="SearchTextKeyUp($event)" [PlaceHolder]="'ARPayment.M.SearchByMsg' | TextCodeTranslationPipe"></SearchTextBox>
                                         </td>
@@ -993,6 +1065,12 @@
                                                 <div class="Label" style="vertical-align:top;margin-top:-5px;margin-left:5px;margin-right:5px; display:inline-block;font-size: 14px;width:auto;color:#282E30;" [style.text-align]="isRTL ? 'right' : 'left'">{{PaymentCurrencyCode}}</div>
                                             </div>
                                         </div>
+
+                                        <!-- Local Amount for DEBUG.   Please retain this part! -->
+                                        <!-- <div style="display:block; text-align:center;" [style.float]="isRTL ? 'right' : 'left'">
+                                            <div style="font-size: 12px; text-align: center;color:#282E30">{{AmountInLocalCurrency | NumbersPipe:'N2'}}</div>
+                                            <div style="font-size: 12px; text-align: center;color:#282E30">{{PaymentCurrencyExchangeRate | NumbersPipe:'N4'}}</div>
+                                        </div> -->
 
                                     </td>
 

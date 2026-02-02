@@ -46,4 +46,11 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="QueueBase"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

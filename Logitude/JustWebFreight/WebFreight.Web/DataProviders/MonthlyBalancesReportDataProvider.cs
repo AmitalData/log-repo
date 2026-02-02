@@ -64,6 +64,8 @@ namespace WebFreight.Web.DataProviders
         public string GLAcountLocalName { get; set; }
         public string GLAcountNumber { get; set; }
         public string ChartOfAccount { get; set; }
+        public string ChartOfAccountsTypeCode { get; set; }
+
         public string GLAcountEnglishName { get; set; }
 
         public decimal TotalReport { get; set; }

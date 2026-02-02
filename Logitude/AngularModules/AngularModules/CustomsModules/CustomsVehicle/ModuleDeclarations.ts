@@ -6,6 +6,7 @@ import { VehiclesSelectionComponent } from './Components/EditTabs/VehiclesSelect
 import { SendVehicleComponent } from './Components/SendVehicle/SendVehicleComponent';
 import { DeleteVehicleComponent } from './Components/SendVehicle/DeleteVehicleComponent';
 import {  CopyRichbitComponent } from './Components/EditTabs/CopyRichbitComponent';
+import { VehicleDocsInTabComponent } from './Components/EditTabs/VehicleDocsInTabComponent';
 
 export const Components =
     [
@@ -16,7 +17,8 @@ export const Components =
         VehiclesSelectionComponent,
         SendVehicleComponent,
         DeleteVehicleComponent,
-        CopyRichbitComponent
+        CopyRichbitComponent,
+        VehicleDocsInTabComponent
     ];
 
 export class ModuleDeclarations {
@@ -33,6 +35,7 @@ export class ModuleDeclarations {
             case "VehiclesSelectionComponent": { myResult = VehiclesSelectionComponent; break; }
             case "SendVehicleComponent": { myResult = SendVehicleComponent; break; }
             case "DeleteVehicleComponent": { myResult = DeleteVehicleComponent; break; }
+            case "VehicleDocsInTabComponent": { myResult = VehicleDocsInTabComponent; break; }
         }
 
         

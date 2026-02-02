@@ -16,12 +16,12 @@ namespace WebFreight.Web.Helpers
             {
                 if (reportFilter.FieldDataType == "Date")
                 {
-                    reportFilter.FieldValue = GetDateValueByOptionCode(reportFilter.FieldValue?.ToString());
+                    reportFilter.FieldValue = GetDateValueByOptionCode(reportFilter.FieldValue?.ToString(), reportFilter.FieldName == "FromDate");
                 }
             });
             return reportFilterItems;
         }
-        public object GetDateValueByOptionCode(string optionCode)
+        public object GetDateValueByOptionCode(string optionCode, bool? fromDate = null)
         {
             DateTime dateValue = new DateTime();
             int quarterNumber = (DateTime.Now.Month - 1) / 3 + 1;
@@ -76,9 +76,42 @@ namespace WebFreight.Web.Helpers
                     break;
                 default:
                     if (string.IsNullOrEmpty(optionCode))
+                    {
                         return optionCode;
-                    
-                    dateValue = Convert.ToDateTime(optionCode);
+                    }
+                    else if (optionCode.StartsWith("PER_"))
+                    {
+                        if (fromDate == null)
+                        {
+                            throw new ArgumentException("fromDate parameter must be provided for period calculations (PER)");
+                        }
+                        var parts = optionCode.Split('_');
+                        var value = int.Parse(parts[1]);
+                        var unit = parts[2].ToLower();
+                        var sign = fromDate == true ? -1 : 1;
+                        dateValue = DateTime.Now;
+
+                        switch (unit)
+                        {
+                            case "days":
+                                dateValue = dateValue.AddDays(sign * value);
+                                break;
+
+                            case "months":
+                                dateValue = dateValue.AddMonths(sign * value);
+                                break;
+
+                            case "years":
+                                dateValue = dateValue.AddYears(sign * value);
+                                break;
+
+                            default:
+                                throw new ArgumentException("Unsupported period unit: " + unit);
+                        }
+                    }
+                    else {
+                        dateValue = Convert.ToDateTime(optionCode);
+                    }
                     break;
             }
             return dateValue;

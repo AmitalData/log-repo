@@ -9886,6 +9886,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode APInvoiceTextCode_APInvoiceOExpenseAllocationSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.ExpenseAllocationSetting", DefaultText = "Expense Allocation Setting",LocalDefaultText = @"BS64:IteU15LXk9eo15XXqiDXpNeo15nXodeUIg==", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
+ 		   TextCode APInvoiceTextCode_APInvoiceOPrepaidExpensesLineRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.PrepaidExpensesLineRequired", DefaultText = "Prepaid expenses line selection is required.",LocalDefaultText = @"BS64:IteX15XXkdeUINec16HXntefINep15XXqNeUINec15TXldem15DXldeqINee16jXkNepIg==", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
    
 	    
 }

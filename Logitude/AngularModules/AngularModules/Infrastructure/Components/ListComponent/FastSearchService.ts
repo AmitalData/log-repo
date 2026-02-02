@@ -77,7 +77,7 @@ export class FastSearchService implements OnDestroy {
 
         this.indexName = indexName;
         if (menuTableQuerySection == "Customs.Declaration")
-            return; // Disabled fase search for import declaration
+            indexName = 'declarations';
         else if (menuTableQuerySection == "Customs.ExportDeclaration")
             indexName = 'exportDeclarations';
         

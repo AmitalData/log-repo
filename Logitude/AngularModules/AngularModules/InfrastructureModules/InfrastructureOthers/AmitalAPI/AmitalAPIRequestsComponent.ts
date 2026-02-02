@@ -1,7 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { AmitalAPISchemaWebService, RequestQueryParams } from 'Common/Services/AmitalAPISchemaWebService';
+import { AmitalApiRequestsSelectionService } from   'Customs/Services/DataChange/AmitalApiRequestsSelectionService';
 import { LogTexBoxFormComponent, TextBoxField } from './components/LogTexBoxFormComponent';
 import { GridColumn, LogitudeGridSimpleComponent } from './components/LogitudeGridSimpleComponent';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -9,7 +14,10 @@ import { GridColumn, LogitudeGridSimpleComponent } from './components/LogitudeGr
     template: `
         <div class='header'>
             <log-text-box-form #form class='form-data-field' [fields]='fields' [dir]="'ltr'"></log-text-box-form>
-            <button class="Button" (click)="refreshTable(grid)">{{'General.O.Search' | TextCodeTranslationPipe}}</button>
+            <div class="button-container">
+                <button class="Button" (click)="refreshTable(grid)">{{'General.O.Search' | TextCodeTranslationPipe}}</button>
+                <button class="Button" [disabled]="!hasSelection" (click)="returnToQueue()">{{'Customs.General.O.ReturnToQueue' | TextCodeTranslationPipe}}</button>
+            </div>
         </div>
         <logitude-grid-simple #grid [columns]='columns' [getData]='getData' [directionRTL]='false' [htmlTemplateComponentUrl]='htmlTemplateComponentUrl' ></logitude-grid-simple>        
         `,
@@ -30,9 +38,21 @@ import { GridColumn, LogitudeGridSimpleComponent } from './components/LogitudeGr
             border: none;
         }
         
+        .button-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
         .header button {
             width: 100px;
-            margin: 0 auto 20px;
+            margin: 0;
+        }
+
+        .header button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         logitude-grid-simple {
@@ -41,11 +61,16 @@ import { GridColumn, LogitudeGridSimpleComponent } from './components/LogitudeGr
             padding:5px;
         }
     `],
+    providers: [AmitalApiRequestsSelectionService]
 })
-export class AmitalAPIRequestsComponent {
+export class AmitalAPIRequestsComponent implements OnInit, OnDestroy {
     @ViewChild('form') form!: LogTexBoxFormComponent;
+    @ViewChild('grid') grid!: LogitudeGridSimpleComponent;
+    
     amitalAPISchemaWebService: AmitalAPISchemaWebService = new AmitalAPISchemaWebService();
     htmlTemplateComponentUrl: string = './CustomsModules/CustomsListTemplates/Components/AmitalAPIRequestsTemplate';
+    hasSelection: boolean = false;
+    private subscription?: Subscription;
     fields: TextBoxField[] = [
         { name: 'fromCreateDate', label: 'Create Date', type: 'date', required: true },
         { name: 'reference', label: 'Ref' },
@@ -57,6 +82,7 @@ export class AmitalAPIRequestsComponent {
         { name: 'minItems', label: 'Min Items', type: 'number' },
     ];
     columns: GridColumn[] = [
+        { Display: '', FieldName: 'Checkbox', Styles: { width: '60px' }, isTemplate: true },
         { Display: 'Id', FieldName: 'Id', Styles: { width: '140px' } },
         { Display: 'Base Com', FieldName: 'IsParent', Styles: { width: '70px' } },
         { Display: 'Req Type', FieldName: 'TaskName', Styles: { width: '70px' } },
@@ -73,6 +99,20 @@ export class AmitalAPIRequestsComponent {
         { Display: 'Success', FieldName: 'HasError', Styles: { width: '60px' }, isTemplate: true },
         { Display: '', FieldName: 'Buttons', Styles: { width: '60px' }, isTemplate: true },
     ]
+
+    constructor(public selectionService: AmitalApiRequestsSelectionService) {}
+
+    ngOnInit() {
+        this.subscription = this.selectionService.selectionChanged$.subscribe(count => {
+            this.hasSelection = count > 0;
+        });
+    }
+
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
 
     convertYesNoToBoolean(value: string) {
         return value === 'Yes' ? true : value === 'No' ? false : null;
@@ -97,6 +137,38 @@ export class AmitalAPIRequestsComponent {
         if (!this.form.valid)
             return;
 
+        this.selectionService.clearAll();
         logitudeGridSimpleComponent.refreshTable();
+    }
+
+    async returnToQueue() {
+        const selectedIds = this.selectionService.getSelectedIds();
+        
+        if (selectedIds.length === 0) {
+            return;
+        }
+
+        SessionLocator.SelectedSession.StartBusyIndicator('');
+
+        try {
+            const result = await this.amitalAPISchemaWebService.requeue(selectedIds);
+            
+            if (result.success) {
+                const msgWin: MessageWindow = new MessageWindow();
+                msgWin.ShowSuccessIcon = true;
+                msgWin.Show(TextCodeTranslator.Translate('Customs.General.O.Success'));
+                
+                this.selectionService.clearAll();
+                this.grid.refreshTable();
+            } else {
+                throw new Error(result.message || 'Failed to requeue');
+            }
+        } catch (error) {
+            const msgWin: MessageWindow = new MessageWindow();
+            msgWin.ShowErrorIcon = true;
+            msgWin.Show(TextCodeTranslator.Translate('Customs.General.O.Fail'));
+        }
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
     }
 }

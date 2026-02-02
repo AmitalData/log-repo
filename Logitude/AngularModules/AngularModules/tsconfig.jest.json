@@ -1,0 +1,21 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "types": [
+            "jest",
+            "node"
+        ],
+        "emitDecoratorMetadata": true,
+        "outDir": "./out-tsc/jest"
+    },
+    "include": [
+        "**/*.ts"
+    ],
+    "exclude": [
+        "**/*.e2e-spec.ts",
+        "dist",
+        "node_modules"
+    ]
+}
+

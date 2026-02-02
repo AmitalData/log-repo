@@ -77,7 +77,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsAmountDebitNegative, 
 	         TransactionAmount, 
 	         ExcelTransactionAmount, 
-	         RefDate,
+	         RefDate, 
              CurrencyRate,
         }
 

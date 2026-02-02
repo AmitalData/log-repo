@@ -93,7 +93,14 @@ namespace Logitude.Customs.Def.ClosedTable
                 SearchFields = "CustomsUpdateClosedTables,CustomsUpdateClosedTables",
                 Description = "Update Closed Tables",
             });
-            return all;
+			all.Add(new CustomsSchedulerProcedureDetails()
+			{
+				Code = "CustomsConnectDocumentToDeclarationCourier",
+				Name = "CustomsConnectDocumentToDeclarationCourier",
+				SearchFields = "CustomsConnectDocumentToDeclarationCourier,CustomsConnectDocumentToDeclarationCourier",
+				Description = "Customs Connect Document To Declaration Courier",
+			});
+			return all;
         }
             public void MapPoco(SchedulerProcedure newPoco)
         {

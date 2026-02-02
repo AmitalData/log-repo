@@ -297,6 +297,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     isFullAccounting: boolean = SessionLocator.TenantPM.AccountingActivated;
     CurrencyFilters: ApiQueryFilters = new ApiQueryFilters();
+    revalOnForeignReco: boolean = false;
+    revalJrnlRef1: string = '';
+
+
     constructor(public CD: ChangeDetectorRef) {
         super();
 
@@ -929,38 +933,77 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                     if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
 
 
-                if (auto) {
-                    this.ValidationErrorsList.push("TotalDifference");
-                    return
-                }
-                var confirmWindow = new ConfirmWindow();
-                confirmWindow.Width = 390;
-                confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
-                confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-                    this.AdjustWithNewJournalScreen();
-                    } else if (confirmWindow.No) {
-                    }
-                    });
-                        //}
-                        return;
+                        if (auto) {
+                            this.ValidationErrorsList.push("TotalDifference");      
+                            return
+                        }
+
+                        this.ShowAdjustmentConfirm();
+
+
                     }
 
-                    //
-        
-                    this.CurrentSession.StartBusyIndicatorSaving();
-                    var entity = this.CreateReconciliation();
-                    this.SubmitChanges(entity);
-        
+                    if (this.SelectedLines.Length > 0 && this.TotalLocalDifference != 0) {
+                        let isRFRToggleOnForeignReco: boolean = false;
+                        if (this.GLAccountPM.ReconcileMethodCode === "1"){
+                            isRFRToggleOnForeignReco = SessionLocator.FeatureToggles.filter(d => d.ToggleCode === "RFR")[0] ? true : false;
+                        }
+                        if (isRFRToggleOnForeignReco) {
+                            var rfrConfirm = new ConfirmWindow();
+                            rfrConfirm.Width = 390;
+                            rfrConfirm.ShowCancelButton = true;
+                            
+                            let textMessage = `${TextCodeTranslator.Translate("Accounting.General.O.RFRDiff1")} ${this.TotalLocalDifference} ${SessionLocator.TenantPM.CurrencySign}.\
+ ${TextCodeTranslator.Translate("Accounting.General.O.RFRDiff2")}`;
+
+                            rfrConfirm.Show(textMessage);
+
+                            rfrConfirm.WindowClosed.subscribe((event: any) => {
+                                if (rfrConfirm.Yes) {
+                                    this.revalOnForeignReco = true;  
+                                    if (this.TotalDifference === 0) { // No need for adjustment journal
+                                        this.RevaluationJournalScreen();
+                                    }
+                                }
+                                if (rfrConfirm.No) {
+                                    this.CurrentSession.StartBusyIndicatorSaving();
+                                    var entity = this.CreateReconciliation();
+                                    this.SubmitChanges(entity);
+                                }
+                            });
+                        }
+                        else  {
+                            this.CurrentSession.StartBusyIndicatorSaving();
+                            var entity = this.CreateReconciliation();
+                            this.SubmitChanges(entity);
+                        }
+                    }
+                    else {
+                        this.CurrentSession.StartBusyIndicatorSaving();
+                        var entity = this.CreateReconciliation();
+                        this.SubmitChanges(entity);
+                    }
                 }
         
-           
-           
-        
-
-
-
     }
+
+    private ShowAdjustmentConfirm(): void {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 390;
+        confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.AdjustWithNewJournalScreen();
+            } else if (confirmWindow.No) {
+                // Do nothing special
+            }
+        });
+
+        return;
+    }
+
+
     IsAutoRecClicked: boolean = false;
     AutomaticReconcileButton() {
         this.IsAutoRecClicked = true;
@@ -1134,10 +1177,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
 
     AdjustWithNewJournalScreen() {
-        //this.ReloadScreen();
+
         if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
 
-            //this.ToSend()
+
             var next = true;
             if (next) {
                 this.CurrentSession.entityResourceService.getEntityResourceByTableName("Journal").subscribe(response => {
@@ -1157,9 +1200,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                         };
                         logitudeWindow.Show('./Accounting/Components/Others/JournalReconcileComponent');
                         logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                            // Close Reconcile window
-                            //this.CurrentSession.CloseCurrentWindow();
-                            //this.CancelButtonClicked();
+
 
                             // Refresh Data
                             this.ReloadScreen();
@@ -1178,6 +1219,42 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         }
 
     }
+
+
+    RevaluationJournalScreen() {
+        if (this.SelectedLines.Length > 0 && this.TotalLocalDifference !== 0) {
+
+
+                        var logitudeWindow = new LogitudeWindow();
+                        logitudeWindow.Width = 500;
+                        logitudeWindow.Height = 300;
+                        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.B.RevaluationJournal");
+                        logitudeWindow.WindowArgs = {
+                            "SourceGLAccountPM": this.GLAccountPM,
+                            TotalLocalDifference: this.TotalLocalDifference
+                        };
+                        logitudeWindow.Show('./Accounting/Components/Others/JournalRevaluationComponent');
+                        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+                            this.revalJrnlRef1 = $event;  
+                            console.log("Returned Reference:", this.revalJrnlRef1);
+
+
+                                    this.CurrentSession.StartBusyIndicatorSaving();
+                                    var entity = this.CreateReconciliation();
+                                    this.SubmitChanges(entity);
+                        });
+
+
+        } else {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.RTL = this.isRTL;
+            myMessageWindow.Show("!(this.SelectedLines.Length > 0 && this.TotalLocalDifference) ");
+        }
+
+    }
+
+
+
 
     onRowSelected($event) {
 
@@ -1682,16 +1759,16 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         
         for (let line of this.SelectedLines.Collection) {
             let rate: number = +line.ledgerTransaction.ExchangeRate;;
-            let lineCurrAmountToReconcile: number = 0;  // if GLAccountPM.CurrencyId != TenantPM.CurrencyId  => lineCurrAmountToReconcile is in GLAccountPM.CurrencyId 
+            let lineCurrAmountToReconcile: number = 0;  // if GLAccountPM.CurrencyId !== TenantPM.CurrencyId  => lineCurrAmountToReconcile is in GLAccountPM.CurrencyId 
             let lineLocalAmountToReconcile: number = 0; // if GLAccountPM.ReconcileMethodCode === "1"  => lineLocalAmountToReconcile is in TenantPM.CurrencyId
-            if (rate != 0 && !AppTool.IsNullOrEmpty(this.GLAccountPM.ReconcileMethodCode) && this.GLAccountPM.ReconcileMethodCode == "0" // NIS
-                && ((!AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId) && this.GLAccountPM.CurrencyId != this.TenantPM.CurrencyId) || this.GLAccountPM.IsMultiCurrency)) {     // GLAcc is not multi, not NIS (say, USD)
+            if (rate !== 0 && !AppTool.IsNullOrEmpty(this.GLAccountPM.ReconcileMethodCode) && this.GLAccountPM.ReconcileMethodCode === "0" // NIS
+                && !AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId) && this.GLAccountPM.CurrencyId !== this.TenantPM.CurrencyId) {     // GLAcc is not multi, not NIS (say, USD)
                 lineCurrAmountToReconcile = +line.AmountToReconcile / rate;  // lineCurrAmountToReconcile in USD, because GLAcc is USD, so all lines are
                 lineLocalAmountToReconcile = +line.AmountToReconcile; // lineLocalAmountToReconcile is already in NIS
             }
-            else if (rate != 0 && !AppTool.IsNullOrEmpty(this.GLAccountPM.ReconcileMethodCode) && this.GLAccountPM.ReconcileMethodCode == "1" // let's say, USD
-                && ((!AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId) && this.GLAccountPM.CurrencyId != this.TenantPM.CurrencyId) || this.GLAccountPM.IsMultiCurrency)) {     // GLAcc is not multi, not NIS (say, USD)
-                lineCurrAmountToReconcile = line.AmountToReconcile;  // lineCurrAmountToReconcile is already in USD 
+            else if (rate !== 0 && !AppTool.IsNullOrEmpty(this.GLAccountPM.ReconcileMethodCode) && this.GLAccountPM.ReconcileMethodCode === "1" // let's say, USD
+                && !AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId) && this.GLAccountPM.CurrencyId !== this.TenantPM.CurrencyId) {     // GLAcc is not multi, not NIS (say, USD)
+                lineCurrAmountToReconcile = +line.AmountToReconcile;  // lineCurrAmountToReconcile is already in USD 
                 lineLocalAmountToReconcile = +line.AmountToReconcile * rate; // lineLocalAmountToReconcile in NIS
             }
             else {
@@ -1702,6 +1779,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 }
             }
 
+
             if (line.AmountToReconcile < 0) {
                 this.TotalCredit += +line.AmountToReconcile * -1; //cast number
                 this.TotalCurrCredit += +lineCurrAmountToReconcile * -1; //cast number
@@ -1711,20 +1789,16 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 this.TotalDebit += +line.AmountToReconcile;
                 this.TotalCurrDebit += +lineCurrAmountToReconcile;
                 this.TotalLocalDebit += +lineLocalAmountToReconcile;
-                this.TotalLocalDebit = AppTool.Round(this.TotalLocalDebit, 2);
-                this.TotalLocalCredit = AppTool.Round(this.TotalLocalCredit, 2);
             }
 
-            //if (line.OpenAmount < 0)
-            //    this.TotalCredit += +line.OpenAmount * -1; //cast number
-            //else
-            //    this.TotalDebit += +line.OpenAmount;
 
             // due this.TotalCredit + amountToReconcile;  == 335.78999999999996 <>335.79
             this.TotalDebit = AppTool.Round(this.TotalDebit, 2);
             this.TotalCredit = AppTool.Round(this.TotalCredit, 2);
             this.TotalCurrDebit = AppTool.Round(this.TotalCurrDebit, 2);
             this.TotalCurrCredit = AppTool.Round(this.TotalCurrCredit, 2);
+            this.TotalLocalDebit = AppTool.Round(this.TotalLocalDebit, 2);
+            this.TotalLocalCredit = AppTool.Round(this.TotalLocalCredit, 2);
 
 
         }
@@ -1739,6 +1813,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this.TotalDifference = round2(Math.abs(dif));
         this.TotalCurrDifference = round2(Math.abs(currdif));    // if GLAccountPM.CurrencyId != TenantPM.CurrencyId  => TotalCurrDifference is in GLAccountPM.CurrencyId 
         this.TotalLocalDifference = round2(Math.abs(localdif));  // if GLAccountPM.ReconcileMethodCode === "1"  => TotalLocalDifference is in TenantPM.CurrencyId 
+    
     }
     //#endregion
 
@@ -1837,7 +1912,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         }
         newEntity.CurrencyCode = this.GLAccountPM.CurrencyCode;
         newEntity.AccountReconcileMethodCode = this.GLAccountPM.ReconcileMethodCode;
-
+        newEntity.RevalOnForeignReco = this.revalOnForeignReco;
+        newEntity.RevalJrnlRef1 = this.revalJrnlRef1;
         newEntity.ReconciliationLines = [];
 
         for (var i = 0; i < this.SelectedLines.Length; i++) {
@@ -1849,7 +1925,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             newLine.Line = i;
             newLine.CurrencyId = selectedTransaction.OpenAmountCurrencyId;
             newLine.TransactionId = selectedTransaction.Id;
-            newLine.CurrencyRate = selectedTransaction.ExchangeRate;
+
+            const rate = selectedTransaction.ledgerTransaction.ExchangeRate;
+
+            newLine.CurrencyRate =
+                rate === 0 || rate == null
+                    ? selectedTransaction.CurrencyRate
+                    : rate;
+
             newLine.ReconciliationAmount = selectedTransaction.AmountToReconcile;
             newLine.DueDate = selectedTransaction.DueDate;
             newLine.IsPartial = selectedTransaction.IsPartial;

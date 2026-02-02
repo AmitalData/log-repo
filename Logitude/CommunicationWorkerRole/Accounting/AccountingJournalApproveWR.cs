@@ -77,8 +77,7 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                 {
                     return true;
                 }
-
-                _DbQueueService = new DbQueueService(JournalApproveService.K_AccountingJournalApproveWR, 0);
+                _DbQueueService = new DbQueueService(JournalApproveService.K_AccountingJournalApproveWR, SettingUtil.GetTenantDBFromConfig());
 
 
             }

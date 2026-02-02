@@ -48,6 +48,11 @@ import { ConfirmationNumberDefaultListService } from './Services/StandardLists/C
 import { ConfirmationNumberDefaultPMService } from './Services/StandardPMs/ConfirmationNumberDefaultPMService';
 import { ConfirmationNumberStatusListService } from './Services/StandardLists/ConfirmationNumberStatusListService';
 import { ConfirmationNumberDefaultExtendedService } from './Services/ExtendedPMs/ConfirmationNumberDefaultExtendedService';
+import { MasavInterfaceListService } from './Services/StandardLists/MasavInterfaceListService';
+import { MasavInterfaceStatusListService } from './Services/StandardLists/MasavInterfaceStatusListService';
+import { MasavInterfacePMService } from './Services/StandardPMs/MasavInterfacePMService';
+import { MasavInterfaceMenuButtonsHandler } from './Components/MenuButtons/MasavInterfaceMenuButtonsHandler';
+import { APPaymentExtendedService } from './Services/ExtendedPMs/APPaymentExtendedService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -106,6 +111,11 @@ export class ModuleProviders {
             case "ARPaymentMenuButtonsHandler": { myResult = new ARPaymentMenuButtonsHandler(); break; }
             case "ARInvoiceStockMenuButtonsHandler": { myResult = new ARInvoiceStockMenuButtonsHandler(); break; } 
             case "QBOGlobalTaxCalculationListService": { myResult = new QBOGlobalTaxCalculationListService(); break; } 
+            case "MasavInterfaceListService": { myResult = new MasavInterfaceListService(); break; }           
+            case "MasavInterfaceStatusListService": { myResult = new MasavInterfaceStatusListService(); break; }           
+            case "MasavInterfacePMService": { myResult = new MasavInterfacePMService(); break; }           
+            case "MasavInterfaceMenuButtonsHandler": { myResult = new MasavInterfaceMenuButtonsHandler(); break; }           
+            case "APPaymentExtendedService": { myResult = new APPaymentExtendedService(); break; }
 
         }
 

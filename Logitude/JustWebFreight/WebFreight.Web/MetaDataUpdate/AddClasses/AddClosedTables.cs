@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -30,6 +32,7 @@ using Logitude.Infrastructure.BL;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs;
+
 
 namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
@@ -2188,6 +2191,33 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
 
 
+        public static void AddMasavInterfaceStatus(MasavInterfaceStatus myDetails, MasavInterfaceStatusRepository myRepository)
+        {
+            Dictionary<string, MasavInterfaceStatus> myDictionary = myRepository.All().ToDictionary(d => d.Code, a => a);
+
+            if (myDictionary.Keys.Contains(myDetails.Code))
+            {
+                MasavInterfaceStatus myPOCO = myRepository.GetSingleMasavInterfaceStatus(myDetails.Code);
+                myPOCO.Name = myDetails.Name;
+                myPOCO.LocalName = myDetails.LocalName;
+                myPOCO.SearchFields = myDetails.Code + "," + myDetails.Name;
+                myRepository.Update(myPOCO);
+            }
+
+            else
+            {
+                MasavInterfaceStatus myPOCO = new MasavInterfaceStatus()
+                {
+                    Code = myDetails.Code,
+                    Name = myDetails.Name,
+                    LocalName = myDetails.LocalName,
+                    SearchFields = myDetails.Code + "," + myDetails.Name
+                };
+
+                myRepository.Add(myPOCO);
+            }
+        }
+
         public static void AddSATInvoiceStatus(SATInvoiceStatusDetails myDetails, SATInvoiceStatusRepository myRepository)
         {
             Dictionary<string, SATInvoiceStatus> myDictionary = myRepository.GetSATInvoiceStatus().ToDictionary(d => d.Code, a => a);
@@ -2212,7 +2242,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 myRepository.Add(myPOCO);
             }
         }
-
 
         public static void AddUsoCFDI(UsoCFDIDetails myDetails, UsoCFDIRepository myRepository)
         {
@@ -3488,6 +3517,28 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     SearchFields = $"{documentType.Code},{documentType.LocalName}".ToLower()
                 };
                 repository.Add(newType);
+            }
+        }
+
+        public static void AddOrUpdateSIIRequestLineStatus(SIIRequestLineStatus status,SIIRequestLineStatusRepository repository)
+        {
+            var existing = repository.GetSingle(status.Code);
+            if (existing != null)
+            {
+                existing.LocalName = status.LocalName;
+                existing.SearchFields = string.Format("{0},{1}", status.Code, status.LocalName).ToLower();
+                repository.Update(existing);
+            }
+            else
+            {
+                var newStatus = new SIIRequestLineStatus
+                {
+                    Code = status.Code,
+                    Name = status.Name,
+                    LocalName = status.LocalName,
+                    SearchFields = string.Format("{0},{1}", status.Code, status.LocalName).ToLower()
+                };
+                repository.Add(newStatus);
             }
         }
     }

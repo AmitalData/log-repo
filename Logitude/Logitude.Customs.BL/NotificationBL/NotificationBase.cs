@@ -1,19 +1,21 @@
-﻿using Logitude.Customs.Def.EntityPMs;
-using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logitude.Customs.Data.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel;
 
 namespace Logitude.Customs.BL.NotificationBL
 {
@@ -177,5 +179,78 @@ namespace Logitude.Customs.BL.NotificationBL
             var oldNotificationPM = notificationQueryService.GetNotification(newNotificationPM.Tenant, newNotificationPM.ObjectTableId, newNotificationPM.EntityId, notificationDefinitionCode);
             return oldNotificationPM;
         }
+        public static NotificationPM CreateNotification(
+    ICustomContext dbContext,
+    int tenant,
+    string objectTableName,
+    string notificationDefinitionCode,
+    string description,
+    string assigneToNotificationTypeCode,
+    string reference1Number,
+    string entityId = null,
+    string createdByRequestId = null,
+    string customerId = null,
+    string referentUserId = null,
+    string departmentId = null,
+    string declarationOfficeCode = null,
+    bool isHandledByCustomOffice = false,
+    string closeRelatedDefinitionCode = null,
+    string reference2Number = null)
+        {
+            if (dbContext == null) throw new ArgumentNullException(nameof(dbContext));
+            if (string.IsNullOrWhiteSpace(notificationDefinitionCode)) return null;
+            if (string.IsNullOrWhiteSpace(description)) return null;
+
+            var notificationUpdateService =
+                new NotificationUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+
+            var newNotificationPM = new NotificationPM();
+            newNotificationPM.ChangeSetOp = ChangeSetOperation.Insert;
+            newNotificationPM.Tenant = tenant;
+
+            newNotificationPM.NotificationDefinitionCode = notificationDefinitionCode;
+
+            newNotificationPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName(objectTableName);
+
+            newNotificationPM.EntityId = entityId;
+
+            newNotificationPM.Reference1Number = reference1Number;
+            newNotificationPM.Reference2Number = reference2Number;
+
+            newNotificationPM.CreatedByRequestID = createdByRequestId;
+            if (string.IsNullOrWhiteSpace(newNotificationPM.CreatedByRequestID))
+            {
+                newNotificationPM.CreatedByRequestID =
+                    Logitude.Customs.Def.Messaging.Customs.RequestSheetContext.Current.GetContextOrDefault()?.CustomsRequestsSheetId;
+            }
+
+            newNotificationPM.CreateDate = DateTime.Now;
+            newNotificationPM.DueDate = DateTime.Now;
+
+            newNotificationPM.Description = description;
+
+            newNotificationPM.DepartmentId = departmentId;
+            newNotificationPM.DeclarationOfficeCode = declarationOfficeCode;
+
+            newNotificationPM.AssigneToNotificationTypeCode = assigneToNotificationTypeCode;
+            newNotificationPM.CustomerId = customerId;
+
+            newNotificationPM.AssigneToId =
+                NotificationBase.CalcAssigneToId(tenant, customerId, referentUserId, notificationDefinitionCode, "");
+
+            if (!string.IsNullOrWhiteSpace(declarationOfficeCode))
+            {
+                newNotificationPM.IsHandledByCustomOffice = true;
+            }
+            if (isHandledByCustomOffice)
+            {
+                newNotificationPM.IsHandledByCustomOffice = true;
+            }
+
+            notificationUpdateService.Update(newNotificationPM, true);
+
+            return newNotificationPM;
+        }
+
     }
 }

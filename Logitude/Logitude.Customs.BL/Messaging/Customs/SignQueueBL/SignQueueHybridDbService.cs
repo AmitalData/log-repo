@@ -120,7 +120,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             );
             return entityLists;
         }
-        public (string signCertificate, SignMethodByQueueEnum dSignMethodByQueue) GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId,bool isCloud = false)
+        public (string signCertificate, SignMethodByQueueEnum dSignMethodByQueue) GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId,bool isCloud = false, string OverrideSignStepName = null, string hsmStationContext = null)
         {
 			ICommonDataContext myContextCommon = CommonDataContext.GetContext(tenant);
 			FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
@@ -132,9 +132,9 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
 
             var hSMAllCertificates = new List<MySignStationList>();
             var hSMSignService = new SignQueueHSMService();
-            if (hSMSignService.IsHSMSign_IsOn(tenant))
+            if (hSMSignService.IsHSMSign_IsOn(tenant, hsmStationContext))
             {
-                hSMAllCertificates = hSMSignService.GetHSMAllCertificates(tenant);
+                hSMAllCertificates = hSMSignService.GetHSMAllCertificates(tenant, hsmStationContext: hsmStationContext);
             }
                 switch (SignatureBy)
             {

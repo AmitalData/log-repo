@@ -38,6 +38,7 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
                 {
                     OriginalLineNumber = item.LineNumber,
                     Reference1 = aRInvoice.InvoiceNumber,
+                    Reference2 = aRInvoice.MainEntityReference,
                     Notes = item.Description
                 }).ToList());
 
@@ -49,6 +50,7 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
                 {
                     OriginalLineNumber = ++count,
                     Reference1 = aRInvoice.InvoiceNumber,
+                    Reference2 = aRInvoice.MainEntityReference,
                     Notes = $"VAT {vt.VATPercent}%"
                 }));
             }

@@ -2079,7 +2079,7 @@ export class MaintenanceComponent {
                         .subscribe((response: any) => {
                             var logitudeWindow = new LogitudeWindow();
                             logitudeWindow.Width = 900;
-                            logitudeWindow.Height = 600;
+                            logitudeWindow.Height = 700;
                             logitudeWindow.Title = TextCodeTranslator.Translate(
                                 'Accounting.O.FullAccountingSettings'
                             ); // "Full Accounting Settings";
@@ -2100,7 +2100,6 @@ export class MaintenanceComponent {
                         logitudeWindow.Title = 'Chart Of Accounts Types Order';//TextCodeTranslator.Translate("Accounting.General.O.ChartOfAccountsTypesOrder");
                         logitudeWindow.Show('./Accounting/Components/Maintenance/ChartOfAccountsTypesOrderComponent');
                     });
-
                     break;
                 }
                 case "DNTC": {
@@ -2112,6 +2111,8 @@ export class MaintenanceComponent {
                         logitudeWindow.Width = 900;
                         logitudeWindow.Height = 600;
                         logitudeWindow.WindowArgs = windowArgs;
+                        logitudeWindow.Title = TextCodeTranslator.Translate("CustomerDebtNotification.O.DebtNotificationToCustomers");
+                        logitudeWindow.Show('./Accounting/Components/Maintenance/CustomerDebtNotificationComponent');
                         logitudeWindow.Title = TextCodeTranslator.Translate("CustomerDebtNotification.O.DebtNotificationToCustomers");
                         logitudeWindow.Show('./Accounting/Components/Maintenance/CustomerDebtNotificationComponent');
 

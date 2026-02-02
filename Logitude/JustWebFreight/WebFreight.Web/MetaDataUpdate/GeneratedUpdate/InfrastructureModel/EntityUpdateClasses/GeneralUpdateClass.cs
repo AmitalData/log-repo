@@ -23,8 +23,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "e3b7b14a62cfd5018d241e3a75b60f9c";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
+		public const string HashString = "d7c43399a0189958d16e07202906f988";
+        public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -1457,7 +1457,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralBAdjust = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.Adjust", DefaultText = "Adjust",LocalDefaultText = @"BS64:IteQ15nXqdeV16gg15TXpNeo16nXmdedIg==", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GeneralTextCode_AccountingGeneralBAutomaticReconcile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.AutomaticReconcile", DefaultText = "AutomaticReconcile",LocalDefaultText = @"BS64:IteU16rXkNee15Qg15DXldeY15XXnteY15nXqiI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+            TextCode GeneralTextCode_AccountingGeneralBRevaluationJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.RevaluationJournal", DefaultText = "Revaluation Journal", LocalDefaultText = @"BS64:Itek16fXldeT16og16nXoteo15XXmiI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode GeneralTextCode_AccountingGeneralBAutomaticReconcile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.AutomaticReconcile", DefaultText = "AutomaticReconcile",LocalDefaultText = @"BS64:IteU16rXkNee15Qg15DXldeY15XXnteY15nXqiI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GeneralTextCode_AccountingGeneralBView = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.View", DefaultText = "View",LocalDefaultText = @"BS64:Item16TXmdeZ15Qi", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
@@ -2873,13 +2875,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralBSendToBackground = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.B.SendToBackground", DefaultText = "Send to Background",LocalDefaultText = @"BS64:Itep15zXlyDXnNeo16fXoiI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-   
-	    
+           TextCode GeneralTextCode_AccountingGeneralOTransactionsBefore = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.TransactionsBefore", DefaultText = "Transactions Before", LocalDefaultText = @"BS64:IiDXqteg15XXoteV16og15zXpNeg15ki", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+           TextCode GeneralTextCode_AccountingGeneralOTransactionsAfter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.TransactionsAfter", DefaultText = "Transactions After", LocalDefaultText = @"BS64:Iteq16DXldei15XXqiDXkNeX16jXmSI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+
 }
 
-    
 
-   }
+
+    }
     
 }
 	 

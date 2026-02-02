@@ -18,11 +18,13 @@ import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo'
 import { FeatureLocator } from '../../../core/Infrastructure/Utilities/FeatureLocator';
 import { InfrastructureDomainService } from '../../../core/Infrastructure/Services/InfrastructureDomainService';
 import { LoginService } from '../../../core/Infrastructure/Services/LoginService';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RomanToolService } from '../../services/roman-tool.service';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { PreferenceMenuComponent } from '../preference-menu/preference-menu';
 import { PreferencesService } from '../preference-menu/PreferencesService';
+import { AppTool } from '../../../core/Infrastructure/Tools';
+
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
@@ -67,7 +69,7 @@ export class MainDisplayComponent implements OnInit {
 	defualtCbCollapseSearchHierarchy: boolean = false;
 
 	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private preferencesService: PreferencesService,
-		private filterPopupService: FilterPopupService, private addCommentService: AddCommentService, private loginService: LoginService,
+		private route: ActivatedRoute, private filterPopupService: FilterPopupService, private addCommentService: AddCommentService, private loginService: LoginService,
 		private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService) {
 		this.screenWidth = window.innerWidth;
 	}
@@ -75,6 +77,7 @@ export class MainDisplayComponent implements OnInit {
 
 
 	ngOnInit() {
+		sessionStorage.removeItem('FullClassification');
 		this.headerService.searchState$.subscribe((data) => {
 			if (!searchState[data]) return;
 
@@ -83,10 +86,14 @@ export class MainDisplayComponent implements OnInit {
 				this.InitData();
 			}
 		});
-
+		// listen to loading mode changes:
+		this.isLoadingMode.subscribe((isLoading) => {
+			this.isLoading = isLoading;
+		});
 		this.checkDefaultCB_CollapseSearchHierarchy();
 		this.ListenToItemsSearched();
 		this.getByIsDiscountCodes();
+		this.updateFullClassificationByClick();
 	}
 
 	InitData() {
@@ -94,20 +101,16 @@ export class MainDisplayComponent implements OnInit {
 		else this.checkIsFeaturePermessionCustomsBook(() => this.GetAllCustomsBookMainView());
 
 		this.getCustomsBookLastUpdateDate();
-		// listen to loading mode changes:
-		this.isLoadingMode.subscribe((isLoading) => {
-			this.isLoading = isLoading;
-		});
 		this.isFeaturePermessionCB.subscribe((isFeaturePermessionCB) => {
 			this.isFeaturePermessionCBMsg = isFeaturePermessionCB;
 		});
 	}
 
 	getCustomsBookLastUpdateDate() {
-		
+
 		this.API_MainService.GetCustomsBookLastUpdateDateByTenant(SessionInfo.LoggedUserTenant).subscribe(
 			(data: any) => {
-				
+
 				const result = data.body;
 				if (!result) return;
 				console.log(result);
@@ -159,27 +162,21 @@ export class MainDisplayComponent implements OnInit {
 
 	IsDiscountCodes: boolean = false;
 	GetAllCustomsBookMainView() {
-
 		this.isLoadingMode.next(true);
 		let filters: Filters = {
 			CustomsBookType: this.searchState,
 			Tenant: SessionInfo.LoggedUserTenant,
 			SearchFields: ''
 		};
-
 		filters.IsDiscountCodes = this.headerService.IsDiscountCodes?.getValue();
-
 		this.getRulesData();
 		this.getCommentsData(SessionInfo.LoggedUserTenant);
-
-
 
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
 			const result: CB_CustomsItemComputedDataList[] = data.body;
 			if (!result) return; // TODO: add error message
 			this.countSearchResult = 0;
 			this.handleClearResults();
-
 
 			this.data = this.orderedData(result);
 			if (this.data.length > 0) {
@@ -319,7 +316,8 @@ export class MainDisplayComponent implements OnInit {
 	showDetailsClick(CustomsItemID: number, item: CB_CustomsItemComputedDataList) {
 		this.selectedItemId = CustomsItemID;
 		if (this.currentItem.getValue()?.CustomsItemID == CustomsItemID) {
-			this.updateShowDetailsClick();
+			this.updateShowDetailsClick(item);
+
 			return;
 		}
 		else if (!this.showDetails) {
@@ -329,7 +327,7 @@ export class MainDisplayComponent implements OnInit {
 		return this.showDetails;
 	}
 
-	updateShowDetailsClick() {
+	updateShowDetailsClick(item?: CB_CustomsItemComputedDataList) {
 		this.showDetails = !this.showDetails;
 		this.showDetailsOpen.next(this.showDetails);
 		this.preferencesService.showSettingsClick(false);
@@ -339,7 +337,34 @@ export class MainDisplayComponent implements OnInit {
 		}
 		else {
 			this.filterPopupService.toggleFilterPopup(false);
+			if (item)
+				this.currentItem.next(item);
 		}
+	}
+
+	updateUrlWithClassification(fullClassification: string) {
+		sessionStorage.setItem('FullClassification', fullClassification);
+		const url = this.searchService.getDecodeUrl(window.location.href);
+		const currentUrl = new URL(url);
+		if (fullClassification) {
+			currentUrl.searchParams.set("FullClassification", fullClassification);
+			window.history.replaceState({}, "", currentUrl.toString());
+		}
+		else {
+			currentUrl.searchParams.delete("FullClassification");
+			window.history.replaceState({}, "", currentUrl.toString());
+		}
+	}
+
+	updateFullClassificationByClick() {
+		this.showDetailsOpen.subscribe((isOpen) => {
+			if (!isOpen)
+				this.updateUrlWithClassification(null);
+		});
+		this.currentItem.subscribe((item) => {
+			if (item && this.showDetails)
+				this.updateUrlWithClassification(item?.FullClassification);
+		});
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
@@ -467,7 +492,19 @@ export class MainDisplayComponent implements OnInit {
 		this.searchService.SetSearchText("");
 	}
 
+	clearSearchValue() {
+		const url = this.searchService.getDecodeUrl(window.location.href);
+		let searchValue = this.searchService.getParameterByName('searchValue', url);
+		if (!AppTool.IsNullOrEmpty(searchValue)) {
+			const currentUrl = new URL(url);
+			currentUrl.searchParams.set("searchValue", "");
+			window.history.replaceState({}, "", currentUrl.toString());
+			window.location.reload();
+		}
+	}
+
 	handleClearResults() {
+		this.clearSearchValue();
 		this.searchMode = TableTopState.ViewAll;
 		this.selectedItemId = null;
 		this.showDetails = false;
@@ -478,7 +515,6 @@ export class MainDisplayComponent implements OnInit {
 		this.searchValue = "";
 		this.countSearchResult = 0;
 		this.filterPopupService.toggleFilterPopup(false);
-		// this.data = this.fullData;
 		this.data = !this.IsDiscountCodes ? this.fullData : this.originalDataByIsDiscountCodes;
 		if (this.IsDiscountCodes && this.originalDataByIsDiscountCodes?.length == 0) this.GetAllCustomsBookMainView();
 		this.toggleVisibility(false, this.data);

@@ -1,0 +1,83 @@
+﻿<style>
+    .readonly {
+             pointer-events: none;
+             user-select: text; 
+             opacity: 0.7;
+        }
+</style>
+
+ 
+
+
+<table>
+    <tr>
+        <td>
+            <div  class="TableHolder">
+                <table>
+
+                   <tr style="height: 30px;">
+
+                    </tr>
+                    <tr style="height: 20px;">                       
+                    
+                        <td>
+                            <div style="display: flex; align-items: center; width: 100%;">
+                                
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <CheckBox
+                                        [class.readonly]="readonly"
+                                        title="Select All"
+                                        [IsChecked]="selectedAll"
+                                        (Checked)="selectedAll = $event">
+                                    </CheckBox>
+                        
+                                    <span>
+                                        {{'MasavInterface.O.SelectAll' | TextCodeTranslationPipe}}
+                                    </span>
+                                </div>
+                        
+                                <div style="flex: 1;"></div>
+                        
+                                <IconButton
+                                    [class.readonly]="readonly"
+                                    [Name]="'Refresh'"
+                                    (click)="refreshButtonClicked()">
+                                </IconButton>
+                        
+                            </div>
+                        </td>
+                      
+                    </tr> 
+                   <tr style="height: 15px;">
+
+                    </tr> 
+                    <tr>
+                       
+                        <td style="">
+
+                            <div class="GeneratedGridContainer">
+                                <logitude-grid GridWidth="80%" GridHeight="100%" [ObjectTable]="'APPayment'"
+                                    [dataSource]="DataSource" [MenuHeaderchangeevent]="menuHeaderchangeevent"
+                                    [columns]="columns" [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent"
+                                    [IsCustomTemplate]="true" [CustomColumnsReady]="masavInterfaceColumnsReady"  
+                                    [PassAdditionalDataToTemplates]="true"
+                                    [MarkIsChecked]="markIsChecked"
+                                    (DataLoaded)="onDataLoaded()"
+                                    [ChangeCheckBoxesState]="changeCheckBoxesState" (CheckBoxChecked)="onRowSelected($event)">
+                                </logitude-grid>
+                            </div>
+                          
+                          
+          
+                        </td>
+                        
+                    </tr>
+
+                    
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+</table>

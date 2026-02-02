@@ -1936,6 +1936,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<ARInvoiceStockLine> ARInvoiceStockLines { get; set; }
         #endregion
         public IDbSet<ARInvoicesSignedStatus> ARInvoicesSignedStatuses { get; set; }
+        public IDbSet<MasavInterface> MasavInterfaces { get; set; }
+        public IDbSet<MasavInterfaceStatus> MasavInterfaceStatuses { get; set; }
+
 
         #region Quotes Context
         public IDbSet<QuoteClosingReason> QuoteClosingReasons { get; set; }

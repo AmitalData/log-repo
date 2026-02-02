@@ -163,8 +163,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                             LogDateTime = myRecord.LogDateTime,
                             HistoryCount = iQuery.Count(),
                             BaseCurrencyId = baseCurrencyId,
-                            CurrencyRates= currencyRateRepository.GetSingleByExchangeRateId(myRecord.Id)
-                        };
+                            CurrencyRates = currencyRateRepository.GetSingleByExchangeRateId(myRecord.Id)
+                         };
                     }
                 }
             }
@@ -291,7 +291,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public double? GetLastRecordByValueDateAndExchangeRateId(int tenant, string foreignCurrencyId, string baseCurrencyId, DateTime? date, string glaccountId)
         {
-            var glAccountQueryService = new GLAccountQueryService(tenant);
+
+                var glAccountQueryService = new GLAccountQueryService(tenant);
             var exchangeRateId = glAccountQueryService.GetExchangeRateIdById(glaccountId, tenant);            
 
             if (exchangeRateId == null || !SecurityUtility.CheckFeature("AdditionalCurrencyRate", "AdditionalCurrencyRate.Features.Menu", tenant))

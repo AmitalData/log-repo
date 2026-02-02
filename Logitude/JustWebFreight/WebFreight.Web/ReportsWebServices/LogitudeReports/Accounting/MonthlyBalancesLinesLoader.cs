@@ -90,8 +90,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 		private void SetMonthlyBalancesLine()
 		{
             ChartOfAccountRepository chartOfAccountRepository = new ChartOfAccountRepository(tenant);
+
             List<ChartOfAccount> chartOfAccountList =chartOfAccountRepository.GetAllByTenant(tenant);
             QueryFilterItem ChartOfAccountsIdList = reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsIdList").FirstOrDefault();
+            QueryFilterItem ChartOfAccountsTypeList = reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsTypeList").FirstOrDefault();
+
             QueryFilterItem DetailedForJobs = reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForJobs").FirstOrDefault();
             var year = int.Parse(reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "NumberOfYear").FirstOrDefault()?.FieldValue?.ToString());
 
@@ -100,14 +103,19 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 string[] ChartOfAccountsIdArray = ChartOfAccountsIdList.FieldValue.ToString().Split(',');
 				 chartOfAccountList = chartOfAccountList.Where(a => ChartOfAccountsIdArray.Contains(a.Id)).ToList();
 			 }
+            if (!string.IsNullOrEmpty((string)ChartOfAccountsTypeList?.FieldValue))
+            {
+                string[] ChartOfAccountsTypeArray = ChartOfAccountsTypeList.FieldValue.ToString().Split(',');
+                chartOfAccountList = chartOfAccountList.Where(a => ChartOfAccountsTypeArray.Contains(a.TypeCode)).ToList();
+            }
             List<MonthlyBalancesLine> monthlyBalancesLine=GetMonthlyBalancesReportByYearAndTenant(tenant, year);
             dataProvider.ChartOfAccountLine=new List<ChartOfAccountLine>();
 			dataProvider.Year = year;
-
+            
             for (int i = 0; i < chartOfAccountList?.Count(); i++)
             {
                 List<MonthlyBalancesLine> monthlyBalancesLineOfChartOfAccount= monthlyBalancesLine.Where(a=>a.ChartOfAccount == chartOfAccountList[i].Id).ToList();
-
+				
                 ChartOfAccountLine chartOfAccountLine = 
                                 new ChartOfAccountLine()
                                 {

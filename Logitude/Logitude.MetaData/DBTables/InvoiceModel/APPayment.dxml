@@ -177,6 +177,7 @@
   </Column>
   <Column
     Name="BankBranch"
+    OldNames="VendorBankBranch"
     Type="varchar"
     Size="10">
     <Constraints
@@ -445,6 +446,13 @@
     Name="ConnectedInvoicesNumbers"
     Type="varchar"
     Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MasavInterfaceId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

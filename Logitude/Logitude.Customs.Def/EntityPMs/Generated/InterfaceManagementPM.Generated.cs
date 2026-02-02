@@ -740,6 +740,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string queueDefinitionGroup ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string QueueDefinitionGroup  
+	   {
+	    
+	     get
+		{
+		   return queueDefinitionGroup;
+		 }
+		 set
+		 {
+		   if(queueDefinitionGroup != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QueueDefinitionGroup",OldValue=queueDefinitionGroup,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   queueDefinitionGroup=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

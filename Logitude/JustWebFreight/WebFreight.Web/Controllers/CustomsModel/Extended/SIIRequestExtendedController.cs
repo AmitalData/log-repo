@@ -97,14 +97,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 if (apiResp == null)
                     throw new InvalidOperationException(
                         $"Did not receive a response from SII for request '{siiRequestId}'.");
-                new SIIRequestApiResponseSaver(auth.Tenant)
+                bool isFinal = new SIIRequestApiResponseSaver(auth.Tenant)
                            .Save(apiResp, siiRequestId, dto);
                 if (apiResp?.Success == true && apiResp.Result?.ResponseCode == 0)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, apiResp.Result);
                 }
 
-                // error → 400 + error payload
                 var errorPayload = new
                 {
                     ResponseCode = apiResp?.ErrorCode ?? -1,
@@ -114,7 +113,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, new
                 {
                     Error = true,
-                    Details = errorPayload
+                    Details = errorPayload,
+                    IsFinal = isFinal
                 });
             }
             catch (Exception ex)
@@ -131,5 +131,38 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, errorPayload);   // 400
             }
         }
+
+        [HttpGet]
+        [Route("api/SIIRequestExtended/GetApprovalReport")]
+        public async Task<HttpResponseMessage> GetApprovalReport([FromUri] string url)
+        {
+            var uri = new Uri(url);
+            if (!uri.Host.Equals("m2c.sii.org.il", StringComparison.OrdinalIgnoreCase))
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid host");
+
+            using (var http = new HttpClient())
+            using (var resp = await http.GetAsync(uri))
+            {
+                if (!resp.IsSuccessStatusCode)
+                    return Request.CreateResponse(resp.StatusCode, "Failed to fetch report");
+
+                var bytes = await resp.Content.ReadAsByteArrayAsync();
+
+                var result = new HttpResponseMessage(HttpStatusCode.OK);
+                result.Content = new ByteArrayContent(bytes);
+                result.Content.Headers.ContentType =
+                    resp.Content.Headers.ContentType ??
+                    new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
+
+                result.Content.Headers.ContentDisposition =
+                    new System.Net.Http.Headers.ContentDispositionHeaderValue("inline")
+                    { FileName = "DeclarationApprovalReport.pdf" };
+
+                return result;
+            }
+        }
+
+
+
     }
 }

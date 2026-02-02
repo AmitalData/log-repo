@@ -23,10 +23,6 @@ namespace Logitude.Customs.Data.EntityKeys
 	  
 				 
 	    			   
-	  public int LineNumber  { get; set; }
-	  
-				 
-	    			   
 	  public string SIIRequestID  { get; set; }
 	  
 				 
@@ -43,7 +39,7 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return DeclarationId+'_'+LineNumber+'_'+SIIRequestID+'_'+InvoiceCounterKey+'_'+InvoiceItemLineNumber ;
+                 return DeclarationId+'_'+SIIRequestID+'_'+InvoiceCounterKey+'_'+InvoiceItemLineNumber ;
                  
       }
 

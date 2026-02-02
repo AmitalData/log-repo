@@ -135,6 +135,7 @@
     <Content Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingServiceComponent.html" />
     <Content Include="Accounting\Components\Others\InterestInvoiceAutoCreditComponent.html" />
     <Content Include="Accounting\Components\Others\JournalReconcileComponent.html" />
+    <Content Include="Accounting\Components\Others\JournalRevaluationComponent.html" />
     <Content Include="Accounting\Components\Others\ExternalReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ReconcileExternalPage\ExternalPagesTabComponent.html" />
@@ -4978,6 +4979,7 @@
     <TypeScriptCompile Include="Accounting\Components\Others\Aging4CustomerChartWindowComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CancelChequeComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\JournalReconcileComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Others\JournalRevaluationComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ExternalReconcileComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ReconciledMessage.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ReconcileComponent.ts" />

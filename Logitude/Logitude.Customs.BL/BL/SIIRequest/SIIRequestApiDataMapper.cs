@@ -4,6 +4,7 @@ using Logitude.BL.Helpers;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.DataContracts.SIIRequest;
+using Logitude.Customs.Data.DataContracts.SIIRequest;
 using Logitude.Customs.Data.EntityKeys.Extended;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
@@ -222,6 +223,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 partnerCode = computingPartnerTranslationQuery.GetPartnerCodeTranslation(logitudeCode, partner.Id, objectTable.Id, tenant);
             }
 
+
             return partnerCode;
         }
         private ReleaseRequestFormDto BuildForm(
@@ -240,8 +242,12 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 ? sii.FromApplicationId
                 : $"{GetSiiCompanyName()}-{siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1}";
 
+            var applicantSystemIdStr = GetMandatoryDefault(_tenant, "SIIApplicantSystemId");
+            var applicantSystemId = ToLong(applicantSystemIdStr, "SIIApplicantSystemId");
+
             var contactName = contact?.LocalName;
 
+            var destPortStr = GetComputingPartnerCodeTranslation(sii.UnloadPortCode,SIIRequestComputingPartner,ComputingPartnerTableUnloadingSiteType,_tenant);
             return new ReleaseRequestFormDto
             {
                 formApplicationId = formApplicationId,
@@ -262,6 +268,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 importerFax = SanitizePhone(sii.ContactFax),
 
                 applicantFullName = contactName,
+                applicantSystemId = applicantSystemId,
                 applicantIdNumber = contact == null
                     ? null
                     : new UserQuery(_tenant).GetPersonalIdByUserId(contact.Id, _tenant),
@@ -283,16 +290,8 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
                 warehouseLocationName = sii.WareHouseAddress,
                 warehouseSettlement = string.IsNullOrEmpty(sii.WareHouseCity)? null: new IdDto { id = ToInt(sii.WareHouseCity, "WareHouseCity") },
-                destinationPort = new IdDto
-                {
-                    id = ToInt(
-                        GetComputingPartnerCodeTranslation(
-                            sii.UnloadPortCode,
-                            SIIRequestComputingPartner,
-                            ComputingPartnerTableUnloadingSiteType,
-                            _tenant),
-                        "destinationPort")
-                }
+                destinationPort = string.IsNullOrWhiteSpace(destPortStr)? null: new IdDto { id = ToInt(destPortStr, "destinationPort") },
+                DestinationPortLogitudeCode = sii.UnloadPortCode,
 
             };
         }
@@ -301,7 +300,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             SiiSelectedRowDto key,
             SupplierInvoiceItemsReqListQueryService service)
         {
-            var item = service.GetRequest(
+            var item = service.GetRequestLine(
                 key.SIIRequestID,
                 key.DeclarationId,
                 key.InvoiceCounterKey,
@@ -353,7 +352,9 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                                           .Replace(item.VendorName, "")
                                           .Trim().Length)),
                 formAttachmentIndexes = new List<int>(),
-               UiLineNumber = key.UiIndex
+                UiLineNumber = key.UiIndex,
+                InvoiceCounterKey = key.InvoiceCounterKey,
+                InvoiceItemLineNumber = key.InvoiceItemLineNumber,
             };
 
             if (string.IsNullOrWhiteSpace(item.ProductFileNumber))

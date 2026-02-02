@@ -35,6 +35,7 @@ using System.Net.Http.Headers;
 using Logitude.Customs.BL.EntityDataMappings;
 using Logitude.BL.CommonDataModel.EntityLists;
 using WebFreight.Web.Controllers.CommonDataModel.Extended;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -46,14 +47,24 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         {
             try
             {
+                //CommunicationLogStepController nenww = new CommunicationLogStepController();
+                //List<CommunicationLogStepList> communicationLogStepList = nenww.GetCommunicationLogStepsDocumentDataBystringStepFilter(mainInterfaceCode, communicationLogId, tenant, stringStepFilter, suppressHugeData) ;
+
+
                 CommunicationLogStepController nenww = new CommunicationLogStepController();
-                List<CommunicationLogStepList> communicationLogStepList = nenww.GetCommunicationLogStepsDocumentDataBystringStepFilter(mainInterfaceCode, communicationLogId, tenant, stringStepFilter, suppressHugeData) ;
+
+                var myFilter = new int[] { 0, 30 };
+                var communicationLogStepQuery = new CommunicationLogStepQuery(tenant);
+
+                List<CommunicationLogStepList> stepLIstOut = communicationLogStepQuery.GetCommunicationLogStepsDocumentData(communicationLogId, tenant, myFilter, false, false);
+
+
                 ICustomContext customContext = CustomContext.GetContext(tenant);
                 PhysicalCheckPM entitypm = new PhysicalCheckPM
                 {
                     Tenant = tenant
                 };
-                PhysicalCheckDataMapping.PhysicalCheckRequestXmlToPM(communicationLogStepList, entitypm);
+                PhysicalCheckDataMapping.PhysicalCheckRequestXmlToPM(stepLIstOut, entitypm);
                 return Request.CreateResponse(HttpStatusCode.OK, entitypm);
             }
 
@@ -69,13 +80,20 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             try
             {
                 CommunicationLogStepController nenww = new CommunicationLogStepController();
-                List<CommunicationLogStepList> communicationLogStepList = nenww.GetCommunicationLogStepsDocumentDataBystringStepFilter(mainInterfaceCode, communicationLogId, tenant, stringStepFilter, suppressHugeData);
+
+                 var myFilter = new int[] { 0, 30 };
+                var communicationLogStepQuery = new CommunicationLogStepQuery(tenant);
+
+                List<CommunicationLogStepList> stepLIstOut = communicationLogStepQuery.GetCommunicationLogStepsDocumentData(communicationLogId, tenant, myFilter, false, false);
+
+ 
+              //  List<CommunicationLogStepList> communicationLogStepList = nenww.GetCommunicationLogStepsDocumentDataBystringStepFilter(mainInterfaceCode, communicationLogId, tenant, stringStepFilter, suppressHugeData);
                 ICustomContext customContext = CustomContext.GetContext(tenant);
                 PhysicalCheckPM entitypm = new PhysicalCheckPM
                 {
                     Tenant = tenant
                 };
-                PhysicalCheckDataMapping.ClosedPhysicalCheckXmlToPM(communicationLogStepList, entitypm);
+                PhysicalCheckDataMapping.ClosedPhysicalCheckXmlToPM(stepLIstOut, entitypm);
                 return Request.CreateResponse(HttpStatusCode.OK, entitypm);
             }
 

@@ -39,6 +39,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(CH_NG_190_MSG1_NoticeToClient customResponse, GenericRequestParams requestParams)
         {
+            bool declarationFound = false;
             const string updatePhysicalCheck = "4";
             try
             {
@@ -59,6 +60,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(NoticeToClient.declarationID.ToString(), requestParams.Tenant);
                     if (myDeclarationPM != null)
                     {
+                        declarationFound = true;
                         //If this is a Converted Declaration
                         if (myDeclarationPM.IsConvertedDeclaration)
                         {
@@ -70,13 +72,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     else
                     {
-                        this.MyResponseData = new INF_MSG_GenericResponseData();
-                        this.MyResponseData.Succeeded = false;
-                        this.MyResponseData.HasException = true;
-                        this.MyResponseData.UserMessage = "Declaration not found";
-                        return;
+                        LogMessagingUtil.Instance.AppendLine(
+       $"[190] Declaration NOT found by declarationID='{NoticeToClient.declarationID}'. Continue without file. checkId={NoticeToClient.checkId}");
+                        declarationId = null;
+                        declarationCustomerId = null;
+                        myDeclarationPM = null;
                     }
-                    //Yuval Chalup 19.11.2015 TASK-17450 --->
                 }
 
                 if (string.IsNullOrWhiteSpace(declarationId))
@@ -88,6 +89,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     if (myDeclarationPM != null)
                     {
+                        declarationFound = true;
                         if (myDeclarationPM.IsConvertedDeclaration)
                         {
                             DeclarationConvertionText = myDeclarationPM.UserNotes;
@@ -97,25 +99,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     else
                     {
-                        this.MyResponseData = new INF_MSG_GenericResponseData();
-                        this.MyResponseData.Succeeded = false;
-                        this.MyResponseData.HasException = true;
-                        this.MyResponseData.UserMessage = "Declaration not found";
-                        return;
+                        LogMessagingUtil.Instance.AppendLine(
+                            $"[190] Declaration NOT found by cargo identifiers. Continue without file. " +
+                            $"type={customResponse?.CheckEntity?.cargoIdentifier?.cargoIdentifierType} " +
+                            $"k1={customResponse?.CheckEntity?.cargoIdentifier?.cargoIdentifierKey1} " +
+                            $"k2={customResponse?.CheckEntity?.cargoIdentifier?.cargoIdentifierKey2} " +
+                            $"checkId={NoticeToClient?.checkId}");
+                        declarationId = null;
+                        declarationCustomerId = null;
+                        myDeclarationPM = null;
                     }
                        
                 }
 
                 if (string.IsNullOrWhiteSpace(declarationCustomerId) && customResponse.NoticeToClient.importerNumber!=null)
                 {
-/*task 35242 change from Client to Card 12/12/2017
-                    ClientQueryService clientQueryService = new ClientQueryService(requestParams.Tenant);
-                    ClientPM clientPM = clientQueryService.GetClientByCode(customResponse.NoticeToClient.importerNumber.ToString(), requestParams.Tenant);
-                    if (clientPM != null)
-                    {
-                        declarationCustomerId = clientPM.Id;
-                    }
-*/
                     Card myCard = null;
                     var repository = new CardRepository (requestParams.Tenant);
                     myCard = repository.GetSingleCardByCode(customResponse.NoticeToClient.importerNumber.ToString(), requestParams.Tenant, false);
@@ -269,9 +267,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                                 //Yuval Chalup 19.11.2015 TASK-17450 --->
                                 eventContextTagModelList.Add(myInsertEventContextTagModel);
-                                myDeclarationPM.PhysicalCheck = "1";
-                                myDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                                declarationUpdateService.Update(myDeclarationPM, true);
+                                if (declarationFound && myDeclarationPM != null)
+                                {
+                                    myDeclarationPM.PhysicalCheck = "1";
+                                    myDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                                    declarationUpdateService.Update(myDeclarationPM, true);
+                                }
 
                             }
                             LogMessagingUtil.Instance.AppendLine("NoticeToClient.QueueType = " + NoticeToClient.QueueType?.ToString());
@@ -308,9 +309,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
 
 
-                ICommonDataContext commonDbContext = CommonDataContext.GetContext(myDeclarationPM.Tenant);
+                ICommonDataContext commonDbContext = CommonDataContext.GetContext(requestParams.Tenant);
                 UserRepository userRepository = new UserRepository(commonDbContext);
-                var user = userRepository.GetSingleUserByCode("MEHES", myDeclarationPM.Tenant, true);
+                var user = userRepository.GetSingleUserByCode("MEHES", requestParams.Tenant, true);
 
                 var _requestDescription = "";//12192 -->
                 switch (NoticeToClient.operationCode)
@@ -318,8 +319,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     case 1:
                         _requestDescription = "בדיקה פיזית חדשה ";
 
-                        if(myDeclarationPM.Direction == "E") 
-                        {                           
+                        if (declarationFound && myDeclarationPM != null && myDeclarationPM.Direction == "E")
+                        {
                             RaiseEvent(myDeclarationPM, user?.Id, status_id: "CHK");
                             if (myDeclarationPM.IsDiamondDeclaration)
                             {
@@ -334,7 +335,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         break;
                     case 3:
                         _requestDescription = "בדיקה פיזית בוטלה ";
-                        if(myDeclarationPM.Direction == "E")
+                        if (declarationFound && myDeclarationPM != null && myDeclarationPM.Direction == "E")
                         {
                             RaiseEvent(myDeclarationPM, user?.Id, status_id: "SFA");
                         }    
@@ -347,14 +348,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 _requestDescription = _requestDescription + NoticeToClient.checkId;
 
 
-                physicalCheck.CargoIdentifierKey1 = customResponse.CheckEntity.cargoIdentifier.cargoIdentifierKey1;
-                physicalCheck.CargoIdentifierKey2 = customResponse.CheckEntity.cargoIdentifier.cargoIdentifierKey2;
-                physicalCheck.CargoIdentifierKey3 = customResponse.CheckEntity.cargoIdentifier.cargoIdentifierKey3;
-                physicalCheck.CargoIdentifierTypeCode = customResponse.CheckEntity.cargoIdentifier.cargoIdentifierType.ToString();
-                physicalCheck.ContainerNubmer = customResponse.CheckEntity.containerNumber;
-                physicalCheck.RowNumber = customResponse.CheckEntity.rowNumber.ToString();
+                physicalCheck.CargoIdentifierKey1 = customResponse.CheckEntity?.cargoIdentifier?.cargoIdentifierKey1;
+                physicalCheck.CargoIdentifierKey2 = customResponse.CheckEntity?.cargoIdentifier?.cargoIdentifierKey2;
+                physicalCheck.CargoIdentifierKey3 = customResponse.CheckEntity?.cargoIdentifier?.cargoIdentifierKey3;
+                physicalCheck.CargoIdentifierTypeCode =
+                    customResponse?.CheckEntity?.cargoIdentifier != null
+                    ? customResponse.CheckEntity.cargoIdentifier.cargoIdentifierType.ToString()
+                    : null;
 
-                physicalCheck.CargoTypeCode = NoticeToClient.entityType.ToString();
+                physicalCheck.ContainerNubmer = customResponse.CheckEntity?.containerNumber;
+                physicalCheck.RowNumber = customResponse?.CheckEntity?.rowNumber != null
+                    ? customResponse.CheckEntity.rowNumber.ToString()
+                    : null;
+
+                physicalCheck.CargoTypeCode = NoticeToClient?.entityType.ToString();
                 physicalCheck.CheckId = NoticeToClient.checkId.ToString();
                 physicalCheck.CheckSiteCode = NoticeToClient.checkSiteNumber?.ToString();
 
@@ -379,33 +386,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 physicalCheck.CheckTypeCode = NoticeToClient.CheckType.ToString();
                 physicalCheck.VehicleChassisNumber = NoticeToClient.VehicleChassisNumber;
-
-                //<--- Yuval Chalup 19.11.2015 TASK-17450 - CHANGE FROM:
-                //if (!string.IsNullOrWhiteSpace(NoticeToClient.declarationID))
-                //{
-                //    //DeclarationRepository declarationRep = new DeclarationRepository(customContext);
-                //    //declarationPM = declarationRep.GetSingleDeclarationByNumber(declarationNo, requestParams.Tenant);
-                //    DeclarationQueryService declarationQueryService = new DeclarationQueryService(customContext);
-                //    declarationId = declarationQueryService.GetIdByDeclarationNumber(NoticeToClient.declarationID.ToString(), requestParams.Tenant);
-                //    if (string.IsNullOrWhiteSpace(declarationId))
-                //    {
-                //        LogMessagingUtil.Instance.AppendLine("NoticeToClient.declarationID = " + NoticeToClient.declarationID + " But DeclarationQueryService.GetSingle return null ");
-                //    }
-                //    else
-                //    {
-                //        physicalCheck.DeclarationId = declarationId;
-                //    }
-                //}
-                //TO:
                 if (string.IsNullOrWhiteSpace(declarationId))
                 {
                     LogMessagingUtil.Instance.AppendLine("NoticeToClient.declarationID = " + NoticeToClient.declarationID + " But DeclarationUpdateService.GetSertByConvertedDeclarationNumber returned null DeclarationPM");
+                    physicalCheck.DeclarationId = null;
                 }
                 else
                 {
                     physicalCheck.DeclarationId = declarationId;
                 }
-                //Yuval Chalup 19.11.2015 TASK-17450 --->
 
                 if (string.IsNullOrWhiteSpace(declarationId))
                 {
@@ -443,7 +432,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyRequestSheetParam.EntityId2 = declarationId;
                 }
 
-                if (myDeclarationPM.IsCourierDeclaration)
+                if (declarationFound && myDeclarationPM != null && myDeclarationPM.IsCourierDeclaration)
                 {
                     SendDeclarationPrint(myDeclarationPM, requestParams);
 
@@ -481,7 +470,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                         if (_MyDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
                         {
-                            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), myDeclarationPM.Tenant);
+                            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), requestParams.Tenant);
                             //_MyDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(myDeclarationPM, _MyDeclarationCourierStatusPM: _MyDeclarationCourierStatusPM);
                             declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
                         }
@@ -502,41 +491,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             return this.MyResponseData;
         }
-
-        void SendDeclarationStatusRequest(DeclarationPM myDeclarationPM)
-        {
-            var newSearchDeclarationStatusRequestParams = new DeclarationStatusRequestParams()
-            {
-                LoggingEnabled = true,
-                //LoggingUserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
-                CustomFileNo = myDeclarationPM.CustomFileNo,
-                DeclarationNumber = myDeclarationPM.DeclarationNumber,
-                //CargoTypeCode = myDeclarationPM.Consignments[0].CargoTypeCode,
-                //ManifestNumber = myDeclarationPM.Consignments[0].ManifestNumber,
-                //SecondCargoID = myDeclarationPM.Consignments[0].SecondCargoID,
-                //ThirdCargoID = myDeclarationPM.Consignments[0].ThirdCargoID,
-                Tenant = myDeclarationPM.Tenant,
-                RequestName = "Declaration Status Search (from Notice To Client Response)",
-                ResponseName = "Declaration Status Search (from Notice To Client Response)",
-                //TestCase = SelectedTest,
-                CargoRadio = false,
-                DeclarationRadio = true,
-                OldReshimonRadio = false,
-                OldReshimonNumber = null,
-                LoggingEntityId = myDeclarationPM.Id,
-                RequestVIA = SendRequestVIA.WebServiceBatch,
-            };
-
-            var service = new DF_NG_8250_Web01_DeclarationStatus_RequestMessagingService();
-            var responseData = service.Send(newSearchDeclarationStatusRequestParams);
-            if (!responseData.Succeeded)
-            {
-                LogMessagingUtil.Instance.AppendLine("Request Failed " + responseData.CustomsRequestsSheetId + ", Message: " + responseData.UserMessage);
-                return;
-            }
-            LogMessagingUtil.Instance.AppendLine("Request Succeeded " + responseData.CustomsRequestsSheetId);
-        }
-
 
         private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id,string comments = null)
         {
@@ -596,7 +550,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LoggingEnabled = true,
                 CustomFileNo = myDeclarationPM.CustomFileNo,
                 DeclarationNumber = decNumList, //declarationPM.DeclarationNumber,
-                Tenant = myDeclarationPM.Tenant,
+                Tenant = requestParams.Tenant,
                 RequestName = "Declaration Print(190)",
                 ResponseName = "Declaration Print(190)",
                 LoggingEntityId = myDeclarationPM.Id,

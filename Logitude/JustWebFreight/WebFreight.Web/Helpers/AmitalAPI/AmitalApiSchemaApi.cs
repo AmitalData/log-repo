@@ -50,5 +50,24 @@ namespace WebFreight.Web.Helpers.AmitalAPI
 
             return res.Res.Content.ReadAsStreamAsync().Result;
         }
+
+        public bool Requeue(string token, string[] ids)
+        {
+            if (token == null || ids == null || ids.Length == 0)
+                return false;
+
+            //TODO - arrange the payload according to the API call /Requeue
+            var payload = new
+            {
+                Ids = ids,
+                Take = ids.Length,
+                CreateDate = DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")
+            };
+            string url = "Requeue";
+
+            HttpClienResponse res = AmitalAPIHelper.SendRequest(token, url, HttpMethod.Post, payload);
+
+            return res.Res.IsSuccessStatusCode;
+        }
     }
 }

@@ -112,5 +112,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public DateTime? ExternalPaymentDate { get; set; }
         public string ExternalPaymentNotes { get; set; }
         public string ConnectedInvoicesNumbers { get; set; }
+        public string MasavInterfaceId { get; set; }
     }
 }

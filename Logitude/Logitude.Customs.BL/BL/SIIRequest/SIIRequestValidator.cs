@@ -11,6 +11,7 @@ internal static class SIIRequestValidator
     internal const string RequiredFieldsTextCode = "Customs.SIIRequest.O.RequiredFields";
     internal const string LineCode = "Customs.SIIRequest.O.Line";
     internal const string AttachmentCode = "Customs.SIIRequest.O.Attachment";
+    internal const string MissingComputingPartnerTranslation = "Customs.SIIRequest.O.MissingComputingPartnerTranslation";
 
     public static void Validate(ReleaseRequestApiDto dto, int tenant)
     {
@@ -22,6 +23,10 @@ internal static class SIIRequestValidator
         Check(f.importerNumber, "importerNumber", errors);
         Check(f.importerEmail, "importerEmail", errors);
         Check(f.applicantIdNumber, "applicantIdNumber", errors);
+
+        if (f.applicantSystemId <= 0)
+            errors.Add("applicantSystemId");
+
         Check(f.applicantFullName, "applicantFullName", errors);
         Check(f.customsAgentRegisteredNumber, "customsAgentRegisteredNumber", errors);
         Check(f.customsAgentName, "customsAgentName", errors);
@@ -29,7 +34,14 @@ internal static class SIIRequestValidator
         Check(f.billOfLadingId, "billOfLadingId", errors);
         CheckIndex(f.formAttachmentIndex, "formAttachmentIndex", errors);
         Check(f.importCountry?.alphaCode, "importCountry", errors);
-        Check(f.destinationPort?.id, "destinationPort", errors);
+        if (string.IsNullOrWhiteSpace(f.DestinationPortLogitudeCode))
+        {
+            errors.Add("destinationPort");
+        }
+        else if (f.destinationPort == null || f.destinationPort.id <= 0)
+        {
+            errors.Add("MissingComputingPartnerTranslation:destinationPort:" + f.DestinationPortLogitudeCode);
+        }
         Check(f.warehouseLocationName, "warehouseLocationName", errors);
         Check(f.warehouseSettlement?.id, "warehouseSettlement", errors);
         Check(f.contactPersonFirstName, "contactPersonFirstName", errors);
@@ -83,6 +95,18 @@ internal static class SIIRequestValidator
         {
             var translatedErrors = errors.Select(raw =>
             {
+                if (raw.StartsWith("MissingComputingPartnerTranslation:"))
+                {
+                    var parts = raw.Split(new[] { ':' }, 3);
+                    var field = parts.Length > 1 ? parts[1] : "";
+                    var val = parts.Length > 2 ? parts[2] : "";
+
+                    var template = Translate(MissingComputingPartnerTranslation, tenant);
+                    var fieldHeb = Translate("Customs.SIIRequest.O." + field, tenant);
+
+                    return string.Format(template, fieldHeb, val);
+                }
+
                 var m = Regex.Match(raw, @"^(?<type>line|attachment)\[(?<idx>\d+)\]\.(?<field>.+)$");
                 if (m.Success)
                 {
@@ -91,13 +115,12 @@ internal static class SIIRequestValidator
                                      : $"{attachmentLabel} {m.Groups["idx"].Value} – ";
 
                     string fieldKey = m.Groups["field"].Value;
-                    string hebrew = Translate($"Customs.SIIRequest.O.{fieldKey}", tenant);
+                    string hebrew = Translate("Customs.SIIRequest.O." + fieldKey, tenant);
 
                     return context + hebrew;
                 }
 
-
-                return Translate($"Customs.SIIRequest.O.{raw}", tenant);
+                return Translate("Customs.SIIRequest.O." + raw, tenant);
             });
 
             var prefix = Translate(RequiredFieldsTextCode, tenant);

@@ -291,5 +291,11 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ExportLocalCustomerGroupId { get; set; }
-    }
+
+        [DataMember]
+        public string BankCodeId { get; set; }
+        [DataMember]
+        public string BankBranch { get; set; }
+
+        }
 }

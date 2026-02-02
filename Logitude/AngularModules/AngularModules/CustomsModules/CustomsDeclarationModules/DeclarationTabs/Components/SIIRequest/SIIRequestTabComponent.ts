@@ -136,14 +136,35 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
   }
 
   AddNewSIIRequest(siiRequestMode: SiiRequestMode) {
-    const newSIIRequestPM = new SIIRequestPM();
-    newSIIRequestPM.DeclarationId = AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? this.EntityPM.Id : this.EntityPM.AmendmentOriginalDeclartation;
-    newSIIRequestPM.Tenant = this.EntityPM.Tenant;
+    const isEdit = (siiRequestMode === SiiRequestMode.IsEdit);
+
+    let siiRequest: SIIRequestPM;
+
+    if (isEdit) {
+      siiRequest = this.selectedSIIRequest;
+    } else {
+      const declarationId =
+        AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation)
+          ? this.EntityPM.Id
+          : this.EntityPM.AmendmentOriginalDeclartation;
+
+      siiRequest = new SIIRequestPM();
+      siiRequest.DeclarationId = declarationId;
+      siiRequest.Tenant = this.EntityPM.Tenant;
+    }
+
+    let isAllowChange = this.IsAllowChange;
+
+    if (isEdit && !AppTool.IsNullOrEmpty(siiRequest?.RequestNo)) {
+      isAllowChange = false;
+    }
+
     let args: any = {
       Decalaration: this.EntityPM,
-      SIIRequest: SiiRequestMode.IsEdit === siiRequestMode ? this.selectedSIIRequest : newSIIRequestPM,
+      SIIRequest: siiRequest,
       IsNewOrEdit: siiRequestMode,
-      filterAgrs: this.initFilterArgs()
+      filterAgrs: this.initFilterArgs(),
+      isAllowChange: isAllowChange
     };
 
     if (siiRequestMode === SiiRequestMode.IsNew)
@@ -187,7 +208,12 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     let logWindow = new LogitudeWindow();
     logWindow.Width = 1030;
     logWindow.Height = 770;
-    logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.SIIRequest");
+    let title = TextCodeTranslator.Translate("Customs.Declaration.TH.SIIRequest");
+    const requestNo = this.selectedSIIRequest?.RequestNo || args?.SIIRequest?.RequestNo;
+    if (!AppTool.IsNullOrEmpty(requestNo)) {
+      title += ` - ${requestNo}`;
+    }
+    logWindow.Title = title;
     logWindow.SubTitle = `${this.EntityPM?.CustomFileNo}`;
     if (!AppTool.IsNullOrEmpty(this.selectedSIIRequest?.ImporterId)) logWindow.SubTitle += ` / ${TextCodeTranslator.Translate("Customs.SIIRequest.F.ImporterId")}: ${this.selectedSIIRequest?.ImporterId}`;
     args.isAllowChange = this.IsAllowChange;
@@ -221,7 +247,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
   }
 
-  DisplayOnlyCheck() {
+ DisplayOnlyCheck() {
 
     this.IsDisplayOnly = !!this.CurrentSession?.CurrentEditComponent?.EditComponentController?.InDisplayMode;
 

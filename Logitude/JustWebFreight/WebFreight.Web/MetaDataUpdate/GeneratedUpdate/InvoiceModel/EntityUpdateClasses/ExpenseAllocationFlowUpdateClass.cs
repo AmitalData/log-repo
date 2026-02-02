@@ -25,7 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ExpenseAllocationFlowUpdateClass
    {  		
-		public const string HashString = "dbc0c2be90634e968922dc71b048faa5";
+		public const string HashString = "1b034dabed568ac829d286742e4eec2c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,7 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Expense Allocation Flows",
-			      				    Code =  "5bb8",
+			      				    Code =  "8d63",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -643,11 +643,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ExpenseAllocationFlowTextCode_ExpenseAllocationFlowOExpenseAllocationSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationFlow.O.ExpenseAllocationSetting", DefaultText = "Expense Allocation Setting",LocalDefaultText = @"BS64:IteU15LXk9eo15XXqiDXpNeo15nXodeUIg==", ObjectTableId = ExpenseAllocationFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode ExpenseAllocationFlowTextCode_ExpenseAllocationFlowOAmountDue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationFlow.O.AmountDue", DefaultText = "Amount Due:",LocalDefaultText = @"BS64:Iteg16nXkNeoINec16nXnNedOiI=", ObjectTableId = ExpenseAllocationFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode ExpenseAllocationFlowTextCode_ExpenseAllocationFlowOUnrecognizedExpenses = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationFlow.O.UnrecognizedExpenses", DefaultText = "Unrecognized Expenses",LocalDefaultText = @"BS64:IteU15XXpteQ15XXqiDXqdeY16jXnSDXlNeV15vXqNeVIg==", ObjectTableId = ExpenseAllocationFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode ExpenseAllocationFlowTextCode_ExpenseAllocationFlowOAmountPaid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationFlow.O.AmountPaid", DefaultText = "amount Paid ",LocalDefaultText = @"BS64:Itep15XXnNedINei15Mg15vXlDoi", ObjectTableId = ExpenseAllocationFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode ExpenseAllocationFlowTextCode_ExpenseAllocationFlowORecognizedExpense = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationFlow.O.RecognizedExpense", DefaultText = "Recognized Expense",LocalDefaultText = @"BS64:IteU15XXpteQ15Qg16nXlNeV15vXqNeUIg==", ObjectTableId = ExpenseAllocationFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode ExpenseAllocationFlowTextCode_ExpenseAllocationFlowOInvoiceVoided = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationFlow.O.InvoiceVoided", DefaultText = "Invoice Voided",LocalDefaultText = @"BS64:IteX16nXkdeV16DXmdeqINeR15XXmNec15Qi", ObjectTableId = ExpenseAllocationFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode ExpenseAllocationFlowTextCode_ExpenseAllocationFlowOTotalExpensesAllocation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExpenseAllocationFlow.O.TotalExpensesAllocation", DefaultText = "Total Expenses for Allocation",LocalDefaultText = @"BS64:Iteh15Qi15sg15TXldem15DXldeqINec16TXqNeZ16HXlCI=", ObjectTableId = ExpenseAllocationFlowObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

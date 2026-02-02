@@ -967,6 +967,14 @@ namespace Logitude.Infrastructure.BL
             });
 
             all.Add(new ToggleDetails()
+            {
+                Code = "IRN",
+                Name = "Interest Report Notes New Logic",
+                SearchFields = "IRN, Interest Report Notes New Logic",
+                Description = "Interest Report Notes: Entity of ARInvoice, Cheques of ARPayment",
+            });
+
+            all.Add(new ToggleDetails()
             {    
                 Code = "JAM", 
                 Name = "Journal Approval MultiThreading", 
@@ -1101,6 +1109,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "Original Name For Child Account",
                 SearchFields = "OCA,Original Name For Child Account",
                 Description = "Original Name For Child Account",
+            });
+            all.Add(new ToggleDetails()
+            {
+                Code = "SSH",
+                Name = "Skip Steps on Hasavot",
+                SearchFields = "SSH,Skip Steps on Hasavot",
+                Description = "לדלג על השלבים עבור הסבות",
             });
             return all;
        }

@@ -229,6 +229,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                 }
 
+
+
                 if (entityPM.RevalOnForeignReco == true  && FeatureToggleHelper.HasFeatureToggle("RFR", entityPM.Tenant))
                 {
                     var glaccountQueryService = new GLAccountQueryService(entityPM.Tenant);
@@ -242,10 +244,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         {
                             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
                             var tenantCurrencyId = tenantQuery.GetLocalCurrencyFromTenant(entityPM.Tenant);
-                            CreateRevaluationJournal(entityPM, glAccountPM.ControlAccountId, tenantCurrencyId);
+                            CreateRevaluationJournal(entityPM, glAccountPM.ControlAccountId, tenantCurrencyId, entityPM.RevalJrnlRef1);
                         }
                     }
                 }
+
 
 
                 if (entityPM.Number == "get")
@@ -261,7 +264,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
 
 
-        public void CreateRevaluationJournal(ReconciliationPM reconciliationPM, string controlAccountId, string tenantCurrencyId)
+        public void CreateRevaluationJournal(ReconciliationPM reconciliationPM, string controlAccountId, string tenantCurrencyId, string revalJrnlRef1)
         {
             try
             {
@@ -322,7 +325,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             LocalAmount = groupLocalRecoAmount,
                             ForeignAmount = 0,
                             CurrencyId = group.Key,
-                            Notes = "Revaluation on Foreign Currency Reco.",
+                            Reference1 = revalJrnlRef1,
+                            Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                         });
 
@@ -341,7 +345,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             LocalAmount = groupLocalRecoAmount,
                             ForeignAmount = 0,
                             CurrencyId = group.Key,
-                            Notes = "Revaluation on Foreign Currency Reco.",
+                            Reference1 = revalJrnlRef1,
+                            Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                         });
 

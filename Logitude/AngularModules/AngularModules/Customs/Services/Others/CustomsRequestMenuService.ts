@@ -11,6 +11,7 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 //import { BaseRequestsSheetMassaging } from '../../Customs/Components/CustomsRequests/BaseRequestsSheetMassaging';
 import { BaseRequestsSheetMassaging } from '../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Injectable()
 export class CustomsRequestMenuService {
@@ -27,6 +28,13 @@ export class CustomsRequestMenuService {
     }
     private buildReportsList() {
         this._CustomsRequestMenuItems = [];
+        if (FeatureLocator.HasFeaturePermession("Customs.CustomsVendor", "SettingVehicle")) {
+            var entityResourceService = new EntityResourceService();
+            entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response: any) => {
+                this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.NewClient"), "NewClient", './CustomsModules/CustomsClient/Components/NewClient/NewClientComponent', 850, 500, "Customs.Client")); //3610
+            });
+        }
+
         if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "SlaReport")) {
             this._CustomsRequestMenuItems.push(new CustomsMenuItem("דוח SLA", "SLAReport", './CustomsModules/CustomsReport/Components/Reports/SLAReportComponent', 400, 300, "1111"));
         }

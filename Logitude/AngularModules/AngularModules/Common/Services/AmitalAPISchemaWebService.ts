@@ -22,6 +22,10 @@ export class AmitalAPISchemaWebService extends AmitalAPIWebServiceBase<AmitalApi
             responseType: 'blob' 
         }).toPromise() as Promise<any>
     }
+
+    requeue(ids: string[]): Promise<{success: boolean, message?: string}> {
+        return this.http.post(this.apiUrl + '/postRequeue', { Ids: ids }, { headers: this.headers }).toPromise() as Promise<{success: boolean, message?: string}>
+    }
 }
 
 export interface AmitalApiSchema {

@@ -1,17 +1,18 @@
-﻿using System;
+﻿using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data;
+using Logitude.Customs.Data.DataContracts;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Server.Tools;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+using Simplog.Server.Infrastructure;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logitude.Customs.Def.EntityPMs;
-using Logitude.Customs.Data;
-using Logitude.Customs.Data.EntityKeys;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Server.Tools;
-using Simplog.Server.Infrastructure;
-using Logitude.Customs.BL.EntityDataMappings;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-using Logitude.Customs.Data.DataContracts;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -21,7 +22,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                    string declarationId,
                                    int tenant)
         {
-            
+
             var newPo = new SIIRequest
             {
                 Tenant = tenant,
@@ -41,7 +42,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public List<SupplieInvoiceItemsForSIIRequest> GetSupplierInvoiceItems(string declarationId, string siiRequestId, int tenant)
         {
-            List<SupplieInvoiceItemsForSIIRequest> items= repository.GetSupplierInvoiceItems(declarationId, siiRequestId, tenant);
+            List<SupplieInvoiceItemsForSIIRequest> items = repository.GetSupplierInvoiceItems(declarationId, siiRequestId, tenant);
             return items;
 
         }
@@ -49,6 +50,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return repository.GetSIIFormApplicationMaxNumber(tenant);
         }
+        public override void GetComposition(EntityKeyFields entityKeys, SIIRequestPM entityPM)
+        {
+            ICustomContext context = MainContext as CustomContext;
+            SIIRequestKeys sIIRequestKeys = entityKeys as SIIRequestKeys;
+            SupplierInvoiceItemsReqListQueryService supplierInvoiceItemsReqListQueryService = new SupplierInvoiceItemsReqListQueryService(context);
+            entityPM.SupplierInvoiceItemsReqLists = supplierInvoiceItemsReqListQueryService.GetMulti(sIIRequestKeys, false,true);
+        }
+
 
     }
 }

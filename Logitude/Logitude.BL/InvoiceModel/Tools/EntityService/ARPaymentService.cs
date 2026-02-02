@@ -730,6 +730,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 return null;
             }
+
+            string chequesCSV = GetChequeNumbersAsCsv(payment);
+
+
             NetCommonHelper.Logger.DevLog.Instance.WriteInfo(
     $"[InterestTransactionPM] MapInterestTransactionPMFromARPaymentPM  ARPayment (Id={payment?.Id}) -  AccountingDate: {journalPM?.AccountingDate}ת (JournalPM, Id={journalPM?.Id}) " );
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
@@ -749,9 +753,30 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = payment.PaymentCurrencyId,
                 JournalId = journalPM?.Id,
-                AccountingDate = journalPM?.AccountingDate
+                AccountingDate = journalPM?.AccountingDate,
+                Notes = chequesCSV,
             };
             return interestTransaction;
+        }
+
+
+        private string GetChequeNumbersAsCsv(ARPaymentPM payment)
+        {
+            IARPaymentChequeQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeQueryServiceExt), "ARPaymentChequeQueryServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeQueryServiceExt;
+            List<ARPaymentChequePM> aRPaymentChequePMList = query.GetListByPaymentId(payment.Id, payment.Tenant);
+            string chequesCSV = String.Empty;
+            if (aRPaymentChequePMList != null && aRPaymentChequePMList.Any())
+            {
+                chequesCSV = string.Join(
+                                            ",",
+                                            aRPaymentChequePMList
+                                                .Select(x => x.ChequeNumber)
+                                                .Where(x => !string.IsNullOrWhiteSpace(x))
+                                                .Distinct()
+                                        );
+
+            }
+            return chequesCSV;
         }
 
         private InterestTransactionPM MapInterestTransactionPMFromARPayment(InterestTransactionPM transaction, ARPaymentPM payment, int lineNumber ,JournalPM journalPM)
@@ -760,6 +785,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
     $"[InterestTransactionPM] MapInterestTransactionPMFromARPayment  ARPayment (Id={payment?.Id}) -  AccountingDate: {journalPM?.AccountingDate}ת (JournalPM, Id={journalPM?.Id}) ");
 
             GLAccountPM account = GetGLAccount(payment);
+
+            string chequesCSV = GetChequeNumbersAsCsv(payment);
+
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "2",
@@ -774,7 +802,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = payment.PaymentCurrencyId,
                 JournalId = journalPM?.Id,
-                AccountingDate = journalPM?.AccountingDate
+                AccountingDate = journalPM?.AccountingDate,
+                Notes = chequesCSV,
             };
             return interestTransaction;
         }

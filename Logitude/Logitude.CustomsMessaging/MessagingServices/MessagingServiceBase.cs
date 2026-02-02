@@ -861,7 +861,7 @@ Please instance and set MyResponseData ");
                     .SignCustomsRequest(
                     RequestParams.Tenant, RequestParams.PBId,
                     RequestParams.SignByPersonalId, companypersonal,
-                    setting.CustomsAgentId, bytesSerilazeObject);
+                    setting.CustomsAgentId, bytesSerilazeObject, RequestParams?.HsmStationContext);
 
 
 

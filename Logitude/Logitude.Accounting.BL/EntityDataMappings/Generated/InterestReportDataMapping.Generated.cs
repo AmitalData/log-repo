@@ -101,7 +101,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CalculatedPostponedChequesCommision, 
 	         IsForeignCurrency, 
 	         ReportCurrencyId, 
-	         ReportCurrencyCode,
+	         ReportCurrencyCode, 
+	         VatNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

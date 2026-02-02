@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {SIIRequestPM} from './SIIRequestPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -20,11 +21,13 @@ export class SupplierInvoiceItemsReqListPM {
       
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
-	  constructor() {
-                    this.UIProperties = new UIProperties(this); 
-          this.IsDirty = false;
+	        constructor(_entityParentPM: any) {
+	  		                        this.EntityParentPM = _entityParentPM;
+                this.UIProperties = new UIProperties(this);
+                this.IsDirty = false;
       }
- 	 
+
+	 
     
     private tenant: number;
     public get Tenant() { return this.tenant; }
@@ -171,9 +174,39 @@ export class SupplierInvoiceItemsReqListPM {
     public set VendorName(newValue: string) { if (this.vendorName != newValue) { this.vendorName = newValue; this.MarkAsDirty("VendorName"); } }
        
 	 
+    private statusCode: string;
+    public get StatusCode() { return this.statusCode; }
+    public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
+       
+	 
+    private statusDate: Date;
+    public get StatusDate() { return this.statusDate; }
+    public set StatusDate(newValue: Date) { if (this.statusDate != newValue) { this.statusDate = newValue; this.MarkAsDirty("StatusDate"); } }
+       
+	 
+    private distApprovalAttachmentPath: string;
+    public get DistApprovalAttachmentPath() { return this.distApprovalAttachmentPath; }
+    public set DistApprovalAttachmentPath(newValue: string) { if (this.distApprovalAttachmentPath != newValue) { this.distApprovalAttachmentPath = newValue; this.MarkAsDirty("DistApprovalAttachmentPath"); } }
+       
+	 
+    private statusName: string;
+    public get StatusName() { return this.statusName; }
+    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoiceItemsReqListPM;
-		
+	
+    private entityParentPM: any;
+    public get EntityParentPM() { return this.entityParentPM; }
+    public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
+
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue;  }//this.MarkAsDirty(); mohammad removed it because it sets the dirty bool to true when there is no changes.
+
+    public UniqueKey: string;
+	 	
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
@@ -181,7 +214,9 @@ export class SupplierInvoiceItemsReqListPM {
        {
  	
         this.IsDirty = true;
-		  	
+		  if (this.EntityParentPM) {
+            this.EntityParentPM.MarkAsDirty();
+        }	
 		 
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));

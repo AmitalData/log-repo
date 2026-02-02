@@ -359,7 +359,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     SuppressCheckGLAccountIsMultiCurrencyWI40640)
                     );
                 _JournalApproveParser.StreamingJournalAlreadChecked = false;
-                _JournalApproveParser.ParseIt();
+                _JournalApproveParser.ParseIt(_SelectedQueue);
                 //_JournalApproveParser.CopyGLAccountTotalByMonthsToControl(_AccountingContext);
 
                 if (actions.HasFlag(MyActions.BuildLedgerTransaction))
@@ -504,42 +504,44 @@ namespace Logitude.Accounting.BL.CoreBL
                     //{
                     this.Exec_usp_AccountingStreaming(myLedgerTransactionsWithCounters, allGLAccountTotalByMonths.ToList(), gLAccountAgingDataPMs);
                     // update BalanceInLocalCurrency
-                    var allGLAccountTotalByMonthsForAccountingOnly = allGLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate);
-                    var glAccountsToUpdate = (from tot in allGLAccountTotalByMonthsForAccountingOnly
-                                              group tot by tot.AccountId into groupByAccId
-                                              select new
-                                              {
-                                                  AccountId = groupByAccId.Key,
-                                                  LocalAmountDifference = groupByAccId.Sum(r => r.LocalAmountDebit - r.LocalAmountCredit)
-                                              }
-                                       )
-                                       .ToList();
-
-
-                    var gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(_AccountingContext);
-                    var gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _Tenant);
-                    var glAccounts = allGLAccountTotalByMonthsForAccountingOnly.Select(x => x.AccountId).ToList();
-                    var gLAccountMoreDataPMList = gLAccountMoreDataQueryService.GetByGLAccountsIdList(glAccounts, _Tenant);
-                    glAccountsToUpdate.ForEach(x =>
+                    if (_SelectedQueue != K_AccountingConversionJournalApproveWR || !FeatureToggleHelper.HasFeatureToggle("SSH", _Tenant))
                     {
-                        var glAccountMoreDataPM = gLAccountMoreDataPMList.Where(acc => acc.AccountId == x.AccountId).First();
-                        //if (_Tenant == 99 && x.AccountId == "1-1405813")//"Id":"1-1405813","Tenant":99,
-                        if (_Tenant == TransferCardTenant && x.AccountId == TransferCardId)//"Id":"1-1405813","Tenant":99,
-                        {
-                            stringBuilderWhyTransferCardBadBalance.AppendLine($"now:{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff tt")}");
-                            stringBuilderWhyTransferCardBadBalance.AppendLine($"b4:{x.AccountId}:BalanceInLocalCurrency={glAccountMoreDataPM.BalanceInLocalCurrency}");
-                        }
-                        glAccountMoreDataPM.BalanceInLocalCurrency = glAccountMoreDataPM.BalanceInLocalCurrency + x.LocalAmountDifference;
-                        glAccountMoreDataPM.ChangeSetOp = ChangeSetOperation.Update;
-                        gLAccountMoreDataUpdateService.Update(glAccountMoreDataPM, true);
-                        //if (_Tenant == 99 && x.AccountId == "1-1405813")//"Id":"1-1405813","Tenant":99,
-                        if (_Tenant == TransferCardTenant && x.AccountId == TransferCardId)//"Id":"1-1405813","Tenant":99,
-                        {
-                            stringBuilderWhyTransferCardBadBalance.AppendLine($"after:{x.AccountId}:BalanceInLocalCurrency={glAccountMoreDataPM.BalanceInLocalCurrency}");
-                        }
+                        var allGLAccountTotalByMonthsForAccountingOnly = allGLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate);
+                        var glAccountsToUpdate = (from tot in allGLAccountTotalByMonthsForAccountingOnly
+                                                  group tot by tot.AccountId into groupByAccId
+                                                  select new
+                                                  {
+                                                      AccountId = groupByAccId.Key,
+                                                      LocalAmountDifference = groupByAccId.Sum(r => r.LocalAmountDebit - r.LocalAmountCredit)
+                                                  }
+                                           )
+                                           .ToList();
 
-                    });
 
+                        var gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(_AccountingContext);
+                        var gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _Tenant);
+                        var glAccounts = allGLAccountTotalByMonthsForAccountingOnly.Select(x => x.AccountId).ToList();
+                        var gLAccountMoreDataPMList = gLAccountMoreDataQueryService.GetByGLAccountsIdList(glAccounts, _Tenant);
+                        glAccountsToUpdate.ForEach(x =>
+                        {
+                            var glAccountMoreDataPM = gLAccountMoreDataPMList.Where(acc => acc.AccountId == x.AccountId).First();
+                            //if (_Tenant == 99 && x.AccountId == "1-1405813")//"Id":"1-1405813","Tenant":99,
+                            if (_Tenant == TransferCardTenant && x.AccountId == TransferCardId)//"Id":"1-1405813","Tenant":99,
+                            {
+                                stringBuilderWhyTransferCardBadBalance.AppendLine($"now:{DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff tt")}");
+                                stringBuilderWhyTransferCardBadBalance.AppendLine($"b4:{x.AccountId}:BalanceInLocalCurrency={glAccountMoreDataPM.BalanceInLocalCurrency}");
+                            }
+                            glAccountMoreDataPM.BalanceInLocalCurrency = glAccountMoreDataPM.BalanceInLocalCurrency + x.LocalAmountDifference;
+                            glAccountMoreDataPM.ChangeSetOp = ChangeSetOperation.Update;
+                            gLAccountMoreDataUpdateService.Update(glAccountMoreDataPM, true);
+                            //if (_Tenant == 99 && x.AccountId == "1-1405813")//"Id":"1-1405813","Tenant":99,
+                            if (_Tenant == TransferCardTenant && x.AccountId == TransferCardId)//"Id":"1-1405813","Tenant":99,
+                            {
+                                stringBuilderWhyTransferCardBadBalance.AppendLine($"after:{x.AccountId}:BalanceInLocalCurrency={glAccountMoreDataPM.BalanceInLocalCurrency}");
+                            }
+
+                        });
+                    }
                     Impersonate();
                     //CreateReconcileFromStorno(myLedgerTransactionsWithCounters);
                     ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService = new CreateAutoReconcileWhileStreamingService();

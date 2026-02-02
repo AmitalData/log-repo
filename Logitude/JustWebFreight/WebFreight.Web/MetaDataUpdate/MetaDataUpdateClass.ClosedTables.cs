@@ -864,6 +864,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "AD", Name = "Approved" }, apPaymentStatusRepository);
             AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "VD", Name = "Void" }, apPaymentStatusRepository);
             AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "CL", Name = "Closed" }, apPaymentStatusRepository);
+            AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "PD", Name = "Paid" }, apPaymentStatusRepository);
+
             apPaymentStatusRepository.SubmitChanges();
 
             //-------- SAT Interfaces ----------//
@@ -1329,6 +1331,8 @@ namespace WebFreight.Web.MetaDataUpdate
             UpdateINTTRAStatuses(shipmentContext);
             UpdateINTTRADocumentTypes(shipmentContext);
             UpdateConfirmationNumberStatusClosedTable(invoiceContext);
+            UpdateMasavInterfaceStatusClosedTable(invoiceContext);
+
 
         }
 
@@ -2621,6 +2625,46 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddSATInvoiceStatus(new SATInvoiceStatusDetails() { Code = "PP", Name = "Partially Paid in SAT" }, entityRepository);
             AddClosedTables.AddSATInvoiceStatus(new SATInvoiceStatusDetails() { Code = "PD", Name = "Paid in SAT" }, entityRepository);
 
+            entityRepository.SubmitChanges();
+        }
+        private void UpdateMasavInterfaceStatusClosedTable(InvoiceContext invoiceContext)
+        {
+            MasavInterfaceStatusRepository entityRepository = new MasavInterfaceStatusRepository(invoiceContext);
+            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus() {
+                Name = "Draft",               
+                Code = "DR",
+                LocalName = "טיוטה",
+            }, entityRepository);
+            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
+            {
+                Name = "Transmitted",
+                Code = "TR",
+                LocalName = "שודר",
+            }, entityRepository);
+            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
+            {
+                Name = "Cancelled",
+                Code = "CN",
+                LocalName = "בוטל",
+            }, entityRepository);
+            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
+            {
+                Name = "Failed",
+                Code = "FD",
+                LocalName = "נכשל",
+            }, entityRepository);
+            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
+            {
+                Name = "In Progress",
+                Code = "IP",
+                LocalName = "בתהליך",
+            }, entityRepository);
+            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
+            {
+                Name = "Cancellation In Progress",
+                Code = "CP",
+                LocalName = "הביטול בתהליך",
+            }, entityRepository);
             entityRepository.SubmitChanges();
         }
         public void LoadMeasurements()

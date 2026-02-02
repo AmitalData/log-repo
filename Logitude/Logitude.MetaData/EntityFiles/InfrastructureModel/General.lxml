@@ -2127,6 +2127,13 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;Accounting.General.B.RevaluationJournal&quot;"
+      DefaultText="&quot;Revaluation Journal&quot;"
+      LocalDefaultTextBack_up="&quot;פקודת שערוך&quot;"
+      LocalDefaultText="&quot;BS64:Itek16fXldeT16og16nXoteo15XXmiI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;Accounting.General.B.AutomaticReconcile&quot;"
       DefaultText="&quot;AutomaticReconcile&quot;"
       LocalDefaultTextBack_up="&quot;התאמה אוטומטית&quot;"
@@ -6819,6 +6826,7 @@
       LocalDefaultText="&quot;BS64:Itep15zXlyDXnNeo16fXoiI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+
     <TextCode
       Code="&quot;Accounting.General.O.CreateANewTaxReport&quot;"
       DefaultText="&quot;Tax Report&quot;"

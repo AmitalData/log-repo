@@ -15,7 +15,7 @@
 }
 
 .ClassificationListContainter {
-    height: 42vh;
+    height: 350px;
 }
 
 .LogTextBoxMultiLine {
@@ -213,10 +213,6 @@
     line-height: 35px;
 }
 
-tr {
-    height: 5px;
-}
-
 .x-button {
     width: initial !important;
     position: relative;
@@ -249,4 +245,11 @@ tr {
     background: linear-gradient(to bottom, #7ad6ba 0%, #a2e5cd 7%, #7ad6ba 9%, #199e7a 100%);
     color: #fff;
     border: 1px solid #529267;
+}
+
+.SiiRequestItemsScrollable {
+    max-height: 400px;  
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 20px
 }

@@ -27,6 +27,7 @@ export class TaskReportSchedulerComponent implements OnInit {
     public ReportGroupList: ReportGroupList;
     public ReportList: ReportList;
     public BIReportEntity: any;
+    public IsPowerBIReport: boolean;
     public IsBIReport: boolean;
     public IsQueryReport: any;
     public IsCustomerDebNotification: any;
@@ -68,6 +69,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         this.ReportGroupList = windowArgs.ReportGroupList;
         this.ReportList = windowArgs.ReportList;
         this.BIReportEntity = windowArgs.BIReportEntity;
+        this.IsPowerBIReport = windowArgs.IsPowerBIReport;
         this.IsQueryReport = windowArgs.IsQueryReport;
         this.IsCustomerDebNotification = windowArgs.IsCustomerDebNotification;
         this.GLAccountId = windowArgs.GLAccountId;
@@ -123,6 +125,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         windowArgs.ReportGroupList = this.ReportGroupList;
         windowArgs.ReportList = this.ReportList;
         windowArgs.BIReportEntity = this.BIReportEntity;
+        windowArgs.IsPowerBIReport = this.IsPowerBIReport;
         windowArgs.IsQueryReport = this.IsQueryReport;
         windowArgs.IsCustomerDebNotification = this.IsCustomerDebNotification;
         windowArgs.GLAccountId = this.GLAccountId;
@@ -154,6 +157,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         windowArgs.BIReportEntity = this.BIReportEntity;
         windowArgs.TasksSchedulerId = DataContext.EntityPM.Id;
         windowArgs.IsQueryReport =  DataContext.EntityPM.ProcedureCode == 'QueryReport' ? true : false;
+        windowArgs.IsPowerBIReport =  this.ReportList?.Code?.toUpperCase()?.startsWith('PBI');
         windowArgs.IsCustomerDebNotification =  DataContext.EntityPM.ProcedureCode == 'CustomerDebNotificationsTask' ? true : false;
         windowArgs.GLAccountId = this.GLAccountId;
         

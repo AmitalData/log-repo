@@ -3567,7 +3567,14 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.Height = 200;
                         break;
                     }
+                case "MasavInterface":
 
+                    {
+
+                        logWindow.Width = 400;
+                        logWindow.Height = 300;
+                        break;
+                    }
                 case "TaxDeductionReport":
 
                     {

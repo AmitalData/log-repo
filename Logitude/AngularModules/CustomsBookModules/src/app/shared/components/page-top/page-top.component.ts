@@ -6,6 +6,7 @@ import { FilterPopupService } from '../filter-popup/service/filter-popup.service
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RomanToolService } from '../../services/roman-tool.service';
 import { SearchCustomsItemAutocomplateComponent } from './search-customs-item-autocomplate/search-customs-item-autocomplate.component';
+import { AppTool } from '../../../core/Infrastructure/Tools';
 
 
 @Component({
@@ -39,11 +40,14 @@ export class PageTopComponent implements AfterViewInit {
 	public SearchByValidation: SearchBy = SearchBy.searchBy_form01;
 
 	ngOnInit() {
-		// this.text = this.searchService.SearchBy('searchBy_form01'); // #112160 
 		this.text = this.searchHeader;
 		this.checked = this.searchService.GetDefaultValue();
 		this.headerService.searchState$.subscribe((searchText) => {
 			this.currentSearchState = searchText;
+		});
+		this.searchService.searchTextFromHost.subscribe((searchText) => {
+			this.textToSearch = searchText;
+			this.clickSearch();
 		});
 	}
 
@@ -94,13 +98,7 @@ export class PageTopComponent implements AfterViewInit {
 		}
 
 		this.searchClick.emit(this.searchByNumOrText);
-		// this.searchClick.emit(this.searchService.selectSearchBy);// #112160
 		this.filterPopupService.toggleFilterPopup(false);
-
-		this.searchService.searchText$.subscribe((searchText) => {
-			// reset search input in html:
-			if (searchText === "") this.textToSearch = "";
-		});
 	}
 
 	onCustomsItemSelected(textToSearch: string) {

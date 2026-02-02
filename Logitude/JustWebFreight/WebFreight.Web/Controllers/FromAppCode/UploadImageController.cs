@@ -12,7 +12,8 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -59,7 +60,8 @@ namespace WebFreight.Web.App_Code
                 if (string.IsNullOrEmpty(shipmentId))
                 {
                     ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                    shipmentId = result.ShipmentId= shipmentRepository.GetShipmentIdByShipmentNumber(filters.ShipmentNumber, tenant);
+                    shipmentId = result.ShipmentId = shipmentRepository.GetShipmentIdByShipmentNumber(filters.ShipmentNumber, tenant);
+                    filters.ShipmentId = shipmentId;  // Fix: Copy to filters so FinishProcessingPODImage receives it
                     if (string.IsNullOrEmpty(shipmentId))
                     {
                         result.IsScceed = false;
@@ -91,10 +93,12 @@ namespace WebFreight.Web.App_Code
                 {
                     DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
                     documentTypeId = result.DocumentTypeId = documentTypeRepository.GetDocumentTypeIdByCode(filters.DocumentType, tenant);
-                    if(string.IsNullOrEmpty(documentTypeId) && filters.DocumentType!="POD" && filters.IsReadDocumentFromBarCode)
+                    filters.DocumentTypeId = documentTypeId;  // Fix: Copy to filters so FinishProcessingPODImage receives it
+                    if (string.IsNullOrEmpty(documentTypeId) && filters.DocumentType != "POD" && filters.IsReadDocumentFromBarCode)
                     {
                         filters.DocumentType = "POD";
                         documentTypeId = result.DocumentTypeId = documentTypeRepository.GetDocumentTypeIdByCode(filters.DocumentType, tenant);
+                        filters.DocumentTypeId = documentTypeId;  // Fix: Copy to filters so FinishProcessingPODImage receives it
                     }
 
                     if (string.IsNullOrEmpty(documentTypeId))
@@ -135,7 +139,7 @@ namespace WebFreight.Web.App_Code
 
             catch (Exception e)
             {
-                ExceptionHandler.HandleException(e, DateTime.Now, 0,"", "", "UploadImageController : PostImageByte", null);
+                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "", "UploadImageController : PostImageByte", null);
                 SuccessMobile data = new SuccessMobile();
                 data.IsScceed = false;
                 string message = e.Message;
@@ -179,11 +183,11 @@ namespace WebFreight.Web.App_Code
             };
         }
 
-        private  void AddConvertImagetoPDFQueue(PODMobileDocumentsFilingArgs podMobileAppServiceArgs)
+        private void AddConvertImagetoPDFQueue(PODMobileDocumentsFilingArgs podMobileAppServiceArgs)
         {
-           IQueueService queueservice = new DbQueueService();
+            IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("PODImageConverterQueue", podMobileAppServiceArgs.Tenant);
-            queueservice.Send(new Dictionary<string, string>() { 
+            queueservice.Send(new Dictionary<string, string>() {
               { "ShipmentNumber", podMobileAppServiceArgs.ShipmentNumber },
               { "ShipmentId", podMobileAppServiceArgs.ShipmentId },
               { "DocumentTypeName", podMobileAppServiceArgs.DocumentTypeName },

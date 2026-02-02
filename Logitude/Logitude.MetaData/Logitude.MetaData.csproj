@@ -207,6 +207,9 @@
     <None Include="DBScripts\GlobalModel\AddStarWorkflowInstanceRetryWorkerBatchService.sxml" />
     <None Include="DBTables\InvoiceModel\ExpenseAllocationFlow.dxml" />
     <None Include="EntityFiles\InvoiceModel\ExpenseAllocationFlow.lxml" />
+    <None Include="DBTables\InvoiceModel\MasavInterface.dxml" />
+    <None Include="DBTables\InvoiceModel\MasavInterfaceStatus.dxml" />
+    <None Include="EntityFiles\InvoiceModel\MasavInterfaceStatus.lxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -318,6 +321,7 @@
     <None Include="DBScripts\ShipmentModel\FillContainersDataFromPackages.sxml" />
     <None Include="DBTables\CommonDataModel\DigitalContactLastSetting.dxml" />
     <None Include="DBTables\InvoiceModel\ExpenseAllocationSetting.dxml" />
+    <None Include="DBTables\ShipmentsModel\OceanCarrierStatusAPIconfig.dxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentTypeMetaData.lxml" />
     <None Include="DBTables\CommonDataModel\FreelancerGroupType.dxml" />
     <None Include="DBTables\CommonDataModel\ExternalLink.dxml" />
@@ -350,7 +354,6 @@
     <None Include="DBTables\ShipmentsModel\ContainerTrackingRequest.dxml" />
     <None Include="DBTables\ShipmentsModel\ContainerTrackingResponse.dxml" />
     <None Include="DBTables\ShipmentsModel\FreightForwarderReference.dxml" />
-    <None Include="DBTables\ShipmentsModel\OceanInsightsStatusLog.dxml" />
     <None Include="DBTables\ShipmentsModel\ReferenceType.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentAnalytic.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentDigitalField.dxml" />
@@ -388,6 +391,7 @@
     <None Include="EntityFiles\InvoiceModel\ARInvoicesSignedStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\ConfirmationNumberDefault.lxml" />
     <None Include="EntityFiles\InvoiceModel\ConfirmationNumberStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\MasavInterface.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesAmountWithVATDetails.lxml" />
     <None Include="EntityFiles\QuoteModel\ValidByType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainerDiscrepancy.lxml" />

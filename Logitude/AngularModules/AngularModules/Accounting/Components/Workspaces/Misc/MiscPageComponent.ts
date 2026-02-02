@@ -30,6 +30,7 @@ export class MiscPageComponent implements AfterViewInit {
         this._entityResourceService.getEntityResourceByTableName("OpenFormatReport").subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("TaxReport").subscribe((response: any) => {
                 this._entityResourceService.getEntityResourceByTableName("TaxDeductionReport").subscribe((response: any) => {
+                    this._entityResourceService.getEntityResourceByTableName("MasavInterface").subscribe((response: any) => {
 
                     var yearTransFeature = FeatureLocator.HasFeaturePermession("GLAccount", "YEARTRANSFERMENU");
                     console.log("YEARTRANSFERMENU Feature:" + yearTransFeature);
@@ -49,6 +50,7 @@ export class MiscPageComponent implements AfterViewInit {
 
          this.isScreenLoaded = true;
          this.CurrentSession.StopBusyIndicator();
+        })
                 });
             });
         });
@@ -126,12 +128,19 @@ export class MiscPageComponent implements AfterViewInit {
                         this.YearTransferMethod(true);
                         break;
                     }
-           case "ACYT":{
+             case "ACYT":{
 
                     this.YearTransferMethod(false);
                        break;
 
                        }
+              case "AllMasavInterfaces":{
+                    displayTitle = TextCodeTranslator.Translate("MasavInterface");
+                    tableName = "MasavInterface";                  
+                    break;
+                }
+    
+                           
                 default: { break; }
             }
 
@@ -214,7 +223,7 @@ export class MiscPageComponent implements AfterViewInit {
         //windowArgs.IsNewEntity = true;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 400;
+        logWindow.Width = 1000;
         logWindow.Height = 200;
         logWindow.Title = windowTitle;
         //logWindow.WindowArgs = windowArgs;

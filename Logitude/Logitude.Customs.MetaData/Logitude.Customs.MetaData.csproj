@@ -151,6 +151,7 @@
     <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementDataOLD.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementData.dxml" />
     <None Include="DBOthers\Procedures\QueueEnqueue_succeedRequestsheets.dxml" />
+    <None Include="DBOthers\Procedures\usp_CustomsBookMainViewByList.dxml" />
     <None Include="DBOthers\Procedures\usp_CustomsBookRulesDetailsOLD.dxml" />
     <None Include="DBOthers\Procedures\usp_CustomsBookRulesDetails.dxml" />
     <None Include="DBOthers\Procedures\usp_NEWCustomsBookMainViewSearchByClassification_OLD.dxml" />
@@ -685,6 +686,7 @@
     <None Include="DBTables\SignStation.dxml" />
     <None Include="DBTables\SIIDocumentType.dxml" />
     <None Include="DBTables\SIIRequest.dxml" />
+    <None Include="DBTables\SIIRequestLineStatus.dxml" />
     <None Include="DBTables\SIIRequestStatus.dxml" />
     <None Include="DBTables\SiteLookup.dxml" />
     <None Include="DBTables\SiteType.dxml" />
@@ -812,6 +814,7 @@
     <None Include="EntityFiles\RequestHandlingAuthority.lxml" />
     <None Include="EntityFiles\SIIDocumentType.lxml" />
     <None Include="EntityFiles\SIIRequest.lxml" />
+    <None Include="EntityFiles\SIIRequestLineStatus.lxml" />
     <None Include="EntityFiles\SIIRequestStatus.lxml" />
     <None Include="EntityFiles\SupplierInvioceItemCertificatDefault.lxml" />
     <None Include="EntityFiles\SupplierInvoiceItemsReqList.lxml" />

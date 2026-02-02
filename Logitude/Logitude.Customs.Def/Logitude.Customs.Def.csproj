@@ -202,6 +202,7 @@
     <Compile Include="EntityPMs\Generated\OriginCriterionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequestReasonCodeEnumPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SIIDocumentTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SIIRequestLineStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SIIRequestPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SIIRequestStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvioceItemCertificatDefaultPM.Generated.cs" />

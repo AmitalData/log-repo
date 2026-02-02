@@ -1,0 +1,290 @@
+// Jenkins Pipeline Example for Logitude Unit Tests
+// Enhanced with per-module coverage, execution time, and detailed metrics
+//
+// Usage:
+//   1. Copy this file to your Jenkins workspace as "Jenkinsfile"
+//   2. Adjust the parameters as needed for your environment
+//   3. Configure your Jenkins job to use this pipeline
+
+pipeline {
+    agent any
+    
+    parameters {
+        int(
+            name: 'COVERAGE_THRESHOLD',
+            defaultValue: 0,
+            description: 'Minimum code coverage percentage (0-100)'
+        )
+        choice(
+            name: 'CONFIGURATION',
+            choices: ['Debug', 'Release'],
+            description: 'Build configuration'
+        )
+        booleanParam(
+            name: 'PUBLISH_COVERAGE',
+            defaultValue: true,
+            description: 'Publish coverage reports to Jenkins'
+        )
+        booleanParam(
+            name: 'ENABLE_PARALLEL',
+            defaultValue: true,
+            description: 'Enable parallel test execution'
+        )
+        int(
+            name: 'PARALLEL_WORKERS',
+            defaultValue: 0,
+            description: 'Number of parallel workers (0 = auto-detect CPU count, -1 = disable)'
+        )
+    }
+    
+    environment {
+        TEST_RESULTS_DIR = 'TestResults'
+        COVERAGE_THRESHOLD = "${params.COVERAGE_THRESHOLD}"
+        CONFIGURATION = "${params.CONFIGURATION}"
+        ENABLE_PARALLEL = "${params.ENABLE_PARALLEL}"
+        PARALLEL_WORKERS = "${params.PARALLEL_WORKERS}"
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                script {
+                    echo "=========================================="
+                    echo "Building test projects..."
+                    echo "Configuration: ${CONFIGURATION}"
+                    echo "=========================================="
+                    bat """
+                        powershell -ExecutionPolicy Bypass -File .\\build-tests.ps1 -Configuration ${CONFIGURATION}
+                    """
+                }
+            }
+        }
+        
+        stage('Run Tests') {
+            steps {
+                script {
+                    echo "=========================================="
+                    echo "Running tests with coverage..."
+                    echo "Coverage Threshold: ${COVERAGE_THRESHOLD}%"
+                    echo "Parallel Execution: ${ENABLE_PARALLEL}"
+                    if (params.ENABLE_PARALLEL && params.PARALLEL_WORKERS != 0) {
+                        echo "Parallel Workers: ${PARALLEL_WORKERS}"
+                    }
+                    echo "=========================================="
+                    
+                    def startTime = System.currentTimeMillis()
+                    
+                    def parallelFlag = params.ENABLE_PARALLEL ? "-EnableParallel" : ""
+                    def workersParam = params.PARALLEL_WORKERS != 0 ? "-ParallelWorkers ${PARALLEL_WORKERS}" : ""
+                    
+                    bat """
+                        powershell -ExecutionPolicy Bypass -File .\\run-tests-ci.ps1 -CoverageThreshold ${COVERAGE_THRESHOLD} -OutputDir ${TEST_RESULTS_DIR} -Configuration ${CONFIGURATION} ${parallelFlag} ${workersParam}
+                    """
+                    
+                    def endTime = System.currentTimeMillis()
+                    def duration = (endTime - startTime) / 1000.0
+                    
+                    echo "Test execution completed in ${duration} seconds"
+                }
+            }
+            post {
+                always {
+                    // Publish test results
+                    publishTestResults(
+                        testResultsPattern: "${TEST_RESULTS_DIR}\\test-results.trx",
+                        testResultsFormat: 'MSTest'
+                    )
+                    
+                    // Publish code coverage (if available and enabled)
+                    script {
+                        if (params.PUBLISH_COVERAGE) {
+                            def coverageFile = "${TEST_RESULTS_DIR}\\coverage.cobertura.xml"
+                            if (fileExists(coverageFile)) {
+                                publishCoverage(
+                                    adapters: [
+                                        coberturaAdapter(coverageFile)
+                                    ],
+                                    sourceFileResolver: sourceFiles('STORE_LAST_BUILD')
+                                )
+                                echo "Coverage report published"
+                            } else {
+                                echo "Coverage file not found: ${coverageFile}"
+                            }
+                        }
+                    }
+                    
+                    // Archive test results
+                    archiveArtifacts artifacts: "${TEST_RESULTS_DIR}\\**\\*", allowEmptyArchive: true
+                    
+                    // Display detailed summary
+                    script {
+                        echo ""
+                        echo "=========================================="
+                        echo "DETAILED TEST RESULTS"
+                        echo "=========================================="
+                        
+                        // Read and display summary
+                        def summaryFile = "${TEST_RESULTS_DIR}\\test-summary.txt"
+                        if (fileExists(summaryFile)) {
+                            def summary = readFile(summaryFile)
+                            echo summary
+                        }
+                        
+                        // Display per-module coverage
+                        def moduleCoverageFile = "${TEST_RESULTS_DIR}\\module-coverage.json"
+                        if (fileExists(moduleCoverageFile)) {
+                            echo ""
+                            echo "=========================================="
+                            echo "PER-MODULE COVERAGE BREAKDOWN"
+                            echo "=========================================="
+                            
+                            def moduleCoverage = readJSON file: moduleCoverageFile
+                            
+                            echo ""
+                            echo "Module Coverage Details:"
+                            echo "----------------------------------------"
+                            
+                            moduleCoverage.modules.each { module ->
+                                def name = module.name
+                                def coverage = module.coverage
+                                def covered = module.covered
+                                def total = module.total
+                                
+                                // Color code based on coverage
+                                def status = coverage >= 80 ? "✓" : (coverage >= 50 ? "⚠" : "✗")
+                                def color = coverage >= 80 ? "green" : (coverage >= 50 ? "yellow" : "red")
+                                
+                                echo "${status} ${name}: ${coverage}% (${covered}/${total} lines)"
+                            }
+                            
+                            echo ""
+                            echo "Coverage Legend:"
+                            echo "  ✓ >= 80% (Good)"
+                            echo "  ⚠ >= 50% (Acceptable)"
+                            echo "  ✗ < 50% (Needs Improvement)"
+                        }
+                        
+                        // Read execution time
+                        def statusFile = "${TEST_RESULTS_DIR}\\jenkins-status.txt"
+                        if (fileExists(statusFile)) {
+                            def status = readFile(statusFile)
+                            
+                            echo ""
+                            echo "=========================================="
+                            echo "EXECUTION METRICS"
+                            echo "=========================================="
+                            
+                            status.readLines().each { line ->
+                                if (line.contains('EXECUTION_TIME')) {
+                                    def parts = line.split('=')
+                                    if (parts.length == 2) {
+                                        if (line.contains('FORMATTED')) {
+                                            echo "Execution Time: ${parts[1]}"
+                                        } else {
+                                            echo "Execution Time (seconds): ${parts[1]}"
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            // Display test statistics
+                            echo ""
+                            echo "Test Statistics:"
+                            echo "----------------------------------------"
+                            
+                            status.readLines().each { line ->
+                                if (line.startsWith('TOTAL_TESTS=') || 
+                                    line.startsWith('PASSED_TESTS=') || 
+                                    line.startsWith('FAILED_TESTS=') || 
+                                    line.startsWith('SKIPPED_TESTS=') ||
+                                    line.startsWith('COVERAGE_PERCENTAGE=')) {
+                                    def parts = line.split('=')
+                                    if (parts.length == 2) {
+                                        def key = parts[0].replace('_', ' ').toLowerCase()
+                                        def value = parts[1]
+                                        
+                                        if (key.contains('coverage percentage')) {
+                                            echo "Overall Coverage: ${value}%"
+                                        } else {
+                                            echo "${key}: ${value}"
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            // Check overall result
+                            def overallResult = status.readLines().find { it.startsWith('OVERALL_RESULT=') }
+                            if (overallResult && overallResult.contains('FAIL')) {
+                                echo ""
+                                echo "=========================================="
+                                echo "BUILD FAILED"
+                                echo "=========================================="
+                                error("Tests failed or coverage threshold not met")
+                            }
+                        }
+                        
+                        echo ""
+                        echo "=========================================="
+                    }
+                }
+            }
+        }
+    }
+    
+    post {
+        success {
+            script {
+                echo ""
+                echo "=========================================="
+                echo "✓ BUILD SUCCESSFUL"
+                echo "=========================================="
+                echo "All tests passed and coverage threshold met!"
+                echo ""
+                
+                // Display quick summary
+                def statusFile = "${TEST_RESULTS_DIR}\\jenkins-status.txt"
+                if (fileExists(statusFile)) {
+                    def status = readFile(statusFile)
+                    def totalTests = status.readLines().find { it.startsWith('TOTAL_TESTS=') }?.split('=')[1] ?: "N/A"
+                    def passedTests = status.readLines().find { it.startsWith('PASSED_TESTS=') }?.split('=')[1] ?: "N/A"
+                    def coverage = status.readLines().find { it.startsWith('COVERAGE_PERCENTAGE=') }?.split('=')[1] ?: "N/A"
+                    
+                    echo "Quick Summary:"
+                    echo "  Total Tests: ${totalTests}"
+                    echo "  Passed: ${passedTests}"
+                    echo "  Coverage: ${coverage}%"
+                }
+            }
+        }
+        failure {
+            script {
+                echo ""
+                echo "=========================================="
+                echo "✗ BUILD FAILED"
+                echo "=========================================="
+                echo "Tests failed or coverage threshold not met!"
+                echo ""
+                echo "Check the test results and coverage reports for details."
+            }
+        }
+        always {
+            script {
+                echo ""
+                echo "Test artifacts are available in: ${TEST_RESULTS_DIR}"
+                echo "  - test-results.trx (MSTest results)"
+                echo "  - coverage.cobertura.xml (Coverage report)"
+                echo "  - module-coverage.json (Per-module coverage)"
+                echo "  - jenkins-status.txt (Status flags)"
+                echo "  - test-summary.txt (Human-readable summary)"
+            }
+            // Cleanup (optional)
+            // cleanWs()
+        }
+    }
+}

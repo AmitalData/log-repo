@@ -1,3 +1,4 @@
+using System;
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
@@ -7,6 +8,7 @@ using System.Data.Entity.Core.EntityClient;
 using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Transactions;
+using System.Threading;
 using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mapping;
 using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -23,6 +25,52 @@ namespace Simplog.Data.InfrastructureModel
 {
     public class WebFreightContext : DbContextBase, IWebFreightContext
     {
+        private static readonly object OverrideLock = new object();
+        private static Func<int, IWebFreightContext> _getContextOverride;
+        private static Func<int, IWebFreightContext> _getSecondaryContextOverride;
+
+        public static IDisposable OverrideGetContext(Func<int, IWebFreightContext> factory)
+        {
+            if (factory == null)
+            {
+                throw new ArgumentNullException(nameof(factory));
+            }
+
+            lock (OverrideLock)
+            {
+                var previous = _getContextOverride;
+                _getContextOverride = factory;
+                return new OverrideScope(() =>
+                {
+                    lock (OverrideLock)
+                    {
+                        _getContextOverride = previous;
+                    }
+                });
+            }
+        }
+
+        public static IDisposable OverrideGetSecondaryContext(Func<int, IWebFreightContext> factory)
+        {
+            if (factory == null)
+            {
+                throw new ArgumentNullException(nameof(factory));
+            }
+
+            lock (OverrideLock)
+            {
+                var previous = _getSecondaryContextOverride;
+                _getSecondaryContextOverride = factory;
+                return new OverrideScope(() =>
+                {
+                    lock (OverrideLock)
+                    {
+                        _getSecondaryContextOverride = previous;
+                    }
+                });
+            }
+        }
+
         public WebFreightContext()
             : base("LogitudeStr")
         {
@@ -46,6 +94,12 @@ namespace Simplog.Data.InfrastructureModel
         }
         public static IWebFreightContext GetSecondaryContext(int tenant)
         {
+            var overrideFactory = _getSecondaryContextOverride;
+            if (overrideFactory != null)
+            {
+                return overrideFactory(tenant);
+            }
+
             GlobalDB currentDb;
             currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
@@ -55,6 +109,12 @@ namespace Simplog.Data.InfrastructureModel
         }
         public static IWebFreightContext GetContext(int tenant)
         {
+            var overrideFactory = _getContextOverride;
+            if (overrideFactory != null)
+            {
+                return overrideFactory(tenant);
+            }
+
             GlobalDB currentDb;
             //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             //{
@@ -1149,6 +1209,22 @@ namespace Simplog.Data.InfrastructureModel
         {
             get;
             set;
+        }
+
+        private sealed class OverrideScope : IDisposable
+        {
+            private Action _onDispose;
+
+            public OverrideScope(Action onDispose)
+            {
+                _onDispose = onDispose ?? throw new ArgumentNullException(nameof(onDispose));
+            }
+
+            public void Dispose()
+            {
+                var action = Interlocked.Exchange(ref _onDispose, null);
+                action?.Invoke();
+            }
         }
     }
 }

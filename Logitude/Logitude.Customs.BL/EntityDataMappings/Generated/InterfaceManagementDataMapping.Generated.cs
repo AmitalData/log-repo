@@ -49,7 +49,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Environment, 
 	         EntityLockId, 
 	         IsCustomsFile, 
-	         IsUnifreight,
+	         IsUnifreight, 
+	         QueueDefinitionGroup,
 	      }
 
 
@@ -86,7 +87,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EntityLockId, 
 	         EntityLockName, 
 	         IsCustomsFile, 
-	         IsUnifreight,
+	         IsUnifreight, 
+	         QueueDefinitionGroup,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -198,6 +200,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUnifreight))
             {
 				entityPOCO.IsUnifreight = entityPM.IsUnifreight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueDefinitionGroup))
+            {
+				entityPOCO.QueueDefinitionGroup = entityPM.QueueDefinitionGroup;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -316,6 +323,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsUnifreight = entityPOCO.IsUnifreight;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QueueDefinitionGroup))
+            {
+					entityPM.QueueDefinitionGroup = entityPOCO.QueueDefinitionGroup;
+            }
+
 		}
 
 		public void PMToOldPM(InterfaceManagementPM entityPM, InterfaceManagementPM oldEntityPM)
@@ -425,6 +437,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUnifreight))
             {
                 oldEntityPM.IsUnifreight = entityPM.IsUnifreight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueDefinitionGroup))
+            {
+                oldEntityPM.QueueDefinitionGroup = entityPM.QueueDefinitionGroup;
             }
 			
 		}

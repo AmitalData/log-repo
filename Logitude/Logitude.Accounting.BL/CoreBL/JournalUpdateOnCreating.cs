@@ -58,7 +58,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 // new IdCounterWrapper().GetNumber(
                 //GetNumberJournal(), 
                 IdCounterWrapperGetNumber(entityPM.Tenant);
-            MatchPaymentCommandTransactions(entityPM, entityPM.Tenant);
+            if(!string.IsNullOrWhiteSpace(entityPM.InvoicesXml))
+               MatchPaymentCommandTransactions(entityPM, entityPM.Tenant);
 
             //entityPM.JournalNumber =
             //    //(new CodeCounterWrapper()).GetNumber(GetCodeNumberJournal(), 
@@ -181,6 +182,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //}
 
         }
+
         private static void MatchPaymentCommandTransactions(JournalPM journalPM, int tenant)
         {
             if (journalPM == null)
@@ -190,80 +192,71 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             try
             {
-                if (string.IsNullOrWhiteSpace(journalPM.InvoicesXml))
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"No InvoicesXml found for Journal {journalPM.Id}, tenant={tenant}");
-                    return;
-                }
+                
                 var accountingContext = AccountingContext.GetContext(tenant);
                 JournalQueryService journalQueryService = new JournalQueryService(accountingContext);
                 JournalUpdateService journalUpdateService = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
-                 LedgerTransactionQueryService ledgerTransactionQuery = new LedgerTransactionQueryService(accountingContext);
+                LedgerTransactionQueryService ledgerTransactionQuery = new LedgerTransactionQueryService(accountingContext);
                 APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(tenant);
                 Tenant loggedTenant = TenantRepository.GetSingleTenant(tenant, true);
-              
-                    List<APIDataContract.ApiV1.Invoice> invoices = null;
 
-                    try
-                    {
+                List<APIDataContract.ApiV1.Invoice> invoices = null;
+
+                try
+                {
                     invoices = JsonSerializer.Deserialize<List<APIDataContract.ApiV1.Invoice>>(journalPM.InvoicesXml);
+                }
+                catch (Exception jex)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to deserialize InvoicesXml for Journal {journalPM.Id}. Content={journalPM.InvoicesXml}, Error={jex.Message}");
+                    return;
+                }
+                if (invoices == null || !invoices.Any())
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"No invoices parsed for Journal {journalPM.Id}");
+                    return;
+                }
+                foreach (APIDataContract.ApiV1.Invoice invoice in invoices)
+                {
+                    if (string.IsNullOrWhiteSpace(invoice?.Key))
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"Invoice with empty key skipped in Journal {journalPM.Id}");
+                        continue;
+                    }
+                    APInvoicePM aPInvoicePM = aPInvoiceQuery.GetSingleInvoiceByExternlaEntityId(invoice.Key, tenant);
 
-                    }
-                    catch (Exception jex)
+                    if (aPInvoicePM == null)
                     {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to deserialize InvoicesXml for Journal {journalPM.Id}. Content={journalPM.InvoicesXml}, Error={jex.Message}");
-                        return;
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"No aPInvoicePM found for Invoice {invoice.Key}, Journal {journalPM.Id}");
+                        continue;
                     }
-                    if (invoices == null || !invoices.Any())
+                    List<LedgerTransactionPM> ledgerTransactions = ledgerTransactionQuery
+                        .GetTransactionBySourceEntity(aPInvoicePM.Id, AccountingEntityValues.APInvoice, tenant)?
+                        .Where(a =>
+                            (a.LocalAmountCredit != 0m || a.ForeignAmountCredit != 0m) &&
+                            a.OpenAmount != 0m &&
+                            !a.InReconcileProgress &&
+                            !a.IsReconciled
+                        ).ToList();
+                    if (ledgerTransactions == null || !ledgerTransactions.Any())
                     {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"No invoices parsed for Journal {journalPM.Id}");
-                        return;
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"No ledger transactions found for Invoice {invoice.Key}, Journal {journalPM.Id}");
+                        continue;
                     }
-                    foreach (APIDataContract.ApiV1.Invoice invoice in invoices)
+
+                    foreach (var transaction in ledgerTransactions)
                     {
-                        if (string.IsNullOrWhiteSpace(invoice?.Key))
+                        JournalPM journal = journalQueryService.GetSingle(transaction.JournalId, true, false);
+                        var line = journal.JournalLines.Where(a => a.Line == transaction.JournalLineNumber).FirstOrDefault();
+                        if (line == null)
                         {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"Invoice with empty key skipped in Journal {journalPM.Id}");
+                            NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"No journal line found for Transaction {transaction.Id}, Journal {journalPM.Id}");
                             continue;
                         }
-                        APInvoicePM aPInvoicePM = aPInvoiceQuery.GetSingleInvoiceByExternlaEntityId(invoice.Key, tenant);
-
-                        if (aPInvoicePM == null)
-                        {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"No aPInvoicePM found for Invoice {invoice.Key}, Journal {journalPM.Id}");
-                            continue;
-                        }
-                        List<LedgerTransactionPM> ledgerTransactions = ledgerTransactionQuery
-                            .GetTransactionBySourceEntity(aPInvoicePM.Id, AccountingEntityValues.APInvoice, tenant)?
-                            .Where(a =>
-                                (a.LocalAmountCredit != 0m || a.ForeignAmountCredit != 0m) &&
-                                a.OpenAmount != 0m &&
-                                !a.InReconcileProgress &&
-                                !a.IsReconciled
-                            ).ToList();
-                        if (ledgerTransactions == null || !ledgerTransactions.Any())
-                        {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"No ledger transactions found for Invoice {invoice.Key}, Journal {journalPM.Id}");
-                            continue;
-                        }
-
-                        foreach (var transaction in ledgerTransactions)
-                        {
-                            JournalPM journal = journalQueryService.GetSingle(transaction.JournalId, true, false);
-                            var line = journal.JournalLines.Where(a => a.Line == transaction.JournalLineNumber).FirstOrDefault();
-                            if (line == null)
-                            {
-                                NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"No journal line found for Transaction {transaction.Id}, Journal {journalPM.Id}");
-                                continue;
-                            }
-                            var amount = (journalPM.CurrencyId == loggedTenant?.CurrencyId ? invoice.LocalAmount : invoice.ForeignAmount);
-                            AddJournalReconciles(transaction, line, journal, amount, journalPM);
-                        }
+                        var amount = (journalPM.CurrencyId == loggedTenant?.CurrencyId ? invoice.LocalAmount : invoice.ForeignAmount);
+                        AddJournalReconciles(transaction, line, journal, amount, journalPM);
                     }
-
-                
-
-
+                }
             }
             catch (Exception ex)
             {
@@ -283,13 +276,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 return;
 
-            }
-
-            if (Math.Abs(reconciliationAmount) > Math.Abs(transaction.OpenAmount))
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"Reconciliation skipped: transaction {transaction.Id} openAmount={transaction.OpenAmount} < reconciliationAmount={reconciliationAmount}");
-                return;
-            }
+            }           
 
             if (baseJournal.JournalReconciles == null)
                 journalPM.JournalReconciles = new List<JournalReconcilePM>();
@@ -301,9 +288,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 JournalId = journalPM.Id,
                 Line = journalLinePM.Line,
                 LedgerTransactionId = transaction.Id,
-                CurrencyId = transaction.OpenAmountCurrencyId,
-                ReconciliationAmount = transaction.OpenAmount,
-                IsPartial =  false
+                CurrencyId =  transaction.OpenAmountCurrencyId,
+                ReconciliationAmount =   reconciliationAmount *-1,
+                IsPartial = Math.Abs(reconciliationAmount) != Math.Abs(transaction.OpenAmount),
             });
         }
 

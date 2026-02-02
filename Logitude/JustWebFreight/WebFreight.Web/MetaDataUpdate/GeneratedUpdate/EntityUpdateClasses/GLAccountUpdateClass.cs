@@ -15220,6 +15220,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountsOMissingFieldInAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MissingFieldInAccount", DefaultText = "Missing {field} in vendor account: {account} ",LocalDefaultText = @"BS64:Itec15Ag16DXntem15Age2ZpZWxkfSDXkdeb16jXmNeZ16Eg16HXpNenOiB7YWNjb3VudH0i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
+
+
+
+
  		   TextCode GLAccountTextCode_AgingReportORunReportImmediately = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.RunReportImmediately", DefaultText = "Run Immediately",LocalDefaultText = @"BS64:IteU16jXpSDXnteZ15nXk9eZ16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountList", DefaultText = "GLAccount List",LocalDefaultText = @"BS64:Iteo16nXmdee16og15vXqNeY15nXodeZ150i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);

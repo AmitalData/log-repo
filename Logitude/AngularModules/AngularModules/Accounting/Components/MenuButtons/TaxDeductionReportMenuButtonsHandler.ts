@@ -77,7 +77,8 @@ export class TaxDeductionReportMenuButtonsHandler {
                               }
                         case "TXFL":
                             {
-                                if (this.EntityPM.StatusTypeCode != "3" || this.EntityPM.ByMonth) {
+                                if (this.EntityPM.StatusTypeCode != "3" || (this.EntityPM.ByMonth && 
+                                    !(this.EntityPM.FromMonth && new Date(this.EntityPM.FromMonth).getMonth() === 0 && this.EntityPM.Month && new Date(this.EntityPM.Month).getMonth() === 11))) {
                                     button.IsDisabled = true;
                                 }
                                 else {

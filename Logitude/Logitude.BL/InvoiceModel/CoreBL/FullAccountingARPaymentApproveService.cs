@@ -586,7 +586,8 @@ $"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  A
             CreateCreditLines(ref counter);
             CreateDebitLines(ref counter);
             CheckAbiltiyOfCreatingAutomaticReconcileForJournal();
-            ProcessInvoiceDifference(ref counter);
+            if (FeatureToggleHelper.HasFeatureToggle("RFR", paymentPM.Tenant))
+                ProcessInvoiceDifference(ref counter);
 
             AutoExternalReconcileBankTransferPageLines();
 
@@ -657,7 +658,7 @@ $"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  A
                 ForeignAmount = 0,
                 ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
                 Reference1 = paymentPM.PaymentNo,
-                Notes = "Revaluation on Foreign Currency Receipt",
+                Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
                 DueDate = GetDueDate(),
                 
             };
@@ -684,7 +685,7 @@ $"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  A
                 ForeignAmount = 0,
                 ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
                 Reference1 = paymentPM.PaymentNo,
-                Notes = "Revaluation on Foreign Currency Receipt",
+                Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", 0, true),
                 DueDate = GetDueDate(),
                 
             };

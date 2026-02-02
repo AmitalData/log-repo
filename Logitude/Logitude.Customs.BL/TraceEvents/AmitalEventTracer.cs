@@ -14,6 +14,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.AmitalMessaging.Utils;
+using Unifreight.BL.EntityPMs;
+using Unifreight.BL.EntityUpdateServices;
+using Unifreight.Data.AmitalModel;
+using Logitude.Customs.Def.EntityPMs;
 
 namespace Logitude.Customs.BL.TraceEvents
 {
@@ -103,21 +108,12 @@ namespace Logitude.Customs.BL.TraceEvents
                 }
                 else
                 {
-                    var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
-                        //myUServerCommunicationService.Send();
-                        myUServerCommunicationService.Send(
-                             new UServerCommunicationServiceParam()
-                             {
-                                 SendImmediately = false,
-                                 SuppressBuildCom = false,
-                                 UServerDelayTime = myAmitalEventTracer.UServerDelayTime
-                             });
+                    AmitalContext context = AmitalContext.GetContext(myAmitalEventTracer.Tenant);
+                    Simplog.Server.Infrastructure.ChangeSetOperation insertOperation = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                    CreateYCULTask(context, myAmitalEventTracer, myFUStatus, mySetting, insertOperation);
+                    CreateGGGQTask(context, myAmitalEventTracer, mySetting, insertOperation);
+                }
 
-
-
-                    }
-
-               // }
             }
             finally
             {
@@ -137,6 +133,59 @@ namespace Logitude.Customs.BL.TraceEvents
 
         }
 
+
+        // Creates YCULTASK record for sending FU status to Unifreight
+        private static void CreateYCULTask(AmitalContext context, AmitalEventTracerModel myAmitalEventTracer, AmitalMessaging.Infrastructure.FuStatus.GFUSTS myFUStatus, CustomsSettingPM mySetting, Simplog.Server.Infrastructure.ChangeSetOperation insertOperation)
+        {
+            string xml = XmlGenericUtil<AmitalMessaging.Infrastructure.FuStatus.GFUSTS>.SerializeObject(myFUStatus, true);
+
+            Unifreight.BL.EntityPMs.YCULTASKPM myYCULTASKPM = new Unifreight.BL.EntityPMs.YCULTASKPM
+            {
+                ChangeSetOp = insertOperation,
+                STATUS = "W",
+                REQUESTDATA = xml,
+                ENTNAME = "CFIFILEM",
+                PRIMARYNUM = myAmitalEventTracer.MyFUStatus.primary_number,
+                PRIORITY = Unifreight.BL.EntityPMs.YCULTASKPM.calcPriority("L2U"),
+                TYPE = "L2U",
+                USRCODE = myAmitalEventTracer.MyFUStatus.OwnerUnifreightUserCode,
+                ARCHIVE = "F"
+            };
+
+            if (!mySetting.IsConnectedToUniFreight)
+                myYCULTASKPM.Tenant = myAmitalEventTracer.Tenant;
+
+            Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(context);
+            myYCULTASKUpdateService.DontAddTransaction = true;
+            myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+
+        }
+
+        // Creates GGGQ record for async execution in Unifreight
+        private static void CreateGGGQTask(AmitalContext context, AmitalEventTracerModel myAmitalEventTracer, CustomsSettingPM mySetting, Simplog.Server.Infrastructure.ChangeSetOperation insertOperation)
+        {
+            GGGQPM myGGGQPM = new GGGQPM
+            {
+                ChangeSetOp = insertOperation,
+                ORIGINQUE = "LGT",
+                STATUS = "1",
+                EXPTASKTIME = 5,
+                EXECDATE = DateTime.Now,
+                TRY = 9,
+                PRIORITY = 8,
+                ENTNAME = "CFIFILEM",
+                PRIMARYNUM = myAmitalEventTracer.MyFUStatus.primary_number,
+                FORMID = "LGT_UPDATE_FCI",
+                DEBUG = "F",
+                DONEOPERATION = "D"
+            };
+
+            if (!mySetting.IsConnectedToUniFreight)
+                myGGGQPM.Tenant = myAmitalEventTracer.Tenant;
+            GGGQUpdateService myGGGQUpdateService = new GGGQUpdateService(context);
+            myGGGQUpdateService.DontAddTransaction = true;
+            myGGGQUpdateService.Update(myGGGQPM, true);
+        }
 
         private static string GetQueueNameByUnifreightEntity(string entname)
         {

@@ -133,5 +133,9 @@ namespace Logitude.FullAccounting.Test.Models
         public string ICAO { get; set; }
 
         public string EmailForSendingSingArinvoice { get; set; }
+
+        public string BankCodeId { get; set; }
+        public string BankBranch { get; set; }
+
     }
 }
