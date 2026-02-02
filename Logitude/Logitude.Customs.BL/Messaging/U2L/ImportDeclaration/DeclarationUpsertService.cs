@@ -329,9 +329,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					this._MyDeclarationPM.TaxationDateTime = DateTime.Now;
 					this._MyDeclarationPM.ExternalDeclarationNumber = (_AmitalCustomsFile.CustomFileNo + DateTime.Today.Year.ToString());
 					this._MyDeclarationPM.SystemConnection = _AmitalCustomsFile.SystemConnection;
-					this._MyDeclarationPM.ShipmentId = _AmitalCustomsFile.ShipmentId;
-					this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Insert;
-					if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.CargoTypeCode))
+                    this._MyDeclarationPM.ShipmentId = _AmitalCustomsFile.ShipmentId;
+                    this._MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Insert;
+                    if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.CargoTypeCode))
 					{
 						this._MyDeclarationPM.Consignments[0].CargoTypeCode = _AmitalCustomsFile.CargoTypeCode;
 					}
@@ -339,7 +339,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					{
 						if (_AmitalCustomsFile.TransportModeId == "A")
 						{
-							if (_AmitalCustomsFile.DeclarationOfficeCode == "49")
+							initManifestNoByNewImportDeclarationWithDefualt();
+
+
+                            if (_AmitalCustomsFile.DeclarationOfficeCode == "49")
 							{
 								this._MyDeclarationPM.Consignments[0].CargoTypeCode = "7";
 							}
@@ -1083,9 +1086,25 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
 
 				scope.Complete();
-
+				
 			}
 		}
+
+        private void initManifestNoByNewImportDeclarationWithDefualt()
+		{
+            string isAirImportNewDeclarationDeufult = GetAmitalDefault("ISRAEL", "CGG_AIR_CURYEAR", "NON", _AmitalCustomsFile.CustomerId, ResolvedTenant());
+            if (isAirImportNewDeclarationDeufult == "Y" && this._MyDeclarationPM.Direction == "I" && _AmitalCustomsFile.TransportModeId == "A")
+            {
+                if (this._MyDeclarationPM?.Consignments != null)
+                {
+                    foreach (var consignment in this._MyDeclarationPM.Consignments)
+                    {
+                        consignment.ManifestNumber = DateTime.Now.Year.ToString();
+                    }
+                }
+
+            }
+        }
 
         private void CalcGrossMassMeasure()
         {
