@@ -647,6 +647,14 @@ namespace WebFreight.Web
 
             return true;
         }
+        public HttpResponseMessage GetIsAppServiceData()
+        {
+            var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
+            bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
+            return (isAppServiceENV || isAppService) ? 
+                Request.CreateResponse(HttpStatusCode.OK, true) :
+                Request.CreateResponse(HttpStatusCode.OK, false);
+        }
 
         public HttpResponseMessage getLoggedDomain()
         {
