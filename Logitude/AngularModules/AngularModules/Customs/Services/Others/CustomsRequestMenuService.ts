@@ -48,7 +48,7 @@ export class CustomsRequestMenuService {
             this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ExportReport"), "ExportReport", './CustomsModules/CustomsReport/Components/Reports/ExportReportComponent', 500, 300, "1112"));
         }
 
-        // this._CustomsRequestMenuItems.push(new CustomsMenuItem("תור חשבוניות - זמני", "InvoiceQueue", './CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent', 1600, 800, "1111"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ExportDeclarationRestoreQuery"), "DeclarationRestoreQuery", './CustomsModules/CustomsRequests/Components/DeclarationRestoreComponent', 850, 500, "9079"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationRestoreQuery"), "DeclarationRestoreQuery", './CustomsModules/CustomsRequests/Components/DeclarationRestoreComponent', 850, 500, "8373"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MorningMessageQuery"), "MorningMessage", './CustomsModules/CustomsGeneralRequests/Components/MorningMessageComponent', 800, 600, "0102"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Declaration.O.SendRequest"), "DeclarationStatusQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/DeclarationStatusComponent', 550, 650, "8250"));
@@ -332,8 +332,10 @@ export class CustomsRequestMenuService {
         logitudeWindow.ShowCloseButton = true;
         logitudeWindow.Title = item.TranslatedName//"Declaration restore query";
 
-        //logitudeWindow.Show('./CustomsModules/CustomsRequests/Components/DeclarationRestoreComponent');
-        //MorningMessageComponent
+        if(item.MainInterfaceCode == "9079"){
+            menuArg = { LoggingEntityReference: 'E' };
+        } 
+
         var myLogId = logId;
         myLogId = myLogId || item.DemoLogId;
         var isComponentLoaded: boolean = false;
