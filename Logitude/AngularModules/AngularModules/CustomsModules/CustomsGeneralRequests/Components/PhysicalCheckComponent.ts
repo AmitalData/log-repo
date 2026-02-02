@@ -54,7 +54,6 @@ export class PhysicalCheckComponent
 
   
     OnMassageDisplayMethod() {
-        debugger;
         if (this.MyCommunicationLogId != null) {
             this.getData(this.MyCommunicationLogId, this.MyCustomsMenuItem.MainInterfaceCode);
         }
