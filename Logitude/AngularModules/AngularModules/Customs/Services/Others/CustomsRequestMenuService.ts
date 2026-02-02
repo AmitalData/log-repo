@@ -17,6 +17,7 @@ import { EntityResourceService } from 'Infrastructure/Services/EntityResourceSer
 export class CustomsRequestMenuService {
     private _CustomsRequestMenuItems: CustomsMenuItem[];
     public get CustomsRequestMenuItems() { return this._CustomsRequestMenuItems }
+    private entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(isReports: any = false) {
         ///alert("CustomsRequestMenuService");
@@ -29,8 +30,7 @@ export class CustomsRequestMenuService {
     private buildReportsList() {
         this._CustomsRequestMenuItems = [];
         if (FeatureLocator.HasFeaturePermession("Customs.CustomsVendor", "SettingVehicle")) {
-            var entityResourceService = new EntityResourceService();
-            entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response: any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response: any) => {
                 this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.NewClient"), "NewClient", './CustomsModules/CustomsClient/Components/NewClient/NewClientComponent', 850, 500, "Customs.Client")); //3610
             });
         }

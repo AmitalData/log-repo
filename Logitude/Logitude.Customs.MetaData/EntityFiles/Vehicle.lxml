@@ -12,7 +12,7 @@
   AvailableInCustomization="false"
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
-  AvailableInDocumentTypes="false"
+  AvailableInDocumentTypes="true"
   IsLock="false"
   HasHelper="false"
   HasShortTitle="false"
