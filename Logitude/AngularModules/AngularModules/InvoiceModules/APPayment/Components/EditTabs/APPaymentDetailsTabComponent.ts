@@ -1417,9 +1417,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             if (this.EntityPM != null) {
                 if (this.EntityPM.PaymentCurrencyExchangeRate != value) {
                     let veryFirstTime = (this.EntityPM.PaymentCurrencyExchangeRate == null || this.EntityPM.PaymentCurrencyExchangeRate === 0) && this.SavedExchangeRate == null;
+                   
                     // Store the previous rate if it's valid
                     this.updateOldRateFromCurrentExchangeRate(this.EntityPM.PaymentCurrencyExchangeRate);
                     this.EntityPM.PaymentCurrencyExchangeRate = AppTool.Round(value, 5);
+
                     this.GetRateIsEnabled();
                     this.ComputeLocalAmount();
                     if (veryFirstTime && this.EntityPM.IsFromReconcilePage) {
@@ -1977,8 +1979,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             || (
                 this.EntityPM.IsFromReconcilePage && // when coming from reconcile page
                 !this.IsRestoring && // not restoring saved values
-                !this.SkipUpdatingLocalAmount && // not skipping update
-                (!this.SavedPaymentCurrencyId || this.SavedPaymentCurrencyId !== this.PaymentCurrencyId)))  // when changing currency from reconcile page
+                !this.SkipUpdatingLocalAmount  // not skipping update
+                ))  // when changing currency from reconcile page
              this.AmountInLocalCurrency = this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;
     }
 
