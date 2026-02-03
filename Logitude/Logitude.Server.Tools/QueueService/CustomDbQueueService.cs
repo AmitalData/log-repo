@@ -132,7 +132,6 @@ namespace Logitude.Server.Tools.QueueService
         public int? Send(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime, /*int tenantPriority, */
             QueueSendModel queueSendModel = null)
         {
-            QueueSendModel = QueueSendModel;
 
             //int tenantPriority=8;
             //LogMessagingUtil.Instance.AppendLine($"SendCommunicationLogMessageToQueue(${queueName},UseRabbitMQ={UseRabbitMQ})");

@@ -92,7 +92,6 @@ namespace Logitude.Server.Tools.QueueService
             int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null//,int tenantPriority = 89
             ,QueueSendModel queueSendModel= null)
         {
-            QueueSendModel = queueSendModel;
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 return SendReturnIdCustoms(messageValues,
@@ -1050,7 +1049,7 @@ namespace Logitude.Server.Tools.QueueService
             {
                 return ReceiveCustoms_new(nextRunDelayInSec, selectCount);
             }
-            // test
+
             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
             long messageId = -1;
 

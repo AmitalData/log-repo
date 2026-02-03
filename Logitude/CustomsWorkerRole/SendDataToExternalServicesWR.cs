@@ -80,15 +80,8 @@ namespace CustomsWorkerRole
                                                                                                                                            //if (StorageAcountDetails.NameSpaceManager.QueueExists(emailQueueName))
                                                                                                                                            //{
                                                                                                                                            //    StorageAcountDetails.NameSpaceManager.DeleteQueue(emailQueueName);
-                                                                                                                                           //}
-
 
                 myClass = this.GetType().Name;
-                if(this.BatchServiceCode == "CustomsCommandAnalyzeResponseWR_Group1")
-                {
-                    var dd = "";
-                }
-
                 _CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), SettingUtil.GetTenantDBFromConfig(), queueDefinitionCode: this.BatchServiceCode );
 
                 int tenantConfig = SettingUtil.GetTenantDBFromConfig();
