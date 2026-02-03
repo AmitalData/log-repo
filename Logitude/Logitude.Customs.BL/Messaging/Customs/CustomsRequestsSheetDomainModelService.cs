@@ -1905,7 +1905,7 @@ After that Remove file  from DCA  .. ");
                 if (createSBQMessage)
                 {
                     InterfaceManagementRepository interfaceManagementRepository = new InterfaceManagementRepository(MyCustomsRequestsSheetPM.Tenant);
-                    string queueDefinitionGroup = interfaceManagementRepository.GetSingle(MyCustomsRequestsSheetPM?.InterfaceTypeCode)?.QueueDefinitionGroup;
+                    string queueDefinitionGroup = interfaceManagementRepository.GetSingleFromCache(MyCustomsRequestsSheetPM?.InterfaceTypeCode)?.QueueDefinitionGroup;
 
                     LogMessagingUtil.Instance.AppendLine("if (createSBQMessage)");
 
@@ -2879,7 +2879,7 @@ After that Remove file  from DCA  .. ");
             _CommonContext.SaveChanges();
 
             InterfaceManagementRepository interfaceManagementRepository = new InterfaceManagementRepository(MyCustomsRequestsSheetPM.Tenant);
-            string queueDefinitionGroup = interfaceManagementRepository.GetSingle(MyCustomsRequestsSheetPM?.InterfaceTypeCode)?.QueueDefinitionGroup;
+            string queueDefinitionGroup = interfaceManagementRepository.GetSingleFromCache(MyCustomsRequestsSheetPM?.InterfaceTypeCode)?.QueueDefinitionGroup;
 
             CustomsCommandEnum nxtCustomsCommandEnum = CustomsCommandEnum.CustomsCommandAnalyzeResponseWR;
             SBQMessageService.CreateBasic<CustomsCommandEnum>(
@@ -2894,7 +2894,7 @@ After that Remove file  from DCA  .. ");
         {
 
             InterfaceManagementRepository interfaceManagementRepository = new InterfaceManagementRepository(MyCustomsRequestsSheetPM.Tenant);
-            string queueDefinitionGroup = interfaceManagementRepository.GetSingle(MyCustomsRequestsSheetPM?.InterfaceTypeCode)?.QueueDefinitionGroup;
+            string queueDefinitionGroup = interfaceManagementRepository.GetSingleFromCache(MyCustomsRequestsSheetPM?.InterfaceTypeCode)?.QueueDefinitionGroup;
 
             CustomsCommandEnum nxtCustomsCommandEnum = CustomsCommandEnum.CustomsCommandGetCustomRequestWR;
             SBQMessageService.CreateBasic<CustomsCommandEnum>(
