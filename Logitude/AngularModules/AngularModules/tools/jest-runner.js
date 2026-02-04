@@ -328,9 +328,11 @@ function displayCoverageGrid(projects, mode) {
 	console.log('-'.repeat(92));
 	
 	// Rows
+	let allRow = null;
 	for (const row of rows) {
 		const avg = (row.statements + row.branches + row.functions + row.lines) / 4;
 		const total = row.statements + row.branches + row.functions + row.lines;
+		if (row.project === 'ALL' || rows.length === 1) allRow = { ...row, avg, total };
 		const line = row.project.padEnd(25) +
 			`${row.statements.toFixed(1)}%`.padStart(12) +
 			`${row.branches.toFixed(1)}%`.padStart(12) +
@@ -340,7 +342,21 @@ function displayCoverageGrid(projects, mode) {
 			`${total.toFixed(1)}%`.padStart(12);
 		console.log(line);
 	}
-	
+
+	// Write machine-readable summary for Jenkins/CI (avoids parsing console log)
+	if (allRow) {
+		const summaryPath = path.join(testResultsDir, 'coverage-summary.json');
+		const summary = {
+			Statements: Math.round(allRow.statements * 10) / 10,
+			Branches: Math.round(allRow.branches * 10) / 10,
+			Functions: Math.round(allRow.functions * 10) / 10,
+			Lines: Math.round(allRow.lines * 10) / 10,
+			Average: Math.round(allRow.avg * 10) / 10,
+			Total: Math.round(allRow.total * 10) / 10
+		};
+		fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2), 'utf8');
+	}
+
 	// Footer with totals/averages
 	if (rows.length > 1) {
 		console.log('-'.repeat(92));

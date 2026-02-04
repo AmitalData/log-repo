@@ -31,7 +31,8 @@
         "report:copyScreenshots": "cp -r cypress/screenshots cypress/results/html/screenshots",
         "test:jest": "jest --runInBand",
         "test:jest:all": "jest",
-        "test:jest:shipment": "jest ShipmentModules/ShipmentSharedManifest/__tests__ --runInBand --coverage --coverageDirectory=coverage-jest/shipment"
+        "test:jest:shipment": "jest ShipmentModules/ShipmentSharedManifest/__tests__ --runInBand --coverage --coverageDirectory=coverage-jest/shipment",
+        "ci-install": "node tools/ci-install.js"
     },
     "private": true,
     "dependencies": {
