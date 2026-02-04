@@ -73,10 +73,20 @@ Please review the Jest results.
         -Headers @{ Authorization = "Bearer $SendGridApiKey"; "Content-Type" = "application/json" } -Body $body
 }
 
-# --- Ensure clean install (fixes __ngcc_entry_points__.json); optional: uncomment to run every time ---
-# Set-Location $AngularRoot; npm run ci-install
-
+# --- Ensure clean install (fixes __ngcc_entry_points__.json and missing Jest binary); works on any branch ---
 Set-Location $AngularRoot
+$nodeModules = Join-Path $AngularRoot "node_modules"
+if (Test-Path $nodeModules) {
+    Write-Host "Removing node_modules..."
+    Remove-Item -Recurse -Force $nodeModules
+}
+Write-Host "Running npm install..."
+npm install
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "npm install failed. Fix npm/network issues and re-run."
+    exit 1
+}
+
 Remove-Item jest-output.log -ErrorAction SilentlyContinue
 pwsh -Command "node tools\jest-runner.js --maxWorkers 8 --maxOldSpaceMB 65536 --mode parallelAll --detailed --enableJUnit 2>&1 | Tee-Object -FilePath jest-output.log"
 

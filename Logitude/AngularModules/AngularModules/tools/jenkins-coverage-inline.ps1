@@ -76,11 +76,17 @@ Please review the Jest results.
 $angularRoot = "E:\Jenkins\LogBoxTestDevOps\Logitude\AngularModules\AngularModules"
 Set-Location $angularRoot
 
-# Ensure node_modules exists (fixes __ngcc_entry_points__.json and missing Jest binary)
-Write-Host "Running ci-install (remove node_modules + npm install)..."
-npm run ci-install
+# Ensure node_modules exists (fixes __ngcc_entry_points__.json and missing Jest binary).
+# Do inline so it works on any branch (with or without npm script "ci-install").
+$nodeModules = Join-Path $angularRoot "node_modules"
+if (Test-Path $nodeModules) {
+    Write-Host "Removing node_modules..."
+    Remove-Item -Recurse -Force $nodeModules
+}
+Write-Host "Running npm install..."
+npm install
 if ($LASTEXITCODE -ne 0) {
-    Write-Error "ci-install failed. Fix npm/network issues and re-run."
+    Write-Error "npm install failed. Fix npm/network issues and re-run."
     exit 1
 }
 
