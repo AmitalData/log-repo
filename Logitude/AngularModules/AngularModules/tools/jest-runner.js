@@ -69,7 +69,7 @@ function setHeap(maxOldSpaceMB) {
 	process.env.NGCC_LOG_LEVEL = process.env.NGCC_LOG_LEVEL || 'error';
 }
 
-function jestBin() {
+function jestBinOrNull() {
 	// 1) Node's resolver (handles symlinks, hoisting, and alternate layouts)
 	try {
 		return require.resolve('jest/bin/jest.js', { paths: [repoRoot] });
@@ -82,16 +82,22 @@ function jestBin() {
 	// 3) From process.cwd() in case runner was invoked from a subdir
 	const cwdJest = path.join(cwd, 'node_modules', 'jest', 'bin', 'jest.js');
 	if (cwd !== repoRoot && fs.existsSync(cwdJest)) return cwdJest;
-	throw new Error(
-		'Could not locate Jest binary in node_modules. Run "npm install" from the repo root (e.g. Logitude/AngularModules/AngularModules) and ensure "jest" is in devDependencies.'
-	);
+	return null;
 }
 
 function runJestOnce(args, env = {}, options = { filterNgccWarnings: false, progress: false, label: '' }) {
+	const jestPath = jestBinOrNull();
+	const useNpx = jestPath == null;
+	const spawnCmd = useNpx ? 'npx' : process.execPath;
+	const spawnArgs = useNpx ? ['jest', ...args] : [jestPath, ...args];
+	if (useNpx) {
+		console.warn('Jest binary not in node_modules; running via npx. Ensure "npm install" runs before tests in CI.');
+	}
 	return new Promise((resolve) => {
-		const child = spawn(process.execPath, [jestBin(), ...args], {
+		const child = spawn(spawnCmd, spawnArgs, {
 			cwd: repoRoot,
-			env: { ...process.env, ...env }
+			env: { ...process.env, ...env },
+			shell: useNpx
 		});
 
 		 // Simple progress spinner
