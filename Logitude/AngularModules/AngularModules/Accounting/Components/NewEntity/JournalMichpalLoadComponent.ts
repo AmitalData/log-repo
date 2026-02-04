@@ -38,6 +38,7 @@ export class JournalMichpalLoadComponent extends BaseComponent
     public hasError = false;
     public errorLog: string;
     public newJournalNumber: string;
+    fileData: number;
 
     public createdJournal: JournalPM;
 
@@ -61,7 +62,7 @@ export class JournalMichpalLoadComponent extends BaseComponent
     }
 
 
-    public uploadFile(): void {
+    public uploadFile(event: any): void {
         const file = attachmentUploader(this.uploadFileId);
         if (!file) return;
 
