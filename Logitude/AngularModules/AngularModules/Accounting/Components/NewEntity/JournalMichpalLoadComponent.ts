@@ -166,9 +166,9 @@ export class JournalMichpalLoadComponent extends BaseComponent
         journalLine.ForeignAmount = amount;
         journalLine.Reference1 = reference1;
         journalLine.Reference2 = reference2;    
-        journalLine.Notes = btoa(
-            String.fromCharCode(...notesBytes)
-        );
+        journalLine.Notes = notesBytes && notesBytes.length > 0 
+            ? btoa(String.fromCharCode(...notesBytes)) 
+            : '';
     
         journalLine.CurrencyId = SessionLocator.AccountingCurrencyId;
         return journalLine;
