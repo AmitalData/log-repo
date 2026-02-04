@@ -1473,9 +1473,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 return _DBEntityAfterCommit;
             }
             var declarationQueryService = new DeclarationQueryService(Tenant);
-           // declarationQueryService.LoadSupplierInvoices = false;
             declarationQueryService.LoadSupplierInvoicesWithItems = false;
-            //if (IsUpdateUnifreight == true) ; //declarationQueryService.LoadSupplierInvoices = true; // moran 14.6.16 - Task 21737
             var myDBEntity = declarationQueryService.GetSingle(DeclarationId, true, false);
             if (!_AfterCommitUpdate)
             {

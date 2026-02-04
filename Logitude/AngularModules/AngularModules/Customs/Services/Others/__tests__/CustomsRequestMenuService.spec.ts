@@ -16,6 +16,7 @@ jest.mock('../../../../Infrastructure/Utilities/TextCodeTranslator', () => ({
 jest.mock('../../../../Infrastructure/Tools', () => ({
     AppTool: {
         IsNullOrEmpty: jest.fn((value: any) => value === null || value === undefined || value === ''),
+        GetLogitudeURL: jest.fn().mockReturnValue('http://test'),
     },
 }));
 

@@ -307,15 +307,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             List<GlobalDB> activeDbs = globaldbRep.GetActiveDataBases();
 
-            var dbById = activeDbs.FirstOrDefault(db => db.Id == tenant);
-            if (dbById != null)
-                return dbById;
+            GlobalDB database = activeDbs.FirstOrDefault(db => db.Id == tenant);
 
-            if (activeDbs.Count == 1)
-                return activeDbs[0];
-
-
-            return null;
+            return database;
         }
 
         private void CreateDWHSettings()

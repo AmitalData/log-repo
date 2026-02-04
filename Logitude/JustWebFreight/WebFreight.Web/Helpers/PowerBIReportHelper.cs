@@ -58,7 +58,7 @@ namespace WebFreight.Web.Helpers
             catch (Exception ex)
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, $"Failed to get report list for workspaceId: {workspaceId}, error: {ex.Message}");
-                throw new Exception($"Failed to get report list for workspaceId: {workspaceId}", ex);
+                throw new Exception($"Failed to get report list for workspaceId: {workspaceId}, error: {ex.Message}", ex);
             }
         }
 
@@ -95,7 +95,7 @@ namespace WebFreight.Web.Helpers
                 */
 
                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, $"Failed to get report file for workspaceId: {workspaceId}, report code: {reportCode}, error: {ex.Message}");
-                throw new Exception($"Failed to get report file for workspaceId: {workspaceId}, report code: {reportCode}", ex);
+                throw new Exception($"Failed to get report file for workspaceId: {workspaceId}, report code: {reportCode}, error: {ex.Message}", ex);
             }
         }
 
@@ -247,8 +247,8 @@ namespace WebFreight.Web.Helpers
             }
             catch (Exception ex)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to generate access token for client id: {clientId}, error: {ex.Message}");
-                throw new Exception($"Failed to generate access token for PowerBI with client id: {clientId}", ex);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, $"Failed to generate access token for client id: {clientId}, error: {ex.Message}");
+                throw new Exception($"Failed to generate access token for PowerBI with client id: {clientId}, error: {ex.Message}", ex);
             }
         }
 

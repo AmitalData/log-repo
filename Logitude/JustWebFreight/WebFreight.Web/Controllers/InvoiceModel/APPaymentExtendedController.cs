@@ -51,7 +51,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
     public partial class APPaymentExtendedController : ApiController
     {
         [HttpPut]
-        public HttpResponseMessage UpdateMulti([FromBody] ParamsUpdateMulti paramsUpdateMulti)
+        public HttpResponseMessage UpdateMulti([FromBody] List<APPaymentList> apPaymentsList)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                 SecurityUtility.CheckContactFeature("APPayment", "READ", authToken.Tenant);
                 IInvoiceContext MyContext = InvoiceContext.GetContext(authToken.Tenant);
                 APPaymentService appaymentService = new APPaymentService(MyContext, authToken.Tenant);
-                appaymentService.UpdateMulti(paramsUpdateMulti.ids, paramsUpdateMulti.masavInterfaceId, authToken.Tenant);
+                appaymentService.UpdateMulti(apPaymentsList, authToken.Tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)

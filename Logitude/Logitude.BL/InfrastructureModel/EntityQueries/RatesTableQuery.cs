@@ -163,8 +163,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                             LogDateTime = myRecord.LogDateTime,
                             HistoryCount = iQuery.Count(),
                             BaseCurrencyId = baseCurrencyId,
-                            CurrencyRates= currencyRateRepository.GetSingleByExchangeRateId(myRecord.Id)
-                        };
+                            CurrencyRates = currencyRateRepository.GetSingleByExchangeRateId(myRecord.Id)
+                         };
                     }
                 }
             }

@@ -2496,7 +2496,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
 
-        public string GetHatraDateForDecId(string decId, int tenant)
+        public DateTime? GetHatraDateForDecId(string decId, int tenant)
         {
             return repository.GetHatraDateForDecId(decId, tenant);
         }

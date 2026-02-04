@@ -225,7 +225,6 @@ using WebFreight.Web.Helpers;
 
             interestReportDP.CustomerName = _InterestReportPM.CustomerName;
             interestReportDP.VatNumber = _InterestReportPM.VatNumber;
-            interestReportDP.DisplayNumber = _InterestReportPM.GLAccountDisplayNumber;
             interestReportDP.InterestCalculationDate = _InterestReportPM.InterestCalculationDate;
             interestReportDP.InvoiceNumber = _InterestReportPM.ARInvoiceNumber;
             interestReportDP.InterestReportLinesByDateList = interestReportPeriods;
@@ -314,14 +313,14 @@ using WebFreight.Web.Helpers;
                     (interestReportPM.InterestReportLinesByDates == null ||
                      !interestReportPM.InterestReportLinesByDates.Any())
                         ? (decimal?)null  // for a null collection, but --IMPORTANTLY-- for an empty collection (because CalculatedStandInterestAmount is decimal [not a decimal?])
-                        : interestReportPM.InterestReportLinesByDates.Sum(l => l.CalculatedStandInterestAmount);
+                        : Math.Round(interestReportPM.InterestReportLinesByDates.Sum(l => l.CalculatedStandInterestAmount), 2, MidpointRounding.AwayFromZero);
 
             /* b */
             rv.CalculatedExcInterestAmount =
                     (interestReportPM.InterestReportLinesByDates == null ||
                      !interestReportPM.InterestReportLinesByDates.Any())
                         ? (decimal?)null  
-                        : interestReportPM.InterestReportLinesByDates.Sum(l => l.CalculatedExcepInterestAmount);
+                        : Math.Round(interestReportPM.InterestReportLinesByDates.Sum(l => l.CalculatedExcepInterestAmount), 2, MidpointRounding.AwayFromZero);
 
             /* c = a + b */
             var sum = (rv.CalculatedStdInterestAmount ?? 0m) +
@@ -330,10 +329,10 @@ using WebFreight.Web.Helpers;
             rv.TotalReportInterestAmount = sum == 0m ? (decimal?)null : sum;
 
             /* d */
-            rv.CreditAllocationFee = interestReportDP.CalCreditAllotmentCommission;
+            rv.CreditAllocationFee = interestReportDP.CalCreditAllotmentCommission != null? Math.Round((decimal)interestReportDP.CalCreditAllotmentCommission, 2, MidpointRounding.AwayFromZero): 0;
 
             /* e */
-            rv.PostponedChequeFee = interestReportDP.CalculatedPostponedChequesCommision;
+            rv.PostponedChequeFee = interestReportDP.CalculatedPostponedChequesCommision != null? Math.Round((decimal)interestReportDP.CalculatedPostponedChequesCommision, 2, MidpointRounding.AwayFromZero): 0;
 
             /* f = c + d + e */
             var sum_f = (rv.TotalReportInterestAmount ?? 0m) +
@@ -347,7 +346,7 @@ using WebFreight.Web.Helpers;
                     (interestReportDP.FutureInterestTransactions == null ||
                      !interestReportDP.FutureInterestTransactions.Any())
                         ? (decimal?)null  
-                        : interestReportDP.FutureInterestTransactions.Sum(l => l.LocalAmount);
+                        : Math.Round(interestReportDP.FutureInterestTransactions.Sum(l => l.LocalAmount), 2, MidpointRounding.AwayFromZero);
 
             return rv;
         }

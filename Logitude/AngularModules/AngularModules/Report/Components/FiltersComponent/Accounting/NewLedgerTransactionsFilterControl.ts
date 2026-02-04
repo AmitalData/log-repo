@@ -531,7 +531,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                 }
                 case "FromGLAccountDisplayNumber":{
                     this.FromGLAccountId = this.GetLookUpFieldValue(queryFilterItem.FieldValue2);
-                    if (!AppTool.IsNullOrEmpty(this.FromGLAccountId)) {
+                    if (!AppTool.IsNullOrEmpty(this.ToGLAccountId)) {
                         this.filterGlAccountSelectedValue = "filter_glaccounts_range";
                         this.IsRangGLAccounts = true;
                     }
@@ -540,6 +540,10 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                     
                 case "ToGLAccountDisplayNumber":
                     this.ToGLAccountId = this.GetLookUpFieldValue(queryFilterItem.FieldValue2);
+                    if (!AppTool.IsNullOrEmpty(this.FromGLAccountId)) {
+                        this.filterGlAccountSelectedValue = "filter_glaccounts_range";
+                        this.IsRangGLAccounts = true;
+                    }
                     break;
                 case "GLAccountId":
                     this.GLAccountId = this.GetLookUpFieldValue(queryFilterItem.FieldValue);

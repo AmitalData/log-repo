@@ -387,6 +387,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.MasavBankId = entityPM.MasavBankId;
 			}
+
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrepaidExpensesGLAccountId))
             {
@@ -641,11 +642,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			{
 				entityPM.MasavCode = entityPOCO.MasavCode;
 			}
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PrepaidExpensesGLAccountId))
             {
 					entityPM.PrepaidExpensesGLAccountId = entityPOCO.PrepaidExpensesGLAccountId;
             }
-
 		
 
 		}
@@ -888,6 +889,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			{
 				oldEntityPM.MasavCode = entityPM.MasavCode;
 			}
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrepaidExpensesGLAccountId))
             {
                 oldEntityPM.PrepaidExpensesGLAccountId = entityPM.PrepaidExpensesGLAccountId;

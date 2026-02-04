@@ -125,7 +125,6 @@ namespace WebFreight.Web.CustomWebServices
             return true;
         }
 
-
         [WebMethod]
         public bool SendSignedDeclaration(string customFileNo, int tenant, string user, string personId, out string errMessage)
         {
@@ -191,7 +190,8 @@ namespace WebFreight.Web.CustomWebServices
             SignMethodByQueueEnum signMethodByQueueEnum = SignMethodByQueueEnum.None;
             string availableSignServer = null;
 
-            if (signQueueHSMService.IsHSMSign_IsOn(tenant, GetHsmStationContext(declarationPM)))
+            var IsCloud = !CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight;
+            if (signQueueHSMService.IsHSMSign_IsOn(tenant, GetHsmStationContext(declarationPM)) || IsCloud)
             {
                 (availableSignServer, signMethodByQueueEnum) = dbSignQueueService
                     .GetAvailableSignServer(tenant, SignQueueByType.SignQueueByPersonId, personId, hsmStationContext:genericRequestParams.HsmStationContext);

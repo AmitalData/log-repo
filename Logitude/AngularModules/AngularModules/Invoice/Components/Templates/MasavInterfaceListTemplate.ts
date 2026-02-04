@@ -34,12 +34,17 @@ export class MasavInterfaceListTemplate {
     constructor(private CD: ChangeDetectorRef) {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-        this.readonly = this.CurrentSession.CurrentEditComponent.EntityPM?.StatusCode ===  MasavInterfaceStatus.Transmitted;
+        this.readonly = this.CurrentSession.CurrentEditComponent.EntityPM?.StatusCode ===  MasavInterfaceStatus.Transmitted || this.CurrentSession.CurrentEditComponent.EntityPM?.StatusCode ===  MasavInterfaceStatus.CancellationInProgress ||
+        this.CurrentSession.CurrentEditComponent.EntityPM?.StatusCode ===  MasavInterfaceStatus.InProgress;
+       
     }
 
     setVariables(rowData: any, fieldName: string, MyAdditionalData: any) {
         this.rowData = rowData;
         this.fieldName = fieldName;
+        this.isChecked =
+        this.rowData.IsChecked ||
+        this.rowData['MasavInterfaceId'] !== null;        
         var isDestroyed: boolean = this.CD['destroyed'];
         if (!isDestroyed) {
             this.CD.detectChanges();   
@@ -48,11 +53,12 @@ export class MasavInterfaceListTemplate {
 
 
     }
-    private isChecked: boolean;
-    get IsChecked() { return this.isChecked; }
-    set IsChecked(newValue: boolean) {        
+    public isChecked : boolean;
+    onCheckedChanged(value: boolean) {
+        this.isChecked = value;
         this.CurrentSession.PseventRowSelectEvent.emit(this.rowData);
-    }
+      }
+      
     getMissingBankDetails(rowData: APPaymentList): string {
         let errorMessage = '';
         if (AppTool.IsNullOrEmpty(rowData.VendorBankAccount)) {

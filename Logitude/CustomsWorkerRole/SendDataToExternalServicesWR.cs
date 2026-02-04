@@ -80,11 +80,9 @@ namespace CustomsWorkerRole
                                                                                                                                            //if (StorageAcountDetails.NameSpaceManager.QueueExists(emailQueueName))
                                                                                                                                            //{
                                                                                                                                            //    StorageAcountDetails.NameSpaceManager.DeleteQueue(emailQueueName);
-                                                                                                                                           //}
-
 
                 myClass = this.GetType().Name;
-				_CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), SettingUtil.GetTenantDBFromConfig());
+                _CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), SettingUtil.GetTenantDBFromConfig(), queueDefinitionCode: this.BatchServiceCode );
 
                 int tenantConfig = SettingUtil.GetTenantDBFromConfig();
                 var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenantConfig);
@@ -165,7 +163,7 @@ namespace CustomsWorkerRole
                 else
                 {
                     var myClass = this.GetType().Name;
-                    _CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), SettingUtil.GetTenantDBFromConfig());
+                    _CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), SettingUtil.GetTenantDBFromConfig(), queueDefinitionCode: this.BatchServiceCode);
                 }
             }
             catch (Exception ex)

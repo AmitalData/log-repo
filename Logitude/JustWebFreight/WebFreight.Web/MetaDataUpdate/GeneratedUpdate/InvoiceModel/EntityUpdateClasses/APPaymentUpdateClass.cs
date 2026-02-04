@@ -25,7 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APPaymentUpdateClass
    {  		
-		public const string HashString = "e78e1dc4e40cceec9164999a87685d6c";
+		public const string HashString = "2a401f5799bdfe0be668695cae058b8d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -2458,7 +2458,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "VendorBankBranch",
+					 						FieldName =  "BankBranch",
 					  						ObjectTableName =  "APPayment",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2478,8 +2478,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "VendorBankBranch",
-					  						ListPropertyPath =  "VendorBankBranch",
+					  						PMPropertyPath =  "BankBranch",
+					  						ListPropertyPath =  "BankBranch",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -2500,11 +2500,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "VendorBankBranch",
+					  						FullFieldLable =  "BankBranch",
 					  						DefaultText =  "Bank Branch",
 					  						FullLocalDefaultTextBack_up =  "סניף",
 					  						FullLocalDefaultText =  "BS64:Iteh16DXmdejIg==",
-					  						ListFieldLable =  "VendorBankBranchListLable",
+					  						ListFieldLable =  "BankBranchListLable",
 					  						ListLableDefaultText =  "BankBranch",
 					  						ListLocalDefaultTextBack_up =  "סניף",
 					  						ListLocalDefaultText =  "BS64:Iteh16DXmdejIg==",

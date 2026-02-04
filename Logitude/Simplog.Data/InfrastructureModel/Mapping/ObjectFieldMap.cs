@@ -13,7 +13,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
            
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FieldName).IsRequired().HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.ShortName).IsRequired().HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.ShortName).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DataTypeCode).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.LookUpTableId).HasMaxLength(15).IsUnicode(false);

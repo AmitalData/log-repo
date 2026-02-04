@@ -864,6 +864,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "AD", Name = "Approved" }, apPaymentStatusRepository);
             AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "VD", Name = "Void" }, apPaymentStatusRepository);
             AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "CL", Name = "Closed" }, apPaymentStatusRepository);
+            AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "PD", Name = "Paid" }, apPaymentStatusRepository);
+
             apPaymentStatusRepository.SubmitChanges();
 
             //-------- SAT Interfaces ----------//
@@ -2651,7 +2653,18 @@ namespace WebFreight.Web.MetaDataUpdate
                 Code = "FD",
                 LocalName = "נכשל",
             }, entityRepository);
-
+            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
+            {
+                Name = "In Progress",
+                Code = "IP",
+                LocalName = "בתהליך",
+            }, entityRepository);
+            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
+            {
+                Name = "Cancellation In Progress",
+                Code = "CP",
+                LocalName = "הביטול בתהליך",
+            }, entityRepository);
             entityRepository.SubmitChanges();
         }
         public void LoadMeasurements()

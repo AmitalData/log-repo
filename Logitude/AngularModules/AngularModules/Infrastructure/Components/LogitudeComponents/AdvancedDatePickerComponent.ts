@@ -45,6 +45,13 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
     public ShowToolTip: boolean;
 
     public AdvancedDatePickerPlaceHolder: string;
+    public PeriodUnitList = ["Days", "Months", "Years"];
+    public selectedPeriodUnit: string = this.PeriodUnitList[0];
+    public IsRelativeperiodDropDownOpen: boolean;
+    public periodNumber = 1;
+    updateSelectedPeriodUnit(selectedPeriodUnit?) {
+        this.OnDropDownSelected(this.DateOptions.filter(d => d.Code == "PER")[0], null, false);
+    }
 
     @Output() OnInputBlurEvent: EventEmitter<any> = new EventEmitter();
     @Output() InputLostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -71,11 +78,19 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
                     this.SelectedItem = selectedItem;
                     this.SelectedItemObject = this.SelectedItem;
                     this.selectedDateValue = selectedItem.Name;
-                    this.InputValue = selectedItem.Name; 
+                    this.InputValue = selectedItem.Name;
                 }
                 else {
                     this.selectedDateValue = newValue;
-                    this.DateValueChanged(new Date(newValue));
+                    if (newValue?.startsWith("PER_")) {
+                        const parts = newValue.split("_");
+                        this.periodNumber = parseInt(parts[1], 10);
+                        this.selectedPeriodUnit = parts[2];
+                        this.IsRelativeperiodDropDownOpen = true;
+                    }
+                    else {
+                        this.DateValueChanged(new Date(newValue));
+                    }
                 }
             }
         }
@@ -138,6 +153,7 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         this.DateOptions.push(new CodeNameClass("SPD", "Specific Date"));
         this.DateOptions.push(new CodeNameClass("TOD", "Today"));
         this.DateOptions.push(new CodeNameClass("YES", "Yesterday"));
+        this.DateOptions.push(new CodeNameClass("PER", "Relative Period"));
         this.DateOptions.push(new CodeNameClass("BTM", "Begin of this month"));
         this.DateOptions.push(new CodeNameClass("BLM", "Begin of last month"));
         this.DateOptions.push(new CodeNameClass("BTQ", "Begin of this quarter"));
@@ -250,7 +266,14 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         this.SelectedItem = item;
         let selectedValue = this.SelectedItem.Name;
         if (!AppTool.IsNullOrEmpty(newValue)) selectedValue = newValue;
-        this.DataContext[this.ObjectFieldName] = this.SelectedItem.Code == "SPD" ? selectedValue : this.SelectedItem.Code;
+        if (this.SelectedItem.Code == "PER") {
+            selectedValue = "PER_" + this.periodNumber + "_" + this.selectedPeriodUnit;
+            this.IsRelativeperiodDropDownOpen = true;
+        }
+        else {
+            this.IsRelativeperiodDropDownOpen = false;
+        }
+        this.DataContext[this.ObjectFieldName] = this.SelectedItem.Code == "SPD" || this.SelectedItem.Code == "PER" ? selectedValue : this.SelectedItem.Code;
         this.SelectedItemObject = this.SelectedItem;
         this.SelectedItemChanged.emit(this.SelectedItem);
         this.ValidateField();
@@ -283,6 +306,7 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
 
     public OnDeleteValue() {
         this.SelectedItem = null;
+        this.IsRelativeperiodDropDownOpen = false;
         this.DataContext[this.ObjectFieldName] = null;
         this.SelectedItemObject = null;
         this.SelectedItemChanged.emit(this.SelectedItem);

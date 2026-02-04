@@ -11,6 +11,8 @@ namespace Logitude.Accounting.Def.EntityPMs
         public const string APInvoiceApprove = "APInvoiceApprove";
         public const string APInvoiceVoid = "APInvoiceVoid ";
         public const string APPaymentApprove = "APPaymentApprove";
+        public const string APPaymentPaid = "APPaymentPaid";
+        public const string APPaymentPaidVoid = "APPaymentPaidVoid";
         public const string APPaymentVoid = "APPaymentVoid";
         public const string PaymentCheque = "PaymentCheque";
         public const string BankDepositApprove = "BankDepositApprove";

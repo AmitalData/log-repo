@@ -42,6 +42,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using Unifreight.BL.EntityQueryServices;
+using Logitude.Customs.Data.Repsitories;
 
 
 
@@ -1903,13 +1904,16 @@ After that Remove file  from DCA  .. ");
                 }
                 if (createSBQMessage)
                 {
+                    InterfaceManagementRepository interfaceManagementRepository = new InterfaceManagementRepository(MyCustomsRequestsSheetPM.Tenant);
+                    string queueDefinitionGroup = interfaceManagementRepository.GetSingleFromCache(MyCustomsRequestsSheetPM?.InterfaceTypeCode)?.QueueDefinitionGroup;
+
                     LogMessagingUtil.Instance.AppendLine("if (createSBQMessage)");
 
                     SBQMessageService.CreateBasic<CustomsCommandEnum>(
                             nxtCustomsCommandEnum,
                             this.MyCustomsRequestsSheetPM.Tenant,
                             this.MyCustomsRequestsSheetPM.InterfaceTypeCode,
-                            this.MyCustomsRequestsSheetPM.Id);
+                            this.MyCustomsRequestsSheetPM.Id, null, queueDefinitionGroup);
                 }
 
 
@@ -2874,25 +2878,30 @@ After that Remove file  from DCA  .. ");
             _CustomsRequestsSheetUpdateService.Update(MyCustomsRequestsSheetPM, true);
             _CommonContext.SaveChanges();
 
+            InterfaceManagementRepository interfaceManagementRepository = new InterfaceManagementRepository(MyCustomsRequestsSheetPM.Tenant);
+            string queueDefinitionGroup = interfaceManagementRepository.GetSingleFromCache(MyCustomsRequestsSheetPM?.InterfaceTypeCode)?.QueueDefinitionGroup;
+
             CustomsCommandEnum nxtCustomsCommandEnum = CustomsCommandEnum.CustomsCommandAnalyzeResponseWR;
             SBQMessageService.CreateBasic<CustomsCommandEnum>(
                             nxtCustomsCommandEnum,
                             this.MyCustomsRequestsSheetPM.Tenant,
                             this.MyCustomsRequestsSheetPM.InterfaceTypeCode,
-                            this.MyCustomsRequestsSheetPM.Id, futureSendDateTime);
+                            this.MyCustomsRequestsSheetPM.Id, futureSendDateTime, queueDefinitionGroup);
         }
 
 
         public void ReCreateNow()
         {
 
-            
+            InterfaceManagementRepository interfaceManagementRepository = new InterfaceManagementRepository(MyCustomsRequestsSheetPM.Tenant);
+            string queueDefinitionGroup = interfaceManagementRepository.GetSingleFromCache(MyCustomsRequestsSheetPM?.InterfaceTypeCode)?.QueueDefinitionGroup;
+
             CustomsCommandEnum nxtCustomsCommandEnum = CustomsCommandEnum.CustomsCommandGetCustomRequestWR;
             SBQMessageService.CreateBasic<CustomsCommandEnum>(
                             nxtCustomsCommandEnum,
                             this.MyCustomsRequestsSheetPM.Tenant,
                             this.MyCustomsRequestsSheetPM.InterfaceTypeCode,
-                            this.MyCustomsRequestsSheetPM.Id);
+                            this.MyCustomsRequestsSheetPM.Id, null, queueDefinitionGroup);
         }
     }
 

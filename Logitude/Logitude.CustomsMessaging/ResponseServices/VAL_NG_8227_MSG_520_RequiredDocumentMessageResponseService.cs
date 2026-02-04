@@ -276,7 +276,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else
 
                         {
-                            myInsertEventContextTagModel.EventRemarks = "Document Request By Customs" + DeclarationConvertionText;
+                            var typeIdStr = customResponse.RequiredDocumentDetails.typeID.ToString();
+                            var documentTypeName = GetDocumentTypeName(typeIdStr, requestParams.Tenant);
+                            var documentTypeInfo = string.Concat(typeIdStr, " - ", documentTypeName);
+                            myInsertEventContextTagModel.EventRemarks = "Document Request By Customs" + DeclarationConvertionText + " DocumentCode: " + documentTypeInfo;
 
                         }
 

@@ -1249,12 +1249,12 @@ namespace Logitude.Customs.Data.Repsitories
             return res2;
         }
 
-        public string GetHatraDateForDecId(string decId, int tenant)
+        public DateTime? GetHatraDateForDecId(string decId, int tenant)
         {
-            var HatraDateQuery = (from a in context.Declarations
-                                  where a.Id == decId && a.Tenant == tenant
-                                  select a.HatraDate);
-            return HatraDateQuery.FirstOrDefault().ToString();
+            return context.Declarations
+                  .Where(d => d.Id == decId && d.Tenant == tenant)
+                  .Select(d => d.HatraDate)
+                  .FirstOrDefault();
         }
 
         public bool HasHataraByCustomFile(string customFileNo, int tenant)

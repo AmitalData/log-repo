@@ -276,13 +276,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 return;
 
-            }
-
-            if (Math.Abs(reconciliationAmount) > Math.Abs(transaction.OpenAmount))
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"Reconciliation skipped: transaction {transaction.Id} openAmount={transaction.OpenAmount} < reconciliationAmount={reconciliationAmount}");
-                return;
-            }
+            }           
 
             if (baseJournal.JournalReconciles == null)
                 journalPM.JournalReconciles = new List<JournalReconcilePM>();
@@ -294,9 +288,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 JournalId = journalPM.Id,
                 Line = journalLinePM.Line,
                 LedgerTransactionId = transaction.Id,
-                CurrencyId = transaction.OpenAmountCurrencyId,
-                ReconciliationAmount = reconciliationAmount*-1,
-                IsPartial = Math.Abs(reconciliationAmount) != Math.Abs(transaction.OpenAmount)
+                CurrencyId =  transaction.OpenAmountCurrencyId,
+                ReconciliationAmount =   reconciliationAmount *-1,
+                IsPartial = Math.Abs(reconciliationAmount) != Math.Abs(transaction.OpenAmount),
             });
         }
 

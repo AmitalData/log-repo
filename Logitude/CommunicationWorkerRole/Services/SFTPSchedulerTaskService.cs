@@ -62,7 +62,16 @@ namespace CommunicationWorkerRole.Services
                     {
                         if(schedulerDetails?.FTPDetails?.Subject == "DocumentSFTP")
                         {
-							AddToAzureQueue(fileName, fileData, schedulerDetails);
+							try
+							{
+							    AddStatusMessage("fileName DocumentSFTP: " + fileName, "0");
+							    
+							    AddToAzureQueue(fileName, fileData, schedulerDetails);
+							}
+							catch (Exception ex)
+							{
+								AddStatusMessage("AddToAzureQueue EXECE: " + ex.Message.ToString(), "-1");
+							}
 						}
 						else
                         {
@@ -239,15 +248,19 @@ namespace CommunicationWorkerRole.Services
 			var createdate = TenantServerConfigration.GetCurrentDateTime(0);
 			using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 			{
-				fileName = fileName.Split('/')[fileName.Split('/').Length - 1].ToLower();
+				fileName = fileName.Split('/')[fileName.Split('/').Length - 1];
 				GetcustomsDocumentTypeAndHawbFromFileName(fileName, schedulerDetails.Tenant, out customsDocumentTypeCode, out hawb, out documentType);
 
-				string documentJson = CreateExampleDocument(hawb, customsDocumentTypeCode, schedulerDetails?.FTPDetails?.From);
+				AddStatusMessage($"customsDocumentTypeCode: {customsDocumentTypeCode } hawb {hawb}", "0");
+
+				string documentJson = CreateExampleDocument(fileName,hawb, customsDocumentTypeCode, schedulerDetails?.FTPDetails?.From);
 
 				string responseText;
 				bool success = false;
 				SendResponseToken sendResponseToken = null;
 				(responseText, success) = await SendDocument(partner_token,  api_token,  caller_objectid, accessToken,fileName, fileData, schedulerDetails, documentJson);
+				AddStatusMessage("success: " + success , "0");
+
 				if (success)
 				{
 					sendResponseToken = JsonConvert.DeserializeObject<SendResponseToken>(responseText);
@@ -299,7 +312,7 @@ namespace CommunicationWorkerRole.Services
 			Console.WriteLine(await response.Content.ReadAsStringAsync());
 			return await response.Content.ReadAsStringAsync();
 		}
-		public static async Task<(string, bool)> SendDocument(string partner_token, string api_token, string caller_objectid, string authorizationToken,string fileName,byte[] fileData, SchedulerDetails schedulerDetails,string documentJson)
+		public  async Task<(string, bool)> SendDocument(string partner_token, string api_token, string caller_objectid, string authorizationToken,string fileName,byte[] fileData, SchedulerDetails schedulerDetails,string documentJson)
 		{
 			var client = new HttpClient();
 			var endpoint = $"{baseUri1}/UploadDocument";
@@ -347,12 +360,13 @@ namespace CommunicationWorkerRole.Services
 				}
 				catch (Exception ex)
 				{
-					Console.WriteLine($"An error occurred: {ex.Message}");
+				    AddStatusMessage($"SendDocument: An error occurred: {ex.Message}", "-1");
+				    Console.WriteLine($"An error occurred: {ex.Message}");
 					return (ex.ToString(), false);
 				}
 			
 		}		
-		static string CreateExampleDocument(string parcelTrackingNumber, string documentType,string partnerCode)
+		static string CreateExampleDocument(string fileName,string parcelTrackingNumber, string documentType,string partnerCode)
 		{
 
 			var exampleDocument = new
@@ -373,7 +387,7 @@ namespace CommunicationWorkerRole.Services
 						parcelID = "ZZZZ",
 						parcelDate = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.0Z"),
 						docReference = Guid.NewGuid().ToString(),
-						fileName = $"{documentType}_{parcelTrackingNumber}.PDF"
+						fileName = fileName
 					}
 				}
 			}
@@ -421,6 +435,7 @@ namespace CommunicationWorkerRole.Services
 			}
 			catch (Exception ex)
 			{
+				AddStatusMessage("GetcustomsDocumentTypeAndHawbFromFileName: " + ex.Message.ToString(), "-1");
 
 			}
 		}
