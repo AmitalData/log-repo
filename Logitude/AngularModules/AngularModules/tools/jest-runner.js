@@ -69,21 +69,35 @@ function setHeap(maxOldSpaceMB) {
 	process.env.NGCC_LOG_LEVEL = process.env.NGCC_LOG_LEVEL || 'error';
 }
 
-function jestBin() {
-	// Resolve jest binary from local node_modules
+function jestBinOrNull() {
+	// 1) Node's resolver (handles symlinks, hoisting, and alternate layouts)
+	try {
+		return require.resolve('jest/bin/jest.js', { paths: [repoRoot] });
+	} catch (_) {}
+	// 2) Direct paths from repo root
 	const local = path.join(repoRoot, 'node_modules', 'jest', 'bin', 'jest.js');
 	if (fs.existsSync(local)) return local;
-	// Fallback: try jest-cli
 	const localCli = path.join(repoRoot, 'node_modules', 'jest-cli', 'bin', 'jest.js');
 	if (fs.existsSync(localCli)) return localCli;
-	throw new Error('Could not locate Jest binary in node_modules.');
+	// 3) From process.cwd() in case runner was invoked from a subdir
+	const cwdJest = path.join(cwd, 'node_modules', 'jest', 'bin', 'jest.js');
+	if (cwd !== repoRoot && fs.existsSync(cwdJest)) return cwdJest;
+	return null;
 }
 
 function runJestOnce(args, env = {}, options = { filterNgccWarnings: false, progress: false, label: '' }) {
+	const jestPath = jestBinOrNull();
+	const useNpx = jestPath == null;
+	const spawnCmd = useNpx ? 'npx' : process.execPath;
+	const spawnArgs = useNpx ? ['jest', ...args] : [jestPath, ...args];
+	if (useNpx) {
+		console.warn('Jest binary not in node_modules; running via npx. Ensure "npm install" runs before tests in CI.');
+	}
 	return new Promise((resolve) => {
-		const child = spawn(process.execPath, [jestBin(), ...args], {
+		const child = spawn(spawnCmd, spawnArgs, {
 			cwd: repoRoot,
-			env: { ...process.env, ...env }
+			env: { ...process.env, ...env },
+			shell: useNpx
 		});
 
 		 // Simple progress spinner
@@ -314,9 +328,11 @@ function displayCoverageGrid(projects, mode) {
 	console.log('-'.repeat(92));
 	
 	// Rows
+	let allRow = null;
 	for (const row of rows) {
 		const avg = (row.statements + row.branches + row.functions + row.lines) / 4;
 		const total = row.statements + row.branches + row.functions + row.lines;
+		if (row.project === 'ALL' || rows.length === 1) allRow = { ...row, avg, total };
 		const line = row.project.padEnd(25) +
 			`${row.statements.toFixed(1)}%`.padStart(12) +
 			`${row.branches.toFixed(1)}%`.padStart(12) +
@@ -326,7 +342,21 @@ function displayCoverageGrid(projects, mode) {
 			`${total.toFixed(1)}%`.padStart(12);
 		console.log(line);
 	}
-	
+
+	// Write machine-readable summary for Jenkins/CI (avoids parsing console log)
+	if (allRow) {
+		const summaryPath = path.join(testResultsDir, 'coverage-summary.json');
+		const summary = {
+			Statements: Math.round(allRow.statements * 10) / 10,
+			Branches: Math.round(allRow.branches * 10) / 10,
+			Functions: Math.round(allRow.functions * 10) / 10,
+			Lines: Math.round(allRow.lines * 10) / 10,
+			Average: Math.round(allRow.avg * 10) / 10,
+			Total: Math.round(allRow.total * 10) / 10
+		};
+		fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2), 'utf8');
+	}
+
 	// Footer with totals/averages
 	if (rows.length > 1) {
 		console.log('-'.repeat(92));
