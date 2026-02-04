@@ -1432,7 +1432,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
                             new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
                     LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing AFTER SEND", false, "sendClosing", stopLogAt);
-                }
+					if (responseData.HasException == true)
+					{
+						throw new System.Exception("Ex" + responseData.UserMessage);
+
+					}
+				}
                 
             }
             catch (System.Exception ex)
@@ -1445,7 +1450,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				   "loggedUserId=" + loggedUserId + " | " +
 				   "Exception=" + ex.Message.ToString()
 				   );
-            }
+                throw ex;
+
+			}
             LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing FINISH SEND", false, "sendClosing", stopLogAt);
 
 
