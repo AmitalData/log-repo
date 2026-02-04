@@ -70,13 +70,21 @@ function setHeap(maxOldSpaceMB) {
 }
 
 function jestBin() {
-	// Resolve jest binary from local node_modules
+	// 1) Node's resolver (handles symlinks, hoisting, and alternate layouts)
+	try {
+		return require.resolve('jest/bin/jest.js', { paths: [repoRoot] });
+	} catch (_) {}
+	// 2) Direct paths from repo root
 	const local = path.join(repoRoot, 'node_modules', 'jest', 'bin', 'jest.js');
 	if (fs.existsSync(local)) return local;
-	// Fallback: try jest-cli
 	const localCli = path.join(repoRoot, 'node_modules', 'jest-cli', 'bin', 'jest.js');
 	if (fs.existsSync(localCli)) return localCli;
-	throw new Error('Could not locate Jest binary in node_modules.');
+	// 3) From process.cwd() in case runner was invoked from a subdir
+	const cwdJest = path.join(cwd, 'node_modules', 'jest', 'bin', 'jest.js');
+	if (cwd !== repoRoot && fs.existsSync(cwdJest)) return cwdJest;
+	throw new Error(
+		'Could not locate Jest binary in node_modules. Run "npm install" from the repo root (e.g. Logitude/AngularModules/AngularModules) and ensure "jest" is in devDependencies.'
+	);
 }
 
 function runJestOnce(args, env = {}, options = { filterNgccWarnings: false, progress: false, label: '' }) {
