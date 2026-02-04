@@ -1,6 +1,6 @@
 {
     "name": "angularmodules",
-    "version": "261721012026",
+    "version": "1.0.0+261721012026",
     "scripts": {
         "ng": "ng",
         "test": "ng test",
