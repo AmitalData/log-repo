@@ -106,5 +106,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string Field10 { get; set; }
         public string PartnerId { get; set; }
         public string BillToCode { get; set; }
+        public string GLAccountId { get; set; }
+        public string GLAccountDisplayNumber { get;  set; }
     }
 }

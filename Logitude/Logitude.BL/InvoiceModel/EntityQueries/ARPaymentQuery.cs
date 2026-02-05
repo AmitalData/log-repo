@@ -604,7 +604,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    BillToId = entity.BillToId,
                                                    BillToName = entity.BillToCard == null ? null : entity.BillToCard.EnglishName,
                                                    BillToLocalName = entity.BillToCard == null ? null : entity.BillToCard.LocalName,
-                                                   BillToCode = entity.BillToCard == null ?null : entity.BillToCard.Code,
+                                                   BillToCode = entity.BillToCard == null ?null : entity.BillToCard.Code,                                                   
                                                    BranchId = entity.BranchId,
                                                    BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                                                    CreateByUserId = entity.CreatedByUserId,
@@ -687,6 +687,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    CancelationNotes = entity.CancelationNotes,
                                                    PartnerId = entity.PartnerId,
                                                    InvoiceNumbers = entity.InvoiceNumbers,
+                                                   GLAccountId = entity.BillToCard == null ? null : entity.BillToCard.GLAccountId,
+                                                   GLAccountDisplayNumber = entity.BillToCard == null ? null : entity.BillToCard.GLAccountDisplayNumber,
                                                };
             return query2;
         }
@@ -787,6 +789,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             AccountingCancelationDate = entity.AccountingCancelationDate,
                             CancelationNotes = entity.CancelationNotes,
                             PartnerId = entity.PartnerId,
+                            GLAccountId = entity.BillToCard == null ? null : entity.BillToCard.GLAccountId,
+                            GLAccountDisplayNumber = entity.BillToCard == null ? null : entity.BillToCard.GLAccountDisplayNumber,
                         };
 
             return query;
@@ -888,6 +892,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             AccountingCancelationDate = entity.AccountingCancelationDate,
                             CancelationNotes = entity.CancelationNotes,
                             PartnerId = entity.PartnerId,
+                            GLAccountId = entity.BillToCard == null ? null : entity.BillToCard.GLAccountId,
+                            GLAccountDisplayNumber = entity.BillToCard == null ? null : entity.BillToCard.GLAccountDisplayNumber,
                         };
 
             return query;
