@@ -6328,6 +6328,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool fromCancelDeclaration ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool FromCancelDeclaration  
+	   {
+	    
+	     get
+		{
+		   return fromCancelDeclaration;
+		 }
+		 set
+		 {
+		   if(fromCancelDeclaration != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromCancelDeclaration",OldValue=fromCancelDeclaration,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   fromCancelDeclaration=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

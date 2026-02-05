@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
@@ -24,7 +24,7 @@ declare var window: any;
     providers: [DeclarationPMService, DeclarationWebService]
 })
 
-export class DeclarationCancellationComponent extends BaseComponent implements OnInit {
+export class DeclarationCancellationComponent extends BaseComponent implements OnInit ,OnDestroy{
     public ObjectTableName: string = "Customs.Declaration";
     public DataContext: DeclarationCancellationComponent = this;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -326,6 +326,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
     }
     SkipCtor: boolean = false;
     ViewDocumentsComponent() {
+        this.EntityPM.FromCancelDeclaration = true;
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
         //windowArgs.ObjectTableName = "Customs.DeclarationCancellation";
@@ -371,7 +372,11 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
     //}
 
     ngOnInit() {
+        this.EntityPM.FromCancelDeclaration = true;
+    }
 
+    ngOnDestroy() {
+        this.EntityPM.FromCancelDeclaration = false;
     }
 
 
