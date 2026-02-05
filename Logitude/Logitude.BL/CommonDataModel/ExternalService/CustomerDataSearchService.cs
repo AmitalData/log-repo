@@ -97,7 +97,8 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
 
         private List<CardSearchResult> GetFilteredCardSearchResultList(IQueryable<CardSearch> cardSearches)
         {
-            var cardSearchResultLists = cardDataSearchService.GetCardSearchDataResults(cardSearchAdvanceArgs, cardSearches);
+            var allowedCardIds = allCardSearchResultLists.Select(e => e.CardId).ToList();
+            var cardSearchResultLists = cardDataSearchService.GetCardSearchDataResults(cardSearchAdvanceArgs, cardSearches, allowedCardIds);
             cardSearchResultLists = cardSearchResultLists.Where(d => !allCardSearchResultLists.Select(a => a.CardId).ToList().Contains(d.CardId)).ToList();
             allCardSearchResultLists = allCardSearchResultLists.Concat(cardSearchResultLists).ToList();
             return cardSearchResultLists;
