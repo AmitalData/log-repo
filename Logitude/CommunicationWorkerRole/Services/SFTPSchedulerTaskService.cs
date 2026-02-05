@@ -1,5 +1,6 @@
 ﻿using CommunicationWorkerRole.Tasks;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.DataContracts;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.FTP;
@@ -18,6 +19,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using WebFreight.Web.Helpers.AmitalAPI;
 
 namespace CommunicationWorkerRole.Services
 {
@@ -234,13 +236,22 @@ namespace CommunicationWorkerRole.Services
 		}
 		private async void  AddToAzureQueue(string fileName, byte[] fileData, SchedulerDetails schedulerDetails)
 		{
-			string response = await login("a0ee73e1-34c4-469a-a3cf-4db8850df683", "q328Q~Jo2-kD_7SJxun6VOkK.3s1cV3PT1BqFbjx");
+			int tenant = schedulerDetails.Tenant;
+			var token = new TenantManagementQuery().GetSinglePM(tenant).AmitalApiToken;
+
+			var clientsData = new AmitalApiClientApi().GetAll(token);
+			var loginToken = clientsData.FirstOrDefault();
+
+            var res = new AmitalApiClientapiApi().GetAll(token);
+			var partnerToken = res.Where(x=>x.PartnerName == schedulerDetails?.FTPDetails?.From && x.SchemaName == "document_base").FirstOrDefault();
+
+			string response = await login(loginToken?.AzureClientId, loginToken?.SecretValue);
 			var tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(response);
 			var accessToken = tokenResponse.access_token;
 			var expires_in = tokenResponse.expires_in;
-			string partner_token = "2c12d723-5cbf-4be0-8c70-3ca1bf275b91";
-			string api_token = "15fe2753-875a-4e6b-80e1-f70f7fdfc133";
-			string caller_objectid = "c2728789-eec7-441d-8a5b-07038362ead5";
+			string partner_token = partnerToken?.PartnerToken;//"2c12d723-5cbf-4be0-8c70-3ca1bf275b91";
+			string api_token = partnerToken?.Id;// "15fe2753-875a-4e6b-80e1-f70f7fdfc133";
+			string caller_objectid = loginToken?.AzureManagedApplObjId;// "c2728789-eec7-441d-8a5b-07038362ead5";
 			
 			string customsDocumentTypeCode = string.Empty;
 			string hawb = string.Empty;

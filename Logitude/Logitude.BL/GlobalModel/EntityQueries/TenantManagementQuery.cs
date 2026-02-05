@@ -555,6 +555,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   ExportLoginCredintial=a.ExportLoginCredintial,
                                                   ExportTenant=a.ExportTenant,
 												  MinutsTimeOutSession = a.MinutsTimeOutSession,
+												  AmitalApiToken = a.AmitalApiToken
 											  }).FirstOrDefault();
 
                 if (tenant1 != null)
