@@ -602,7 +602,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    AccountingPaymentMethodName = entity.AccountingPaymentMethod == null ? null : entity.AccountingPaymentMethod.Name,
                                                    BillToAddressId = entity.BillToAddressId,
                                                    BillToId = entity.BillToId,
-                                                   BillToName = entity.BillToCard == null ? null : entity.BillToCard.GLAccountDisplayNumber,
+                                                   BillToName = entity.BillToCard == null ? null : entity.BillToCard.EnglishName,
                                                    BillToLocalName = entity.BillToCard == null ? null : entity.BillToCard.LocalName,
                                                    BillToCode = entity.BillToCard == null ?null : entity.BillToCard.Code,                                                   
                                                    BranchId = entity.BranchId,
