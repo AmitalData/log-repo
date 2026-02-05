@@ -170,6 +170,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         else {
             this.AutomaticPayment = Number(event.target.checked);
             if (!this.AutomaticPayment) {
+                this.DeclarationPM.AutomaticPayment = this.AutomaticPayment;
                 this.ErrorMessage = null;
                 this.IsDisplayMessage = false;
                 this.RefreshScreen()
