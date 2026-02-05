@@ -32,29 +32,35 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             repository = MasavInterfaceRepository;
         }
 
-       
-        public IQueryable<MasavInterfaceList> GetIQueryableEntityList(IQueryable<MasavInterface> iQueryable)
-        {
-            IQueryable<MasavInterfaceList> result = from entity in iQueryable
-                                                     select new MasavInterfaceList()
-                                                     {
-                                                         Id = entity.Id,
-                                                         Tenant = entity.Tenant,
-                                                         CreateDate = entity.CreateDate,
-                                                         CreatedByUserId = entity.CreatedByUserId,
-                                                         UpdateDate = entity.UpdateDate,
-                                                         UpdatedByUserId = entity.UpdatedByUserId,
-                                                         SearchFields = entity.SearchFields,
-                                                         FromDate = entity.FromDate,
-                                                         ToDate = entity.ToDate,
-                                                         PaymentDate = entity.PaymentDate,
-                                                         Amount = 0,
-                                                         TotalPayments = 0,
-                                                         StatusCode = entity.StatusCode,
-                                                        StatusName = entity.Status != null ? entity.Status.LocalName : null,
-                                                     };
 
-            return result;
+        public IQueryable<MasavInterfaceList> GetIQueryableEntityList(    IQueryable<MasavInterface> iQueryable)
+        {
+            return
+                from entity in iQueryable
+                select new MasavInterfaceList
+                {
+                    Id = entity.Id,
+                    Tenant = entity.Tenant,
+                    CreateDate = entity.CreateDate,
+                    CreatedByUserId = entity.CreatedByUserId,
+                    UpdateDate = entity.UpdateDate,
+                    UpdatedByUserId = entity.UpdatedByUserId,
+                    SearchFields = entity.SearchFields,
+                    FromDate = entity.FromDate,
+                    ToDate = entity.ToDate,
+                    PaymentDate = entity.PaymentDate,
+                    TotalPayments =
+                        repository.context.APPayments
+                            .Count(p => p.MasavInterfaceId == entity.Id),
+                    Amount =
+                        repository.context.APPayments
+                            .Where(p => p.MasavInterfaceId == entity.Id)
+                            .Sum(p =>p.AmountInPaymentCurrency) ?? 0,
+                    StatusCode = entity.StatusCode,
+                    StatusName = entity.Status != null
+                        ? entity.Status.LocalName
+                        : null
+                };
         }
         public MasavInterfacePM GetSinglePM(string id , int tenant)
         {

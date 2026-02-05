@@ -20572,6 +20572,13 @@
       LocalDefaultText="&quot;BS64:IteX15XXk9ep15ki&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.AccountingDate&quot;"
+      DefaultText="&quot;Accounting&quot;"
+      LocalDefaultTextBack_up="&quot;חשבונאי&quot;"
+      LocalDefaultText="&quot;BS64:IteX16nXkdeV16DXkNeZIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

@@ -756,7 +756,7 @@
                                             <div></div>
                                         </td>
                                         <td style="width:20px; color :black ;font-size: 11px;">
-                                           {{ 'Accounting.General.O.FilterBy' |  TextCodeTranslationPipe }}                                            
+                                           {{ 'ARInvoice.S.Details.FilterBy' |  TextCodeTranslationPipe }} {{'Accounting.General.O.Date' |  TextCodeTranslationPipe }}:                                            
                                         </td>
                                         <td style="width: 5px;">
                                             <div></div>
@@ -770,7 +770,7 @@
                                                 <li float-start id="filter_Accounting"
                                                     (click)="DateFilterItemClicked('filter_Accounting')"
                                                     [class.SelectedFilter]="DateFilterSelectedValue === 'filter_Accounting'">
-                                                    {{ 'GLAccounts.O.Accounting' | TextCodeTranslationPipe }}
+                                                    {{ 'GLAccounts.O.AccountingDate' | TextCodeTranslationPipe }}
                                                 </li>
                                             </ul>
                                         </td>

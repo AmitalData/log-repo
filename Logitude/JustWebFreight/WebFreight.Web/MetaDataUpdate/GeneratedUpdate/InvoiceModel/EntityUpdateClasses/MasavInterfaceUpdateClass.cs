@@ -25,7 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class MasavInterfaceUpdateClass
    {  		
-		public const string HashString = "87312bcf25e6c963bf76ccf09aef2c7d";
+		public const string HashString = "8eb34b7a6e915a24d034419fb0e7aa23";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -941,11 +941,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusCode",
-					  						DefaultText =  "Status",
+					  						DefaultText =  "Status Code",
+					  						FullLocalDefaultTextBack_up =  "סטטוס קוד",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16fXldeTIg==",
 					  						ListFieldLable =  "StatusCodeListLable",
-					  						ListLableDefaultText =  "Status",
-					  						ListLocalDefaultTextBack_up =  "סטטוס",
-					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Ei",
+					  						ListLableDefaultText =  "Status Code",
+					  						ListLocalDefaultTextBack_up =  "סטטוס קוד",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16fXldeTIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "MasavInterfaceStatus",
 					  						NavigationPropertyName =  "Status",

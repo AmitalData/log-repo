@@ -28,7 +28,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    {  		
 
 
-		public const string HashString = "65b494d7c91181b3e7558ab9e79f8eac";
+		public const string HashString = "27a6920f9c5b9c1a9962d002d46c78d0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -15248,6 +15248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountsODaily = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Daily", DefaultText = "Daily",LocalDefaultText = @"BS64:IteZ15XXnteZIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_GLAccountsOMonthly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Monthly", DefaultText = "Monthly",LocalDefaultText = @"BS64:IteX15XXk9ep15ki", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOAccountingDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AccountingDate", DefaultText = "Accounting",LocalDefaultText = @"BS64:IteX16nXkdeV16DXkNeZIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
 
    
