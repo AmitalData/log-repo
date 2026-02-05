@@ -76,7 +76,7 @@ export class PageTopComponent implements AfterViewInit {
 	}
 
 	clickSearch() {
-		this.searchCustomsItemAutocomplateComponent.clearAutocomplete();
+		this.searchCustomsItemAutocomplateComponent?.clearAutocomplete();
 
 		if (this.textToSearch.trim() === "") {
 			this.textToSearch = "";
