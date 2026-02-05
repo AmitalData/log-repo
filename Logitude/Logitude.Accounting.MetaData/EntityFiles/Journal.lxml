@@ -5825,6 +5825,13 @@
       LocalDefaultText="&quot;BS64:Itec15vXqNeY15nXoSAlZGViaXRBY2NvdW50TmFtZSDXnteV15LXk9eoINep16LXqCDXlNee16jXlCAlZGViaXRFeGNoYW5nZVJhdGVOYW1lINeV15zXm9eo15jXmdehICVjcmVkaXRBY2NvdW50TmFtZSDXnteV15LXk9eoINep16LXqCDXlNee16jXlCAlY3JlZGl0RXhjaGFuZ2VSYXRlTmFtZSwg15zXkCDXoNeZ16rXnyDXnNeo16nXldedINeq16DXldei16og15fXmdeV15Ev15bXmdeb15XXmSwg16DXkCDXnNek16bXnCDXkNeqINeU16rXoNeV16LXldeqIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.JournalCreated&quot;"
+      DefaultText="&quot;Journal Created&quot;"
+      LocalDefaultTextBack_up="&quot;נוצרה פקודת יומן&quot;"
+      LocalDefaultText="&quot;BS64:Iteg15XXpteo15Qg16TXp9eV15PXqiDXmdeV157XnyI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -5949,6 +5956,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Journal.Features.Journal.Feature.ManageSecurity&quot;"
       FeatureDefaultText="&quot;Manage Security&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;LOADJOURNALMICHPAL&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;Journal.Features.LOADJOURNALMICHPAL&quot;"
+      FeatureDefaultText="&quot;Load michpal file&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

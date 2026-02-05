@@ -99,6 +99,8 @@ export class JournalPageComponent implements AfterViewInit {
     public ExternalJournalsVisibility: boolean = false;
     public Auto_Created_JournalsVisibility: boolean = true;
     public LoadCVS_JournalsVisibility: boolean = true;
+    public LoadMichpal_JournalsVisibility: boolean = true;
+
     
     SetQueriesVisibility() {
         this.Draft_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "DraftJournal") ? true : false;
@@ -107,7 +109,7 @@ export class JournalPageComponent implements AfterViewInit {
         this.All_journalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "JOURNAL") ? true : false;
         this.ExternalJournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "ExternalJournals") ? true : false;
         this.LoadCVS_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "LOADJOURNALCSV") ? true : false;
-        //this.Auto_Created_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "Auto_Created_Journals") ? true : false;
+        this.LoadMichpal_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "LOADJOURNALMICHPAL");
     }
 
     journalSummary: JournalSummary = new JournalSummary();
@@ -432,6 +434,19 @@ export class JournalPageComponent implements AfterViewInit {
 
         });
         logWindow.Show('./Accounting/Components/NewEntity/JournalCSVLoadComponent');
+
+    }
+    LoadJournalFromMichpalFile() {
+        var logWindow = new LogitudeWindow();
+        logWindow.IsShowCloseButton = true;
+        logWindow.Width = 900;
+        logWindow.Height = 400;
+        logWindow.Title = TextCodeTranslator.Translate("Journal.Features.LOADJOURNALMICHPAL");
+        logWindow.WindowArgs = {};
+        logWindow.WindowClosed.subscribe(($event: any) => {
+
+        });
+        logWindow.Show('./Accounting/Components/NewEntity/JournalMichpalLoadComponent');
 
     }
     async showRecentSearches(retrunIfLengthNotMet: boolean = false) {

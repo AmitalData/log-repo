@@ -66,6 +66,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.Server.Tools.Utils;
 using CsvHelper.Configuration;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using static Simplog.Server.Infrastructure.DbContextBase;
 
 
 namespace Logitude.Accounting.BL.CoreBL

@@ -65,7 +65,7 @@ namespace WebFreight.Web.App_Code
                     if (string.IsNullOrEmpty(shipmentId))
                     {
                         result.IsScceed = false;
-                        result.ExceptionMessage = "התיק לא אותר";
+                        result.ExceptionMessage = "×”×ª×™×§ ×œ×� ×�×•×ª×¨";
                         return result;
                     }
                 }
@@ -81,7 +81,7 @@ namespace WebFreight.Web.App_Code
                     if (!isScceed)
                     {
                         result.IsScceed = false;
-                        result.ExceptionMessage = "זיהוי משלוח לא תקין- אנא פנה לסוכן מכס";
+                        result.ExceptionMessage = "×–×™×”×•×™ ×ž×©×œ×•×— ×œ×� ×ª×§×™×Ÿ- ×�× ×� ×¤× ×” ×œ×¡×•×›×Ÿ ×ž×›×¡";
                         return result;
                     }
                 }
@@ -104,7 +104,7 @@ namespace WebFreight.Web.App_Code
                     if (string.IsNullOrEmpty(documentTypeId))
                     {
                         result.IsScceed = false;
-                        result.ExceptionMessage = filters.DocumentType + "סוג מסמך POD לא נמצא";
+                        result.ExceptionMessage = filters.DocumentType + "×¡×•×’ ×ž×¡×ž×š POD ×œ×� × ×ž×¦×�";
                         return result;
                     }
                 }
