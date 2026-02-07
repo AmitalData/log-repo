@@ -176,4 +176,6 @@
     Columns="Tenant,RequestStatusCode,RequestCreateDate" />
 	<Index
    Columns="Tenant,CustomFileNo" />
+	<Index
+   Columns="Tenant,CustomFileNo,InterfaceTypeCode" />
 </Table>
