@@ -218,7 +218,6 @@
                                                 <td style="width:120px; height:25px;">
                                                     <LogLabel [ObjectFieldName]="'VendorId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
-
                                                 <td style="width:210px; ">
                                                     <LogLov [ObjectFieldName]="'VendorId'"
                                                             [ObjectTableName]="ObjectTableName"
@@ -227,14 +226,14 @@
                                                             [LookUpTableName]="'Card'"
                                                             (SelectedItemChanged)="VendorChanged($event)"
                                                             [HideLastColumn]="true"
-                                                            [DependencyFilter1Value]="'AC,CS,AG,AL,CG,SG,SL,TR,VD,CO,WH'"
+                                                            [DependencyFilter1Value]="partnerTypeList"
                                                             [DependencyFilter1IsList]="true"
                                                             [DisplayFieldsFromList]="DisplayFieldsFromList"
                                                             [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
                                                             [CustomizedWidth]="VendorLovSizeForFullAccounting"
                                                             [StartSearchFromChar]="3"
                                                             [StartSearchFromNumber]="5"
-                                            [QueryFilterItems]="GLAccountsFilterItems"
+                                                            [QueryFilterItems]="GLAccountsFilterItems"
                                                             >
                                                     </LogLov>
 
