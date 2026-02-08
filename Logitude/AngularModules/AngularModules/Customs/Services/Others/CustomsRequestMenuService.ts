@@ -391,8 +391,14 @@ export class CustomsRequestMenuService {
         let resJson = "";
 
         this.CurrentSession.StartBusyIndicator("");
+        if (!this.shouldPrefetchReqRes(item)) {
+            this.CurrentSession.StopBusyIndicator();
+            this.ShowAsRequestSheet(logitudeWindow, item, null, null, menuArg, logId, true);
+            return;
+        }
+
         var myCommunicationLogStepListService = new CommunicationLogStepListService();
-        //logId=1-212245&tenant=1
+
         myCommunicationLogStepListService.getCommunicationLogStepsRequestParamResponseData(
             item.MainInterfaceCode,
             myLogId, SessionLocator.Tenant
@@ -407,16 +413,13 @@ export class CustomsRequestMenuService {
                 //alert(resJson);
                 this.CurrentSession.StopBusyIndicator();
                 this.ShowAsRequestSheet(logitudeWindow, item, reqJson, resJson, menuArg, logId);
-
-
             });
-
-
-
-
     }
 
-    ShowAsRequestSheet(logitudeWindow, item: CustomsMenuItem, reqJson, resJson, menuArg, logId: string) {
+
+
+
+    ShowAsRequestSheet(logitudeWindow, item: CustomsMenuItem, reqJson, resJson, menuArg, logId: string, isNoDataByDesign: boolean = false) {
         var myRequestSheetState = item.requestSheetState || new RequestSheetState(true, true, false);
 
         logitudeWindow.ComponentLoaded.subscribe((compo) => {
@@ -431,7 +434,17 @@ export class CustomsRequestMenuService {
                         myRequestsSheetMassagingView.CustomRequestContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
                         myRequestsSheetMassagingView.CustomResponseContentIsDisable = myRequestSheetState.CustomRequestContentIsDisable;
                         myRequestsSheetMassagingView.CustomSendOptionsButtonIsDisable = myRequestSheetState.CustomSendOptionsButtonIsDisable;
-                        myRequestsSheetMassagingView.MassageDisplay(reqJson, resJson);
+                        if (isNoDataByDesign) {
+                            var anyView = myRequestsSheetMassagingView as any;
+                            if (anyView && anyView.MessageDisplayWithNoData) {
+                                anyView.MessageDisplayWithNoData();
+                            } else {
+                                myRequestsSheetMassagingView.MassageDisplay("", "");
+                            }
+                        } else {
+                            myRequestsSheetMassagingView.MassageDisplay(reqJson, resJson);
+
+                        }
                         if (!AppTool.IsNullOrEmpty(menuArg)) {
                             try {
                                 var myRequestsSheetMassagingViewAny = myRequestsSheetMassagingView as any;
@@ -462,6 +475,10 @@ export class CustomsRequestMenuService {
 
         });
         logitudeWindow.Show(item.URLContent);
+    }
+
+    private shouldPrefetchReqRes(item: CustomsMenuItem): boolean {
+        return item.MainInterfaceCode !== "190";
     }
 }
 class LongRunner20 {

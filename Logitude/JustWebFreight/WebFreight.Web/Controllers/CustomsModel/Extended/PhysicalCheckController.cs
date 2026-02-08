@@ -46,14 +46,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         {
             try
             {
-                CommunicationLogStepController nenww = new CommunicationLogStepController();
-                List<CommunicationLogStepList> communicationLogStepList = nenww.GetCommunicationLogStepsDocumentDataBystringStepFilter(mainInterfaceCode, communicationLogId, tenant, stringStepFilter, suppressHugeData) ;
-                ICustomContext customContext = CustomContext.GetContext(tenant);
-                PhysicalCheckPM entitypm = new PhysicalCheckPM
-                {
+                CommunicationLogStepController nenww = new CommunicationLogStepController(); 
+                List<CommunicationLogStepList> communicationLogStepList = nenww.GetCommunicationLogStepsDocumentDataBystringStepFilter(mainInterfaceCode, communicationLogId, tenant, stringStepFilter, suppressHugeData) ; 
+                ICustomContext customContext = CustomContext.GetContext(tenant); 
+                PhysicalCheckPM entitypm = new PhysicalCheckPM 
+                {  
                     Tenant = tenant
-                };
-                PhysicalCheckDataMapping.PhysicalCheckRequestXmlToPM(communicationLogStepList, entitypm);
+                }; 
+                PhysicalCheckDataMapping.PhysicalCheckRequestXmlToPM(communicationLogStepList, entitypm); 
                 return Request.CreateResponse(HttpStatusCode.OK, entitypm);
             }
 
@@ -61,8 +61,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        
-      
+
+
         }
         public HttpResponseMessage GetClosedPhysicalCheck(string mainInterfaceCode, string communicationLogId, int tenant, string stringStepFilter, bool suppressHugeData)
         {
