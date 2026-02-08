@@ -68,7 +68,7 @@ export class MasavInterfaceListTemplate {
             if (!AppTool.IsNullOrEmpty(errorMessage)) {
                 errorMessage += ' ,';
             }
-            errorMessage += TextCodeTranslator.Translate("APPayment.F.VendorBankBranch") + " " + TextCodeTranslator.Translate("APPayment.O.Missing");
+            errorMessage += TextCodeTranslator.Translate("APPayment.F.VendorBranch") + " " + TextCodeTranslator.Translate("APPayment.O.Missing");
         }
         if(AppTool.IsNullOrEmpty(rowData.VendorBankCode)) {
             if (!AppTool.IsNullOrEmpty(errorMessage)) {

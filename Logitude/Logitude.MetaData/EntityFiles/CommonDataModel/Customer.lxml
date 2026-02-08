@@ -20114,12 +20114,12 @@
       <ScreenField
         Column="1"
         Row="2"
-        ObjectFieldName="&quot;AccountNumber&quot;"
+        ObjectFieldName="&quot;BankName&quot;"
         ScreenName="Billing Tab Screen" />
       <ScreenField
         Column="1"
         Row="3"
-        ObjectFieldName="&quot;BankBranch&quot;"
+        ObjectFieldName="&quot;BankAddress&quot;"
         ScreenName="Billing Tab Screen" />
       <ScreenField
         Column="1"
@@ -20129,12 +20129,12 @@
       <ScreenField
         Column="1"
         Row="5"
-        ObjectFieldName="&quot;BankAddress&quot;"
+        ObjectFieldName="&quot;BankBranch&quot;"
         ScreenName="Billing Tab Screen" />
       <ScreenField
         Column="1"
         Row="6"
-        ObjectFieldName="&quot;BankName&quot;"
+        ObjectFieldName="&quot;AccountNumber&quot;"
         ScreenName="Billing Tab Screen" />
     </ScreenFields>
   </Screen>
