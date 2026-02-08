@@ -10228,8 +10228,8 @@
     SystemLevel="true"
     IsAddNewEntity="true"
     IsPackagable="false"
-    DefaultSortName="&quot;PaymentNo&quot;"
-    DefaultSortDirection="&quot;Descending&quot;"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     QueryGroupName="&quot;AR Payments&quot;"
     TextCodeCode="&quot;ARPayment.Q.AllPayments&quot;"
     FeatureCode="&quot;ALLPAYMENTS&quot;"
@@ -10312,8 +10312,8 @@
     SystemLevel="true"
     IsAddNewEntity="true"
     IsPackagable="false"
-    DefaultSortName="&quot;PaymentNo&quot;"
-    DefaultSortDirection="&quot;Descending&quot;"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     EditWizardComponentPath="&quot;./InvoiceModules/ARPayment/Components/NewEntity/ARPaymentTransferTemplate&quot;"
     QueryGroupName="&quot;AR Payments&quot;"
     TextCodeCode="&quot;ARPayment.Q.NotReadyPayments&quot;"
@@ -10330,31 +10330,36 @@
       <QueryColumn
         QueryCode="&quot;Not Ready Payments&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Not Ready Payments&quot;"
+        IndexOrder="2"
         ObjectFieldName="&quot;PaymentNo&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Not Ready Payments&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="190" />
       <QueryColumn
         QueryCode="&quot;Not Ready Payments&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Not Ready Payments&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;AmountInPaymentCurrency&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Not Ready Payments&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;ReadyForTransfer&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;Not Ready Payments&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;TransferError&quot;"
         ColumnWidth="500" />
     </QueryColumns>
@@ -10380,8 +10385,8 @@
     SystemLevel="true"
     IsAddNewEntity="true"
     IsPackagable="false"
-    DefaultSortName="&quot;PaymentNo&quot;"
-    DefaultSortDirection="&quot;Descending&quot;"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     EditWizardComponentPath="&quot;./InvoiceModules/ARPayment/Components/NewEntity/ARPaymentTransferTemplate&quot;"
     QueryGroupName="&quot;AR Payments&quot;"
     TextCodeCode="&quot;ARPayment.Q.MarkedAsBlockedForTransfer&quot;"
@@ -10398,31 +10403,36 @@
       <QueryColumn
         QueryCode="&quot;Marked as blocked for transfer&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Marked as blocked for transfer&quot;"
+        IndexOrder="2"
         ObjectFieldName="&quot;PaymentNo&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Marked as blocked for transfer&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="190" />
       <QueryColumn
         QueryCode="&quot;Marked as blocked for transfer&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Marked as blocked for transfer&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;AmountInPaymentCurrency&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Marked as blocked for transfer&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;ReadyForTransfer&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;Marked as blocked for transfer&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;TransferError&quot;"
         ColumnWidth="500" />
     </QueryColumns>
@@ -10455,8 +10465,8 @@
     SystemLevel="true"
     IsAddNewEntity="true"
     IsPackagable="false"
-    DefaultSortName="&quot;PaymentNo&quot;"
-    DefaultSortDirection="&quot;Descending&quot;"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
     QueryGroupName="&quot;AR Payments&quot;"
     TextCodeCode="&quot;ARPayment.Q.FailedSAT&quot;"
     FeatureCode="&quot;SATFAILEDPAYMENTS&quot;"
