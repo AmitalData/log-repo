@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { LAZY_WIDGETS } from './DynamicLoader/LazyWidgetsTokens';
 import { DynamicLoader } from './DynamicLoader/DynamicLoader';
 import { ChildDirective } from './Directives/ChildDirective';
-import { AppDataService } from 'Infrastructure/Services/CookieService';
 import { AmitalGatewayUtil } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 
 @Component({
@@ -24,7 +23,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   IsOpenedFromUnifreight: boolean = false;
   public IsLoginScreenLoaded: boolean = false;
   @ViewChild(ChildDirective) Child: ChildDirective;
-  constructor(private appDataService: AppDataService, private http: HttpClient, private injector: Injector, private compiler: Compiler, @Inject(LAZY_WIDGETS) private lazyWidgets: { [key: string]: () => Promise<NgModuleFactory<any> | Type<any>> }) {
+  constructor(private http: HttpClient, private injector: Injector, private compiler: Compiler, @Inject(LAZY_WIDGETS) private lazyWidgets: { [key: string]: () => Promise<NgModuleFactory<any> | Type<any>> }) {
     DynamicLoader.Injector = injector;
     DynamicLoader.Compiler = compiler;
     DynamicLoader.LazyWidgets = lazyWidgets;
@@ -41,11 +40,4 @@ export class AppComponent implements OnInit, AfterViewInit {
         cmpRef.instance.Boot({ Http: this.http });
       });
   }
-
-  
-  // LoadIsAppService() {
-  //   this.appDataService.GetIsAppServiceData().subscribe((data: any) => {
-  //     this.isAppService = data;
-  //   });
-  // }
 }
