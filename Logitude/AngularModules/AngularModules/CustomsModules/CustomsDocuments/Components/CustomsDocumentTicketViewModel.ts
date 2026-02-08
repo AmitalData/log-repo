@@ -1411,8 +1411,7 @@ export class CustomsDocumentTicketViewModel {
     }
 
     OnAddEditWindowClosed(event) {
-
-        if (event != 'cancel' && this.isDisplayOnly && !this.customsDocumentsTicketPM.RequestedCustomsDocId) {
+        if (event != 'cancel' && this.isDisplayOnly && !this.customsDocumentsTicketPM.RequestedCustomsDocId && !this.DataContext.EntityPM.FromCancelDeclaration) {
             var messageWindow = new MessageWindow();
             messageWindow.Width = 400;
             messageWindow.Height = 200;
