@@ -83,6 +83,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
      public GLAccountsFilterItems: ApiQueryFilters;
     isLoad:boolean = false;
     public OldRate: number = null;
+    public partnerTypeList ="AC,CS,AG,AL,CG,SG,SL,TR,VD,CO,WH"
      constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -1573,7 +1574,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     set AccountingPaymentMethodId(value: string) {
         if (this.EntityPM != null) {
-            if (this.EntityPM.AccountingPaymentMethodId != value) {
+            if (this.EntityPM.AccountingPaymentMethodId != value) {                
                 this.EntityPM.AccountingPaymentMethodId = value;
                 this.RefreshPaymentMethodFields();
             }
@@ -1658,7 +1659,15 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.PaymentMethodCode == "CA" || this.PaymentMethodCode == "FS" || this.PaymentMethodCode == "MS") {
             this.ValueDate = DateTool.GetCurrentDateAsUtc();
         }
-
+        if(this.PaymentMethodCode === "MS"){
+            this.partnerTypeList = "VD,CS";
+            this.VendorId = null;
+            
+        }
+            
+        else{
+            this.partnerTypeList = "AC,CS,AG,AL,CG,SG,SL,TR,VD,CO,WH"
+        }
         this.SetUIProperties_Cheque();
         this.SetUIProperties_CreditCard();
 
