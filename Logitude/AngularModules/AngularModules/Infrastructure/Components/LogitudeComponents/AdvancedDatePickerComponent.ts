@@ -50,6 +50,12 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
     public selectedPeriodUnit: string = this.PeriodUnitList[0];
     public IsRelativeperiodDropDownOpen: boolean;
     public periodNumber = 1;
+    public units = ['Days', 'Weeks', 'Months', 'Years'];
+    public selectedUnit = 'Days';
+    public hoveredItem = null;
+    public isOffsetOpen = false;
+    public result = new Date();
+
     updateSelectedPeriodUnit(selectedPeriodUnit?) {
         this.OnDropDownSelected(this.DateOptions.filter(d => d.Code == "PER")[0], null, false);
     }
@@ -90,7 +96,7 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
                         this.IsRelativeperiodDropDownOpen = true;
                     }
                     else if (newValue?.indexOf("_") > -1) {
-                        this.SetOffsetDateInPopup();
+                        this.SetOffsetDateInPopup(true);
                     }
                     else {
                         this.DateValueChanged(new Date(newValue));
@@ -106,18 +112,20 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         }
     }
 
-    SetOffsetDateInPopup() {
+    SetOffsetDateInPopup(selectItem = false) {
         // example: BTM_PLUS_2_Weeks
         const parts = this.selectedDateValue?.split("_");
         if (parts?.length == 4) {
             this.Offset = (parts[1]?.toLowerCase() == "minus"? -1: 1) * parseInt(parts[2], 10);
             this.selectedUnit = parts[3];
 
-            const selectedItem: CodeNameClass = this.DateOptions.filter(date => date.Code == parts[0])[0];
-            if (selectedItem) {
-                this.SelectedItem = selectedItem;
-                this.SelectedItemObject = this.SelectedItem;
-                this.InputValue = selectedItem.Name + (this.Offset > 0? "+": "-") + this.Offset + this.selectedUnit[0]?.toLowerCase();
+            if (selectItem) {
+                const selectedItem: CodeNameClass = this.DateOptions.filter(date => date.Code == parts[0])[0];
+                if (selectedItem) {
+                    this.SelectedItem = selectedItem;
+                    this.SelectedItemObject = this.SelectedItem;
+                    this.InputValue = selectedItem.Name + (this.Offset > 0? "+": "-") + Math.abs(this.Offset) + this.selectedUnit[0]?.toLowerCase();
+                }
             }
         }
     }
@@ -279,9 +287,6 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         this.hoveredItem = item;
     }
 
-    hoveredItem = null;
-    units = ['Days', 'Weeks', 'Months', 'Years'];
-    result = new Date();
     offset = 1;
     public get Offset(): number {
         return this.offset;
@@ -291,38 +296,35 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
 
         this.recalculate();
     }
-    selectedUnit = 'Days';
-    isOffsetOpen = false;
 
-    SetOffsetDate () {
-        const value = this.offset == 0? null: this.SelectedItem.Code + (this.offset < 0? "_MINUS_": "_PLUS_") + this.offset + "_" + this.selectedUnit;
+    SaveOffsetDate () {
+        const value = this.offset == 0? null: this.SelectedItem.Code + (this.offset < 0? "_MINUS_": "_PLUS_") + Math.abs(this.offset) + "_" + this.selectedUnit;
         console.log("selected offset", value);
         this.OnDropDownSelected(this.SelectedItem, value);
         this.isOffsetOpen = false;
     }
 
-    // changeOffset(delta: number) {
-    //     this.offset += delta;
-    //     this.recalculate();
-    // }
     recalculate() {
 
         var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
+        if (!this.SelectedItem) {
+            return;
+        }
         const date = advancedDatePickerResolverComponent.ResolveDateValue(this.SelectedItem.Code, false);
 
         switch (this.selectedUnit) {
-        case 'Days':
-            date.setDate(date.getDate() + this.offset);
-            break;
-        case 'Weeks':
-            date.setDate(date.getDate() + this.offset * 7);
-            break;
-        case 'Months':
-            date.setMonth(date.getMonth() + this.offset);
-            break;
-        case 'Years':
-            date.setFullYear(date.getFullYear() + this.offset);
-            break;
+            case 'Days':
+                date.setDate(date.getDate() + this.offset);
+                break;
+            case 'Weeks':
+                date.setDate(date.getDate() + this.offset * 7);
+                break;
+            case 'Months':
+                date.setMonth(date.getMonth() + this.offset);
+                break;
+            case 'Years':
+                date.setFullYear(date.getFullYear() + this.offset);
+                break;
         }
         this.result = date;
     }
@@ -334,12 +336,12 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
     }
 
     OnDropDownSelectedMouse($event, item) {
-        setTimeout(() => {
-            if (!this.isOffsetOpen) {
-                console.log("OnDropDownSelected");
-                this.OnDropDownSelected(item);
-            }
-        }, 100);
+        if ($event.target.id == "setOffset") {
+            this.OpenOffsetPopup(item);
+        }
+        else {
+            this.OnDropDownSelected(item);
+        }
     }
     OpenOffsetPopup(item) {
         this.isOffsetOpen = true;

@@ -386,7 +386,7 @@
                                              class="AdvancedDatePickerDropdownInnerItem"
                                              (mouseover)="OnLiMouseOver($event, item)"
                                              (mouseleave)="OnLiMouseLeave($event)">
-                                            <span *ngIf="hoveredItem === item && hoveredItem.Code != 'SPD' && hoveredItem.Code != 'PER'" (click)="OpenOffsetPopup(item)" >&lt;</span>
+                                            <span style="padding: 4px;" id="setOffset" *ngIf="hoveredItem === item && hoveredItem.Code != 'SPD' && hoveredItem.Code != 'PER'" >&lt;</span>
                                             {{item.Name}}
                                         </div>
                                     </div>
@@ -406,23 +406,23 @@
     </div>
 
     <div class="offset-popup periodText" *ngIf="isOffsetOpen">
-        <div style="cursor: pointer; margin-top: 5px; margin-right: 5px; width: 10px;" (click)="isOffsetOpen = false">X</div>
+        <div style="cursor: pointer; margin-top: 5px; margin-right: 5px; width: 10px; height: 10px;" (click)="isOffsetOpen = false">X</div>
 
         <div class="result">Offset from selection:</div>
         <div class="offset-row">
             <button (click)="Offset = Offset - 1" style="cursor: pointer;">−</button>
-            <input type="number" min="1" [(ngModel)]="Offset">
+            <input style="direction: ltr;" type="number" min="1" [(ngModel)]="Offset">
             <button (click)="Offset = Offset + 1" style="cursor: pointer;">+</button>
         </div>
 
         <div class="units">
-            <span>Units:</span>
-            <RadioButton class="unit" *ngFor="let u of units" [Name]="u" [IsChecked]="selectedUnit == u" (Checked)="$event? selectedUnit = u: null; recalculate()" [Text]="u"></RadioButton>
+            <span class="FieldRow">Units:</span>
+            <RadioButton class="unit FieldRow" *ngFor="let u of units" [Name]="u" [IsChecked]="selectedUnit == u" (Checked)="$event? selectedUnit = u: null; recalculate()" [Text]="u"></RadioButton>
         </div>
 
-        <div class="result">
+        <div class="result FieldRow">
             <span>Result: {{ result | date:'dd/MM/yyyy' }}</span>
-            <span class="result-v" (click)="SetOffsetDate()">V</span>
+            <span class="result-v" (click)="SaveOffsetDate()">V</span>
         </div>
     </div>
 </div>
