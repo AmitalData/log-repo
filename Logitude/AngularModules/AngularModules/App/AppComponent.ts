@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { LAZY_WIDGETS } from './DynamicLoader/LazyWidgetsTokens';
 import { DynamicLoader } from './DynamicLoader/DynamicLoader';
 import { ChildDirective } from './Directives/ChildDirective';
-import { CookieService } from 'Infrastructure/Services/CookieService';
+import { AmitalGatewayUtil } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 
 @Component({
   selector: 'AppComponent',
@@ -15,22 +15,24 @@ import { CookieService } from 'Infrastructure/Services/CookieService';
         <img *ngIf="!IsLoginScreenLoaded" class="CenterCenter" src="./_Resources/Images/Gif/Bluespin.gif" />
         <div ChildDirective></div>
     </div>
-    <cookieconsent *ngIf="isAppService"></cookieconsent>
+    <cookieconsent *ngIf="!IsOpenedFromUnifreight"></cookieconsent>
     `,
 })
 
+
 export class AppComponent implements OnInit, AfterViewInit {
-  isAppService: boolean = false;
+  IsOpenedFromUnifreight: boolean = false;
   public IsLoginScreenLoaded: boolean = false;
   @ViewChild(ChildDirective) Child: ChildDirective;
-  constructor(private cookieService: CookieService, private http: HttpClient, private injector: Injector, private compiler: Compiler, @Inject(LAZY_WIDGETS) private lazyWidgets: { [key: string]: () => Promise<NgModuleFactory<any> | Type<any>> }) {
+  constructor(private http: HttpClient, private injector: Injector, private compiler: Compiler, @Inject(LAZY_WIDGETS) private lazyWidgets: { [key: string]: () => Promise<NgModuleFactory<any> | Type<any>> }) {
     DynamicLoader.Injector = injector;
     DynamicLoader.Compiler = compiler;
     DynamicLoader.LazyWidgets = lazyWidgets;
   }
 
+
   ngOnInit() {
-    this.LoadIsAppService();
+    this.IsOpenedFromUnifreight = AmitalGatewayUtil.Instance.AmitalBrowserInUse;
   }
 
   ngAfterViewInit() {
@@ -39,11 +41,5 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.IsLoginScreenLoaded = true;
         cmpRef.instance.Boot({ Http: this.http });
       });
-  }
-
-  LoadIsAppService() {
-    this.cookieService.GetIsAppServiceData().subscribe((data: any) => {
-      this.isAppService = data;
-    });
   }
 }
