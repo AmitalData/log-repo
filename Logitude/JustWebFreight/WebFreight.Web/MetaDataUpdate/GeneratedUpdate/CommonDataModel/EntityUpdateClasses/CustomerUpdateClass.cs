@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "b715551c061fdd8b12db7605b70ca6be";
+		public const string HashString = "33c70e256555ea6df408be0d06a3ddd0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -16645,15 +16645,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	          
              ScreenField CustomerCustomerBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField CustomerCustomerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
+             ScreenField CustomerCustomerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.BankName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField CustomerCustomerBillingTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.BankBranch", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
+             ScreenField CustomerCustomerBillingTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
              ScreenField CustomerCustomerBillingTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.BankCodeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField CustomerCustomerBillingTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
+             ScreenField CustomerCustomerBillingTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.BankBranch", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField CustomerCustomerBillingTabScreenScreenField13 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 6, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.BankName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
+             ScreenField CustomerCustomerBillingTabScreenScreenField13 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 6, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	            
 	      
 
