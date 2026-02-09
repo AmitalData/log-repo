@@ -140,7 +140,7 @@
                                     [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
                             </td>
 
-                            <td style="width: 135px;">
+                            <td style="width: 155px;">
                                 <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
                                     <li float-start id="filter_day"
                                         (click)="FilterByMonthOrDayClicked('filter_day')" style="height: 22px;width: 68.5px"
@@ -277,8 +277,8 @@
                                 </ul>
 
                             </td>
-                            <td style="width: 135px;">
-                                <AdvancedDatePicker *ngIf="monthOrDayFilterSelected === 'filter_day'" style="display: block;width: 135px;" float-start
+                            <td style="width: 155px;">
+                                <AdvancedDatePicker *ngIf="monthOrDayFilterSelected === 'filter_day'" style="display: block;width: 155px;" float-start
                                     [ObjectFieldName]="'AgingForDate'" [ObjectTableName]="'GLAccount'" [NoObjectField]="false"
                                     [DataContext]="DataContext" [InputType]="'date'" [TimeMode]="'12'"
                                     [SelectedDateValue]="AgingForDate" [ShowToolTip]="true"></AdvancedDatePicker> 

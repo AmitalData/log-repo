@@ -10,6 +10,7 @@ import { ObjectFieldPM } from "../../EntityPMs/ObjectFieldPM";
 import { UIProperty, } from "./UIProperties";
 import { AppTool } from "../../Tools";
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
+import { AdvancedDatePickerResolverComponent } from "./AdvancedDatePickerResolverComponent";
 
 @Component({
     selector: "AdvancedDatePicker",
@@ -49,6 +50,12 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
     public selectedPeriodUnit: string = this.PeriodUnitList[0];
     public IsRelativeperiodDropDownOpen: boolean;
     public periodNumber = 1;
+    public units = ['Days', 'Weeks', 'Months', 'Years'];
+    public selectedUnit = 'Days';
+    public hoveredItem = null;
+    public isOffsetOpen = false;
+    public result = new Date();
+
     updateSelectedPeriodUnit(selectedPeriodUnit?) {
         this.OnDropDownSelected(this.DateOptions.filter(d => d.Code == "PER")[0], null, false);
     }
@@ -88,6 +95,9 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
                         this.selectedPeriodUnit = parts[2];
                         this.IsRelativeperiodDropDownOpen = true;
                     }
+                    else if (newValue?.indexOf("_") > -1) {
+                        this.SetOffsetDateInPopup(true);
+                    }
                     else {
                         this.DateValueChanged(new Date(newValue));
                     }
@@ -99,6 +109,24 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
             if (newValue === undefined) newValue = null;
             if (this.selectedDateValue === undefined) this.selectedDateValue = null;
             if (this.selectedDateValue != newValue && !AppTool.IsNullOrEmpty(newValue)) this.DateValueChanged(newValue);
+        }
+    }
+
+    SetOffsetDateInPopup(selectItem = false) {
+        // example: BTM_PLUS_2_Weeks
+        const parts = this.selectedDateValue?.split("_");
+        if (parts?.length == 4) {
+            this.Offset = (parts[1]?.toLowerCase() == "minus"? -1: 1) * parseInt(parts[2], 10);
+            this.selectedUnit = parts[3];
+
+            if (selectItem) {
+                const selectedItem: CodeNameClass = this.DateOptions.filter(date => date.Code == parts[0])[0];
+                if (selectedItem) {
+                    this.SelectedItem = selectedItem;
+                    this.SelectedItemObject = this.SelectedItem;
+                    this.InputValue = selectedItem.Name + (this.Offset > 0? "+": "-") + Math.abs(this.Offset) + this.selectedUnit[0]?.toLowerCase();
+                }
+            }
         }
     }
 
@@ -135,6 +163,7 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         if (!this.eRef.nativeElement.contains(event.target)) {
             this.IsDropDownVisible = false;
             this.IsOpen = false;
+            this.isOffsetOpen = false;
         }
     }
 
@@ -236,7 +265,7 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         this.DropDownMouseInArea = false;
     }
 
-    public OnLiMouseOver($event) {
+    public OnLiMouseOver($event, item) {
         this.DropDownMouseInArea = true;
         let active = document.getElementsByClassName("highlighted");
         if (active[0]) {
@@ -254,11 +283,72 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         else {
             this.ToggleCalendar(false);
         }
+
+        this.hoveredItem = item;
+    }
+
+    offset = 1;
+    public get Offset(): number {
+        return this.offset;
+    }
+    public set Offset(value: number) {
+        this.offset = value;
+
+        this.recalculate();
+    }
+
+    SaveOffsetDate () {
+        const value = this.offset == 0? null: this.SelectedItem.Code + (this.offset < 0? "_MINUS_": "_PLUS_") + Math.abs(this.offset) + "_" + this.selectedUnit;
+        console.log("selected offset", value);
+        this.OnDropDownSelected(this.SelectedItem, value);
+        this.isOffsetOpen = false;
+    }
+
+    recalculate() {
+
+        var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
+        if (!this.SelectedItem) {
+            return;
+        }
+        const date = advancedDatePickerResolverComponent.ResolveDateValue(this.SelectedItem.Code, false);
+
+        switch (this.selectedUnit) {
+            case 'Days':
+                date.setDate(date.getDate() + this.offset);
+                break;
+            case 'Weeks':
+                date.setDate(date.getDate() + this.offset * 7);
+                break;
+            case 'Months':
+                date.setMonth(date.getMonth() + this.offset);
+                break;
+            case 'Years':
+                date.setFullYear(date.getFullYear() + this.offset);
+                break;
+        }
+        this.result = date;
     }
 
     public OnLiMouseLeave($event) {
         this.DropDownMouseInArea = false;
         $event.target.classList.remove("highlighted");
+        this.hoveredItem = null;
+    }
+
+    OnDropDownSelectedMouse($event, item) {
+        if ($event.target.id == "setOffset") {
+            this.OpenOffsetPopup(item);
+        }
+        else {
+            this.OnDropDownSelected(item);
+        }
+    }
+    OpenOffsetPopup(item) {
+        this.isOffsetOpen = true;
+        this.SelectedItem = item;
+
+        this.SetOffsetDateInPopup();
+        this.recalculate();
     }
 
     public OnDropDownSelected(item: any, newValue = null, toggleDropDown = true) {
@@ -273,7 +363,7 @@ export class AdvancedDatePickerComponent implements OnInit, OnDestroy {
         else {
             this.IsRelativeperiodDropDownOpen = false;
         }
-        this.DataContext[this.ObjectFieldName] = this.SelectedItem.Code == "SPD" || this.SelectedItem.Code == "PER" ? selectedValue : this.SelectedItem.Code;
+        this.DataContext[this.ObjectFieldName] = this.SelectedItem.Code == "SPD" || selectedValue?.indexOf("_") > -1 ? selectedValue : this.SelectedItem.Code;
         this.SelectedItemObject = this.SelectedItem;
         this.SelectedItemChanged.emit(this.SelectedItem);
         this.ValidateField();

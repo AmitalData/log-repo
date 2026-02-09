@@ -83,7 +83,7 @@
         height: 32px !important;
     }
     ::ng-deep MultiSelectLOV .container{
-        width:150px !important;
+        width:155px !important;
     }
    
     .aboodRTLFilterMenu li:first-child,
@@ -173,7 +173,7 @@
                     <td *ngIf="IsRangGLAccounts">
                         <LogLov
                             [ShowInActive]="true"
-                            style="display: block; width: 145px"
+                            style="display: block; width: 155px"
                             float-start
                             [ObjectFieldName]="'FromGLAccountId'"
                             [ObjectTableName]="ObjectTableName"
@@ -193,7 +193,7 @@
                     <td *ngIf="IsRangGLAccounts">
                         <LogLov
                             [ShowInActive]="true"
-                            style="display: block; width: 150px"
+                            style="display: block; width: 155px"
                             float-start
                             [ObjectFieldName]="'ToGLAccountId'"
                             [ObjectTableName]="ObjectTableName"
@@ -214,7 +214,7 @@
                     <td  *ngIf="!IsListGLAccounts && !IsRangGLAccounts">
                         <LogLov
                             [ShowInActive]="true"
-                            style="display: block; width: 150px"
+                            style="display: block; width: 155px"
                             float-start
                             [ObjectFieldName]="'GLAccountId'"
                             [ObjectTableName]="ObjectTableName"
@@ -233,7 +233,7 @@
                         </LogLov>
                     </td>
                     <td  *ngIf="IsListGLAccounts"></td>
-                    <td  style="width:150px" *ngIf="IsListGLAccounts">
+                    <td  style="width:155px" *ngIf="IsListGLAccounts">
                         <MultiSelectLOV
                             [DataContext]="DataContext"
                             [PlaceHolder]="'GLTransactionReport.O.GLAccountList' | TextCodeTranslationPipe"
@@ -319,7 +319,7 @@
 
                     <!-- 4 -->
                     <td style="width: 250px">
-                        <div style="width: 150px;" *ngIf="chartOfAccountsTypes.length > 0">
+                        <div style="width: 155px;" *ngIf="chartOfAccountsTypes.length > 0">
 
                              <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150"  
                                 [SelectedItem]="ChartOfAccountsTypeComboboxValue"  [ItemsSource]="chartOfAccountsTypes" (EditedItemSource)="OnChartOfAccountsTypeItemClicked($event)"
@@ -413,7 +413,7 @@
                     <td>
                         <LogLov
                             [ShowInActive]="true"
-                            style="display: block; width: 150px"
+                            style="display: block; width: 155px"
                             float-start
                             [ObjectFieldName]="'ChartOfAccountId'"
                             [ObjectTableName]="ObjectTableName"
@@ -525,9 +525,9 @@
                     </td>
 
                     <!-- 3 -->
-                    <td style="padding-top: 4px; width: 160px;">
+                    <td style="padding-top: 4px; width: 175px;">
                         <AdvancedDatePicker
-                            style="display: block; width: 135px"
+                            style="display: block; width: 155px"
                             float-start
                             [ObjectFieldName]="'FromDate'"
                             [ObjectTableName]="ObjectTableName"
@@ -547,7 +547,7 @@
                     <!-- 4 -->
                     <td>
                         <AdvancedDatePicker
-                            style="display: block; width: 150px"
+                            style="display: block; width: 155px"
                             float-start
                             [ObjectFieldName]="'ToDate'"
                             [ObjectTableName]="ObjectTableName"
@@ -729,7 +729,7 @@
                     <td>
                         <LogLov
                             [ShowInActive]="true"
-                            style="display: block; width: 150px"
+                            style="display: block; width: 155px"
                             float-start
                             [ObjectFieldName]="'Salesman'"
                             [ObjectTableName]="'GLAccount'"

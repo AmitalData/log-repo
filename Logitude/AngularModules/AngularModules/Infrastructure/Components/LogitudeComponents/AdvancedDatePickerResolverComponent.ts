@@ -72,19 +72,14 @@ export class AdvancedDatePickerResolverComponent {
                                 return null;
                             }
 
-                            switch (unit) {
-                                case "days":
-                                    dateValue.setDate(date.getDate() + sign * value);
-                                    break;
-                                case "months":
-                                    dateValue.setMonth(date.getMonth() + sign * value);
-                                    break;
-                                case "years":
-                                    dateValue.setFullYear(date.getFullYear() + sign * value);
-                                    break;
-                                default:
-                                    throw new Error("Unsupported period unit: " + unit);
-                            }
+                            return this.SetOffsetDate(dateValue, sign * value, unit);
+                        }
+                        else if (typeof dateOption === "string" && dateOption.indexOf("_") > -1) {
+                            const parts = dateOption.split("_");
+                            const dateValue = this.ResolveDateValue(parts[0], null);
+                            const offset = (parts[1]?.toLowerCase() == "minus"? -1: 1) * parseInt(parts[2], 10);
+                            const unit = parts[3];
+                            return this.SetOffsetDate(dateValue, offset, unit);
                         }
                         else {
                             dateValue = new Date(dateOption);
@@ -95,6 +90,26 @@ export class AdvancedDatePickerResolverComponent {
                     }
                     break;
             }
+        }
+        return dateValue;
+    }
+
+    SetOffsetDate(dateValue, offset, unit) {
+        switch (unit.toLowerCase()) {
+            case "days":
+                dateValue.setDate(dateValue.getDate() + offset);
+                break;
+            case "weeks":
+                dateValue.setDate(dateValue.getDate() + offset * 7);
+                break;
+            case "months":
+                dateValue.setMonth(dateValue.getMonth() + offset);
+                break;
+            case "years":
+                dateValue.setFullYear(dateValue.getFullYear() + offset);
+                break;
+            default:
+                throw new Error("Unsupported period unit: " + unit);
         }
         return dateValue;
     }
