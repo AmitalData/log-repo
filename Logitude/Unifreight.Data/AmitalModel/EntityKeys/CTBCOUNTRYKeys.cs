@@ -11,6 +11,7 @@ namespace Unifreight.Data.AmitalModel.EntityKeys
     {
         public string COUNTRYID { get; set; }
 
+
         public override string GetFullKey()
         {
             return COUNTRYID;

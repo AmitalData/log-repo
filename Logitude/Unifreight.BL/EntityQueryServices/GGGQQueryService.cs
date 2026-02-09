@@ -33,22 +33,22 @@ namespace Unifreight.BL.EntityQueryServices
             
         //    return curGGGQ;
         //}
-        public GGGQPM GetSingle(string QUEID, bool getComposition, bool getFromCache)
+        public GGGQPM GetSingle(string QUEID,int tenant, bool getComposition, bool getFromCache)
         {
-            var EntityKeys = new GGGQKeys() { QUEID = QUEID };
+            var EntityKeys = new GGGQKeys() { QUEID = QUEID ,Tenant=tenant };
             return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
-        public GGGQPM GetByPrimary(string primary, string entity, string originQue, string formId, string status)
+        public GGGQPM GetByPrimary(string primary, string entity, string originQue, string formId, string status, int tenant)
         {
             if (string.IsNullOrWhiteSpace(primary) || string.IsNullOrWhiteSpace(entity) || string.IsNullOrWhiteSpace(originQue) || string.IsNullOrWhiteSpace(formId)) return null;
-            var gggq = (this.Repository as GGGQRepository).GetByPrimary(primary,  entity,  originQue,  formId, status);
+            var gggq = (this.Repository as GGGQRepository).GetByPrimary(primary,  entity,  originQue,  formId, status,tenant);
             return this.GetEntityPM(gggq, false, null);
         }
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(GGGQ entityPOCO)
         {
-            return new GGGQKeys() { QUEID = entityPOCO.QUEID };
+            return new GGGQKeys() { QUEID = entityPOCO.QUEID, Tenant = entityPOCO.TENANT };
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Unifreight.Data.AmitalModel
                 if (tenant == null || !tenant.HasValue || primaryNum == null || !long.TryParse(primaryNum, out long lCUSTOMFILENO) || IsConnectedToUniFreight(tenant.Value))
                     return;
 
-                var fileNo = new CCUFILEMRepository(tenant.Value).GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
+                var fileNo = new CCUFILEMRepository(tenant.Value).GetFILENOByCUSTOMFILENO(lCUSTOMFILENO,tenant);
                 if (fileNo == null)
                     return;
 

@@ -53,7 +53,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                     var comment = ""; // moran 20.9.15 - Task 15458
                     var addComment = ""; // moran 20.9.15 - Task 15458
 
-                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, false);
+                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, dirtyDeclarationPM.Tenant, false);
                     if (myCCUQUELOCK == null)
                     {
                         var myCCUQUELOCKPM = new CCUQUELOCKPM()
@@ -231,7 +231,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                         var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(myAmitalContext);
                         var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(myAmitalContext);
                         myCCUQUELOCKUpdateService.DontAddTransaction = true;
-                        CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, false);
+                        CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, dirtyDeclarationPM.Tenant, false);
                         if (myCCUQUELOCK == null)
                         {
                             var myCCUQUELOCKPM = new CCUQUELOCKPM()

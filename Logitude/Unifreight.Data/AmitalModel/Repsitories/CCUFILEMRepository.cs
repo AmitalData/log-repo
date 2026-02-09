@@ -25,7 +25,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUFILEM GetSingle(int FILENO,int tenant)
+        public CCUFILEM GetSingle(int FILENO,int? tenant)
         {
             return (from a in context.CCUFILEMs
                     where a.FILENO == FILENO && a.TENANT == tenant
@@ -92,10 +92,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             return this.GetSingle(keys.FILENO, keys.TENANT);
         }
 
-        public int? GetFILENOByCUSTOMFILENO(long lCUSTOMFILENO)
+        public int? GetFILENOByCUSTOMFILENO(long lCUSTOMFILENO, int? tenant)
         {
             var rec = (from a in context.CCUFILEMs
-                       where a.CUSTOMFILENO == lCUSTOMFILENO
+                       where a.CUSTOMFILENO == lCUSTOMFILENO && a.TENANT == tenant
                        select a).FirstOrDefault();
             
             if (rec == null)
@@ -105,21 +105,19 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             return rec.FILENO;
         }
 
-        public int LockByCUSTOMFILENO_forUpdateNOWAIT(long lCUSTOMFILENO)
+        public int LockByCUSTOMFILENO_forUpdateNOWAIT(long lCUSTOMFILENO, int tenant)
         {
 
-            var succ =  context.FirstOrDefaultFUNOWAITWhere<CCUFILEM>( rec=> rec.CUSTOMFILENO == lCUSTOMFILENO);
-            //var oracleTransaction =Transaction.Current as OracleTransaction;
-            //context.Database.
+            var succ =  context.FirstOrDefaultFUNOWAITWhere<CCUFILEM>( rec=> rec.CUSTOMFILENO == lCUSTOMFILENO && rec.TENANT==tenant);
+          
             
             return succ;
         }
 
-        //<--- Yuval Chalup 19.11.2015 TASK-17450
-        public CCUFILEM GetCCUFILEMByRESHIMONNO(string reshimonNumber)
+         public CCUFILEM GetCCUFILEMByRESHIMONNO(string reshimonNumber, int tenant)
         {
             var rec = (from a in context.CCUFILEMs
-                       where a.RESHIMONNO == reshimonNumber
+                       where a.RESHIMONNO == reshimonNumber && a.TENANT == tenant
                        select a).FirstOrDefault();
             if (rec == null)
             {
@@ -127,12 +125,11 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
             return rec;
         }
-        //Yuval Chalup 19.11.2015 TASK-17450 --->
-
-        public int FastDeleteMulti(EntityKeyFields parentEntityKeys) // moran 5.1.16 - AMI-55274
+ 
+        public int FastDeleteMulti(EntityKeyFields parentEntityKeys)  
         {
             var keys = parentEntityKeys as CCUFILEMKeys;
-            return context.DeleteWhere<CCUFILEM>(rec => rec.FILENO == keys.FILENO);
+            return context.DeleteWhere<CCUFILEM>(rec => rec.FILENO == keys.FILENO && rec.TENANT== keys.TENANT);
         }
 
         public void GetWeeklyStatistic(int tenant,
@@ -144,15 +141,14 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             TotalOpenCCULastWeek = LastMonthOpenByUserCCU = -1;
             var lastWeek = 
                 DateTime.Now.Add(TimeSpan.FromDays(-7));
-                //DateTime.Now.Date;
 
             var qLastMonth = (from a in context.CCUFILEMs
-                              where a.OPENDATE > lastWeek
+                              where a.TENANT==tenant && a.OPENDATE > lastWeek
                               select a);
             var qTotalOpenCCULastMonth =
                 (from a in qLastMonth
-                 where (a.FROMIIG == null || a.FROMIIG.Trim() == string.Empty)//String.IsNullOrWhiteSpace(a.FROMIIG)
-                 where (a.RESHIMONNON == null || a.RESHIMONNON.Trim() == string.Empty)//String.IsNullOrWhiteSpace(a.RESHIMONNON)
+                 where (a.FROMIIG == null || a.FROMIIG.Trim() == string.Empty)
+                 where (a.RESHIMONNON == null || a.RESHIMONNON.Trim() == string.Empty)
                  select a);
             var qLastMonthOpenByUserCCU =
                 (from a in qLastMonth
@@ -177,10 +173,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
 
             return;
-            LastMonthOpenByUserCCU
-                = (from a in context.CCUFILEMs
-                   where a.OPENDATE > lastWeek
-                   select a.OPENBYUSER).Distinct().Count(); ;
+ 
         }
     }
 }

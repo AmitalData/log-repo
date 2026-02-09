@@ -23,15 +23,15 @@ namespace Unifreight.BL.EntityQueryServices
             mapping = new CCUMSHGRDataMapping();
         }
 
-        public CCUMSHGRPM GetSingle(int FILENO, int LINENO, bool getComposition)
+        public CCUMSHGRPM GetSingle(int FILENO, int LINENO,int tenant, bool getComposition)
         {
-            var keys = new CCUMSHGRKeys() { FILENO = FILENO, LINENO = LINENO };
+            var keys = new CCUMSHGRKeys() { FILENO = FILENO, LINENO = LINENO , Tenant=tenant };
             return  base.GetSingle(keys , getComposition ,false );        
         }
 
         protected override EntityKeyFields GetKeys(CCUMSHGR entityPOCO)
         {
-            return new CCUMSHGRKeys() { FILENO = entityPOCO.FILENO, LINENO = entityPOCO.LINENO };
+            return new CCUMSHGRKeys() { FILENO = entityPOCO.FILENO, LINENO = entityPOCO.LINENO, Tenant = entityPOCO.TENANT };
         }
 
         public override void GetComposition(EntityKeyFields entityKeys, CCUMSHGRPM entityPM)

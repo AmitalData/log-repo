@@ -10,7 +10,7 @@ namespace Unifreight.Data.AmitalModel.EntityKeys
     public class CCUFILEMKeys : EntityKeyFields
     {
         public int FILENO { get; set; }
-        public int TENANT { get; set; } 
+        public int? TENANT { get; set; } 
 
         public override string GetFullKey()
         {

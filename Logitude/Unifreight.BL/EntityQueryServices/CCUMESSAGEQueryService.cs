@@ -22,15 +22,15 @@ namespace Unifreight.BL.EntityQueryServices
             mapping = new CCUMESSAGEDataMapping();
         }
 
-        public CCUMESSAGEPM GetSingle(int FILENO, int LINENO, bool getComposition)
+        public CCUMESSAGEPM GetSingle(int FILENO, int LINENO,int tenant,  bool getComposition)
         {
-            var keys = new CCUMESSAGEKeys() { FILENO = FILENO, LINENO = LINENO };
+            var keys = new CCUMESSAGEKeys() { FILENO = FILENO, LINENO = LINENO , Tenant= tenant };
             return  base.GetSingle(keys , getComposition ,false );        
         }
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUMESSAGE entityPOCO)
         {
-            return new CCUMESSAGEKeys() { FILENO = entityPOCO.FILENO, LINENO = entityPOCO.LINENO };
+            return new CCUMESSAGEKeys() { FILENO = entityPOCO.FILENO, LINENO = entityPOCO.LINENO, Tenant = entityPOCO.TENANT };
         }
     }
 }

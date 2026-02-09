@@ -24,7 +24,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUCAR GetSingle(int FILENO, int LINENO, int tenant)
+        public CCUCAR GetSingle(int FILENO, int LINENO, int? tenant)
         {
             return (from a in context.CCUCARs
                     where a.FILENO == FILENO && a.LINENO == LINENO && a.TENANT == tenant
@@ -45,22 +45,16 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public void Remove(CCUCAR entity)
         {
-            //if (entity.EntityState == System.Data.EntityState.Unchanged)
-            {
+             {
                 context.CCUCARs.Attach(entity);
             }
-            //context.AddToCCUCARs 
-            //context.CCUCARs.DeleteAllOnSubmit //ther isn't
-            //http://forums.devart.com/viewtopic.php?t=13223
-            //context.ExecuteStoreCommand 
-            context.CCUCARs.Remove(entity);
+             context.CCUCARs.Remove(entity);
             SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUCAR entity)
         {
-            //if (entity.EntityState == System.Data.EntityState.Unchanged)
-            {
+             {
                 context.CCUCARs.Attach(entity); context.SetAsModified(entity);
             }
 
@@ -86,7 +80,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         {
             var keys = entityKeys as CCUCUSTITEMKeys;
             return (from a in context.CCUCARs
-                    where a.FILENO == keys.FILENO && a.LINENO == keys.LINENO
+                    where a.FILENO == keys.FILENO && a.LINENO == keys.LINENO && a.TENANT == keys.TENANT
                     select a).ToList();
         }
 
@@ -99,7 +93,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public int FastDeleteMulti(CCUFILEMKeys parentEntityKeys)
         {
             var keys = parentEntityKeys as CCUFILEMKeys;
-            return context.DeleteWhere<CCUCAR>(rec => rec.FILENO == keys.FILENO);
+            return context.DeleteWhere<CCUCAR>(rec => rec.FILENO == keys.FILENO && rec.TENANT == keys.TENANT);
         }
     }
 }

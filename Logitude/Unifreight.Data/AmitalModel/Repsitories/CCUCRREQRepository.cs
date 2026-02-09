@@ -22,7 +22,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUCRREQ GetSingle(string ENTNAME, int FILENO, int ACCLINENO, int ITEMLINE, int LINENO, int TENANT)
+        public CCUCRREQ GetSingle(string ENTNAME, int FILENO, int ACCLINENO, int ITEMLINE, int LINENO, int? TENANT)
         {
             return (from a in context.CCUCRREQs
                     where a.ENTNAME == ENTNAME && a.FILENO == FILENO && a.ACCLINENO == ACCLINENO && a.ITEMLINE == ITEMLINE && a.LINENO == LINENO && a.TENANT == TENANT
@@ -43,19 +43,16 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public void Remove(CCUCRREQ entity)
         {
-            //if (entity.EntityState == System.Data.EntityState.Unchanged)
-            {
+             {
                 context.CCUCRREQs.Attach(entity);
             }
-            //context.AddToCCUCRREQs 
-            context.CCUCRREQs.Remove(entity);
+             context.CCUCRREQs.Remove(entity);
             SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUCRREQ entity)
         {
-            //if (entity.EntityState == System.Data.EntityState.Unchanged)
-            {
+             {
                 context.CCUCRREQs.Attach(entity); context.SetAsModified(entity);
             }
             SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);

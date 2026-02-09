@@ -23,7 +23,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUCARL GetSingle(int FILENO, int LINENO, int COUNTER, int tenant)
+        public CCUCARL GetSingle(int FILENO, int LINENO, int COUNTER, int? tenant)
         {
             return (from a in context.CCUCARLs
                     where a.FILENO == FILENO && a.LINENO == LINENO && a.COUNTER == COUNTER && a.TENANT == tenant
@@ -44,22 +44,16 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public void Remove(CCUCARL entity)
         {
-            //if (entity.EntityState == System.Data.EntityState.Unchanged)
-            {
+             {
                 context.CCUCARLs.Attach(entity);
             }
-            //context.AddToCCUCARLs 
-            //context.CCUCARLs.DeleteAllOnSubmit //ther isn't
-            //http://forums.devart.com/viewtopic.php?t=13223
-            //context.ExecuteStoreCommand 
-            context.CCUCARLs.Remove(entity);
+             context.CCUCARLs.Remove(entity);
             SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUCARL entity)
         {
-            //if (entity.EntityState == System.Data.EntityState.Unchanged)
-            {
+             {
                 context.CCUCARLs.Attach(entity); context.SetAsModified(entity);
             }
            

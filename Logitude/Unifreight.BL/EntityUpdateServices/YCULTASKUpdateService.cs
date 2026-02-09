@@ -29,7 +29,7 @@ namespace Unifreight.BL.EntityUpdateServices
        
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(YCULTASKPM entityPM)
         {
-            return new YCULTASKKeys() { TASKID = entityPM.TASKID };
+            return new YCULTASKKeys() { TASKID = entityPM.TASKID, Tenant = entityPM.Tenant };
         }
 
         protected override void OnCreating(YCULTASKPM entityPM, EntityPM entityParentPM)

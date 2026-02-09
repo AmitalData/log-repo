@@ -22,10 +22,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUPAYHAND GetSingle(int FILENO)
+        public CCUPAYHAND GetSingle(int FILENO, int? tenant)
         {
             return (from a in context.CCUPAYHANDs
-                    where a.FILENO == FILENO
+                    where a.FILENO == FILENO && a.TENANT == tenant
                     select a).FirstOrDefault();
         }
 
@@ -81,16 +81,16 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             throw new NotImplementedException();
         }
 
-        public CCUPAYHAND GetSingle(EntityKeyFields entityKeys)
+        public CCUPAYHAND GetSingle(EntityKeyFields entityKeys )
         {
             var keys = entityKeys as CCUPAYHANDKeys;
-            return this.GetSingle(keys.FILENO);
+            return this.GetSingle(keys.FILENO , keys.Tenant);
         }
 
-        public int FastDeleteMulti(EntityKeyFields parentEntityKeys) // moran 5.1.16 - AMI-55274
+        public int FastDeleteMulti(EntityKeyFields parentEntityKeys)  
         {
             var keys = parentEntityKeys as CCUFILEMKeys;
-            return context.DeleteWhere<CCUPAYHAND>(rec => rec.FILENO == keys.FILENO);
+            return context.DeleteWhere<CCUPAYHAND>(rec => rec.FILENO == keys.FILENO && rec.TENANT == keys.TENANT);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Unifreight.BL.EntityUpdateServices
         
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(SupplierInvoiceItem103PM entityPM)
         {
-            return new CCUSUPITEMKeys() { FILENO = entityPM.FILENO, ACCLINENO = entityPM.ACCLINENO, LINENO = entityPM.LINENO };
+            return new CCUSUPITEMKeys() { FILENO = entityPM.FILENO, ACCLINENO = entityPM.ACCLINENO, LINENO = entityPM.LINENO, TENANT = entityPM.Tenant };
         }
 
         protected override void UpdateComposition(SupplierInvoiceItem103PM entityPM)
