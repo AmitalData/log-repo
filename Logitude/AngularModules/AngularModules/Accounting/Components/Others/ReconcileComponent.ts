@@ -945,7 +945,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
                     if (this.SelectedLines.Length > 0 && this.TotalLocalDifference != 0) {
                         let isRFRToggleOnForeignReco: boolean = false;
-                        if (this.GLAccountPM.ReconcileMethodCode === "1"){
+                        if (this.GLAccountPM.ReconcileMethodCode === "1"
+                            && !(this.IsMultiWithReconcileMethodCodeEqualOne && this.CurrencyId === this.TenantPM.CurrencyId )
+                        ){
                             isRFRToggleOnForeignReco = SessionLocator.FeatureToggles.filter(d => d.ToggleCode === "RFR")[0] ? true : false;
                         }
                         if (isRFRToggleOnForeignReco) {
@@ -1766,6 +1768,15 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 lineCurrAmountToReconcile = +line.AmountToReconcile / rate;  // lineCurrAmountToReconcile in USD, because GLAcc is USD, so all lines are
                 lineLocalAmountToReconcile = +line.AmountToReconcile; // lineLocalAmountToReconcile is already in NIS
             }
+            else if (rate !== 0 && this.IsMultiWithReconcileMethodCodeEqualOne && this.CurrencyId !== this.TenantPM.CurrencyId) {     // GLAcc is multi with recomethod code equal 1; not NIS (say, USD) 
+                lineCurrAmountToReconcile = +line.AmountToReconcile;  // lineCurrAmountToReconcile is already in USD 
+                lineLocalAmountToReconcile = +line.AmountToReconcile * rate; // lineLocalAmountToReconcile in NIS
+            } 
+            else if (this.IsMultiWithReconcileMethodCodeEqualOne && this.CurrencyId === this.TenantPM.CurrencyId) {     // GLAcc is multi with recomethod code equal 1; NIS 
+                rate = 1; // in this case, the rate is 1, because the line currency is the same as the tenant currency, so the amount to reconcile is the same in both local and foreigncurrency
+                lineCurrAmountToReconcile = +line.AmountToReconcile;  // lineCurrAmountToReconcile is already in USD 
+                lineLocalAmountToReconcile = +line.AmountToReconcile; // lineLocalAmountToReconcile in NIS
+            }            
             else if (rate !== 0 && !AppTool.IsNullOrEmpty(this.GLAccountPM.ReconcileMethodCode) && this.GLAccountPM.ReconcileMethodCode === "1" // let's say, USD
                 && !AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId) && this.GLAccountPM.CurrencyId !== this.TenantPM.CurrencyId) {     // GLAcc is not multi, not NIS (say, USD)
                 lineCurrAmountToReconcile = +line.AmountToReconcile;  // lineCurrAmountToReconcile is already in USD 
