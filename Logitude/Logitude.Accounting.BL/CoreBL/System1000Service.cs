@@ -42,7 +42,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public List<string> GetSystem1000FlatFile(IAccountingContext accountingContext, int tenant)
         {
-            StringBuilder flatFile = new StringBuilder();
             _sb.AppendLine($"GetDeductionFileNumberFromAccSetting({tenant})");
             _FullAccountingSettingPM = GetDeductionFileNumberFromAccSetting(accountingContext, tenant);
             _AllVendorGLAccountCards = GetQAllVendorGLAccountCards(accountingContext, tenant);
@@ -99,6 +98,8 @@ namespace Logitude.Accounting.BL.CoreBL
             var res = new List<string>();
             foreach (List<CardGLAccountDataView> listOfAccountsMax1000 in listOf1000)
             {
+                StringBuilder flatFile = new StringBuilder(); 
+
                 string header = "A" + _FullAccountingSettingPM.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9);
                 flatFile.AppendLine(header);
                 int count = 0;
