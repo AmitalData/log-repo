@@ -1935,6 +1935,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 this.CheckDuplicateEntity().then(isDuplicate => {
                     
                     if (!isDuplicate) {
+                        this.StartBusyIndicatorSaving()
                         this.entityPMService.update(this.ObjectTableName, this.EntityPM, this.ClonedEntityPM).then((res: any) => {
                             res.subscribe((myResponse: ServiceResponse) => {
 
