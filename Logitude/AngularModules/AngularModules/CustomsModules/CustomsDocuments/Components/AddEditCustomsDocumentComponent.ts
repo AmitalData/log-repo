@@ -578,8 +578,8 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         if (this.CustomsDocument) {
             var statusCodes = ['1', '7'];
             if (statusCodes.indexOf(this.CustomsDocument.DocumentStatusCode) > -1 && !AppTool.IsNullOrEmpty(this.CustomsDocument.CustomsDocId)
-                && this.CustomsDocumentsTicket && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId) && this.EntityPM.FromCancelDeclaration
-                && !this.IsEntityDisplayOnly) {
+                && this.CustomsDocumentsTicket && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId) 
+                && (!this.IsEntityDisplayOnly || this.EntityPM.FromCancelDeclaration)){
                 new CustomsDocumentsTicketsExtendedService().GetDocConnectTicket(this.CustomsDocument.DocumentsFilingId, this.ParentEntityId, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
                     const anotherDeclarationConnect: string[] = response.Result.decConnect;
 
