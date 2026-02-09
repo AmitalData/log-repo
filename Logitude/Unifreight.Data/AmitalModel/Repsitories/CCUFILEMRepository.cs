@@ -25,10 +25,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUFILEM GetSingle(int FILENO)
+        public CCUFILEM GetSingle(int FILENO,int tenant)
         {
             return (from a in context.CCUFILEMs
-                    where a.FILENO == FILENO
+                    where a.FILENO == FILENO && a.TENANT == tenant
                     select a).FirstOrDefault();
         }
 
@@ -89,7 +89,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public CCUFILEM GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUFILEMKeys;
-            return this.GetSingle(keys.FILENO);
+            return this.GetSingle(keys.FILENO, keys.TENANT);
         }
 
         public int? GetFILENOByCUSTOMFILENO(long lCUSTOMFILENO)

@@ -22,10 +22,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUCRREQ GetSingle(string ENTNAME, int FILENO, int ACCLINENO, int ITEMLINE, int LINENO)
+        public CCUCRREQ GetSingle(string ENTNAME, int FILENO, int ACCLINENO, int ITEMLINE, int LINENO, int TENANT)
         {
             return (from a in context.CCUCRREQs
-                    where a.ENTNAME == ENTNAME && a.FILENO == FILENO && a.ACCLINENO == ACCLINENO && a.ITEMLINE == ITEMLINE && a.LINENO == LINENO
+                    where a.ENTNAME == ENTNAME && a.FILENO == FILENO && a.ACCLINENO == ACCLINENO && a.ITEMLINE == ITEMLINE && a.LINENO == LINENO && a.TENANT == TENANT
                     select a).FirstOrDefault();
         }
 
@@ -81,28 +81,28 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             var keys = entityKeys as CCUSUPITEMKeys;
             return (from a in context.CCUCRREQs
                     where a.ENTNAME == "CCUFILEM" && a.FILENO == keys.FILENO && 
-                            a.ACCLINENO == keys.ACCLINENO && a.ITEMLINE == keys.LINENO 
+                            a.ACCLINENO == keys.ACCLINENO && a.ITEMLINE == keys.LINENO && a.TENANT == keys.TENANT
                     select a).ToList();
         }
 
         public CCUCRREQ GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUCRREQKeys;
-            return this.GetSingle(keys.ENTNAME, keys.FILENO, keys.ACCLINENO, keys.ITEMLINE, keys.LINENO);
+            return this.GetSingle(keys.ENTNAME, keys.FILENO, keys.ACCLINENO, keys.ITEMLINE, keys.LINENO, keys.TENANT);
         }
 
        
         public int FastDeleteMulti(CCUFILEMKeys parentEntityKeys)
         {
             var keys = parentEntityKeys as CCUFILEMKeys;
-            return context.DeleteWhere<CCUCRREQ>(rec => rec.FILENO == keys.FILENO);
+            return context.DeleteWhere<CCUCRREQ>(rec => rec.FILENO == keys.FILENO && rec.TENANT == keys.TENANT);
         }
 
-        public List<CCUCRREQ> GetFiles105Documents(int FILENO, int ACCLINENO, int ITEMLINE)
+        public List<CCUCRREQ> GetFiles105Documents(int FILENO, int ACCLINENO, int ITEMLINE, int TENANT)
         {
             return (from a in context.CCUCRREQs
                     where a.ENTNAME == "CCUFILEM" && a.FILENO == FILENO &&
-                          a.ACCLINENO == ACCLINENO && a.ITEMLINE == ITEMLINE 
+                          a.ACCLINENO == ACCLINENO && a.ITEMLINE == ITEMLINE && a.TENANT == TENANT
                     select a).ToList();
         }
     }

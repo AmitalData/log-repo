@@ -24,10 +24,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUCAR GetSingle(int FILENO, int LINENO)
+        public CCUCAR GetSingle(int FILENO, int LINENO, int tenant)
         {
             return (from a in context.CCUCARs
-                    where a.FILENO == FILENO && a.LINENO == LINENO 
+                    where a.FILENO == FILENO && a.LINENO == LINENO && a.TENANT == tenant
                     select a).FirstOrDefault();
         }
 
@@ -93,7 +93,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public CCUCAR GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUCARKeys;
-            return this.GetSingle(keys.FILENO, keys.LINENO);
+            return this.GetSingle(keys.FILENO, keys.LINENO, keys.Tenant);
         }
 
         public int FastDeleteMulti(CCUFILEMKeys parentEntityKeys)

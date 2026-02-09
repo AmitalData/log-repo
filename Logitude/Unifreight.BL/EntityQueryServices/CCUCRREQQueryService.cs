@@ -34,9 +34,9 @@ namespace Unifreight.BL.EntityQueryServices
             return new CCUCRREQKeys() { ENTNAME = entityPOCO.ENTNAME, FILENO = entityPOCO.FILENO, ACCLINENO = entityPOCO.ACCLINENO, ITEMLINE = entityPOCO.ITEMLINE, LINENO = entityPOCO.LINENO };
         }
 
-        public List<CCUCRREQPM> GetFiles105Documents(int FILENO, int ACCLINENO, int ITEMLINE)
+        public List<CCUCRREQPM> GetFiles105Documents(int FILENO, int ACCLINENO, int ITEMLINE, int TENANT)
         {
-            var listPoco = (this.Repository as CCUCRREQRepository).GetFiles105Documents(FILENO, ACCLINENO, ITEMLINE);
+            var listPoco = (this.Repository as CCUCRREQRepository).GetFiles105Documents(FILENO, ACCLINENO, ITEMLINE, TENANT);
             var listPM = listPoco.Select(poco => this.GetEntityPM(poco)).ToList();
             return listPM;
         }

@@ -23,10 +23,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUACCSUP GetSingle(int FILENO, int LINENO)
+        public CCUACCSUP GetSingle(int FILENO, int LINENO,int tenant)
         {
             return (from a in context.CCUACCSUPs
-                    where a.FILENO == FILENO && a.LINENO == LINENO
+                    where a.FILENO == FILENO && a.LINENO == LINENO && a.TENANT == tenant
                     select a).FirstOrDefault();
         }
 
@@ -90,7 +90,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public CCUACCSUP GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUACCSUPKeys;
-            return this.GetSingle(keys.FILENO, keys.LINENO);
+            return this.GetSingle(keys.FILENO, keys.LINENO, keys.Tenant);
         }
 
         public int FastDeleteMulti(CCUFILEMKeys parentEntityKeys)
