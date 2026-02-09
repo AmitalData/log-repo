@@ -75,7 +75,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
             while ((selectedDataCount == take && cardSearchResultLists.Count() < cardSearchAdvanceArgs.Take) || isFirstTime)
             {
                 var cardSearchResultSelectedLists = (from a in cardSearches
-                                               where a.Keyword.StartsWith(cardSearchAdvanceArgs.SeachText) && allowedCardIds.Contains(a.CardId) 
+                                               where a.Keyword.StartsWith(cardSearchAdvanceArgs.SeachText) && (allowedCardIds.Contains(a.CardId)  || allowedCardIds.Count() <1)
                                                select new CardSearchResult()
                                                {
                                                    CardId = a.CardId,
