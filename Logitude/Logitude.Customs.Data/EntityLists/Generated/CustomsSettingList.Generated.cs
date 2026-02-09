@@ -83,6 +83,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ForbiddenSigns  { get; set; }
        [DataMember]
        public DateTime? CB_LastUpdateDate  { get; set; }
+       [DataMember]
+       public string CustomsBookToken  { get; set; }
    }
 
 }
