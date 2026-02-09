@@ -2165,7 +2165,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                          var myCCUFILEMQueryService = new CCUFILEMQueryService(amitalContext);
 
-                        myCCUFILEM = myCCUFILEMQueryService.GetCCUFILEMByRESHIMONNO(reshimonNumber);
+                        myCCUFILEM = myCCUFILEMQueryService.GetCCUFILEMByRESHIMONNO(reshimonNumber,tenant);
 
                         if (!setting.IsConnectedToUniFreight)
                         {

@@ -169,7 +169,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     myCCUQUELOCKUpdateService.DontAddTransaction = true;
 
 
-                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, false);
+                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo,dirtyDeclarationPM.Tenant, false);
                     if (myCCUQUELOCK == null)
                     {
                         var myCCUQUELOCKPM = new CCUQUELOCKPM()

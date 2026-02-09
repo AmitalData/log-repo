@@ -24,10 +24,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public YCULTASK GetSingle(string TASKID)
+        public YCULTASK GetSingle(string TASKID, int? tenant)
         {
             return (from a in context.YCULTASKs
-                    where a.TASKID == TASKID
+                    where a.TASKID == TASKID && a.TENANT == tenant
                     select a).FirstOrDefault();
         }
 
@@ -86,12 +86,12 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public YCULTASK GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as YCULTASKKeys;
-            return this.GetSingle(keys.TASKID);
+            return this.GetSingle(keys.TASKID , keys.Tenant);
         }
 
         public void GetStatisticWeekly(out int totalTasks, 
             //out int over30sectoanalyze, out int over30secfromlog2start, 
-            out int problemTasks)
+            out int problemTasks, int tenant)
         {
             int over30sectoanalyze, over30secfromlog2start;
             totalTasks = over30sectoanalyze = over30secfromlog2start = problemTasks = -1;
@@ -109,8 +109,8 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
             var qWeekAgo =
                 (from tsk in context.YCULTASKs
-                 where
-                 tsk.LOGTIME >= weekAgo
+                 where tsk.TENANT == tenant &&
+                 tsk.LOGTIME >= weekAgo 
                  select tsk);
 
             var qq1 = (

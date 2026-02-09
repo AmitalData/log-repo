@@ -753,7 +753,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
                     myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                    
-                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, false);
+                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo,dirtyDeclarationPM.Tenant, false);
                     if (myCCUQUELOCK == null)
                     {
                         var myCCUQUELOCKPM = new CCUQUELOCKPM()

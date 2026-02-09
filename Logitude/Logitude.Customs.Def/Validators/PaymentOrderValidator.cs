@@ -32,7 +32,7 @@ namespace Logitude.Customs.Def.Validators
                 long lCUSTOMFILENO;
                 if (long.TryParse(paymentOrderPM.AccountingCustomFile, out lCUSTOMFILENO))
                 {
-                    int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
+                    int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO,paymentOrderPM.Tenant);
                     if (!FILENO.HasValue)
                     {
                         valid = false;

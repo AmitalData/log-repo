@@ -22,10 +22,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUCUSTITEM GetSingle(int FILENO, int LINENO)
+        public CCUCUSTITEM GetSingle(int FILENO, int LINENO, int? TENANT)
         {
             return (from a in context.CCUCUSTITEMs
-                    where a.FILENO == FILENO && a.LINENO == LINENO
+                    where a.FILENO == FILENO && a.LINENO == LINENO && a.TENANT == TENANT    
                     select a).FirstOrDefault();
         }
 
@@ -43,19 +43,16 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public void Remove(CCUCUSTITEM entity)
         {
-            //if (entity.EntityState == System.Data.EntityState.Unchanged)
-            {
+             {
                 context.CCUCUSTITEMs.Attach(entity);
             }
-            //context.AddToCCUCUSTITEMs 
-            context.CCUCUSTITEMs.Remove(entity);
+             context.CCUCUSTITEMs.Remove(entity);
             SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUCUSTITEM entity)
         {
-            //if (entity.EntityState == System.Data.EntityState.Unchanged)
-            {
+             {
                 context.CCUCUSTITEMs.Attach(entity); context.SetAsModified(entity);
             }
             SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
@@ -79,7 +76,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public CCUCUSTITEM GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUCUSTITEMKeys;
-            return this.GetSingle(keys.FILENO, keys.LINENO);
+            return this.GetSingle(keys.FILENO, keys.LINENO, keys.TENANT);
 
         }
 
@@ -88,25 +85,8 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             var my105List = new List<CCUCUSTITEM>();
             var keys = entityKeys as CCUSUPITEMKeys;
 
-            if (false)
-            {
-                var CCUSUPITEMRepo = new CCUSUPITEMRepository(this.context);
-                var myParent103 =
-                    //context.CCUSUPITEMs.FirstOrDefault(rec => rec.FILENO == keys.FILENO && rec.ACCLINENO == keys.ACCLINENO && rec.LINENO == keys.LINENO);
-                    CCUSUPITEMRepo.GetSingle(keys);
-                if (!myParent103.ITEMLINENO.HasValue)
-                {
-                    return my105List;
-                }
-                var cur105 = GetSingle(myParent103.FILENO, myParent103.ITEMLINENO.Value);
-                if (cur105 != null)
-                {
-                    my105List.Add(cur105);
-                }
-            }
-
-            var join105and103 = (from b in context.CCUSUPITEMs.Where(rec => rec.FILENO == keys.FILENO && rec.ACCLINENO == keys.ACCLINENO && rec.LINENO == keys.LINENO)
-                                 from a in context.CCUCUSTITEMs.Where(rec => rec.FILENO == keys.FILENO && rec.LINENO == b.ITEMLINENO.Value)
+            var join105and103 = (from b in context.CCUSUPITEMs.Where(rec => rec.FILENO == keys.FILENO && rec.ACCLINENO == keys.ACCLINENO && rec.LINENO == keys.LINENO && rec.TENANT== keys.TENANT)
+                                 from a in context.CCUCUSTITEMs.Where(rec => rec.FILENO == keys.FILENO && rec.LINENO == b.ITEMLINENO.Value && rec.TENANT == b.TENANT)
                                  select new { my103 = b, my105 = a }).FirstOrDefault();
             if (join105and103 != null)
             {
@@ -122,15 +102,15 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public int FastDeleteMulti(CCUFILEMKeys parentEntityKeys)
         {
             var keys = parentEntityKeys as CCUFILEMKeys;
-            return context.DeleteWhere<CCUCUSTITEM>(rec => rec.FILENO == keys.FILENO);
+            return context.DeleteWhere<CCUCUSTITEM>(rec => rec.FILENO == keys.FILENO && rec.TENANT == keys.TENANT);
         }
 
-        public List<CCUCUSTITEM> GetFile105(int? FILENO)
+        public List<CCUCUSTITEM> GetFile105(int? FILENO, int tenant)
         {
             var my105List = new List<CCUCUSTITEM>();
 
             return (from a in context.CCUCUSTITEMs
-                    where a.FILENO == FILENO
+                    where a.FILENO == FILENO && a.TENANT == tenant
                     select a).ToList();
 
         }

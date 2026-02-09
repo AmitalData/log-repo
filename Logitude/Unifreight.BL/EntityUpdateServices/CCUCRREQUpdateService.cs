@@ -28,7 +28,7 @@ namespace Unifreight.BL.EntityUpdateServices
         
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUCRREQPM entityPM)
         {
-            return new CCUCRREQKeys() { ENTNAME = entityPM.ENTNAME, FILENO = entityPM.FILENO, ACCLINENO = entityPM.ACCLINENO, ITEMLINE = entityPM.ITEMLINE, LINENO = entityPM.LINENO };
+            return new CCUCRREQKeys() { ENTNAME = entityPM.ENTNAME, FILENO = entityPM.FILENO, ACCLINENO = entityPM.ACCLINENO, ITEMLINE = entityPM.ITEMLINE, LINENO = entityPM.LINENO , TENANT =entityPM.Tenant };
         }
 
         protected override void OnCreating(CCUCRREQPM entityPM, SupplierInvoiceItem103PM entityParentPM)

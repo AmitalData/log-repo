@@ -22,10 +22,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUTAX GetSingle(int FILENO, int LINENO)
+        public CCUTAX GetSingle(int FILENO, int LINENO , int? tenant)
         {
             return (from a in context.CCUTAXES 
-                    where a.FILENO == FILENO && a.LINENO == LINENO
+                    where a.FILENO == FILENO && a.LINENO == LINENO && a.TENANT == tenant
                     select a).FirstOrDefault();
         }
 
@@ -43,19 +43,16 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public void Remove(CCUTAX entity)
         {
-            //if (entity.EntityState == System.Data.EntityState.Unchanged)
-            {
+             {
                 context.CCUTAXES.Attach(entity);
             }
-            //context.AddToCCUTAXES 
-            context.CCUTAXES.Remove(entity);
+             context.CCUTAXES.Remove(entity);
             SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUTAX entity)
         {
-            //if (entity.EntityState == System.Data.EntityState.Unchanged)
-            {
+             {
                 context.CCUTAXES.Attach(entity); context.SetAsModified(entity);
             }
             SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
@@ -81,14 +78,14 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             var keys = entityKeys as CCUFILEMKeys;
 
             return (from a in context.CCUTAXES
-                    where a.FILENO == keys.FILENO
+                    where a.FILENO == keys.FILENO && a.TENANT == keys.TENANT
                     select a).ToList();
         }
 
         public CCUTAX GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUTAXKeys;
-            return this.GetSingle(keys.FILENO, keys.LINENO);
+            return this.GetSingle(keys.FILENO, keys.LINENO, keys.Tenant);
         }
 
         public int FastDeleteMulti(CCUFILEMKeys parentEntityKeys, string taxType = null)
@@ -97,16 +94,16 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             switch (taxType)
             {
                 case null:
-                    return context.DeleteWhere<CCUTAX>(rec => rec.FILENO == keys.FILENO);
+                    return context.DeleteWhere<CCUTAX>(rec => rec.FILENO == keys.FILENO && rec.TENANT == keys.TENANT);
                     break;
                 case "Declaration":
-                    return context.DeleteWhere<CCUTAX>(rec => rec.FILENO == keys.FILENO && (rec.PRATMEHES == null || rec.PRATMEHES == ""));
+                    return context.DeleteWhere<CCUTAX>(rec => rec.FILENO == keys.FILENO  && (rec.PRATMEHES == null || rec.PRATMEHES == "") && rec.TENANT == keys.TENANT);
                     break;
                 case "SupplierInvoiceItem":
-                    return context.DeleteWhere<CCUTAX>(rec => rec.FILENO == keys.FILENO && rec.PRATMEHES != null && rec.PRATMEHES != "");
+                    return context.DeleteWhere<CCUTAX>(rec => rec.FILENO == keys.FILENO && rec.PRATMEHES != null && rec.PRATMEHES != "" && rec.TENANT == keys.TENANT);
                     break;
                 default:
-                    return context.DeleteWhere<CCUTAX>(rec => rec.FILENO == keys.FILENO);
+                    return context.DeleteWhere<CCUTAX>(rec => rec.FILENO == keys.FILENO && rec.TENANT == keys.TENANT);
                     break;
             }
         }

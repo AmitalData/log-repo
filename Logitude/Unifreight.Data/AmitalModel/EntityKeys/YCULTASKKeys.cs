@@ -10,6 +10,7 @@ namespace Unifreight.Data.AmitalModel.EntityKeys
     public class YCULTASKKeys : EntityKeyFields
     {
         public string TASKID { get; set; }
+        public int? Tenant { get; set; }
 
         public override string GetFullKey()
         {

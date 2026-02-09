@@ -26,16 +26,16 @@ namespace Unifreight.BL.EntityQueryServices
             this.mapping = new CCUSUPITEMDataMapping();
         }
 
-        public SupplierInvoiceItem103PM GetSingle(int FILENO, int LINENO, int ACCLINENO, bool getComposition)
+        public SupplierInvoiceItem103PM GetSingle(int FILENO, int LINENO, int ACCLINENO,int tenant, bool getComposition)
         {
-            var keys = new CCUSUPITEMKeys() { FILENO = FILENO, LINENO = LINENO, ACCLINENO = ACCLINENO };
+            var keys = new CCUSUPITEMKeys() { FILENO = FILENO, LINENO = LINENO, ACCLINENO = ACCLINENO , TENANT=tenant };
             return base.GetSingle(keys, getComposition ,false);
         }
 
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUSUPITEM entityPOCO)
         {
-            return new CCUSUPITEMKeys() { FILENO = entityPOCO.FILENO, LINENO = entityPOCO.LINENO, ACCLINENO = entityPOCO.ACCLINENO };
+            return new CCUSUPITEMKeys() { FILENO = entityPOCO.FILENO, LINENO = entityPOCO.LINENO, ACCLINENO = entityPOCO.ACCLINENO, TENANT = entityPOCO.TENANT };
         }
         public override void GetComposition(Simplog.Server.Infrastructure.EntityKeyFields entityKeys, SupplierInvoiceItem103PM entityPM)
         {
@@ -50,7 +50,7 @@ namespace Unifreight.BL.EntityQueryServices
             entityPM.CCUCRREQPMLastLine = (entityPM.CCUCRREQPM.Count == 0) ? 0 : entityPM.CCUCRREQPM.Max(rec => rec.LINENO);
 
             var myCCUSUPITEMSIQueryService = new CCUSUPITEMSIQueryService(amitalContext);
-            entityPM.CCUSUPITEMSIPM = myCCUSUPITEMSIQueryService.GetSingle(entityPM.FILENO, entityPM.LINENO, entityPM.ACCLINENO, false);
+            entityPM.CCUSUPITEMSIPM = myCCUSUPITEMSIQueryService.GetSingle(entityPM.FILENO, entityPM.LINENO, entityPM.ACCLINENO,Tenant, false);
 
             base.GetComposition(entityKeys, entityPM);
         }
