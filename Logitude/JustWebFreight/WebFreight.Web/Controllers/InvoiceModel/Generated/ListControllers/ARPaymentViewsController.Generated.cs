@@ -118,7 +118,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
 				ARPaymentQuery aRPaymentQuery = new ARPaymentQuery(aRPaymentRepository);
 			    IQueryable<ARPaymentList> entityLists = aRPaymentQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.PaymentNo);
+				entityLists = entityLists.OrderBy(d => d.CreateDate);
 				List<ARPaymentList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
                 CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
@@ -324,7 +324,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.PaymentNo);
+                                entityLists = entityLists.OrderBy(d => d.CreateDate);
                                 break;
                             }
                     }
@@ -333,7 +333,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderBy(d => d.PaymentNo);
+                entityLists = entityLists.OrderBy(d => d.CreateDate);
             } 
 
 			ServiceResponse response = new ServiceResponse();
