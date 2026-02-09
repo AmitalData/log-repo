@@ -515,7 +515,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 this.DisplayOnlyMessage = " לתצוגה בלבד - המסמך נדחה על ידי המכס ";//Document was deneid
             }
 
-            if (this.IsEntityDisplayOnly) { // declaration display only
+            if (this.IsEntityDisplayOnly && !this.EntityPM.FromCancelDeclaration) { // declaration display only
                 this.IsPointerChangeEnabled = false;
                 this.IsEditEnabled = false;
                 //this.IsSendDocumentEnabled = false;
@@ -525,7 +525,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         //Display only Logic - (Task 35024)
         if (this.CustomsDocumentsTicket && this.CustomsDocument) {
             var entitySpecialCondition = this.iCustomsDocumentsController.GetAddEditDocumentsEntitySpecialCondition();
-            if ((this.IsEntityDisplayOnly || !entitySpecialCondition) && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId)) {//(Regular doc in a paid declaration)
+            if ((this.IsEntityDisplayOnly || !entitySpecialCondition) && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId) && !this.EntityPM.FromCancelDeclaration) {//(Regular doc in a paid declaration)
                 this.IsEditEnabled = false;
                 this.IsPointerChangeEnabled = false;
                 this.IsMetaDataEditEnabled = false;
@@ -562,7 +562,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 this.IsDocumentTypeEnabled = false;
                 this.IsSendDocumentEnabled = false;
             }
-            if (!entitySpecialCondition || this.CustomsDocument.DocumentStatusCode == '7' || this.IsEntityDisplayOnly) {
+            if (!entitySpecialCondition || this.CustomsDocument.DocumentStatusCode == '7' || (this.IsEntityDisplayOnly && !this.EntityPM.FromCancelDeclaration)) {
                 this.IsEditEnabled = false;
                 this.IsPointerChangeEnabled = false;
                 //this.IsSendDocumentEnabled = false;
@@ -578,8 +578,8 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         if (this.CustomsDocument) {
             var statusCodes = ['1', '7'];
             if (statusCodes.indexOf(this.CustomsDocument.DocumentStatusCode) > -1 && !AppTool.IsNullOrEmpty(this.CustomsDocument.CustomsDocId)
-                && this.CustomsDocumentsTicket && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId)
-                && !this.IsEntityDisplayOnly) {
+                && this.CustomsDocumentsTicket && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId) 
+                && (!this.IsEntityDisplayOnly || this.EntityPM.FromCancelDeclaration)){
                 new CustomsDocumentsTicketsExtendedService().GetDocConnectTicket(this.CustomsDocument.DocumentsFilingId, this.ParentEntityId, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
                     const anotherDeclarationConnect: string[] = response.Result.decConnect;
 
