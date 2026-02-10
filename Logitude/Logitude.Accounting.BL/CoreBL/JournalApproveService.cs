@@ -542,6 +542,29 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
 
                         });
+
+                        /*  Update Due Balances for new transactions with actual due dates  */
+                        DateTime tomorrow = DateTime.Today.AddDays(1);
+                        var allGLAccounts = myLedgerTransactionsWithCounters
+                            .Where(lt => lt.DueDate < tomorrow)
+                            .Select(t => t.AccountId).Distinct().ToList();
+
+                        string currentId = String.Empty;
+                        allGLAccounts.ForEach(acc =>
+                        {
+                            try
+                            {
+                                currentId = acc;
+                                var myDueLocalBalanceService = new DueLocalBalanceService();
+                                myDueLocalBalanceService.ReBuild(_Tenant, acc, false); // only clients and vendors, see inside
+                            }
+                            catch (Exception)
+                            {
+                                NetCommonHelper.Logger.DevLog.Instance.WriteError("JournalApproveService Update Due Balances cureent id: {0}, workerRoleName: {1}, time:{2} ",
+                                   null, currentId, LogitudeSettings.WorkerRoleName, DateTime.Now);
+                            }
+                        });
+
                     }
                     Impersonate();
                     //CreateReconcileFromStorno(myLedgerTransactionsWithCounters);
