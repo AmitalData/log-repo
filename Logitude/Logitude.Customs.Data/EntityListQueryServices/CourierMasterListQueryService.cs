@@ -120,7 +120,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        CourierDeclarationStatusCode = myJoinCourierDeclarationStatuses.CourierDeclarationStatusCode,
                                                        CourierManifestStatusCode = myJoinCourierDeclarationStatuses.CourierManifestStatusCode,
                                                        IsCourierMissingClassification = myJoinCourierDeclarationStatuses.IsCourierMissingClassification,
-                                                       IsReadyForInvoice = a.IsReadyForInvoice
+                                                       IsReadyForInvoice = a.IsReadyForInvoice,
+                                                       UnifreightLeadingFile = a.UnifreightLeadingFile,
                                                    }); ;
             return query;
         }
