@@ -34,6 +34,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             if (!string.IsNullOrWhiteSpace(entityPOCO.UnifreightLeadingFile) && string.IsNullOrWhiteSpace(entityPM.UnifreightLeadingFile))
             {
+                entityPM.UnifreightLeadingFile = entityPOCO.UnifreightLeadingFile;
                 NetCommonHelper.Logger.DevLog.Instance.WriteError(
                     "!!! UnifreightLeadingFile WILL BE DELETED !!! " +
                     "Id=" + entityPOCO.Id +
