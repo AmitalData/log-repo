@@ -1167,6 +1167,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			catch (Exception ex)
 			{
 				AppendLogLine("Exception SendClosing" + ex.ToString());
+				throw ex;
 			}
 		}
 		private void FillExportDeclarationClosingDataFromUNF()
