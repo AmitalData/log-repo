@@ -75,7 +75,12 @@ using WebFreight.Web.Helpers;
             List<InterestTransactionList> interestTransactionLists = interestReportService.GetAllInterestTransactionByDate(entityId, null, tenant, null).interestTransactionLists;
 
             HashSet<InterestReportLinesByDateProvider> InterestReportPeriods = _InterestReportPM.InterestReportLinesByDates
-                .Where(l => l.IsOpenBalanceLine != true)
+                .Where(l =>
+                    l.IsOpenBalanceLine != true
+                    ||
+                    interestTransactionLists.Any(s =>
+                        s.InterestValueDate.Date == l.FromDate.Date &&
+                        s.InterestEntityTypeCode != InterestEntityTypes.OpenBalance))
                 .Select(d => new InterestReportLinesByDateProvider
                 {
                     FromDate = d.FromDate,
@@ -105,7 +110,8 @@ using WebFreight.Web.Helpers;
                 TotalInterest = d.CalculatedCreditInterestAmount + d.CalculatedExcepInterestAmount + d.CalculatedStandInterestAmount,
                 TotalLocalAmount = interestTransactionLists.Sum(s => s.LocalAmount),
 
-                InterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date)
+                InterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date &&
+                                                                              s.InterestEntityTypeCode != InterestEntityTypes.OpenBalance)
                 .Select(a =>
                 new InterestTransactionProvider
                 {
@@ -119,7 +125,8 @@ using WebFreight.Web.Helpers;
                     Notes = a.Notes,
                 }).ToList(),
 
-                GroupedInterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date)
+                GroupedInterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date &&
+                                                                              s.InterestEntityTypeCode != InterestEntityTypes.OpenBalance)
                 .GroupBy(x => new { x.InterestEntityNumber, x.InterestEntityIconCode, x.CurrencyCode, x.InterestValueDate })
                 .Select(a =>
                    new InterestTransactionProvider
