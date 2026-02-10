@@ -19,14 +19,14 @@ namespace Logitude.Server.Tools.QueueService
     {
         public static int GetWorkerWaitingStatusForSending(int tenant, string queueCode = null)
         {
-            int? result = GetWaitingStatusForSecondWorkerRole(tenant, queueCode);
+            string workerName = GetCurrentWorkerName();
+            int? result = GetWaitingStatusForSecondWorkerRole(tenant, queueCode, workerName);
             if (result != null)
             {
                 return result.Value;
             }
 
             int waitingStatus = 0;
-            string workerName = GetCurrentWorkerName();
             if (FeatureToggleHelper.HasFeatureToggle("NWR", tenant))
             {
                  waitingStatus = -1030;
@@ -50,10 +50,19 @@ namespace Logitude.Server.Tools.QueueService
             return waitingStatus;
         }
 
-        private static int? GetWaitingStatusForSecondWorkerRole(int tenant, string queueCode)
+        private static int? GetWaitingStatusForSecondWorkerRole(int tenant, string queueCode, string workerName)
         {
             try
             {
+                if (!string.IsNullOrEmpty(workerName))
+                {
+                    return GetWaitingSatusForWorkerName(tenant, workerName);
+                }
+                else if (queueCode?.StartsWith("externaltasksqueue", StringComparison.OrdinalIgnoreCase) ?? false)
+                {
+                    return null;
+                }
+
                 string key = $"SecondWorkerRoleWaitingStatus{tenant}";
                 string cached = (string)CacheManager.CacheWrapper.Get(key);
                 if (cached == null)
