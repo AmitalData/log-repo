@@ -559,7 +559,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
                             catch (Exception)
                             {
-                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("JournalApproveService Update Due Balances cureent id: {0}, workerRoleName: {1}, time:{2} ",
+                                NetCommonHelper.Logger.DevLog.Instance.WriteError("JournalApproveService Update Due Balances cureent id: {0}, workerRoleName: {1}, time:{2} ",
                                    null, currentId, LogitudeSettings.WorkerRoleName, DateTime.Now);
                             }
                         });
