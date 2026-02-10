@@ -123,8 +123,9 @@ namespace WebFreight.Web.Stimulsoft
                     #endregion
 
                     ReFillBusinessObjects(report.Dictionary.BusinessObjects, tenant, reportTemplateId, templateId);
-
+                    LogitudeStiWebDesigner.ShowSaveDialog = false;
                     LogitudeStiWebDesigner.Report = report;
+
                 }
                 
    
@@ -324,29 +325,13 @@ namespace WebFreight.Web.Stimulsoft
                             ReportHelper reportHelper = new ReportHelper();
                             reportHelper.StimulReportSaved(processType, reportTemplateId, fileData, loggedUser.Id, tenant);
                             this.LogitudeStiWebDesigner.Visible = false;
-                            //SignalRHubMessageSender.SendSignalRMessage("StimulReportSaved", "User" + loggedUser.Id + tenant + sessionId, reportTemplateId);
+
                         }
 
                         #endregion
 
 
-                        //HubEventPublisher.PublishChannelEvent(new HubChannelEvent() { ChannelName = "Tenant" + tenant, EventName = "StimulSaved", Data = templateId });
-                        //String closeScript = "<script type='text/javascript'> window.parent.postMessage('true', '*');</script>";
-                        //ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "script", closeScript, false);
-
-                        //ClientScript.RegisterStartupScript(GetType(), "AutoPostBackScript",
-                        //                  "alert('hi');", true);
-
-                        //String closeScript = "<script type='text/javascript'> console.log('olaaaaaaaaaaaaaaaaa');  alert('Called!');</script>";
-                        // ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "script", closeScript, false);
-
-
-                        //String closeScript = "<script type='text/javascript'> window.sessionStorage.setItem('designerClosed','true')</script>";
-                        //ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "script", closeScript, false);
-
-                        //String closeScript = "<script type='text/javascript'>self.close();</script>";
-                        //String closeScript = "<script type='text/javascript'>window.stimulsoftDesignerComponentRef.zone.run(() => { window.stimulsoftDesignerComponentRef.component.stimuldesignerFinished('true'); })</script>";
-                        //String closeScript = "<script type='text/javascript'> window.parent.postMessage('true', '*');</script>";
+                       
 
                         String closeScript = "<script type='text/javascript'>self.close();</script>";
                         ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "script", closeScript, false);
@@ -357,25 +342,10 @@ namespace WebFreight.Web.Stimulsoft
 
 
                 }
-                //else
-                //{
-                //    HttpContext.Current.User = null;
-                //    Response.Output.Write("Sorry you’re not authenticated to view this document.");
-                //}
-            }
-            else
-            {
-                //Response.Output.Write("Sorry you’re not authenticated to view this document.");
+               
             }
 
 
-            // }
-            //catch (Exception exception)
-            //{
-            //    string ErrorMessage = exception.Message;
-            //    Response.Clear();
-            //    Response.Output.Write(ErrorMessage);
-            //}
 
         }
 
@@ -384,7 +354,7 @@ namespace WebFreight.Web.Stimulsoft
 
     public class StiMyCacheHelper : StiCacheHelper
     {
-        public override StiReport GetReport(string guid, StiServerCacheMode mode, TimeSpan timeout, CacheItemPriority priority)
+        public override StiReport GetReport(string guid)
         {
             //string path = Path.Combine(HttpContext.Current.Server.MapPath(string.Empty), "CacheFiles", guid);
             //if (File.Exists(path))
@@ -418,7 +388,7 @@ namespace WebFreight.Web.Stimulsoft
             //return base.GetReport(guid, mode, timeout, priority);
         }
 
-        public override void SaveReport(StiReport report, string guid, StiServerCacheMode mode, TimeSpan timeout, CacheItemPriority priority)
+        public override void SaveReport(StiReport report, string guid)
         {
             string packedReport = guid.EndsWith("template") ? report.SavePackedReportToString() : report.SavePackedDocumentToString();
             //string path = Path.Combine(HttpContext.Current.Server.MapPath(string.Empty), "CacheFiles", guid);
