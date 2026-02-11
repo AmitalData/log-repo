@@ -70,6 +70,11 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public isFullyCompleted: CompleteStatuses = CompleteStatuses.FullyCompleted;
     public isRequestNumberViewMode: boolean = false;
     private _ignoreLocalNameEvents = true;
+    ProcessTypeOptions: any[] = [];
+    SelectedProcessType: any = null;
+
+    readonly PROCESS_TYPE_AMITAL = 1;
+    readonly PROCESS_TYPE_NOT_AMITAL = 2;
 
     constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef) {
         super();
@@ -89,6 +94,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                     this.IsLoaded = true;
                     this.FillInvoiceNumbersList();
                     this.SetPropertiesEnabled();
+                    this.initProcessTypeOptions();
                 });
             });
         });
@@ -391,13 +397,17 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             InvoiceItemLineNumber: item.InvoiceLineNumber,
         }));
 
+        const body = {
+            SelectedRows: selectedRows,
+            ProcessType: (this.SelectedProcessType && this.SelectedProcessType.Id) ? this.SelectedProcessType.Id : this.PROCESS_TYPE_AMITAL
+        };
         const afterSave = () => {
             this.siiRequestWebService
                 .postSendSIIRequest(
                     this.entityPM.Id,
                     this.DeclarationId,
                     this.entityPM.Tenant,
-                    selectedRows
+                    body
                 )
                 .pipe(
                     map((resp: any) => normalizeReleasePayload(resp)),
@@ -834,6 +844,17 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/ApprovalReportViewer/ApprovalReportViewerComponent');
     }
     //#endregion LevelSelection Filter Methods   
+
+    private initProcessTypeOptions() {
+        this.ProcessTypeOptions = [
+            { Id: this.PROCESS_TYPE_AMITAL, Name: TextCodeTranslator.Translate('Customs.SIIRequest.O.AmitalProcessType') },
+            { Id: this.PROCESS_TYPE_NOT_AMITAL, Name: TextCodeTranslator.Translate('Customs.SIIRequest.O.NotAmitalProcessType') }
+        ];
+    }
+
+    OnProcessTypeChanged(item: any) {
+        this.SelectedProcessType = item || this.ProcessTypeOptions[0];
+    }
 
     //#region contact data
     getContactData(contactId: string) {

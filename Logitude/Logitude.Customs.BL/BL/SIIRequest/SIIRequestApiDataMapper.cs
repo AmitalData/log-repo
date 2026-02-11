@@ -4,7 +4,6 @@ using Logitude.BL.Helpers;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.DataContracts.SIIRequest;
-using Logitude.Customs.Data.DataContracts.SIIRequest;
 using Logitude.Customs.Data.EntityKeys.Extended;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
@@ -62,12 +61,15 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
         public ReleaseRequestApiDto Build(CredentialsDto credentials,
             string siiRequestId,
-            List<SiiSelectedRowDto> requestItemsKeys)
+            SiiSendRequestBodyDto body)
         {
             try
             {
+                var requestItemsKeys = body?.SelectedRows;
                 if (requestItemsKeys == null || requestItemsKeys.Count == 0)
                     throw new ArgumentException("No items selected", nameof(requestItemsKeys));
+
+                var processType = (body == null || body.ProcessType == 0)? SiiProcessType.Amital: body.ProcessType;
 
                 var context = CustomContext.GetContext(_tenant);
                 var siiService = new SIIRequestQueryService(context);
@@ -153,7 +155,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                     }
                 }
 
-                var form = BuildForm(sii, dec, importer, contact, defService, siiService);
+                var form = BuildForm(sii, dec, importer, contact, defService, siiService, processType);
                 form.formAttachmentIndex = mainFormAttachmentIndexes.Count > 0
                     ? mainFormAttachmentIndexes[0]
                     : -1;
@@ -232,15 +234,32 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             UserPM importer,
             Contact contact,
             DefaultValueQueryService defService,
-            SIIRequestQueryService siiService)
+            SIIRequestQueryService siiService,
+            SiiProcessType processType)
         {
             var agentName = defService.GetDefault("ISRAEL", "GGG_COMP_NAM_L", "NON", "NON", _tenant);
-            string GetSiiCompanyName() => DefaultService.Instance.Get(_tenant, "SIIApplicationName", "SIIApplicationName")?.Value1
-                ?? throw new InvalidOperationException("Default 'SIIApplicationName' is missing.");
+
+            string GetDefaultOrNull(string key) => DefaultService.Instance.Get(_tenant, key, key)?.Value1;
+
+            string ResolveCompanyPrefix()
+            {
+                if (processType == SiiProcessType.NotAmital)
+                {
+                    var v = GetDefaultOrNull("SIIApplicationNameNotByAmital");
+                    return string.IsNullOrWhiteSpace(v) ? "STD" : v.Trim();
+                }
+
+                var amital = GetDefaultOrNull("SIIApplicationName");
+                if (string.IsNullOrWhiteSpace(amital))
+                    throw new InvalidOperationException("Default 'SIIApplicationName' is missing.");
+                return amital.Trim();
+            }
+
+            var prefix = ResolveCompanyPrefix();
 
             var formApplicationId = !string.IsNullOrWhiteSpace(sii.FromApplicationId)
                 ? sii.FromApplicationId
-                : $"{GetSiiCompanyName()}-{siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1}";
+                : $"{prefix}-{siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1}";
 
             var applicantSystemIdStr = GetMandatoryDefault(_tenant, "SIIApplicantSystemId");
             var applicantSystemId = ToLong(applicantSystemIdStr, "SIIApplicantSystemId");
@@ -399,6 +418,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
             return ext.ToLowerInvariant();
         }
+
 
     }
 }

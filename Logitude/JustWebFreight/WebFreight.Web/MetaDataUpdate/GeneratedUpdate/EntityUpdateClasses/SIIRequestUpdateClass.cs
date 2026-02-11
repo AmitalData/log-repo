@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestUpdateClass
    {  		
-		public const string HashString = "001204a387b8a241c08931647f50bf53";
+		public const string HashString = "9cf8feb1781dd32fd19ed811ae9c6be1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,7 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultTextBack_up =  "בקשות למכון תקנים",
 			      				    LocalDefaultText =  "BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==",
 			      				    DefaultText =  "SIIRequest",
-			      				    Code =  "d3dd",
+			      				    Code =  "d59a",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2115,6 +2115,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode SIIRequestTextCode_CustomsSIIRquestOError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRquest.O.Error", DefaultText = "Error",LocalDefaultText = @"BS64:Itep15LXmdeQ15XXqiI=", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOMissingComputingPartnerTranslation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.MissingComputingPartnerTranslation", DefaultText = "Missing Computing Partner translation for field {0} (value: {1})",LocalDefaultText = @"BS64:IteX16HXqCDXqteo15LXldedIENvbXB1dGluZyBQYXJ0bmVyINei15HXldeoINeU16nXk9eUIHswfSAo16LXqNeaOiB7MX0pIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOProcessType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.ProcessType", DefaultText = "ProcessType",LocalDefaultText = @"BS64:Iteh15XXkiDXqteU15zXmdeaIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOAmitalProcessType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.AmitalProcessType", DefaultText = "AmitalProcessType",LocalDefaultText = @"BS64:Iteq15TXnNeZ15og16LXnteZ15jXnCI=", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestONotAmitalProcessType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.NotAmitalProcessType", DefaultText = "NotAmitalProcessType",LocalDefaultText = @"BS64:Iteq15TXnNeZ15og15zXkCDXotee15nXmNecIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

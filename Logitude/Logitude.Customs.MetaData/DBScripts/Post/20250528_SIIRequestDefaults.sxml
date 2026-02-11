@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Script DBType="Global" Module="Customs">
-	<Sql Version="6">
+	<Sql Version="7">
 		<![CDATA[
 		/* ---------- Cloud Tenant ---------- */
     IF NOT EXISTS (
@@ -46,6 +46,21 @@
                FullDesctiption, SetType1, SetType2)
         VALUES (0, GETDATE(), 'SIIApplicationName',
                 'SII Application Name', 'SII Application Name',
+                'System.String', 'System.String');
+    END
+	/* ---------- SII Application Name Not By Amital ---------- */
+    IF NOT EXISTS (
+        SELECT 1
+        FROM   DefaultAndConfigurationKeys
+        WHERE  Tenant = 0
+          AND  SetKey = 'SIIApplicationNameNotByAmital'
+    )
+    BEGIN
+        INSERT INTO DefaultAndConfigurationKeys
+              (Tenant, CreateDate, SetKey, ShortDescription,
+               FullDesctiption, SetType1, SetType2)
+        VALUES (0, GETDATE(), 'SIIApplicationNameNotByAmital',
+                'SII Application Name Not By Amital', 'SII Application Name Not By Amital',
                 'System.String', 'System.String');
     END
 	/* ---------- Download Document URL ---------- */
@@ -231,6 +246,23 @@ WHEN NOT MATCHED THEN
       VALUES (src.Tenant, SYSDATE, src.SetKey,
               src.ShortDescription, src.FullDesctiption,
               src.SetType1, src.SetType2);
+			  /* ---------- SII Application Name Not By Amital ---------- */
+MERGE INTO DefaultAndConfigurationKeys d
+USING (SELECT 0                               AS Tenant,
+              'SIIApplicationNameNotByAmital' AS SetKey,
+              'SII Application Name Not By Amital' AS ShortDescription,
+              'SII Application Name Not By Amital' AS FullDesctiption,
+              'System.String'                 AS SetType1,
+              'System.String'                 AS SetType2
+       FROM dual) src
+ON (d.Tenant = src.Tenant AND d.SetKey = src.SetKey)
+WHEN NOT MATCHED THEN
+  INSERT (Tenant, CreateDate, SetKey, ShortDescription,
+          FullDesctiption, SetType1, SetType2)
+  VALUES (src.Tenant, SYSDATE, src.SetKey,
+          src.ShortDescription, src.FullDesctiption,
+          src.SetType1, src.SetType2);
+
     ]]>
 	</Oracle>
 
