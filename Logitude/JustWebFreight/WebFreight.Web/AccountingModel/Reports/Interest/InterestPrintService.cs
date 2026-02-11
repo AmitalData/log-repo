@@ -7,6 +7,7 @@ using Logitude.Accounting.Data.EntityMapping;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
@@ -59,6 +60,12 @@ using WebFreight.Web.Helpers;
             {
                 InterestReportFlatLineList = new List<InterestReportFlatLine>()
             };
+            if (String.IsNullOrWhiteSpace(_InterestReportPM.VatNumber) && !String.IsNullOrEmpty(_InterestReportPM.CustomerId))
+            {
+                CardQuery cardQuery = new CardQuery(tenant);
+                var card = cardQuery.GetSinglePM(_InterestReportPM.CustomerId, tenant);
+                if (card != null && !String.IsNullOrWhiteSpace(card.VatNumber)) _InterestReportPM.VatNumber = card.VatNumber;
+            }
 
 
             InterestReportQueryService interestReportQuery = new InterestReportQueryService(tenant);
@@ -184,7 +191,6 @@ using WebFreight.Web.Helpers;
                         // Last in a period
                         var lastLineInPeriod = periodLineList.Last();
                         lastLineInPeriod.Date = period.FromDate.Value.Date;
-                        lastLineInPeriod.Notes = TranslateTextsClass.Translate("Accounting.General.O.TotalInterest", tenant);
                         lastLineInPeriod.NumberOfDays = period.TotalInterestDays;
                         lastLineInPeriod.LineType = InterestPeriodLineTypes.LastInPeriod;
 
@@ -240,7 +246,6 @@ using WebFreight.Web.Helpers;
             interestReportDP.PostponedChequesCommission = !string.IsNullOrEmpty(_InterestReportPM.GLAccountId) ? GetPostponedChequesCommission(_InterestReportPM.GLAccountId, _InterestReportPM.Tenant) : null;
             interestReportDP.CountPostponedCheques = CalcCountPostponedCheques(interestReportDP.CalculatedPostponedChequesCommision, interestReportDP.PostponedChequesCommission);
             interestReportDP.TotalAmountWithPostponedCheques = _InterestReportPM?.TotalAmount + _InterestReportPM?.CalculatedPostponedChequesCommision;
-            //interestReportDP.InterestReportFlatLineList.Add(EndFlatLine(_InterestReportPM, lastTotal));
 
             Reorder(interestReportDP);
 

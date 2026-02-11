@@ -28,14 +28,20 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
                 string chequesCSV = String.Empty;
                 if (aRPaymentChequePMList != null && aRPaymentChequePMList.Any())
                 {
-                    chequesCSV = string.Join(
-                                                ",",
-                                                aRPaymentChequePMList
-                                                    .Select(x => x.ChequeNumber)
-                                                    .Where(x => !string.IsNullOrWhiteSpace(x))
-                                                    .Distinct()
-                                            );
+                    var distinctCheques = aRPaymentChequePMList
+                        .Select(x => x.ChequeNumber)
+                        .Where(x => !string.IsNullOrWhiteSpace(x))
+                        .Distinct()
+                        .ToList();
 
+                    if (distinctCheques.Count == 1)
+                    {
+                        chequesCSV = distinctCheques[0];
+                    }
+                    else if (distinctCheques.Count > 1)
+                    {
+                        chequesCSV = $"{distinctCheques[0]}, ...";
+                    }
                 }
                 result.EntityId = aRPaymentPM.Id;
                 result.EntityNumber = aRPaymentPM.PaymentNo;
