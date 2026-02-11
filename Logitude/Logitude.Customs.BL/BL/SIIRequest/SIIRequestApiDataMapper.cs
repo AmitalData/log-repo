@@ -265,10 +265,6 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 : $"{prefix}-{siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1}";
 
 
-
-            var applicantSystemIdStr = GetMandatoryDefault(_tenant, "SIIApplicantSystemId");
-            var applicantSystemId = ToLong(applicantSystemIdStr, "SIIApplicantSystemId");
-
             var contactName = contact?.LocalName;
 
             var destPortStr = GetComputingPartnerCodeTranslation(sii.UnloadPortCode,SIIRequestComputingPartner,ComputingPartnerTableUnloadingSiteType,_tenant);
