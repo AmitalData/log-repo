@@ -255,8 +255,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 return amital.Trim();
             }
 
-            var applicantSystemIdStr = GetMandatoryDefault(_tenant, "SIIApplicantSystemId");
-            var applicantSystemId = ToLong(applicantSystemIdStr, "SIIApplicantSystemId");
+            var applicantSystemId = ToLong(GetMandatoryDefault(_tenant, "SIIApplicantSystemId"), "SIIApplicantSystemId");
 
             var prefix = ResolveCompanyPrefix();
 
