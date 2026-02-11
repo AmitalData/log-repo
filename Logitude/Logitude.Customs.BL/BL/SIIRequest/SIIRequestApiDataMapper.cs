@@ -255,14 +255,15 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 return amital.Trim();
             }
 
+            var applicantSystemIdStr = GetMandatoryDefault(_tenant, "SIIApplicantSystemId");
+            var applicantSystemId = ToLong(applicantSystemIdStr, "SIIApplicantSystemId");
+
             var prefix = ResolveCompanyPrefix();
 
             var formApplicationId = !string.IsNullOrWhiteSpace(sii.FromApplicationId)
                 ? sii.FromApplicationId
                 : $"{prefix}-{siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1}";
 
-            var applicantSystemIdStr = GetMandatoryDefault(_tenant, "SIIApplicantSystemId");
-            var applicantSystemId = ToLong(applicantSystemIdStr, "SIIApplicantSystemId"); 
 
             var contactName = contact?.LocalName;
 
