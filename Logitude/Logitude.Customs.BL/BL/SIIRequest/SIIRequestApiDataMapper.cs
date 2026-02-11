@@ -242,6 +242,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 ? sii.FromApplicationId
                 : $"{GetSiiCompanyName()}-{siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1}";
 
+
             var applicantSystemIdStr = GetMandatoryDefault(_tenant, "SIIApplicantSystemId");
             var applicantSystemId = ToLong(applicantSystemIdStr, "SIIApplicantSystemId");
 
