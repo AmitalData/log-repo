@@ -334,7 +334,7 @@ namespace Logitude.Accounting.BL.InterestService
                 var irnEnabled = FeatureToggleHelper.HasFeatureToggle("IRN", Tenant);
 
                 interestTransactionLists.Notes =
-                    irnEnabled && !string.IsNullOrWhiteSpace(line.Reference2)
+                    irnEnabled
                         ? line.Reference2
                         : line.Notes;
 

@@ -7,6 +7,7 @@ using Logitude.Accounting.Data.EntityMapping;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
@@ -59,6 +60,12 @@ using WebFreight.Web.Helpers;
             {
                 InterestReportFlatLineList = new List<InterestReportFlatLine>()
             };
+            if (String.IsNullOrWhiteSpace(_InterestReportPM.VatNumber) && !String.IsNullOrEmpty(_InterestReportPM.CustomerId))
+            {
+                CardQuery cardQuery = new CardQuery(tenant);
+                var card = cardQuery.GetSinglePM(_InterestReportPM.CustomerId, tenant);
+                if (card != null && !String.IsNullOrWhiteSpace(card.VatNumber)) _InterestReportPM.VatNumber = card.VatNumber;
+            }
 
 
             InterestReportQueryService interestReportQuery = new InterestReportQueryService(tenant);
@@ -75,7 +82,12 @@ using WebFreight.Web.Helpers;
             List<InterestTransactionList> interestTransactionLists = interestReportService.GetAllInterestTransactionByDate(entityId, null, tenant, null).interestTransactionLists;
 
             HashSet<InterestReportLinesByDateProvider> InterestReportPeriods = _InterestReportPM.InterestReportLinesByDates
-                .Where(l => l.IsOpenBalanceLine != true)
+                .Where(l =>
+                    l.IsOpenBalanceLine != true
+                    ||
+                    interestTransactionLists.Any(s =>
+                        s.InterestValueDate.Date == l.FromDate.Date &&
+                        s.InterestEntityTypeCode != InterestEntityTypes.OpenBalance))
                 .Select(d => new InterestReportLinesByDateProvider
                 {
                     FromDate = d.FromDate,
@@ -105,7 +117,8 @@ using WebFreight.Web.Helpers;
                 TotalInterest = d.CalculatedCreditInterestAmount + d.CalculatedExcepInterestAmount + d.CalculatedStandInterestAmount,
                 TotalLocalAmount = d.StandardInterestAmount + d.ExceptionalInterestAmount + d.CreditInterestAmount,
 
-                InterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date)
+                InterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date &&
+                                                                              s.InterestEntityTypeCode != InterestEntityTypes.OpenBalance)
                 .Select(a =>
                 new InterestTransactionProvider
                 {
@@ -119,7 +132,8 @@ using WebFreight.Web.Helpers;
                     Notes = a.Notes,
                 }).ToList(),
 
-                GroupedInterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date)
+                GroupedInterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date &&
+                                                                              s.InterestEntityTypeCode != InterestEntityTypes.OpenBalance)
                 .GroupBy(x => new { x.InterestEntityNumber, x.InterestEntityIconCode, x.CurrencyCode, x.InterestValueDate })
                 .Select(a =>
                    new InterestTransactionProvider
@@ -181,7 +195,6 @@ using WebFreight.Web.Helpers;
                         // Last in a period
                         var lastLineInPeriod = periodLineList.Last();
                         lastLineInPeriod.Date = period.FromDate.Value.Date;
-                        lastLineInPeriod.Notes = TranslateTextsClass.Translate("Accounting.General.O.TotalInterest", tenant);
                         lastLineInPeriod.NumberOfDays = period.TotalInterestDays;
                         lastLineInPeriod.LineType = InterestPeriodLineTypes.LastInPeriod;
 
@@ -237,7 +250,6 @@ using WebFreight.Web.Helpers;
             interestReportDP.PostponedChequesCommission = !string.IsNullOrEmpty(_InterestReportPM.GLAccountId) ? GetPostponedChequesCommission(_InterestReportPM.GLAccountId, _InterestReportPM.Tenant) : null;
             interestReportDP.CountPostponedCheques = CalcCountPostponedCheques(interestReportDP.CalculatedPostponedChequesCommision, interestReportDP.PostponedChequesCommission);
             interestReportDP.TotalAmountWithPostponedCheques = _InterestReportPM?.TotalAmount + _InterestReportPM?.CalculatedPostponedChequesCommision;
-            //interestReportDP.InterestReportFlatLineList.Add(EndFlatLine(_InterestReportPM, lastTotal));
 
             Reorder(interestReportDP);
 
