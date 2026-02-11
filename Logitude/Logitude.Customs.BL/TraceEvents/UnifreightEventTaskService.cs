@@ -55,7 +55,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
 
 
-                    EnsureLockExist4Entity(myCCUQUELOCKQueryService, myCCUQUELOCKUpdateService, myUnifreightEventParam);
+                    EnsureLockExist4Entity(myCCUQUELOCKQueryService, myCCUQUELOCKUpdateService, myUnifreightEventParam,tenant);
 
                     
                     InsertGGGQ4Entity(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum, myGGGQUpdateService, mySetting.IsConnectedToUniFreight, tenant);
@@ -254,9 +254,9 @@ namespace Logitude.Customs.BL.TraceEvents
             return unfreightUserId;
         }
 
-        private static void EnsureLockExist4Entity(CCUQUELOCKQueryService myCCUQUELOCKQueryService, CCUQUELOCKUpdateService myCCUQUELOCKUpdateService, UnifreightEventParam myUnifreightEventParam)
+        private static void EnsureLockExist4Entity(CCUQUELOCKQueryService myCCUQUELOCKQueryService, CCUQUELOCKUpdateService myCCUQUELOCKUpdateService, UnifreightEventParam myUnifreightEventParam,int tenant)
         {
-            CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum, false);
+            CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum,tenant, false);
             if (myCCUQUELOCK == null)
             {
                 var myCCUQUELOCKPM = new CCUQUELOCKPM()

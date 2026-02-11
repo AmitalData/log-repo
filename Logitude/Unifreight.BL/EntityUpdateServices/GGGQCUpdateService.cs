@@ -29,7 +29,7 @@ namespace Unifreight.BL.EntityUpdateServices
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(GGGQCPM entityPM)
         {
-            return new GGGQCKeys() { QUEID = entityPM.QUEID };
+            return new GGGQCKeys() { QUEID = entityPM.QUEID, Tenant = entityPM.Tenant };
         }
 
         protected override void OnCreating(GGGQCPM entityPM, GGGQPM entityParentPM)

@@ -24,10 +24,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUQUELOCK GetSingle(string ENTNAME, string FILENO)
+        public CCUQUELOCK GetSingle(string ENTNAME, string FILENO, int? tenant)
         {
             return (from a in context.CCUQUELOCKs
-                    where a.ENTNAME == ENTNAME && a.FILE_NO == FILENO
+                    where a.ENTNAME == ENTNAME && a.FILE_NO == FILENO && a.TENANT == tenant
                     select a).FirstOrDefault();
         }
 
@@ -90,20 +90,16 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public CCUQUELOCK GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUQUELOCKKeys;
-            return this.GetSingle(keys.ENTNAME, keys.FILENO);
+            return this.GetSingle(keys.ENTNAME, keys.FILENO, keys.Tenant);
         }
 
 
         public CCUQUELOCK GetSingleGeneralLockNOWAIT(string ENTNAME, string FILENO)
         {
-            ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
-            ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
             return (context as DbContextBase)
                 .GetListNOWAITWhere<CCUQUELOCK>(rec => rec.ENTNAME == ENTNAME &&
-                ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
-                rec.FILE_NO ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
-                ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
-                == FILENO
+                rec.FILE_NO 
+                == FILENO 
                 ).FirstOrDefault(); ;
         }
     }

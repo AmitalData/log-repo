@@ -91,7 +91,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         var myCCUPAYHANDQueryService = new CCUPAYHANDQueryService(_AmitalContext);
                         var myCCUPAYHANDUpdateService = new CCUPAYHANDUpdateService(_AmitalContext);
                         myCCUPAYHANDUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                        int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
+                        int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, _DeclarationPM.Tenant);
                         if (!FILENO.HasValue)
                         {
                             var unifrightDeclarationUpdateService = new UnifrightDeclarationUpdateService(declarationPM, null, declarationPM.CreatedByUserId);
@@ -115,13 +115,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 }
 
                             }
-                            FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO)?? _CCUFILEMPM.FILENO;
+                            FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, _DeclarationPM.Tenant)?? _CCUFILEMPM.FILENO;
 
                         }
 
 						int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO, _DeclarationPM.Tenant);
 
-						_CCUPAYHAND = myCCUPAYHANDQueryService.GetSingle(FILENO.Value, true, false);
+						_CCUPAYHAND = myCCUPAYHANDQueryService.GetSingle(FILENO.Value, true, _DeclarationPM.Tenant, false);
 
 						Boolean noUpdate = false;
                         var currentRequestSheetContext = RequestSheetContext.Current.GetContextOrDefault();

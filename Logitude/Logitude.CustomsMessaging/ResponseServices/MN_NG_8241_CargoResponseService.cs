@@ -868,7 +868,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
              
                     var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
-                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", _MyDeclarationPM.CustomFileNo, false);
+                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", _MyDeclarationPM.CustomFileNo, _MyDeclarationPM.Tenant, false);
                     if (myCCUQUELOCK == null)
                     {
                         var myCCUQUELOCKPM = new CCUQUELOCKPM()
@@ -894,7 +894,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         var xmlCFIPACKS = XmlGenericUtil<CFIPACKS>.SerializeObject(myCFIPACKS, true);
                         myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
 
-                            CCUQUELOCKPM myCCUQUELOCK_Packs = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", myCFIPACKS.CFIPACKS_DATA[0].FILE_NO, false);
+                            CCUQUELOCKPM myCCUQUELOCK_Packs = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", myCFIPACKS.CFIPACKS_DATA[0].FILE_NO,_MyDeclarationPM.Tenant, false);
                             if (myCCUQUELOCK_Packs == null)
                             {
                                 var myCCUQUELOCKPM = new CCUQUELOCKPM()

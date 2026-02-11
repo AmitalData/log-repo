@@ -221,7 +221,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         myCCUFILEMUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
 
 
-                        int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
+                        int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO,_DirtyDeclarationPM.Tenant);
                     bool isConnectedToUniFreight = setting?.IsConnectedToUniFreight == true;
                     if (!isConnectedToUniFreight && _DirtyDeclarationPM.IsCancelled == true && !FILENO.HasValue)
                     {
@@ -242,7 +242,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         //if(file!=null) file.WriteLine("Start Deleting " + FILENO + ": " + DateTime.Now.ToString());
 
                         //do not need the composite due we delete all down entities !!!_CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, true, false);
-                        _CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, false, false);
+                        _CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value,_DirtyDeclarationPM.Tenant, false, false);
                             if (_CCUFILEMPM == null)
                             {
                                 LogMessagingUtil.Instance.AppendLine("Update4: _CCUFILEMPM GetSingle failed, file no: " + FILENO.Value);
@@ -255,7 +255,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         {
                             _CCUFILEMPM.Tenant = _DirtyDeclarationPM.Tenant;
                         }
-                        _CCUFILEMPMwithCCUMSHGRP = myCCUFILEMQueryService.GetSingle(FILENO.Value, false, false);
+                        _CCUFILEMPMwithCCUMSHGRP = myCCUFILEMQueryService.GetSingle(FILENO.Value, _DirtyDeclarationPM.Tenant, false, false);
 
                             //CCUFILEMKeys cCUFILEMKeys = new CCUFILEMKeys { FILENO = FILENO.GetValueOrDefault() };
                             //List<CCUMSHGRPM> myCCUMSHGRPMList = myCCUMSHGRQueryService.GetMulti(cCUFILEMKeys, false, false);
@@ -264,7 +264,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             if (this._UpdateCCUFILEMFromSupplerInvoice)
                             {
                                 var myCCUTRANSPVALQueryService = new CCUTRANSPVALQueryService(_AmitalContext);
-                                CCUFILEMKeys myCCUFILEMKeys = new CCUFILEMKeys { FILENO = FILENO.GetValueOrDefault() };
+                                CCUFILEMKeys myCCUFILEMKeys = new CCUFILEMKeys { FILENO = FILENO.GetValueOrDefault(),TENANT=_DirtyDeclarationPM.Tenant };
                                 List<CCUTRANSPVALPM> myCCUTRANSPVALPMList = myCCUTRANSPVALQueryService.GetMulti(myCCUFILEMKeys, false, false);
 
                                 //Delete CCUTRANSPVALs
@@ -509,8 +509,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                     if (fileno.HasValue)
                     {
-                        _CCUFILEMPMwithCCUMSHGRP = myCCUFILEMQueryService.GetSingle(fileno.Value, false, false);
-                        CCUFILEMKeys cCUFILEMKeys = new CCUFILEMKeys { FILENO = fileno.GetValueOrDefault() };
+                        _CCUFILEMPMwithCCUMSHGRP = myCCUFILEMQueryService.GetSingle(fileno.Value, _DirtyDeclarationPM.Tenant, false, false);
+                        CCUFILEMKeys cCUFILEMKeys = new CCUFILEMKeys { FILENO = fileno.GetValueOrDefault() , TENANT=_DirtyDeclarationPM.Tenant };
                         List<CCUMSHGRPM> myCCUMSHGRPMList = myCCUMSHGRQueryService.GetMulti(cCUFILEMKeys, false, true);
                         _CCUFILEMPMwithCCUMSHGRP.CCUMSHGRs = myCCUMSHGRPMList;
                     }
@@ -550,7 +550,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                     if (fileno.HasValue)
                     {
-                        CCUFILEMKeys cCUFILEMKeys = new CCUFILEMKeys { FILENO = fileno.GetValueOrDefault() };
+                        CCUFILEMKeys cCUFILEMKeys = new CCUFILEMKeys { FILENO = fileno.GetValueOrDefault() , TENANT= _DirtyDeclarationPM.Tenant };
                         List<CCUTAXPM> myCCUTAXPMList = myCCUTAXQueryService.GetMulti(cCUFILEMKeys, false, false);
                         _CCUTAX_4LD2UPM_Before = CCUTAX_4LD2U_Mapping(myCCUTAXPMList);
                     }
@@ -698,7 +698,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(_DirtyDeclarationPM.Tenant);
          
                 var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
-                CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", customFile.ToString(), false);
+                CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", customFile.ToString(), _DirtyDeclarationPM.Tenant, false);
                 if (myCCUQUELOCK == null)
                 {
                     var myCCUQUELOCKPM = new CCUQUELOCKPM()
@@ -769,7 +769,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     var xmlCFIPACKS = XmlGenericUtil<CFIPACKS>.SerializeObject(myCFIPACKS, true);
                  
                          myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
-                        CCUQUELOCKPM myCCUQUELOCK_Packs = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", myCFIPACKS.CFIPACKS_DATA[0].FILE_NO, false);
+                        CCUQUELOCKPM myCCUQUELOCK_Packs = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", myCFIPACKS.CFIPACKS_DATA[0].FILE_NO, _DirtyDeclarationPM.Tenant, false);
                         if (myCCUQUELOCK_Packs == null)
                         {
                             var myCCUQUELOCKPM = new CCUQUELOCKPM()

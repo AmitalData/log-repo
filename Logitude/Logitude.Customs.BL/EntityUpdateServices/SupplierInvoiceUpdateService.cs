@@ -1041,7 +1041,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     var myCCUQUELOCKUpdateService = new Unifreight.BL.EntityUpdateServices.CCUQUELOCKUpdateService(_AmitalContext);
                     var myGGGQUpdateService = new Unifreight.BL.EntityUpdateServices.GGGQUpdateService(_AmitalContext);
 
-                    Unifreight.BL.EntityPMs.UGenerated.CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", myDeclarationPM.CustomFileNo, false);
+                    Unifreight.BL.EntityPMs.UGenerated.CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", myDeclarationPM.CustomFileNo, myDeclarationPM.Tenant, false);
                     if (myCCUQUELOCK == null)
                     {
                         var myCCUQUELOCKPM = new Unifreight.BL.EntityPMs.UGenerated.CCUQUELOCKPM()

@@ -28,9 +28,9 @@ namespace Unifreight.BL.EntityQueryServices
             this.mapping = new CCUSUPITEMSIDataMapping();
         }
 
-        public CCUSUPITEMSIPM GetSingle(int FILENO, int LINENO, int ACCLINENO, bool getComposition)
+        public CCUSUPITEMSIPM GetSingle(int FILENO, int LINENO, int ACCLINENO,int tenant,  bool getComposition)
         {
-            var keys = new CCUSUPITEMSIKeys() { FILENO = FILENO, LINENO = LINENO, ACCLINENO = ACCLINENO };
+            var keys = new CCUSUPITEMSIKeys() { FILENO = FILENO, LINENO = LINENO, ACCLINENO = ACCLINENO , Tenant=tenant};
 
             return base.GetSingle(keys, getComposition, false);
         }
@@ -38,7 +38,7 @@ namespace Unifreight.BL.EntityQueryServices
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUSUPITEMSI entityPOCO)
         {
-            return new CCUSUPITEMSIKeys() { FILENO = entityPOCO.FILENO, LINENO = entityPOCO.LINENO, ACCLINENO = entityPOCO.ACCLINENO };
+            return new CCUSUPITEMSIKeys() { FILENO = entityPOCO.FILENO, LINENO = entityPOCO.LINENO, ACCLINENO = entityPOCO.ACCLINENO , Tenant = entityPOCO.TENANT };
         }
 
         //public int? GetFILENOByCUSTOMFILENO(long lCUSTOMFILENO)

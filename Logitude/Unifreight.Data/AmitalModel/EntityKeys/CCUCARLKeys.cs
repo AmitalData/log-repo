@@ -12,6 +12,7 @@ namespace Unifreight.Data.AmitalModel.EntityKeys
         public int FILENO { get; set; }
         public int LINENO { get; set; }
         public int COUNTER { get; set; }
+        public int? TENANT { get; set; }
 
         public override string GetFullKey()
         {

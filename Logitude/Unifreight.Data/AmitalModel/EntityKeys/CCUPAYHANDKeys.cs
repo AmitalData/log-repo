@@ -10,6 +10,8 @@ namespace Unifreight.Data.AmitalModel.EntityKeys
     public class CCUPAYHANDKeys : EntityKeyFields
     {
         public int FILENO { get; set; }
+        public int? Tenant { get; set; }
+
 
         public override string GetFullKey()
         {

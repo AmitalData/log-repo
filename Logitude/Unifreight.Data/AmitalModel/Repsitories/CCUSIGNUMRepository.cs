@@ -22,10 +22,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUSIGNUM GetSingle(int FILENO, int LINENOMSHGR, int LINENOSIGN)
+        public CCUSIGNUM GetSingle(int FILENO, int LINENOMSHGR, int LINENOSIGN, int? tenant)
         {
             return (from a in context.CCUSIGNUMs
-                    where a.FILENO == FILENO && a.LINENOMSHGR == LINENOMSHGR && a.LINENOSIGN == LINENOSIGN
+                    where a.FILENO == FILENO && a.LINENOMSHGR == LINENOMSHGR && a.LINENOSIGN == LINENOSIGN && a.TENANT == tenant
                     select a).FirstOrDefault();
         }
 
@@ -81,14 +81,14 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             var keys = entityKeys as CCUMSHGRKeys;
 
             return (from a in context.CCUSIGNUMs
-                    where a.FILENO == keys.FILENO && a.LINENOMSHGR == keys.LINENO
+                    where a.FILENO == keys.FILENO && a.LINENOMSHGR == keys.LINENO && a.TENANT == keys.Tenant
                     select a).ToList();
         }
 
         public CCUSIGNUM GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUSIGNUMKeys;
-            return this.GetSingle(keys.FILENO, keys.LINENOMSHGR, keys.LINENOSIGN);
+            return this.GetSingle(keys.FILENO, keys.LINENOMSHGR, keys.LINENOSIGN, keys.Tenant);
         }
 
         public int FastDeleteMulti(EntityKeyFields parentEntityKeys)
@@ -96,7 +96,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             //var keys = parentEntityKeys as CCUMSHGRKeys;
             //return context.DeleteWhere<CCUSIGNUM>(rec => rec.FILENO == keys.FILENO && rec.LINENOMSHGR == keys.LINENO);
             var keys = parentEntityKeys as CCUFILEMKeys;
-            return context.DeleteWhere<CCUSIGNUM>(rec => rec.FILENO == keys.FILENO);
+            return context.DeleteWhere<CCUSIGNUM>(rec => rec.FILENO == keys.FILENO && rec.TENANT==keys.TENANT);
         }
     }
 }
