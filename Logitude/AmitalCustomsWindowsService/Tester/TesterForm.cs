@@ -295,13 +295,6 @@ namespace AmitalCustomsWindowsService.Tester
 				case "DocumentAzureQueueWR":
 					{
 						d = new AmitalCustomsWindowsService.BL.WorkerOnce<DocumentAzureQueueWR>(
-				10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
-						{ ServiceStarted = true, };
-					}
-					break;
-                case "SiiStatusAzureQueueWR":
-                    {
-                        d = new AmitalCustomsWindowsService.BL.WorkerOnce<SiiStatusAzureQueueWR>(
                 10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
                         { ServiceStarted = true, };
                     }
@@ -313,6 +306,13 @@ namespace AmitalCustomsWindowsService.Tester
 						{ ServiceStarted = true, };
 					}
 					break;
+                case "SiiStatusAzureQueueWR":
+                    {
+                        d = new AmitalCustomsWindowsService.BL.WorkerOnce<SiiStatusAzureQueueWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+                        { ServiceStarted = true, };
+                    }
+                    break;
                 default:
                     return;
             }

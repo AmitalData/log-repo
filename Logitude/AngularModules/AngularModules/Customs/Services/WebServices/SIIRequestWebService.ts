@@ -70,7 +70,7 @@ export class SIIRequestWebService {
         );
     }
 
-    postSendSIIRequest(siiRequestId: string, declarationId: string, tenant: number, selectedRows: any[]) {
+    postSendSIIRequest(siiRequestId: string, declarationId: string, tenant: number, body: any) {
         return defer(() => {
             let headers = new Headers();
             headers.append('Token', SessionInfo.Token);
@@ -78,7 +78,7 @@ export class SIIRequestWebService {
 
             return this._http.post(
                 this._apiUrl + "/PostSendSIIRequest?siiRequestId=" + siiRequestId + "&declarationId=" + declarationId + "&tenant=" + tenant,
-                JSON.stringify(selectedRows),
+                JSON.stringify(body),
                 ServiceHelper.GetHttpHeaders()
             ).pipe(
                 map(resp => resp),
