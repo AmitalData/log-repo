@@ -247,56 +247,56 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
   }
 
- DisplayOnlyCheck() {
+    DisplayOnlyCheck() {
 
-    this.IsDisplayOnly = !!this.CurrentSession?.CurrentEditComponent?.EditComponentController?.InDisplayMode;
+        this.IsDisplayOnly = !!this.CurrentSession?.CurrentEditComponent?.EditComponentController?.InDisplayMode;
 
-    if (this.EntityPM?.AmendmentMessage) {
-      this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+        if (this.EntityPM?.AmendmentMessage) {
+            this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
 
-      if (this.EntityPM.IsAmendmentDisplayOnly) {
-        this.IsDisplayOnly = true;
-      }
-    }
-    else if (this.IsDisplayOnly) {
-      this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly");
-    }
-
-    if (this.EntityPM.HatraDate || this.EntityPM.PaymentDate) {
-      this.IsDisplayOnly = true;
-    }
-
-    const declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
-    declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
-
-      const displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
-
-      this.IsDisplayOnly = !!displayOnlyCheckResult.IsDisplayOnly;
-
-      if (this.EntityPM.HatraDate || this.EntityPM.PaymentDate) {
-        this.IsDisplayOnly = true;
-      }
-
-      if (this.EntityPM?.AmendmentMessage) {
-        this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
-
-        if (this.EntityPM.IsAmendmentDisplayOnly) {
-          this.IsDisplayOnly = true;
+            if (this.EntityPM.IsAmendmentDisplayOnly) {
+                this.IsDisplayOnly = true;
+            }
         }
-      }
-      else if (this.IsDisplayOnly) {
-        const prefix = (TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly") || "").trim();
-        const msg = (displayOnlyCheckResult.DisplayOnlyMessage || "").trim();
+        else if (this.IsDisplayOnly) {
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly");
+        }
 
-        this.DisplayOnlyMessage = msg
-          ? (msg.startsWith(prefix) ? msg : (prefix + msg))
-          : prefix;
-      }
-      else {
-        this.DisplayOnlyMessage = null;
-      }
-    });
-  }
+        if (this.EntityPM.HatraDate || this.EntityPM.PaymentDate) {
+            this.IsDisplayOnly = true;
+        }
+
+        const declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
+        declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
+
+            const displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
+
+            this.IsDisplayOnly = !!displayOnlyCheckResult.IsDisplayOnly;
+
+            if (this.EntityPM.HatraDate || this.EntityPM.PaymentDate) {
+                this.IsDisplayOnly = true;
+            }
+
+            if (this.EntityPM?.AmendmentMessage) {
+                this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
+
+                if (this.EntityPM.IsAmendmentDisplayOnly) {
+                    this.IsDisplayOnly = true;
+                }
+            }
+            else if (this.IsDisplayOnly) {
+                const prefix = (TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly") || "").trim();
+                const msg = (displayOnlyCheckResult.DisplayOnlyMessage || "").trim();
+
+                this.DisplayOnlyMessage = msg
+                    ? (msg.startsWith(prefix) ? msg : (prefix + msg))
+                    : prefix;
+            }
+            else {
+                this.DisplayOnlyMessage = null;
+            }
+        });
+    }
 
 
   get IsAllowChange(): boolean {
