@@ -179,6 +179,7 @@ namespace Logitude.Accounting.Data.Repositories
                                                      where a.Tenant == tenant && a.GLAccountId == glaccountId
                            && ((a.InterestCalculationDate >= ga.InterestCalculationStartDate) || ga.InterestCalculationStartDate == null)
                            && (a.InterestReportStatusCode == InterestReportStatusCodes.Invoiced
+                           || a.InterestReportStatusCode == InterestReportStatusCodes.InvoicePrintingFailed
                            || a.InterestReportStatusCode == InterestReportStatusCodes.ClosedWithoutInvoice)
                                                      orderby a.InterestCalculationDate descending
                                                      select new CloseBalanceInterestReportData()
