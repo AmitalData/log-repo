@@ -147,10 +147,9 @@ namespace Logitude.Customs.BL.TraceEvents
                 DONEOPERATION = "D",
 
             };
-            if(!isConnectedToUniFreight)
-            {
-                myGGGQPM_Packs.Tenant = tenant;
-            }
+            
+            myGGGQPM_Packs.Tenant = tenant;
+            
             myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with 
             myGGGQUpdateService.Update(myGGGQPM_Packs, true);
         }
@@ -158,7 +157,6 @@ namespace Logitude.Customs.BL.TraceEvents
         private static void InsertEventTask4Entity(UnifreightFUStatusParam myUnifreightEventParam, string unfreightUserId, int tenant, string requestData)
         {
 
-            var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight;
 
 
             var myYCULTASKPM_Packs = new YCULTASKPM()
@@ -175,10 +173,9 @@ namespace Logitude.Customs.BL.TraceEvents
                 ARCHIVE = "F",
 
             };
-            if (!isConnectedToUniFreight) 
-            {
-                myYCULTASKPM_Packs.Tenant = tenant;
-            }
+            
+            myYCULTASKPM_Packs.Tenant = tenant;
+            
 
             AmitalContext _AmitalContext = AmitalContext.GetContext(tenant);
             var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);

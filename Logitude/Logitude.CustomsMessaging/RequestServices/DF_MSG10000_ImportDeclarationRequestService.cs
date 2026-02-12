@@ -280,7 +280,6 @@ namespace Logitude.CustomsMessaging.RequestServices
                 return;
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
-            bool isConnectedToUnifreight = mySetting.IsConnectedToUniFreight;
 
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
             {
@@ -332,10 +331,9 @@ namespace Logitude.CustomsMessaging.RequestServices
                     DEBUG = "F",
                     DONEOPERATION = "D"
                 };
-                if (!isConnectedToUnifreight)
-                {
-                    myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
-                }
+                
+                myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
+                
                 myGGGQUpdateService.Update(myGGGQPM, true);
 
 
@@ -396,10 +394,9 @@ namespace Logitude.CustomsMessaging.RequestServices
                     USRCODE = unifreightUser,
                     ARCHIVE = "F"
                 };
-                if (!isConnectedToUnifreight)
-                {
-                    myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
-                }
+                
+                myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
+                
                 var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
                 myYCULTASKUpdateService.DontAddTransaction = true;
                 myYCULTASKUpdateService.Update(myYCULTASKPM, true);

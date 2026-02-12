@@ -588,10 +588,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                    //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
                 };
                 //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
-                if (!isConnectedToUniFreight)
-                {
-                    myYCULTASKPM.Tenant = tenant;
-                }
+                
+                myYCULTASKPM.Tenant = tenant;
+                
                
                 LogitudeSettings.HandleLogMe("update YCULTASK", false, "UniPaymentOrder", stopLogAt);
                 var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);

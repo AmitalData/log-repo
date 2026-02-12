@@ -754,7 +754,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
-            var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyCourierMasterPM.Tenant).IsConnectedToUniFreight;
 
             string entNameTarget = isUnifreightLeadingFile ? "CFIFILEM" : "MASTER";
             string primaryNumTarget = isUnifreightLeadingFile ? dirtyCourierMasterPM.UnifreightLeadingFile : dirtyCourierMasterPM.Id;
@@ -791,10 +790,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     USRCODE = unifreightUser,
                     ARCHIVE = "F",
                 };
-                if (!isConnectedToUniFreight)
-                {
-                    myYCULTASKPM.Tenant = dirtyCourierMasterPM.Tenant;
-                }
+                
+                myYCULTASKPM.Tenant = dirtyCourierMasterPM.Tenant;
+                
                 
                 _AmitalContext = AmitalContext.GetContext(dirtyCourierMasterPM.Tenant);
                 var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
@@ -819,10 +817,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     DEBUG = "F",
                     DONEOPERATION = "D",
                 };
-                if (!isConnectedToUniFreight)
-                {
-                    myGGGQPM.Tenant = dirtyCourierMasterPM.Tenant;
-                }
+                
+                myGGGQPM.Tenant = dirtyCourierMasterPM.Tenant;
+                
                 myGGGQUpdateService.Update(myGGGQPM, true);
                 
                 if (scope != null)

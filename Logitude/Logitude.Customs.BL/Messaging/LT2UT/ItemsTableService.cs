@@ -39,7 +39,6 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
         public void OpenUnifreighTask(string xmlReq)
         {
             CustomsSettingQueryService settingService = new CustomsSettingQueryService(_Tenant);
-            bool isConnectedToUniFreight  = settingService.GetSettingByTenantN(_Tenant).IsConnectedToUniFreight;
 
           
           
@@ -129,10 +128,8 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
                     //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
                 };
                 //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
-                if (!isConnectedToUniFreight)
-                {
-                    myYCULTASKPM.Tenant = _Tenant;
-                }
+                myYCULTASKPM.Tenant = _Tenant;
+                
                 AmitalContext MyContext = AmitalContext.GetContext(_Tenant);
 
                 var myGGGQUpdateService = new GGGQUpdateService(MyContext);
@@ -159,10 +156,9 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
                     GSTRING1 = "NO_LOCK",
                     //GSTRING1 = myYCULTASKPM.TASKID,
                 };
-                if(!isConnectedToUniFreight)
-                {
-                    myGGGQPM.Tenant = _Tenant;
-                }
+              
+                myGGGQPM.Tenant = _Tenant;
+                
                 myGGGQUpdateService.Update(myGGGQPM, true);
                 
                 if (scope != null)
