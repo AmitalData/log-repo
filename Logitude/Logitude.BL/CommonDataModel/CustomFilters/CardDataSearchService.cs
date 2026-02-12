@@ -37,14 +37,11 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
         private  IQueryable<CardList> GetCardSearchResults(CardSearchArgs cardSearchArgs, IQueryable<EntityLists.CardList> entityLists)
         {
             IQueryable<CardSearch> cardSearches = GetCardSearches(cardSearchArgs);
-            var allowedCardIds = entityLists.Select(e => e.Id).ToList();
 
             CardSearchAdvanceArgs cardSearchAdvanceArgs = GetCardSearchAdvanceArgs(cardSearchArgs);
-            List<CardSearchResult> cardSearchResultLists = GetCardSearchDataResults(cardSearchAdvanceArgs, cardSearches, allowedCardIds);
-            if (!cardSearchResultLists.Any())
-                return Enumerable.Empty<CardList>().AsQueryable();
+            List<CardSearchResult> cardSearchResultLists = GetCardSearchDataResults(cardSearchAdvanceArgs, cardSearches);
 
-            var cardIds = cardSearchResultLists.Select(c => c.CardId);
+            var cardIds = cardSearchResultLists.Select(c => c.CardId).ToList();
             var filteredEntityLists = entityLists.Where(d => cardIds.Contains(d.Id)).ToList();
             foreach (var list in filteredEntityLists)
             {
@@ -66,7 +63,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
             return cardSearches;
         }
 
-        public  List<CardSearchResult> GetCardSearchDataResults(CardSearchAdvanceArgs cardSearchAdvanceArgs, IQueryable<CardSearch> cardSearches, List<string> allowedCardIds)
+        public  List<CardSearchResult> GetCardSearchDataResults(CardSearchAdvanceArgs cardSearchAdvanceArgs, IQueryable<CardSearch> cardSearches)
         {
             List<CardSearchResult> cardSearchResultLists = new List<CardSearchResult>();
             int take = (int)(cardSearchAdvanceArgs.Take * 1.5);
@@ -75,7 +72,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
             while ((selectedDataCount == take && cardSearchResultLists.Count() < cardSearchAdvanceArgs.Take) || isFirstTime)
             {
                 var cardSearchResultSelectedLists = (from a in cardSearches
-                                               where a.Keyword.StartsWith(cardSearchAdvanceArgs.SeachText) && allowedCardIds.Contains(a.CardId) 
+                                               where a.Keyword.StartsWith(cardSearchAdvanceArgs.SeachText)
                                                select new CardSearchResult()
                                                {
                                                    CardId = a.CardId,
