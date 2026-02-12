@@ -216,7 +216,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 ContactPM contact = GetLoggedContact(entityPM.Tenant);
                 bool showLocals = !contact.DontShowLocal;
-                if ((entityPM.InterestReportStatusCode != entityPOCO.InterestReportStatusCode))
+                if ((entityPM.InterestReportStatusCode != entityPOCO.InterestReportStatusCode) || (entityPM.InterestReportStatusCode == "6" && !String.IsNullOrWhiteSpace(entityPM.InvoiceFailureReason)))
                 {
                     switch (entityPM.InterestReportStatusCode)
                     {

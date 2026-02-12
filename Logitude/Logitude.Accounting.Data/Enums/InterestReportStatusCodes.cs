@@ -16,5 +16,6 @@ namespace Logitude.Accounting.Data.Enums
         public static string Failed { get { return "6"; } }
         public static string InvoicingInProgress { get { return "8"; } }
         public static string InvoicingFailed { get { return "9"; } }
+        public static string InvoicePrintingFailed { get { return "10"; } }
     }
 }
