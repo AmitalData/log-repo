@@ -214,32 +214,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 _CCUPAYHAND.ChangeSetOp = ChangeSetOperation.Update;
             }
-            
-            
-            var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPaymentPM.Tenant);
-            if (!setting.IsConnectedToUniFreight)
-            {
-                _CCUPAYHAND.Tenant =  _DirtyDeclarationPaymentPM.Tenant;
-            }
 
+            _CCUPAYHAND.Tenant = _DirtyDeclarationPaymentPM.Tenant;
             _CCUPAYHAND.DeclarationId = _DeclarationPM.Id;
-
-            //_CCUPAYHAND.PAYTAX = _DirtyDeclarationPaymentPM.;
-            ///_CCUPAYHAND.REJECTTAX = _DirtyDeclarationPaymentPM.;
             if (_DirtyDeclarationPaymentPM.IsProcessA == true)
             {
                 _CCUPAYHAND.PROCESSWANT = "א";
             }
 
-
-
-            //cCUTAXPM.POSTPONEDTAX = decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
-            //cCUTAXPM.TAXTOPAY = cCUTAXPM.TAXAMOUNT - cCUTAXPM.POSTPONEDTAX;
-            // cCUTAXPM.TAXTOPAY = cCUTAXPM.TAXAMOUNT - decDeclarationTaxes.DeferredTaxAmount.ToNullableDouble("decDeclarationTaxes.DeferredTaxAmount");
-            //_DeclarationPM.DeclarationTaxes[0].DeferredTaxAmount
-
-            //_CCUPAYHAND.TOTALPAYTAX = _DirtyDeclarationPaymentPM.;
-            //_CCUPAYHAND.TOTALPAYDEPOSIT = _DirtyDeclarationPaymentPM.;
             _CCUPAYHAND.HANDDATE = _DirtyDeclarationPaymentPM.PaymentDate;
             _CCUPAYHAND.HANDTYPE = 1;
             if (!String.IsNullOrWhiteSpace(_DirtyDeclarationPaymentPM.SignatoryIdentification))
@@ -372,39 +354,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             curCCUPAYLINEF.BANKBRANCH = decDeclarationPaymentMethods.BranchCode;
             curCCUPAYLINEF.BANKACCOUNT = decDeclarationPaymentMethods.AccountNumber;
             curCCUPAYLINEF.PAYORDNO = _DeclarationPM.PaymentOrderNumber.ToNullableInt("_DeclarationPM.PaymentOrderNumber"); //Yuval Chalup 20.09.2015 TASK-16498      
-
-            var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPaymentPM.Tenant);
-            if (!setting.IsConnectedToUniFreight)
-            {
-                curCCUPAYLINEF.Tenant = _DirtyDeclarationPaymentPM.Tenant;
-            }
+            curCCUPAYLINEF.Tenant = _DirtyDeclarationPaymentPM.Tenant;
+            
 
             return curCCUPAYLINEF;
-        }
-
-        private int GetCounter(DeclarationPaymentPM _DeclarationPaymentPM)
-        {
-            int i = Convert.ToInt32(_DeclarationPaymentPM.DeclarationId.Replace("-", ""));
-            return 50000000 + i;
-        }
-
-        private string GetTranslationP2L(string partnerID, string tableID, string partnerCode)
-        {
-            var myGTRTRANQueryService = new GTRTRANQueryService(_AmitalContext);
-
-            if (partnerID == null || tableID == null || partnerCode == null)
-            {
-                return ("");
-            }
-
-            GTRTRAN myGTRTRANPM = myGTRTRANQueryService.GetTranslationP2L(partnerID, tableID, partnerCode);
-
-            if (myGTRTRANPM == null)
-            {
-                return ("");
-            }
-
-            return (myGTRTRANPM.LOCALCODE);
         }
     }
 }

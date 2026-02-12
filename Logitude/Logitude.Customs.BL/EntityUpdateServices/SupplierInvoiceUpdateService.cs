@@ -1034,7 +1034,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             try
             {
                
-                bool isConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
              
                      _AmitalContext = AmitalContext.GetContext(entityPM.Tenant);
                     var myCCUQUELOCKQueryService = new Unifreight.BL.EntityQueryServices.CCUQUELOCKQueryService(_AmitalContext);
@@ -1051,10 +1050,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             FILENO = myDeclarationPM.CustomFileNo,
                         };
 
-                        if (!isConnectedToUnifreight)
-                        {
-                            myCCUQUELOCK.Tenant = EntityPM.Tenant;
-                        }
+                        
+                        myCCUQUELOCK.Tenant = EntityPM.Tenant;
+                        
 
                         myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                         myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
@@ -1082,10 +1080,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     };
 
                     myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    if (!isConnectedToUnifreight)
-                    {
-                        myGGGQPM.Tenant = myDeclarationPM.Tenant;
-                    }
+                    
+                    myGGGQPM.Tenant = myDeclarationPM.Tenant;
+                    
                     myGGGQUpdateService.Update(myGGGQPM, true);
                 
 
@@ -1101,10 +1098,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         USRCODE = unifreightUser,
                         ARCHIVE = "F"
                     };
-                    if (!isConnectedToUnifreight)
-                    {
-                        myYCULTASKPM.Tenant = myDeclarationPM.Tenant;
-                    }
+                   
+                    myYCULTASKPM.Tenant = myDeclarationPM.Tenant;
+                    
                     var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
                     myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                     myYCULTASKUpdateService.Update(myYCULTASKPM, true);

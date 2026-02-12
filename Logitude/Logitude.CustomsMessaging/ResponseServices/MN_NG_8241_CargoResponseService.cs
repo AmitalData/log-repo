@@ -823,7 +823,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void OpenUnifreighTask()
         {
-            bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant).IsConnectedToUniFreight;
            
 
             TransactionScope scope = null;
@@ -937,10 +936,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
                         };
                         //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
-                        if (!isConnectedToUniFreight) 
-                        {
-                            myYCULTASKPM_Packs.Tenant = _MyDeclarationPM.Tenant;
-                        }
+                        
+                        myYCULTASKPM_Packs.Tenant = _MyDeclarationPM.Tenant;
+                        
                         var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
                         myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                         myYCULTASKUpdateService.Update(myYCULTASKPM_Packs, true);
@@ -963,10 +961,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             DONEOPERATION = "D",
                             //GSTRING1 = myYCULTASKPM.TASKID,
                         };
-                        if(!isConnectedToUniFreight)
-                        {
-                            myGGGQPM_Packs.Tenant = _MyDeclarationPM.Tenant;
-                        }
+                        
+                        myGGGQPM_Packs.Tenant = _MyDeclarationPM.Tenant;
+                        
                         var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
                         myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                         myGGGQUpdateService.Update(myGGGQPM_Packs, true);
