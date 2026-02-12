@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Script DBType="Global" Module="Customs">
-	<Sql Version="7">
+	<Sql Version="8">
 		<![CDATA[
 		/* ---------- Cloud Tenant ---------- */
     IF NOT EXISTS (
@@ -128,7 +128,7 @@
     END
     ]]>
 	</Sql>
-	<Oracle Version="5">
+	<Oracle Version="8">
 		<![CDATA[
    MERGE INTO DefaultAndConfigurationKeys d
 USING (SELECT 0               AS Tenant,
