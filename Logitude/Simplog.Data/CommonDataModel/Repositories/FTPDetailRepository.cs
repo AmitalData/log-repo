@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public FTPDetailRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public FTPDetailRepository(int tenant)
         {
