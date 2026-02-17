@@ -13,7 +13,34 @@ import { Observable } from 'rxjs';
 @Component({
     selector: 'app-external-link',
     templateUrl: './ExternalLinkComponent.html',
-    styleUrls: ['./ExternalLinkComponent.scss']
+    styles: [`
+        .view-container {
+            padding: 15px;
+        }
+        
+        .data-row {
+            width: 200px;
+        }
+
+        BooleanFilter {
+            width: 71px;
+            display: block;
+            margin: 14px 0px;
+        }
+
+        .button-wrapper {
+            direction: ltr;
+            position: absolute;
+            bottom: 16px;
+            left: 23px;
+        }
+
+        .Button {
+            display: inline-block;
+            width: 50px;
+            margin: 0 5px;
+        }
+    `]
 })
 export class ExternalLinkComponent {
     externalLinkPM: ExternalLinkPM = new ExternalLinkPM();
@@ -22,7 +49,6 @@ export class ExternalLinkComponent {
     dataReady: boolean = false;
     tableDataInit: boolean = false;
     errors: string[] = [];
-    isTenant0: boolean = SessionLocator.Tenant === 0;
 
     constructor(entityArgs: EntityArgs) {
         this.initObjectTable();
@@ -39,7 +65,7 @@ export class ExternalLinkComponent {
 
     async initObjectTable() {
         await new Promise<void>(res => new EntityResourceService().getEntityResourceByTableName("ExternalLink").subscribe((myResult: ServiceResponse) => res())),
-            this.tableDataInit = true;
+        this.tableDataInit = true;
     }
 
     SetNewWizardArgs(args: any): void {
@@ -54,12 +80,9 @@ export class ExternalLinkComponent {
         this.initData(externalLinkPM);
     }
 
-    async initExistsData(externalLinkPM: ExternalLinkPM): Promise<void> {
+    async initExistsData(externalLinkPM: ExternalLinkPM): Promise<void> {        
         SessionLocator.SelectedSession.StartBusyIndicator('');
-        if (externalLinkPM.Tenant !== SessionLocator.Tenant)
-            externalLinkPM.IsDirty = true;
-
-        await this.initData(externalLinkPM);
+        await this.initData(externalLinkPM);        
     }
 
     initData(externalLinkPM: ExternalLinkPM): void {
@@ -77,7 +100,7 @@ export class ExternalLinkComponent {
 
         SessionLocator.SelectedSession?.CloseCurrentWindow();
     }
-
+    
     async sendToServer(): Promise<boolean> {
         let successSend: boolean = false;
         try {

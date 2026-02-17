@@ -56,27 +56,23 @@ export function AddInternalNoteTicket() {
 
 export function CancelTicket() {
     cy.DefineRequestWait(RestAPI.PUT,URLs.Tickets,RequestAliases.PutTicket)
-    cy.get(TicketSelectors.MenuButtons, { timeout: 5000 }).should('exist').click({ force: true });
-    cy.get(TicketSelectors.TicketCancel, { timeout: 5000 }).should('exist').click({ force: true });
-    cy.get(BaseSelectors.ConfirmWindow, { timeout: 5000 }).should('be.visible');
-    cy.get(BaseSelectors.ConfirmWindowButton, { timeout: 5000 }).should('exist').click({ force: true });
+    cy.Click(TicketSelectors.MenuButtons, null);
+    cy.Click(TicketSelectors.TicketCancel, null);
+    cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsYes);
 }
 
 export function ReactivateTicket() {
     cy.DefineRequestWait(RestAPI.PUT,URLs.Tickets,RequestAliases.PutTicket)
-    cy.get(TicketSelectors.MenuButtons, { timeout: 5000 }).should('exist').click({ force: true });
-    cy.get(TicketSelectors.TicektReactivate, { timeout: 5000 }).should('exist').click({ force: true });
-    cy.get(BaseSelectors.ConfirmWindow, { timeout: 5000 }).should('be.visible');
-    cy.get(BaseSelectors.ConfirmWindowButton, { timeout: 5000 }).should('exist').click({ force: true });
+    cy.Click(TicketSelectors.MenuButtons, null);
+    cy.Click(TicketSelectors.TicektReactivate, null);
+    cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsYes);
 }
 
 export function CloseTicket() {
     cy.DefineRequestWait(RestAPI.PUT,URLs.Tickets,RequestAliases.PutTicket)
-    cy.get(TicketSelectors.MenuButtons, { timeout: 5000 }).should('exist').click({ force: true });
-    cy.wait(500);
-    cy.get(TicketSelectors.TicektClosewithoutNotifying, { timeout: 5000 }).should('exist').click({ force: true });
-    cy.get(BaseSelectors.LogitudeWindow, { timeout: 5000 }).should('be.visible');
-    cy.contains('button', TicketSelectors.ContainsOk, { timeout: 5000 }).should('be.visible').click({ force: true });
+    cy.Click(TicketSelectors.MenuButtons, null);
+    cy.Click(TicketSelectors.TicektClosewithoutNotifying, null);
+    cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsOk);
 }
 
 export function CreateActivity(ActivityTypeButton: string ,ticketActivitySubject:string) {

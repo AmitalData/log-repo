@@ -11,7 +11,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class UserLicenseQuery
     {
         UserLicenseRepository repository;
-
+        public UserLicenseQuery()
+        {
+            repository = new UserLicenseRepository();
+        }
 
         public UserLicenseQuery(int tenant)
         {
