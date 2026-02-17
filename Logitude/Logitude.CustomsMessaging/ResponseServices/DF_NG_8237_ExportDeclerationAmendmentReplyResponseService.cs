@@ -1432,27 +1432,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
                             new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
                     LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing AFTER SEND", false, "sendClosing", stopLogAt);
-					if (responseData.HasException == true)
-					{
-						throw new System.Exception("Ex" + responseData.UserMessage);
-
-					}
-				}
+                }
                 
             }
             catch (System.Exception ex)
             {
                 LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing ex" + ex.Message.ToString(), false, "sendClosing", stopLogAt);
-				NetCommonHelper.Logger.DevLog.Instance.WriteError(
-				   "ICustomsAutoDecClosing failed | " +
-				   "Tenant=" + decPm?.Tenant + " | " +
-				   "DeclarationId=" + decPm?.Id + " | " +
-				   "loggedUserId=" + loggedUserId + " | " +
-				   "Exception=" + ex.Message.ToString()
-				   );
-                throw ex;
 
-			}
+            }
             LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing FINISH SEND", false, "sendClosing", stopLogAt);
 
 
