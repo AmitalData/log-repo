@@ -52,8 +52,6 @@ export class RequestParamsBase {
     public TestCase: TestCase;
 
     public SendUpdateContainerization:boolean;
-    public HsmStationContext: HsmStationContext;
-    
 }
 export class TestCase {
     public Code: string;
@@ -68,8 +66,3 @@ export class CustomSendOptionsArgs {
     public RequestVIA: SendRequestVIA;
     public TestCase: boolean = false;
 } 
-export enum HsmStationContext {
-    Import = 'Customs',
-    Export = 'MehesExport',
-    Courier = 'Ecom'
-}

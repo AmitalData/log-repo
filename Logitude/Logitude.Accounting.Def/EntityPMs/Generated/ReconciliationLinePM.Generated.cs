@@ -765,29 +765,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal? currencyRate ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public decimal? CurrencyRate  
-	   {
-	    
-	     get
-		{
-		   return currencyRate;
-		 }
-		 set
-		 {
-		   if(currencyRate != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyRate",OldValue=currencyRate,NewValue=value,PropertyType="decimal?"};
-		    NotifyPropertyChanged(values);
-		   currencyRate=value;
-		   }
-			
-		 }
-	   }
 	    }
    
 }

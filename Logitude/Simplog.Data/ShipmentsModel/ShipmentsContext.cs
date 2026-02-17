@@ -314,8 +314,6 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
             modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
             modelBuilder.Configurations.Add(new OceanInsightsRequestMap());
-            modelBuilder.Configurations.Add(new OceanCarrierStatusAPIconfigMap());
-
             modelBuilder.Configurations.Add(new OceanInsightsRequestsCountMap());
             modelBuilder.Configurations.Add(new OceanInsightsStatusesMap());
             modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
@@ -351,6 +349,7 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ShipmentUnassignedFieldMap());
             modelBuilder.Configurations.Add(new ShipmentDocsFieldMap());
             modelBuilder.Configurations.Add(new ShipmentAnalyticMap());
+            modelBuilder.Configurations.Add(new OceanInsightsStatusLogMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -406,8 +405,6 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ContainersExternalData> ContainersExternalDatas { get; set; }
         public IDbSet<ShipmentAdditionalCloudData> ShipmentAdditionalCloudDatas { get; set; }
         public IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts { get; set; }
-        public IDbSet<OceanCarrierStatusAPIconfig> OceanCarrierStatusAPIconfigs { get; set; }
-
         public IDbSet<OceanInsightsRequest> OceanInsightsRequests { get; set; }
         public IDbSet<LogitudeOceanInsightsRequest> LogitudeOceanInsightsRequests { get; set; }
         public IDbSet<LogitudeOceanInsightsResponse> LogitudeOceanInsightsResponses { get; set; }
@@ -439,6 +436,8 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ShipmentAnalytic> ShipmentAnalytics { get; set; }
         public IDbSet<ContainerAnalytic> ContainerAnalytics { get; set; }
         public IDbSet<ContainerDiscrepancy> ContainerDiscrepancies { get; set; }
+        public IDbSet<OceanInsightsStatusLog> OceanInsightsStatusLogs { get; set; }
+
 
         [DbFunction("ShipmentsContext", "udf_ShipmentSearch")]
         public IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields)
