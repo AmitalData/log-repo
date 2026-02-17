@@ -107,11 +107,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int? ChequeCounterSeriesID { get; set; }
         [Column("FactoringBank")]
 	    public bool? FactoringBank { get; set; }
-        [ForeignKey("MasavGLAcccount")]
-        [Column("MasavGLAcccountId")]
-	    public string MasavGLAcccountId { get; set; }
-	      
-        public virtual GLAccount MasavGLAcccount { get; set; }
     }
 }
 	 

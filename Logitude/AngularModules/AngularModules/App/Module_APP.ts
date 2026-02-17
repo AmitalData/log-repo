@@ -8,7 +8,6 @@ import { ChildDirective } from './Directives/ChildDirective';
 
 import { AppComponent } from './AppComponent';
 import { LazyArrayToObjects } from './DynamicLoader/LazyWidgetsLogitude';
-import { CookieconsentComponent } from '../Common/Components/cookieconsent/cookieconsent.component';
 // import { AppComponent } from './AppComponent_Cust';
 
 // import { LazyArrayToObjects } from './DynamicLoader/LazyWidgetsCustoms';
@@ -23,8 +22,8 @@ import { ErrorHandlerService } from './Services/ErrorHandler.Service';
 
 
 @NgModule({
-  imports: [BrowserModule, HttpClientModule, BrowserAnimationsModule],
-  declarations: [ChildDirective, AppComponent, CookieconsentComponent],
+   imports: [BrowserModule, HttpClientModule, BrowserAnimationsModule],
+   declarations: [ChildDirective, AppComponent],
 
   providers: [
     SystemJsNgModuleLoader,

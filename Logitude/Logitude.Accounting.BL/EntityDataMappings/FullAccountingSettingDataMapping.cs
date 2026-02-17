@@ -137,7 +137,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPM.TenantPaymentTermId = tenantpm.PaymentTermId;
                 entityPM.AccountingActivated = tenantpm.AccountingActivated;
-                entityPM.HebrewTenant = tenantpm.HebrewTenant;
                 entityPM.AccountingActivationDate = tenantpm.AccountingActivationDate;
             }
            
