@@ -31,8 +31,6 @@ import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import * as xmlbuilder from 'xmlbuilder';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
-import { CertificateOfOriginTypeCodeEnumPM } from 'Customs/EntityPMs/CertificateOfOriginTypeCodeEnumPM';
-import { CertificateOfOriginTypeCodeEnumListService } from 'Customs/Services/StandardLists/CertificateOfOriginTypeCodeEnumListService';
 
 
 class UpdateGeneralArgsParams {
@@ -99,7 +97,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     cargoDescription: string = "";
-    certificateOfOriginTypeCodeEnumListService: CertificateOfOriginTypeCodeEnumListService = new CertificateOfOriginTypeCodeEnumListService();
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
         this.entityPM = EntityPM;
@@ -339,7 +336,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 }
                 mappedConsignments.MeasureType = consignmentPackage?.GrossMassMeasureTypeCode || '';
                 mappedConsignments.MeasureTypeName = consignmentPackage?.GrossMassMeasureTypeName || '';
-
 
                 // Initialize ContainerTypeWCO field:
                 this.getContainerTypeWCOData(consignment, mappedConsignments, unifreightItem.manifestNumber);
@@ -757,20 +753,14 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetWarning("RequestReasonCode", this.ObjectTableName, true);
     }
 
-    SetDisableByCooTypeCode(CooTypeCode: string, IsDisplayOnly: false) { // if CooTypeCode = 1 or 2
-        this.UIProperties.SetEnabled("TradeAgreementCountry1", this.ObjectTableName, IsDisplayOnly);
-        this.UIProperties.SetEnabled("TradeAgreementCountry2", this.ObjectTableName, IsDisplayOnly);
-        this.UIProperties.SetEnabled("TradeAgreementGroupOfCountries", this.ObjectTableName, IsDisplayOnly);
-        this.SetManufactureDataByCooTypeCode(CooTypeCode);
-    }
-    
-    SetManufactureDataByCooTypeCode(CooTypeCode: string) {
-        let enabled: boolean = false;
-        this.certificateOfOriginTypeCodeEnumListService.getSingle(CooTypeCode).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) enabled = response.Result?.IsZipcodeMandatory;
+    SetDisableByCooTypeCodeEuro(enabled: boolean) { // if CooTypeCode = 1 or 2
+        this.UIProperties.SetEnabled("TradeAgreementCountry1", this.ObjectTableName, enabled);
+        this.UIProperties.SetEnabled("TradeAgreementCountry2", this.ObjectTableName, enabled);
+        this.UIProperties.SetEnabled("TradeAgreementGroupOfCountries", this.ObjectTableName, enabled);
+        if(this.entityPM.CooTypeCode != "9" && this.entityPM.CooTypeCode != "1" && this.entityPM.CooTypeCode != "2"){
             this.UIProperties.SetEnabled("PlaceOfManufacture", this.ObjectTableName, enabled);
             this.UIProperties.SetEnabled("ZipCodeOfManufacture", this.ObjectTableName, enabled);
-        });
+        }
     }
 
     mandatoryFielsList = [];
@@ -796,7 +786,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.SetPropertiesEnabledAllFields(!this.IsDisplayOnly);
 
             if (this.entityPM.CooTypeCode != "1" && this.entityPM.CooTypeCode != "2") {
-                this.SetDisableByCooTypeCode(CooTypeCode, this.IsDisplayOnly);
+                this.SetDisableByCooTypeCodeEuro(this.IsDisplayOnly);
             }
         }
 
