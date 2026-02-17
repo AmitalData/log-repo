@@ -15,7 +15,6 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import { CustomerDebtNotificationPM } from './CustomerDebtNotificationPM';
 
 export class GLAccountPM {
 
@@ -937,14 +936,7 @@ export class GLAccountPM {
     public get CardCountryCode() { return this.cardCountryCode; }
     public set CardCountryCode(newValue: string) { if (this.cardCountryCode != newValue) { this.cardCountryCode = newValue;  } }
      
-    private foreignCurrencyInterest: boolean;
-    public get ForeignCurrencyInterest() { return this.foreignCurrencyInterest; }
-    public set ForeignCurrencyInterest(newValue: boolean) { if (this.foreignCurrencyInterest != newValue) { this.foreignCurrencyInterest = newValue; this.MarkAsDirty("ForeignCurrencyInterest"); } }
-
-    private customerDebtNotification: CustomerDebtNotificationPM;
-    public get CustomerDebtNotification() { return this.customerDebtNotification; }
-    public set CustomerDebtNotification(newValue: CustomerDebtNotificationPM) { if (this.customerDebtNotification != newValue) { this.customerDebtNotification = newValue; this.MarkAsDirty("CustomerDebtNotification"); } }
-       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

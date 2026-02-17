@@ -6,14 +6,13 @@ import { ReportGroupList } from '../../EntityLists/ReportGroupList';
 import { ReportList } from '../../EntityLists/ReportList';
 import { ReportsTemplateListExtendedService } from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ReportSchedulerRecepients, ReportSchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
+import { ReportSchedulerRecepients, ReportSchedulerDetails, SchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
 import { SchedulerExtendedPMService } from 'Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
 import { AppTool } from 'Infrastructure/Tools';
 import { BIReportPMService } from '../../../Infrastructure/Services/StandardPMs/BIReportPMService';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { DWSubQueryPMService } from '../../../Infrastructure/Services/StandardPMs/DWSubQueryPMService';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
-import { QueryFilterItem } from '../Filters/QueryFilterItem';
 @Component({
     
     templateUrl: './AddEditReportSchedulerComponent.html',
@@ -32,15 +31,10 @@ export class AddEditReportSchedulerComponent implements OnInit {
     private PageChild_PRREP: any = null;
     private PageChild_OPEMA: any = null;
     public BIReportEntity: any;
-    public IsPowerBIReport: boolean;
     public IsBIReport: boolean;
     public IsQueryReport: boolean;
-    public IsCustomerDebNotification: boolean;
-    public GLAccountId: string;
     public IsNew: boolean = true;
     public TasksSchedulerId: string;
-    public TaskSchedulerIdMaintenance: string;
-    public MaintenanceSchedulerDetails;
     public OldReportSchedulerDetails;
     private CurrentSession = SessionLocator.SelectedSession;
     schedulerExtendedPMService: SchedulerExtendedPMService;
@@ -85,14 +79,10 @@ export class AddEditReportSchedulerComponent implements OnInit {
         this.ReportGroupList = windowArgs.ReportGroupList;
         this.ReportList = windowArgs.ReportList;
         this.IsQueryReport = windowArgs.IsQueryReport;
-        this.IsCustomerDebNotification = windowArgs.IsCustomerDebNotification;
-        this.GLAccountId = windowArgs.GLAccountId;
-        this.TaskSchedulerIdMaintenance = windowArgs.TaskSchedulerIdMaintenance;
-
+        
         if (!windowArgs.TasksSchedulerId) {
             this.BIReportEntity = windowArgs.BIReportEntity;
         }
-        this.IsPowerBIReport = windowArgs.IsPowerBIReport;    
         if (windowArgs.BIReportEntity) {
             this.IsBIReport = true;
         }
@@ -262,58 +252,12 @@ export class AddEditReportSchedulerComponent implements OnInit {
             });
     }
 
-    async SetReportDetails() {
+    SetReportDetails() {
         let reportTemplateId = this.PageChild_RETASK.GetReportTemplateId();
         let reportFilterItems = this.PageChild_RETASK.GetReportFilterItems();
         let messageTemplateId = this.PageChild_RETASK.GetMessageTemplateId();
-        if (this.IsCustomerDebNotification)
-        {
-           var queryFilterItems = new Array<QueryFilterItem>();
-            var queryFilterItem = new QueryFilterItem();
 
-            if (!AppTool.IsNullOrEmpty(this.GLAccountId))
-            {
-
-                 if (AppTool.IsNullOrEmpty(this.TasksSchedulerId) && !AppTool.IsNullOrEmpty(this.TaskSchedulerIdMaintenance))
-               {
-                       await new Promise<void>((resolve, reject) => {
-                    this.schedulerExtendedPMService
-                        .GetSchedulerDetailsById(this.TaskSchedulerIdMaintenance)
-                        .subscribe({
-                            next: (myResult: ServiceResponse) => {
-                                var myResponse: ServiceResponse = myResult;
-                                this.MaintenanceSchedulerDetails = myResponse?.Result?.ReportDetails;
-                                queryFilterItems = this.MaintenanceSchedulerDetails.ReportFilterItems;
-                                resolve(); 
-                            },
-                            error: (err) => reject(err)
-                        });
-                });           
-              }
-               queryFilterItem.FieldName = "GLAccountId";
-               queryFilterItem.FieldValue = this.GLAccountId;
-               queryFilterItem.Operator = "Equals";
-               queryFilterItems.push(queryFilterItem);
-            }
-            else
-            {
-               queryFilterItem.FieldName = "IsDisableGlaccountId";
-               queryFilterItem.FieldValue = true;
-               queryFilterItem.Operator = "Equals";
-               queryFilterItem.IsCustom = true;                       
-            }
-            if(reportFilterItems == null)
-            {
-               queryFilterItems.push(queryFilterItem);
-               this.PageChild_PRREP.SetReportFilterItems(queryFilterItems);
-            }
-            else
-            {
-              reportFilterItems.push(queryFilterItem);
-            }
-         }
-
-         this.PageChild_PRREP.SetReportFilterItems(reportFilterItems);      
+        this.PageChild_PRREP.SetReportFilterItems(reportFilterItems);
         this.PageChild_PRREP.SetReportTemplate(reportTemplateId);
         this.PageChild_PRREP.SetReportTemplateType(this.TemplateType);
         this.PageChild_PRREP.SetMessageTemplateId(messageTemplateId);
@@ -329,18 +273,18 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     SetReportRecepientsDetails(isReloaded) {        
-        const isPartnersChanged = !this.IsQueryReport && !this.IsPowerBIReport? this.PageChild_PRREP.IsPartnersChanged("3"): false; 
-        if(!this.IsQueryReport && !this.IsPowerBIReport) 
+        const isPartnersChanged = !this.IsQueryReport? this.PageChild_PRREP.IsPartnersChanged("3"): false; 
+        if(!this.IsQueryReport) 
          this.PageChild_PRREP.PrepareContactList();        
         var windowArgs: any = {};
         var recepients: ReportSchedulerRecepients = this.PageChild_RETASK.DataContext.SchedulerDetails.ReportDetails.Recepients;
         windowArgs.ToEmail = this.SavedRecepients ? "" : recepients.To;
         windowArgs.Cc = this.SavedRecepients ? "" : recepients.Cc;
         windowArgs.Bcc = this.SavedRecepients ? "" : recepients.Bcc;
-        windowArgs.PartnersObslist = !this.IsQueryReport && !this.IsPowerBIReport ? this.PageChild_PRREP?.PartnersObslist : [];
+        windowArgs.PartnersObslist = !this.IsQueryReport ? this.PageChild_PRREP?.PartnersObslist : [];
         windowArgs.EntityId = this.IsBIReport ? this.BIReportEntity['Id'] : this.ReportList.Id;
         windowArgs.OnCloseSendToContactsEvent = false;
-        windowArgs.IsUserFromReport = this.PageChild_PRREP?.PartnersObslist || this.IsQueryReport || this.IsPowerBIReport? true : false;
+        windowArgs.IsUserFromReport = this.PageChild_PRREP?.PartnersObslist || this.IsQueryReport? true : false;
         windowArgs.IsSchedulerReport = true;
         windowArgs.isReloaded = isReloaded;
         windowArgs.ClearRecepients = isPartnersChanged;
@@ -365,7 +309,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
 
     public SelectedTabLocation: number = 0; //0: Report Task, 1: Preview Report, 2: Open Email
     NextButtonClicked() {
-        if(this.IsQueryReport || this.IsPowerBIReport) {
+        if(this.IsQueryReport) {
             if (this.PageChild_RETASK.NextButtonClicked()) {
                 if (this.PageChild_OPEMA != null) {
                     this.SetRecepientsDetails(true);
@@ -418,7 +362,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             return;
         }
 
-        if (!this.IsCustomerDebNotification && !this.DataContext.IsFTP && !this.IsNew && AppTool.IsNullOrEmpty(this.OldReportSchedulerDetails?.Recepients?.To) && !this.PageChild_OPEMA) {
+        if (!this.DataContext.IsFTP && !this.IsNew && AppTool.IsNullOrEmpty(this.OldReportSchedulerDetails?.Recepients?.To) && !this.PageChild_OPEMA) {
             this.PageChild_RETASK?.parentComponent?.ValidationErrorsList?.push("Please add at least one contact");
             return;
         }
@@ -430,7 +374,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         if (this.IsBIReport) {
             this.SaveBIReportSchedulerDetails();
         }
-        else if(this.IsQueryReport || this.IsPowerBIReport) {
+        else if(this.IsQueryReport) {
             this.SaveQueryReportSchedulerDetails();
         }
         else {         
@@ -508,7 +452,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             DocumentTypeTemplateId: null,
             DocumentTypeTemplateIds: null,
             MessageTemplateId: null,
-            ProcedureName: this.IsQueryReport? this.PageChild_RETASK.SelectedReport.Code: null,
+            ProcedureName: this.PageChild_RETASK.SelectedReport.Code,
 
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
@@ -596,7 +540,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     BackButtonClicked() {
-        if(!this.IsQueryReport && !this.IsPowerBIReport) {
+        if(!this.IsQueryReport) {
             switch (this.SelectedTabLocation) {
                 case 1:
                     this.reOpenReportTaskTab();
@@ -638,20 +582,15 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     DisableFinishButton() { 
-        if (this.IsCustomerDebNotification && AppTool.IsNullOrEmpty(this.GLAccountId) && this.PageChild_PRREP) return false;
         if (this.PageChild_OPEMA && this.PageChild_OPEMA.ToEmailLists.length == 0) return true;
         if (!this.IsBIReport && this.PageChild_PRREP && !this.IsNew && !this.PageChild_PRREP.ValidateSelectedFilters()) return true;
-        if((this.IsQueryReport || this.IsPowerBIReport) && this.IsNew && (this.PageChild_OPEMA)) return false;
+        if(this.IsQueryReport && this.IsNew && (this.PageChild_OPEMA)) return false;
         if (this.IsNew && this.PageChild_PRREP && this.DataContext.IsFTP) return false;
         if (this.IsNew && (!this.PageChild_PRREP || !this.PageChild_OPEMA)) return true;
 
         return false;
     }
-    DisableNextButton() {
-        if (this.IsCustomerDebNotification && AppTool.IsNullOrEmpty(this.GLAccountId) && this.PageChild_PRREP) return true;
 
-       return this.SelectedTabLocation == 2 || (this.DataContext.IsFTP && this.SelectedTabLocation == 1);
-    }
     CloseButtonClicked() {
         var confirmMsg = "Are you sure you want to leave this page without saving the report?";
 
@@ -662,10 +601,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             if (!confirmWindow.Yes) return;
 
             this.PageChild_RETASK.RejectChanges();
-            if(this.IsCustomerDebNotification)
-               this.CurrentSession.CloseCurrentWindowData(this.TasksSchedulerId);
-           
-               this.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         });
     }
 }
