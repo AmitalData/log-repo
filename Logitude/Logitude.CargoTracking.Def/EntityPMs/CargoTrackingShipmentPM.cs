@@ -193,8 +193,7 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         public bool? IsEstimation { get; set; }
         public bool? IsCurrent { get; set; }
         public bool? InActive { get; set; }
-        public int TenantId { get; set; }
-        public string ExternalCode {  get; set; }
+
     }
 
     public class ConnectedOrder
@@ -216,6 +215,6 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         public bool? IsChoose { get; set; }
         public string PartnerTypeId { get; set; }
 		public string EntityType { get; set; }
-        public string EventTypeId { get; set; }
-    }
+		
+	}
 }

@@ -13,7 +13,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         AWBDescriptionOfGoodsRepository repository;
 
- 
+        public AWBDescriptionOfGoodsQuery()
+        {
+            this.repository = new AWBDescriptionOfGoodsRepository(); 
+        }
 
         public AWBDescriptionOfGoodsQuery(int tenant)
         {

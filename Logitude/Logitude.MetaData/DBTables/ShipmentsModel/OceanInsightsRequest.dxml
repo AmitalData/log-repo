@@ -72,37 +72,4 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Column
-    Name="System"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-  Name="IsClosed"
-  Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-  Name="Method"
-  Type="varchar"
-  Size="10">
-	  <Constraints
-		  Nullable="true" />
-  </Column>
-  <Column
-   Name="OriginalResponse"
-   Type="varchar"
-   Size="4000">
-	  <Constraints
-		  Nullable="true" />
-  </Column>
-  <Column
-    Name="ApiStatus"
-    Type="bit">
-	    <Constraints
-		  Nullable="true" />
-  </Column>
 </Table>
