@@ -131,7 +131,5 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string EmailForSendingSingArinvoice { get; set; }
         public bool SendingInterestReport { get; set; }
         public string ExternalSystem { get; set; }
-        public string BankCodeId { get; set; }
-        public string BankBranch { get; set; }
     }
 }

@@ -171,7 +171,6 @@ import { GlAccountInterestTransactionsListTemplate } from './Components/ListTemp
 import { NewNLogComponent } from './Components/Maintenance/NewNLogComponent';
 import { InvoiceApiCommunicationLogDetailsTabComponent } from './Components/EditTabs/InvoiceApi/InvoiceApiCommunicationLogDetailsTabComponent';
 import { CustomerDebtNotificationComponent } from './Components/Maintenance/CustomerDebtNotificationComponent';
-import { JournalMichpalLoadComponent } from './Components/NewEntity/JournalMichpalLoadComponent';
 
 
 
@@ -208,7 +207,6 @@ export const Components =
         LoadRecoExPageComponent,
         NewUserDefinedReportComponent,
         JournalCSVLoadComponent,
-        JournalMichpalLoadComponent,
         TaxReportUploadLinesComponent,
 
         //Maintenance
@@ -391,7 +389,6 @@ export class ModuleDeclarations {
             case "NewOpenFormatReportComponent": { myResult = NewOpenFormatReportComponent; break; }
             case "LoadRecoExPageComponent": { myResult = LoadRecoExPageComponent; break; }
             case "JournalCSVLoadComponent": { myResult = JournalCSVLoadComponent; break; }
-            case "JournalMichpalLoadComponent": { myResult = JournalMichpalLoadComponent; break; }
             case "NewInterestReportComponent": { myResult = NewInterestReportComponent; break; }
             case "NewUserDefinedReportComponent": { myResult = NewUserDefinedReportComponent; break; }
 

@@ -1,33 +1,31 @@
-﻿using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.BL.EntityUpdateServices;
-using Logitude.Accounting.BL.InterestEntityQueryServices;
-using Logitude.Accounting.BL.InterestEntityQueryServices.InterestFactory;
-using Logitude.Accounting.BL.InterestService.HelperClasses;
-using Logitude.Accounting.Data;
+﻿using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.Resolvers;
-using Logitude.Infrastructure.BL.EntityPMs;
-using Logitude.Infrastructure.BL.EntityQueryServices;
-using Logitude.Infrastructure.BL.EntityUpdateServices;
-using Logitude.Infrastructure.Data;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.QueueService;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.Helpers;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
+using System.Data.Entity;
+using Logitude.Accounting.BL.InterestEntityQueryServices;
+using Logitude.Accounting.BL.InterestEntityQueryServices.InterestFactory;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Def.EntityPMs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.Resolvers;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Accounting.BL.InterestService.HelperClasses;
+using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Server.Tools.QueueService;
 using System.Xml.Serialization;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.BL.InterestService
 {
@@ -269,7 +267,7 @@ namespace Logitude.Accounting.BL.InterestService
                 for (int i = 0; i < interestTransactionLists.Count; i++)
                 {
 
-                    interestTransactionLists[i] = FillDataInterestTransaction(interestTransactionLists[i],JournalNumbers, CurencyCodes, Tenant);
+                    interestTransactionLists[i] = FillDataInterestTransaction(interestTransactionLists[i],JournalNumbers, CurencyCodes);
 
                 }
                 TotalLocalAmount += interestTransactionLists.Sum(s=>s.LocalAmount);
@@ -312,7 +310,7 @@ namespace Logitude.Accounting.BL.InterestService
 
         }
 
-        private InterestTransactionList FillDataInterestTransaction(InterestTransactionList interestTransactionLists, List<string> JournalNumbers, List<string> CurencyCodes, int Tenant)
+        private InterestTransactionList FillDataInterestTransaction(InterestTransactionList interestTransactionLists, List<string> JournalNumbers, List<string> CurencyCodes)
         {
             InterestEntityResult entityResult = GetInterestEntityResultByInterestTransaction(interestTransactionLists);
 
@@ -322,26 +320,16 @@ namespace Logitude.Accounting.BL.InterestService
             interestTransactionLists.InterestEntityIconCode = entityResult.EntityTypeCode; // See InterestEntityTypeCodes.cs
             interestTransactionLists.JournalId = entityResult.JournalId;               //aRInvoice.JournalId //aRPaymentPM.JournalId //journalPM.Id //journalPM.Id //null
             interestTransactionLists.AccountEntityCode = entityResult.AccountCode;     //"2" //"3" //"1" //"1" //"11"
-
-            var line = 
-                entityResult.OriginalLines
-                    .FirstOrDefault(ln => ln.OriginalLineNumber == interestTransactionLists.OriginalEntityLineNumber)
-                ?? entityResult.OriginalLines.FirstOrDefault();
-
-            if (line != null)
+            if (entityResult.OriginalLines.Any(ln => ln.OriginalLineNumber == interestTransactionLists.OriginalEntityLineNumber))
             {
-                interestTransactionLists.Reference1 = line.Reference1;
-                var irnEnabled = FeatureToggleHelper.HasFeatureToggle("IRN", Tenant);
-
-                interestTransactionLists.Notes =
-                    irnEnabled
-                        ? line.Reference2
-                        : line.Notes;
-
-
+                interestTransactionLists.Reference1 = entityResult.OriginalLines.Where(ln => ln.OriginalLineNumber == interestTransactionLists.OriginalEntityLineNumber).FirstOrDefault()?.Reference1;
+                interestTransactionLists.Notes = entityResult.OriginalLines.Where(ln => ln.OriginalLineNumber == interestTransactionLists.OriginalEntityLineNumber).FirstOrDefault()?.Notes;
             }
-
-
+            else
+            {
+                interestTransactionLists.Reference1 = entityResult.OriginalLines.FirstOrDefault()?.Reference1;
+                interestTransactionLists.Notes = entityResult.OriginalLines.FirstOrDefault()?.Notes; 
+            }
             interestTransactionLists.CurrencyCode = GetSingleCurrencyCodeByInterestTransaction(interestTransactionLists, CurencyCodes);
         
             return interestTransactionLists;

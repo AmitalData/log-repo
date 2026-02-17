@@ -20,7 +20,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
     
     [TestClass]
-    [Ignore("Disabled: relies on environment/data not available in this run")]
     public partial class JournalValidatorUnitTest
     {
         const string C_ExternalNoExist = "ExternalNoExist";
