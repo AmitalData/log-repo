@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         AirlineMessagingRuleRepository repository;
 
-
+        public AirlineMessagingRuleQuery()
+        {
+            repository = new AirlineMessagingRuleRepository(); 
+        }
 
         public AirlineMessagingRuleQuery(int tenant)
         {

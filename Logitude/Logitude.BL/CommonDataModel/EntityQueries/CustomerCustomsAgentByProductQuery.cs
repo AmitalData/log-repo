@@ -16,7 +16,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
          CustomerCustomsAgentByProductRepository repository;
 
-
+        public CustomerCustomsAgentByProductQuery()
+        {
+            repository = new CustomerCustomsAgentByProductRepository(); 
+            
+        }
 
         public CustomerCustomsAgentByProductQuery(int tenant)
         {

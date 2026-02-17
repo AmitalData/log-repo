@@ -23,7 +23,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
     
 
-
+        public CustomerTenantAccessQuery()
+        {
+            repository = new CustomerTenantAccessRepository();
+        }
 
         public CustomerTenantAccessQuery(int tenant)
         {
