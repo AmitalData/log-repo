@@ -86,7 +86,7 @@ namespace Logitude.BL.Security
 
                 if (contactinfo != null)
                 {
-                    if (contactinfo.IsLogitudeAdmin || contactinfo.IsApi)
+                    if (contactinfo.IsApi)
                     {
                         exists = true;
                     }
