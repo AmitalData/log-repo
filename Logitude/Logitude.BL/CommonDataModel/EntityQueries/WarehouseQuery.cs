@@ -23,6 +23,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         WarehouseRepository repository;
 
+        public WarehouseQuery()
+        {
+            repository = new WarehouseRepository(); 
+        }
 
         public WarehouseQuery(int tenant)
         {

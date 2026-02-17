@@ -11,7 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public RestrictionRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public RestrictionRepository(ICommonDataContext context)
         {

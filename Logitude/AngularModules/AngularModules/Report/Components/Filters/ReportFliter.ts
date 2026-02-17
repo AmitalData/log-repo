@@ -20,7 +20,6 @@ export class ReportFliter {
     ReportName: string;
     InvoiceType: string;
     DefaultTemplateId: string;
-    DefaultExcelNoStimId: string;
     DefaultTemplateVsersion: number;
     ReportsRunUsingWR: boolean = false;
     UserId: string;

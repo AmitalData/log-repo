@@ -1,5 +1,4 @@
-﻿using Logitude.Accounting.BL.CloseTables;
-using Logitude.Accounting.BL.EntityQueryServices;
+﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
@@ -102,11 +101,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
                     String theJournalLineCurrencyId = "";
-                    if(glPM.IsMultiCurrency==true && glPM.ReconcileMethodCode == ReconcileMethodValues.ForeignCurrency)
-                    {
-                        theJournalLineCurrencyId = theCurrencyId;
-                    }
-                    else if (!String.IsNullOrWhiteSpace(glPM.CurrencyId))
+
+                    if (!String.IsNullOrWhiteSpace(glPM.CurrencyId))
                     {
                         theJournalLineCurrencyId = glPM.CurrencyId;
 
@@ -356,7 +352,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     var myAccountingEntityDetails = new AccountingEntityDetails();
                     var adjustmentAccountingEntityDetails = myAccountingEntityDetails.GetAll().FirstOrDefault(r => r.EnglishName == AdjustmentAccountingEntityName);
 
-                    string theJournalLineCurrencyId = !String.IsNullOrWhiteSpace(glAccountPM.CurrencyId) ? glAccountPM.CurrencyId : (glAccountPM.IsMultiCurrency == true && glAccountPM.ReconcileMethodCode ==  "1") ? theCurrencyId :accountingCurrencyId;
+                    string theJournalLineCurrencyId = !String.IsNullOrWhiteSpace(glAccountPM.CurrencyId) ? glAccountPM.CurrencyId : accountingCurrencyId;
                     theCurrencyId = theJournalLineCurrencyId;
                     RatesTablePM rate = null;
                     rate = ratesTableQuery.GetLastRateByValueDate(tenant, theCurrencyId, accountingCurrencyId,AccountDate);

@@ -15,7 +15,7 @@
   <Column
     Name="AddressId"
     Type="varchar"
-    Size="15">
+    Size="9">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -62,7 +62,7 @@
   <Column
     Name="BranchName"
     Type="nvarchar"
-    Size="255">
+    Size="35">
     <Constraints
       Nullable="true" />
   </Column>
