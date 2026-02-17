@@ -61,18 +61,6 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
-        public bool ExistsJournalLineByReferenceCreditAccountId(string reference1, string gLAccountId, int tenant)
-        {
-            return context.JournalLines
-                .Where(a => a.Reference1 == reference1 && a.CreditAccountId == gLAccountId && a.Tenant == tenant
-                 && a.Journal.StatusCode != JournalStatuses.Voided.ToString()
-                 && a.Journal.StatusCode != JournalStatuses.Cancelled.ToString()
-                 && a.Journal.OriginalJournalId == null)
-                .Any();
-        }
-
-
-
         partial void onUpdate()//Partial Methods
         {
             InsureUsingOnlyByUpdateService();

@@ -3822,30 +3822,7 @@ namespace Logitude.Accounting.Def.EntityPMs
             }
         }
 
-		private CustomerDebtNotificationPM customerDebtNotification = new CustomerDebtNotificationPM();
 
-
-		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-		[DataMember]
-		public CustomerDebtNotificationPM CustomerDebtNotification
-		{
-
-			get
-			{
-				return customerDebtNotification;
-			}
-			set
-			{
-				if (customerDebtNotification != value)
-				{
-					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "CustomerDebtNotification", OldValue = customerDebtNotification, NewValue = value, PropertyType = "CustomerDebtNotificationPM" };
-					NotifyPropertyChanged(values);
-					customerDebtNotification = value;
-				}
-
-			}
-		}
-	
         private bool foreignCurrencyInterest;
 
 
@@ -3873,7 +3850,31 @@ namespace Logitude.Accounting.Def.EntityPMs
 
 
 
-    }
+
+		private CustomerDebtNotificationPM customerDebtNotification = new CustomerDebtNotificationPM();
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public CustomerDebtNotificationPM CustomerDebtNotification
+		{
+
+			get
+			{
+				return customerDebtNotification;
+			}
+			set
+			{
+				if (customerDebtNotification != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "CustomerDebtNotification", OldValue = customerDebtNotification, NewValue = value, PropertyType = "CustomerDebtNotificationPM" };
+					NotifyPropertyChanged(values);
+					customerDebtNotification = value;
+				}
+
+			}
+		}
+	}
    
 }
 	 

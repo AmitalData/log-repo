@@ -317,7 +317,7 @@ namespace WebFreight.Web.Helpers
 						stop = true;
 					}
 				}
-                if (stop == false)
+				if (stop == false)
 				{
 					MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.TaxReportDomainService", query);
 					if (MethodsInfo != null)
