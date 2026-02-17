@@ -43,11 +43,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                       IsFirstLine = a.IsFirstLine,
                                                   }).FirstOrDefault();
 
-            //if (myResult != null)
-            //{
-            //    ShipmentPackageQuery packagesQuery = new ShipmentPackageQuery(tenant);
-            //    myResult.CommodityPackages = packagesQuery.GetPackagesByCommodityId(myResult.Id, tenant);
-            //}
+            if (myResult != null)
+            {
+                ShipmentPackageQuery packagesQuery = new ShipmentPackageQuery(tenant);
+                myResult.CommodityPackages = packagesQuery.GetPackagesByCommodityId(myResult.Id, tenant);
+            }
 
             return myResult;
         }
@@ -74,15 +74,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                       IsFirstLine = a.IsFirstLine,
                                                   }).OrderBy(a => a.Id).ToList();
 
-            //if (myResult.Count > 0)
-            //{
-            //    ShipmentPackageQuery packagesQuery = new ShipmentPackageQuery(tenant);
+            if (myResult.Count > 0)
+            {
+                ShipmentPackageQuery packagesQuery = new ShipmentPackageQuery(tenant);
 
-            //    foreach (ShipmentCommodityPM item in myResult)
-            //    {
-            //        item.CommodityPackages = packagesQuery.GetPackagesByCommodityId(item.Id, tenant).ToList();
-            //    }
-            //}
+                foreach (ShipmentCommodityPM item in myResult)
+                {
+                    item.CommodityPackages = packagesQuery.GetPackagesByCommodityId(item.Id, tenant).ToList();
+                }
+            }
 
             return myResult;
         }

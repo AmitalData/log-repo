@@ -940,16 +940,7 @@ namespace Logitude.Infrastructure.BL
                 Description = "Payment Status based on Reco", 
                 Name = " A/P Invoice Payment Status based on Reconciliation", 
 			});
-
-
-            all.Add(new ToggleDetails()
-            {
-                SearchFields = "RFR, Revaluation on Foreign Reco",
-                Code = "RFR",
-                Description = "Revaluation on Foreign Reco",
-                Name = "Revaluation Journal on Foreign Currency Reconciliation",
-            });
-
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "RE2", 
@@ -964,14 +955,6 @@ namespace Logitude.Infrastructure.BL
                 Name = "Get Tax Report VAT from A/P Invoice",
                 SearchFields = "VPI, Get Tax Report VAT from A/P Invoice",
                 Description = "Get Tax Report VAT from A/P Invoice",
-            });
-
-            all.Add(new ToggleDetails()
-            {
-                Code = "IRN",
-                Name = "Interest Report Notes New Logic",
-                SearchFields = "IRN, Interest Report Notes New Logic",
-                Description = "Interest Report Notes: Entity of ARInvoice, Cheques of ARPayment",
             });
 
             all.Add(new ToggleDetails()
@@ -1054,14 +1037,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "AV2,Israel Invoices Do Not Activate V2",
                 Description = "חשבוניות ישראל לא להפעיל V2 ",
             });
-            all.Add(new ToggleDetails()
-            {
-                Code = "BMO",
-                Name = "Open Format Report Optimization",
-                SearchFields = "BMO,Open Format Report Optimization",
-                Description = "דוח במבנה אחיד - אופטימיזציה",
-            }); 
-            all.Add(new ToggleDetails()
+			all.Add(new ToggleDetails()
 			{
 				Code = "STQ",
 				Name = "Add Task Scheduler To Queue By Date",
@@ -1088,34 +1064,6 @@ namespace Logitude.Infrastructure.BL
                 Name = "Calculate With Total Past Open Cheques",
                 SearchFields = "CTP,Calculate With Total Past Open Cheques",
                 Description = "Calculate With Total Past Open Cheques",
-            });
-            all.Add(new ToggleDetails()
-            {
-                Code = "UAT",
-                Name = "Use Accounting Date for AP Tax Report",
-                SearchFields = "Use Accounting Date for AP Tax Report,UAT",
-                Description = "Use Accounting Date for AP Tax Report ",
-            });
-            all.Add(new ToggleDetails()
-            {
-                Code = "SWR",
-                Name = "Second Worker Role",
-                SearchFields = "SWR,Second Worker Role",
-                Description = "Second Worker Role",
-            });
-            all.Add(new ToggleDetails()
-            {
-                Code = "OCA",
-                Name = "Original Name For Child Account",
-                SearchFields = "OCA,Original Name For Child Account",
-                Description = "Original Name For Child Account",
-            });
-            all.Add(new ToggleDetails()
-            {
-                Code = "SSH",
-                Name = "Skip Steps on Hasavot",
-                SearchFields = "SSH,Skip Steps on Hasavot",
-                Description = "לדלג על השלבים עבור הסבות",
             });
             return all;
        }
