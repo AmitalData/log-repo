@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OpenFormatReportUpdateClass
    {  		
-		public const string HashString = "eb1e2e4d19cee5f8cce080e67c13c75b";
+		public const string HashString = "35cc177b8f918c7d4c7f6b57cfd25269";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -44,7 +44,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  true,
-			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -71,8 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "NewOpenFormatReportComponent",
-			      				    LocalDefaultTextBack_up =  "דוחות מבנה אחיד",
-			      				    LocalDefaultText =  "BS64:IteT15XXl9eV16og157Xkdeg15Qg15DXl9eZ15Mi",
+			      				    LocalDefaultText =  "דוחות מבנה אחיד",
 			      				    DefaultText =  "Open Format Report",
 			      				    Code =  "7d37",
 			      				    Name =  " Query Group",
@@ -83,7 +81,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
-			      				    ShowFastSearch =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -267,12 +264,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultTextBack_up =  "תאריך יצירה",
-					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
+					  						FullLocalDefaultText =  "תאריך יצירה",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultTextBack_up =  "תאריך יצירה",
-					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
+					  						ListLocalDefaultText =  "תאריך יצירה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -336,12 +331,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
 					  						DefaultText =  "Created By",
-					  						FullLocalDefaultTextBack_up =  "נוצר ע\\\"י",
-					  						FullLocalDefaultText =  "BS64:Iteg15XXpteoINeiXCLXmSI=",
+					  						FullLocalDefaultText =  "נוצר ע\\\"י",
 					  						ListFieldLable =  "CreatedByUserIdListLable",
 					  						ListLableDefaultText =  "Created By User",
-					  						ListLocalDefaultTextBack_up =  "נוצר ע\\\"י",
-					  						ListLocalDefaultText =  "BS64:Iteg15XXpteoINeiXCLXmSI=",
+					  						ListLocalDefaultText =  "נוצר ע\\\"י",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "CreatedByUser",
@@ -406,12 +399,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
 					  						DefaultText =  "Update Date",
-					  						FullLocalDefaultTextBack_up =  "תאריך עדכון ",
-					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyAi",
+					  						FullLocalDefaultText =  "תאריך עדכון ",
 					  						ListFieldLable =  "UpdateDateListLable",
 					  						ListLableDefaultText =  "Update Date",
-					  						ListLocalDefaultTextBack_up =  "תאריך עדכון ",
-					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyAi",
+					  						ListLocalDefaultText =  "תאריך עדכון ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -537,12 +528,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReportNumber",
 					  						DefaultText =  "Report Number",
-					  						FullLocalDefaultTextBack_up =  "מספר דוח",
-					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeT15XXlyI=",
+					  						FullLocalDefaultText =  "מספר דוח",
 					  						ListFieldLable =  "ReportNumberListLable",
 					  						ListLableDefaultText =  "Report Number",
-					  						ListLocalDefaultTextBack_up =  "מספר דוח",
-					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeT15XXlyI=",
+					  						ListLocalDefaultText =  "מספר דוח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -605,12 +594,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FromDate",
 					  						DefaultText =  "From",
-					  						FullLocalDefaultTextBack_up =  "מתאריך",
-					  						FullLocalDefaultText =  "BS64:Itee16rXkNeo15nXmiI=",
+					  						FullLocalDefaultText =  "מתאריך",
 					  						ListFieldLable =  "FromDateListLable",
 					  						ListLableDefaultText =  "From",
-					  						ListLocalDefaultTextBack_up =  "מתאריך",
-					  						ListLocalDefaultText =  "BS64:Itee16rXkNeo15nXmiI=",
+					  						ListLocalDefaultText =  "מתאריך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -673,12 +660,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ToDate",
 					  						DefaultText =  "To ",
-					  						FullLocalDefaultTextBack_up =  "עד תאריך",
-					  						FullLocalDefaultText =  "BS64:Itei15Mg16rXkNeo15nXmiI=",
+					  						FullLocalDefaultText =  "עד תאריך",
 					  						ListFieldLable =  "ToDateListLable",
 					  						ListLableDefaultText =  "To",
-					  						ListLocalDefaultTextBack_up =  "עד תאריך",
-					  						ListLocalDefaultText =  "BS64:Itei15Mg16rXkNeo15nXmiI=",
+					  						ListLocalDefaultText =  "עד תאריך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -742,12 +727,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusTypeCode",
 					  						DefaultText =  "Status Code",
-					  						FullLocalDefaultTextBack_up =  "קוד סטטוס ",
-					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXodeY15jXldehICI=",
+					  						FullLocalDefaultText =  "קוד סטטוס ",
 					  						ListFieldLable =  "StatusTypeCodeListLable",
 					  						ListLableDefaultText =  "Status Code",
-					  						ListLocalDefaultTextBack_up =  "קוד סטטוס ",
-					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeY15jXldehICI=",
+					  						ListLocalDefaultText =  "קוד סטטוס ",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "OpenFormatReportStatus",
 					  						NavigationPropertyName =  "OpenFormatReportStatus",
@@ -810,8 +793,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ErrorMessage",
 					  						DefaultText =  "Error Message",
-					  						FullLocalDefaultTextBack_up =  "הערות שגיאה",
-					  						FullLocalDefaultText =  "BS64:IteU16LXqNeV16og16nXkteZ15DXlCI=",
+					  						FullLocalDefaultText =  "הערות שגיאה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -873,12 +855,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserName",
 					  						DefaultText =  "Created By User",
-					  						FullLocalDefaultTextBack_up =  "נוצר ע\\\"י",
-					  						FullLocalDefaultText =  "BS64:Iteg15XXpteoINeiXCLXmSI=",
+					  						FullLocalDefaultText =  "נוצר ע\\\"י",
 					  						ListFieldLable =  "CreatedByUserNameListLable",
 					  						ListLableDefaultText =  "Created By User",
-					  						ListLocalDefaultTextBack_up =  "נוצר ע\\\"י",
-					  						ListLocalDefaultText =  "BS64:Iteg15XXpteoINeiXCLXmSI=",
+					  						ListLocalDefaultText =  "נוצר ע\\\"י",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -940,12 +920,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Status",
 					  						DefaultText =  "Status",
-					  						FullLocalDefaultTextBack_up =  "סטטוס",
-					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Ei",
+					  						FullLocalDefaultText =  "סטטוס",
 					  						ListFieldLable =  "StatusListLable",
 					  						ListLableDefaultText =  "Status",
-					  						ListLocalDefaultTextBack_up =  "סטטוס",
-					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Ei",
+					  						ListLocalDefaultText =  "סטטוס",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1159,7 +1137,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  4000,
+					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -1231,7 +1209,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode OpenFormatReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.Q.AllOpenFormats", DefaultText = @"All Open Format Reports",LocalDefaultText = "BS64:Iteb15wg15TXk9eV15fXldeqIg==", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode OpenFormatReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.Q.AllOpenFormats", DefaultText = @"All Open Format Reports",LocalDefaultText = "כל הדוחות", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature OpenFormatReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpenFormatReport.Q.AllOpenFormats", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReportFeatures.AllOpenFormats", NameTextCodeDefaultText = "AllOpenFormats", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,OpenFormatReportObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -1291,11 +1269,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable OpenFormatReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode OpenFormatReportGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.TH.General", DefaultText = "General",LocalDefaultText = "BS64:Iteb15zXnNeZIg==", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode OpenFormatReportGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature OpenFormatReportGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpenFormatReport.Tab.General", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReportFeatures.OFGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,OpenFormatReportObjectTable,contextTenant);
  
                  
-			   TextCode OpenFormatReportLogTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.TH.Log", DefaultText = "Log",LocalDefaultText = "BS64:Itec15XXkiI=", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode OpenFormatReportLogTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.TH.Log", DefaultText = "Log",LocalDefaultText = "לוג", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature OpenFormatReportLogFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpenFormatReport.Tab.Log", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReportFeatures.OGLG", NameTextCodeDefaultText = "Log", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,OpenFormatReportObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
@@ -1397,7 +1375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = null,
 						Style = null,
-						LocalDefaultText = "BS64:IteZ15XXqteoIg==",
+						LocalDefaultText = "יותר",
 						FeatureUniqeCode = null,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -1417,7 +1395,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  OpenFormatReportFeature_MB00.Id,
 						Style = null,
-						LocalDefaultText = "BS64:IteU15XXqNeT15Qi",
+						LocalDefaultText = "הורדה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  OpenFormatReportFeature_MB00.FeatureUniqeCode,
@@ -1437,7 +1415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  OpenFormatReportFeature_MB01.Id,
 						Style = null,
-						LocalDefaultText = "BS64:IteU15XXqNeTINen15XXkdelIFBERiI=",
+						LocalDefaultText = "PDF הורד קובץ ",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  OpenFormatReportFeature_MB01.FeatureUniqeCode,
@@ -1452,7 +1430,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable OpenFormatReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode OpenFormatReportTextCode_OpenFormatReportONewReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.O.NewReport", DefaultText = "New open format report",LocalDefaultText = @"BS64:IteT15XXlyDXnteR16DXlCDXkNeX15nXkyDXl9eT16ki", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OpenFormatReportTextCode_OpenFormatReportONewReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.O.NewReport", DefaultText = "New open format report",LocalDefaultText = @"דוח מבנה אחיד חדש", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

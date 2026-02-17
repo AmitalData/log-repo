@@ -345,7 +345,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-                    FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
+                    FeatureQuery featureQuery = new FeatureQuery();
 
                     var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
 

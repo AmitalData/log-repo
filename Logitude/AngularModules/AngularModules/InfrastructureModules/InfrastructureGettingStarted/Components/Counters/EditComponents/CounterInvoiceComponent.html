@@ -41,7 +41,16 @@
                                     </td>
                                 </tr>
 
-                               
+                                <tr style="height: 20px;" *ngIf="SameForAllTypes == false">
+                                    <td>
+                                        <CheckBox [IsEnabled]="!IsCounterUsed" [IsChecked]="UniquePerPrefix" (Checked)="UniquePerPrefix = $event" [Text]="'Unique Per Prefix'"></CheckBox>
+                                    </td>
+                                </tr>
+                                <tr style="height: 20px;" *ngIf="SameForAllTypes == false && !IsCustomizedCounter">
+                                    <td>
+                                        <CheckBox [IsEnabled]="!IsCounterUsed" [IsChecked]="ActivateConsolidationCreditNoteCounter" (Checked)="ActivateConsolidationCreditNoteCounter = $event" [Text]="'Activate Consolidation Credit Note Counter'"></CheckBox>
+                                    </td>
+                                </tr>
 
                                 <tr style="height: 20px;" *ngIf="HasBranchCounterCodeFeature && HasSeparatePerBranchCounterCodeFeature && !IsCustomizedCounter">
                                     <td>
@@ -162,7 +171,27 @@
 
                                 <!-- Different | List -->
                                 <table *ngIf="SameForAllTypes == false && !IsCustomizedCounter">
-                                  
+
+                                    <!-- StartNumber -->
+                                    <tr class="FormFieldRow" *ngIf="!UniquePerPrefix">
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 100px;">
+                                                        <LogLabel [ObjectFieldName]="'StartNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td style="width: 150px;">
+                                                        <LogTextBox [ObjectFieldName]="'StartNumber'" [Text]="StartNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                    </td>
+
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
 
                                     <tr>
                                         <td>
