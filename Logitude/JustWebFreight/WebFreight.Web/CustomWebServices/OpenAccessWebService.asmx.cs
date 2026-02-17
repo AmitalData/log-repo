@@ -125,6 +125,7 @@ namespace WebFreight.Web.CustomWebServices
             return true;
         }
 
+
         [WebMethod]
         public bool SendSignedDeclaration(string customFileNo, int tenant, string user, string personId, out string errMessage)
         {
@@ -183,18 +184,16 @@ namespace WebFreight.Web.CustomWebServices
                 LoggingEnabled = true,
                 ForcePersonalSign = true,
                 UnifreightListOnServerOnly = unifreightListOnServerOnly,
-                HsmStationContext = GetHsmStationContext(declarationPM),
             };
             var signQueueHSMService = new SignQueueHSMService();
             var dbSignQueueService = new SignQueueHybridDbService();
             SignMethodByQueueEnum signMethodByQueueEnum = SignMethodByQueueEnum.None;
             string availableSignServer = null;
 
-            var IsCloud = !CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight;
-            if (signQueueHSMService.IsHSMSign_IsOn(tenant, GetHsmStationContext(declarationPM)) || IsCloud)
+            if (signQueueHSMService.IsHSMSign_IsOn(tenant))
             {
                 (availableSignServer, signMethodByQueueEnum) = dbSignQueueService
-                    .GetAvailableSignServer(tenant, SignQueueByType.SignQueueByPersonId, personId, hsmStationContext:genericRequestParams.HsmStationContext);
+                    .GetAvailableSignServer(tenant, SignQueueByType.SignQueueByPersonId, personId);
             }
             if (string.IsNullOrEmpty(availableSignServer))
             {
@@ -223,21 +222,6 @@ namespace WebFreight.Web.CustomWebServices
             //var availableSignServer = SignQueue.Instance.GetAvailableSignServer(tenant, Server.Tools.ExternalServices.SignQueueByType.SignQueueByPersonId, personId);
             var availableSignServer = SignQueue.Instance.GetAvailableSignServer(tenant, SignQueueByType.SignQueueByPersonId, personId);
             return !String.IsNullOrWhiteSpace(availableSignServer);
-        }
-
-        private string GetHsmStationContext(DeclarationPM declarationPM)
-        {
-            if (declarationPM != null && declarationPM.IsCourierDeclaration == true)
-            {
-                return "Ecom";
-            }
-
-            if (declarationPM != null && string.Equals(declarationPM.Direction, "E", StringComparison.OrdinalIgnoreCase))
-            {
-                return "MehesExport";
-            }
-
-            return "Customs";
         }
 
     }

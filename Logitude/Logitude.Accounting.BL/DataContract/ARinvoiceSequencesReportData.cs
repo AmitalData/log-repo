@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.DataContract
 {
-    public class ARinvoiceSequencesReportData: BaseDataProvider
+    public class ARinvoiceSequencesReportData
     {
         public List<string> Sequances {get; set;}
     }
