@@ -41,9 +41,8 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     public ValidationErrorsList: any[];
     DataContext = this;
     private documentTypeCode: string;
-    public IsFromSIIRequest = false;
     get DocumentTypeCode() {
-        if (this.CustomsDocument && !this.IsFromSIIRequest) {
+        if (this.CustomsDocument) {
             this.documentTypeCode = this.CustomsDocument.DocumentTypeCode;
         }
         else if (this.CustomsDocumentsTicket) {
@@ -56,17 +55,39 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     set DocumentTypeCode(value: string) {
         if (value != this.documentTypeCode) {
             this.documentTypeCode = value;
+            //if (value != null) {
             if (this.CustomsDocument) {
+                //not needed
+                //if (this.newVersionAdded) {
+                //    this.documentTypeCode = value;
+                //    this.CurrentSession.StopBusyIndicator();
+                //    var confirmWindow = new ConfirmWindow();
+                //    confirmWindow.Width = 400;
+                //    confirmWindow.Height = 200;
+                //    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                //    confirmWindow.ShowNoButton = false;
+                //    confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
+                //    confirmWindow.Show(TextCodeTranslator.Translate("Customs.CustomsDocuments.DocMetadataWarning"));
+                //    confirmWindow.WindowClosed.subscribe((event: any) => {
+                //        if (confirmWindow.Yes) {
+                //            this.CustomsDocument.DocumentTypeCode = this.documentTypeCode;
+                //            //customDocumentMetaDataControlViewModel.LoadMetaData(previousValueList);
+                //            confirmWindow.Close();
+                //        }
+                //    });
+                //}
+                // else {
                 this.CustomsDocument.DocumentTypeCode = value;
-                if (!this.IsFromSIIRequest) {
-                    this.ClearAllMetaDataValues();
-                    this.InitializeMetaData(this.previousValueList);
-                }
+                this.ClearAllMetaDataValues();
+                this.InitializeMetaData(this.previousValueList);
+                // }
             }
             if (this.CustomsDocumentsTicket) {
                 this.CustomsDocumentsTicket.DocumentTypeCode = value;
+                //ChangePointersDocumentTypeCode(value);
+                //this.IsTicketChanged = true;
             }
-
+            //}
         }
     }
     IsDisplayOnly: boolean;
@@ -188,7 +209,6 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         this.WindowArgs = windowArgs;
 
         this.CustomsDocumentsTicket = windowArgs.CustomsDocumentsTicket;
-        this.IsFromSIIRequest = windowArgs.IsFromSIIRequest;
 
         if (this.CustomsDocumentsTicket) {
             this.CustomsDocumentsTicket.CloneMe();
@@ -202,9 +222,9 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         if (this.CustomsDocument) {
             this.CustomsDocument.CloneMe();
         }
-
+        
         this.isRequireDocumentTicket = windowArgs.RequestedDocumentId;
-
+        
         this.ParentEntityCode = windowArgs.ParentEntityCode;
         this.ParentEntityId = windowArgs.ParentEntityId;
         this.Child1EntityCode = windowArgs.Child1EntityCode;
@@ -356,13 +376,23 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                     this.IsMetaDataEditEnabled = true;
                     this.IsSendDocumentEnabled = true;
                 }
-                else {
+                else { //removed redundunt code
+                    //if (!isEditEnabled) {
+                    //    this.IsEditEnabled = falseca;
+                    //    this.IsMetaDataEditEnabled = false;
+                    //    this.IsSendDocumentEnabled = false;
+                    //    this.IsDocumentTypeEnabled = false;
+                    //    this.ViewDisableMessageVisibility = true;
+                    //    this.DisplayOnlyMessage = " המסך לתצוגה בלבד - סטטוס המסמך " + this.CustomsDocument.DocumentStatusName;
+                    //}
+                    //else {
                     this.IsEditEnabled = false;
                     this.IsMetaDataEditEnabled = false;
                     this.IsDocumentTypeEnabled = false;
                     this.IsSendDocumentEnabled = false;
                     this.ViewDisableMessageVisibility = true;
                     this.DisplayOnlyMessage = " המסך לתצוגה בלבד - סטטוס המסמך " + this.CustomsDocument.DocumentStatusName;
+                    //}
                 }
             }
             else {
@@ -515,7 +545,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 this.DisplayOnlyMessage = " לתצוגה בלבד - המסמך נדחה על ידי המכס ";//Document was deneid
             }
 
-            if (this.IsEntityDisplayOnly && !this.EntityPM.FromCancelDeclaration) { // declaration display only
+            if (this.IsEntityDisplayOnly) { // declaration display only
                 this.IsPointerChangeEnabled = false;
                 this.IsEditEnabled = false;
                 //this.IsSendDocumentEnabled = false;
@@ -525,7 +555,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         //Display only Logic - (Task 35024)
         if (this.CustomsDocumentsTicket && this.CustomsDocument) {
             var entitySpecialCondition = this.iCustomsDocumentsController.GetAddEditDocumentsEntitySpecialCondition();
-            if ((this.IsEntityDisplayOnly || !entitySpecialCondition) && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId) && !this.EntityPM.FromCancelDeclaration) {//(Regular doc in a paid declaration)
+            if ((this.IsEntityDisplayOnly || !entitySpecialCondition) && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId)) {//(Regular doc in a paid declaration)
                 this.IsEditEnabled = false;
                 this.IsPointerChangeEnabled = false;
                 this.IsMetaDataEditEnabled = false;
@@ -562,7 +592,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 this.IsDocumentTypeEnabled = false;
                 this.IsSendDocumentEnabled = false;
             }
-            if (!entitySpecialCondition || this.CustomsDocument.DocumentStatusCode == '7' || (this.IsEntityDisplayOnly && !this.EntityPM.FromCancelDeclaration)) {
+            if (!entitySpecialCondition || this.CustomsDocument.DocumentStatusCode == '7' || this.IsEntityDisplayOnly) {
                 this.IsEditEnabled = false;
                 this.IsPointerChangeEnabled = false;
                 //this.IsSendDocumentEnabled = false;
@@ -578,14 +608,14 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         if (this.CustomsDocument) {
             var statusCodes = ['1', '7'];
             if (statusCodes.indexOf(this.CustomsDocument.DocumentStatusCode) > -1 && !AppTool.IsNullOrEmpty(this.CustomsDocument.CustomsDocId)
-                && this.CustomsDocumentsTicket && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId) 
-                && (!this.IsEntityDisplayOnly || this.EntityPM.FromCancelDeclaration)){
+            && this.CustomsDocumentsTicket && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId)
+            && !this.IsEntityDisplayOnly) {
                 new CustomsDocumentsTicketsExtendedService().GetDocConnectTicket(this.CustomsDocument.DocumentsFilingId, this.ParentEntityId, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
                     const anotherDeclarationConnect: string[] = response.Result.decConnect;
 
                     if (anotherDeclarationConnect.length === 0)
                         this.IsActionButtonsEnabled = true;
-                })
+                })            
             }
             else {
                 if (this.CustomsDocument.DocumentStatusCode == '2') {
@@ -615,7 +645,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         }
 
         //*********************************************************//
-        if (this.isRequireDocumentTicket) {
+        if(this.isRequireDocumentTicket){
             this.IsDocumentTypeEnabled = false;
         }
         this.UIProperties.SetEnabled("DocumentTypeCode", "Customs.CustomsDocument", this.IsDocumentTypeEnabled);
@@ -627,10 +657,10 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     SendButtonClicked() {
-
-
-        this.OkMethod(true);
-
+       
+       
+            this.OkMethod(true);
+        
     }
 
     OkMethod(isSendToQueue: boolean) {
@@ -641,7 +671,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             var messageWindow = new MessageWindow();
             messageWindow.Width = 400;
             messageWindow.Height = 200;
-            messageWindow.RTL = true;
+            messageWindow.RTL=true;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
             messageWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.MustCustomDocumentType"));
             messageWindow.WindowClosed.subscribe((event: any) => {
@@ -653,13 +683,6 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         }
         if (this.CustomsDocument) {
             Validator.TryValidateObject(this.CustomsDocument, "Customs.CustomsDocument", errors);
-            if (errors.length > 0) {
-                this.ValidationErrorsList = errors;
-                return;
-            }
-        }
-        if (this.IsFromSIIRequest) {
-            Validator.TryValidateObject(this.CustomsDocumentsTicket, "Customs.CustomsDocumentsTicket", errors);
             if (errors.length > 0) {
                 this.ValidationErrorsList = errors;
                 return;
@@ -709,6 +732,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 if (AppTool.IsNullOrEmpty(this.CustomsDocument.DeclarationId)) {
                     this.CustomsDocument.DeclarationId = this.ParentEntityId;
                 }
+
                 if (AppTool.IsNullOrEmpty(this.CustomsDocument.DeclarationId)) {
                     this.CurrentSession.StopBusyIndicator();
                     var messageWindow = new MessageWindow();
@@ -743,16 +767,10 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                     newPointer.Tenant = SessionLocator.Tenant;
                     newPointer.ParentEntityId = this.ParentEntityId;
                     newPointer.ParentEntityCode = this.ParentEntityCode;
-                    if (this.IsFromSIIRequest) {
-                        newPointer.Child1EntityCode = this.Child1EntityCode;
-                        newPointer.Child1EntityId = this.Child1EntityId;
-                    }
-                    else {
-                        newPointer.Child1EntityCode = null;
-                        newPointer.Child1EntityId = null;
-                    }
+                    newPointer.Child1EntityCode = null;
                     newPointer.Child2EntityCode = null;
                     newPointer.Child3EntityCode = null;
+                    newPointer.Child1EntityId = null;
                     newPointer.Child2EntityId = null;
                     newPointer.Child3EntityId = null;
                     newPointer.DocumentTypeCode = this.CustomsDocumentsTicket.DocumentTypeCode;
@@ -918,7 +936,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             this.ShowSelectionComponent(selectInvoicesOnly);
         }
 
-
+        
     }
 
     //if(index != 0) {
@@ -961,7 +979,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         }
 
     }
-
+ 
     u
 
     RefereshConnectedInvoices() {

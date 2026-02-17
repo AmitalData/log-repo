@@ -43,7 +43,6 @@ using System.Text;
 using System.Threading;
 using System.Transactions;
 using System.Web;
-using static Simplog.Server.Infrastructure.DbContextBase;
 using Logitude.Accounting.BL.CoreBL.Reports.Aging;
 using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -542,29 +541,6 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
 
                         });
-
-                        /*  Update Due Balances for new transactions with actual due dates  */
-                        DateTime tomorrow = DateTime.Today.AddDays(1);
-                        var allGLAccounts = myLedgerTransactionsWithCounters
-                            .Where(lt => lt.DueDate < tomorrow)
-                            .Select(t => t.AccountId).Distinct().ToList();
-
-                        string currentId = String.Empty;
-                        allGLAccounts.ForEach(acc =>
-                        {
-                            try
-                            {
-                                currentId = acc;
-                                var myDueLocalBalanceService = new DueLocalBalanceService();
-                                myDueLocalBalanceService.ReBuild(_Tenant, acc, false); // only clients and vendors, see inside
-                            }
-                            catch (Exception)
-                            {
-                                NetCommonHelper.Logger.DevLog.Instance.WriteError("JournalApproveService Update Due Balances cureent id: {0}, workerRoleName: {1}, time:{2} ",
-                                   null, currentId, LogitudeSettings.WorkerRoleName, DateTime.Now);
-                            }
-                        });
-
                     }
                     Impersonate();
                     //CreateReconcileFromStorno(myLedgerTransactionsWithCounters);
@@ -1214,10 +1190,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         catch (Exception eee2)
                         {
-							LogMessagingUtil.Instance.AppendLine($"ReturnToQueue journalId= {journalId.ToString()} | Exception: {eee2.Message}");
-                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee2, journalId.ToString());
-
-                            Logitude.SystemLogs.ExceptionHandler.HandleException(eee2, DateTime.Now, 0, "", "", "JournalApproveService.ReturnToQueue()" + eee2.Message, null);
+ 							LogMessagingUtil.Instance.AppendLine($"ReturnToQueue journalId= {journalId.ToString()} | Exception: {eee2.Message}");
+ 
+							NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee2,journalId.ToString());
+                             Logitude.SystemLogs.ExceptionHandler.HandleException(eee2, DateTime.Now, 0, "", "", "JournalApproveService.ReturnToQueue()" + eee2.Message, null);
 
                             Thread.Sleep(100);
 
@@ -1380,7 +1356,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     myDbQueueService.Complete();
                     isSubmitApprove = true;
-                    MatchPaymentCommandTransactions(qpJournalId,tenant);
                 }
                 else
                 {
@@ -1805,18 +1780,6 @@ namespace Logitude.Accounting.BL.CoreBL
             return tGLAccountAgingDataType;
         }
 
-        private static void MatchPaymentCommandTransactions(string journalId, int tenant)
-        {
-
-            try
-            {
-                         
-            }
-            catch (Exception ex)
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError(ex.Message + " ,"+journalId);
-            }
-        }
         public class JournalApproveWorker
         {
             private static DateTime _NextDueDoneAt = DateTime.MinValue;
