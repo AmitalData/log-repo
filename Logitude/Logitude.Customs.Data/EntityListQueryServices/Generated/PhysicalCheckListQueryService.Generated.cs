@@ -117,7 +117,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.OpenDate);
+                                query2 = query2.OrderBy(d => d.Id);
                                 break;
                             }
                     }
@@ -126,7 +126,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.OpenDate);
+                query2 = query2.OrderBy(d => d.Id);
             }
 			if(!queryOperations.GetAll)
 			{

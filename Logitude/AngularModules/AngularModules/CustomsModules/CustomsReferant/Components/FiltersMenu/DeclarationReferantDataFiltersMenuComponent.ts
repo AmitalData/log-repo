@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Output, EventEmitter, ContentChild, ViewChild, ViewChildren, QueryList, ChangeDetectorRef, Input } from '@angular/core';
+import { Component, AfterViewInit, Output, EventEmitter, ContentChild, Input, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { MultiSelectLOVComponent } from '../../../../Infrastructure/Components/LogitudeComponents/MultiSelectLOVComponent';
@@ -134,9 +134,9 @@ export class DeclarationReferantDataFiltersMenuComponent
         var myService: UserListService = new UserListService();
         if (UserListFromFilters[0] != "HowCare" && UserListFromFilters.length != 0 && !AppTool.IsNullOrEmpty(UserListFromFilters[0])) {
             UserListFromFilters[0].split("%2C").forEach(function (value) {
-                    let ul = new UserList();
-                    ul.Id = value;
-                    this.LOVListUsers.push(ul)
+                let ul = new UserList();
+                ul.Id = value;
+                this.LOVListUsers.push(ul)
             }, this);
         } else {
         }
@@ -542,8 +542,8 @@ export class DeclarationReferantDataFiltersMenuComponent
         }
         this.apiQueryFilters.addAdditionalFilter("ReferantUserName", this.UserNamesListString, null, null, "Equal", true, false, false, "string", true);
         this.apiQueryFilters.addAdditionalFilter("ReferentUserId", this.UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0);
-        // this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
-        this.FilterChangeSubject.next();
+       // this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
+       this.FilterChangeSubject.next();
         this.apiQueryFiltersChanged = true;
     }
 
@@ -590,7 +590,7 @@ export class DeclarationReferantDataFiltersMenuComponent
         this.FilterChangeSubject.next();
 
     }
-
+    
     transportmodeId: string = "All";
     itemClicked(itemValue: string) {
         this.transportmodeId = itemValue;
@@ -680,7 +680,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                 "CFIHMAIN.LogitudeTask",
                 "ShowOCRQuery",
                 unifreightMessageM,
-                " הצגת מסך : שםילתם ל - OCR");
+                " הצגת מסך : שאילתא ל - OCR");
         }
         else {
             alert("ShowOCRQuery");
