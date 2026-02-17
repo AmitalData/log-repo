@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentOutCopyRepository repository;
 
-
+        public DocumentOutCopyQuery()
+        {
+            repository = new DocumentOutCopyRepository(); 
+        }
 
         public DocumentOutCopyQuery(int tenant)
         {
