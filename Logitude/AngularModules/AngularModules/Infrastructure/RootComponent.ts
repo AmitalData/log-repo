@@ -25,11 +25,7 @@ declare var IsMobileDetected;
 export class RootComponent implements AfterViewInit {
     @ViewChild(ChildDirective) Child: ChildDirective;
 
-    private _shouldFreshReload: boolean = false;
-
     constructor() {
-        if (this._shouldFreshReload) { this.clearAppData(); }
-
         var data = window.sessionStorage.getItem('userdata');
 
         if (data != 'SignOut') {
@@ -173,9 +169,9 @@ export class RootComponent implements AfterViewInit {
                 './Infrastructure/Components/SatisfactionSurvey/SatisfactionSurveyComponent',
                 this.Child.Location
             ).then();
-        else if (SessionLocator?.ExternalParams?.Menu?.startsWith("IdentityShaamLandingPage"))
-            SessionLocator.DynamicLoader.Load("./Infrastructure/Components/IdentityShaamLandingPageComponent/IdentityShaamLandingPageComponent", this.Child.Location).then()
-        else if (RootService.redirectToExternalLink())
+        else if(SessionLocator?.ExternalParams?.Menu?.startsWith("IdentityShaamLandingPage"))
+                SessionLocator.DynamicLoader.Load("./Infrastructure/Components/IdentityShaamLandingPageComponent/IdentityShaamLandingPageComponent", this.Child.Location).then()          
+        else if (RootService.redirectToExternalLink()) 
             return;
         else {
             SessionLocator.DynamicLoader.Load(
@@ -341,7 +337,7 @@ export class RootComponent implements AfterViewInit {
         this._FinishLogin = true;
         var termsofUseService = new TermsofUseService();
         termsofUseService
-            .GetCheckIfGoToTermUseComponent(
+            .GetCheckIfGoToTermUseComponent(    
                 SessionLocator.LoggedUserId
             )
             .subscribe((res: ServiceResponse) => {
@@ -511,15 +507,6 @@ export class RootComponent implements AfterViewInit {
         } else {
             document.location.href =
                 ServiceHelper.GetLogitudeURL() + 'Login.aspx';
-        }
-    }
-    private clearAppData() {
-        localStorage.clear();
-        sessionStorage.clear();
-        if ('caches' in window) {
-            caches.keys().then((names) => {
-                names.forEach((name) => caches.delete(name));
-            });
         }
     }
 }

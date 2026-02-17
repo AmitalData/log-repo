@@ -13,7 +13,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public DocumentsFilingRepository()
+        {
+            commonDataContext = new CommonDataContext();
+            //(context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+        
+        }
 
         public DocumentsFilingRepository(int tenant)
         {
@@ -441,13 +446,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                           where d.Id == DocumentsFilingId && a.Tenant == tenant
                           select a.FileSize).FirstOrDefault();
         }
-        public string GetFileDataMD5HashByDocumentIdAndTenant(string documentId, int tenant)
-        {
-            return context.DocumentsFilings
-                          .Where(df => df.DocumentId == documentId && df.Tenant == tenant)
-                          .Select(df => df.FileDataMD5Hash)
-                          .FirstOrDefault();
-        }
+
 
 
     }

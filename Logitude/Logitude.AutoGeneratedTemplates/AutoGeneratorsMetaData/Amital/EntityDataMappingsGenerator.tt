@@ -116,13 +116,7 @@ public dynamic GetMappingClassNameSpace(string destinationFolder)
 }
 
 #>
-<#+
-private bool SkipDbOnly(dynamic f)
-{
-    try { return (f.ObjectFieldDBOnly.GetType() == typeof(string) && f.ObjectFieldDBOnly == "true"); }
-    catch { return false; }
-}
-#>
+
 <#+
 void SaveMappingClassOutput(string outputFileName,bool isCustom)
   {
@@ -154,7 +148,6 @@ void SaveMappingClassOutput(string outputFileName,bool isCustom)
 	PMFields = new List<dynamic>();
 	foreach(var field in entity["field"])  
 		 { 
-		  if (SkipDbOnly(field)) continue;
 		  if( field.HasDataBaseField.GetType() == typeof(string))
            {
              if(field.HasDataBaseField == "true")
@@ -240,7 +233,6 @@ namespace <#= mapnamespacestring #>
 	PMFields = new List<dynamic>();
 	foreach(var field in entity["field"])  
 		 { 
-		  if (SkipDbOnly(field)) continue;
 		  if( field.HasDataBaseField.GetType() == typeof(string))
            {
              if(field.HasDataBaseField == "true")

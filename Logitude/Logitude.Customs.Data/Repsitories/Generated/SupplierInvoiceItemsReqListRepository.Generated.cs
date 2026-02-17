@@ -35,10 +35,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  POCO.SupplierInvoiceItemsReqList GetSingle(string declarationid, string siirequestid, int invoicecounterkey, int invoiceitemlinenumber, int tenant)
+		public  POCO.SupplierInvoiceItemsReqList GetSingle(string declarationid, int linenumber, string siirequestid, int invoicecounterkey, int invoiceitemlinenumber, int tenant)
         {
             return (from a in context.SupplierInvoiceItemsReqLists
-                    where a.DeclarationId == declarationid && a.SIIRequestID == siirequestid && a.InvoiceCounterKey == invoicecounterkey && a.InvoiceItemLineNumber == invoiceitemlinenumber && a.Tenant == tenant
+                    where a.DeclarationId == declarationid && a.LineNumber == linenumber && a.SIIRequestID == siirequestid && a.InvoiceCounterKey == invoicecounterkey && a.InvoiceItemLineNumber == invoiceitemlinenumber && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -53,7 +53,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             SupplierInvoiceItemsReqListKeys keys = entityKeys as SupplierInvoiceItemsReqListKeys;
             return (from a in context.SupplierInvoiceItemsReqLists
-                    where a.DeclarationId == keys.DeclarationId && a.SIIRequestID == keys.SIIRequestID && a.InvoiceCounterKey == keys.InvoiceCounterKey && a.InvoiceItemLineNumber == keys.InvoiceItemLineNumber
+                    where a.DeclarationId == keys.DeclarationId && a.LineNumber == keys.LineNumber && a.SIIRequestID == keys.SIIRequestID && a.InvoiceCounterKey == keys.InvoiceCounterKey && a.InvoiceItemLineNumber == keys.InvoiceItemLineNumber
                     select a).FirstOrDefault();
         }
 		 		                 

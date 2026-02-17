@@ -84,7 +84,6 @@ export class CustomsPartnerFtpListComponent extends BaseComponent implements OnI
 
 
                     let val = r.Value;
-
                     let myInterfaceDetails: InterfaceDetails = JSON.parse(val);
                     this._InterfaceNameItems.push(new KeyValuePair(myInterfaceDetails.Code,myInterfaceDetails.Name));
                     this._InterfaceDetailsItems.push(myInterfaceDetails);

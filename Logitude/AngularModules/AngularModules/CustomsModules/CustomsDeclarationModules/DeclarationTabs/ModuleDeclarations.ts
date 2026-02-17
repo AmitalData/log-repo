@@ -42,7 +42,6 @@ import { CertificateOfOriginGeneralTabComponent } from './Components/DigitalCert
 import { CertificateOfOriginMoreDetailsTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/MoreData/CertificateOfOriginMoreDetailsTabComponent';
 import { CertificateAnswersComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateAnswers/CertificateAnswersComponent';
 import { UpdateCertificateOfOriginGeneralFieldComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/UpdateCertificateOfOriginGeneralFieldComponent';
-import { ApprovalReportViewerComponent } from './Components/SIIRequest/ApprovalReportViewer/ApprovalReportViewerComponent';
 
 export const Components =
     [
@@ -89,7 +88,6 @@ export const Components =
         UpdateCertificateOfOriginGeneralFieldComponent,
         CertificateOfOriginMoreDetailsTabComponent,
         CertificateAnswersComponent,
-        ApprovalReportViewerComponent
 
     ];
 
@@ -145,7 +143,6 @@ export class ModuleDeclarations {
             case "CertificateOfOriginMoreDetailsTabComponent": { myResult = CertificateOfOriginMoreDetailsTabComponent; break; }
             case "CreateEditTicketComponent": { myResult = CreateEditTicketComponent; break; }
             case "CertificateAnswersComponent": { myResult = CertificateAnswersComponent; break; }
-            case "ApprovalReportViewerComponent": { myResult = ApprovalReportViewerComponent; break; }
 
         }
 

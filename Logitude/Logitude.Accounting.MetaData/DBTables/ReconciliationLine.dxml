@@ -79,14 +79,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="CurrencyRate"
-    Type="decimal"
-    Precision="16"
-    Scale="5">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="ReconciliationId"
     ReferencedTable="Reconciliations"

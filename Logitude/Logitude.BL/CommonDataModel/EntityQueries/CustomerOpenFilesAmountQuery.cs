@@ -13,7 +13,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CustomerOpenFilesAmountRepository repository;
 
-
+        public CustomerOpenFilesAmountQuery()
+        {
+            repository = new CustomerOpenFilesAmountRepository();
+        }
 
         public CustomerOpenFilesAmountQuery(int tenant)
         {

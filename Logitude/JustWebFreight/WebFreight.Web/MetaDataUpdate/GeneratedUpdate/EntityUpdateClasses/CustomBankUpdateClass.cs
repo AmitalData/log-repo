@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomBankUpdateClass
    {  		
-		public const string HashString = "a97f5230d5fc43ef2c31510421be8dea";
+		public const string HashString = "0fb8db638fa932efb8236d2cd49e3f77";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,7 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "Logitude.Customs.Views.NewCustomBankControlCommand",
-			      				    LocalDefaultTextBack_up =  "בנקים סוכן / יבוםן",
+			      				    LocalDefaultTextBack_up =  "בנקים סוכן / יבואן",
 			      				    LocalDefaultText =  "BS64:IteR16DXp9eZ150g16HXldeb158gLyDXmdeR15XXkNefIg==",
 			      				    DefaultText =  "Custom Bank",
 			      				    Code =  "CSBK",
@@ -227,7 +227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "InternalCode",
 					  						ObjectTableName =  "Customs.CustomBank",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
@@ -571,7 +571,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "EnglishName",
 					  						ObjectTableName =  "Customs.CustomBank",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
@@ -610,11 +610,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultTextBack_up =  "שם םנגלית",
+					  						FullLocalDefaultTextBack_up =  "שם אנגלית",
 					  						FullLocalDefaultText =  "BS64:Itep150g15DXoNeS15zXmdeqIg==",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultTextBack_up =  "שם םנגלית",
+					  						ListLocalDefaultTextBack_up =  "שם אנגלית",
 					  						ListLocalDefaultText =  "BS64:Itep150g15DXoNeS15zXmdeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -678,11 +678,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InActive",
 					  						DefaultText =  "InActive",
-					  						FullLocalDefaultTextBack_up =  "לם פעיל",
+					  						FullLocalDefaultTextBack_up =  "לא פעיל",
 					  						FullLocalDefaultText =  "BS64:Itec15Ag16TXoteZ15wi",
 					  						ListFieldLable =  "InActiveListLable",
 					  						ListLableDefaultText =  "InActive",
-					  						ListLocalDefaultTextBack_up =  "לם פעיל",
+					  						ListLocalDefaultTextBack_up =  "לא פעיל",
 					  						ListLocalDefaultText =  "BS64:Itec15Ag16TXoteZ15wi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,

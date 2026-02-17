@@ -22,10 +22,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public GGGQ GetSingle(string QUEID , int? tenant)
+        public GGGQ GetSingle(string QUEID)
         {
             return (from a in context.GGGQs
-                    where a.QUEID == QUEID && a.TENANT == tenant
+                    where a.QUEID == QUEID
                     select a).FirstOrDefault();
         }
 
@@ -68,11 +68,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             get { return currentContext; }
         }
 
-        public GGGQ GetByPrimary(string primary, string entity, string originQue, string formId, string status, int tenant)
+        public GGGQ GetByPrimary(string primary, string entity, string originQue, string formId, string status)
         {
             var q = (from a in context.GGGQs
-                     where a.PRIMARYNUM == primary & a.ENTNAME == entity & a.ORIGINQUE == originQue
-                     & a.FORMID == formId & a.STATUS == status && a.TENANT==tenant
+                     where a.PRIMARYNUM == primary & a.ENTNAME == entity & a.ORIGINQUE == originQue & a.FORMID == formId & a.STATUS == status
                      select a);
             return q.FirstOrDefault();
         }
@@ -90,7 +89,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public GGGQ GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as GGGQKeys;
-            return this.GetSingle(keys.QUEID, keys.Tenant);
+            return this.GetSingle(keys.QUEID);
         }
     }
 }

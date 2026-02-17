@@ -132,8 +132,6 @@ namespace CommunicationWorkerRole
 
                         if (response?.MessageValues?.ContainsKey("InvoiceApiId") == true)
                         {
-
-                            invoiceXml = null;
                             string InvoiceApiId = response.MessageValues["InvoiceApiId"].ToString();
                             GeInvoiceApiLog(InvoiceApiId);
                             tenant = invoiceApiCommunicationLog.Tenant;
@@ -469,15 +467,10 @@ namespace CommunicationWorkerRole
                     aRInvoicePM.VatNumber = card?.VatNumber;
                     aRInvoicePM.PaymentTermId = card?.PaymentTermId;
                     aRInvoicePM.BillToAddressId = card?.BillingAddressId;
-                    aRInvoicePM.BillToDisplayNumber = card?.Code;
                     if (!string.IsNullOrWhiteSpace(card?.MainAddressId))
                     {
                         aRInvoicePM.BillToAddressId = card?.MainAddressId;
                     }
-                }
-                else
-                {
-                     exception += $"EntityID element not found in XML\n";
                 }
                 var invoiceNumber = invoice.Element(ns + "Number")?.Value;
                 aRInvoicePM.DraftNumber = invoiceNumber;
@@ -738,7 +731,7 @@ namespace CommunicationWorkerRole
             var filePath = $"tenant{tenant}/{StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder)}";
 
 
-            var fileInfo = new BlobFileInfo()
+            var fileInfo = new BlobFileInfo
             {
                 FileName = document.Id,
                 FolderName = document.Folder,
@@ -770,9 +763,8 @@ namespace CommunicationWorkerRole
             {
                 Tenant = document.Tenant,
                 FileName = document.Id,
-                FolderName = document.Folder,
-                Extension = document.Extension,
-                FileSize = document.FileSize
+                FolderName = "others",
+                Extension = "xml",
 
             };
 

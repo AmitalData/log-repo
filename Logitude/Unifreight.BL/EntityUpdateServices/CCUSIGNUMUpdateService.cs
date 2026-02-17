@@ -29,7 +29,7 @@ namespace Unifreight.BL.EntityUpdateServices
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUSIGNUMPM entityPM)
         {
-            return new CCUSIGNUMKeys() { FILENO = entityPM.FILENO, LINENOMSHGR = entityPM.LINENOMSHGR, LINENOSIGN = entityPM.LINENOSIGN, Tenant = entityPM.Tenant };
+            return new CCUSIGNUMKeys() { FILENO = entityPM.FILENO, LINENOMSHGR = entityPM.LINENOMSHGR, LINENOSIGN = entityPM.LINENOSIGN};
         }
 
         protected override void OnCreating(CCUSIGNUMPM entityPM, CCUMSHGRPM entityParentPM)

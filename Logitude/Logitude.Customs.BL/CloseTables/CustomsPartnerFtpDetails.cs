@@ -51,13 +51,11 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_SIISendRequest_Response = "SII_SEND_REQUEST_R";
         public const string InterfaceName_DownloadCustomsFilesFromSftp = "DWN_CUSTOMS_SFTP";
         public const string InterfaceName_UploadNotNeeded9100FilesToSftp = "UPLOAD_NOTNEEDED9100_TOSFTP";
-        public const string InterfaceName_Customs = "Customs";
-        public const string InterfaceName_SIIRequestStatus = "SII_REQUEST_STATUS";
+
         public const string PartnerCode_Mamam = "MAMAN";
         public const string PartnerCode_ILOVS = "ILOVS";
         public const string PartnerCode_ILSWS = "ILSWS";
         public const string PartnerCode_AMITAL = "AMITAL";
-        public const string PartnerCode_CUSTOMS = "Customs";
         public const string PartnerCode_SII = "SII";
         public const string TypeCode_Out = "OUT";
         public const string TypeCode_In = "IN";
@@ -430,25 +428,8 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_AMITAL,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-            },
-            new InterfaceDetails()
-            {
-                Code= InterfaceName_Customs,
-                Name = "העלאת קבצי SFTP עבור כספות תהילה",
-                TypeCode = TypeCode_Out,
-                Partner = PartnerCode_CUSTOMS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-            },
-           new InterfaceDetails()
-            {
-                Code = InterfaceName_SIIRequestStatus,
-                Name = "מכון תקנים - סטטוס בקשה",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_SII,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
             }
             };
-
             ///
 
             //all.Add(new KeyValuePair<string, string>("TST", "Test"));
@@ -480,7 +461,6 @@ namespace Logitude.Customs.BL.CloseTables
             all.Add(new KeyValuePair<string, string>(PartnerCode_ILSWS, "Swissport"));
             all.Add(new KeyValuePair<string, string>(PartnerCode_SII, "SII"));
             all.Add(new KeyValuePair<string, string>(PartnerCode_AMITAL, "Amital"));
-            all.Add(new KeyValuePair<string, string>(PartnerCode_CUSTOMS, "Customs"));
 
             return all;
         }

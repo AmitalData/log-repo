@@ -881,8 +881,6 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SIIRequestMap());
 	
-            modelBuilder.Configurations.Add(new SIIRequestLineStatusMap());
-	
             modelBuilder.Configurations.Add(new SIIRequestStatusMap());
 	
             modelBuilder.Configurations.Add(new SiteLookupMap());
@@ -3977,12 +3975,6 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SIIRequest> SIIRequests 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<SIIRequestLineStatus> SIIRequestLineStatuses 
 	 {
 	      get; set;
 	 

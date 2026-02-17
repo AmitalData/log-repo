@@ -52,7 +52,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 											  ExternalID = a.ExternalID,
 											  ARInvoiceId = a.ARInvoiceId,
 											  InvoiceNumber = a.ARInvoice != null ?( invoiceStatusCodes.Contains(a.ARInvoice.StatusCode) ? a.ARInvoice.DraftNumber : a.ARInvoice.InvoiceNumber) : null,
-											  ExternalInvoiceNumber =a.ARInvoice != null ? a.ARInvoice.DraftNumber : null
+
 
                                             });
             return query;

@@ -617,10 +617,7 @@ namespace WebFreight.Web
 
             HttpCookie cookie1 = new HttpCookie(FormsAuthentication.FormsCookieName, "");
             cookie1.Expires = DateTime.Now.AddYears(-1);
-			cookie1.HttpOnly = true;               
-			cookie1.Secure = true;                 
-			cookie1.SameSite = SameSiteMode.Lax; 
-			HttpContext.Current.Response.Cookies.Add(cookie1);
+            HttpContext.Current.Response.Cookies.Add(cookie1);
             HttpContext.Current.Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
             HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             HttpContext.Current.Response.Cache.SetNoStore();
@@ -646,14 +643,6 @@ namespace WebFreight.Web
 
 
             return true;
-        }
-        public HttpResponseMessage GetIsAppServiceData()
-        {
-            var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
-            bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
-            return (isAppServiceENV || isAppService) ? 
-                Request.CreateResponse(HttpStatusCode.OK, true) :
-                Request.CreateResponse(HttpStatusCode.OK, false);
         }
 
         public HttpResponseMessage getLoggedDomain()
@@ -1617,7 +1606,7 @@ namespace WebFreight.Web
                     customerCare = false;
                     bool distributor = false;
                     User logitudeUser = null;
-                    GlobalContact contact = globalContext.GlobalContacts.Where(d => (d.GlobalTenantId == 0  || d.GlobalTenantId == tenant) && d.Email.ToLower() == parameters.Email.ToLower() && d.InActive == false).FirstOrDefault(); //mohammad
+                    GlobalContact contact = globalContext.GlobalContacts.Where(d => d.GlobalTenantId == 0 && d.Email.ToLower() == parameters.Email.ToLower() && d.InActive == false).FirstOrDefault(); //mohammad
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
                     if (contact != null)
                     {
@@ -1686,9 +1675,7 @@ namespace WebFreight.Web
 
                                 string encryptedTicket = FormsAuthentication.Encrypt(ticket);
                                 HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-								authCookie.HttpOnly = true;          
-								authCookie.Secure = true;								
-								authCookie.SameSite = SameSiteMode.None;
+                                authCookie.SameSite = SameSiteMode.None;
                                 HttpContext.Current.Response.Cookies.Add(authCookie);
 
                             }
@@ -1800,6 +1787,7 @@ namespace WebFreight.Web
                     }
 
                     user.HtmlVersion = GetHtmlVersion();
+                    user.IsAdmin = SecurityUtility.isUserAdmin(email, tenant) || customerCare;
                 }
 
                 int executionTime = (int)((DateTime.Now.Ticks - DateBeforePostLoginData.Ticks) / TimeSpan.TicksPerMillisecond);
@@ -2020,7 +2008,7 @@ namespace WebFreight.Web
                 }
 
 
-                string environment = IsLogBoxEnvironment() ? "Logbox" : "AmitalCloud";
+                string environment = IsLogBoxEnvironment() ? "Logbox" : LogitudeSettings.WorkEnvironment == "cloud" ? "Cloud" : "Logitude";
                 string body = "Please use the code " + device.AuthenticationCode + " to verify your " + environment + " Account";
                 byte[] bytearray = Encoding.ASCII.GetBytes(body);
 
@@ -2291,7 +2279,7 @@ namespace WebFreight.Web
             bool customerCare = false;
             bool distributor = false;
             User logitudeUser = null;
-            GlobalContact contact = globalObjectContext.GlobalContacts.Where(d => (d.GlobalTenantId == 0 || d.GlobalTenantId == tenant) && d.InActive == false && d.Email == name).FirstOrDefault(); //mohammad
+            GlobalContact contact = globalObjectContext.GlobalContacts.Where(d => d.GlobalTenantId == 0 && d.InActive == false && d.Email == name).FirstOrDefault(); //mohammad
 
 
 
@@ -3184,7 +3172,7 @@ namespace WebFreight.Web
             else HttpContext.Current.Response.Headers.Add("ServerTime", executionTime.ToString());
 
         }
-        
+
 
 
         //   [OperationContract]

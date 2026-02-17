@@ -56,8 +56,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         StepName, 
 	         ExternalID, 
 	         ARInvoiceId, 
-	         InvoiceNumber, 
-	         ExternalInvoiceNumber,
+	         InvoiceNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
