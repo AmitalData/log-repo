@@ -1636,11 +1636,6 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             get;
             set;
         }
-        public IDbSet<OceanCarrierStatusAPIconfig> OceanCarrierStatusAPIconfigs
-        {
-            get;
-            set;
-        }
         public IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts
         {
             get;
@@ -1846,9 +1841,6 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<ExternalSystemsTablesCode> ExternalSystemsTablesCodes { get; set; }
         public IDbSet<ExternalSystemsMissingTranslation> ExternalSystemsMissingTranslations { get; set; }
         public IDbSet<ExternalSystemsSyncStatus> ExternalSystemsSyncStatuses { get; set; }
-        public IDbSet<ExpenseAllocationSetting> ExpenseAllocationSettings { get; set; }
-        public IDbSet<ExpenseAllocationFlow> ExpenseAllocationFlows { get; set; }
-
         public IDbSet<AccountingSystemsSetting> AccountingSystemsSettings { get; set; }
         public IDbSet<AccountingSystemsSyncStatus> AccountingSystemsSyncStatuses { get; set; }
         public IDbSet<QuickbooksSyncRequestTicket> QuickbooksSyncRequestTickets { get; set; }
@@ -4829,8 +4821,6 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new OceanInsightsStatusesMap());
             modelBuilder.Configurations.Add(new OceanInsightsRequestMap());
             modelBuilder.Configurations.Add(new OceanInsightsRequestsCountMap());
-            modelBuilder.Configurations.Add(new OceanCarrierStatusAPIconfigMap());
-
             modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
             // modelBuilder.Configurations.Add(new EntityChangesAutomationMap());
             modelBuilder.Configurations.Add(new EntityChangeMap());

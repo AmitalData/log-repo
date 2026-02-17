@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class TenantUpdateClass
    {  		
-		public const string HashString = "076058ded59fb65b1038f5d98ff19d94";
+		public const string HashString = "076058ded59fb65b1038f7d98ff19d94";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -763,7 +763,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "Company",
 					  						ObjectTableName =  "Tenant",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,

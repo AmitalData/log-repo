@@ -651,12 +651,6 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
-    get PrepaidExpensesGLAccountId() { return this.EntityPM.PrepaidExpensesGLAccountId; }
-    set PrepaidExpensesGLAccountId(value: string) {
-        if (this.EntityPM.PrepaidExpensesGLAccountId != value) {
-            this.EntityPM.PrepaidExpensesGLAccountId = value;
-        }
-    }
 
 
 

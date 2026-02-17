@@ -612,17 +612,8 @@ namespace Simplog.Data.InvoiceModel.Mocks
             get { throw new NotImplementedException(); }
             set { }
         }
-        public IDbSet<ExpenseAllocationSetting> ExpenseAllocationSettings
-        {
-            get { throw new NotImplementedException(); }
-            set { }
-        }
 
-        public IDbSet<ExpenseAllocationFlow> ExpenseAllocationFlows
-        {
-            get { throw new NotImplementedException(); }
-            set { }
-        }
+
         List<CreditCardType> creditCardTypes;
         MockObjectSet<CreditCardType> creditCardTypeObjectSet;
         public IDbSet<CreditCardType> CreditCardTypes

@@ -74,7 +74,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TenantForConfirmationNumberApi, 
 	         InvoiceNotes, 
 	         InterestInvoiceNotes, 
-	         PrepaidExpensesGLAccountId,
 	         MasavBankId, 
 	         MasavCode,
 	      }
@@ -146,7 +145,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TenantForConfirmationNumberApi, 
 	         InvoiceNotes, 
 	         InterestInvoiceNotes, 
-	         PrepaidExpensesGLAccountId, 
 	         HebrewTenant, 
 	         MasavBankId, 
 	         MasavCode,
@@ -387,18 +385,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.MasavBankId = entityPM.MasavBankId;
 			}
-
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrepaidExpensesGLAccountId))
-            {
-				entityPOCO.PrepaidExpensesGLAccountId = entityPM.PrepaidExpensesGLAccountId;
-			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasavCode))
             {
 				entityPOCO.MasavCode = entityPM.MasavCode;
 			}
-		}
+			}
 
 		public void POCOToPM(FullAccountingSettingPM entityPM, POCO.FullAccountingSetting entityPOCO)
         {
@@ -639,15 +631,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MasavCode))
-			{
-				entityPM.MasavCode = entityPOCO.MasavCode;
-			}
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PrepaidExpensesGLAccountId))
             {
-					entityPM.PrepaidExpensesGLAccountId = entityPOCO.PrepaidExpensesGLAccountId;
+					entityPM.MasavCode = entityPOCO.MasavCode;
             }
-		
 
 		}
 
@@ -884,15 +870,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 oldEntityPM.MasavBankId = entityPM.MasavBankId;
             }
-
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasavCode))
-			{
-				oldEntityPM.MasavCode = entityPM.MasavCode;
-			}
-
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrepaidExpensesGLAccountId))
             {
-                oldEntityPM.PrepaidExpensesGLAccountId = entityPM.PrepaidExpensesGLAccountId;
+                oldEntityPM.MasavCode = entityPM.MasavCode;
             }
 			
 		}

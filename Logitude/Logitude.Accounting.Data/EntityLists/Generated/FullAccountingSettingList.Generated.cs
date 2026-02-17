@@ -138,8 +138,6 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string InterestInvoiceNotes  { get; set; }
        [DataMember]
-       public string PrepaidExpensesGLAccountId  { get; set; }
-       [DataMember]
        public string MasavBankId  { get; set; }
        [DataMember]
        public string MasavCode  { get; set; }

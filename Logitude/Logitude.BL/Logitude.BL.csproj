@@ -249,20 +249,32 @@
     <Reference Include="Microsoft.Identity.Client.Extensions.Msal, Version=4.66.1.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Identity.Client.Extensions.Msal.4.66.1\lib\netstandard2.0\Microsoft.Identity.Client.Extensions.Msal.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.7.6.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.6.35.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.7.6.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.35.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.7.6.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.35.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.7.6.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.35.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.33.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.6.33.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.33.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.33.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.33.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.33.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.33.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.33.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
@@ -389,8 +401,8 @@
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
-    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.35.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.7.6.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
@@ -927,9 +939,9 @@
     <Compile Include="InfrastructureModel\EntityAMs\EntityStatusAM.cs" />
     <Compile Include="InfrastructureModel\EntityAMs\EventTypeAM.cs" />
     <Compile Include="InfrastructureModel\EntityLists\AdditionalCurrencyRateList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationKeyList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\GeneralLockList.cs" />
-    <Compile Include="GlobalModel\EntityLists\DefaultAndConfigurationKeyList.cs" />
-    <Compile Include="GlobalModel\EntityLists\DefaultAndConfigurationList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\EventRemarkList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldsMainObjectList.cs" />
@@ -946,8 +958,8 @@
     <Compile Include="InfrastructureModel\EntityPMs\AdditionalCurrencyRatePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ChildEntitiesCustomFieldPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\CurrencyRatePM.cs" />
-    <Compile Include="GlobalModel\EntityPMs\DefaultAndConfigurationKeyPM.cs" />
-    <Compile Include="GlobalModel\EntityPMs\DefaultAndConfigurationPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationKeyPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\EventRemarkPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\CustomChildEntity.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\CustomChildObjectPM.cs" />
@@ -968,8 +980,8 @@
     <Compile Include="InfrastructureModel\EntityQueries\AdditionalCurrencyRateQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ChildEntitiesCustomFieldQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\CurrencyRateQuery.cs" />
-    <Compile Include="GlobalModel\EntityQueries\DefaultAndConfigurationKeyQuery.cs" />
-    <Compile Include="GlobalModel\EntityQueries\DefaultAndConfigurationQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationKeyQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\EventRemarkQueryService.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\CustomChildObjectQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\CustomFieldsMainObjectQuery.cs" />
@@ -984,16 +996,6 @@
     <Compile Include="InfrastructureModel\EntityQueries\QueueMessageQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\QuoteChargesGroupQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ReferenceCustomObjectQuery.cs" />
-    <Compile Include="InvoiceModel\EntityLists\ExpenseAllocationFlowList.cs" />
-    <Compile Include="InvoiceModel\EntityLists\ExpenseAllocationSettingList.cs" />
-    <Compile Include="InvoiceModel\EntityPMs\ExpenseAllocationFlowPM.cs" />
-    <Compile Include="InvoiceModel\EntityPMs\ExpenseAllocationSettingPM.cs" />
-    <Compile Include="InvoiceModel\EntityQueries\ExpenseAllocationFlowQuery.cs" />
-    <Compile Include="InvoiceModel\EntityQueries\ExpenseAllocationSettingQuery.cs" />
-    <Compile Include="InvoiceModel\Tools\DataMapping\ExpenseAllocationFlowMapping.cs" />
-    <Compile Include="InvoiceModel\Tools\DataMapping\ExpenseAllocationSettingMapping.cs" />
-    <Compile Include="InvoiceModel\Tools\EntityService\ExpenseAllocationFlowService.cs" />
-    <Compile Include="InvoiceModel\Tools\EntityService\ExpenseAllocationSettingService.cs" />
     <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\MasavInterfaceStatusDetails.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\EnumGenerated\MasavInterfaceStatusStruct.Generated.cs" />
     <Compile Include="InvoiceModel\CoreBL\Batch\MasavBatchCancelTask.cs" />
@@ -1010,13 +1012,17 @@
     <Compile Include="Security\ContactInfo.cs" />
     <Compile Include="ShipmentsModel\EntityLists\FreightForwarderReferenceList.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\FreightForwarderReferencePM.cs" />
-    <Compile Include="ShipmentsModel\EntityPMs\OceanCarrierStatusAPIconfigPM.cs" />
-    <Compile Include="ShipmentsModel\EntityQueries\OceanCarrierStatusAPIconfigQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ReferenceTypeListQueryService.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ScreenSectionQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\SearchIndexQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\SearchIndexTenantHistoryQuery.cs" />
     <Compile Include="InfrastructureModel\Services\CustomChildEntityService.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationKeyList.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationKeyPM.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationKeyQuery.cs" />
     <Compile Include="InfrastructureModel\FieldShortNameGetters\ObjectFieldsShortNamesGetter.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
     <Compile Include="GlobalModel\EntityLists\HelpResourceList.cs" />
@@ -1065,8 +1071,8 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\CurrencyRateMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomChildObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomFieldsMainObjectMapping.cs" />
-    <Compile Include="GlobalModel\Tools\DataMapping\DefaultAndConfigurationKeyMapping.cs" />
-    <Compile Include="GlobalModel\Tools\DataMapping\DefaultAndConfigurationMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DefaultAndConfigurationKeyMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DefaultAndConfigurationMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackagesVersionMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackageMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DataCustomObjectMapping.cs" />
@@ -1082,12 +1088,14 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\MultiEntityUpdateLogMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\QuoteChargesGroupMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\ScreenSectionMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DefaultAndConfigurationMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DefaultAndConfigurationKeyMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\WorkerRoleNameMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\RuleUpdateHistoryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\CustomFieldsMainObjectService.cs" />
-    <Compile Include="GlobalModel\Tools\EntityService\DefaultAndConfigurationKeyService.cs" />
-    <Compile Include="GlobalModel\Tools\EntityService\DefaultAndConfigurationService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DefaultAndConfigurationKeyService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DefaultAndConfigurationService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackagesVersionService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackageService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DataCustomObjectService.cs" />
@@ -1103,6 +1111,8 @@
     <Compile Include="InfrastructureModel\Tools\EntityService\TableTabMappingService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\TableTabModificationService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\ObjectTableTabTextCodeService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DefaultAndConfigurationService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DefaultAndConfigurationKeyService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\WorkerRoleNameService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\RuleUpdateHistoryService.cs" />
     <Compile Include="InfrastructureModel\Tools\TraceEvents\CurrencyRateTracing.cs" />
@@ -1214,14 +1224,17 @@
     <Compile Include="ShipmentsModel\EntityLists\LogBoxShipmentList.cs" />
     <Compile Include="ShipmentsModel\EntityOtherServices\ContainerShipmentUpdateService.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ExternalLinkPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsStatusLogPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ReferenceTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReferancePM.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ReferenceTypeQueryService.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\FreightForwarderReferenceQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReferanceQuery.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsStatusLogMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.FreightForwarderReference.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentReferance.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ExternalLinkQuery.cs" />
+    <Compile Include="ShipmentsModel\Tools\EntityService\OceanInsightsStatusLogService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\FreightForwarderReferenceService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentReferanceService.cs" />
     <Compile Include="ShipmentsModel\Tools\ExternalService\ShipmentAdditionalDataService.cs" />

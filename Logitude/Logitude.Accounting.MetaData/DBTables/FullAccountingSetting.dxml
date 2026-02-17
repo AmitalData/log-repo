@@ -323,13 +323,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="PrepaidExpensesGLAccountId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="MasavBankId"
     Type="varchar"
     Size="15">
@@ -435,11 +428,6 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="TaxInstitutionGLAccountId"
-    ReferencedTable="GLAccounts"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="PrepaidExpensesGLAccountId"
     ReferencedTable="GLAccounts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />

@@ -4,10 +4,8 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.BL.ExtendedServices;
-using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +32,7 @@ namespace CommunicationWorkerRole
                 {
 
                     batchTaskExecutionQueue = new DbQueueService();
-                    batchTaskExecutionQueue.InitializeQueue("batchtaskexecutionqueue", SettingUtil.GetTenantDBFromConfig());
+                    batchTaskExecutionQueue.InitializeQueue("batchtaskexecutionqueue", 0);
                     if (DateTime.Now.Subtract(freeTenantsDateTime) >= TimeSpan.FromMinutes(10))
                     {
                         freeTenantsDateTime = DateTime.Now;
@@ -156,7 +154,7 @@ namespace CommunicationWorkerRole
             try
             {
                 batchTaskExecutionQueue = new DbQueueService();
-                batchTaskExecutionQueue.InitializeQueue("batchtaskexecutionqueue", SettingUtil.GetTenantDBFromConfig());
+                batchTaskExecutionQueue.InitializeQueue("batchtaskexecutionqueue", 0);
 
             }
 
