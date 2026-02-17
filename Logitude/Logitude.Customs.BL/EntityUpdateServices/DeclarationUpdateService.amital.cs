@@ -87,14 +87,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             OurVersionToUpdateDeclarationPlatformFeeAndPrimaryInvoice(dirtyDeclarationPM);
 
-
-            bool isFrom2470 =dirtyDeclarationPM.CurrentContextTag is EventContextTagModel ectm && 
-                ectm.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate;
-
-            if (dirtyDeclarationPM.IsAmendment==true && !isFrom2470)
+            if (dirtyDeclarationPM.IsAmendment==true)
             {
                 LogitudeSettings.HandleLogMe("IsAmendment", false, "UpdateUnifreight_" + dirtyDeclarationPM.Id, stopLogAt);
-
                 return;
             }
 
@@ -463,6 +458,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
             var statusDateTime = DateTime.Now;
+            var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
 
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
             {
@@ -519,9 +515,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     USRCODE = unifreightUser,
                     ARCHIVE = "F",
                 };
-                
-                myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
-                
+                if (!isConnectedToUniFreight)
+                {
+                    myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
+                }
                 _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
                 var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
                 myGGGQUpdateService.DontAddTransaction = true;
@@ -545,9 +542,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     DONEOPERATION = "D",
                     //GSTRING1 = myYCULTASKPM.TASKID,
                 };
-                 
-                myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
-                
+                if(!isConnectedToUniFreight) 
+                { 
+                    myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
+                }
                 myGGGQUpdateService.Update(myGGGQPM, true);
                 
                 
@@ -729,6 +727,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             if (dirtyDeclarationPM.Direction == "E")
                 return;
+            bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
             AmitalContext _AmitalContext = null;
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
@@ -749,7 +748,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
                     myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                    
-                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo,dirtyDeclarationPM.Tenant, false);
+                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, false);
                     if (myCCUQUELOCK == null)
                     {
                         var myCCUQUELOCKPM = new CCUQUELOCKPM()
@@ -759,9 +758,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             FILENO = dirtyDeclarationPM.CustomFileNo,
                         };
 
-                        
-                        myCCUQUELOCKPM.Tenant = EntityPM.Tenant;
-                        
+                        if (!isConnectedToUniFreight)
+                        {
+                            myCCUQUELOCKPM.Tenant = EntityPM.Tenant;
+                        }
                         myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                     }
                
@@ -874,7 +874,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
                     
-                        
+                        //eitan h 12/3/15 moved to static -->
+                        //short priority = 9;
+                        //switch (taskType)
+                        //{
+                        //    case "L2U":
+                        //        priority = 1;
+                        //        break;
+                        //    case "LD2U":
+                        //        priority = 2;
+                        //        break;
+                        //    case "LP2U":
+                        //        priority = 3;
+                        //        break;
+                        //    default:
+                        //        break;
+                        //}
+                        //<--eitan h 12/3/15 moved to static
 
                         var myYCULTASKPM = new YCULTASKPM()
                         {
@@ -892,9 +908,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                         };
                 //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
-                        
-                        myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
-                        
+                        if (!isConnectedToUniFreight)
+                        {
+                            myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
+                        }
                         var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
                         myYCULTASKUpdateService.DontAddTransaction = true;
                         myYCULTASKUpdateService.Update(myYCULTASKPM, true);
@@ -919,9 +936,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             DONEOPERATION = "D",
                             //GSTRING1 = myYCULTASKPM.TASKID,
                         };
-                        
-                        myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
-                        
+                        if(!isConnectedToUniFreight)
+                        {
+                            myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
+                        }
                         myGGGQUpdateService.Update(myGGGQPM, true);
                    
 
@@ -1450,7 +1468,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 return _DBEntityAfterCommit;
             }
             var declarationQueryService = new DeclarationQueryService(Tenant);
+           // declarationQueryService.LoadSupplierInvoices = false;
             declarationQueryService.LoadSupplierInvoicesWithItems = false;
+            //if (IsUpdateUnifreight == true) ; //declarationQueryService.LoadSupplierInvoices = true; // moran 14.6.16 - Task 21737
             var myDBEntity = declarationQueryService.GetSingle(DeclarationId, true, false);
             if (!_AfterCommitUpdate)
             {
@@ -1893,6 +1913,39 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             return (isStatusExist);
         }
+        public void CreateCustomFileCCU(DeclarationPM declarationPM)
+        {
+			_AmitalContext = AmitalContext.GetContext(declarationPM.Tenant);
+			var myCCUFILEMQueryService = new CCUFILEMQueryService(_AmitalContext);
+			if (!long.TryParse(declarationPM.CustomFileNo, out lCUSTOMFILENO))
+			{
+				throw new BusinessErrorException("dirtyDeclarationPM.CustomFileNo could not convert to long ");
+			}
+			int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
+			if (!FILENO.HasValue)
+			{
+				var unifrightDeclarationUpdateService = new UnifrightDeclarationUpdateService(declarationPM, null, declarationPM.CreatedByUserId);
+				var _CCUFILEMPM = unifrightDeclarationUpdateService.DoCustomFile();
+				var myCCUFILEMUpdateService = new CCUFILEMUpdateService(_AmitalContext);
+				using (var logger = (_AmitalContext as DbContextBase).CreateLogger())
+				{
+					try
+					{
+						LogMessagingUtil.Instance.AppendLine("Update1: _CCUFILEMPM Update, file: " + _CCUFILEMPM.CUSTOMFILENO);
+						myCCUFILEMUpdateService.Update(_CCUFILEMPM, true);
+					}
+					catch (Exception eUpdate)
+					{
+						LogMessagingUtil.Instance.Append("CCUFILEMUpdateService.Update:");
+						throw;
+					}
+
+				}
+				FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO) ?? _CCUFILEMPM.FILENO;
+
+			}
+		}
+
     }
     public class amitalInfo
     {

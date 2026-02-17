@@ -172,8 +172,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 CustomsRequestsSheetQueryService customsRequestsSheetQuery = new CustomsRequestsSheetQueryService(customContext);
-                bool hasBlockingRequests = customsRequestsSheetQuery.HasBlockingRequests(CustomFileNo, tenant, InterfaceTypeCode);
-                return Request.CreateResponse(HttpStatusCode.OK, hasBlockingRequests);
+                List<CustomsRequestsSheetPM> requestSheets = customsRequestsSheetQuery.GetCustomsRequestsSheetByCustomFileNumberPM(CustomFileNo, Tenant);
+                requestSheets  =requestSheets.Where(r => r.InterfaceTypeCode == InterfaceTypeCode && r.RequestStatusCode !="99").ToList();
+
+
+
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, requestSheets);
             }
 
             catch (Exception ex)
@@ -593,7 +599,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         public static bool Isinteractive(int tenant, string RequestComminicationId)
         {
             SendRequestVIA? curSendRequestVIA = null;
-            var communicationLogStepQuery = new CommunicationLogStepQuery(tenant);
+            var communicationLogStepQuery = new CommunicationLogStepQuery();
             var requestParamXml = communicationLogStepQuery.GetStartRequestParams(tenant, RequestComminicationId);
             if (!string.IsNullOrWhiteSpace(requestParamXml))
             {

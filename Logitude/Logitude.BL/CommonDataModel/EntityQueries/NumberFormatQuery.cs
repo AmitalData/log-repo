@@ -14,7 +14,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         NumberFormatRepository repository;
 
-
+        public NumberFormatQuery()
+        {
+            repository = new NumberFormatRepository();
+        }
 
         public NumberFormatQuery(int tenant)
         {

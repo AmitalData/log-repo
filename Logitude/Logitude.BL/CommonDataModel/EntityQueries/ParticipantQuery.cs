@@ -17,7 +17,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ParticipantRepository repository;
 
-
+        public ParticipantQuery()
+        {
+            repository = new ParticipantRepository(); 
+        }
 
         public ParticipantQuery(int tenant)
         {
